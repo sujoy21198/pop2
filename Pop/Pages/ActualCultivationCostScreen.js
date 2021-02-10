@@ -138,6 +138,9 @@ var styles = StyleSheet.create({
         alignSelf:'center'
     },
     input: {
-        borderWidth: 0
+        borderWidth: 0,
+        height:heightToDp("6%"),
+        fontSize:widthToDp("5%"),
+        fontFamily: 'Oswald-Light'
     }
 });

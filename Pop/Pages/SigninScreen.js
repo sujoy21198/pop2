@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, TouchableOpacity, StyleSheet } from 'react-native'
+import { View, TouchableOpacity, StyleSheet,ScrollView } from 'react-native'
 import { Text, Toast } from 'native-base'
 import { heightToDp, widthToDp } from '../Responsive'
 import BaseColor from '../Core/BaseTheme'
@@ -72,7 +72,7 @@ export default class SigninScreen extends Component {
                     type: 'success',
                     duration: 3000
                 })
-            }
+            }   
             
         }).catch(function (error){
             load = false
@@ -95,7 +95,9 @@ export default class SigninScreen extends Component {
     }
     render() {
         return (
-            <KeyboardAwareScrollView style={{ backgroundColor: BaseColor.BackgroundColor, flex: 1 }}>
+            <KeyboardAwareScrollView style={{ backgroundColor: BaseColor.BackgroundColor, flex: 1 }}
+            keyboardShouldPersistTaps='handled'
+            >
                 <View >
                     <View style={{ marginTop: heightToDp("3%"), alignSelf: "center" }}>
                         <Logo />
@@ -136,6 +138,7 @@ export default class SigninScreen extends Component {
                             inputStyle={styles.input}
                             style={styles.formInput}
                             password={true}
+                            
                             onChangeText={(text) => { this.setState({ password: text }) }}
                         // onBlur={this.onBlur}
                         >PASSWORD</FloatingLabel>
@@ -176,8 +179,7 @@ export default class SigninScreen extends Component {
 var styles = StyleSheet.create({
     container: {
         flex: 1,
-        paddingTop: 65,
-        backgroundColor: 'white',
+        backgroundColor: 'white'
     },
     labelInput: {
         color: '#000',
@@ -190,6 +192,9 @@ var styles = StyleSheet.create({
         width: widthToDp("80%")
     },
     input: {
-        borderWidth: 0
+        borderWidth: 0,
+        height:heightToDp("6%"),
+        fontSize:widthToDp("5%"),
+        fontFamily: 'Oswald-Light'
     }
 });

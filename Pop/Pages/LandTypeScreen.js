@@ -136,7 +136,7 @@ export default class LandTypeScreen extends Component {
                         data={data}
                         style={{marginBottom:heightToDp("74%")}}
                         renderItem={({ item }) => 
-                        <TouchableOpacity onPress={() => this.props.navigation.navigate('AnalysisScreen')}>
+                        <TouchableOpacity onPress={() => this.props.navigation.navigate('SelectFarmingAreaScreen')}>
                             <Card style={{width:widthToDp("94%"),marginLeft:widthToDp("3%"),height:heightToDp("30%"),marginBottom:heightToDp("1%"),borderRadius:20,backgroundColor:BaseColor.Red}}>
                                 <View style={{flexDirection:'row'}}>
                                     <View style={{width:widthToDp("45%")}}>
