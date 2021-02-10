@@ -75,6 +75,7 @@ export default class SigninScreen extends Component {
             }
             
         }).catch(function (error){
+            load = false
             console.log(error)
         })
 

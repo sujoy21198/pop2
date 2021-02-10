@@ -10,30 +10,27 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import base64 from 'react-native-base64'
 import axios from 'axios'
 import DataAccess from '../Core/DataAccess'
+import CustomIndicator from '../Core/CustomIndicator'
+
 
 
 export default class CropsScreen extends Component {
 
-    constructor(props){
+    constructor(props) {
         super(props)
-        this.state={
-            crops:[]
+        this.state = {
+            crops: [],
+            isLoading: false
         }
     }
-    componentDidMount(){
+    componentDidMount() {
         this.loadCrops()
     }
 
-    // checkSession = async() => {
-    //     var username = await AsyncStorage.getItem('username')
-    //     var token = await AsyncStorage.getItem('token')
-    //     var encodedUsername = base64.encode(username)
-    //     this.setState({encodedUsername: encodedUsername})
-    //     this.setState({token : token})
-    // }
+    loadCrops = async () => {
 
-    loadCrops = async() => {
-
+        this.setState({isLoading:true})
+        var load = true
         var username = await AsyncStorage.getItem('username')
         var token = await AsyncStorage.getItem('token')
         var encodedUsername = base64.encode(username)
@@ -50,22 +47,30 @@ export default class CropsScreen extends Component {
         // }).catch(function(error){
         //     console.log(error)
         // })
-        await axios.get(DataAccess.BaseUrl+DataAccess.AccessUrl+DataAccess.Crops,{
-            headers:{
+        await axios.get(DataAccess.BaseUrl + DataAccess.AccessUrl + DataAccess.Crops, {
+            headers: {
                 'Content-type': "accept",
                 'X-Information': encodedUsername,
-                'Authorization': "POP "+ token
+                'Authorization': "POP " + token
             }
-        }).then(function(response){
+        }).then(function (response) {
             //console.log(response.data.data)
             cropsArray = response.data.data
+            if(response.data.status === 1){
+                load = false
+            }
             // console.log(cropsArray)
             // var id = cropsArray
             // console.log(id)
-            
-        }).catch(function(error){
+
+        }).catch(function (error) {
             console.log(error.message)
         })
+
+
+        if(load === false){
+            this.setState({isLoading:false})
+        }
 
         this.setState({
             crops: cropsArray
@@ -78,7 +83,7 @@ export default class CropsScreen extends Component {
         console.log(cropsArray)
         return (
             <View style={{ backgroundColor: BaseColor.BackgroundColor }}>
-                <View style={{ backgroundColor: 'white', width: widthToDp("100%"), height: heightToDp("13%"),flexDirection: 'row' }}>
+                <View style={{ backgroundColor: 'white', width: widthToDp("100%"), height: heightToDp("13%"), flexDirection: 'row' }}>
                     <View style={{ marginTop: heightToDp("3%"), marginLeft: widthToDp("3%") }}>
                         <TopLogo />
                     </View>
@@ -103,72 +108,60 @@ export default class CropsScreen extends Component {
                     </TouchableOpacity>
 
                     <TouchableOpacity onPress={() => this.props.navigation.navigate('IncomeScreen')}>
-                        <View style={{ backgroundColor: BaseColor.Hindi, width: widthToDp("30%"), height: heightToDp("6%"), marginLeft: widthToDp("2%"), borderRadius: 100,flexDirection:'row' }}>
-                            <Text style={{ color: '#fff', marginTop: heightToDp("1.7%"), marginLeft:widthToDp("5%"),fontWeight:'bold',fontSize:widthToDp("4.3%") }}>हिन्दी</Text>
+                        <View style={{ backgroundColor: BaseColor.Hindi, width: widthToDp("30%"), height: heightToDp("6%"), marginLeft: widthToDp("2%"), borderRadius: 100, flexDirection: 'row' }}>
+                            <Text style={{ color: '#fff', marginTop: heightToDp("1.7%"), marginLeft: widthToDp("5%"), fontWeight: 'bold', fontSize: widthToDp("4.3%") }}>हिन्दी</Text>
                             <Icon
-                            name="microphone"
-                            color="white"
-                            size={20}
-                            style={{marginTop:heightToDp("1.8%"),marginLeft:widthToDp("9%")}}
+                                name="microphone"
+                                color="white"
+                                size={20}
+                                style={{ marginTop: heightToDp("1.8%"), marginLeft: widthToDp("9%") }}
                             />
                         </View>
-                        </TouchableOpacity>
+                    </TouchableOpacity>
 
-                        <TouchableOpacity>
-                        <View style={{ backgroundColor: BaseColor.Ho, width: widthToDp("30%"), height: heightToDp("6%"), marginLeft: widthToDp("2%"), borderRadius: 100,flexDirection:'row' }}>
-                            <Text style={{ color: '#fff', marginTop: heightToDp("1.5%"), marginLeft:widthToDp("5%"),fontWeight:'bold',fontSize:widthToDp("4.3%") }}>ʤʌgʌr</Text>
+                    <TouchableOpacity>
+                        <View style={{ backgroundColor: BaseColor.Ho, width: widthToDp("30%"), height: heightToDp("6%"), marginLeft: widthToDp("2%"), borderRadius: 100, flexDirection: 'row' }}>
+                            <Text style={{ color: '#fff', marginTop: heightToDp("1.5%"), marginLeft: widthToDp("5%"), fontWeight: 'bold', fontSize: widthToDp("4.3%") }}>ʤʌgʌr</Text>
                             <Icon
-                            name="microphone"
-                            color="white"
-                            size={20}
-                            style={{marginTop:heightToDp("1.8%"),marginLeft:widthToDp("6.3%")}}
+                                name="microphone"
+                                color="white"
+                                size={20}
+                                style={{ marginTop: heightToDp("1.8%"), marginLeft: widthToDp("6.3%") }}
                             />
                         </View>
-                        </TouchableOpacity>
+                    </TouchableOpacity>
                 </View>
-                <View style={{ flexDirection: 'row', marginTop: heightToDp("1%"), marginLeft: widthToDp("1%"),alignSelf:'center' }}>
-                <TouchableOpacity>
-                        <View style={{ backgroundColor: BaseColor.Uridia, width: widthToDp("30%"), height: heightToDp("6%"), borderRadius: 100,flexDirection:'row' }}>
-                            <Text style={{ color: '#fff', marginTop: heightToDp("1.7%"),marginLeft:widthToDp("4.7%"),fontWeight:'bold',fontSize:widthToDp("4.3%") }}>ଓଡ଼ିଆ</Text>
+                <View style={{ flexDirection: 'row', marginTop: heightToDp("1%"), marginLeft: widthToDp("1%"), alignSelf: 'center' }}>
+                    <TouchableOpacity>
+                        <View style={{ backgroundColor: BaseColor.Uridia, width: widthToDp("30%"), height: heightToDp("6%"), borderRadius: 100, flexDirection: 'row' }}>
+                            <Text style={{ color: '#fff', marginTop: heightToDp("1.7%"), marginLeft: widthToDp("4.7%"), fontWeight: 'bold', fontSize: widthToDp("4.3%") }}>ଓଡ଼ିଆ</Text>
                             <Icon
-                            name="microphone"
-                            color="white"
-                            size={20}
-                            style={{marginTop:heightToDp("1.8%"),marginLeft:widthToDp("6.9%")}}
+                                name="microphone"
+                                color="white"
+                                size={20}
+                                style={{ marginTop: heightToDp("1.8%"), marginLeft: widthToDp("6.9%") }}
                             />
                         </View>
-                        </TouchableOpacity>
+                    </TouchableOpacity>
 
-                        <TouchableOpacity>
-                    <View style={{backgroundColor:BaseColor.Santhali, width: widthToDp("30%"), height: heightToDp("6%"),  borderRadius: 100, marginLeft: widthToDp("2%"),flexDirection:'row' }}>
-                        <Text style={{ color: '#fff', marginTop: heightToDp("1.7%"), marginLeft:widthToDp("3.4%"),fontWeight:'bold',fontSize:widthToDp("4.3%") }}>ᱥᱟᱱᱛᱟᱲᱤ</Text>
-                        <Icon
-                            name="microphone"
-                            color="white"
-                            size={20}
-                            style={{marginTop:heightToDp("1.8%"),marginLeft:widthToDp("3%")}}
+                    <TouchableOpacity>
+                        <View style={{ backgroundColor: BaseColor.Santhali, width: widthToDp("30%"), height: heightToDp("6%"), borderRadius: 100, marginLeft: widthToDp("2%"), flexDirection: 'row' }}>
+                            <Text style={{ color: '#fff', marginTop: heightToDp("1.7%"), marginLeft: widthToDp("3.4%"), fontWeight: 'bold', fontSize: widthToDp("4.3%") }}>ᱥᱟᱱᱛᱟᱲᱤ</Text>
+                            <Icon
+                                name="microphone"
+                                color="white"
+                                size={20}
+                                style={{ marginTop: heightToDp("1.8%"), marginLeft: widthToDp("3%") }}
                             />
-                    </View>
+                        </View>
                     </TouchableOpacity>
                 </View>
                 <View style={{ borderBottomColor: BaseColor.Stroke, borderBottomWidth: 1, marginTop: heightToDp('1.5%'), width: widthToDp("100%") }}></View>
                 <Text style={{ marginLeft: widthToDp("3%"), marginTop: heightToDp("2%"), fontSize: widthToDp("7%"), fontFamily: 'Oswald-Medium' }}>CROPS</Text>
-                {/* <View style={{ flexDirection: 'row', marginTop: heightToDp("5%") }}>
-                    
-                    <Text style={{ marginTop: heightToDp("2%"), marginLeft: widthToDp("5%") }}>ENGLISH</Text>
-                    <View style={{ height: heightToDp("5%"), width: 1, backgroundColor: '#909090', marginTop: heightToDp("1%"), marginLeft: widthToDp("1%") }}></View>
-                    <Text style={{ marginTop: heightToDp("2%"), marginLeft: widthToDp("1%") }}>हिन्दी</Text>
-                    <View style={{ height: heightToDp("5%"), width: 1, backgroundColor: '#909090', marginTop: heightToDp("1%"), marginLeft: widthToDp("1%") }}></View>
-                    <Text style={{ marginTop: heightToDp("2%"), marginLeft: widthToDp("1%") }}>ʤʌgʌr</Text>
-                    <View style={{ height: heightToDp("5%"), width: 1, backgroundColor: '#909090', marginTop: heightToDp("1%"), marginLeft: widthToDp("1%") }}></View>
-                    <Text style={{ marginTop: heightToDp("2%"), marginLeft: widthToDp("1%") }}>ଓଡ଼ିଆ</Text>
-                    <View style={{ height: heightToDp("5%"), width: 1, backgroundColor: '#909090', marginTop: heightToDp("1%"), marginLeft: widthToDp("1%") }}></View>
-                    <Text style={{ marginTop: heightToDp("2%"), marginLeft: widthToDp("1%") }}>ᱥᱟᱱᱛᱟᱲᱤ</Text>
-                </View> */}
-                {/* <Image
-                style={{width:30,height:30}}
-                source={{uri:'https://upload.wikimedia.org/wikipedia/commons/4/48/Basketball.jpeg'}}
-                /> */}
+                {
+                    this.state.isLoading ? <View style={{justifyContent:'center',marginTop:heightToDp("20%")}}><CustomIndicator IsLoading={this.state.isLoading} /></View> : null
+                }
+
                 <View>
                     <FlatGrid
                         style={{ marginTop: heightToDp("1%"), marginBottom: heightToDp("74%") }}
@@ -182,7 +175,7 @@ export default class CropsScreen extends Component {
                                     <Text style={{ color: "#fff", fontSize: widthToDp("5%"), marginLeft: widthToDp("5%"), marginTop: heightToDp("0.4%"), fontFamily: 'Oswald-Medium' }}>{item.name}</Text>
                                     <Image
                                         style={{ width: widthToDp("47%"), height: heightToDp("25%"), borderBottomLeftRadius: 10, borderBottomRightRadius: 10, marginTop: heightToDp("1%") }}
-                                        source={{ uri:"http://161.35.122.165:3020/app-property/uploads/crops/"+item.imageFile }}
+                                        source={{ uri: "http://161.35.122.165:3020/app-property/uploads/crops/" + item.imageFile }}
                                     />
                                 </View>
                             </TouchableOpacity>

@@ -1,9 +1,12 @@
 import React,{ Component } from 'react'
 import {View,Button} from 'react-native'
+import AsyncStorage from '@react-native-async-storage/async-storage'
+
 
 export default class GeneralSettingsScreen extends Component{
 
-    go = () => {
+    go = async() => {
+        await AsyncStorage.removeItem('_id')
         this.props.navigation.reset({
             index:0,
             routes:[{name:"SigninScreen"}]

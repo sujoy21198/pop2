@@ -107,7 +107,6 @@ export default class RegistrationScreen extends Component {
     await axios.post(DataAccess.BaseUrl + DataAccess.AccessUrl+DataAccess.SignUp, {
       name: this.state.fullname,
       gender: this.state.genderPicker,
-      dob: this.state.date,
       age: this.state.age,
       phone: this.state.phoneNumber,
       username: this.state.username,
@@ -293,67 +292,16 @@ export default class RegistrationScreen extends Component {
             </Picker> */}
           </View>
           <View style={{ borderBottomColor: 'black', borderBottomWidth: 1, marginTop: heightToDp('0.1%'), width: widthToDp("80%"), marginLeft: widthToDp("8.2%") }}></View>
-          <View style={{ marginTop: heightToDp("5%"), marginLeft: widthToDp("5%"), flexDirection: 'row' }}>
-            {/* <View style={{ width: widthToDp("30%") }}>
-              <Text style={{color: '#000',fontSize: widthToDp("4.6%"),fontFamily: 'Oswald-Medium'}}>DATE OF BIRTH</Text>
-            </View>
-            <Icon
-              name="calendar"
-              size={25}
-              style={{ marginLeft: widthToDp("44%") }}
-              onPress={() => this.check()}
-            /> */}
-            <DatePicker
-              androidMode='spinner'
-              date={this.state.date}
-              mode="date"
-
-              showIcon={false}
-              // iconComponent={
-              //   <Icon
-              //   name="calendar"
-              //   size={25}
-              //   //style={{marginLeft:widthToDp("30%")}}
-              //   />
-              // }
-              placeholder="DATE OF BIRTH"
-              format="DD-MM-YYYY"
-              confirmBtnText="Confirm"
-              cancelBtnText="Cancel"
-              //onDateChange={(date) => { this.setState({ date: date }) }}
-              onDateChange={(date) => this.ageCalculator(date)}
-              customStyles={{
-                placeholderText: {
-                  fontFamily: 'Oswald-Medium',
-                  color: '#000',
-                  fontSize: widthToDp("4.5")
-                },
-                dateText: {
-                  fontFamily: 'Oswald-Medium',
-                  color: '#000',
-                  fontSize: widthToDp("4.5")
-                },
-                dateInput: {
-                  borderWidth: 0
-                },
-              }}
-            />
-            <Calendar
-              name="calendar"
-              size={25}
-              style={{ marginTop: heightToDp("1%"), marginLeft: widthToDp("42%") }}
-            />
-          </View>
-          <View style={{ borderBottomColor: 'black', borderBottomWidth: 1, marginTop: heightToDp('0.1%'), width: widthToDp("80%"), marginLeft: widthToDp("8.2%") }}></View>
-          <View style={{ marginTop: heightToDp("5%"), marginLeft: widthToDp("8%") }}>
-            {/* <FloatingLabel
+          
+          <View style={{ marginTop: heightToDp("2.5%"), marginLeft: widthToDp("8%") }}>
+            <FloatingLabel
               labelStyle={styles.labelInput}
               inputStyle={styles.input}
               style={styles.formInput}
+              keyboardType='numeric'
+              onChangeText={(text) => { this.setState({ age: text }) }}
             // onBlur={this.onBlur}
-            >{this.state.age}</FloatingLabel> */}
-            <Text style={{ fontSize: widthToDp("4.6%"), marginLeft: widthToDp("2%"), fontFamily: 'Oswald-Medium' }}>{this.state.age}</Text>
-            <View style={{ borderBottomColor: 'black', borderBottomWidth: 1, marginTop: heightToDp('0.1%'), width: widthToDp("80%"), marginLeft: widthToDp("1%") }}></View>
+            >AGE</FloatingLabel>
           </View>
           <View style={{ marginTop: heightToDp("2.5%"), marginLeft: widthToDp("8%") }}>
             <FloatingLabel
