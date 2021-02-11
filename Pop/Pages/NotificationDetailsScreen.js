@@ -10,7 +10,7 @@ import tts from 'react-native-tts'
 
 export default class NotificationDetailsScreen extends Component {
     speak = () => {
-        tts.setDefaultLanguage('hu-HU')
+        
         tts.speak("this is the body of notification and it will contain the details of the notification")
     }
     render() {

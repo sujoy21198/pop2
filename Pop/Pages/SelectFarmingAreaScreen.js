@@ -12,6 +12,81 @@ import Icon3 from 'react-native-vector-icons/EvilIcons'
 
 
 export default class SelectFarmingAreaScreen extends Component {
+
+    constructor(props){
+        super(props)
+        this.state={
+            landType:'',
+            vertical:'',
+            horizontal:'',
+            verticalCal:'',
+            horizontalCal:'',
+            farmingAreaInSquareFeet : '',
+            farmingAreaInDecimal : '',
+            productionInKg : '',
+            expense : '',
+            totalIncomeFromCrop : ''
+        }
+        this.state.landType = this.props.route.params.landType
+        //alert(this.state.landType)
+    }
+
+
+    submitDimensions = () => {
+        var verticalCal
+        var horizontalCal
+        var vertical = this.state.vertical
+        var horizontal = this.state.horizontal
+
+        verticalCal = vertical * 5
+        horizontalCal = horizontal * 5
+
+        // this.setState({verticalCal : verticalCal})
+        // this.setState({horizontalCal : horizontalCal})
+        this.state.verticalCal = verticalCal
+        this.state.horizontalCal = horizontalCal
+
+        var farmingAreaInSquareFeet = verticalCal * horizontalCal
+        var farmingAreaInDecimal = parseFloat(farmingAreaInSquareFeet / 436).toFixed(2)
+
+        // this.setState({farmingAreaInSquareFeet : farmingAreaInSquareFeet})
+        // this.setState({farmingAreaInDecimal : farmingAreaInDecimal})
+
+
+        this.state.farmingAreaInSquareFeet = farmingAreaInSquareFeet
+        this.state.farmingAreaInDecimal = farmingAreaInDecimal
+
+        //10 decimal produces : 400 KG
+        var productionInKg = Math.round(40*farmingAreaInDecimal)
+
+        // this.setState({productionInKg : productionInKg})
+        this.state.productionInKg = productionInKg
+
+        //Expense / Cost of cultivation per 10 decimal of land : Rs. 2810
+        var expense = 281*farmingAreaInDecimal
+
+        // this.setState({expense : expense})
+        this.state.expense = expense
+
+        //Cost per KG : Rs. 35 (assumed)
+        var totalIncomeFromCrop = Math.round(35 * productionInKg).toFixed(2)
+
+        //this.setState({totalIncomeFromCrop : totalIncomeFromCrop})
+        this.state.totalIncomeFromCrop = totalIncomeFromCrop
+
+        this.props.navigation.navigate({
+            name: 'AnalysisScreen',
+            params: {
+                landType : this.state.landType,
+                farmingAreaInDecimal : this.state.farmingAreaInDecimal,
+                expense : this.state.expense,
+                totalIncomeFromCrop : this.state.totalIncomeFromCrop,
+                productionInKg : this.state.productionInKg,
+            }
+        })
+    }
+
+
     render() {
         return (
             <View style={{ backgroundColor: BaseColor.BackgroundColor, flex: 1 }}>
@@ -117,6 +192,8 @@ export default class SelectFarmingAreaScreen extends Component {
                                 <Input
                                     placeholder='Number of sticks'
                                     containerStyle={{ width: widthToDp("40%") }}
+                                    keyboardType='numeric'
+                                    onChangeText={(text) => this.setState({vertical:text})}
                                 />
                             </View>
 
@@ -136,13 +213,15 @@ export default class SelectFarmingAreaScreen extends Component {
                                 <Input
                                     placeholder='Number of sticks'
                                     containerStyle={{ width: widthToDp("40%") }}
+                                    keyboardType='numeric'
+                                    onChangeText={(text) => this.setState({horizontal:text})}
                                 />
                             </View>
                         </View>
 
                     </View>
                 </View>
-                <TouchableOpacity onPress={() => {}}>
+                <TouchableOpacity onPress={() => this.submitDimensions()}>
                     <View style={{ backgroundColor: BaseColor.SecondaryColor, marginTop: heightToDp("3%"), width: widthToDp("37%"), alignSelf: 'center', height: heightToDp("5%"), borderRadius: 100 }}>
                         <Text style={{ alignSelf: 'center', marginTop: heightToDp("0.4%"), fontWeight: '500', fontSize: widthToDp("5%"), fontFamily: 'Oswald-Medium' }}>SUBMIT</Text>
                     </View>

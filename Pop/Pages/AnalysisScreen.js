@@ -16,6 +16,35 @@ const data = [
 ]
 
 export default class LandTypeScreen extends Component {
+    constructor(props){
+        super(props)
+        this.state={
+            landType:'',
+            farmingAreaInDecimal : '',
+            productionInKg : '',
+            expense : '',
+            totalIncomeFromCrop : '',
+            netProfit:''
+        }
+        this.state.landType = this.props.route.params.landType
+        this.state.farmingAreaInDecimal = this.props.route.params.farmingAreaInDecimal
+        this.state.expense = this.props.route.params.expense
+        this.state.totalIncomeFromCrop = this.props.route.params.totalIncomeFromCrop
+        this.state.productionInKg = this.props.route.params.productionInKg
+
+
+        this.netProfitCalculation()
+
+    }
+
+    netProfitCalculation = () => {
+        var netProfit = this.state.totalIncomeFromCrop - this.state.expense
+        this.state.netProfit = netProfit
+    }
+
+    comingSoon = () => {
+        alert("COMING SOON")
+    }
     render() {
         return (
             <View style={{ backgroundColor: BaseColor.BackgroundColor, flex: 1 }}>
@@ -100,12 +129,12 @@ export default class LandTypeScreen extends Component {
                         <Text style={{ color: 'white', marginLeft: widthToDp("4%"), marginTop: heightToDp('1.5%'), fontSize: widthToDp("5%"),fontFamily:'Oswald-Medium' }}>COST BENEFIT ANALYSIS</Text>
                         <View style={{ backgroundColor: 'white', width: widthToDp("90%"), height: heightToDp("23.5%"), borderBottomLeftRadius: 10, borderBottomRightRadius: 10, marginTop: heightToDp("2%") }}>
                             <View style={{ flexDirection: 'row' }}>
-                                <View style={{ marginTop: heightToDp("4%"), marginLeft: widthToDp("2%") }}>
+                                <View style={{ marginTop: heightToDp("4%"), marginLeft: widthToDp("2%"), width: widthToDp("30%") }}>
                                     <Text style={{fontFamily:'Oswald-Medium'}}>LAND TYPE</Text>
-                                    <Text style={{fontFamily:'Oswald-Light'}}>Low Land</Text>
+                                    <Text style={{fontFamily:'Oswald-Light'}}>{this.state.landType}</Text>
 
                                     <Text style={{ marginTop: heightToDp("3%"),fontFamily:'Oswald-Medium' }}>AREA</Text>
-                                    <Text style={{fontFamily:'Oswald-Light'}}>Area 0.92 Decimal</Text>
+                                    <Text style={{fontFamily:'Oswald-Light'}}>Area {this.state.farmingAreaInDecimal} Decimal</Text>
                                 </View>
                                 <Image
                                     style={{ height: heightToDp("20%"), width: widthToDp("50%"), marginTop: heightToDp("2%"), marginLeft: widthToDp("7%"), borderRadius: 10 }}
@@ -119,31 +148,32 @@ export default class LandTypeScreen extends Component {
                     <View style={{ backgroundColor: BaseColor.Red, width: widthToDp("90%"), height: heightToDp("30%"), alignSelf: 'center', marginTop: heightToDp("2%"), borderRadius: 10 }}>
                         <Text style={{ color: 'white', marginLeft: widthToDp("4%"), marginTop: heightToDp('1.5%'), fontSize: widthToDp("5%"),fontFamily:'Oswald-Medium' }}>COST BENEFIT ANALYSIS</Text>
                         <View style={{ backgroundColor: 'white', width: widthToDp("90%"), height: heightToDp("32%"), borderBottomLeftRadius: 10, borderBottomRightRadius: 10, marginTop: heightToDp("2%") }}>
+                            <View style={{ flexDirection: 'row', marginLeft: widthToDp("4%"), marginTop: heightToDp('1%')}}>
+                                <Text style={{fontFamily:'Oswald-Medium',width
+                            :widthToDp("20%")}}>Description</Text>
+                                <Text style={{ marginLeft: widthToDp("50%"),fontFamily:'Oswald-Medium' }}>Amount</Text>
+                            </View>
+                            <View style={{ borderBottomColor: 'black', borderBottomWidth: 1, marginTop: heightToDp('1.5%'), width: widthToDp("90%") }}></View>
+                            <View style={{ flexDirection: 'row', marginLeft: widthToDp("4%"), marginTop: heightToDp('2%') }}>
+                                <Text style={{fontFamily:'Oswald-Medium', width: widthToDp("33%")}}>Total cost of cultivation</Text>
+                                <Text style={{ marginLeft: widthToDp("36.7%"),fontFamily:'Oswald-Medium' }}>₹ {this.state.expense}</Text>
+                            </View>
+                            <View style={{ flexDirection: 'row', marginLeft: widthToDp("4%"), marginTop: heightToDp('2%') }}>
+                                <Text style={{fontFamily:'Oswald-Medium', width: widthToDp("33%")}}>Total income from crop</Text>
+                                <Text style={{ marginLeft: widthToDp("36.7%"),fontFamily:'Oswald-Medium' }}>₹ {this.state.totalIncomeFromCrop}</Text>
+                            </View>
+                            <View style={{ flexDirection: 'row', marginLeft: widthToDp("4%"), marginTop: heightToDp('2%') }}>
+                                <Text style={{fontFamily:'Oswald-Medium', width: widthToDp("33%")}}>Production</Text>
+                                <Text style={{ marginLeft: widthToDp("36%"),fontFamily:'Oswald-Medium' }}>{this.state.productionInKg} KG</Text>
+                            </View>
+                            <View style={{ flexDirection: 'row', marginLeft: widthToDp("4%"), marginTop: heightToDp('2%') }}>
+                                <Text style={{fontFamily:'Oswald-Medium', width: widthToDp("33%")}}>Cost Per kg</Text>
+                                <Text style={{ marginLeft: widthToDp("36%"),fontFamily:'Oswald-Medium' }}>₹ 35</Text>
+                            </View>
+                            <View style={{ borderBottomColor: 'black', borderBottomWidth: 1, marginTop: heightToDp('1.5%'), width: widthToDp("90%") }}></View>
                             <View style={{ flexDirection: 'row', marginLeft: widthToDp("4%"), marginTop: heightToDp('1%') }}>
-                                <Text style={{fontFamily:'Oswald-Medium'}}>Description</Text>
-                                <Text style={{ marginLeft: widthToDp("52%"),fontFamily:'Oswald-Medium' }}>Amount</Text>
-                            </View>
-                            <View style={{ borderBottomColor: 'black', borderBottomWidth: 1, marginTop: heightToDp('1.5%'), width: widthToDp("90%") }}></View>
-                            <View style={{ flexDirection: 'row', marginLeft: widthToDp("4%"), marginTop: heightToDp('2%') }}>
-                                <Text style={{fontFamily:'Oswald-Medium'}}>Total cost of cultivation</Text>
-                                <Text style={{ marginLeft: widthToDp("35%"),fontFamily:'Oswald-Medium' }}>Amount</Text>
-                            </View>
-                            <View style={{ flexDirection: 'row', marginLeft: widthToDp("4%"), marginTop: heightToDp('2%') }}>
-                                <Text style={{fontFamily:'Oswald-Medium'}}>Total income from crop</Text>
-                                <Text style={{ marginLeft: widthToDp("36%"),fontFamily:'Oswald-Medium' }}>Amount</Text>
-                            </View>
-                            <View style={{ flexDirection: 'row', marginLeft: widthToDp("4%"), marginTop: heightToDp('2%') }}>
-                                <Text style={{fontFamily:'Oswald-Medium'}}>Production</Text>
-                                <Text style={{ marginLeft: widthToDp("52%"),fontFamily:'Oswald-Medium' }}>Amount</Text>
-                            </View>
-                            <View style={{ flexDirection: 'row', marginLeft: widthToDp("4%"), marginTop: heightToDp('2%') }}>
-                                <Text style={{fontFamily:'Oswald-Medium'}}>Cost Per kg</Text>
-                                <Text style={{ marginLeft: widthToDp("51%"),fontFamily:'Oswald-Medium' }}>Amount</Text>
-                            </View>
-                            <View style={{ borderBottomColor: 'black', borderBottomWidth: 1, marginTop: heightToDp('1.5%'), width: widthToDp("90%") }}></View>
-                            <View style={{ flexDirection: 'row', marginLeft: widthToDp("4%"), marginTop: heightToDp('2%') }}>
-                                <Text style={{fontSize: widthToDp("6%"),fontFamily:'Oswald-Bold' }}>Net Profit</Text>
-                                <Text style={{ marginLeft: widthToDp("40%"), fontWeight: 'bold', fontSize: widthToDp("6%"),fontFamily:'Oswald-Bold' }}>Amount</Text>
+                                <Text style={{fontSize: widthToDp("6%"),fontFamily:'Oswald-Bold', width: widthToDp("33%") }}>Net Profit</Text>
+                                <Text style={{ marginLeft: widthToDp("25%"), fontWeight: 'bold', fontSize: widthToDp("6%"),fontFamily:'Oswald-Bold' }}>₹ {this.state.netProfit}</Text>
                             </View>
                         </View>
                     </View>
@@ -151,12 +181,12 @@ export default class LandTypeScreen extends Component {
                 </ScrollView>
                 <View style={{ height: heightToDp("10%") }}>
                     <View style={{ flexDirection: 'row' }}>
-                        <TouchableOpacity>
+                        <TouchableOpacity onPress={() => this.props.navigation.goBack()}>
                             <View style={{ backgroundColor: "#fff", height: heightToDp("6%"), width: widthToDp("30%"), borderRadius: 100, marginLeft: widthToDp("20%"), marginTop: heightToDp("2%") }}>
                                 <Text style={{ fontSize: widthToDp("4%"), color: "#000", marginTop: heightToDp("1.4%"), alignSelf: 'center',fontFamily:'Oswald-Medium' }}>CANCEL</Text>
                             </View>
                         </TouchableOpacity>
-                        <TouchableOpacity onPress={() => this.props.navigation.navigate('StepOneScreen')}>
+                        <TouchableOpacity onPress={() => this.comingSoon()}>
                             <View style={{ backgroundColor: "#fff", height: heightToDp("6%"), width: widthToDp("30%"), borderRadius: 100, marginLeft: widthToDp("2%"), marginTop: heightToDp("2%") }}>
                                 <Text style={{ fontSize: widthToDp("4%"), color: "#000", marginTop: heightToDp("1.4%"), alignSelf: 'center' ,fontFamily:'Oswald-Medium'}}>DONE</Text>
                             </View>

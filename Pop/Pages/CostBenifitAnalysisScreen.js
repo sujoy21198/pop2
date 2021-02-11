@@ -15,7 +15,7 @@ const data = [
     { name: 'LOW LAND', code: 'https://www.biggovernment.news/wp-content/uploads/sites/59/2017/06/farmer-plow-field.jpg' }
 ]
 
-export default class LandTypeScreen extends Component {
+export default class CostBenifitAnalysisScreen extends Component {
     render() {
         return (
             <View style={{ backgroundColor: BaseColor.BackgroundColor, flex: 1 }}>
