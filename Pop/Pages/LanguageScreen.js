@@ -33,7 +33,7 @@ export default class LanguageScreen extends Component {
         let token = await AsyncStorage.getItem('token')
         let type = await AsyncStorage.getItem('type')
         console.log(token+" this is token ")
-        if(token){
+        if(value){
             this.props.navigation.reset({
                 index:0,
                 routes:[{name:"DashBoardScreen"}]

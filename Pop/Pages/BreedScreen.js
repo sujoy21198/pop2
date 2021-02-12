@@ -10,6 +10,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import base64 from 'react-native-base64'
 import axios from 'axios'
 import DataAccess from '../Core/DataAccess'
+import CustomIndicator from '../Core/CustomIndicator'
 
 export default class BreedScreen extends Component {
 
@@ -17,9 +18,12 @@ export default class BreedScreen extends Component {
         super(props)
         this.state={
             breed:[],
-            _id:''
+            _id:'',
+            isLoading:false,
+            name:''
         }
         this.state._id = this.props.route.params._id
+        this.state.name = this.props.route.params.name
         //alert(this.state._id)
     }
     componentDidMount(){
@@ -27,6 +31,8 @@ export default class BreedScreen extends Component {
     }
 
     loadLiveStocks = async() => {
+        this.setState({isLoading:true})
+        var load = true
         var username = await AsyncStorage.getItem('username')
         var token = await AsyncStorage.getItem('token')
         var encodedUsername = base64.encode(username)
@@ -52,6 +58,9 @@ export default class BreedScreen extends Component {
         }).then(function(response){
             //console.log(response.data.data)
             cropsArray = response.data.data
+            if(response.data.status === 1){
+                load = false
+            }
             // console.log(cropsArray)
             // var id = cropsArray
             // console.log(id)
@@ -60,13 +69,19 @@ export default class BreedScreen extends Component {
             console.log(error.message)
         })
 
+        if(load === false){
+            this.setState({isLoading:false})
+        }
+
         this.setState({
             breed: cropsArray
         })
     }
     
     navigationController = (data) => {
-        alert(data)
+        this.props.navigation.navigate({
+            name: 'BreedDescriptionScreen'
+        })
     }
     render() {
         var breedArray = []
@@ -147,23 +162,10 @@ export default class BreedScreen extends Component {
                     </TouchableOpacity>
                 </View>
                 <View style={{ borderBottomColor: BaseColor.Stroke, borderBottomWidth: 1, marginTop: heightToDp('1.5%'), width: widthToDp("100%") }}></View>
-                <Text style={{marginLeft:widthToDp("3%"),marginTop:heightToDp("2%"),fontSize:widthToDp("7%"),fontFamily:'Oswald-Medium'}}>LIVESTOCK</Text>
-                {/* <View style={{ flexDirection: 'row', marginTop: heightToDp("5%") }}>
-                    
-                    <Text style={{ marginTop: heightToDp("2%"), marginLeft: widthToDp("5%") }}>ENGLISH</Text>
-                    <View style={{ height: heightToDp("5%"), width: 1, backgroundColor: '#909090', marginTop: heightToDp("1%"), marginLeft: widthToDp("1%") }}></View>
-                    <Text style={{ marginTop: heightToDp("2%"), marginLeft: widthToDp("1%") }}>हिन्दी</Text>
-                    <View style={{ height: heightToDp("5%"), width: 1, backgroundColor: '#909090', marginTop: heightToDp("1%"), marginLeft: widthToDp("1%") }}></View>
-                    <Text style={{ marginTop: heightToDp("2%"), marginLeft: widthToDp("1%") }}>ʤʌgʌr</Text>
-                    <View style={{ height: heightToDp("5%"), width: 1, backgroundColor: '#909090', marginTop: heightToDp("1%"), marginLeft: widthToDp("1%") }}></View>
-                    <Text style={{ marginTop: heightToDp("2%"), marginLeft: widthToDp("1%") }}>ଓଡ଼ିଆ</Text>
-                    <View style={{ height: heightToDp("5%"), width: 1, backgroundColor: '#909090', marginTop: heightToDp("1%"), marginLeft: widthToDp("1%") }}></View>
-                    <Text style={{ marginTop: heightToDp("2%"), marginLeft: widthToDp("1%") }}>ᱥᱟᱱᱛᱟᱲᱤ</Text>
-                </View> */}
-                {/* <Image
-                style={{width:30,height:30}}
-                source={{uri:'https://upload.wikimedia.org/wikipedia/commons/4/48/Basketball.jpeg'}}
-                /> */}
+                <Text style={{marginLeft:widthToDp("3%"),marginTop:heightToDp("2%"),fontSize:widthToDp("7%"),fontFamily:'Oswald-Medium'}}>{(this.state.name).toUpperCase()} - SELECT BREED TYPE</Text>
+                {
+                    this.state.isLoading ? <View style={{justifyContent:'center',marginTop:heightToDp("20%")}}><CustomIndicator IsLoading={this.state.isLoading} /></View> : null
+                }
                 <View>
                     <FlatGrid
                         style={{ marginTop: heightToDp("1%"), marginBottom: heightToDp("74%") }}

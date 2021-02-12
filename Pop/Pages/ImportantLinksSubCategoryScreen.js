@@ -13,6 +13,8 @@ import DataAccess from '../Core/DataAccess'
 import CustomIndicator from '../Core/CustomIndicator'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
+const Sound = require('react-native-sound')
+
 
 const data = [
     { name: 'HIGH LAND', code: 'https://shramajeewiki.com/images/English/00214136.jpg' },
@@ -21,6 +23,8 @@ const data = [
 ]
 
 export default class ImportantLinksSubCategoryScreen extends Component {
+
+    sound = new Sound('http://commondatastorage.googleapis.com/codeskulptor-assets/jump.ogg')
 
     constructor(props){
         super(props)
@@ -89,7 +93,8 @@ export default class ImportantLinksSubCategoryScreen extends Component {
 
 
     speak = (data) => {
-        tts.speak(data)
+        // tts.speak(data)
+        this.sound.play()
     }
 
 

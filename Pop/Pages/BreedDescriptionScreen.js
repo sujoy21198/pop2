@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Image, TouchableOpacity } from 'react-native'
+import { View, Image, TouchableOpacity , ScrollView} from 'react-native'
 import BaseColor from '../Core/BaseTheme'
 import { Text } from 'native-base'
 import TopLogo from '../assets/TopLogo'
@@ -12,82 +12,14 @@ import axios from 'axios'
 import DataAccess from '../Core/DataAccess'
 import CustomIndicator from '../Core/CustomIndicator'
 
-export default class LiveStockScreen extends Component {
+export default class BreedDescriptionScreen extends Component {
 
-    constructor(props){
-        super(props)
-        this.state={
-            livestocks:[],
-            isLoading:false
-        }
-    }
-    componentDidMount(){
-        this.loadLiveStocks()
-    }
-
-    loadLiveStocks = async() => {
-        this.setState({isLoading:true})
-        var load = true
-        var username = await AsyncStorage.getItem('username')
-        var token = await AsyncStorage.getItem('token')
-        var encodedUsername = base64.encode(username)
-        var cropsArray = []
-        //console.log(token)
-        // await axios.get(DataAccess.BaseUrl+DataAccess.Crops,{
-        //     headers:{
-        //         'Content-type': 'application/json',
-        //         'X-Information': this.state.encodedUsername,
-        //         'Authorization': 'POP '+ this.state.token
-        //     }
-        // }).then(function(response){
-        //     console.log(response.data)
-        // }).catch(function(error){
-        //     console.log(error)
-        // })
-        await axios.get(DataAccess.BaseUrl+DataAccess.AccessUrl+DataAccess.LiveStocks,{
-            headers:{
-                'Content-type': "accept",
-                'X-Information': encodedUsername,
-                'Authorization': "POP "+ token
-            }
-        }).then(function(response){
-            //console.log(response.data.data)
-            cropsArray = response.data.data
-            if(response.data.status === 1){
-                load = false
-            }
-            // console.log(cropsArray)
-            // var id = cropsArray
-            // console.log(id)
-            
-        }).catch(function(error){
-            console.log(error.message)
-        })
-
-
-        if(load === false){
-            this.setState({isLoading:false})
-        }
-
-        this.setState({
-            livestocks: cropsArray
-        })
-    }
-    
-    navigationController = (data,name) => {
-        //alert(name)
-        this.props.navigation.navigate({
-            name: 'BreedScreen',
-            params : {_id:data,
-                name : name
-            }
-        })
+    nextButton = () => {
+        alert('coming soon')
     }
     render() {
-        var livestocksArray = []
-        livestocksArray = this.state.livestocks
         return (
-            <View style={{ backgroundColor: BaseColor.BackgroundColor }}>
+            <View style={{ backgroundColor: BaseColor.BackgroundColor,flex:1 }}>
                 <View style={{ backgroundColor: 'white', width: widthToDp("100%"), height: heightToDp("13%"),flexDirection: 'row' }}>
                     <View style={{ marginTop: heightToDp("3%"), marginLeft: widthToDp("3%") }}>
                         <TopLogo />
@@ -99,6 +31,7 @@ export default class LiveStockScreen extends Component {
                         onPress={() => this.props.navigation.navigate('NotificationsScreen')}
                     />
                 </View>
+
                 <View style={{ flexDirection: 'row', marginTop: heightToDp("1%"), marginLeft: widthToDp("1%") }}>
                     <TouchableOpacity onPress={() => this.props.navigation.navigate('SigninScreen')}>
                         <View style={{ backgroundColor: BaseColor.English, width: widthToDp("30%"), height: heightToDp("6%"), marginLeft: widthToDp("2%"), borderRadius: 100, flexDirection: 'row' }}>
@@ -136,6 +69,8 @@ export default class LiveStockScreen extends Component {
                         </View>
                         </TouchableOpacity>
                 </View>
+
+
                 <View style={{ flexDirection: 'row', marginTop: heightToDp("1%"), marginLeft: widthToDp("1%"),alignSelf:'center' }}>
                 <TouchableOpacity>
                         <View style={{ backgroundColor: BaseColor.Uridia, width: widthToDp("30%"), height: heightToDp("6%"), borderRadius: 100,flexDirection:'row' }}>
@@ -162,29 +97,34 @@ export default class LiveStockScreen extends Component {
                     </TouchableOpacity>
                 </View>
                 <View style={{ borderBottomColor: BaseColor.Stroke, borderBottomWidth: 1, marginTop: heightToDp('1.5%'), width: widthToDp("100%") }}></View>
-                <Text style={{marginLeft:widthToDp("3%"),marginTop:heightToDp("2%"),fontSize:widthToDp("7%"),fontFamily:'Oswald-Medium'}}>LIVESTOCK</Text>
-                {
-                    this.state.isLoading ? <View style={{justifyContent:'center',marginTop:heightToDp("20%")}}><CustomIndicator IsLoading={this.state.isLoading} /></View> : null
-                }
-                <View>
-                    <FlatGrid
-                        style={{ marginTop: heightToDp("1%"), marginBottom: heightToDp("74%") }}
-                        bounces={true}
-                        itemDimension={130}
-                        data={Object.values(livestocksArray)}
-                        bouncesZoom={true}
-                        renderItem={({ item }) => (
-                            <TouchableOpacity onPress={() => this.navigationController(item._id , item.name)}>
-                                <View style={{backgroundColor:BaseColor.Red,width:widthToDp("47%"),height:heightToDp("30%"), elevation: 10, borderRadius: 10}}>
-                                    <Text style={{color: "#fff", fontSize: widthToDp("5%"),marginLeft:widthToDp("5%"), marginTop: heightToDp("0.4%"),fontFamily:'Oswald-Medium'}}>{(item.name).toUpperCase()}</Text>
-                                    <Image
-                                style={{ width: widthToDp("47%"), height: heightToDp("25%") ,borderBottomLeftRadius:10,borderBottomRightRadius:10, marginTop: heightToDp("1%")}}
-                                source={{ uri: DataAccess.BaseUrl+DataAccess.CropImage+item.imageFile}}
-                                />
-                                </View>
-                            </TouchableOpacity>
-                        )}
-                    />
+                <Text style={{marginLeft:widthToDp("3%"),marginTop:heightToDp("2%"),fontSize:widthToDp("7%"),fontFamily:'Oswald-Medium'}}>BREED</Text>
+                <ScrollView>
+                    <View style={{backgroundColor:BaseColor.Red,height:heightToDp("60%"),alignSelf:'center',width:widthToDp("90%"),borderRadius:10, marginTop: heightToDp('1.5%')}}>
+                    <Text style={{color: "#fff", fontSize: widthToDp("5%"),marginLeft:widthToDp("5%"), marginTop: heightToDp("1%"),fontFamily:'Oswald-Medium'}}>BLACK BENGAL GOAT</Text>
+                        <View style={{backgroundColor:"white",height:heightToDp("54.5%"),alignSelf:'center',width:widthToDp("90%"), marginTop: heightToDp('2%'),borderBottomLeftRadius:10,borderBottomRightRadius:10}}>
+                            <Image
+                            source={{uri:'https://morningchores.com/wp-content/uploads/2019/08/Black-Bengal-Goat-Breed-Info-Characteristics-Breeding-and-Care-FI-1.jpg'}}
+                            style={{height:heightToDp("15%"),width:widthToDp("80%"),alignSelf:'center',marginTop:heightToDp("1%"),borderRadius:10}}
+                            />
+                            <View style={{flexDirection:'row'}}>
+                            <View style={{width:widthToDp("23%"),marginLeft:widthToDp("5%"), marginTop: heightToDp("1%")}}>
+                                <Text style={{fontFamily:'Oswald-Medium',fontSize: widthToDp("4%")}}>DESCRIPTION</Text>
+                            </View>
+                            <View style={{width:widthToDp("23%"),marginLeft:widthToDp("40%"), marginTop: heightToDp("1%")}}>
+                                <Text style={{fontFamily:'Oswald-Medium',fontSize: widthToDp("4%")}}>RATE BY %</Text>
+                            </View>
+                            </View>
+                            
+                        </View>
+                    </View>
+                    <View style={{ marginTop: heightToDp("10%") }}></View>
+                </ScrollView>
+                <View style={{ height: heightToDp("10%") }}>
+                        <TouchableOpacity onPress={() => this.nextButton()}>
+                            <View style={{ backgroundColor: "#fff", height: heightToDp("6%"), width: widthToDp("30%"), borderRadius: 100, alignSelf:'center', marginTop: heightToDp("2%") }}>
+                                <Text style={{ fontSize: widthToDp("4%"), color: "#000", marginTop: heightToDp("1.3%"), alignSelf: 'center',fontFamily:'Oswald-Medium' }}>NEXT</Text>
+                            </View>
+                        </TouchableOpacity>
                 </View>
             </View>
         );
