@@ -28,7 +28,12 @@ export default class LanguageScreen extends Component {
 
     checkSession = async() => {
         let value = await AsyncStorage.getItem('_id')
-        if(value){
+        let username = await AsyncStorage.getItem('username')
+        let name = await AsyncStorage.getItem('name')
+        let token = await AsyncStorage.getItem('token')
+        let type = await AsyncStorage.getItem('type')
+        console.log(token+" this is token ")
+        if(token){
             this.props.navigation.reset({
                 index:0,
                 routes:[{name:"DashBoardScreen"}]

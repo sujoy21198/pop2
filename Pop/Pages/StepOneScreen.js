@@ -6,16 +6,95 @@ import TopLogo from '../assets/TopLogo'
 import { widthToDp, heightToDp } from '../Responsive'
 import { FlatGrid, SectionGrid } from 'react-native-super-grid'
 import Icon from 'react-native-vector-icons/FontAwesome'
+import axios from 'axios'
+import DataAccess from '../Core/DataAccess'
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import base64 from 'react-native-base64'
 
-
-
-const data = [
-    { name: 'HIGH LAND', code: 'https://shramajeewiki.com/images/English/00214136.jpg' },
-    { name: 'MEDIUM LAND', code: 'https://timesofindia.indiatimes.com/thumb/msid-60012970,imgsize-2640154,width-400,resizemode-4/60012970.jpg' },
-    { name: 'LOW LAND', code: 'https://www.biggovernment.news/wp-content/uploads/sites/59/2017/06/farmer-plow-field.jpg' }
-]
 
 export default class StepOneScreen extends Component {
+
+    constructor(props){
+        super(props)
+        this.state={
+            _id:'',
+            count: '',
+            steps: [],
+            name:'',
+            image:'',
+            materialName:'',
+            qty:'',
+            stepCounter:1
+        }
+        this.state._id = this.props.route.params._id
+        this.state.count = this.props.route.params.count
+        //alert(this.state._id)
+    }
+    componentDidMount(){
+        this.getSteps()
+    }
+
+    getSteps = async() => {
+        var username = await AsyncStorage.getItem('username')
+        var token = await AsyncStorage.getItem('token')
+        var encodedUsername = base64.encode(username)
+        var steps = []
+        var name;
+        var image;
+        var materialName,qty;
+        var check = false
+        await axios.get(DataAccess.BaseUrl + DataAccess.AccessUrl +'crop/steps/materials/'+this.state._id+'/'+this.state.count, {
+            headers: {
+                'Content-type': "accept",
+                'X-Information': encodedUsername,
+                'Authorization': "POP " + token
+            }
+        }).then(function (response) {
+            if(!response.data.data){
+                return check=true
+            }
+            //console.log(response.data.data.qty)
+            steps = response.data.data.stepData
+            name = steps.map((i) => i.name)
+            image = steps.map((i) => i.imageFile)
+            materialName = response.data.data.materialName
+            qty = response.data.data.qty
+            
+            //console.log("steps "+ steps.map((i) => i.name))
+            // if(response.data.status === 1){
+            //     load = false
+            // }
+            // console.log(cropsArray)
+            // var id = cropsArray
+            // console.log(id)
+
+        }).catch(function (error) {
+            console.log(error.message)
+        })
+
+        if(check === true){
+            alert('No more steps available the next features are Coming soon')
+            this.props.navigation.navigate({
+                name: 'DashBoardScreen'
+            })
+        }
+        this.setState({name:name})
+        this.setState({image : image})
+        this.setState({materialName : materialName})
+        this.setState({qty : qty})
+
+    }
+
+
+    increaseCount = () => {
+        var stepCounter = this.state.stepCounter
+        this.setState({stepCounter : stepCounter+1})
+        this.state.count = this.state.count+1
+        this.getSteps()
+        
+        
+    }
+
     render() {
         return (
             <View style={{ backgroundColor: BaseColor.BackgroundColor, flex: 1 }}>
@@ -93,7 +172,7 @@ export default class StepOneScreen extends Component {
                     </TouchableOpacity>
                 </View>
                 <View style={{ borderBottomColor: BaseColor.Stroke, borderBottomWidth: 1, marginTop: heightToDp('1.5%'), width: widthToDp("100%") }}></View>
-                <Text style={{fontSize:widthToDp("6%"),marginLeft:widthToDp("3%"),marginTop:heightToDp("1%"),fontFamily:'Oswald-Medium'}}>STEP - 01/08</Text>
+                <Text style={{fontSize:widthToDp("6%"),marginLeft:widthToDp("3%"),marginTop:heightToDp("1%"),fontFamily:'Oswald-Medium'}}>STEP - 0{this.state.stepCounter}/08</Text>
                 <ScrollView>
                     <View style={{ backgroundColor: BaseColor.Red, width: widthToDp("90%"), height: heightToDp("26%"), alignSelf: 'center', marginTop: heightToDp("2%"), borderRadius: 10 }}>
                         <Text style={{ color: 'white', marginLeft: widthToDp("4%"), marginTop: heightToDp('1.5%'), fontSize: widthToDp("5%"),fontFamily:'Oswald-Medium' }}>PLOUGHING OF LAND</Text>
@@ -101,7 +180,7 @@ export default class StepOneScreen extends Component {
                             <View>
                                 <Image
                                     style={{ height: heightToDp("20%"), width: widthToDp("90%"), borderBottomLeftRadius: 10, borderBottomRightRadius:10 }}
-                                    source={{ uri: 'https://travel.paintedstork.com/blog/wp-content/uploads/2015/04/farmer-plough.jpg' }}
+                                    source={{ uri: 'http://161.35.122.165:3020/app-property/uploads/crops/steps/'+ this.state.image }}
                                 />
                             </View>
                         </View>
@@ -111,7 +190,7 @@ export default class StepOneScreen extends Component {
                     <View style={{ backgroundColor: BaseColor.Red, width: widthToDp("90%"), height: heightToDp("13%"), alignSelf: 'center', marginTop: heightToDp("2%"), borderRadius: 10 }}>
                         <Text style={{ color: 'white', marginLeft: widthToDp("4%"), marginTop: heightToDp('1.5%'), fontSize: widthToDp("5%"),fontFamily:'Oswald-Medium' }}>DESCRIPTION</Text>
                         <View style={{ backgroundColor: 'white', width: widthToDp("90%"), height: heightToDp("7%"), borderBottomLeftRadius: 10, borderBottomRightRadius: 10, marginTop: heightToDp("2%") }}>
-                            <Text style={{marginLeft:widthToDp("2%"),marginTop:heightToDp("1%"),fontFamily:'Oswald-Light'}}>Plough land 2-3 times for main field preparation</Text>
+                            <Text style={{marginLeft:widthToDp("2%"),marginTop:heightToDp("1%"),fontFamily:'Oswald-Light'}}>{this.state.name}</Text>
                         </View>
                     </View>
 
@@ -141,8 +220,8 @@ export default class StepOneScreen extends Component {
                                 <Text style={{color:BaseColor.Red,fontFamily:'Oswald-Medium',marginLeft:widthToDp("50%")}}>Amount</Text>
                             </View>
                             <View style={{flexDirection:'row',marginLeft:widthToDp("3%"),marginTop:heightToDp("2%")}}>
-                                <Text style={{fontFamily:'Oswald-Medium'}}>Ploughing with oxen</Text>
-                                <Text style={{marginLeft:widthToDp("38%"),fontFamily:'Oswald-Medium'}}>Amount</Text>
+                                <Text style={{fontFamily:'Oswald-Medium', width: widthToDp("30%")}}>{this.state.materialName}</Text>
+                                <Text style={{marginLeft:widthToDp("40%"),fontFamily:'Oswald-Medium'}}>₹ {this.state.qty}</Text>
                             </View>
                         </View>
                     </View>
@@ -150,9 +229,9 @@ export default class StepOneScreen extends Component {
                     <View style={{ marginBottom: heightToDp("10%") }}></View>
                 </ScrollView>
                 <View style={{ height: heightToDp("10%") }}>
-                        <TouchableOpacity onPress={() => this.props.navigation.navigate('StepTwoScreen')}>
+                        <TouchableOpacity onPress={() => this.increaseCount()}>
                             <View style={{ backgroundColor: "#fff", height: heightToDp("6%"), width: widthToDp("30%"), borderRadius: 100, alignSelf:'center', marginTop: heightToDp("2%") }}>
-                                <Text style={{ fontSize: widthToDp("4%"), color: "#000", marginTop: heightToDp("1.7%"), alignSelf: 'center',fontFamily:'Oswald-Medium' }}>NEXT</Text>
+                                <Text style={{ fontSize: widthToDp("4%"), color: "#000", marginTop: heightToDp("1.3%"), alignSelf: 'center',fontFamily:'Oswald-Medium' }}>NEXT</Text>
                             </View>
                         </TouchableOpacity>
                 </View>

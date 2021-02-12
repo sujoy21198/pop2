@@ -24,13 +24,15 @@ export default class LandTypeScreen extends Component {
             productionInKg : '',
             expense : '',
             totalIncomeFromCrop : '',
-            netProfit:''
+            netProfit:'',
+            _id:''
         }
         this.state.landType = this.props.route.params.landType
         this.state.farmingAreaInDecimal = this.props.route.params.farmingAreaInDecimal
         this.state.expense = this.props.route.params.expense
         this.state.totalIncomeFromCrop = this.props.route.params.totalIncomeFromCrop
         this.state.productionInKg = this.props.route.params.productionInKg
+        this.state._id = this.props.route.params._id
 
 
         this.netProfitCalculation()
@@ -43,7 +45,14 @@ export default class LandTypeScreen extends Component {
     }
 
     comingSoon = () => {
-        alert("COMING SOON")
+        // alert(this.state._id)
+        this.props.navigation.navigate({
+            name: 'StepOneScreen',
+            params: {
+                _id : this.state._id,
+                count: 0
+            }
+        })
     }
     render() {
         return (
@@ -147,7 +156,7 @@ export default class LandTypeScreen extends Component {
 
                     <View style={{ backgroundColor: BaseColor.Red, width: widthToDp("90%"), height: heightToDp("30%"), alignSelf: 'center', marginTop: heightToDp("2%"), borderRadius: 10 }}>
                         <Text style={{ color: 'white', marginLeft: widthToDp("4%"), marginTop: heightToDp('1.5%'), fontSize: widthToDp("5%"),fontFamily:'Oswald-Medium' }}>COST BENEFIT ANALYSIS</Text>
-                        <View style={{ backgroundColor: 'white', width: widthToDp("90%"), height: heightToDp("32%"), borderBottomLeftRadius: 10, borderBottomRightRadius: 10, marginTop: heightToDp("2%") }}>
+                        <View style={{ backgroundColor: 'white', width: widthToDp("90%"), height: heightToDp("45%"), borderBottomLeftRadius: 10, borderBottomRightRadius: 10, marginTop: heightToDp("2%") }}>
                             <View style={{ flexDirection: 'row', marginLeft: widthToDp("4%"), marginTop: heightToDp('1%')}}>
                                 <Text style={{fontFamily:'Oswald-Medium',width
                             :widthToDp("20%")}}>Description</Text>
@@ -156,11 +165,11 @@ export default class LandTypeScreen extends Component {
                             <View style={{ borderBottomColor: 'black', borderBottomWidth: 1, marginTop: heightToDp('1.5%'), width: widthToDp("90%") }}></View>
                             <View style={{ flexDirection: 'row', marginLeft: widthToDp("4%"), marginTop: heightToDp('2%') }}>
                                 <Text style={{fontFamily:'Oswald-Medium', width: widthToDp("33%")}}>Total cost of cultivation</Text>
-                                <Text style={{ marginLeft: widthToDp("36.7%"),fontFamily:'Oswald-Medium' }}>₹ {this.state.expense}</Text>
+                                <Text style={{ marginLeft: widthToDp("33%"),fontFamily:'Oswald-Medium' }}>₹ {this.state.expense}</Text>
                             </View>
                             <View style={{ flexDirection: 'row', marginLeft: widthToDp("4%"), marginTop: heightToDp('2%') }}>
                                 <Text style={{fontFamily:'Oswald-Medium', width: widthToDp("33%")}}>Total income from crop</Text>
-                                <Text style={{ marginLeft: widthToDp("36.7%"),fontFamily:'Oswald-Medium' }}>₹ {this.state.totalIncomeFromCrop}</Text>
+                                <Text style={{ marginLeft: widthToDp("33%"),fontFamily:'Oswald-Medium' }}>₹ {this.state.totalIncomeFromCrop}</Text>
                             </View>
                             <View style={{ flexDirection: 'row', marginLeft: widthToDp("4%"), marginTop: heightToDp('2%') }}>
                                 <Text style={{fontFamily:'Oswald-Medium', width: widthToDp("33%")}}>Production</Text>
@@ -177,7 +186,7 @@ export default class LandTypeScreen extends Component {
                             </View>
                         </View>
                     </View>
-                    <View style={{ marginBottom: heightToDp("10%") }}></View>
+                    <View style={{ marginBottom: heightToDp("30%") }}></View>
                 </ScrollView>
                 <View style={{ height: heightToDp("10%") }}>
                     <View style={{ flexDirection: 'row' }}>

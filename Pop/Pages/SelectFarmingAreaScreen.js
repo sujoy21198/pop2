@@ -25,9 +25,11 @@ export default class SelectFarmingAreaScreen extends Component {
             farmingAreaInDecimal : '',
             productionInKg : '',
             expense : '',
-            totalIncomeFromCrop : ''
+            totalIncomeFromCrop : '',
+            _id:''
         }
         this.state.landType = this.props.route.params.landType
+        this.state._id = this.props.route.params._id
         //alert(this.state.landType)
     }
 
@@ -74,6 +76,13 @@ export default class SelectFarmingAreaScreen extends Component {
         //this.setState({totalIncomeFromCrop : totalIncomeFromCrop})
         this.state.totalIncomeFromCrop = totalIncomeFromCrop
 
+
+        if(!this.state.vertical){
+            return alert("enter a value")
+        }else if(!this.state.horizontal){
+            return alert("enter a value")
+        }
+
         this.props.navigation.navigate({
             name: 'AnalysisScreen',
             params: {
@@ -82,6 +91,7 @@ export default class SelectFarmingAreaScreen extends Component {
                 expense : this.state.expense,
                 totalIncomeFromCrop : this.state.totalIncomeFromCrop,
                 productionInKg : this.state.productionInKg,
+                _id : this.state._id
             }
         })
     }
@@ -174,7 +184,7 @@ export default class SelectFarmingAreaScreen extends Component {
                         
                     </ImageBackground> */}
                     <Text style={{ color: 'white', marginLeft: widthToDp("6%"), marginTop: heightToDp("1%"), fontSize: widthToDp("5.5%"), fontFamily: 'Oswald-Light' }}>MEASURE USING 5 FEET LONG STICK</Text>
-                    <View style={{ backgroundColor: 'white', height: heightToDp("28%"), width: widthToDp("65%"), alignSelf: 'center', marginTop: heightToDp("4%"), borderRadius: 20 }}>
+                    <View style={{ backgroundColor: 'white', height: heightToDp("28%"), width: widthToDp("70%"), alignSelf: 'center', marginTop: heightToDp("4%"), borderRadius: 20 }}>
                         <View style={{ marginTop: heightToDp("5%") }}>
                             <View style={{ flexDirection: 'row' }}>
                                 <Icon2
@@ -191,7 +201,7 @@ export default class SelectFarmingAreaScreen extends Component {
                                 />
                                 <Input
                                     placeholder='Number of sticks'
-                                    containerStyle={{ width: widthToDp("40%") }}
+                                    containerStyle={{ width: widthToDp("46%") }}
                                     keyboardType='numeric'
                                     onChangeText={(text) => this.setState({vertical:text})}
                                 />
@@ -212,7 +222,7 @@ export default class SelectFarmingAreaScreen extends Component {
                                 />
                                 <Input
                                     placeholder='Number of sticks'
-                                    containerStyle={{ width: widthToDp("40%") }}
+                                    containerStyle={{ width: widthToDp("46%") }}
                                     keyboardType='numeric'
                                     onChangeText={(text) => this.setState({horizontal:text})}
                                 />

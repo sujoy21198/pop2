@@ -28,6 +28,10 @@ export default class DashBoardScreen extends Component {
             this.props.navigation.navigate({
                 name:"KnowledgeCenterScreen"
             })
+        }else if(data === 'Important Links'){
+            this.props.navigation.navigate({
+                name:"ImportantLinksScreen"
+            })
         }
     }
     render() {

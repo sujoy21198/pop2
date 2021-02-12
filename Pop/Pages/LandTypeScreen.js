@@ -17,21 +17,33 @@ const data = [
 ]
 
 export default class LandTypeScreen extends Component {
+
+
+    constructor(props){
+        super(props)
+        this.state={
+            _id : ''
+        }
+        this.state._id = this.props.route.params._id
+    }
+
+
+
     selectLandType = (data) => {
         if(data === 'HIGH LAND'){
             this.props.navigation.navigate({
                 name: 'SelectFarmingAreaScreen',
-                params : {landType:data}
+                params : {landType:data, _id:this.state._id}
             })
         }else if(data === 'MEDIUM LAND'){
             this.props.navigation.navigate({
                 name: 'SelectFarmingAreaScreen',
-                params : {landType:data}
+                params : {landType:data, _id:this.state._id}
             })
         }else if(data === 'LOW LAND'){
             this.props.navigation.navigate({
                 name: 'SelectFarmingAreaScreen',
-                params : {landType:data}
+                params : {landType:data, _id:this.state._id}
             })
         }
     }

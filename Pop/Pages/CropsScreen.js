@@ -35,18 +35,7 @@ export default class CropsScreen extends Component {
         var token = await AsyncStorage.getItem('token')
         var encodedUsername = base64.encode(username)
         var cropsArray = []
-        //console.log(token)
-        // await axios.get(DataAccess.BaseUrl+DataAccess.Crops,{
-        //     headers:{
-        //         'Content-type': 'application/json',
-        //         'X-Information': this.state.encodedUsername,
-        //         'Authorization': 'POP '+ this.state.token
-        //     }
-        // }).then(function(response){
-        //     console.log(response.data)
-        // }).catch(function(error){
-        //     console.log(error)
-        // })
+        console.log(token+ " token from crops")
         await axios.get(DataAccess.BaseUrl + DataAccess.AccessUrl + DataAccess.Crops, {
             headers: {
                 'Content-type': "accept",
@@ -74,6 +63,15 @@ export default class CropsScreen extends Component {
 
         this.setState({
             crops: cropsArray
+        })
+    }
+
+    navigateToLandScreen = (data) =>{
+        this.props.navigation.navigate({
+            name: 'LandTypeScreen',
+            params: {
+                _id : data,
+            }
         })
     }
 
@@ -170,7 +168,7 @@ export default class CropsScreen extends Component {
                         data={Object.values(cropsArray)}
                         bouncesZoom={true}
                         renderItem={({ item }) => (
-                            <TouchableOpacity onPress={() => this.props.navigation.navigate('LandTypeScreen')}>
+                            <TouchableOpacity onPress={() => this.navigateToLandScreen(item._id)}>
                                 <View style={{ backgroundColor: BaseColor.Red, width: widthToDp("47%"), height: heightToDp("30%"), elevation: 10, borderRadius: 10 }}>
                                     <Text style={{ color: "#fff", fontSize: widthToDp("5%"), marginLeft: widthToDp("5%"), marginTop: heightToDp("0.4%"), fontFamily: 'Oswald-Medium' }}>{item.name}</Text>
                                     <Image
