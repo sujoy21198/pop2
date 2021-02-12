@@ -4,8 +4,12 @@ const DataAccess = {
     SignUp: 'signup',
     SignIn: 'signin',
     Crops: 'crops',
+    CropImage: 'app-property/uploads/crops/',
     LiveStocks: 'livestocks',
-    Breeds: '/breeds/'
+    LiveStockImage : 'app-property/uploads/livestocks/',
+    Breeds: '/breeds/',
+    ImportantLinks:'important-links/',
+    ImportantLinksImage : 'app-property/uploads/important-links/',
 }
 
 export default DataAccess

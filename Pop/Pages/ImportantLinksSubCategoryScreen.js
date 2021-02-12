@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Image, TouchableOpacity, FlatList } from 'react-native'
+import { View, Image, TouchableOpacity, FlatList,Linking } from 'react-native'
 import BaseColor from '../Core/BaseTheme'
 import { Card, Text } from 'native-base'
 import TopLogo from '../assets/TopLogo'
@@ -7,55 +7,96 @@ import { widthToDp, heightToDp } from '../Responsive'
 import { FlatGrid, SectionGrid } from 'react-native-super-grid'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import tts from 'react-native-tts'
-
+import base64 from 'react-native-base64'
+import axios from 'axios'
+import DataAccess from '../Core/DataAccess'
+import CustomIndicator from '../Core/CustomIndicator'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 
 const data = [
-    { name: 'WASH', code: 'https://shramajeewiki.com/images/English/00214136.jpg' },
-    { name: 'HEALTH', code: 'https://timesofindia.indiatimes.com/thumb/msid-60012970,imgsize-2640154,width-400,resizemode-4/60012970.jpg' },
-    { name: 'COVID', code: 'https://www.biggovernment.news/wp-content/uploads/sites/59/2017/06/farmer-plow-field.jpg' },
-    { name: 'GOVT SCHEMES', code: 'https://shramajeewiki.com/images/English/00214136.jpg' }
+    { name: 'HIGH LAND', code: 'https://shramajeewiki.com/images/English/00214136.jpg' },
+    { name: 'MEDIUM LAND', code: 'https://timesofindia.indiatimes.com/thumb/msid-60012970,imgsize-2640154,width-400,resizemode-4/60012970.jpg' },
+    { name: 'LOW LAND', code: 'https://www.biggovernment.news/wp-content/uploads/sites/59/2017/06/farmer-plow-field.jpg' }
 ]
 
-export default class ImportantLinksScreen extends Component {
+export default class ImportantLinksSubCategoryScreen extends Component {
 
-
-   
-
-
-    selectLandType = (data) => {
-        if(data === 'WASH'){
-            this.props.navigation.navigate({
-                name: 'ImportantLinksSubCategoryScreen',
-                params : {value: 0}
-            })
-        }else if(data === 'HEALTH'){
-            this.props.navigation.navigate({
-                name: 'ImportantLinksSubCategoryScreen',
-                params : {value: 1}
-            })
-        }else if(data === 'COVID'){
-            this.props.navigation.navigate({
-                name: 'ImportantLinksSubCategoryScreen',
-                params : {value: 2}
-            })
-        }else if(data === 'GOVT SCHEMES'){
-            this.props.navigation.navigate({
-                name: 'ImportantLinksSubCategoryScreen',
-                params : {value: 3}
-            })
+    constructor(props){
+        super(props)
+        this.state={
+            value : '',
+            title:'',
+            data: [],
+            isLoading : false
         }
+        this.state.value = this.props.route.params.value
+        if(this.state.value === 0){
+            this.state.title ="WASH"
+        }else if(this.state.value === 1){
+            this.state.title = "HEALTH"
+        }else if(this.state.value === 2){
+            this.state.title = "COVID-19"
+        }else if(this.state.value === 3){
+            this.state.title = "GOV SCHEMES & ENTITLEMENTS"
+        }
+        //alert(this.state.value)
     }
+
+    componentDidMount(){
+        this.getDetails()
+    }
+
+
+    getDetails = async() =>{
+        this.setState({isLoading:true})
+        var load = true
+        var username = await AsyncStorage.getItem('username')
+        var token = await AsyncStorage.getItem('token')
+        var encodedUsername = base64.encode(username)
+        var valueArray = []
+
+        await axios.get(DataAccess.BaseUrl + DataAccess.AccessUrl + DataAccess.ImportantLinks+this.state.value, {
+            headers: {
+                'Content-type': "accept",
+                'X-Information': encodedUsername,
+                'Authorization': "POP " + token
+            }
+        }).then(function (response) {
+            if(response.data.status === 1){
+                load = false
+            }
+            //console.log(response.data.status)
+            valueArray = response.data.data
+        }).catch(function (error) {
+            console.log(error.message)
+        })
+
+
+        if(load === false){
+            this.setState({isLoading:false})
+        }
+        this.setState({data : valueArray})
+        //console.log(this.state.data)
+
+    }
+
+    openLink = (link) => {
+        Linking.openURL(link)
+    }
+
+
+
+
     speak = (data) => {
-        if(data === 'HIGH LAND'){
-            tts.speak('HIGH LAND')
-        }else if(data === 'MEDIUM LAND'){
-            tts.speak('MEDIUM LAND')
-        }else if(data === 'LOW LAND'){
-            tts.speak('LOW LAND')
-        }
+        tts.speak(data)
     }
+
+
     render() {
+        var valueArray = []
+        valueArray = this.state.data
+        //console.log(valueArray)
         return (
             <View style={{ backgroundColor: BaseColor.BackgroundColor }}>
                 <View style={{ backgroundColor: 'white', width: widthToDp("100%"), height: heightToDp("13%"), flexDirection: 'row' }}>
@@ -133,28 +174,40 @@ export default class ImportantLinksScreen extends Component {
                     </TouchableOpacity>
                 </View>
                 <View style={{ borderBottomColor: BaseColor.Stroke, borderBottomWidth: 1, marginTop: heightToDp('1.5%'), width: widthToDp("100%") }}></View>
-                <Text style={{ marginLeft: widthToDp("3%"), marginTop: heightToDp("2%"), fontSize: widthToDp("7%"), fontFamily: 'Oswald-Medium' }}>IMPORTANT LINKS</Text>
-                
+                <Text style={{ marginLeft: widthToDp("3%"), marginTop: heightToDp("2%"), fontSize: widthToDp("7%"), fontFamily: 'Oswald-Medium' }}>{this.state.title}</Text>
+                {
+                    this.state.isLoading ? <View style={{justifyContent:'center',marginTop:heightToDp("20%")}}><CustomIndicator IsLoading={this.state.isLoading} /></View> : null
+                }
                 <View>
                    
-                <FlatGrid
-                        style={{ marginTop: heightToDp("2%"), marginBottom: heightToDp("75%") }}
-                        bounces={true}
-                        itemDimension={130}
-                        data={data}
-                        bouncesZoom={true}
-                        renderItem={({ item }) => (
-                            <TouchableOpacity onPress={() => this.selectLandType(item.name)}>
-                                <View style={{ backgroundColor: BaseColor.Red, width: widthToDp("47%"), height: heightToDp("30%"), elevation: 10, borderRadius: 10 }}>
-                                    <Text style={{ color: "#fff", fontSize: widthToDp("5%"), marginLeft: widthToDp("5%"), marginTop: heightToDp("0.4%"), fontFamily: 'Oswald-Medium' }}>{item.name}</Text>
-                                    <Image
-                                        style={{ width: widthToDp("47%"), height: heightToDp("25%"), borderBottomLeftRadius: 10, borderBottomRightRadius: 10, marginTop: heightToDp("1%") }}
-                                        source={{ uri: item.code }}
-                                    />
-                                </View>
+                    <FlatList
+                        data={Object.values(valueArray)}
+                        style={{ marginBottom: heightToDp("74%") }}
+                        renderItem={({ item }) =>
 
-                            </TouchableOpacity>
-                        )}
+                            <Card style={{ width: widthToDp("94%"), marginLeft: widthToDp("3%"), height: heightToDp("30%"), marginBottom: heightToDp("1%"), borderRadius: 20, backgroundColor: BaseColor.Red }}>
+                                <View style={{ flexDirection: 'row' }}>
+                                    <View style={{ width: widthToDp("45%") }}>
+                                        <Text style={{ color: 'white', marginLeft: widthToDp("6%"), marginTop: heightToDp("1%"), fontSize: widthToDp("5%"), fontFamily: 'Oswald-Medium' }}>{(item.category).toUpperCase()}</Text>
+                                    </View>
+                                    <TouchableOpacity onPress={() => this.speak(item.category)}>
+                                    <Icon
+                                        name="microphone"
+                                        size={23}
+                                        style={{ color: 'white', marginTop: heightToDp("2%"), marginLeft: widthToDp("36%") }}
+                                    />
+                                    </TouchableOpacity>
+                                    
+                                </View>
+                                <TouchableOpacity onPress={() => this.openLink(item.link)}>
+                                    <Image
+                                        style={{ width: widthToDp("93.7%"), height: heightToDp("24%"), marginLeft: widthToDp("0%"), borderRadius: 2, marginTop: heightToDp("1%"), borderBottomLeftRadius: 20, borderBottomRightRadius: 20 }}
+                                        source={{ uri: DataAccess.BaseUrl+DataAccess.ImportantLinksImage + item.image }}
+                                    />
+                                </TouchableOpacity>
+                            </Card>
+
+                        }
                     />
                 </View>
             </View>
