@@ -64,7 +64,7 @@ export default class LanguageScreen extends Component {
                             />
                         </View>
                         </TouchableOpacity>
-                        <TouchableOpacity onPress={() => this.props.navigation.navigate('IncomeScreen')}>
+                        <TouchableOpacity >
                         <View style={{ backgroundColor: BaseColor.Hindi, width: widthToDp("30%"), height: heightToDp("6%"), marginLeft: widthToDp("10%"), borderRadius: 100,flexDirection:'row' }}>
                             <Text style={{ color: '#fff', marginTop: heightToDp("1.7%"), marginLeft:widthToDp("5%"),fontWeight:'bold',fontSize:widthToDp("4.3%") }}>हिन्दी</Text>
                             <Icon
@@ -113,32 +113,6 @@ export default class LanguageScreen extends Component {
                     </View>
                     </TouchableOpacity>
                 </View>
-                {/* <View style={{marginTop: heightToDp("5%")}}>
-                    <Text style={{ fontSize: widthToDp("7%"), alignSelf: 'center' }}>SELECT LANGUAGE</Text>
-                </View>
-                <TouchableOpacity onPress={() => this.props.navigation.navigate('RegistrationScreen')}>
-                <View style={{marginTop: heightToDp("5%")}}>
-                    <Text style={{ fontSize: widthToDp("6%"), alignSelf: 'center' }}>ENGLISH</Text>
-                </View>
-                </TouchableOpacity>
-                <View style={{borderBottomColor: 'black',borderBottomWidth: 1, marginTop:heightToDp('2.5%'),width:widthToDp("80%"),alignSelf:'center'}}></View>
-                <View style={{marginTop: heightToDp("2.5%")}}>
-                    <Text style={{ fontSize: widthToDp("6%"), alignSelf: 'center' }}>हिन्दी</Text>
-                </View>
-                <View style={{borderBottomColor: 'black',borderBottomWidth: 1, marginTop:heightToDp('2.5%'),width:widthToDp("80%"),alignSelf:'center'}}></View>
-                <View style={{marginTop: heightToDp("2.5%")}}>
-                    <Text style={{ fontSize: widthToDp("6%"), alignSelf: 'center' }}>ʤʌgʌr</Text>
-                </View>
-                <View style={{borderBottomColor: 'black',borderBottomWidth: 1, marginTop:heightToDp('2.5%'),width:widthToDp("80%"),alignSelf:'center'}}></View>
-                <View style={{marginTop: heightToDp("2.5%")}}>
-                    <Text style={{ fontSize: widthToDp("6%"), alignSelf: 'center' }}>ଓଡ଼ିଆ</Text>
-                </View>
-                <View style={{borderBottomColor: 'black',borderBottomWidth: 1, marginTop:heightToDp('2.5%'),width:widthToDp("80%"),alignSelf:'center'}}></View>
-                <View style={{marginTop: heightToDp("2.5%")}}>
-                    <Text style={{ fontSize: widthToDp("6%"), alignSelf: 'center' }}>ᱥᱟᱱᱛᱟᱲᱤ</Text>
-                </View>
-                <View style={{borderBottomColor: 'black',borderBottomWidth: 1, marginTop:heightToDp('2.5%'),width:widthToDp("80%"),alignSelf:'center'}}></View> */}
-
             </View>
         );
     }
