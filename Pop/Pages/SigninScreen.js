@@ -12,6 +12,7 @@ import axios from 'axios'
 import DataAccess from '../Core/DataAccess'
 import CustomIndicator from '../Core/CustomIndicator'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import LanguageChange from '../Core/LanguageChange'
 
 export default class SigninScreen extends Component {
     constructor(props) {
@@ -103,7 +104,7 @@ export default class SigninScreen extends Component {
                         <Logo />
                     </View>
                     <View style={{ marginTop: heightToDp("5%") }}>
-                        <Text style={{ fontSize: widthToDp("7%"), alignSelf: 'center', fontFamily: 'Oswald-SemiBold' }}>SIGN IN</Text>
+                        <Text style={{ fontSize: widthToDp("7%"), alignSelf: 'center', fontFamily: 'Oswald-SemiBold' }}>{LanguageChange.signIn}</Text>
                     </View>
                     <View style={{ marginTop: heightToDp("2%"), marginLeft: widthToDp("10%") }}>
                         <FloatingLabel
@@ -113,7 +114,7 @@ export default class SigninScreen extends Component {
                             keyboardType='numeric'
                             onChangeText={(text) => { this.setState({ phoneNumber: text }) }}
                         // onBlur={this.onBlur}
-                        >CONTACT NUMBER</FloatingLabel>
+                        >{LanguageChange.contactNumber}</FloatingLabel>
                     </View>
                     {/* <View style={{ marginTop: heightToDp("5%"), marginLeft: widthToDp("10%") }}>
                     <Text style={{ fontSize: widthToDp("5%") }}>CONTACT NUMBER</Text>
@@ -129,7 +130,7 @@ export default class SigninScreen extends Component {
                             style={styles.formInput}
                             // onBlur={this.onBlur}
                             onChangeText={(text) => { this.setState({ username: text }) }}
-                        >USERNAME</FloatingLabel>
+                        >{LanguageChange.username}</FloatingLabel>
                     </View>
                     {/* <View style={{ borderBottomColor: 'black', borderBottomWidth: 1, marginTop: heightToDp('1.5%'), width: widthToDp("80%"), alignSelf: 'center' }}></View> */}
                     <View style={{ marginTop: heightToDp("2%"), marginLeft: widthToDp("10%"), flexDirection: 'row' }}>
@@ -141,11 +142,11 @@ export default class SigninScreen extends Component {
                             
                             onChangeText={(text) => { this.setState({ password: text }) }}
                         // onBlur={this.onBlur}
-                        >PASSWORD</FloatingLabel>
+                        >{LanguageChange.password}</FloatingLabel>
                     </View>
                     {/* <View style={{ borderBottomColor: 'black', borderBottomWidth: 1, marginTop: heightToDp('1.5%'), width: widthToDp("80%"), alignSelf: 'center' }}></View> */}
                     <View style={{ marginLeft: widthToDp("60.5%"), marginTop: heightToDp("0.5%") }}>
-                        <Text style={{ fontFamily: 'Oswald-Medium' }}>FORGOT PASSWORD</Text>
+                        <Text style={{ fontFamily: 'Oswald-Medium' }}>{LanguageChange.forgotPassword}</Text>
                     </View>
                     {
                         this.state.isLoading ? <CustomIndicator IsLoading={this.state.isLoading} /> : null
@@ -153,13 +154,13 @@ export default class SigninScreen extends Component {
                     
                     <TouchableOpacity onPress={() => this.signIn()}>
                         <View style={{ backgroundColor: BaseColor.SecondaryColor, marginTop: heightToDp("5%"), width: widthToDp("37%"), alignSelf: 'center', height: heightToDp("5%"), borderRadius: 100 }}>
-                            <Text style={{ alignSelf: 'center', marginTop: heightToDp("0.5%"), fontWeight: '500', fontSize: widthToDp("5%"), fontFamily: 'Oswald-Medium' }}>SIGN IN</Text>
+                            <Text style={{ alignSelf: 'center', marginTop: heightToDp("0.5%"), fontWeight: '500', fontSize: widthToDp("5%"), fontFamily: 'Oswald-Medium' }}>{LanguageChange.signIn}</Text>
                         </View>
                     </TouchableOpacity>
                     <View style={{ flexDirection: 'row', alignSelf: 'center', marginTop: heightToDp('1.5%') }}>
-                        <Text style={{ fontFamily: 'Oswald-Medium' }}>You don't have an account?</Text>
+                        <Text style={{ fontFamily: 'Oswald-Medium' }}>{LanguageChange.noAccount}</Text>
                         <TouchableOpacity onPress={() => this.props.navigation.navigate('RegistrationScreen')}>
-                            <Text style={{ color: BaseColor.Red, fontFamily: 'Oswald-Medium' }}> Please Sign up</Text>
+                            <Text style={{ color: BaseColor.Red, fontFamily: 'Oswald-Medium' }}> {LanguageChange.pleaseSignUp}</Text>
                         </TouchableOpacity>
                     </View>
 
@@ -167,7 +168,7 @@ export default class SigninScreen extends Component {
 
                     <TouchableOpacity onPress={() => this.props.navigation.navigate('DashBoardScreen')}>
                         <View style={{ backgroundColor: BaseColor.SecondaryColor, marginTop: heightToDp("3%"), width: widthToDp("37%"), alignSelf: 'center', height: heightToDp("5%"), borderRadius: 100 }}>
-                            <Text style={{ alignSelf: 'center', marginTop: heightToDp("0.4%"), fontWeight: '500', fontSize: widthToDp("5%"), fontFamily: 'Oswald-Medium' }}>GUEST SIGN IN</Text>
+                            <Text style={{ alignSelf: 'center', marginTop: heightToDp("0.4%"), fontWeight: '500', fontSize: widthToDp("5%"), fontFamily: 'Oswald-Medium' }}>{LanguageChange.guestSignIn}</Text>
                         </View>
                     </TouchableOpacity>
                 </View>

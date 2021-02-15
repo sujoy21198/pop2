@@ -28,7 +28,7 @@ export default class LanguageScreen extends Component {
 
     test = (value) => {
         LanguageChange.setLanguage(value)
-        this.props.navigation.navigate('NotificationDetailsScreen',{selectedLanguage : value})
+        this.props.navigation.navigate('SigninScreen',{selectedLanguage : value})
         //alert(value)
 
     }
@@ -92,7 +92,7 @@ export default class LanguageScreen extends Component {
                         })
                     } */}
                     <View style={{ flexDirection: 'row', marginTop: heightToDp("5%") }}>
-                        <TouchableOpacity onPress={() => this.props.navigation.navigate('SigninScreen')}>
+                        <TouchableOpacity onPress={() => this.test(this.state.languages[0].id)}>
                         <View style={{ backgroundColor: BaseColor.English, width: widthToDp("30%"), height: heightToDp("6%"), marginLeft: widthToDp("10%"), borderRadius: 100,flexDirection:'row' }}>
                             <Text style={{ color: '#fff', marginTop: heightToDp("1.5%"),fontFamily:'Oswald-Medium',marginLeft:widthToDp("5%") }}>{this.state.languages[0].value}</Text>
                             <Icon
@@ -128,7 +128,7 @@ export default class LanguageScreen extends Component {
                         </View>
                         </TouchableOpacity>
 
-                        <TouchableOpacity>
+                        <TouchableOpacity onPress={() => this.test(this.state.languages[3].id)}>
                         <View style={{ backgroundColor: BaseColor.Uridia, width: widthToDp("30%"), height: heightToDp("6%"), marginLeft: widthToDp("10%"), borderRadius: 100,flexDirection:'row' }}>
                             <Text style={{ color: '#fff', marginTop: heightToDp("1.7%"),marginLeft:widthToDp("4.7%"),fontWeight:'bold',fontSize:widthToDp("4.3%") }}>{this.state.languages[3].value}</Text>
                             <Icon
