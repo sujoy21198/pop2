@@ -7,6 +7,7 @@ import { heightToDp, widthToDp } from '../Responsive'
 import Icon from 'react-native-vector-icons/AntDesign'
 import Icon2 from 'react-native-vector-icons/FontAwesome'
 import tts from 'react-native-tts'
+import LanguageChange from '../Core/LanguageChange'
 
 export default class NotificationDetailsScreen extends Component {
     speak = () => {
@@ -26,7 +27,7 @@ export default class NotificationDetailsScreen extends Component {
                 </View>
                 <View style={{ backgroundColor: '#fff', height: heightToDp("43%"), width: widthToDp("90%"), marginLeft: widthToDp("5%"), marginTop: heightToDp("5%"), borderRadius: 20, elevation: 10 }}>
                     <View style={{ flexDirection: 'row' }}>
-                        <Text style={{ marginLeft: widthToDp("3%"), marginTop: heightToDp("3%"), fontSize: widthToDp("5%"), fontFamily: 'Oswald-Light' }}>From : Admin</Text>
+                        <Text style={{ marginLeft: widthToDp("3%"), marginTop: heightToDp("3%"), fontSize: widthToDp("5%"), fontFamily: 'Oswald-Light' }}>From : {LanguageChange.second}</Text>
                         <Icon2
                             name="microphone"
                             color="black"

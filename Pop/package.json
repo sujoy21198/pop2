@@ -28,6 +28,7 @@
     "react-native-gesture-handler": "^1.9.0",
     "react-native-imei": "^0.2.0",
     "react-native-keyboard-aware-scroll-view": "^0.9.3",
+    "react-native-localization": "^2.1.6",
     "react-native-raw-bottom-sheet": "^2.2.0",
     "react-native-reanimated": "^1.13.2",
     "react-native-safe-area-context": "^3.1.9",
