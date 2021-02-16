@@ -9,7 +9,7 @@ export default class GeneralSettingsScreen extends Component{
         await AsyncStorage.removeItem('_id')
         this.props.navigation.reset({
             index:0,
-            routes:[{name:"SigninScreen"}]
+            routes:[{name:"LanguageScreen"}]
         });
     } 
     render(){

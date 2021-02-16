@@ -94,7 +94,9 @@ export default class SigninScreen extends Component {
             // })
             this.props.navigation.reset({
                 index:0,
-                routes:[{name:"DashBoardScreen"}]
+                routes:[
+                    {name:"DashBoardScreen"}
+                ]
             });
         }
     }

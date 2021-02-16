@@ -7,6 +7,7 @@ import { widthToDp, heightToDp } from '../Responsive'
 import { FlatGrid, SectionGrid } from 'react-native-super-grid'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import tts from 'react-native-tts'
+import Languages from '../Core/Languages'
 
 
 
@@ -22,8 +23,10 @@ export default class LandTypeScreen extends Component {
     constructor(props){
         super(props)
         this.state={
-            _id : ''
+            _id : '',
+            languages:[]
         }
+        this.state.languages = Languages
         this.state._id = this.props.route.params._id
     }
 
@@ -72,9 +75,9 @@ export default class LandTypeScreen extends Component {
                 </View>
 
                 <View style={{ flexDirection: 'row', marginTop: heightToDp("1%"), marginLeft: widthToDp("1%") }}>
-                    <TouchableOpacity onPress={() => this.props.navigation.navigate('SigninScreen')}>
+                    <TouchableOpacity>
                         <View style={{ backgroundColor: BaseColor.English, width: widthToDp("30%"), height: heightToDp("6%"), marginLeft: widthToDp("2%"), borderRadius: 100, flexDirection: 'row' }}>
-                            <Text style={{ color: '#fff', marginTop: heightToDp("1.5%"), fontFamily: 'Oswald-Medium', marginLeft: widthToDp("5%") }}>ENGLISH</Text>
+                            <Text style={{ color: '#fff', marginTop: heightToDp("1.5%"), fontFamily: 'Oswald-Medium', marginLeft: widthToDp("5%") }}>{this.state.languages[0].value}</Text>
                             <Icon
                                 name="microphone"
                                 color="white"
@@ -85,52 +88,52 @@ export default class LandTypeScreen extends Component {
                     </TouchableOpacity>
 
                     <TouchableOpacity >
-                        <View style={{ backgroundColor: BaseColor.Hindi, width: widthToDp("30%"), height: heightToDp("6%"), marginLeft: widthToDp("2%"), borderRadius: 100, flexDirection: 'row' }}>
-                            <Text style={{ color: '#fff', marginTop: heightToDp("1.7%"), marginLeft: widthToDp("5%"), fontWeight: 'bold', fontSize: widthToDp("4.3%") }}>हिन्दी</Text>
+                        <View style={{ backgroundColor: BaseColor.Hindi, width: widthToDp("30%"), height: heightToDp("6%"), marginLeft: widthToDp("2%"), borderRadius: 100,flexDirection:'row' }}>
+                            <Text style={{ color: '#fff', marginTop: heightToDp("1.7%"), marginLeft:widthToDp("5%"),fontWeight:'bold',fontSize:widthToDp("4.3%") }}>{this.state.languages[1].value}</Text>
                             <Icon
-                                name="microphone"
-                                color="white"
-                                size={20}
-                                style={{ marginTop: heightToDp("1.8%"), marginLeft: widthToDp("9%") }}
+                            name="microphone"
+                            color="white"
+                            size={20}
+                            style={{marginTop:heightToDp("1.8%"),marginLeft:widthToDp("9%")}}
                             />
                         </View>
-                    </TouchableOpacity>
+                        </TouchableOpacity>
 
-                    <TouchableOpacity>
-                        <View style={{ backgroundColor: BaseColor.Ho, width: widthToDp("30%"), height: heightToDp("6%"), marginLeft: widthToDp("2%"), borderRadius: 100, flexDirection: 'row' }}>
-                            <Text style={{ color: '#fff', marginTop: heightToDp("1.5%"), marginLeft: widthToDp("5%"), fontWeight: 'bold', fontSize: widthToDp("4.3%") }}>ʤʌgʌr</Text>
+                        <TouchableOpacity>
+                        <View style={{ backgroundColor: BaseColor.Ho, width: widthToDp("30%"), height: heightToDp("6%"), marginLeft: widthToDp("2%"), borderRadius: 100,flexDirection:'row' }}>
+                            <Text style={{ color: '#fff', marginTop: heightToDp("1.5%"), marginLeft:widthToDp("5%"),fontWeight:'bold',fontSize:widthToDp("4.3%") }}>{this.state.languages[2].value}</Text>
                             <Icon
-                                name="microphone"
-                                color="white"
-                                size={20}
-                                style={{ marginTop: heightToDp("1.8%"), marginLeft: widthToDp("6.3%") }}
+                            name="microphone"
+                            color="white"
+                            size={20}
+                            style={{marginTop:heightToDp("1.8%"),marginLeft:widthToDp("6.3%")}}
                             />
                         </View>
-                    </TouchableOpacity>
+                        </TouchableOpacity>
                 </View>
-                <View style={{ flexDirection: 'row', marginTop: heightToDp("1%"), marginLeft: widthToDp("1%"), alignSelf: 'center' }}>
-                    <TouchableOpacity>
-                        <View style={{ backgroundColor: BaseColor.Uridia, width: widthToDp("30%"), height: heightToDp("6%"), borderRadius: 100, flexDirection: 'row' }}>
-                            <Text style={{ color: '#fff', marginTop: heightToDp("1.7%"), marginLeft: widthToDp("4.7%"), fontWeight: 'bold', fontSize: widthToDp("4.3%") }}>ଓଡ଼ିଆ</Text>
+                <View style={{ flexDirection: 'row', marginTop: heightToDp("1%"), marginLeft: widthToDp("1%"),alignSelf:'center' }}>
+                <TouchableOpacity>
+                        <View style={{ backgroundColor: BaseColor.Uridia, width: widthToDp("30%"), height: heightToDp("6%"), borderRadius: 100,flexDirection:'row' }}>
+                            <Text style={{ color: '#fff', marginTop: heightToDp("1.7%"),marginLeft:widthToDp("4.7%"),fontWeight:'bold',fontSize:widthToDp("4.3%") }}>{this.state.languages[3].value}</Text>
                             <Icon
-                                name="microphone"
-                                color="white"
-                                size={20}
-                                style={{ marginTop: heightToDp("1.8%"), marginLeft: widthToDp("6.9%") }}
+                            name="microphone"
+                            color="white"
+                            size={20}
+                            style={{marginTop:heightToDp("1.8%"),marginLeft:widthToDp("6.9%")}}
                             />
                         </View>
-                    </TouchableOpacity>
+                        </TouchableOpacity>
 
-                    <TouchableOpacity>
-                        <View style={{ backgroundColor: BaseColor.Santhali, width: widthToDp("30%"), height: heightToDp("6%"), borderRadius: 100, marginLeft: widthToDp("2%"), flexDirection: 'row' }}>
-                            <Text style={{ color: '#fff', marginTop: heightToDp("1.7%"), marginLeft: widthToDp("3.4%"), fontWeight: 'bold', fontSize: widthToDp("4.3%") }}>ᱥᱟᱱᱛᱟᱲᱤ</Text>
-                            <Icon
-                                name="microphone"
-                                color="white"
-                                size={20}
-                                style={{ marginTop: heightToDp("1.8%"), marginLeft: widthToDp("3%") }}
+                        <TouchableOpacity>
+                    <View style={{backgroundColor:BaseColor.Santhali, width: widthToDp("30%"), height: heightToDp("6%"),  borderRadius: 100, marginLeft: widthToDp("2%"),flexDirection:'row' }}>
+                        <Text style={{ color: '#fff', marginTop: heightToDp("1.7%"), marginLeft:widthToDp("3.4%"),fontWeight:'bold',fontSize:widthToDp("4.3%") }}>{this.state.languages[4].value}</Text>
+                        <Icon
+                            name="microphone"
+                            color="white"
+                            size={20}
+                            style={{marginTop:heightToDp("1.8%"),marginLeft:widthToDp("3%")}}
                             />
-                        </View>
+                    </View>
                     </TouchableOpacity>
                 </View>
                 <View style={{ borderBottomColor: BaseColor.Stroke, borderBottomWidth: 1, marginTop: heightToDp('1.5%'), width: widthToDp("100%") }}></View>

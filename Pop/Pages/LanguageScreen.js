@@ -27,8 +27,10 @@ export default class LanguageScreen extends Component {
     }
 
     test = (value) => {
+        AsyncStorage.setItem('language',value)
         LanguageChange.setLanguage(value)
         this.props.navigation.navigate('SigninScreen',{selectedLanguage : value})
+        
         //alert(value)
 
     }
@@ -52,6 +54,8 @@ export default class LanguageScreen extends Component {
         let name = await AsyncStorage.getItem('name')
         let token = await AsyncStorage.getItem('token')
         let type = await AsyncStorage.getItem('type')
+        let language = await AsyncStorage.getItem('language')
+        LanguageChange.setLanguage(language)
         console.log(token + " this is token ")
         if (value) {
             this.props.navigation.reset({
@@ -116,7 +120,7 @@ export default class LanguageScreen extends Component {
                         </TouchableOpacity>
                     </View>
                     <View style={{ flexDirection: 'row', marginTop: heightToDp("4%") }}>
-                        <TouchableOpacity>
+                        <TouchableOpacity onPress={() => alert("No scripts available")}>
                         <View style={{ backgroundColor: BaseColor.Ho, width: widthToDp("30%"), height: heightToDp("6%"), marginLeft: widthToDp("10%"), borderRadius: 100,flexDirection:'row' }}>
                             <Text style={{ color: '#fff', marginTop: heightToDp("1.5%"), marginLeft:widthToDp("5%"),fontWeight:'bold',fontSize:widthToDp("4.3%") }}>{this.state.languages[2].value}</Text>
                             <Icon
@@ -140,7 +144,7 @@ export default class LanguageScreen extends Component {
                         </View>
                         </TouchableOpacity>
                     </View>
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={() => alert("No scripts available")}>
                     <View style={{ marginTop: heightToDp("4%"),backgroundColor:BaseColor.Santhali, width: widthToDp("30%"), height: heightToDp("6%"),  borderRadius: 100,alignSelf:'center',flexDirection:'row' }}>
                         <Text style={{ color: '#fff', marginTop: heightToDp("1.7%"), marginLeft:widthToDp("3.4%"),fontWeight:'bold',fontSize:widthToDp("4.3%") }}>{this.state.languages[4].value}</Text>
                         <Icon

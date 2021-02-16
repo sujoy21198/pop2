@@ -22,7 +22,13 @@ const LanguageChange = new LocalizedStrings({
     gramPanchayat : 'पंचायत',
     village: 'गाँव',
     otp:'ओटीपी',
-    fieldOfficerPassword:'जमीनी स्तर के अधिकारी'
+    fieldOfficerPassword:'जमीनी स्तर के अधिकारी',
+    knowledgeCenter: 'ज्ञान केंद्र',
+    importantLinks : 'महत्वपूर्ण लिंक',
+    moneyManager : 'मनी मैनेजर',
+    contact : 'संपर्क करें',
+    message: 'संदेश',
+    generalSettings : 'सामान्य सेटिंग्स'
   },
   en: {
     signIn: 'SIGN IN',
@@ -44,7 +50,13 @@ const LanguageChange = new LocalizedStrings({
     gramPanchayat : 'GRAMPANCHAYAT',
     village: 'VILLAGE',
     otp:'OTP',
-    fieldOfficerPassword:'FIELD OFFICER PASSWORD'
+    fieldOfficerPassword:'FIELD OFFICER PASSWORD',
+    knowledgeCenter: 'KNOWLEDGE CENTER',
+    importantLinks : 'IMPORTANT LINKS',
+    moneyManager : 'MONEY MANAGER',
+    contact : 'CONTACT',
+    message: 'MESSAGE',
+    generalSettings : 'GENERAL SETTINGS'
   },
   od: {
     signIn: 'ଚୁକ୍ତି କରିବା',
@@ -66,7 +78,13 @@ const LanguageChange = new LocalizedStrings({
     gramPanchayat : 'ଗ୍ରାମପଞ୍ଚାୟତ',
     village: 'ଗ୍ରାମ',
     otp:'OTP',
-    fieldOfficerPassword:'ଫିଲ୍ଡ ଅଫିସ୍ ପାସୱାର୍ଡ'
+    fieldOfficerPassword:'ଫିଲ୍ଡ ଅଫିସ୍ ପାସୱାର୍ଡ',
+    knowledgeCenter: 'ଜ୍ଞାନ କେନ୍ଦ୍ର',
+    importantLinks : 'ଗୁରୁତ୍ୱପୂର୍ଣ୍ଣ ଲିଙ୍କ୍',
+    moneyManager : 'ଟଙ୍କା ପରିଚାଳକ',
+    contact : 'ଯୋଗାଯୋଗ କରନ୍ତୁ',
+    message: 'ବାର୍ତ୍ତା',
+    generalSettings : 'ସାଧାରଣ ସେଟିଂସମୂହ'
   }
 })
 

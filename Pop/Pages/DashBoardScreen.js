@@ -6,7 +6,8 @@ import TopLogo from '../assets/TopLogo'
 import { widthToDp, heightToDp } from '../Responsive'
 import { FlatGrid, SectionGrid } from 'react-native-super-grid'
 import Icon from 'react-native-vector-icons/FontAwesome'
-
+import Languages from '../Core/Languages'
+import LanguageChange from '../Core/LanguageChange'
 
 
 const data = [
@@ -18,17 +19,37 @@ const data = [
     { name: 'General Settings', code: 'https://www.kisaanhelpline.com/news_image/20012020020200fertilisers-bccl.jpg' }
 ]
 
+
 export default class DashBoardScreen extends Component {
+
+
+    constructor(props){
+        super(props)
+        this.state={
+            data :[],
+            languages: []
+        }
+
+        this.state.languages = Languages
+        this.state.data = data
+        this.state.data[0].name = LanguageChange.knowledgeCenter
+        this.state.data[1].name = LanguageChange.importantLinks
+        this.state.data[2].name = LanguageChange.moneyManager
+        this.state.data[3].name = LanguageChange.contact
+        this.state.data[4].name = LanguageChange.message
+        this.state.data[5].name = LanguageChange.generalSettings
+        
+    }
     check = (data) => {
-        if(data === 'General Settings'){
+        if(data === LanguageChange.generalSettings){
             this.props.navigation.navigate({
                 name: 'GeneralSettingsScreen'
             })
-        }else if(data === 'Knowledge Center'){
+        }else if(data === LanguageChange.knowledgeCenter){
             this.props.navigation.navigate({
                 name:"KnowledgeCenterScreen"
             })
-        }else if(data === 'Important Links'){
+        }else if(data === LanguageChange.importantLinks){
             this.props.navigation.navigate({
                 name:"ImportantLinksScreen"
             })
@@ -49,9 +70,9 @@ export default class DashBoardScreen extends Component {
                     />
                 </View>
                 <View style={{ flexDirection: 'row', marginTop: heightToDp("1%"), marginLeft: widthToDp("1%") }}>
-                    <TouchableOpacity onPress={() => this.props.navigation.navigate('SigninScreen')}>
+                    <TouchableOpacity>
                         <View style={{ backgroundColor: BaseColor.English, width: widthToDp("30%"), height: heightToDp("6%"), marginLeft: widthToDp("2%"), borderRadius: 100, flexDirection: 'row' }}>
-                            <Text style={{ color: '#fff', marginTop: heightToDp("1.5%"), fontFamily: 'Oswald-Medium', marginLeft: widthToDp("5%") }}>ENGLISH</Text>
+                            <Text style={{ color: '#fff', marginTop: heightToDp("1.5%"), fontFamily: 'Oswald-Medium', marginLeft: widthToDp("5%") }}>{this.state.languages[0].value}</Text>
                             <Icon
                                 name="microphone"
                                 color="white"
@@ -63,7 +84,7 @@ export default class DashBoardScreen extends Component {
 
                     <TouchableOpacity >
                         <View style={{ backgroundColor: BaseColor.Hindi, width: widthToDp("30%"), height: heightToDp("6%"), marginLeft: widthToDp("2%"), borderRadius: 100,flexDirection:'row' }}>
-                            <Text style={{ color: '#fff', marginTop: heightToDp("1.7%"), marginLeft:widthToDp("5%"),fontWeight:'bold',fontSize:widthToDp("4.3%") }}>हिन्दी</Text>
+                            <Text style={{ color: '#fff', marginTop: heightToDp("1.7%"), marginLeft:widthToDp("5%"),fontWeight:'bold',fontSize:widthToDp("4.3%") }}>{this.state.languages[1].value}</Text>
                             <Icon
                             name="microphone"
                             color="white"
@@ -75,7 +96,7 @@ export default class DashBoardScreen extends Component {
 
                         <TouchableOpacity>
                         <View style={{ backgroundColor: BaseColor.Ho, width: widthToDp("30%"), height: heightToDp("6%"), marginLeft: widthToDp("2%"), borderRadius: 100,flexDirection:'row' }}>
-                            <Text style={{ color: '#fff', marginTop: heightToDp("1.5%"), marginLeft:widthToDp("5%"),fontWeight:'bold',fontSize:widthToDp("4.3%") }}>ʤʌgʌr</Text>
+                            <Text style={{ color: '#fff', marginTop: heightToDp("1.5%"), marginLeft:widthToDp("5%"),fontWeight:'bold',fontSize:widthToDp("4.3%") }}>{this.state.languages[2].value}</Text>
                             <Icon
                             name="microphone"
                             color="white"
@@ -88,7 +109,7 @@ export default class DashBoardScreen extends Component {
                 <View style={{ flexDirection: 'row', marginTop: heightToDp("1%"), marginLeft: widthToDp("1%"),alignSelf:'center' }}>
                 <TouchableOpacity>
                         <View style={{ backgroundColor: BaseColor.Uridia, width: widthToDp("30%"), height: heightToDp("6%"), borderRadius: 100,flexDirection:'row' }}>
-                            <Text style={{ color: '#fff', marginTop: heightToDp("1.7%"),marginLeft:widthToDp("4.7%"),fontWeight:'bold',fontSize:widthToDp("4.3%") }}>ଓଡ଼ିଆ</Text>
+                            <Text style={{ color: '#fff', marginTop: heightToDp("1.7%"),marginLeft:widthToDp("4.7%"),fontWeight:'bold',fontSize:widthToDp("4.3%") }}>{this.state.languages[3].value}</Text>
                             <Icon
                             name="microphone"
                             color="white"
@@ -100,7 +121,7 @@ export default class DashBoardScreen extends Component {
 
                         <TouchableOpacity>
                     <View style={{backgroundColor:BaseColor.Santhali, width: widthToDp("30%"), height: heightToDp("6%"),  borderRadius: 100, marginLeft: widthToDp("2%"),flexDirection:'row' }}>
-                        <Text style={{ color: '#fff', marginTop: heightToDp("1.7%"), marginLeft:widthToDp("3.4%"),fontWeight:'bold',fontSize:widthToDp("4.3%") }}>ᱥᱟᱱᱛᱟᱲᱤ</Text>
+                        <Text style={{ color: '#fff', marginTop: heightToDp("1.7%"), marginLeft:widthToDp("3.4%"),fontWeight:'bold',fontSize:widthToDp("4.3%") }}>{this.state.languages[4].value}</Text>
                         <Icon
                             name="microphone"
                             color="white"
@@ -117,7 +138,7 @@ export default class DashBoardScreen extends Component {
                         style={{ marginTop: heightToDp("2%"), marginBottom: heightToDp("60%") }}
                         bounces={true}
                         itemDimension={130}
-                        data={data}
+                        data={this.state.data}
                         bouncesZoom={true}
                         renderItem={({ item }) => (
                             <TouchableOpacity onPress={() => this.check(item.name)}>
