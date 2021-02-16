@@ -19,10 +19,13 @@ import RBSheet5 from "react-native-raw-bottom-sheet"
 import RadioForm, { RadioButton, RadioButtonInput, RadioButtonLabel } from 'react-native-simple-radio-button'
 import DataAccess from '../Core/DataAccess'
 import CustomIndicator from '../Core/CustomIndicator'
+import LanguageChange from '../Core/LanguageChange'
+import Language from '../Core/Languages'
+
 
 const radio_props = [
-  { label: 'OTP', value: 0 },
-  { label: 'FIELD OFFICER PASSWORD', value: 1 }
+  { label: "OTP", value: 0 },
+  { label: "FIELD OFFICER PASSWORD", value: 1 }
 ]
 
 export default class RegistrationScreen extends Component {
@@ -33,16 +36,16 @@ export default class RegistrationScreen extends Component {
       date: '',
       age: 'AGE',
       deviceId: '',
-      genderPicker: 'GENDER',
+      genderPicker: LanguageChange.gender,
       fullname: '',
       phoneNumber: '',
       username: '',
       password: '',
       confirmPassword: '',
-      state: 'STATE',
-      district: 'DISTRICT',
-      gram: 'GRAMPANCHAYAT',
-      village: 'VILLAGE',
+      state: LanguageChange.state,
+      district: LanguageChange.district,
+      gram: LanguageChange.gramPanchayat,
+      village: LanguageChange.village,
       participantNumber: '',
       fieldOfficerPass: '',
       value: '',
@@ -229,7 +232,7 @@ export default class RegistrationScreen extends Component {
           <Logo />
         </View>
         <View style={{ marginTop: heightToDp("5%") }}>
-          <Text style={{ fontSize: widthToDp("7%"), alignSelf: 'center', fontFamily: 'Oswald-Medium' }}>REGISTRATION</Text>
+          <Text style={{ fontSize: widthToDp("7%"), alignSelf: 'center', fontFamily: 'Oswald-Medium' }}>{LanguageChange.registration}</Text>
         </View>
 
         <View style={{ marginTop: heightToDp("5%"), marginLeft: widthToDp("8%") }}>
@@ -238,7 +241,7 @@ export default class RegistrationScreen extends Component {
             inputStyle={styles.input}
             style={styles.formInput}
             onChangeText={(value) => this.FullName(value)}
-          >FULL-NAME</FloatingLabel>
+          >{LanguageChange.fullname}</FloatingLabel>
         </View>
         <View style={{ marginTop: heightToDp("5%"), marginLeft: widthToDp("8%"), flexDirection: 'row' }}>
           <TouchableOpacity style={{ flexDirection: 'row' }} onPress={() => this.RBSheet.open()}>
@@ -303,7 +306,7 @@ export default class RegistrationScreen extends Component {
             keyboardType='numeric'
             onChangeText={(text) => { this.setState({ age: text }) }}
           // onBlur={this.onBlur}
-          >AGE</FloatingLabel>
+          >{LanguageChange.age}</FloatingLabel>
         </View>
         <View style={{ marginTop: heightToDp("2.5%"), marginLeft: widthToDp("8%") }}>
           <FloatingLabel
@@ -313,7 +316,7 @@ export default class RegistrationScreen extends Component {
             keyboardType='numeric'
             onChangeText={(text) => { this.setState({ phoneNumber: text }) }}
           // onBlur={this.onBlur}
-          >CONTACT NUMBER</FloatingLabel>
+          >{LanguageChange.contactNumber}</FloatingLabel>
         </View>
         <View style={{ marginTop: heightToDp("2.5%"), marginLeft: widthToDp("8%") }}>
           <FloatingLabel
@@ -322,7 +325,7 @@ export default class RegistrationScreen extends Component {
             style={styles.formInput}
             onChangeText={(text) => { this.setState({ username: text }) }}
           // onBlur={this.onBlur}
-          >USERNAME</FloatingLabel>
+          >{LanguageChange.username}</FloatingLabel>
         </View>
         <View style={{ marginTop: heightToDp("2.5%"), marginLeft: widthToDp("8%") }}>
           <FloatingLabel
@@ -332,7 +335,7 @@ export default class RegistrationScreen extends Component {
             password={this.state.passwordVisibility}
             onChangeText={(text) => { this.setState({ password: text }) }}
           // onBlur={this.onBlur}
-          >PASSWORD</FloatingLabel>
+          >{LanguageChange.password}</FloatingLabel>
         </View>
         <View style={{ marginTop: heightToDp("2.5%"), marginLeft: widthToDp("8%") }}>
           <FloatingLabel
@@ -342,7 +345,7 @@ export default class RegistrationScreen extends Component {
             password={this.state.passwordVisibility}
             onChangeText={(text) => { this.setState({ confirmPassword: text }) }}
           // onBlur={this.onBlur}
-          >CONFIRM PASSWORD</FloatingLabel>
+          >{LanguageChange.confirmPassword}</FloatingLabel>
         </View>
         <View style={{ marginTop: heightToDp("5%"), marginLeft: widthToDp("8%") }}>
           <TouchableOpacity style={{ flexDirection: 'row' }} onPress={() => this.RBSheet3.open()}>
@@ -506,7 +509,7 @@ export default class RegistrationScreen extends Component {
             style={styles.formInput}
             onChangeText={(text) => { this.setState({ participantNumber: text }) }}
           // onBlur={this.onBlur}
-          >PARTICIPANT NUMBER</FloatingLabel>
+          >{LanguageChange.participantNumber}</FloatingLabel>
         </View>
         <View style={{ marginTop: heightToDp("5%"), marginLeft: widthToDp("8%") }}>
           {/* <FloatingLabel
@@ -581,16 +584,16 @@ export default class RegistrationScreen extends Component {
 
         <TouchableOpacity onPress={() => this.signup()}>
           <View style={{ backgroundColor: BaseColor.SecondaryColor, marginTop: heightToDp("5%"), width: widthToDp("37%"), alignSelf: 'center', height: heightToDp("5%"), borderRadius: 100 }}>
-            <Text style={{ alignSelf: 'center', marginTop: heightToDp("0.5%"), fontWeight: '500', fontSize: widthToDp("5%"), fontFamily: 'Oswald-Medium' }}>SIGN UP</Text>
+            <Text style={{ alignSelf: 'center', marginTop: heightToDp("0.5%"), fontWeight: '500', fontSize: widthToDp("5%"), fontFamily: 'Oswald-Medium' }}>{LanguageChange.signUp}</Text>
           </View>
         </TouchableOpacity>
         {
           this.state.isLoading ? <CustomIndicator IsLoading={this.state.isLoading} /> : null
         }
         <View style={{ flexDirection: 'row', marginTop: heightToDp("4%"), alignSelf: 'center' }}>
-          <Text style={{ color: "#fff", fontFamily: 'Oswald-Medium' }}>You have an account?</Text>
+          <Text style={{ color: "#fff", fontFamily: 'Oswald-Medium' }}>{LanguageChange.noAccount}</Text>
           <TouchableOpacity onPress={() => this.props.navigation.navigate('SigninScreen')}>
-            <Text style={{ color: BaseColor.SecondaryColor, fontFamily: 'Oswald-Medium' }}>Sign in</Text>
+            <Text style={{ color: BaseColor.SecondaryColor, fontFamily: 'Oswald-Medium' }}>{LanguageChange.signIn}</Text>
           </TouchableOpacity>
         </View>
         <View style={{ marginTop: heightToDp("10%") }}></View>

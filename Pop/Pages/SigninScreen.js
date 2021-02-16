@@ -21,8 +21,12 @@ export default class SigninScreen extends Component {
             phoneNumber: '',
             username: '',
             password: '',
-            isLoading: false
+            isLoading: false,
+            selectedLanguage: ''
         }
+
+        this.state.selectedLanguage = this.props.route.params.selectedLanguage
+        //alert(this.state.languageCode)
     }
 
     signIn = async () => {
@@ -94,6 +98,13 @@ export default class SigninScreen extends Component {
             });
         }
     }
+
+
+    navigateToRegistration = () => {
+        LanguageChange.setLanguage(this.state.selectedLanguage)
+        this.props.navigation.navigate('RegistrationScreen',{selectedLanguage : this.state.selectedLanguage})
+    }
+
     render() {
         return (
             <KeyboardAwareScrollView style={{ backgroundColor: BaseColor.BackgroundColor, flex: 1 }}
@@ -159,14 +170,14 @@ export default class SigninScreen extends Component {
                     </TouchableOpacity>
                     <View style={{ flexDirection: 'row', alignSelf: 'center', marginTop: heightToDp('1.5%') }}>
                         <Text style={{ fontFamily: 'Oswald-Medium' }}>{LanguageChange.noAccount}</Text>
-                        <TouchableOpacity onPress={() => this.props.navigation.navigate('RegistrationScreen')}>
+                        <TouchableOpacity onPress={() => this.navigateToRegistration()}>
                             <Text style={{ color: BaseColor.Red, fontFamily: 'Oswald-Medium' }}> {LanguageChange.pleaseSignUp}</Text>
                         </TouchableOpacity>
                     </View>
 
                     <View style={{ borderBottomColor: BaseColor.Stroke, borderBottomWidth: 1, marginTop: heightToDp('1.5%'), width: widthToDp("100%") }}></View>
 
-                    <TouchableOpacity onPress={() => this.props.navigation.navigate('DashBoardScreen')}>
+                    <TouchableOpacity >
                         <View style={{ backgroundColor: BaseColor.SecondaryColor, marginTop: heightToDp("3%"), width: widthToDp("37%"), alignSelf: 'center', height: heightToDp("5%"), borderRadius: 100 }}>
                             <Text style={{ alignSelf: 'center', marginTop: heightToDp("0.4%"), fontWeight: '500', fontSize: widthToDp("5%"), fontFamily: 'Oswald-Medium' }}>{LanguageChange.guestSignIn}</Text>
                         </View>

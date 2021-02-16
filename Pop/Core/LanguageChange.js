@@ -1,36 +1,73 @@
 import LocalizedStrings from 'react-native-localization'
 
 const LanguageChange = new LocalizedStrings({
-    hi: {
-        contactNumber : 'संपर्क संख्या',
-        username : 'उपयोगकर्ता नाम',
-        password: 'पारण शब्द',
-        forgotPassword: 'पासवर्ड भूल गए',
-        signIn: 'साइन इन करें',
-        noAccount: 'आपका कोई खाता नहीं है?',
-        pleaseSignUp:'कृपया साइन अप करो',
-        guestSignIn: 'दोस्तों में साइन इन करें'
-      },
-      en: {
-        signIn : 'SIGN IN',
-        contactNumber : 'CONTACT NUMBER',
-        username : 'USERNAME',
-        password : 'PASSWORD',
-        forgotPassword: 'FORGOT PASSWORD',
-        noAccount : 'You dont have an account?',
-        pleaseSignUp: 'Please Sign up',
-        guestSignIn : 'GUEST SIGN IN'
-      },
-      od: {
-          signIn:'ଚୁକ୍ତି କରିବା',
-          contactNumber:'ଯୋଗାଯୋଗ ସଂଖ୍ୟା',
-          username:'ଉପଯୋଗକର୍ତ୍ତା',
-          password:'ପାସୱାର୍ଡ',
-          forgotPassword:'ପାସୱାର୍ଡ଼ ଭୁଲି ଗଲେ କି',
-          noAccount:'ଆପଣଙ୍କର ଏକ ଖାତା ନାହିଁ?',
-          pleaseSignUp:'ଦୟାକରି ସାଇନ୍ ଅପ୍ କରନ୍ତୁ',
-          guestSignIn:'ସର୍ବଶ୍ରେଷ୍ଠ ସାଇନ୍ ଇନ୍'
-      }
+  hi: {
+    contactNumber: 'संपर्क संख्या',
+    username: 'उपयोगकर्ता नाम',
+    password: 'पारण शब्द',
+    forgotPassword: 'पासवर्ड भूल गए',
+    confirmPassword: 'पासवर्ड की पुष्टि कीजिये',
+    signIn: 'साइन इन करें',
+    noAccount: 'आपका कोई खाता नहीं है?',
+    pleaseSignUp: 'कृपया साइन अप करो',
+    guestSignIn: 'दोस्तों में साइन इन करें',
+    registration: 'पंजीकरण',
+    fullname: 'पूरा नाम',
+    gender: 'लिंग',
+    age: 'उम्र',
+    signUp: 'साइन अप करें',
+    participantNumber: 'आंशिक संख्या',
+    state:'राज्य',
+    district : 'जिला',
+    gramPanchayat : 'पंचायत',
+    village: 'गाँव',
+    otp:'ओटीपी',
+    fieldOfficerPassword:'जमीनी स्तर के अधिकारी'
+  },
+  en: {
+    signIn: 'SIGN IN',
+    contactNumber: 'CONTACT NUMBER',
+    username: 'USERNAME',
+    password: 'PASSWORD',
+    forgotPassword: 'FORGOT PASSWORD',
+    noAccount: 'You dont have an account?',
+    pleaseSignUp: 'Please Sign up',
+    guestSignIn: 'GUEST SIGN IN',
+    registration: 'REGISTRATION',
+    fullname: 'FULL-NAME',
+    gender: 'GENDER',
+    age: 'AGE',
+    signUp: 'SIGN UP',
+    participantNumber: 'PARTICIPANT NUMBER',
+    state:'STATE',
+    district : 'DISTRICT',
+    gramPanchayat : 'GRAMPANCHAYAT',
+    village: 'VILLAGE',
+    otp:'OTP',
+    fieldOfficerPassword:'FIELD OFFICER PASSWORD'
+  },
+  od: {
+    signIn: 'ଚୁକ୍ତି କରିବା',
+    contactNumber: 'ଯୋଗାଯୋଗ ସଂଖ୍ୟା',
+    username: 'ଉପଯୋଗକର୍ତ୍ତା',
+    password: 'ପାସୱାର୍ଡ',
+    forgotPassword: 'ପାସୱାର୍ଡ଼ ଭୁଲି ଗଲେ କି',
+    noAccount: 'ଆପଣଙ୍କର ଏକ ଖାତା ନାହିଁ?',
+    pleaseSignUp: 'ଦୟାକରି ସାଇନ୍ ଅପ୍ କରନ୍ତୁ',
+    guestSignIn: 'ସର୍ବଶ୍ରେଷ୍ଠ ସାଇନ୍ ଇନ୍',
+    registration: 'ପଞ୍ଜୀକରଣ',
+    fullname: 'ପୁରା ନାମ',
+    gender: 'ଲିଙ୍ଗ',
+    age: 'ବୟସ',
+    signUp: 'ସାଇନ୍ ଅପ୍ କରନ୍ତୁ',
+    participantNumber: 'ଭାଗୀଦାରୀ ସଂଖ୍ୟା',
+    state:'ରାଜ୍ୟ',
+    district : 'ଜିଲ୍ଲା',
+    gramPanchayat : 'ଗ୍ରାମପଞ୍ଚାୟତ',
+    village: 'ଗ୍ରାମ',
+    otp:'OTP',
+    fieldOfficerPassword:'ଫିଲ୍ଡ ଅଫିସ୍ ପାସୱାର୍ଡ'
+  }
 })
 
 export default LanguageChange
