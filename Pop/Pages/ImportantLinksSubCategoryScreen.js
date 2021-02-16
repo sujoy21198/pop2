@@ -193,7 +193,7 @@ export default class ImportantLinksSubCategoryScreen extends Component {
                             <Card style={{ width: widthToDp("94%"), marginLeft: widthToDp("3%"), height: heightToDp("30%"), marginBottom: heightToDp("1%"), borderRadius: 20, backgroundColor: BaseColor.Red }}>
                                 <View style={{ flexDirection: 'row' }}>
                                     <View style={{ width: widthToDp("45%") }}>
-                                        <Text style={{ color: 'white', marginLeft: widthToDp("6%"), marginTop: heightToDp("1%"), fontSize: widthToDp("5%"), fontFamily: 'Oswald-Medium' }}>{(item.category).toUpperCase()}</Text>
+                                        <Text style={{ color: 'white', marginLeft: widthToDp("6%"), marginTop: heightToDp("1%"), fontSize: widthToDp("5%"), fontFamily: 'Oswald-Medium' }}>{item.category}</Text>
                                     </View>
                                     <TouchableOpacity onPress={() => this.speak(item.category)}>
                                     <Icon
