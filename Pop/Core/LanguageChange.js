@@ -32,7 +32,11 @@ const LanguageChange = new LocalizedStrings({
     crops:'फसलों',
     livestock :'पशुधन',
     smallBusiness : 'छोटा व्यवसाय',
-    nutrition: 'पोषण बगीचा'
+    nutrition: 'पोषण बगीचा',
+    wash:'वाश',
+    health : 'स्वास्थ्य',
+    covid: 'कोविड',
+    govtSchemes: 'सरकारी योजनाएँ'
   },
   en: {
     signIn: 'SIGN IN',
@@ -65,7 +69,11 @@ const LanguageChange = new LocalizedStrings({
     crops:'CROPS',
     livestock :'LIVESTOCK',
     smallBusiness : 'SMALL BUSINESS',
-    nutrition: 'NUTRITION GARDEN'
+    nutrition: 'NUTRITION GARDEN',
+    wash:'WASH',
+    health : 'HEALTH',
+    covid: 'COVID',
+    govtSchemes: 'GOVT SCHEMES'
   },
   od: {
     signIn: 'ଚୁକ୍ତି କରିବା',
@@ -98,7 +106,11 @@ const LanguageChange = new LocalizedStrings({
     crops:'ଫସଲ',
     livestock :'ପଶୁପାଳନ',
     smallBusiness : 'ଛୋଟ ବ୍ୟବସାୟ',
-    nutrition: 'ପୁଷ୍ଟିକର ଉଦ୍ୟାନ'
+    nutrition: 'ପୁଷ୍ଟିକର ଉଦ୍ୟାନ',
+    wash:'ଧୋଇ ଦିଅ',
+    health : 'ସ୍ୱାସ୍ଥ୍ୟ',
+    covid: 'covid',
+    govtSchemes: 'ଶାସନ ଯୋଜନା'
   }
 })
 

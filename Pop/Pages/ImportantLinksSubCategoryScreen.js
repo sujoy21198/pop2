@@ -12,6 +12,8 @@ import axios from 'axios'
 import DataAccess from '../Core/DataAccess'
 import CustomIndicator from '../Core/CustomIndicator'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import Languages from '../Core/Languages'
+import LanguageChange from '../Core/LanguageChange'
 
 const Sound = require('react-native-sound')
 
@@ -32,23 +34,46 @@ export default class ImportantLinksSubCategoryScreen extends Component {
             value : '',
             title:'',
             data: [],
-            isLoading : false
+            isLoading : false,
+            languages: []
         }
+        this.state.languages = Languages
         this.state.value = this.props.route.params.value
         if(this.state.value === 0){
-            this.state.title ="WASH"
+            this.state.title =LanguageChange.wash
         }else if(this.state.value === 1){
-            this.state.title = "HEALTH"
+            this.state.title = LanguageChange.health
         }else if(this.state.value === 2){
-            this.state.title = "COVID-19"
+            this.state.title = LanguageChange.covid
         }else if(this.state.value === 3){
-            this.state.title = "GOV SCHEMES & ENTITLEMENTS"
+            this.state.title = LanguageChange.govtSchemes
         }
         //alert(this.state.value)
     }
 
     componentDidMount(){
         this.getDetails()
+    }
+
+
+    changeLanguage = (id) => {
+        //alert(id)
+        AsyncStorage.setItem('language',id)
+        LanguageChange.setLanguage(id)
+        if(this.state.value === 0){
+            this.setState({title : LanguageChange.wash})
+        }else if(this.state.value === 1){
+            this.setState({title : LanguageChange.health}) 
+        }else if(this.state.value === 2){
+            this.setState({title : LanguageChange.covid})
+        }else if(this.state.value === 3){
+            this.setState({title : LanguageChange.govtSchemes})
+        }
+        // this.setState({data : data})
+        // this.state.data[0].name = LanguageChange.wash
+        // this.state.data[1].name = LanguageChange.health
+        // this.state.data[2].name = LanguageChange.covid
+        // this.state.data[3].name = LanguageChange.govtSchemes
     }
 
 
@@ -117,9 +142,9 @@ export default class ImportantLinksSubCategoryScreen extends Component {
                 </View>
 
                 <View style={{ flexDirection: 'row', marginTop: heightToDp("1%"), marginLeft: widthToDp("1%") }}>
-                    <TouchableOpacity onPress={() => this.props.navigation.navigate('SigninScreen')}>
+                    <TouchableOpacity onPress={() => this.changeLanguage(this.state.languages[0].id)}>
                         <View style={{ backgroundColor: BaseColor.English, width: widthToDp("30%"), height: heightToDp("6%"), marginLeft: widthToDp("2%"), borderRadius: 100, flexDirection: 'row' }}>
-                            <Text style={{ color: '#fff', marginTop: heightToDp("1.5%"), fontFamily: 'Oswald-Medium', marginLeft: widthToDp("5%") }}>ENGLISH</Text>
+                            <Text style={{ color: '#fff', marginTop: heightToDp("1.5%"), fontFamily: 'Oswald-Medium', marginLeft: widthToDp("5%") }}>{this.state.languages[0].value}</Text>
                             <Icon
                                 name="microphone"
                                 color="white"
@@ -129,9 +154,9 @@ export default class ImportantLinksSubCategoryScreen extends Component {
                         </View>
                     </TouchableOpacity>
 
-                    <TouchableOpacity >
+                    <TouchableOpacity onPress={() => this.changeLanguage(this.state.languages[1].id)}>
                         <View style={{ backgroundColor: BaseColor.Hindi, width: widthToDp("30%"), height: heightToDp("6%"), marginLeft: widthToDp("2%"), borderRadius: 100, flexDirection: 'row' }}>
-                            <Text style={{ color: '#fff', marginTop: heightToDp("1.7%"), marginLeft: widthToDp("5%"), fontWeight: 'bold', fontSize: widthToDp("4.3%") }}>हिन्दी</Text>
+                            <Text style={{ color: '#fff', marginTop: heightToDp("1.7%"), marginLeft: widthToDp("5%"), fontWeight: 'bold', fontSize: widthToDp("4.3%") }}>{this.state.languages[1].value}</Text>
                             <Icon
                                 name="microphone"
                                 color="white"
@@ -141,9 +166,9 @@ export default class ImportantLinksSubCategoryScreen extends Component {
                         </View>
                     </TouchableOpacity>
 
-                    <TouchableOpacity>
+                    <TouchableOpacity >
                         <View style={{ backgroundColor: BaseColor.Ho, width: widthToDp("30%"), height: heightToDp("6%"), marginLeft: widthToDp("2%"), borderRadius: 100, flexDirection: 'row' }}>
-                            <Text style={{ color: '#fff', marginTop: heightToDp("1.5%"), marginLeft: widthToDp("5%"), fontWeight: 'bold', fontSize: widthToDp("4.3%") }}>ʤʌgʌr</Text>
+                            <Text style={{ color: '#fff', marginTop: heightToDp("1.5%"), marginLeft: widthToDp("5%"), fontWeight: 'bold', fontSize: widthToDp("4.3%") }}>{this.state.languages[2].value}</Text>
                             <Icon
                                 name="microphone"
                                 color="white"
@@ -154,9 +179,9 @@ export default class ImportantLinksSubCategoryScreen extends Component {
                     </TouchableOpacity>
                 </View>
                 <View style={{ flexDirection: 'row', marginTop: heightToDp("1%"), marginLeft: widthToDp("1%"), alignSelf: 'center' }}>
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={() => this.changeLanguage(this.state.languages[3].id)}>
                         <View style={{ backgroundColor: BaseColor.Uridia, width: widthToDp("30%"), height: heightToDp("6%"), borderRadius: 100, flexDirection: 'row' }}>
-                            <Text style={{ color: '#fff', marginTop: heightToDp("1.7%"), marginLeft: widthToDp("4.7%"), fontWeight: 'bold', fontSize: widthToDp("4.3%") }}>ଓଡ଼ିଆ</Text>
+                            <Text style={{ color: '#fff', marginTop: heightToDp("1.7%"), marginLeft: widthToDp("4.7%"), fontWeight: 'bold', fontSize: widthToDp("4.3%") }}>{this.state.languages[3].value}</Text>
                             <Icon
                                 name="microphone"
                                 color="white"
@@ -166,9 +191,9 @@ export default class ImportantLinksSubCategoryScreen extends Component {
                         </View>
                     </TouchableOpacity>
 
-                    <TouchableOpacity>
+                    <TouchableOpacity >
                         <View style={{ backgroundColor: BaseColor.Santhali, width: widthToDp("30%"), height: heightToDp("6%"), borderRadius: 100, marginLeft: widthToDp("2%"), flexDirection: 'row' }}>
-                            <Text style={{ color: '#fff', marginTop: heightToDp("1.7%"), marginLeft: widthToDp("3.4%"), fontWeight: 'bold', fontSize: widthToDp("4.3%") }}>ᱥᱟᱱᱛᱟᱲᱤ</Text>
+                            <Text style={{ color: '#fff', marginTop: heightToDp("1.7%"), marginLeft: widthToDp("3.4%"), fontWeight: 'bold', fontSize: widthToDp("4.3%") }}>{this.state.languages[4].value}</Text>
                             <Icon
                                 name="microphone"
                                 color="white"
