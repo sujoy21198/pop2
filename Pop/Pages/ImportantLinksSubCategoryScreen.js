@@ -211,7 +211,6 @@ export default class ImportantLinksSubCategoryScreen extends Component {
                                     />
                                 </TouchableOpacity>
                             </Card>
-
                         }
                     />
                 </View>

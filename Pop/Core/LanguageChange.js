@@ -28,7 +28,11 @@ const LanguageChange = new LocalizedStrings({
     moneyManager : 'मनी मैनेजर',
     contact : 'संपर्क करें',
     message: 'संदेश',
-    generalSettings : 'सामान्य सेटिंग्स'
+    generalSettings : 'सामान्य सेटिंग्स',
+    crops:'फसलों',
+    livestock :'पशुधन',
+    smallBusiness : 'छोटा व्यवसाय',
+    nutrition: 'पोषण बगीचा'
   },
   en: {
     signIn: 'SIGN IN',
@@ -36,6 +40,7 @@ const LanguageChange = new LocalizedStrings({
     username: 'USERNAME',
     password: 'PASSWORD',
     forgotPassword: 'FORGOT PASSWORD',
+    confirmPassword: 'CONFIRM PASSWORD',
     noAccount: 'You dont have an account?',
     pleaseSignUp: 'Please Sign up',
     guestSignIn: 'GUEST SIGN IN',
@@ -56,7 +61,11 @@ const LanguageChange = new LocalizedStrings({
     moneyManager : 'MONEY MANAGER',
     contact : 'CONTACT',
     message: 'MESSAGE',
-    generalSettings : 'GENERAL SETTINGS'
+    generalSettings : 'GENERAL SETTINGS',
+    crops:'CROPS',
+    livestock :'LIVESTOCK',
+    smallBusiness : 'SMALL BUSINESS',
+    nutrition: 'NUTRITION GARDEN'
   },
   od: {
     signIn: 'ଚୁକ୍ତି କରିବା',
@@ -64,6 +73,7 @@ const LanguageChange = new LocalizedStrings({
     username: 'ଉପଯୋଗକର୍ତ୍ତା',
     password: 'ପାସୱାର୍ଡ',
     forgotPassword: 'ପାସୱାର୍ଡ଼ ଭୁଲି ଗଲେ କି',
+    confirmPassword: 'ପାସ୍ବାଡ଼ ନିସ୍ଚିତ କର',
     noAccount: 'ଆପଣଙ୍କର ଏକ ଖାତା ନାହିଁ?',
     pleaseSignUp: 'ଦୟାକରି ସାଇନ୍ ଅପ୍ କରନ୍ତୁ',
     guestSignIn: 'ସର୍ବଶ୍ରେଷ୍ଠ ସାଇନ୍ ଇନ୍',
@@ -84,7 +94,11 @@ const LanguageChange = new LocalizedStrings({
     moneyManager : 'ଟଙ୍କା ପରିଚାଳକ',
     contact : 'ଯୋଗାଯୋଗ କରନ୍ତୁ',
     message: 'ବାର୍ତ୍ତା',
-    generalSettings : 'ସାଧାରଣ ସେଟିଂସମୂହ'
+    generalSettings : 'ସାଧାରଣ ସେଟିଂସମୂହ',
+    crops:'ଫସଲ',
+    livestock :'ପଶୁପାଳନ',
+    smallBusiness : 'ଛୋଟ ବ୍ୟବସାୟ',
+    nutrition: 'ପୁଷ୍ଟିକର ଉଦ୍ୟାନ'
   }
 })
 

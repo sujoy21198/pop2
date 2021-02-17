@@ -8,6 +8,7 @@ import { FlatGrid, SectionGrid } from 'react-native-super-grid'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import Languages from '../Core/Languages'
 import LanguageChange from '../Core/LanguageChange'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 
 const data = [
@@ -40,6 +41,20 @@ export default class DashBoardScreen extends Component {
         this.state.data[5].name = LanguageChange.generalSettings
         
     }
+    
+    changeLanguage = (id) => {
+        //alert(id)
+        AsyncStorage.setItem('language',id)
+        LanguageChange.setLanguage(id)
+        this.setState({data : data})
+        this.state.data[0].name = LanguageChange.knowledgeCenter
+        this.state.data[1].name = LanguageChange.importantLinks
+        this.state.data[2].name = LanguageChange.moneyManager
+        this.state.data[3].name = LanguageChange.contact
+        this.state.data[4].name = LanguageChange.message
+        this.state.data[5].name = LanguageChange.generalSettings
+    }
+
     check = (data) => {
         if(data === LanguageChange.generalSettings){
             this.props.navigation.navigate({
@@ -70,7 +85,7 @@ export default class DashBoardScreen extends Component {
                     />
                 </View>
                 <View style={{ flexDirection: 'row', marginTop: heightToDp("1%"), marginLeft: widthToDp("1%") }}>
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={() => this.changeLanguage(this.state.languages[0].id)}>
                         <View style={{ backgroundColor: BaseColor.English, width: widthToDp("30%"), height: heightToDp("6%"), marginLeft: widthToDp("2%"), borderRadius: 100, flexDirection: 'row' }}>
                             <Text style={{ color: '#fff', marginTop: heightToDp("1.5%"), fontFamily: 'Oswald-Medium', marginLeft: widthToDp("5%") }}>{this.state.languages[0].value}</Text>
                             <Icon
@@ -82,7 +97,7 @@ export default class DashBoardScreen extends Component {
                         </View>
                     </TouchableOpacity>
 
-                    <TouchableOpacity >
+                    <TouchableOpacity onPress={() => this.changeLanguage(this.state.languages[1].id)}>
                         <View style={{ backgroundColor: BaseColor.Hindi, width: widthToDp("30%"), height: heightToDp("6%"), marginLeft: widthToDp("2%"), borderRadius: 100,flexDirection:'row' }}>
                             <Text style={{ color: '#fff', marginTop: heightToDp("1.7%"), marginLeft:widthToDp("5%"),fontWeight:'bold',fontSize:widthToDp("4.3%") }}>{this.state.languages[1].value}</Text>
                             <Icon
@@ -94,7 +109,7 @@ export default class DashBoardScreen extends Component {
                         </View>
                         </TouchableOpacity>
 
-                        <TouchableOpacity>
+                        <TouchableOpacity > 
                         <View style={{ backgroundColor: BaseColor.Ho, width: widthToDp("30%"), height: heightToDp("6%"), marginLeft: widthToDp("2%"), borderRadius: 100,flexDirection:'row' }}>
                             <Text style={{ color: '#fff', marginTop: heightToDp("1.5%"), marginLeft:widthToDp("5%"),fontWeight:'bold',fontSize:widthToDp("4.3%") }}>{this.state.languages[2].value}</Text>
                             <Icon
@@ -107,7 +122,7 @@ export default class DashBoardScreen extends Component {
                         </TouchableOpacity>
                 </View>
                 <View style={{ flexDirection: 'row', marginTop: heightToDp("1%"), marginLeft: widthToDp("1%"),alignSelf:'center' }}>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={() => this.changeLanguage(this.state.languages[3].id)}>
                         <View style={{ backgroundColor: BaseColor.Uridia, width: widthToDp("30%"), height: heightToDp("6%"), borderRadius: 100,flexDirection:'row' }}>
                             <Text style={{ color: '#fff', marginTop: heightToDp("1.7%"),marginLeft:widthToDp("4.7%"),fontWeight:'bold',fontSize:widthToDp("4.3%") }}>{this.state.languages[3].value}</Text>
                             <Icon
@@ -119,7 +134,7 @@ export default class DashBoardScreen extends Component {
                         </View>
                         </TouchableOpacity>
 
-                        <TouchableOpacity>
+                        <TouchableOpacity >
                     <View style={{backgroundColor:BaseColor.Santhali, width: widthToDp("30%"), height: heightToDp("6%"),  borderRadius: 100, marginLeft: widthToDp("2%"),flexDirection:'row' }}>
                         <Text style={{ color: '#fff', marginTop: heightToDp("1.7%"), marginLeft:widthToDp("3.4%"),fontWeight:'bold',fontSize:widthToDp("4.3%") }}>{this.state.languages[4].value}</Text>
                         <Icon
