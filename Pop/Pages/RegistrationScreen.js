@@ -51,8 +51,11 @@ export default class RegistrationScreen extends Component {
       value: '',
       status: '',
       passwordVisibility: true,
-      isLoading: false
+      isLoading: false,
+      selectedLanguage: ''
     }
+
+    this.state.selectedLanguage = this.props.route.params.selectedLanguage
   }
 
   componentDidMount() {
@@ -159,7 +162,8 @@ export default class RegistrationScreen extends Component {
       // })
       this.props.navigation.reset({
         index: 0,
-        routes: [{ name: "SigninScreen" }]
+        routes: [{ name: "SigninScreen" ,
+      params : {selectedLanguage:this.state.selectedLanguage}}]
       });
     }
   }

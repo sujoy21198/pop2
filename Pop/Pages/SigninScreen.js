@@ -74,7 +74,7 @@ export default class SigninScreen extends Component {
                 load = false
                 Toast.show({
                     text: response.data.msg,
-                    type: 'success',
+                    type: 'danger',
                     duration: 3000
                 })
             }   
@@ -104,7 +104,11 @@ export default class SigninScreen extends Component {
 
     navigateToRegistration = () => {
         LanguageChange.setLanguage(this.state.selectedLanguage)
-        this.props.navigation.navigate('RegistrationScreen',{selectedLanguage : this.state.selectedLanguage})
+        this.props.navigation.navigate('RegistrationScreen')
+        this.props.navigation.navigate({
+            name: 'RegistrationScreen',
+            params : {selectedLanguage:this.state.selectedLanguage}
+        })
     }
 
     render() {

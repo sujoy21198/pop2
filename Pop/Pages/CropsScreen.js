@@ -12,6 +12,7 @@ import axios from 'axios'
 import DataAccess from '../Core/DataAccess'
 import CustomIndicator from '../Core/CustomIndicator'
 import Languages from '../Core/Languages'
+import LanguageChange from '../Core/LanguageChange'
 
 
 
@@ -158,7 +159,7 @@ export default class CropsScreen extends Component {
                     </TouchableOpacity>
                 </View>
                 <View style={{ borderBottomColor: BaseColor.Stroke, borderBottomWidth: 1, marginTop: heightToDp('1.5%'), width: widthToDp("100%") }}></View>
-                <Text style={{ marginLeft: widthToDp("3%"), marginTop: heightToDp("2%"), fontSize: widthToDp("7%"), fontFamily: 'Oswald-Medium' }}>CROPS</Text>
+                <Text style={{ marginLeft: widthToDp("3%"), marginTop: heightToDp("2%"), fontSize: widthToDp("7%"), fontFamily: 'Oswald-Medium' }}>{LanguageChange.crops}</Text>
                 {
                     this.state.isLoading ? <View style={{justifyContent:'center',marginTop:heightToDp("20%")}}><CustomIndicator IsLoading={this.state.isLoading} /></View> : null
                 }
