@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, TouchableOpacity, StyleSheet,ScrollView } from 'react-native'
+import { View, TouchableOpacity, StyleSheet, ScrollView } from 'react-native'
 import { Text, Toast } from 'native-base'
 import { heightToDp, widthToDp } from '../Responsive'
 import BaseColor from '../Core/BaseTheme'
@@ -13,6 +13,7 @@ import DataAccess from '../Core/DataAccess'
 import CustomIndicator from '../Core/CustomIndicator'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import LanguageChange from '../Core/LanguageChange'
+import DeviceInfo from 'react-native-device-info'
 
 export default class SigninScreen extends Component {
     constructor(props) {
@@ -22,28 +23,63 @@ export default class SigninScreen extends Component {
             username: '',
             password: '',
             isLoading: false,
-            selectedLanguage: ''
+            selectedLanguage: '',
+            loadPhoneNumber: false
         }
 
         this.state.selectedLanguage = this.props.route.params.selectedLanguage
         //alert(this.state.languageCode)
     }
 
+    componentDidMount() {
+        this.getCustodianMobileNumber()
+       
+    }
+
+    getCustodianMobileNumber = async () => {
+        
+        let deviceId = await DeviceInfo.getAndroidId()
+        var load = true
+        this.setState({ loadPhoneNumber: true })
+        var phone
+        await axios.get(DataAccess.BaseUrl + DataAccess.AccessUrl + DataAccess.CustodianNumber + deviceId, {
+        }).then(function (response) {
+            load = false
+            console.log(response.data.data.phone)
+            phone = response.data.data.phone
+        }).catch(function (error) {
+            console.log(error)
+        })
+
+        if (load === false) {
+            this.setState({ loadPhoneNumber: false })
+        }
+        this.setState({ phoneNumber: phone })
+
+    }
+
     signIn = async () => {
         var load = true
-        this.setState({isLoading:true})
+        this.setState({ isLoading: true })
         var name = this.state.username
         var redirect = false
-        if (this.state.phoneNumber.length != 10) {
-            this.setState({isLoading:false})
-            return Toast.show({
-                text: "Phone number shoud consist of 10 digits",
-                duration: 3000,
-                type: 'danger'
+
+
+        if(this.state.username === ''){
+            Toast.show({
+                text: "please enter username",
+                type: 'danger',
+                duration: 3000
+            })
+        }else if(this.state.password === ''){
+            Toast.show({
+                text: "please enter password",
+                type: 'danger',
+                duration: 3000
             })
         }
 
-        await axios.post(DataAccess.BaseUrl +DataAccess.AccessUrl+ DataAccess.SignIn, {
+        await axios.post(DataAccess.BaseUrl + DataAccess.AccessUrl + DataAccess.SignIn, {
             phone: this.state.phoneNumber,
             username: this.state.username,
             password: this.state.password
@@ -57,45 +93,45 @@ export default class SigninScreen extends Component {
             console.log(response.data.data.token)
             console.log(response.data.data.type)
             console.log(response.data.data.username)
-            if(response.data.status === 1){
+            if (response.data.status === 1) {
                 console.log("yes")
                 redirect = true
                 Toast.show({
-                    text: "Welcome" + " "+name,
+                    text: "Welcome" + " " + name,
                     type: 'success',
                     duration: 3000
                 })
-                AsyncStorage.setItem("_id",response.data.data._id)
-                AsyncStorage.setItem("name",response.data.data.name)
-                AsyncStorage.setItem("token",response.data.data.token)
-                AsyncStorage.setItem("type",response.data.data.type)
-                AsyncStorage.setItem("username",response.data.data.username)
-            }else{
+                AsyncStorage.setItem("_id", response.data.data._id)
+                AsyncStorage.setItem("name", response.data.data.name)
+                AsyncStorage.setItem("token", response.data.data.token)
+                AsyncStorage.setItem("type", response.data.data.type)
+                AsyncStorage.setItem("username", response.data.data.username)
+            } else {
                 load = false
                 Toast.show({
                     text: response.data.msg,
                     type: 'danger',
                     duration: 3000
                 })
-            }   
-            
-        }).catch(function (error){
+            }
+
+        }).catch(function (error) {
             load = false
             console.log(error)
         })
 
-        if(load === false){
-            this.setState({isLoading : false})
+        if (load === false) {
+            this.setState({ isLoading: false })
         }
 
-        if(redirect === true){
+        if (redirect === true) {
             // this.props.navigation.navigate({
             //     name: 'DashBoardScreen'
             // })
             this.props.navigation.reset({
-                index:0,
-                routes:[
-                    {name:"DashBoardScreen"}
+                index: 0,
+                routes: [
+                    { name: "DashBoardScreen" }
                 ]
             });
         }
@@ -107,14 +143,14 @@ export default class SigninScreen extends Component {
         this.props.navigation.navigate('RegistrationScreen')
         this.props.navigation.navigate({
             name: 'RegistrationScreen',
-            params : {selectedLanguage:this.state.selectedLanguage}
+            params: { selectedLanguage: this.state.selectedLanguage }
         })
     }
 
     render() {
         return (
             <KeyboardAwareScrollView style={{ backgroundColor: BaseColor.BackgroundColor, flex: 1 }}
-            keyboardShouldPersistTaps='handled'
+                keyboardShouldPersistTaps='handled'
             >
                 <View >
                     <View style={{ marginTop: heightToDp("3%"), alignSelf: "center" }}>
@@ -123,15 +159,12 @@ export default class SigninScreen extends Component {
                     <View style={{ marginTop: heightToDp("5%") }}>
                         <Text style={{ fontSize: widthToDp("7%"), alignSelf: 'center', fontFamily: 'Oswald-SemiBold' }}>{LanguageChange.signIn}</Text>
                     </View>
-                    <View style={{ marginTop: heightToDp("2%"), marginLeft: widthToDp("10%") }}>
-                        <FloatingLabel
-                            labelStyle={styles.labelInput}
-                            inputStyle={styles.input}
-                            style={styles.formInput}
-                            keyboardType='numeric'
-                            onChangeText={(text) => { this.setState({ phoneNumber: text }) }}
-                        // onBlur={this.onBlur}
-                        >{LanguageChange.contactNumber}</FloatingLabel>
+                    <View style={{ marginTop: heightToDp("5%"), marginLeft: widthToDp("8%") }}>
+                    {
+                        this.state.loadPhoneNumber ? <CustomIndicator IsLoading={this.state.loadPhoneNumber} /> : null
+                    }
+                        <Text style={{ fontSize: widthToDp("4.6%"), marginLeft: widthToDp("2%"), fontFamily: 'Oswald-Medium' }}>{this.state.phoneNumber}</Text>
+                        <View style={{ borderBottomColor: 'black', borderBottomWidth: 1, marginTop: heightToDp('0.1%'), width: widthToDp("80%"), marginLeft: widthToDp("2%") }}></View>
                     </View>
                     {/* <View style={{ marginTop: heightToDp("5%"), marginLeft: widthToDp("10%") }}>
                     <Text style={{ fontSize: widthToDp("5%") }}>CONTACT NUMBER</Text>
@@ -156,7 +189,7 @@ export default class SigninScreen extends Component {
                             inputStyle={styles.input}
                             style={styles.formInput}
                             password={true}
-                            
+
                             onChangeText={(text) => { this.setState({ password: text }) }}
                         // onBlur={this.onBlur}
                         >{LanguageChange.password}</FloatingLabel>
@@ -168,7 +201,7 @@ export default class SigninScreen extends Component {
                     {
                         this.state.isLoading ? <CustomIndicator IsLoading={this.state.isLoading} /> : null
                     }
-                    
+
                     <TouchableOpacity onPress={() => this.signIn()}>
                         <View style={{ backgroundColor: BaseColor.SecondaryColor, marginTop: heightToDp("5%"), width: widthToDp("37%"), alignSelf: 'center', height: heightToDp("5%"), borderRadius: 100 }}>
                             <Text style={{ alignSelf: 'center', marginTop: heightToDp("0.5%"), fontWeight: '500', fontSize: widthToDp("5%"), fontFamily: 'Oswald-Medium' }}>{LanguageChange.signIn}</Text>
@@ -211,8 +244,8 @@ var styles = StyleSheet.create({
     },
     input: {
         borderWidth: 0,
-        height:heightToDp("6%"),
-        fontSize:widthToDp("5%"),
+        height: heightToDp("6%"),
+        fontSize: widthToDp("5%"),
         fontFamily: 'Oswald-Light'
     }
 });

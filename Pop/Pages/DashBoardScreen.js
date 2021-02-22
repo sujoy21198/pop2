@@ -41,7 +41,11 @@ export default class DashBoardScreen extends Component {
         this.state.data[5].name = LanguageChange.generalSettings
         
     }
-    
+
+    componentDidMount(){
+        
+    }
+
     changeLanguage = (id) => {
         //alert(id)
         AsyncStorage.setItem('language',id)

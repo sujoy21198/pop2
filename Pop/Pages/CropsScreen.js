@@ -23,7 +23,8 @@ export default class CropsScreen extends Component {
         this.state = {
             crops: [],
             isLoading: false,
-            languages: []
+            languages: [],
+            isFetching: false
         }
         this.state.languages = Languages
     }
@@ -33,13 +34,13 @@ export default class CropsScreen extends Component {
 
     loadCrops = async () => {
 
-        this.setState({isLoading:true})
+        this.setState({ isLoading: true })
         var load = true
         var username = await AsyncStorage.getItem('username')
         var token = await AsyncStorage.getItem('token')
         var encodedUsername = base64.encode(username)
         var cropsArray = []
-        console.log(token+ " token from crops")
+        console.log(token + " token from crops")
         await axios.get(DataAccess.BaseUrl + DataAccess.AccessUrl + DataAccess.Crops, {
             headers: {
                 'Content-type': "accept",
@@ -49,7 +50,7 @@ export default class CropsScreen extends Component {
         }).then(function (response) {
             //console.log(response.data.data)
             cropsArray = response.data.data
-            if(response.data.status === 1){
+            if (response.data.status === 1) {
                 load = false
             }
             // console.log(cropsArray)
@@ -61,8 +62,9 @@ export default class CropsScreen extends Component {
         })
 
 
-        if(load === false){
-            this.setState({isLoading:false})
+        if (load === false) {
+            this.setState({ isLoading: false })
+            this.setState({ isFetching: false })
         }
 
         this.setState({
@@ -70,13 +72,17 @@ export default class CropsScreen extends Component {
         })
     }
 
-    navigateToLandScreen = (data) =>{
+    navigateToLandScreen = (data) => {
         this.props.navigation.navigate({
             name: 'LandTypeScreen',
             params: {
-                _id : data,
+                _id: data,
             }
         })
+    }
+
+    onRefresh = () => {
+        this.setState({ isFetching: true }, function () { this.loadCrops() });
     }
 
     render() {
@@ -84,7 +90,7 @@ export default class CropsScreen extends Component {
         cropsArray = this.state.crops
         console.log(cropsArray)
         return (
-            <View style={{ backgroundColor: BaseColor.BackgroundColor }}>
+            <View style={{ backgroundColor: BaseColor.BackgroundColor}}>
                 <View style={{ backgroundColor: 'white', width: widthToDp("100%"), height: heightToDp("13%"), flexDirection: 'row' }}>
                     <View style={{ marginTop: heightToDp("3%"), marginLeft: widthToDp("3%") }}>
                         <TopLogo />
@@ -110,80 +116,83 @@ export default class CropsScreen extends Component {
                     </TouchableOpacity>
 
                     <TouchableOpacity >
-                        <View style={{ backgroundColor: BaseColor.Hindi, width: widthToDp("30%"), height: heightToDp("6%"), marginLeft: widthToDp("2%"), borderRadius: 100,flexDirection:'row' }}>
-                            <Text style={{ color: '#fff', marginTop: heightToDp("1.7%"), marginLeft:widthToDp("5%"),fontWeight:'bold',fontSize:widthToDp("4.3%") }}>{this.state.languages[1].value}</Text>
+                        <View style={{ backgroundColor: BaseColor.Hindi, width: widthToDp("30%"), height: heightToDp("6%"), marginLeft: widthToDp("2%"), borderRadius: 100, flexDirection: 'row' }}>
+                            <Text style={{ color: '#fff', marginTop: heightToDp("1.7%"), marginLeft: widthToDp("5%"), fontWeight: 'bold', fontSize: widthToDp("4.3%") }}>{this.state.languages[1].value}</Text>
                             <Icon
-                            name="microphone"
-                            color="white"
-                            size={20}
-                            style={{marginTop:heightToDp("1.8%"),marginLeft:widthToDp("9%")}}
+                                name="microphone"
+                                color="white"
+                                size={20}
+                                style={{ marginTop: heightToDp("1.8%"), marginLeft: widthToDp("9%") }}
                             />
                         </View>
-                        </TouchableOpacity>
+                    </TouchableOpacity>
 
-                        <TouchableOpacity>
-                        <View style={{ backgroundColor: BaseColor.Ho, width: widthToDp("30%"), height: heightToDp("6%"), marginLeft: widthToDp("2%"), borderRadius: 100,flexDirection:'row' }}>
-                            <Text style={{ color: '#fff', marginTop: heightToDp("1.5%"), marginLeft:widthToDp("5%"),fontWeight:'bold',fontSize:widthToDp("4.3%") }}>{this.state.languages[2].value}</Text>
+                    <TouchableOpacity>
+                        <View style={{ backgroundColor: BaseColor.Ho, width: widthToDp("30%"), height: heightToDp("6%"), marginLeft: widthToDp("2%"), borderRadius: 100, flexDirection: 'row' }}>
+                            <Text style={{ color: '#fff', marginTop: heightToDp("1.5%"), marginLeft: widthToDp("5%"), fontWeight: 'bold', fontSize: widthToDp("4.3%") }}>{this.state.languages[2].value}</Text>
                             <Icon
-                            name="microphone"
-                            color="white"
-                            size={20}
-                            style={{marginTop:heightToDp("1.8%"),marginLeft:widthToDp("6.3%")}}
+                                name="microphone"
+                                color="white"
+                                size={20}
+                                style={{ marginTop: heightToDp("1.8%"), marginLeft: widthToDp("6.3%") }}
                             />
                         </View>
-                        </TouchableOpacity>
+                    </TouchableOpacity>
                 </View>
-                <View style={{ flexDirection: 'row', marginTop: heightToDp("1%"), marginLeft: widthToDp("1%"),alignSelf:'center' }}>
-                <TouchableOpacity>
-                        <View style={{ backgroundColor: BaseColor.Uridia, width: widthToDp("30%"), height: heightToDp("6%"), borderRadius: 100,flexDirection:'row' }}>
-                            <Text style={{ color: '#fff', marginTop: heightToDp("1.7%"),marginLeft:widthToDp("4.7%"),fontWeight:'bold',fontSize:widthToDp("4.3%") }}>{this.state.languages[3].value}</Text>
+                <View style={{ flexDirection: 'row', marginTop: heightToDp("1%"), marginLeft: widthToDp("1%"), alignSelf: 'center' }}>
+                    <TouchableOpacity>
+                        <View style={{ backgroundColor: BaseColor.Uridia, width: widthToDp("30%"), height: heightToDp("6%"), borderRadius: 100, flexDirection: 'row' }}>
+                            <Text style={{ color: '#fff', marginTop: heightToDp("1.7%"), marginLeft: widthToDp("4.7%"), fontWeight: 'bold', fontSize: widthToDp("4.3%") }}>{this.state.languages[3].value}</Text>
                             <Icon
-                            name="microphone"
-                            color="white"
-                            size={20}
-                            style={{marginTop:heightToDp("1.8%"),marginLeft:widthToDp("6.9%")}}
+                                name="microphone"
+                                color="white"
+                                size={20}
+                                style={{ marginTop: heightToDp("1.8%"), marginLeft: widthToDp("6.9%") }}
                             />
                         </View>
-                        </TouchableOpacity>
+                    </TouchableOpacity>
 
-                        <TouchableOpacity>
-                    <View style={{backgroundColor:BaseColor.Santhali, width: widthToDp("30%"), height: heightToDp("6%"),  borderRadius: 100, marginLeft: widthToDp("2%"),flexDirection:'row' }}>
-                        <Text style={{ color: '#fff', marginTop: heightToDp("1.7%"), marginLeft:widthToDp("3.4%"),fontWeight:'bold',fontSize:widthToDp("4.3%") }}>{this.state.languages[4].value}</Text>
-                        <Icon
-                            name="microphone"
-                            color="white"
-                            size={20}
-                            style={{marginTop:heightToDp("1.8%"),marginLeft:widthToDp("3%")}}
+                    <TouchableOpacity>
+                        <View style={{ backgroundColor: BaseColor.Santhali, width: widthToDp("30%"), height: heightToDp("6%"), borderRadius: 100, marginLeft: widthToDp("2%"), flexDirection: 'row' }}>
+                            <Text style={{ color: '#fff', marginTop: heightToDp("1.7%"), marginLeft: widthToDp("3.4%"), fontWeight: 'bold', fontSize: widthToDp("4.3%") }}>{this.state.languages[4].value}</Text>
+                            <Icon
+                                name="microphone"
+                                color="white"
+                                size={20}
+                                style={{ marginTop: heightToDp("1.8%"), marginLeft: widthToDp("3%") }}
                             />
-                    </View>
+                        </View>
                     </TouchableOpacity>
                 </View>
                 <View style={{ borderBottomColor: BaseColor.Stroke, borderBottomWidth: 1, marginTop: heightToDp('1.5%'), width: widthToDp("100%") }}></View>
                 <Text style={{ marginLeft: widthToDp("3%"), marginTop: heightToDp("2%"), fontSize: widthToDp("7%"), fontFamily: 'Oswald-Medium' }}>{LanguageChange.crops}</Text>
                 {
-                    this.state.isLoading ? <View style={{justifyContent:'center',marginTop:heightToDp("20%")}}><CustomIndicator IsLoading={this.state.isLoading} /></View> : null
+                    this.state.isLoading ? <View style={{ justifyContent: 'center', marginTop: heightToDp("20%"),backgroundColor: BaseColor.BackgroundColor }}><CustomIndicator IsLoading={this.state.isLoading} /></View> :
+                        <View>
+                            <FlatGrid
+                                style={{ marginTop: heightToDp("1%"), marginBottom: heightToDp("74%"),backgroundColor:BaseColor.BackgroundColor }}
+                                bounces={true}
+                                itemDimension={130}
+                                data={Object.values(cropsArray)}
+                                bouncesZoom={true}
+                                onRefresh={() => this.onRefresh()}
+                                refreshing={this.state.isFetching}
+                                renderItem={({ item }) => (
+                                    <TouchableOpacity onPress={() => this.navigateToLandScreen(item._id)}>
+                                        <View style={{ backgroundColor: BaseColor.Red, width: widthToDp("47%"), height: heightToDp("30%"), elevation: 10, borderRadius: 10 }}>
+                                            <Text style={{ color: "#fff", fontSize: widthToDp("5%"), marginLeft: widthToDp("5%"), marginTop: heightToDp("0.4%"), fontFamily: 'Oswald-Medium' }}>{item.name}</Text>
+                                            <Image
+                                                style={{ width: widthToDp("47%"), height: heightToDp("25%"), borderBottomLeftRadius: 10, borderBottomRightRadius: 10, marginTop: heightToDp("1%") }}
+                                                source={{ uri: DataAccess.BaseUrl + DataAccess.CropImage + item.imageFile }}
+                                            />
+                                        </View>
+                                    </TouchableOpacity>
+                                )}
+                            />
+                        </View>
                 }
 
-                <View>
-                    <FlatGrid
-                        style={{ marginTop: heightToDp("1%"), marginBottom: heightToDp("74%") }}
-                        bounces={true}
-                        itemDimension={130}
-                        data={Object.values(cropsArray)}
-                        bouncesZoom={true}
-                        renderItem={({ item }) => (
-                            <TouchableOpacity onPress={() => this.navigateToLandScreen(item._id)}>
-                                <View style={{ backgroundColor: BaseColor.Red, width: widthToDp("47%"), height: heightToDp("30%"), elevation: 10, borderRadius: 10 }}>
-                                    <Text style={{ color: "#fff", fontSize: widthToDp("5%"), marginLeft: widthToDp("5%"), marginTop: heightToDp("0.4%"), fontFamily: 'Oswald-Medium' }}>{item.name}</Text>
-                                    <Image
-                                        style={{ width: widthToDp("47%"), height: heightToDp("25%"), borderBottomLeftRadius: 10, borderBottomRightRadius: 10, marginTop: heightToDp("1%") }}
-                                        source={{ uri: DataAccess.BaseUrl+DataAccess.CropImage + item.imageFile }}
-                                    />
-                                </View>
-                            </TouchableOpacity>
-                        )}
-                    />
-                </View>
+
             </View>
         );
     }
