@@ -88,11 +88,11 @@ export default class SigninScreen extends Component {
                 'Content-type': 'application/json'
             }
         }).then(function (response) {
-            console.log(response.data.data._id)
-            console.log(response.data.data.name)
-            console.log(response.data.data.token)
-            console.log(response.data.data.type)
-            console.log(response.data.data.username)
+            // console.log(response.data.data._id)
+            // console.log(response.data.data.name)
+            // console.log(response.data.data.token)
+            // console.log(response.data.data.type)
+            // console.log(response.data.data.username)
             if (response.data.status === 1) {
                 console.log("yes")
                 redirect = true
@@ -104,7 +104,6 @@ export default class SigninScreen extends Component {
                 AsyncStorage.setItem("_id", response.data.data._id)
                 AsyncStorage.setItem("name", response.data.data.name)
                 AsyncStorage.setItem("token", response.data.data.token)
-                AsyncStorage.setItem("type", response.data.data.type)
                 AsyncStorage.setItem("username", response.data.data.username)
             } else {
                 load = false
@@ -124,6 +123,33 @@ export default class SigninScreen extends Component {
             this.setState({ isLoading: false })
         }
 
+        let _id = await AsyncStorage.getItem('_id')
+        let reqname = await AsyncStorage.getItem('name')
+        let token = await AsyncStorage.getItem('token')
+        let username = await AsyncStorage.getItem('username')
+
+        const userToBeSaved = {'_id': _id , 'name' : reqname, 'token':token, 'username':username , 'syncStatus':false, 'cropData' : [], 'livestockData':[], 'moneyManagerData':[] }
+        const exsistingUser = await AsyncStorage.getItem('user')
+        let newUser = JSON.parse(exsistingUser)
+        if(!newUser){
+            newUser = []
+        }
+
+        var valueArr = newUser.map(function(item){return item._id})
+        if(valueArr.includes(_id)){
+            console.log("NO")
+        }else{
+            newUser.push(userToBeSaved)
+        }
+
+        await AsyncStorage.setItem("user", JSON.stringify(newUser))
+            .then(() => {
+                console.log('‘It was saved successfully’')
+            })
+            .catch(() => {
+                console.log('‘There was an error saving the product’')
+            })
+
         if (redirect === true) {
             // this.props.navigation.navigate({
             //     name: 'DashBoardScreen'
@@ -134,6 +160,33 @@ export default class SigninScreen extends Component {
                     { name: "DashBoardScreen" }
                 ]
             });
+        }
+    }
+
+    displayData = async() => {
+        try {
+            //var count = 8
+            let user = await AsyncStorage.getItem('user');
+            let parsed = JSON.parse(user);
+            console.log(JSON.stringify(parsed))
+            // var valueArr = parsed.map(function(item){ return item.userId });
+            // alert(valueArr)
+            // var specificObject = parsed.find((i) => i.userId === count)
+            // console.log(specificObject.userId)
+
+            //console.log(specificObject.userId = count+1)
+            // console.log(specificObject.userId = 6)
+            //await AsyncStorage.setItem('products',JSON.stringify(parsed))
+
+
+            //alert(parsed[0].item = "bitch")
+            // await AsyncStorage.setItem('products',JSON.stringify(parsed))
+            // console.log(JSON.stringify(parsed))
+            //alert(JSON.stringify(parsed));
+            // console.log(JSON.stringify(parsed))
+        }
+        catch (error) {
+            alert(error)
         }
     }
 
@@ -216,7 +269,7 @@ export default class SigninScreen extends Component {
 
                     <View style={{ borderBottomColor: BaseColor.Stroke, borderBottomWidth: 1, marginTop: heightToDp('1.5%'), width: widthToDp("100%") }}></View>
 
-                    <TouchableOpacity >
+                    <TouchableOpacity onPress={() => this.displayData()}>
                         <View style={{ backgroundColor: BaseColor.SecondaryColor, marginTop: heightToDp("3%"), width: widthToDp("37%"), alignSelf: 'center', height: heightToDp("5%"), borderRadius: 100 }}>
                             <Text style={{ alignSelf: 'center', marginTop: heightToDp("0.4%"), fontWeight: '500', fontSize: widthToDp("5%"), fontFamily: 'Oswald-Medium' }}>{LanguageChange.guestSignIn}</Text>
                         </View>
