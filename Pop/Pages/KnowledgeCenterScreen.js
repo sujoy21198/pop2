@@ -43,6 +43,11 @@ export default class KnowledgeCenterScreen extends Component {
         this.state.data[1].name = LanguageChange.livestock
         this.state.data[2].name = LanguageChange.smallBusiness
         this.state.data[3].name = LanguageChange.nutrition
+        this.props.navigation.reset({
+            index: 0,
+            routes: [{ name: "DashBoardScreen" }]
+        });
+        
     }
 
 
