@@ -57,20 +57,25 @@ export default class SelectFarmingAreaScreen extends Component {
             var length = this.state.horizontalCounter * 5
             var width = this.state.verticalCounter * 5
             var farmingAreaInSqFeet = length*width
-            var farmingAreaInDecimal = farmingAreaInSqFeet/436
-            var productionInKg = (400/10)* farmingAreaInDecimal
-            var costOfCultivatinPerTenDecimal = (2810/10)* farmingAreaInDecimal
-            var costPerKg = parseFloat(35 * productionInKg).toFixed(2)  
-            console.log(costPerKg)
+            var farmingAreaInDecimal = parseFloat(farmingAreaInSqFeet/436).toFixed(2)
+            var productionInKg = parseFloat((400/10)* farmingAreaInDecimal).toFixed(2)
+            var costOfCultivatinPerTenDecimal = parseFloat((2810/10)* farmingAreaInDecimal).toFixed(2)//expense
+            var costPerKg = parseFloat(35 * productionInKg).toFixed(2) //income
+
+            this.props.navigation.navigate({
+                name: 'AnalysisScreen',
+                params: {
+                    landType: this.state.landType,
+                    _id: this.state._id,
+                    cropName: this.state.cropName,
+                    farmingAreaInDecimal: farmingAreaInDecimal,
+                    costOfCultivatinPerTenDecimal: costOfCultivatinPerTenDecimal,
+                    costPerKg: costPerKg,
+                    productionInKg:productionInKg,
+                    cost: 35
+                }
+            })
         }
-        // this.props.navigation.navigate({
-        //     name: 'AnalysisScreen',
-        //     params: {
-        //         landType: this.state.landType,
-        //         _id: this.state._id,
-        //         cropName: this.state.cropName
-        //     }
-        // })
     }
 
 

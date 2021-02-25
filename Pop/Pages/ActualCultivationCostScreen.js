@@ -10,6 +10,10 @@ import Icon from 'react-native-vector-icons/FontAwesome'
 
 
 export default class ActualCultivationCost extends Component {
+
+    nextScreen = () => {
+        alert("coming soon")
+    }
     render() {
         return (
             <KeyboardAwareScrollView style={{ backgroundColor: BaseColor.BackgroundColor, flex: 1 }}>
@@ -90,7 +94,7 @@ export default class ActualCultivationCost extends Component {
                 <View style={{ borderBottomColor: BaseColor.Stroke, borderBottomWidth: 1, marginTop: heightToDp('1.5%'), width: widthToDp("100%") }}></View>
                 <Text style={{ fontSize: widthToDp("6%"), marginLeft: widthToDp("3%"), marginTop: heightToDp("1%"), fontFamily: 'Oswald-Medium' }}>ACTUAL CULTIVATION COST</Text>
                 
-                <View style={{ backgroundColor: 'white',height:heightToDp("24%"),width:widthToDp("95%"),alignSelf:'center',marginTop:heightToDp("3%"),borderRadius:10 }}>
+                <View style={{ backgroundColor: 'white',height:heightToDp("40%"),width:widthToDp("95%"),alignSelf:'center',marginTop:heightToDp("3%"),borderRadius:10 }}>
                     <Text style={{ fontFamily: 'Oswald-Light',marginLeft:widthToDp("2%"),marginTop:heightToDp("1%") }}>PRODUCTION IN KGs</Text>
                     <FloatingLabel
                         labelStyle={styles.labelInput}
@@ -105,10 +109,17 @@ export default class ActualCultivationCost extends Component {
                         style={styles.formInput}
                     // onBlur={this.onBlur}
                     >₹</FloatingLabel>
+                    <Text style={{ fontFamily: 'Oswald-Light' ,marginLeft:widthToDp("2%"),marginTop:heightToDp("1%")}}>TOTAL EXPENSE</Text>
+                    <FloatingLabel
+                        labelStyle={styles.labelInput}
+                        inputStyle={styles.input}
+                        style={styles.formInput}
+                    // onBlur={this.onBlur}
+                    >₹</FloatingLabel>
                 </View>
 
                 <View style={{ height: heightToDp("10%") }}>
-                        <TouchableOpacity onPress={()=> this.props.navigation.navigate('CostBenifitAnalysisScreen')}>
+                        <TouchableOpacity onPress={()=> {this.nextScreen()}}>
                             <View style={{ backgroundColor: "#fff", height: heightToDp("6%"), width: widthToDp("30%"), borderRadius: 100, alignSelf:'center', marginTop: heightToDp("2%") }}>
                                 <Text style={{ fontSize: widthToDp("4%"), color: "#000", marginTop: heightToDp("1.4%"), alignSelf: 'center',fontFamily:'Oswald-Medium' }}>SUBMIT</Text>
                             </View>

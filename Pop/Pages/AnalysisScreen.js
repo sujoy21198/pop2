@@ -20,19 +20,23 @@ export default class LandTypeScreen extends Component {
         super(props)
         this.state={
             landType:'',
-            farmingAreaInDecimal : '',
-            productionInKg : '',
-            expense : '',
-            totalIncomeFromCrop : '',
-            netProfit:'',
-            _id:''
+            _id:'',
+            cropName:'',
+            farmingAreaInDecimal:'',
+            costOfCultivatinPerTenDecimal:'',
+            costPerKg:'',
+            productionInKg:'',
+            netProfit :'',
+            cost:''
         }
         this.state.landType = this.props.route.params.landType
-        this.state.farmingAreaInDecimal = this.props.route.params.farmingAreaInDecimal
-        this.state.expense = this.props.route.params.expense
-        this.state.totalIncomeFromCrop = this.props.route.params.totalIncomeFromCrop
-        this.state.productionInKg = this.props.route.params.productionInKg
         this.state._id = this.props.route.params._id
+        this.state.cropName = this.props.route.params.cropName
+        this.state.farmingAreaInDecimal = this.props.route.params.farmingAreaInDecimal
+        this.state.costOfCultivatinPerTenDecimal = this.props.route.params.costOfCultivatinPerTenDecimal //expense
+        this.state.costPerKg = this.props.route.params.costPerKg //income
+        this.state.productionInKg = this.props.route.params.productionInKg
+        this.state.cost = this.props.route.params.cost
 
 
         this.netProfitCalculation()
@@ -40,20 +44,20 @@ export default class LandTypeScreen extends Component {
     }
 
     netProfitCalculation = () => {
-        var netProfit = this.state.totalIncomeFromCrop - this.state.expense
+        var netProfit = this.state.costPerKg - this.state.costOfCultivatinPerTenDecimal //expense - profit
         this.state.netProfit = netProfit
     }
 
-    comingSoon = () => {
-        // alert(this.state._id)
+    stepOneScreen = () => {
         this.props.navigation.navigate({
             name: 'StepOneScreen',
             params: {
-                _id : this.state._id,
-                count: 0
+                cropName: this.state.cropName,
+                _id: this.state._id
             }
         })
     }
+
     render() {
         return (
             <View style={{ backgroundColor: BaseColor.BackgroundColor, flex: 1 }}>
@@ -165,11 +169,11 @@ export default class LandTypeScreen extends Component {
                             <View style={{ borderBottomColor: 'black', borderBottomWidth: 1, marginTop: heightToDp('1.5%'), width: widthToDp("90%") }}></View>
                             <View style={{ flexDirection: 'row', marginLeft: widthToDp("4%"), marginTop: heightToDp('2%') }}>
                                 <Text style={{fontFamily:'Oswald-Medium', width: widthToDp("33%")}}>Total cost of cultivation</Text>
-                                <Text style={{ marginLeft: widthToDp("33%"),fontFamily:'Oswald-Medium' }}>₹ {this.state.expense}</Text>
+                                <Text style={{ marginLeft: widthToDp("33%"),fontFamily:'Oswald-Medium' }}>₹ {this.state.costOfCultivatinPerTenDecimal}</Text>
                             </View>
                             <View style={{ flexDirection: 'row', marginLeft: widthToDp("4%"), marginTop: heightToDp('2%') }}>
                                 <Text style={{fontFamily:'Oswald-Medium', width: widthToDp("33%")}}>Total income from crop</Text>
-                                <Text style={{ marginLeft: widthToDp("33%"),fontFamily:'Oswald-Medium' }}>₹ {this.state.totalIncomeFromCrop}</Text>
+                                <Text style={{ marginLeft: widthToDp("33%"),fontFamily:'Oswald-Medium' }}>₹ {this.state.costPerKg}</Text>
                             </View>
                             <View style={{ flexDirection: 'row', marginLeft: widthToDp("4%"), marginTop: heightToDp('2%') }}>
                                 <Text style={{fontFamily:'Oswald-Medium', width: widthToDp("33%")}}>Production</Text>
@@ -177,7 +181,7 @@ export default class LandTypeScreen extends Component {
                             </View>
                             <View style={{ flexDirection: 'row', marginLeft: widthToDp("4%"), marginTop: heightToDp('2%') }}>
                                 <Text style={{fontFamily:'Oswald-Medium', width: widthToDp("33%")}}>Cost Per kg</Text>
-                                <Text style={{ marginLeft: widthToDp("36%"),fontFamily:'Oswald-Medium' }}>₹ 35</Text>
+                                <Text style={{ marginLeft: widthToDp("36%"),fontFamily:'Oswald-Medium' }}>₹ {this.state.cost}</Text>
                             </View>
                             <View style={{ borderBottomColor: 'black', borderBottomWidth: 1, marginTop: heightToDp('1.5%'), width: widthToDp("90%") }}></View>
                             <View style={{ flexDirection: 'row', marginLeft: widthToDp("4%"), marginTop: heightToDp('1%') }}>
@@ -195,7 +199,7 @@ export default class LandTypeScreen extends Component {
                                 <Text style={{ fontSize: widthToDp("4%"), color: "#000", marginTop: heightToDp("1.4%"), alignSelf: 'center',fontFamily:'Oswald-Medium' }}>CANCEL</Text>
                             </View>
                         </TouchableOpacity>
-                        <TouchableOpacity onPress={() => this.comingSoon()}>
+                        <TouchableOpacity onPress={() => {this.stepOneScreen()}}>
                             <View style={{ backgroundColor: "#fff", height: heightToDp("6%"), width: widthToDp("30%"), borderRadius: 100, marginLeft: widthToDp("2%"), marginTop: heightToDp("2%") }}>
                                 <Text style={{ fontSize: widthToDp("4%"), color: "#000", marginTop: heightToDp("1.4%"), alignSelf: 'center' ,fontFamily:'Oswald-Medium'}}>DONE</Text>
                             </View>
