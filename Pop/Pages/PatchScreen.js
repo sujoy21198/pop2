@@ -1,96 +1,59 @@
 import React, { Component } from 'react'
-import { View, Image, TouchableOpacity } from 'react-native'
+import { View, Image, TouchableOpacity, FlatList } from 'react-native'
 import BaseColor from '../Core/BaseTheme'
-import { Text } from 'native-base'
+import { Text, Card } from 'native-base'
 import TopLogo from '../assets/TopLogo'
 import { widthToDp, heightToDp } from '../Responsive'
 import { FlatGrid, SectionGrid } from 'react-native-super-grid'
 import Icon from 'react-native-vector-icons/FontAwesome'
-import AsyncStorage from '@react-native-async-storage/async-storage'
-import base64 from 'react-native-base64'
-import axios from 'axios'
-import DataAccess from '../Core/DataAccess'
-import CustomIndicator from '../Core/CustomIndicator'
 import Languages from '../Core/Languages'
 import LanguageChange from '../Core/LanguageChange'
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import DialogInput from 'react-native-dialog-input';
 
+const data = [
+    { name: 'HIGH LAND', code: 'https://shramajeewiki.com/images/English/00214136.jpg' },
+    { name: 'MEDIUM LAND', code: 'https://timesofindia.indiatimes.com/thumb/msid-60012970,imgsize-2640154,width-400,resizemode-4/60012970.jpg' },
+    { name: 'LOW LAND', code: 'https://www.biggovernment.news/wp-content/uploads/sites/59/2017/06/farmer-plow-field.jpg' }
+]
 
-
-export default class CropsScreen extends Component {
+export default class PatchScreen extends Component {
 
     constructor(props) {
         super(props)
         this.state = {
-            crops: [],
-            isLoading: false,
+            _id: '',
             languages: [],
-            isFetching: false
+            data: [],
+            isDialogVisible: false
         }
         this.state.languages = Languages
-    }
-    componentDidMount() {
-        this.loadCrops()
+        this.state._id = this.props.route.params._id
     }
 
-    loadCrops = async () => {
-
-        this.setState({ isLoading: true })
-        var load = true
-        var username = await AsyncStorage.getItem('username')
-        var token = await AsyncStorage.getItem('token')
-        var encodedUsername = base64.encode(username)
-        var cropsArray = []
-        console.log(token + " token from crops")
-        await axios.get(DataAccess.BaseUrl + DataAccess.AccessUrl + DataAccess.Crops, {
-            headers: {
-                'Content-type': "accept",
-                'X-Information': encodedUsername,
-                'Authorization': "POP " + token
-            }
-        }).then(function (response) {
-            //console.log(response.data.data)
-            cropsArray = response.data.data
-            if (response.data.status === 1) {
-                load = false
-            }
-            // console.log(cropsArray)
-            // var id = cropsArray
-            // console.log(id)
-
-        }).catch(function (error) {
-            console.log(error.message)
-        })
-
-
-        if (load === false) {
-            this.setState({ isLoading: false })
-            this.setState({ isFetching: false })
-        }
-
-        this.setState({
-            crops: cropsArray
-        })
+    addDataToArray = (data) => {
+        var newPatch = []
+        const objToBeSaved = { 'name': data }
+        newPatch.push(objToBeSaved)
+        this.setState({ data: newPatch })
+        this.setState({ isDialogVisible: false })
     }
 
-    navigateToLandScreen = (data) => {
+    showCustomAlert = () => {
+        this.setState({ isDialogVisible: true })
+    }
+
+    navigateToPatch = () => {
         this.props.navigation.navigate({
-            name: 'PatchScreen',
+            name: 'LandTypeScreen',
             params: {
-                _id: data,
+                _id: this.state._id,
             }
         })
     }
-
-    onRefresh = () => {
-        this.setState({ isFetching: true }, function () { this.loadCrops() });
-    }
-
     render() {
-        var cropsArray = []
-        cropsArray = this.state.crops
-        console.log(cropsArray)
         return (
-            <View style={{ backgroundColor: BaseColor.BackgroundColor}}>
+            <View style={{ backgroundColor: BaseColor.BackgroundColor }}>
                 <View style={{ backgroundColor: 'white', width: widthToDp("100%"), height: heightToDp("13%"), flexDirection: 'row' }}>
                     <View style={{ marginTop: heightToDp("3%"), marginLeft: widthToDp("3%") }}>
                         <TopLogo />
@@ -103,7 +66,7 @@ export default class CropsScreen extends Component {
                     />
                 </View>
                 <View style={{ flexDirection: 'row', marginTop: heightToDp("1%"), marginLeft: widthToDp("1%") }}>
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={() => this.changeLanguage(this.state.languages[0].id)}>
                         <View style={{ backgroundColor: BaseColor.English, width: widthToDp("30%"), height: heightToDp("6%"), marginLeft: widthToDp("2%"), borderRadius: 100, flexDirection: 'row' }}>
                             <Text style={{ color: '#fff', marginTop: heightToDp("1.5%"), fontFamily: 'Oswald-Medium', marginLeft: widthToDp("5%") }}>{this.state.languages[0].value}</Text>
                             <Icon
@@ -115,7 +78,7 @@ export default class CropsScreen extends Component {
                         </View>
                     </TouchableOpacity>
 
-                    <TouchableOpacity >
+                    <TouchableOpacity onPress={() => this.changeLanguage(this.state.languages[1].id)}>
                         <View style={{ backgroundColor: BaseColor.Hindi, width: widthToDp("30%"), height: heightToDp("6%"), marginLeft: widthToDp("2%"), borderRadius: 100, flexDirection: 'row' }}>
                             <Text style={{ color: '#fff', marginTop: heightToDp("1.7%"), marginLeft: widthToDp("5%"), fontWeight: 'bold', fontSize: widthToDp("4.3%") }}>{this.state.languages[1].value}</Text>
                             <Icon
@@ -127,7 +90,7 @@ export default class CropsScreen extends Component {
                         </View>
                     </TouchableOpacity>
 
-                    <TouchableOpacity>
+                    <TouchableOpacity >
                         <View style={{ backgroundColor: BaseColor.Ho, width: widthToDp("30%"), height: heightToDp("6%"), marginLeft: widthToDp("2%"), borderRadius: 100, flexDirection: 'row' }}>
                             <Text style={{ color: '#fff', marginTop: heightToDp("1.5%"), marginLeft: widthToDp("5%"), fontWeight: 'bold', fontSize: widthToDp("4.3%") }}>{this.state.languages[2].value}</Text>
                             <Icon
@@ -140,7 +103,7 @@ export default class CropsScreen extends Component {
                     </TouchableOpacity>
                 </View>
                 <View style={{ flexDirection: 'row', marginTop: heightToDp("1%"), marginLeft: widthToDp("1%"), alignSelf: 'center' }}>
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={() => this.changeLanguage(this.state.languages[3].id)}>
                         <View style={{ backgroundColor: BaseColor.Uridia, width: widthToDp("30%"), height: heightToDp("6%"), borderRadius: 100, flexDirection: 'row' }}>
                             <Text style={{ color: '#fff', marginTop: heightToDp("1.7%"), marginLeft: widthToDp("4.7%"), fontWeight: 'bold', fontSize: widthToDp("4.3%") }}>{this.state.languages[3].value}</Text>
                             <Icon
@@ -152,7 +115,7 @@ export default class CropsScreen extends Component {
                         </View>
                     </TouchableOpacity>
 
-                    <TouchableOpacity>
+                    <TouchableOpacity >
                         <View style={{ backgroundColor: BaseColor.Santhali, width: widthToDp("30%"), height: heightToDp("6%"), borderRadius: 100, marginLeft: widthToDp("2%"), flexDirection: 'row' }}>
                             <Text style={{ color: '#fff', marginTop: heightToDp("1.7%"), marginLeft: widthToDp("3.4%"), fontWeight: 'bold', fontSize: widthToDp("4.3%") }}>{this.state.languages[4].value}</Text>
                             <Icon
@@ -164,35 +127,39 @@ export default class CropsScreen extends Component {
                         </View>
                     </TouchableOpacity>
                 </View>
+
                 <View style={{ borderBottomColor: BaseColor.Stroke, borderBottomWidth: 1, marginTop: heightToDp('1.5%'), width: widthToDp("100%") }}></View>
-                <Text style={{ marginLeft: widthToDp("3%"), marginTop: heightToDp("2%"), fontSize: widthToDp("7%"), fontFamily: 'Oswald-Medium' }}>{LanguageChange.crops}</Text>
-                {
-                    this.state.isLoading ? <View style={{ justifyContent: 'center', marginTop: heightToDp("20%"),backgroundColor: BaseColor.BackgroundColor }}><CustomIndicator IsLoading={this.state.isLoading} /></View> :
-                        <View>
-                            <FlatGrid
-                                style={{ marginTop: heightToDp("1%"), marginBottom: heightToDp("74%"),backgroundColor:BaseColor.BackgroundColor }}
-                                bounces={true}
-                                itemDimension={130}
-                                data={Object.values(cropsArray)}
-                                bouncesZoom={true}
-                                onRefresh={() => this.onRefresh()}
-                                refreshing={this.state.isFetching}
-                                renderItem={({ item }) => (
-                                    <TouchableOpacity onPress={() => this.navigateToLandScreen(item._id)}>
-                                        <View style={{ backgroundColor: BaseColor.Red, width: widthToDp("47%"), height: heightToDp("30%"), elevation: 10, borderRadius: 10 }}>
-                                            <Text style={{ color: "#fff", fontSize: widthToDp("5%"), marginLeft: widthToDp("5%"), marginTop: heightToDp("0.4%"), fontFamily: 'Oswald-Medium' }}>{item.name}</Text>
-                                            <Image
-                                                style={{ width: widthToDp("47%"), height: heightToDp("25%"), borderBottomLeftRadius: 10, borderBottomRightRadius: 10, marginTop: heightToDp("1%") }}
-                                                source={{ uri: DataAccess.BaseUrl + DataAccess.CropImage + item.imageFile }}
-                                            />
-                                        </View>
-                                    </TouchableOpacity>
-                                )}
-                            />
+
+                <View style={{ height: heightToDp("10%") }}>
+                    <TouchableOpacity onPress={() => this.showCustomAlert()}>
+                        <View style={{ backgroundColor: "#fff", height: heightToDp("6%"), width: widthToDp("30%"), borderRadius: 100, alignSelf: 'center', marginTop: heightToDp("2%") }}>
+                            <Text style={{ fontSize: widthToDp("4%"), color: "#000", marginTop: heightToDp("1.3%"), alignSelf: 'center', fontFamily: 'Oswald-Medium' }}>ADD PATCH</Text>
                         </View>
-                }
+                    </TouchableOpacity>
+                </View>
+                <DialogInput isDialogVisible={this.state.isDialogVisible}
+                    title={"ADD PATCH"}
+                    // message={"Message for DialogInput #1"}
+                    hintInput={"Please enter the name of your patch"}
+                    submitInput={(inputText) => { this.addDataToArray(inputText) }}
+                    closeDialog={() => { this.setState({ isDialogVisible: false }) }}>
+                </DialogInput>
+                <View>
 
+                    <FlatList
+                        data={this.state.data}
+                        style={{ marginBottom: heightToDp("74%") }}
+                        renderItem={({ item }) =>
 
+                            <TouchableOpacity onPress={() => {this.navigateToPatch()}}>
+                                <View style={{ width: widthToDp("90%"), backgroundColor: 'white', margin: widthToDp("3%"), borderRadius: 20, height: heightToDp("5%") }}>
+                                    <Text style={{ alignSelf: 'center', justifyContent: 'center', marginTop: heightToDp("0.5%"), fontSize: widthToDp("5%"), color: "#000", fontFamily: 'Oswald-Medium' }}>{item.name}</Text>
+                                </View>
+                            </TouchableOpacity>
+
+                        }
+                    />
+                </View>
             </View>
         );
     }

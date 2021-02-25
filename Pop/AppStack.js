@@ -31,6 +31,7 @@ import SelectFarmingAreaScreen from './Pages/SelectFarmingAreaScreen'
 import ImportantLinksSubCategoryScreen from './Pages/ImportantLinksSubCategoryScreen'
 import ImportantLinksScreen from './Pages/ImportantLinksScreen'
 import BreedDescriptionScreen from './Pages/BreedDescriptionScreen'
+import PatchScreen from './Pages/PatchScreen'
 
 const Stack = createStackNavigator();
 
@@ -66,6 +67,7 @@ function AppStack(){
                 <Stack.Screen name="ImportantLinksScreen" component={ImportantLinksScreen}/>
                 <Stack.Screen name="ImportantLinksSubCategoryScreen" component={ImportantLinksSubCategoryScreen}/>
                 <Stack.Screen name="BreedDescriptionScreen" component={BreedDescriptionScreen}/>
+                <Stack.Screen name="PatchScreen" component={PatchScreen}/>
             </Stack.Navigator>
         </NavigationContainer>
     );
