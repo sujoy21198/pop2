@@ -7,94 +7,134 @@ import TopLogo from '../assets/TopLogo'
 import { widthToDp, heightToDp } from '../Responsive'
 import { FlatGrid, SectionGrid } from 'react-native-super-grid'
 import Icon from 'react-native-vector-icons/FontAwesome'
-import Icon2 from 'react-native-vector-icons/FontAwesome5'
+import Icon2 from 'react-native-vector-icons/AntDesign'
 import Icon3 from 'react-native-vector-icons/EvilIcons'
 
 
 export default class SelectFarmingAreaScreen extends Component {
 
-    constructor(props){
+    constructor(props) {
         super(props)
-        this.state={
-            landType:'',
-            vertical:'',
-            horizontal:'',
-            verticalCal:'',
-            horizontalCal:'',
-            farmingAreaInSquareFeet : '',
-            farmingAreaInDecimal : '',
-            productionInKg : '',
-            expense : '',
-            totalIncomeFromCrop : '',
-            _id:''
+        this.state = {
+            landType: '',
+            _id: '',
+            horizontalCounter: 0,
+            verticalCounter: 0,
+            cropName:''
         }
         this.state.landType = this.props.route.params.landType
         this.state._id = this.props.route.params._id
-        //alert(this.state.landType)
+        this.state.cropName = this.props.route.params.cropName
+        //alert(this.state.cropName)
     }
 
+    verticalCounterControl = (operation) => {
+        if (operation === 'plus') {
+            this.setState({ verticalCounter: this.state.verticalCounter + 1 })
+        } else if (operation === 'minus') {
+            this.setState({ verticalCounter: this.state.verticalCounter - 1 })
+        }
+    }
+
+    horizontalCounterControl = (operation) => {
+        if (operation === 'plus') {
+            this.setState({ horizontalCounter: this.state.horizontalCounter + 1 })
+        } else if (operation === 'minus') {
+            this.setState({ horizontalCounter: this.state.horizontalCounter - 1 })
+        }
+    }
 
     submitDimensions = () => {
-        var verticalCal
-        var horizontalCal
-        var vertical = this.state.vertical
-        var horizontal = this.state.horizontal
+        if(this.state.cropName === 'Bitter Gourd'){
 
-        verticalCal = vertical * 5
-        horizontalCal = horizontal * 5
+        }else if(this.state.cropName === 'Chilli'){
 
-        // this.setState({verticalCal : verticalCal})
-        // this.setState({horizontalCal : horizontalCal})
-        this.state.verticalCal = verticalCal
-        this.state.horizontalCal = horizontalCal
+        }else if(this.state.cropName === 'Onion'){
 
-        var farmingAreaInSquareFeet = verticalCal * horizontalCal
-        var farmingAreaInDecimal = parseFloat(farmingAreaInSquareFeet / 436).toFixed(2)
+        }else if(this.state.cropName === 'Paddy'){
 
-        // this.setState({farmingAreaInSquareFeet : farmingAreaInSquareFeet})
-        // this.setState({farmingAreaInDecimal : farmingAreaInDecimal})
-
-
-        this.state.farmingAreaInSquareFeet = farmingAreaInSquareFeet
-        this.state.farmingAreaInDecimal = farmingAreaInDecimal
-
-        //10 decimal produces : 400 KG
-        var productionInKg = Math.round(40*farmingAreaInDecimal)
-
-        // this.setState({productionInKg : productionInKg})
-        this.state.productionInKg = productionInKg
-
-        //Expense / Cost of cultivation per 10 decimal of land : Rs. 2810
-        var expense = 281*farmingAreaInDecimal
-
-        // this.setState({expense : expense})
-        this.state.expense = expense
-
-        //Cost per KG : Rs. 35 (assumed)
-        var totalIncomeFromCrop = Math.round(35 * productionInKg).toFixed(2)
-
-        //this.setState({totalIncomeFromCrop : totalIncomeFromCrop})
-        this.state.totalIncomeFromCrop = totalIncomeFromCrop
-
-
-        if(!this.state.vertical){
-            return alert("enter a value")
-        }else if(!this.state.horizontal){
-            return alert("enter a value")
+        }else if(this.state.cropName === 'Tomato'){
+            var length = this.state.horizontalCounter * 5
+            var width = this.state.verticalCounter * 5
+            var farmingAreaInSqFeet = length*width
+            var farmingAreaInDecimal = farmingAreaInSqFeet/436
+            var productionInKg = (400/10)* farmingAreaInDecimal
+            var costOfCultivatinPerTenDecimal = (2810/10)* farmingAreaInDecimal
+            var costPerKg = parseFloat(35 * productionInKg).toFixed(2)  
+            console.log(costPerKg)
         }
-
-        this.props.navigation.navigate({
-            name: 'AnalysisScreen',
-            params: {
-                landType : this.state.landType,
-                farmingAreaInDecimal : this.state.farmingAreaInDecimal,
-                expense : this.state.expense,
-                totalIncomeFromCrop : this.state.totalIncomeFromCrop,
-                productionInKg : this.state.productionInKg,
-                _id : this.state._id
-            }
-        })
+        // this.props.navigation.navigate({
+        //     name: 'AnalysisScreen',
+        //     params: {
+        //         landType: this.state.landType,
+        //         _id: this.state._id,
+        //         cropName: this.state.cropName
+        //     }
+        // })
     }
+
+
+    // submitDimensions = () => {
+    //     var verticalCal
+    //     var horizontalCal
+    //     var vertical = this.state.vertical
+    //     var horizontal = this.state.horizontal
+
+    //     verticalCal = vertical * 5
+    //     horizontalCal = horizontal * 5
+
+    //     // this.setState({verticalCal : verticalCal})
+    //     // this.setState({horizontalCal : horizontalCal})
+    //     this.state.verticalCal = verticalCal
+    //     this.state.horizontalCal = horizontalCal
+
+    //     var farmingAreaInSquareFeet = verticalCal * horizontalCal
+    //     var farmingAreaInDecimal = parseFloat(farmingAreaInSquareFeet / 436).toFixed(2)
+
+    //     // this.setState({farmingAreaInSquareFeet : farmingAreaInSquareFeet})
+    //     // this.setState({farmingAreaInDecimal : farmingAreaInDecimal})
+
+
+    //     this.state.farmingAreaInSquareFeet = farmingAreaInSquareFeet
+    //     this.state.farmingAreaInDecimal = farmingAreaInDecimal
+
+    //     //10 decimal produces : 400 KG
+    //     var productionInKg = Math.round(40 * farmingAreaInDecimal)
+
+    //     // this.setState({productionInKg : productionInKg})
+    //     this.state.productionInKg = productionInKg
+
+    //     //Expense / Cost of cultivation per 10 decimal of land : Rs. 2810
+    //     var expense = 281 * farmingAreaInDecimal
+
+    //     // this.setState({expense : expense})
+    //     this.state.expense = expense
+
+    //     //Cost per KG : Rs. 35 (assumed)
+    //     var totalIncomeFromCrop = Math.round(35 * productionInKg).toFixed(2)
+
+    //     //this.setState({totalIncomeFromCrop : totalIncomeFromCrop})
+    //     this.state.totalIncomeFromCrop = totalIncomeFromCrop
+
+
+    //     if (!this.state.vertical) {
+    //         return alert("enter a value")
+    //     } else if (!this.state.horizontal) {
+    //         return alert("enter a value")
+    //     }
+
+    //     this.props.navigation.navigate({
+    //         name: 'AnalysisScreen',
+    //         params: {
+    //             landType: this.state.landType,
+    //             farmingAreaInDecimal: this.state.farmingAreaInDecimal,
+    //             expense: this.state.expense,
+    //             totalIncomeFromCrop: this.state.totalIncomeFromCrop,
+    //             productionInKg: this.state.productionInKg,
+    //             _id: this.state._id
+    //         }
+    //     })
+    // }
 
 
     render() {
@@ -185,49 +225,66 @@ export default class SelectFarmingAreaScreen extends Component {
                     </ImageBackground> */}
                     <Text style={{ color: 'white', marginLeft: widthToDp("6%"), marginTop: heightToDp("1%"), fontSize: widthToDp("5.5%"), fontFamily: 'Oswald-Light' }}>MEASURE USING 5 FEET LONG STICK</Text>
                     <View style={{ backgroundColor: 'white', height: heightToDp("28%"), width: widthToDp("70%"), alignSelf: 'center', marginTop: heightToDp("4%"), borderRadius: 20 }}>
-                        <View style={{ marginTop: heightToDp("5%") }}>
-                            <View style={{ flexDirection: 'row' }}>
-                                <Icon2
-                                    name="ellipsis-v"
-                                    color="black"
-                                    size={widthToDp("10%")}
-                                    style={{ marginTop: heightToDp("1.8%"), marginLeft: widthToDp("8%") }}
-                                />
-                                <Icon3
-                                    name="close"
-                                    color="black"
-                                    size={widthToDp("5%")}
-                                    style={{ marginTop: heightToDp("3%"), marginLeft: widthToDp("6%") }}
-                                />
-                                <Input
-                                    placeholder='Number of sticks'
-                                    containerStyle={{ width: widthToDp("46%") }}
-                                    keyboardType='numeric'
-                                    onChangeText={(text) => this.setState({vertical:text})}
-                                />
-                            </View>
-
-                            <View style={{ flexDirection: 'row' }}>
-                                <Icon2
-                                    name="ellipsis-h"
-                                    color="black"
-                                    size={widthToDp("10%")}
-                                    style={{ marginTop: heightToDp("1.8%"), marginLeft: widthToDp("2%") }}
-                                />
-                                <Icon3
-                                    name="close"
-                                    color="black"
-                                    size={widthToDp("5%")}
-                                    style={{ marginTop: heightToDp("3%"), marginLeft: widthToDp("6%") }}
-                                />
-                                <Input
-                                    placeholder='Number of sticks'
-                                    containerStyle={{ width: widthToDp("46%") }}
-                                    keyboardType='numeric'
-                                    onChangeText={(text) => this.setState({horizontal:text})}
-                                />
+                        <View style={{ flexDirection: 'row', marginTop: heightToDp("2%"), marginLeft: widthToDp("4%") }}>
+                            <Image
+                                source={require('../assets/5FeetLongStick-Horizental.png')}
+                                style={{ height: heightToDp("10%"), width: widthToDp("6%") }}
+                            />
+                            <View style={{ borderWidth: 1, width: widthToDp("35%"), marginLeft: widthToDp("20%"), height: heightToDp("7%"), flexDirection: 'row', borderRadius: 11 }}>
+                                <TouchableOpacity onPress={() => { this.horizontalCounterControl('plus') }}>
+                                    <View style={{ backgroundColor: 'black', width: widthToDp("10%"), borderTopLeftRadius: 10, borderBottomLeftRadius: 10, height: heightToDp("6.7%") }}>
+                                        <Icon2
+                                            name='plus'
+                                            style={{ color: 'white', marginTop: heightToDp("2%"), alignSelf: 'center' }}
+                                            size={25}
+                                        />
+                                    </View>
+                                </TouchableOpacity>
+                                <View style={{ width: widthToDp("15%") }}>
+                                    <Text style={{ marginTop: heightToDp("0.5%"), fontSize: widthToDp("7%"), fontFamily: 'Oswald-Medium', alignSelf: 'center' }}>{this.state.horizontalCounter}</Text>
+                                </View>
+                                <TouchableOpacity onPress={() => { this.horizontalCounterControl('minus') }}>
+                                    <View style={{ backgroundColor: 'black', width: widthToDp("10%"), borderTopRightRadius: 10, borderBottomRightRadius: 10, height: heightToDp("6.7%") }}>
+                                        <Icon2
+                                            name='minus'
+                                            style={{ color: 'white', marginTop: heightToDp("2%"), alignSelf: 'center' }}
+                                            size={25}
+                                        />
+                                    </View>
+                                </TouchableOpacity>
                             </View>
                         </View>
+
+                        <View style={{ flexDirection: 'row', marginTop: heightToDp("6%"), marginLeft: widthToDp("4%") }}>
+                            <Image
+                                source={require('../assets/5FeetLongStick-Vertical.png')}
+                                style={{ height: heightToDp("3%"), width: widthToDp("18%") }}
+                            />
+                            <View style={{ borderWidth: 1, width: widthToDp("35%"), marginLeft: widthToDp("6.7%"), height: heightToDp("7%"), flexDirection: 'row', borderRadius: 11 }}>
+                                <TouchableOpacity onPress={() => { this.verticalCounterControl('plus') }}>
+                                    <View style={{ backgroundColor: 'black', width: widthToDp("10%"), borderTopLeftRadius: 10, borderBottomLeftRadius: 10, height: heightToDp("6.7%") }}>
+                                        <Icon2
+                                            name='plus'
+                                            style={{ color: 'white', marginTop: heightToDp("2%"), alignSelf: 'center' }}
+                                            size={25}
+                                        />
+                                    </View>
+                                </TouchableOpacity>
+                                <View style={{ width: widthToDp("15%") }}>
+                                    <Text style={{ marginTop: heightToDp("0.5%"), fontSize: widthToDp("7%"), fontFamily: 'Oswald-Medium', alignSelf: 'center' }}>{this.state.verticalCounter}</Text>
+                                </View>
+                                <TouchableOpacity onPress={() => { this.verticalCounterControl('minus') }}>
+                                    <View style={{ backgroundColor: 'black', width: widthToDp("10%"), borderTopRightRadius: 10, borderBottomRightRadius: 10, height: heightToDp("6.7%") }}>
+                                        <Icon2
+                                            name='minus'
+                                            style={{ color: 'white', marginTop: heightToDp("2%"), alignSelf: 'center' }}
+                                            size={25}
+                                        />
+                                    </View>
+                                </TouchableOpacity>
+                            </View>
+                        </View>
+
 
                     </View>
                 </View>

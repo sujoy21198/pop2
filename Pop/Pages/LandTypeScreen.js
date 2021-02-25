@@ -24,10 +24,12 @@ export default class LandTypeScreen extends Component {
         super(props)
         this.state={
             _id : '',
-            languages:[]
+            languages:[],
+            cropName:''
         }
         this.state.languages = Languages
         this.state._id = this.props.route.params._id
+        this.state.cropName = this.props.route.params.cropName
     }
 
 
@@ -36,17 +38,17 @@ export default class LandTypeScreen extends Component {
         if(data === 'HIGH LAND'){
             this.props.navigation.navigate({
                 name: 'SelectFarmingAreaScreen',
-                params : {landType:data, _id:this.state._id}
+                params : {landType:data, _id:this.state._id , cropName: this.state.cropName}
             })
         }else if(data === 'MEDIUM LAND'){
             this.props.navigation.navigate({
                 name: 'SelectFarmingAreaScreen',
-                params : {landType:data, _id:this.state._id}
+                params : {landType:data, _id:this.state._id, cropName: this.state.cropName}
             })
         }else if(data === 'LOW LAND'){
             this.props.navigation.navigate({
                 name: 'SelectFarmingAreaScreen',
-                params : {landType:data, _id:this.state._id}
+                params : {landType:data, _id:this.state._id, cropName: this.state.cropName}
             })
         }
     }

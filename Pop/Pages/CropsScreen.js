@@ -48,8 +48,9 @@ export default class CropsScreen extends Component {
                 'Authorization': "POP " + token
             }
         }).then(function (response) {
-            //console.log(response.data.data)
+            console.log(response.data.data)
             cropsArray = response.data.data
+            console.log(cropsArray.map((i) => i.name))
             if (response.data.status === 1) {
                 load = false
             }
@@ -72,11 +73,13 @@ export default class CropsScreen extends Component {
         })
     }
 
-    navigateToLandScreen = (data) => {
+    navigateToLandScreen = (data,name) => {
+        
         this.props.navigation.navigate({
             name: 'PatchScreen',
             params: {
                 _id: data,
+                cropName:name
             }
         })
     }
@@ -88,7 +91,7 @@ export default class CropsScreen extends Component {
     render() {
         var cropsArray = []
         cropsArray = this.state.crops
-        console.log(cropsArray)
+        //console.log(cropsArray)
         return (
             <View style={{ backgroundColor: BaseColor.BackgroundColor}}>
                 <View style={{ backgroundColor: 'white', width: widthToDp("100%"), height: heightToDp("13%"), flexDirection: 'row' }}>
@@ -178,7 +181,7 @@ export default class CropsScreen extends Component {
                                 onRefresh={() => this.onRefresh()}
                                 refreshing={this.state.isFetching}
                                 renderItem={({ item }) => (
-                                    <TouchableOpacity onPress={() => this.navigateToLandScreen(item._id)}>
+                                    <TouchableOpacity onPress={() => this.navigateToLandScreen(item._id, item.name)}>
                                         <View style={{ backgroundColor: BaseColor.Red, width: widthToDp("47%"), height: heightToDp("30%"), elevation: 10, borderRadius: 10 }}>
                                             <Text style={{ color: "#fff", fontSize: widthToDp("5%"), marginLeft: widthToDp("5%"), marginTop: heightToDp("0.4%"), fontFamily: 'Oswald-Medium' }}>{item.name}</Text>
                                             <Image
