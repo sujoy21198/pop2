@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { View, Image, TouchableOpacity, FlatList, ScrollView } from 'react-native'
 import BaseColor from '../Core/BaseTheme'
-import { Card, Text } from 'native-base'
+import { Card, Text,Input } from 'native-base'
 import TopLogo from '../assets/TopLogo'
 import { widthToDp, heightToDp } from '../Responsive'
 import { FlatGrid, SectionGrid } from 'react-native-super-grid'
@@ -24,7 +24,8 @@ export default class StepOneScreen extends Component {
             materialName: '',
             decimalPrice: '',
             isLoading: false,
-            imageFile:''
+            imageFile:'',
+            materialPrice:''
         }
         this.state._id = this.props.route.params._id
         this.state.cropName = this.props.route.params.cropName
@@ -74,14 +75,28 @@ export default class StepOneScreen extends Component {
     }
 
     stepFiveScreen = () => {
-        this.props.navigation.navigate({
-            name: 'StepFiveScreen',
-            params: {
-                cropName: this.state.cropName,
-                _id: this.state._id,
-                imageFile : this.state.imageFile
-            }
-        })
+        if(this.state.materialPrice === ''){
+            alert("please enter a value")
+        }else{
+            this.props.navigation.navigate({
+                name: 'StepFiveScreen',
+                params: {
+                    cropName: this.state.cropName,
+                    _id: this.state._id,
+                    imageFile : this.state.imageFile
+                }
+            })
+        }
+        
+    }
+
+    saveButton = () => {
+        if(this.state.materialPrice === ''){
+            alert("please enter a value")
+        }else{
+            alert("AMOUNT SAVED")
+        }
+        
     }
     // getSteps = async() => {
     //     var username = await AsyncStorage.getItem('username')
@@ -278,7 +293,12 @@ export default class StepOneScreen extends Component {
                                         </View>
                                         <View style={{ flexDirection: 'row', marginLeft: widthToDp("3%"), marginTop: heightToDp("2%") }}>
                                             <Text style={{ fontFamily: 'Oswald-Medium', width: widthToDp("30%") }}>{this.state.materialName}</Text>
-                                            <Text style={{ marginLeft: widthToDp("35%"), fontFamily: 'Oswald-Medium' }}>₹ {this.state.decimalPrice}</Text>
+                                            <Input
+                                                placeholder= {this.state.decimalPrice}
+                                                keyboardType='number-pad'
+                                                onChangeText={(data) => {this.setState({materialPrice : data})}}
+                                                style={{marginLeft: widthToDp("33%"), fontFamily: 'Oswald-Medium',width:widthToDp("20%"), marginTop: heightToDp("-2%")}}
+                                            />
                                         </View>
                                     </View>
                                 </View>
