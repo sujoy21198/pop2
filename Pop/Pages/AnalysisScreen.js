@@ -6,7 +6,7 @@ import TopLogo from '../assets/TopLogo'
 import { widthToDp, heightToDp } from '../Responsive'
 import { FlatGrid, SectionGrid } from 'react-native-super-grid'
 import Icon from 'react-native-vector-icons/FontAwesome'
-
+import DataAccess from '../Core/DataAccess'
 
 
 const data = [
@@ -27,7 +27,8 @@ export default class LandTypeScreen extends Component {
             costPerKg:'',
             productionInKg:'',
             netProfit :'',
-            cost:''
+            cost:'',
+            imageFile:''
         }
         this.state.landType = this.props.route.params.landType
         this.state._id = this.props.route.params._id
@@ -37,6 +38,7 @@ export default class LandTypeScreen extends Component {
         this.state.costPerKg = this.props.route.params.costPerKg //income
         this.state.productionInKg = this.props.route.params.productionInKg
         this.state.cost = this.props.route.params.cost
+        this.state.imageFile = this.props.route.params.imageFile
 
 
         this.netProfitCalculation()
@@ -53,7 +55,8 @@ export default class LandTypeScreen extends Component {
             name: 'StepOneScreen',
             params: {
                 cropName: this.state.cropName,
-                _id: this.state._id
+                _id: this.state._id,
+                imageFile : this.state.imageFile
             }
         })
     }
@@ -151,7 +154,7 @@ export default class LandTypeScreen extends Component {
                                 </View>
                                 <Image
                                     style={{ height: heightToDp("20%"), width: widthToDp("50%"), marginTop: heightToDp("2%"), marginLeft: widthToDp("7%"), borderRadius: 10 }}
-                                    source={{ uri: 'https://static.toiimg.com/photo/77876184.cms' }}
+                                    source={{ uri: DataAccess.BaseUrl + DataAccess.CropImage + this.state.imageFile }}
                                 />
                             </View>
                         </View>

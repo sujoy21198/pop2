@@ -40,6 +40,7 @@ export default class CropsScreen extends Component {
         var token = await AsyncStorage.getItem('token')
         var encodedUsername = base64.encode(username)
         var cropsArray = []
+        var imageFile;
         console.log(token + " token from crops")
         await axios.get(DataAccess.BaseUrl + DataAccess.AccessUrl + DataAccess.Crops, {
             headers: {
@@ -54,6 +55,8 @@ export default class CropsScreen extends Component {
             if (response.data.status === 1) {
                 load = false
             }
+            imageFile = cropsArray.map((i) => i.imageFile)
+            console.log(imageFile)
             // console.log(cropsArray)
             // var id = cropsArray
             // console.log(id)
@@ -73,13 +76,14 @@ export default class CropsScreen extends Component {
         })
     }
 
-    navigateToLandScreen = (data,name) => {
+    navigateToLandScreen = (data,name,imageFile) => {
         
         this.props.navigation.navigate({
             name: 'PatchScreen',
             params: {
                 _id: data,
-                cropName:name
+                cropName:name,
+                imageFile : imageFile
             }
         })
     }
@@ -181,7 +185,7 @@ export default class CropsScreen extends Component {
                                 onRefresh={() => this.onRefresh()}
                                 refreshing={this.state.isFetching}
                                 renderItem={({ item }) => (
-                                    <TouchableOpacity onPress={() => this.navigateToLandScreen(item._id, item.name)}>
+                                    <TouchableOpacity onPress={() => this.navigateToLandScreen(item._id, item.name , item.imageFile)}>
                                         <View style={{ backgroundColor: BaseColor.Red, width: widthToDp("47%"), height: heightToDp("30%"), elevation: 10, borderRadius: 10 }}>
                                             <Text style={{ color: "#fff", fontSize: widthToDp("5%"), marginLeft: widthToDp("5%"), marginTop: heightToDp("0.4%"), fontFamily: 'Oswald-Medium' }}>{item.name}</Text>
                                             <Image

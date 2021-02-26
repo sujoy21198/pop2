@@ -26,11 +26,13 @@ export default class PatchScreen extends Component {
             languages: [],
             data: [],
             isDialogVisible: false,
-            cropName:''
+            cropName:'',
+            imageFile: ''
         }
         this.state.languages = Languages
         this.state._id = this.props.route.params._id
         this.state.cropName = this.props.route.params.cropName
+        this.state.imageFile = this.props.route.params.imageFile
     }
 
     addDataToArray = (data) => {
@@ -50,7 +52,8 @@ export default class PatchScreen extends Component {
             name: 'LandTypeScreen',
             params: {
                 _id: this.state._id,
-                cropName: this.state.cropName
+                cropName: this.state.cropName,
+                imageFile : this.state.imageFile
             }
         })
     }

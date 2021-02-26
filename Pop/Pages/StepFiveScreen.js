@@ -23,10 +23,12 @@ export default class StepOneScreen extends Component {
             stepData: [],
             materialName: '',
             decimalPrice: '',
-            isLoading: false
+            isLoading: false,
+            imageFile : ''
         }
         this.state._id = this.props.route.params._id
         this.state.cropName = this.props.route.params.cropName
+        this.state.imageFile = this.props.route.params.imageFile
     }
 
     componentDidMount() {
@@ -235,7 +237,7 @@ export default class StepOneScreen extends Component {
                                         <View>
                                             <Image
                                                 style={{ height: heightToDp("20%"), width: widthToDp("90%"), borderBottomLeftRadius: 10, borderBottomRightRadius: 10 }}
-                                                source={{ uri: 'https://shramajeewiki.com/images/English/00214136.jpg' }}
+                                                source={{ uri: DataAccess.BaseUrl+DataAccess.CropImage+'steps/'+i.imageFile }}
                                             />
                                         </View>
                                     </View>
@@ -260,7 +262,7 @@ export default class StepOneScreen extends Component {
                                             </View>
                                             <Image
                                                 style={{ height: heightToDp("20%"), width: widthToDp("50%"), marginTop: heightToDp("2%"), marginLeft: widthToDp("7%"), borderRadius: 10 }}
-                                                source={{ uri: 'https://static.toiimg.com/photo/77876184.cms' }}
+                                                source={{ uri: DataAccess.BaseUrl + DataAccess.CropImage + this.state.imageFile }}
                                             />
                                         </View>
                                     </View>

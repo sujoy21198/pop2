@@ -20,11 +20,13 @@ export default class SelectFarmingAreaScreen extends Component {
             _id: '',
             horizontalCounter: 0,
             verticalCounter: 0,
-            cropName:''
+            cropName:'',
+            imageFile:''
         }
         this.state.landType = this.props.route.params.landType
         this.state._id = this.props.route.params._id
         this.state.cropName = this.props.route.params.cropName
+        this.state.imageFile = this.props.route.params.imageFile
         //alert(this.state.cropName)
     }
 
@@ -67,6 +69,7 @@ export default class SelectFarmingAreaScreen extends Component {
                 params: {
                     landType: this.state.landType,
                     _id: this.state._id,
+                    imageFile: this.state.imageFile,
                     cropName: this.state.cropName,
                     farmingAreaInDecimal: farmingAreaInDecimal,
                     costOfCultivatinPerTenDecimal: costOfCultivatinPerTenDecimal,
