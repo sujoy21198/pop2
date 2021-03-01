@@ -14,6 +14,8 @@ import CustomIndicator from '../Core/CustomIndicator'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import LanguageChange from '../Core/LanguageChange'
 import DeviceInfo from 'react-native-device-info'
+import NetInfo from '@react-native-community/netinfo'
+
 
 export default class SigninScreen extends Component {
     constructor(props) {
@@ -34,6 +36,12 @@ export default class SigninScreen extends Component {
     componentDidMount() {
         this.getCustodianMobileNumber()
        
+    }
+
+    checkConnection = () => {
+        NetInfo.fetch().then(state => {
+            console.log("is Connected?" , state.isConnected)
+        })
     }
 
     getCustodianMobileNumber = async () => {
@@ -128,7 +136,7 @@ export default class SigninScreen extends Component {
         let token = await AsyncStorage.getItem('token')
         let username = await AsyncStorage.getItem('username')
 
-        const userToBeSaved = {'_id': _id , 'name' : reqname, 'token':token, 'username':username , 'syncStatus':false, 'cropData' : [], 'livestockData':[], 'moneyManagerData':[] }
+        const userToBeSaved = {'_id': _id , 'name' : reqname,'password': this.state.password, 'token':token, 'username':username , 'syncStatus':false, 'cropData' : [], 'livestockData':[], 'moneyManagerData':[] }
         const exsistingUser = await AsyncStorage.getItem('user')
         let newUser = JSON.parse(exsistingUser)
         if(!newUser){
@@ -255,7 +263,7 @@ export default class SigninScreen extends Component {
                         this.state.isLoading ? <CustomIndicator IsLoading={this.state.isLoading} /> : null
                     }
 
-                    <TouchableOpacity onPress={() => this.signIn()}>
+                    <TouchableOpacity onPress={() => this.checkConnection()}>
                         <View style={{ backgroundColor: BaseColor.SecondaryColor, marginTop: heightToDp("5%"), width: widthToDp("37%"), alignSelf: 'center', height: heightToDp("5%"), borderRadius: 100 }}>
                             <Text style={{ alignSelf: 'center', marginTop: heightToDp("0.5%"), fontWeight: '500', fontSize: widthToDp("5%"), fontFamily: 'Oswald-Medium' }}>{LanguageChange.signIn}</Text>
                         </View>

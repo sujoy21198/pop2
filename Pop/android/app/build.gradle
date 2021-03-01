@@ -132,6 +132,7 @@ android {
     defaultConfig {
         applicationId "com.pop"
         minSdkVersion rootProject.ext.minSdkVersion
+        multiDexEnabled true
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
         versionName "1.0"

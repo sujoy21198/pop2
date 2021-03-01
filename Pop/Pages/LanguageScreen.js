@@ -9,6 +9,7 @@ import Icon from 'react-native-vector-icons/FontAwesome'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import Languages from '../Core/Languages'
 import LanguageChange from '../Core/LanguageChange'
+import NetInfo from '@react-native-community/netinfo'
 
 const Sound = require('react-native-sound')
 
@@ -22,9 +23,10 @@ export default class LanguageScreen extends Component {
         }
 
         this.state.languages = Languages
-
         //console.log(this.state.languages)
     }
+
+   
 
     test = (value) => {
         AsyncStorage.setItem('language',value)
