@@ -10,7 +10,8 @@ const DataAccess = {
     Breeds: '/breeds/',
     ImportantLinks:'important-links/',
     ImportantLinksImage : 'app-property/uploads/important-links/',
-    CustodianNumber :'get-custodian/'
+    CustodianNumber :'get-custodian/',
+    GetAllData: 'get-all-data'
 }
 
 export default DataAccess

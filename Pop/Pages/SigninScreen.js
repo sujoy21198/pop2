@@ -15,6 +15,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import LanguageChange from '../Core/LanguageChange'
 import DeviceInfo from 'react-native-device-info'
 import NetInfo from '@react-native-community/netinfo'
+import base64 from 'react-native-base64'
 
 
 export default class SigninScreen extends Component {
@@ -36,6 +37,80 @@ export default class SigninScreen extends Component {
     componentDidMount() {
         this.getCustodianMobileNumber()
         this.setCustodianNumber()
+        this.getAllData()
+    }
+
+
+    getAllData = async() => {
+        var allusername = await AsyncStorage.getItem('username')
+        var token = await AsyncStorage.getItem('token')
+        var encodedUsername = base64.encode(allusername)
+        var cropObjectsToBeSaved,cropsMaterialsObjectsToBeSaved,livestockObjectsToBeSaved,liveStockStepMaterialsObjectsToBeSaved,liveStockBreedsObjectsToBeSaved,breedCategoriesObjectsToBeSaved,importantLinksObjectsToBeSaved;
+        await axios.get("http://161.35.122.165:3021/api/v1/get-all-data",{
+            headers:{
+                'Content-type': "application/json",
+                'X-Information': encodedUsername,
+                'Authorization': "POP " + token
+            }
+        }).then(function(response){
+            console.log(response.data,"CROPS NAMES")
+            var crops = response.data.crops
+            //var cropObjects = crops.substring(1,crops.length-1)
+            cropObjectsToBeSaved = crops
+            var cropsMaterials = response.data.cropsMaterials
+            //var cropsMaterialsObjects = cropsMaterials.substring(1,cropsMaterials.length-1)
+            cropsMaterialsObjectsToBeSaved = cropsMaterials
+            var livestock = response.data.livestock
+            //var livestockObjects = livestock.substring(1,livestock.length-1)
+            livestockObjectsToBeSaved = livestock
+            var liveStockStepMaterials = response.data.liveStockStepMaterials
+            //var liveStockStepMaterialsObjects = liveStockStepMaterials.substring(1,liveStockStepMaterials.length-1)
+            liveStockStepMaterialsObjectsToBeSaved = liveStockStepMaterials
+            var liveStockBreeds = response.data.liveStockBreeds
+            //var liveStockBreedsObjects = liveStockBreeds.substring(1,liveStockBreeds.length-1)
+            liveStockBreedsObjectsToBeSaved = liveStockBreeds
+            var breedCategories = response.data.breedCategories
+            //var breedCategoriesObjects = breedCategories.substring(1,breedCategories.length-1)
+            breedCategoriesObjectsToBeSaved = breedCategories
+            var importantLinks = response.data.importantLinks
+            //var importantLinksObjects = importantLinks.substring(1,importantLinks.length-1)
+            importantLinksObjectsToBeSaved = importantLinks
+            //console.log(importantLinksObjectsToBeSaved)
+        }).catch(function(error){
+            console.log(error)
+        })
+
+        const offlineDataToBeSaved = {'username': allusername , 'crops':[] ,'cropsMaterials':[],'livestock':[] , 'liveStockStepMaterials':[] , 'liveStockBreeds':[] , 'breedCategories':[] , 'importantLinks':[] }
+        offlineDataToBeSaved.crops.push(cropObjectsToBeSaved)
+        offlineDataToBeSaved.cropsMaterials.push(cropsMaterialsObjectsToBeSaved)
+        offlineDataToBeSaved.livestock.push(livestockObjectsToBeSaved)
+        offlineDataToBeSaved.liveStockStepMaterials.push(liveStockStepMaterialsObjectsToBeSaved)
+        offlineDataToBeSaved.liveStockBreeds.push(liveStockBreedsObjectsToBeSaved)
+        offlineDataToBeSaved.breedCategories.push(breedCategoriesObjectsToBeSaved)
+        offlineDataToBeSaved.importantLinks.push(importantLinksObjectsToBeSaved)
+
+        const exsistingOfflineData = await AsyncStorage.getItem('offlineData')
+        let newOfflineData = JSON.parse(exsistingOfflineData)
+        if(!newOfflineData){
+            newOfflineData = []
+        }
+
+        var offlineArr = newOfflineData.map(function(item){return item.username})
+        if(offlineArr.includes(allusername)){
+            console.log("NO")
+        }else{
+            newOfflineData.push(offlineDataToBeSaved)
+        }
+
+
+        await AsyncStorage.setItem("offlineData", JSON.stringify(newOfflineData))
+            .then(() => {
+                console.log('‘Offline Data saved successfully’')
+            })
+            .catch(() => {
+                console.log('‘There was an error saving the product’')
+            })
+
     }
 
     setCustodianNumber  =  async() => {
@@ -122,7 +197,7 @@ export default class SigninScreen extends Component {
         // if (load === false) {
         //     this.setState({ loadPhoneNumber: false })
         // }
-        //this.setState({ phoneNumber: phone })
+        this.setState({ phoneNumber: phone })
     }
 
     signIn = async () => {
@@ -228,12 +303,14 @@ export default class SigninScreen extends Component {
                 ]
             });
         }
+
+        //this.getAllData()
     }
 
     displayData = async() => {
         try {
             //var count = 8
-            let user = await AsyncStorage.getItem('user');
+            let user = await AsyncStorage.getItem('offlineData');
             let parsed = JSON.parse(user);
             console.log(JSON.stringify(parsed))
             // var valueArr = parsed.map(function(item){ return item.userId });
