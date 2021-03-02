@@ -32,6 +32,10 @@ export default class CropsScreen extends Component {
         this.loadCrops()
     }
 
+    offlineLoadCrops = () => {
+
+    }
+
     loadCrops = async () => {
 
         this.setState({ isLoading: true })
@@ -46,10 +50,11 @@ export default class CropsScreen extends Component {
             headers: {
                 'Content-type': "accept",
                 'X-Information': encodedUsername,
-                'Authorization': "POP " + token
+                'Authorization': "POP " + token,
+                'Accept-Language':""
             }
         }).then(function (response) {
-            console.log(response.data.data)
+            console.log(response.data)
             cropsArray = response.data.data
             console.log(cropsArray.map((i) => i.name))
             if (response.data.status === 1) {

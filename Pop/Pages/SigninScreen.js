@@ -35,35 +35,94 @@ export default class SigninScreen extends Component {
 
     componentDidMount() {
         this.getCustodianMobileNumber()
-       
+        this.setCustodianNumber()
+    }
+
+    setCustodianNumber  =  async() => {
+        let cus = await AsyncStorage.getItem("cus")
+        this.setState({ loadPhoneNumber: false })
+        this.setState({phoneNumber: cus})
     }
 
     checkConnection = () => {
         NetInfo.fetch().then(state => {
-            console.log("is Connected?" , state.isConnected)
+            var isConnected = state.isConnected
+            console.log(isConnected)
+            if(isConnected === true){
+                return this.signIn()
+            }else{
+                return this.offlineMode()
+            }
         })
+    }
+
+    offlineMode = async() => {
+        // let user = await AsyncStorage.getItem('user')
+        // let parsed = JSON.stringify(user)
+        // console.log(JSON.stringify(parsed))
+        // var specificObject = parsed.find((i) => i.username === this.state.username)
+        // console.log(specificObject.username)
+        try {
+            //var count = 8
+            var offlinePassword
+            let user = await AsyncStorage.getItem('user');
+            let parsed = JSON.parse(user);
+            console.log(JSON.stringify(parsed))
+            var specificObject = parsed.find((i) => i.username === this.state.username)
+            console.log(specificObject.password)
+            offlinePassword = specificObject.password
+            if(offlinePassword === this.state.password){
+                this.props.navigation.reset({
+                    index: 0,
+                    routes: [
+                        { name: "DashBoardScreen" }
+                    ]
+                });
+            }else{
+                alert("please enter a valid password")
+            }
+            // var valueArr = parsed.map(function(item){ return item.userId });
+            // alert(valueArr)
+            // var specificObject = parsed.find((i) => i.userId === count)
+            // console.log(specificObject.userId)
+
+            //console.log(specificObject.userId = count+1)
+            // console.log(specificObject.userId = 6)
+            //await AsyncStorage.setItem('products',JSON.stringify(parsed))
+
+
+            //alert(parsed[0].item = "bitch")
+            // await AsyncStorage.setItem('products',JSON.stringify(parsed))
+            // console.log(JSON.stringify(parsed))
+            //alert(JSON.stringify(parsed));
+            // console.log(JSON.stringify(parsed))
+        }
+        catch (error) {
+            alert(error)
+        }
+        
     }
 
     getCustodianMobileNumber = async () => {
         
         let deviceId = await DeviceInfo.getAndroidId()
-        var load = true
-        this.setState({ loadPhoneNumber: true })
+        //var load = true
+        //this.setState({ loadPhoneNumber: true })
         var phone
         await axios.get(DataAccess.BaseUrl + DataAccess.AccessUrl + DataAccess.CustodianNumber + deviceId, {
         }).then(function (response) {
-            load = false
+            //load = false
             console.log(response.data.data.phone)
             phone = response.data.data.phone
+            AsyncStorage.setItem("cus",JSON.stringify(response.data.data.phone))
         }).catch(function (error) {
             console.log(error)
         })
 
-        if (load === false) {
-            this.setState({ loadPhoneNumber: false })
-        }
-        this.setState({ phoneNumber: phone })
-
+        // if (load === false) {
+        //     this.setState({ loadPhoneNumber: false })
+        // }
+        //this.setState({ phoneNumber: phone })
     }
 
     signIn = async () => {
