@@ -80,14 +80,14 @@ export default class SigninScreen extends Component {
             console.log(error)
         })
 
-        const offlineDataToBeSaved = {'username': allusername , 'crops':[] ,'cropsMaterials':[],'livestock':[] , 'liveStockStepMaterials':[] , 'liveStockBreeds':[] , 'breedCategories':[] , 'importantLinks':[] }
-        offlineDataToBeSaved.crops.push(cropObjectsToBeSaved)
-        offlineDataToBeSaved.cropsMaterials.push(cropsMaterialsObjectsToBeSaved)
-        offlineDataToBeSaved.livestock.push(livestockObjectsToBeSaved)
-        offlineDataToBeSaved.liveStockStepMaterials.push(liveStockStepMaterialsObjectsToBeSaved)
-        offlineDataToBeSaved.liveStockBreeds.push(liveStockBreedsObjectsToBeSaved)
-        offlineDataToBeSaved.breedCategories.push(breedCategoriesObjectsToBeSaved)
-        offlineDataToBeSaved.importantLinks.push(importantLinksObjectsToBeSaved)
+        const offlineDataToBeSaved = {'username': allusername , 'crops':cropObjectsToBeSaved ,'cropsMaterials':cropsMaterialsObjectsToBeSaved,'livestock':livestockObjectsToBeSaved , 'liveStockStepMaterials':liveStockStepMaterialsObjectsToBeSaved , 'liveStockBreeds':liveStockBreedsObjectsToBeSaved , 'breedCategories':breedCategoriesObjectsToBeSaved , 'importantLinks':importantLinksObjectsToBeSaved }
+        // offlineDataToBeSaved.crops.push(cropObjectsToBeSaved)
+        // offlineDataToBeSaved.cropsMaterials.push(cropsMaterialsObjectsToBeSaved)
+        // offlineDataToBeSaved.livestock.push(livestockObjectsToBeSaved)
+        // offlineDataToBeSaved.liveStockStepMaterials.push(liveStockStepMaterialsObjectsToBeSaved)
+        // offlineDataToBeSaved.liveStockBreeds.push(liveStockBreedsObjectsToBeSaved)
+        // offlineDataToBeSaved.breedCategories.push(breedCategoriesObjectsToBeSaved)
+        // offlineDataToBeSaved.importantLinks.push(importantLinksObjectsToBeSaved)
 
         const exsistingOfflineData = await AsyncStorage.getItem('offlineData')
         let newOfflineData = JSON.parse(exsistingOfflineData)

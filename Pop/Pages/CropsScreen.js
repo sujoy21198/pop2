@@ -29,11 +29,21 @@ export default class CropsScreen extends Component {
         this.state.languages = Languages
     }
     componentDidMount() {
-        this.loadCrops()
+        //this.loadCrops()
+        this.loadCropsFromStorage()
     }
 
-    offlineLoadCrops = () => {
-
+    loadCropsFromStorage = async() => {
+        try{
+            let username = await AsyncStorage.getItem('username')
+            let user = await AsyncStorage.getItem('offlineData');
+            let parsed = JSON.parse(user);
+            var specificObject = parsed.find((i) => i.username === username)
+            console.log(specificObject.crops)
+        }catch(error){
+            alert(error)
+        }
+        this.setState({crops : specificObject.crops})
     }
 
     loadCrops = async () => {
