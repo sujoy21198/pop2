@@ -37,14 +37,14 @@ export default class SigninScreen extends Component {
     componentDidMount() {
         this.getCustodianMobileNumber()
         this.setCustodianNumber()
-        this.getAllData()
+        //this.getAllData()
     }
 
 
     getAllData = async() => {
         var allusername = await AsyncStorage.getItem('username')
         var token = await AsyncStorage.getItem('token')
-        var encodedUsername = base64.encode(allusername)
+        var encodedUsername = base64.encode(this.state.username)
         var cropObjectsToBeSaved,cropsMaterialsObjectsToBeSaved,livestockObjectsToBeSaved,liveStockStepMaterialsObjectsToBeSaved,liveStockBreedsObjectsToBeSaved,breedCategoriesObjectsToBeSaved,importantLinksObjectsToBeSaved;
         await axios.get("http://161.35.122.165:3021/api/v1/get-all-data",{
             headers:{
@@ -80,7 +80,7 @@ export default class SigninScreen extends Component {
             console.log(error)
         })
 
-        const offlineDataToBeSaved = {'username': allusername , 'crops':cropObjectsToBeSaved ,'cropsMaterials':cropsMaterialsObjectsToBeSaved,'livestock':livestockObjectsToBeSaved , 'liveStockStepMaterials':liveStockStepMaterialsObjectsToBeSaved , 'liveStockBreeds':liveStockBreedsObjectsToBeSaved , 'breedCategories':breedCategoriesObjectsToBeSaved , 'importantLinks':importantLinksObjectsToBeSaved }
+        const offlineDataToBeSaved = {'username': this.state.username , 'crops':cropObjectsToBeSaved ,'cropsMaterials':cropsMaterialsObjectsToBeSaved,'livestock':livestockObjectsToBeSaved , 'liveStockStepMaterials':liveStockStepMaterialsObjectsToBeSaved , 'liveStockBreeds':liveStockBreedsObjectsToBeSaved , 'breedCategories':breedCategoriesObjectsToBeSaved , 'importantLinks':importantLinksObjectsToBeSaved }
         // offlineDataToBeSaved.crops.push(cropObjectsToBeSaved)
         // offlineDataToBeSaved.cropsMaterials.push(cropsMaterialsObjectsToBeSaved)
         // offlineDataToBeSaved.livestock.push(livestockObjectsToBeSaved)
@@ -96,7 +96,7 @@ export default class SigninScreen extends Component {
         }
 
         var offlineArr = newOfflineData.map(function(item){return item.username})
-        if(offlineArr.includes(allusername)){
+        if(offlineArr.includes(this.state.username)){
             console.log("NO")
         }else{
             newOfflineData.push(offlineDataToBeSaved)
@@ -270,7 +270,7 @@ export default class SigninScreen extends Component {
         let token = await AsyncStorage.getItem('token')
         let username = await AsyncStorage.getItem('username')
 
-        const userToBeSaved = {'_id': _id , 'name' : reqname,'password': this.state.password, 'token':token, 'username':username , 'syncStatus':false, 'cropData' : [], 'livestockData':[], 'moneyManagerData':[] }
+        const userToBeSaved = {'_id': _id , 'name' : reqname,'password': this.state.password, 'token':token, 'username':username , 'syncStatus':false, 'patch':[], 'cropData' : [], 'livestockData':[], 'moneyManagerData':[] }
         const exsistingUser = await AsyncStorage.getItem('user')
         let newUser = JSON.parse(exsistingUser)
         if(!newUser){
@@ -304,7 +304,7 @@ export default class SigninScreen extends Component {
             });
         }
 
-        //this.getAllData()
+        this.getAllData()
     }
 
     displayData = async() => {

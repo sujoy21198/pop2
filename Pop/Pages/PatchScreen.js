@@ -11,12 +11,6 @@ import LanguageChange from '../Core/LanguageChange'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import DialogInput from 'react-native-dialog-input';
 
-const data = [
-    { name: 'HIGH LAND', code: 'https://shramajeewiki.com/images/English/00214136.jpg' },
-    { name: 'MEDIUM LAND', code: 'https://timesofindia.indiatimes.com/thumb/msid-60012970,imgsize-2640154,width-400,resizemode-4/60012970.jpg' },
-    { name: 'LOW LAND', code: 'https://www.biggovernment.news/wp-content/uploads/sites/59/2017/06/farmer-plow-field.jpg' }
-]
-
 export default class PatchScreen extends Component {
 
     constructor(props) {
@@ -34,6 +28,49 @@ export default class PatchScreen extends Component {
         this.state.cropName = this.props.route.params.cropName
         this.state.imageFile = this.props.route.params.imageFile
     }
+    componentDidMount(){
+        //this.setPatch()
+
+        this.showData()
+    }
+
+    setPatch = async(data) => {
+        try{
+            const patchObject = { 'name' : data}
+            let username = await AsyncStorage.getItem('username')
+            let user = await AsyncStorage.getItem('user')
+            let parsed = JSON.parse(user)
+            //var testy = user.filter((i) => i.username === username)
+            var sepcific = parsed.find((i) => i.username === username)
+            sepcific.patch.push(patchObject)
+            //sepcific.patch = []
+            
+            //console.log(sepcific.patch )
+            await AsyncStorage.setItem('user',JSON.stringify(parsed))
+            this.setState({ data: sepcific.patch})
+            this.setState({ isDialogVisible: false })
+        }catch(error){
+            console.log(error)
+        }
+    }
+
+
+    showData = async() => {
+        try{
+            let username = await AsyncStorage.getItem('username')
+            let user = await AsyncStorage.getItem('user')
+            let parsed = JSON.parse(user)
+            var sepcific = parsed.find((i) => i.username === username)
+            this.setState({ data: sepcific.patch})
+            console.log(JSON.stringify(parsed))
+        }catch(error){
+            alert(error)
+        }
+    }
+
+    
+
+
 
     addDataToArray = (data) => {
         var newPatch = []
@@ -147,14 +184,14 @@ export default class PatchScreen extends Component {
                     title={"ADD PATCH"}
                     // message={"Message for DialogInput #1"}
                     hintInput={"Please enter the name of your patch"}
-                    submitInput={(inputText) => { this.addDataToArray(inputText) }}
+                    submitInput={(inputText) => { this.setPatch(inputText) }}
                     closeDialog={() => { this.setState({ isDialogVisible: false }) }}>
                 </DialogInput>
                 <View>
 
                     <FlatList
                         data={this.state.data}
-                        style={{ marginBottom: heightToDp("74%") }}
+                        style={{ marginBottom: heightToDp("80%") }}
                         renderItem={({ item }) =>
 
                             <TouchableOpacity onPress={() => {this.navigateToPatch()}}>
