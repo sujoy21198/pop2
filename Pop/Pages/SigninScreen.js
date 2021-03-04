@@ -229,6 +229,7 @@ export default class SigninScreen extends Component {
             password: this.state.password
         }, {
             headers: {
+                
                 'Content-type': 'application/json'
             }
         }).then(function (response) {
