@@ -227,7 +227,6 @@ export default class SigninScreen extends Component {
             phone: this.state.phoneNumber,
             username: this.state.username,
             password: this.state.password
-            
         }, {
             headers: {
                 

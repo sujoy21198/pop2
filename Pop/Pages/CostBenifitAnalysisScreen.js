@@ -6,6 +6,7 @@ import TopLogo from '../assets/TopLogo'
 import { widthToDp, heightToDp } from '../Responsive'
 import { FlatGrid, SectionGrid } from 'react-native-super-grid'
 import Icon from 'react-native-vector-icons/FontAwesome'
+import DataAccess from '../Core/DataAccess'
 
 
 
@@ -16,6 +17,25 @@ const data = [
 ]
 
 export default class CostBenifitAnalysisScreen extends Component {
+
+    constructor(props) {
+        super(props)
+        this.state = {
+            _id: '',
+            cropName: '',
+            stepData: [],
+            materialName: '',
+            decimalPrice: '',
+            isLoading: false,
+            imageFile : '',
+            materialPrice:'',
+            numberOfSteps:'',
+            pageNumber : '05'
+        }
+        this.state._id = this.props.route.params._id
+        this.state.cropName = this.props.route.params.cropName
+        this.state.imageFile = this.props.route.params.imageFile
+    }
     render() {
         return (
             <View style={{ backgroundColor: BaseColor.BackgroundColor, flex: 1 }}>
@@ -108,7 +128,7 @@ export default class CostBenifitAnalysisScreen extends Component {
                                 </View>
                                 <Image
                                     style={{ height: heightToDp("20%"), width: widthToDp("50%"), marginTop: heightToDp("2%"), marginLeft: widthToDp("7%"), borderRadius: 10 }}
-                                    source={{ uri: 'https://static.toiimg.com/photo/77876184.cms' }}
+                                    source={{ uri: DataAccess.BaseUrl+DataAccess.CropImage+'steps/'+this.state.imageFile }}
                                 />
                             </View>
                         </View>
@@ -186,7 +206,7 @@ export default class CostBenifitAnalysisScreen extends Component {
                                 <Text style={{ fontSize: widthToDp("4%"), color: "#000", marginTop: heightToDp("1.4%"), alignSelf: 'center',fontFamily:'Oswald-Medium' }}>CANCEL</Text>
                             </View>
                         </TouchableOpacity>
-                        <TouchableOpacity onPress={() => this.props.navigation.navigate('LiveStockScreen')}>
+                        <TouchableOpacity onPress={() => this.props.navigation.navigate('DashBoardScreen')}>
                             <View style={{ backgroundColor: "#fff", height: heightToDp("6%"), width: widthToDp("30%"), borderRadius: 100, marginLeft: widthToDp("2%"), marginTop: heightToDp("2%") }}>
                                 <Text style={{ fontSize: widthToDp("4%"), color: "#000", marginTop: heightToDp("1.4%"), alignSelf: 'center' ,fontFamily:'Oswald-Medium'}}>DONE</Text>
                             </View>

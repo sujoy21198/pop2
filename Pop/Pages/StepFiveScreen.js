@@ -25,7 +25,9 @@ export default class StepOneScreen extends Component {
             decimalPrice: '',
             isLoading: false,
             imageFile : '',
-            materialPrice:''
+            materialPrice:'',
+            numberOfSteps:'',
+            pageNumber : '05'
         }
         this.state._id = this.props.route.params._id
         this.state.cropName = this.props.route.params.cropName
@@ -33,7 +35,30 @@ export default class StepOneScreen extends Component {
     }
 
     componentDidMount() {
-        this.getStepData()
+        //this.getStepData()
+        this.getStepDataFromLocal()
+    }
+
+    getStepDataFromLocal = async () => {
+        try {
+            var stepData = []
+            var decimalPrice, materialName
+            let username = await AsyncStorage.getItem('username')
+            let user = await AsyncStorage.getItem('offlineData');
+            let parsed = JSON.parse(user);
+            var specific = parsed.find((i) => i.username === username)
+            var cropFilter = specific.cropsMaterials.filter((i) => i.cropId === this.state._id)
+            stepData = cropFilter[4].stepData
+            decimalPrice = cropFilter[4].decimalPrice
+            materialName =cropFilter[4].materialName
+            console.log(cropFilter)
+            this.setState({ stepData: stepData })
+            this.setState({ materialName: materialName })
+            this.setState({ decimalPrice: decimalPrice })
+            this.setState({numberOfSteps : cropFilter.length})
+        } catch (error) {
+            alert(error)
+        }
     }
 
     getStepData = async () => {
@@ -75,14 +100,27 @@ export default class StepOneScreen extends Component {
     }
 
     stepSixScreen = () => {
+        // if(this.state.materialPrice === ''){
+        //     alert("please enter a value")
+        // }else{
+        //     this.props.navigation.navigate({
+        //         name: 'StepSixScreen',
+        //         params: {
+        //             cropName: this.state.cropName,
+        //             _id: this.state._id
+        //         }
+        //     })
+        // }
+
         if(this.state.materialPrice === ''){
             alert("please enter a value")
-        }else{
-            this.props.navigation.navigate({
-                name: 'StepSixScreen',
+        }else {
+                this.props.navigation.navigate({
+                name: 'ActualCultivationCostScreen',
                 params: {
                     cropName: this.state.cropName,
-                    _id: this.state._id
+                    _id: this.state._id,
+                    imageFile : this.state.imageFile
                 }
             })
         }
@@ -237,7 +275,7 @@ export default class StepOneScreen extends Component {
                     </TouchableOpacity>
                 </View>
                 <View style={{ borderBottomColor: BaseColor.Stroke, borderBottomWidth: 1, marginTop: heightToDp('1.5%'), width: widthToDp("100%") }}></View>
-                <Text style={{ fontSize: widthToDp("6%"), marginLeft: widthToDp("3%"), marginTop: heightToDp("1%"), fontFamily: 'Oswald-Medium' }}>STEP - 05/08</Text>
+                <Text style={{ fontSize: widthToDp("6%"), marginLeft: widthToDp("3%"), marginTop: heightToDp("1%"), fontFamily: 'Oswald-Medium' }}>STEP - {this.state.pageNumber}/08</Text>
                 
                 {
                     this.state.isLoading ? <View style={{ justifyContent: 'center', marginTop: heightToDp("20%"),backgroundColor: BaseColor.BackgroundColor,marginBottom:heightToDp("30%") }}><CustomIndicator IsLoading={this.state.isLoading} /></View> :null

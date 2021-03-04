@@ -11,8 +11,34 @@ import Icon from 'react-native-vector-icons/FontAwesome'
 
 export default class ActualCultivationCost extends Component {
 
+    constructor(props) {
+        super(props)
+        this.state = {
+            _id: '',
+            cropName: '',
+            stepData: [],
+            materialName: '',
+            decimalPrice: '',
+            isLoading: false,
+            imageFile : '',
+            materialPrice:'',
+            numberOfSteps:'',
+            pageNumber : '05'
+        }
+        this.state._id = this.props.route.params._id
+        this.state.cropName = this.props.route.params.cropName
+        this.state.imageFile = this.props.route.params.imageFile
+    }
+
     nextScreen = () => {
-        alert("coming soon")
+        this.props.navigation.navigate({
+            name: 'CostBenifitAnalysisScreen',
+            params: {
+                cropName: this.state.cropName,
+                _id: this.state._id,
+                imageFile : this.state.imageFile
+            }
+        })
     }
     render() {
         return (

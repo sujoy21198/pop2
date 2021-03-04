@@ -26,16 +26,47 @@ export default class StepOneScreen extends Component {
             decimalPrice: '',
             isLoading: false,
             imageFile: '',
-            materialPrice: ''
+            materialPrice: '',
+            numberOfSteps:'',
+            pageNumber : '01'
         }
         this.state._id = this.props.route.params._id
         this.state.cropName = this.props.route.params.cropName
         this.state.imageFile = this.props.route.params.imageFile
+        //alert(this.state._id)
     }
 
     componentDidMount() {
         //this.getStepData()
         this.getStepDataFromLocal()
+        //this.displayData()
+    }
+
+    displayData = async() => {
+        try {
+            //var count = 8
+            let user = await AsyncStorage.getItem('offlineData');
+            let parsed = JSON.parse(user);
+            console.log(JSON.stringify(parsed),"aslllll data")
+            // var valueArr = parsed.map(function(item){ return item.userId });
+            // alert(valueArr)
+            // var specificObject = parsed.find((i) => i.userId === count)
+            // console.log(specificObject.userId)
+
+            //console.log(specificObject.userId = count+1)
+            // console.log(specificObject.userId = 6)
+            //await AsyncStorage.setItem('products',JSON.stringify(parsed))
+
+
+            //alert(parsed[0].item = "bitch")
+            // await AsyncStorage.setItem('products',JSON.stringify(parsed))
+            // console.log(JSON.stringify(parsed))
+            //alert(JSON.stringify(parsed));
+            // console.log(JSON.stringify(parsed))
+        }
+        catch (error) {
+            alert(error)
+        }
     }
 
 
@@ -47,13 +78,15 @@ export default class StepOneScreen extends Component {
             let user = await AsyncStorage.getItem('offlineData');
             let parsed = JSON.parse(user);
             var specific = parsed.find((i) => i.username === username)
-            stepData = specific.cropsMaterials[0].stepData
-            decimalPrice = specific.cropsMaterials[0].decimalPrice
-            materialName = specific.cropsMaterials[0].materialName
-            console.log(specific.cropsMaterials[18])
+            var cropFilter = specific.cropsMaterials.filter((i) => i.cropId === this.state._id)
+            stepData = cropFilter[0].stepData
+            decimalPrice = cropFilter[0].decimalPrice
+            materialName =cropFilter[0].materialName
+            console.log(cropFilter.length)
             this.setState({ stepData: stepData })
             this.setState({ materialName: materialName })
             this.setState({ decimalPrice: decimalPrice })
+            this.setState({numberOfSteps : cropFilter.length})
         } catch (error) {
             alert(error)
         }
@@ -261,7 +294,7 @@ export default class StepOneScreen extends Component {
                     </TouchableOpacity>
                 </View>
                 <View style={{ borderBottomColor: BaseColor.Stroke, borderBottomWidth: 1, marginTop: heightToDp('1.5%'), width: widthToDp("100%") }}></View>
-                <Text style={{ fontSize: widthToDp("6%"), marginLeft: widthToDp("3%"), marginTop: heightToDp("1%"), fontFamily: 'Oswald-Medium' }}>STEP - 01/08</Text>
+                <Text style={{ fontSize: widthToDp("6%"), marginLeft: widthToDp("3%"), marginTop: heightToDp("1%"), fontFamily: 'Oswald-Medium' }}>STEP - {this.state.pageNumber}/08</Text>
                 {
                     this.state.isLoading ? <View style={{ justifyContent: 'center', marginTop: heightToDp("20%"), backgroundColor: BaseColor.BackgroundColor, marginBottom: heightToDp("30%") }}><CustomIndicator IsLoading={this.state.isLoading} /></View> : null
                 }
