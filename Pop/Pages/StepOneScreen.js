@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { View, Image, TouchableOpacity, FlatList, ScrollView } from 'react-native'
 import BaseColor from '../Core/BaseTheme'
-import { Card, Text ,Input} from 'native-base'
+import { Card, Text, Input } from 'native-base'
 import TopLogo from '../assets/TopLogo'
 import { widthToDp, heightToDp } from '../Responsive'
 import { FlatGrid, SectionGrid } from 'react-native-super-grid'
@@ -26,7 +26,7 @@ export default class StepOneScreen extends Component {
             decimalPrice: '',
             isLoading: false,
             imageFile: '',
-            materialPrice:''
+            materialPrice: ''
         }
         this.state._id = this.props.route.params._id
         this.state.cropName = this.props.route.params.cropName
@@ -34,7 +34,29 @@ export default class StepOneScreen extends Component {
     }
 
     componentDidMount() {
-        this.getStepData()
+        //this.getStepData()
+        this.getStepDataFromLocal()
+    }
+
+
+    getStepDataFromLocal = async () => {
+        try {
+            var stepData = []
+            var decimalPrice, materialName
+            let username = await AsyncStorage.getItem('username')
+            let user = await AsyncStorage.getItem('offlineData');
+            let parsed = JSON.parse(user);
+            var specific = parsed.find((i) => i.username === username)
+            stepData = specific.cropsMaterials[0].stepData
+            decimalPrice = specific.cropsMaterials[0].decimalPrice
+            materialName = specific.cropsMaterials[0].materialName
+            console.log(specific.cropsMaterials[18])
+            this.setState({ stepData: stepData })
+            this.setState({ materialName: materialName })
+            this.setState({ decimalPrice: decimalPrice })
+        } catch (error) {
+            alert(error)
+        }
     }
 
     getStepData = async () => {
@@ -76,9 +98,9 @@ export default class StepOneScreen extends Component {
     }
 
     stepTwoScreen = () => {
-        if(this.state.materialPrice === ''){
+        if (this.state.materialPrice === '') {
             alert("please enter a value")
-        }else{
+        } else {
             this.props.navigation.navigate({
                 name: 'StepTwoScreen',
                 params: {
@@ -88,16 +110,16 @@ export default class StepOneScreen extends Component {
                 }
             })
         }
-        
+
     }
 
     saveButton = () => {
-        if(this.state.materialPrice === ''){
+        if (this.state.materialPrice === '') {
             alert("please enter a value")
-        }else{
+        } else {
             alert("AMOUNT SAVED")
         }
-        
+
     }
     // getSteps = async() => {
     //     var username = await AsyncStorage.getItem('username')
@@ -295,13 +317,13 @@ export default class StepOneScreen extends Component {
                                             <Text style={{ fontFamily: 'Oswald-Medium', width: widthToDp("30%") }}>{this.state.materialName}</Text>
                                             {/* <Text style={{ marginLeft: widthToDp("35%"), fontFamily: 'Oswald-Medium' }}>₹ {this.state.decimalPrice}</Text> */}
                                             <Input
-                                                placeholder= {this.state.decimalPrice}
+                                                placeholder={this.state.decimalPrice}
                                                 keyboardType='number-pad'
-                                                onChangeText={(data) => {this.setState({materialPrice : data})}}
-                                                style={{marginLeft: widthToDp("33%"), fontFamily: 'Oswald-Medium',width:widthToDp("20%"), marginTop: heightToDp("-2%")}}
+                                                onChangeText={(data) => { this.setState({ materialPrice: data }) }}
+                                                style={{ marginLeft: widthToDp("33%"), fontFamily: 'Oswald-Medium', width: widthToDp("20%"), marginTop: heightToDp("-2%") }}
                                             />
-                                            
-                                            
+
+
                                         </View>
                                     </View>
                                 </View>
@@ -317,7 +339,7 @@ export default class StepOneScreen extends Component {
                             <Text style={{ fontSize: widthToDp("4%"), color: "#000", marginTop: heightToDp("1.3%"), alignSelf: 'center', fontFamily: 'Oswald-Medium' }}>BACK</Text>
                         </View>
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={() => { this.saveButton()}}>
+                    <TouchableOpacity onPress={() => { this.saveButton() }}>
                         <View style={{ backgroundColor: "#fff", height: heightToDp("6%"), width: widthToDp("30%"), borderRadius: 100, marginLeft: widthToDp("1%"), marginTop: heightToDp("2%") }}>
                             <Text style={{ fontSize: widthToDp("4%"), color: "#000", marginTop: heightToDp("1.3%"), alignSelf: 'center', fontFamily: 'Oswald-Medium' }}>SAVE</Text>
                         </View>

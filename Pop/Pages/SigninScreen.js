@@ -45,7 +45,7 @@ export default class SigninScreen extends Component {
         var allusername = await AsyncStorage.getItem('username')
         var token = await AsyncStorage.getItem('token')
         var encodedUsername = base64.encode(this.state.username)
-        var cropObjectsToBeSaved,cropsMaterialsObjectsToBeSaved,livestockObjectsToBeSaved,liveStockStepMaterialsObjectsToBeSaved,liveStockBreedsObjectsToBeSaved,breedCategoriesObjectsToBeSaved,importantLinksObjectsToBeSaved;
+        var cropObjectsToBeSaved,cropStepsObjectsToBeSaved,cropsMaterialsObjectsToBeSaved,livestockObjectsToBeSaved,liveStockStepMaterialsObjectsToBeSaved,liveStockBreedsObjectsToBeSaved,breedCategoriesObjectsToBeSaved,importantLinksObjectsToBeSaved;
         await axios.get("http://161.35.122.165:3021/api/v1/get-all-data",{
             headers:{
                 'Content-type': "application/json",
@@ -57,6 +57,8 @@ export default class SigninScreen extends Component {
             var crops = response.data.crops
             //var cropObjects = crops.substring(1,crops.length-1)
             cropObjectsToBeSaved = crops
+            var cropSteps = response.data.cropSteps
+            cropStepsObjectsToBeSaved = cropSteps
             var cropsMaterials = response.data.cropsMaterials
             //var cropsMaterialsObjects = cropsMaterials.substring(1,cropsMaterials.length-1)
             cropsMaterialsObjectsToBeSaved = cropsMaterials
@@ -80,7 +82,7 @@ export default class SigninScreen extends Component {
             console.log(error)
         })
 
-        const offlineDataToBeSaved = {'username': this.state.username , 'crops':cropObjectsToBeSaved ,'cropsMaterials':cropsMaterialsObjectsToBeSaved,'livestock':livestockObjectsToBeSaved , 'liveStockStepMaterials':liveStockStepMaterialsObjectsToBeSaved , 'liveStockBreeds':liveStockBreedsObjectsToBeSaved , 'breedCategories':breedCategoriesObjectsToBeSaved , 'importantLinks':importantLinksObjectsToBeSaved }
+        const offlineDataToBeSaved = {'username': this.state.username , 'crops':cropObjectsToBeSaved ,'cropSteps':cropStepsObjectsToBeSaved,'cropsMaterials':cropsMaterialsObjectsToBeSaved,'livestock':livestockObjectsToBeSaved , 'liveStockStepMaterials':liveStockStepMaterialsObjectsToBeSaved , 'liveStockBreeds':liveStockBreedsObjectsToBeSaved , 'breedCategories':breedCategoriesObjectsToBeSaved , 'importantLinks':importantLinksObjectsToBeSaved }
         // offlineDataToBeSaved.crops.push(cropObjectsToBeSaved)
         // offlineDataToBeSaved.cropsMaterials.push(cropsMaterialsObjectsToBeSaved)
         // offlineDataToBeSaved.livestock.push(livestockObjectsToBeSaved)
@@ -105,7 +107,7 @@ export default class SigninScreen extends Component {
 
         await AsyncStorage.setItem("offlineData", JSON.stringify(newOfflineData))
             .then(() => {
-                console.log('‘Offline Data saved successfully’')
+                alert('‘Offline Data saved successfully’')
             })
             .catch(() => {
                 console.log('‘There was an error saving the product’')
