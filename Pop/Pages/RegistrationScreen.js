@@ -122,7 +122,7 @@ export default class RegistrationScreen extends Component {
       panchayat: this.state.gram,
       village: this.state.village,
       participantNumber: this.state.participantNumber,
-      officerPassword: this.state.fieldOfficerPass,
+      blockPassword: this.state.fieldOfficerPass,
       deviceId: this.state.deviceId
     }, {
       headers: {

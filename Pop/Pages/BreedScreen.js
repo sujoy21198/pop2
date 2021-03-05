@@ -27,7 +27,24 @@ export default class BreedScreen extends Component {
         //alert(this.state._id)
     }
     componentDidMount(){
-        this.loadLiveStocks()
+        //this.loadLiveStocks()
+        this.loadBreedFromStorage()
+    }
+
+    loadBreedFromStorage = async() => {
+        try{
+            let username = await AsyncStorage.getItem('username')
+            let user = await AsyncStorage.getItem('offlineData');
+            let parsed = JSON.parse(user);
+            var specific = parsed.find((i) => i.username === username)
+            var breedData  = specific.liveStockBreeds.filter((i) => i.livestockId === this.state._id)
+            console.log(breedData)
+            this.setState({
+                breed: breedData
+            })
+        }catch(error){
+            alert(error)
+        }
     }
 
     loadLiveStocks = async() => {
@@ -78,9 +95,14 @@ export default class BreedScreen extends Component {
         })
     }
     
-    navigationController = (data) => {
+    navigationController = (data,name,imageFile) => {
         this.props.navigation.navigate({
-            name: 'BreedDescriptionScreen'
+            name: 'BreedDescriptionScreen',
+            params:{
+                _id:data,
+                breedname:name,
+                imageFile : imageFile
+            }
         })
     }
     render() {
@@ -174,12 +196,12 @@ export default class BreedScreen extends Component {
                         data={Object.values(breedArray)}
                         bouncesZoom={true}
                         renderItem={({ item }) => (
-                            <TouchableOpacity onPress={() => this.navigationController(item._id)}>
+                            <TouchableOpacity onPress={() => this.navigationController(item._id,item.name,item.imageFile)}>
                                 <View style={{backgroundColor:BaseColor.Red,width:widthToDp("47%"),height:heightToDp("30%"), elevation: 10, borderRadius: 10}}>
                                     <Text style={{color: "#fff", fontSize: widthToDp("5%"),marginLeft:widthToDp("5%"), marginTop: heightToDp("0.4%"),fontFamily:'Oswald-Medium'}}>{item.name}</Text>
                                     <Image
                                 style={{ width: widthToDp("47%"), height: heightToDp("25%") ,borderBottomLeftRadius:10,borderBottomRightRadius:10, marginTop: heightToDp("1%")}}
-                                source={{ uri: "http://161.35.122.165:3020/app-property/uploads/crops/"+item.imageFile}}
+                                source={{ uri: DataAccess.BaseUrl+"app-property/uploads/livestocks/"+item.imageFile}}
                                 />
                                 </View>
                             </TouchableOpacity>

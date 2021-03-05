@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Image, TouchableOpacity , ScrollView} from 'react-native'
+import { View, Image, TouchableOpacity,ScrollView } from 'react-native'
 import BaseColor from '../Core/BaseTheme'
 import { Text } from 'native-base'
 import TopLogo from '../assets/TopLogo'
@@ -12,8 +12,9 @@ import axios from 'axios'
 import DataAccess from '../Core/DataAccess'
 import CustomIndicator from '../Core/CustomIndicator'
 
-export default class BreedDescriptionScreen extends Component {
 
+
+export default class LiveStockEnterQuantityScreen extends Component{
 
     constructor(props){
         super(props)
@@ -29,19 +30,8 @@ export default class BreedDescriptionScreen extends Component {
         this.state.imageFile = this.props.route.params.imageFile
         //alert(this.state._id)
     }
-
-    nextButton = () => {
-        this.props.navigation.navigate({
-            name: 'LiveStockEnterQuantityScreen',
-            params:{
-                _id:this.state._id,
-                breedname:this.state.breedname,
-                imageFile : this.state.imageFile
-            }
-        })
-    }
-    render() {
-        return (
+    render(){
+        return(
             <View style={{ backgroundColor: BaseColor.BackgroundColor,flex:1 }}>
                 <View style={{ backgroundColor: 'white', width: widthToDp("100%"), height: heightToDp("13%"),flexDirection: 'row' }}>
                     <View style={{ marginTop: heightToDp("3%"), marginLeft: widthToDp("3%") }}>
@@ -142,13 +132,6 @@ export default class BreedDescriptionScreen extends Component {
                     </View>
                     <View style={{ marginTop: heightToDp("10%") }}></View>
                 </ScrollView>
-                <View style={{ height: heightToDp("10%") }}>
-                        <TouchableOpacity onPress={() => this.nextButton()}>
-                            <View style={{ backgroundColor: "#fff", height: heightToDp("6%"), width: widthToDp("30%"), borderRadius: 100, alignSelf:'center', marginTop: heightToDp("2%") }}>
-                                <Text style={{ fontSize: widthToDp("4%"), color: "#000", marginTop: heightToDp("1.3%"), alignSelf: 'center',fontFamily:'Oswald-Medium' }}>NEXT</Text>
-                            </View>
-                        </TouchableOpacity>
-                </View>
             </View>
         );
     }

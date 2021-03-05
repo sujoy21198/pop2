@@ -22,7 +22,22 @@ export default class LiveStockScreen extends Component {
         }
     }
     componentDidMount(){
-        this.loadLiveStocks()
+        //this.loadLiveStocks()
+        this.loadLivestocksOffline()
+    }
+
+    loadLivestocksOffline = async() => {
+        try{
+            let username = await AsyncStorage.getItem('username')
+            let user = await AsyncStorage.getItem('offlineData');
+            let parsed = JSON.parse(user);
+            var specific = parsed.find((i) => i.username === username)
+            console.log(specific.livestock)
+
+        }catch(error){
+            alert(error)
+        }
+        this.setState({livestocks : specific.livestock})
     }
 
     loadLiveStocks = async() => {
@@ -75,7 +90,7 @@ export default class LiveStockScreen extends Component {
     }
     
     navigationController = (data,name) => {
-        //alert(name)
+        //alert(data)
         this.props.navigation.navigate({
             name: 'BreedScreen',
             params : {_id:data,
@@ -179,7 +194,7 @@ export default class LiveStockScreen extends Component {
                                     <Text style={{color: "#fff", fontSize: widthToDp("5%"),marginLeft:widthToDp("5%"), marginTop: heightToDp("0.4%"),fontFamily:'Oswald-Medium'}}>{(item.name)}</Text>
                                     <Image
                                 style={{ width: widthToDp("47%"), height: heightToDp("25%") ,borderBottomLeftRadius:10,borderBottomRightRadius:10, marginTop: heightToDp("1%")}}
-                                source={{ uri: DataAccess.BaseUrl+DataAccess.CropImage+item.imageFile}}
+                                source={{ uri: DataAccess.BaseUrl+"app-property/uploads/livestocks/"+item.imageFile}}
                                 />
                                 </View>
                             </TouchableOpacity>

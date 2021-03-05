@@ -59,7 +59,7 @@ const LanguageChange = new LocalizedStrings({
     gramPanchayat : 'GRAMPANCHAYAT',
     village: 'VILLAGE',
     otp:'OTP',
-    fieldOfficerPassword:'FIELD OFFICER PASSWORD',
+    fieldOfficerPassword:'BLOCK PASSWORD',
     knowledgeCenter: 'KNOWLEDGE CENTER',
     importantLinks : 'IMPORTANT LINKS',
     moneyManager : 'MONEY MANAGER',

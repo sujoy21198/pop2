@@ -32,6 +32,7 @@ import ImportantLinksSubCategoryScreen from './Pages/ImportantLinksSubCategorySc
 import ImportantLinksScreen from './Pages/ImportantLinksScreen'
 import BreedDescriptionScreen from './Pages/BreedDescriptionScreen'
 import PatchScreen from './Pages/PatchScreen'
+import LiveStockEnterQuantityScreen from './Pages/LiveStockEnterQuantityScreen'
 
 const Stack = createStackNavigator();
 
@@ -68,6 +69,7 @@ function AppStack(){
                 <Stack.Screen name="ImportantLinksSubCategoryScreen" component={ImportantLinksSubCategoryScreen}/>
                 <Stack.Screen name="BreedDescriptionScreen" component={BreedDescriptionScreen}/>
                 <Stack.Screen name="PatchScreen" component={PatchScreen}/>
+                <Stack.Screen name="LiveStockEnterQuantityScreen" component={LiveStockEnterQuantityScreen}/>
             </Stack.Navigator>
         </NavigationContainer>
     );
