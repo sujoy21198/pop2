@@ -107,7 +107,12 @@ export default class SigninScreen extends Component {
 
         await AsyncStorage.setItem("offlineData", JSON.stringify(newOfflineData))
             .then(() => {
-                alert('‘Offline Data saved successfully’')
+                //alert('‘Offline Data saved successfully’')
+                Toast.show({
+                    text: "Offline Data saved successfully",
+                    duration: 3000,
+                    type: 'success'
+                  })
             })
             .catch(() => {
                 console.log('‘There was an error saving the product’')

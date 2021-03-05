@@ -49,7 +49,14 @@ export default class LiveStockEnterQuantityScreen extends Component {
     }
 
     nextScreen=()=>{
-        alert("ji")
+        this.props.navigation.navigate({
+            name: 'LiveStockExpectedProfitAnalysisScreen',
+            params:{
+                _id:this.state._id,
+                breedname:this.state.breedname,
+                imageFile : this.state.imageFile
+            }
+        })
     }
 
     saveButton = () => {
