@@ -84,13 +84,14 @@ export default class PatchScreen extends Component {
         this.setState({ isDialogVisible: true })
     }
 
-    navigateToPatch = () => {
+    navigateToPatch = (patchName) => {
         this.props.navigation.navigate({
             name: 'LandTypeScreen',
             params: {
                 _id: this.state._id,
                 cropName: this.state.cropName,
-                imageFile : this.state.imageFile
+                imageFile : this.state.imageFile,
+                patchName: patchName
             }
         })
     }
@@ -194,7 +195,7 @@ export default class PatchScreen extends Component {
                         style={{ marginBottom: heightToDp("80%") }}
                         renderItem={({ item }) =>
 
-                            <TouchableOpacity onPress={() => {this.navigateToPatch()}}>
+                            <TouchableOpacity onPress={() => {this.navigateToPatch(item.name)}}>
                                 <View style={{ width: widthToDp("90%"), backgroundColor: 'white', margin: widthToDp("3%"), borderRadius: 20, height: heightToDp("5%") }}>
                                     <Text style={{ alignSelf: 'center', justifyContent: 'center', marginTop: heightToDp("0.5%"), fontSize: widthToDp("5%"), color: "#000", fontFamily: 'Oswald-Medium' }}>{item.name}</Text>
                                 </View>

@@ -27,11 +27,27 @@ export default class StepOneScreen extends Component {
             imageFile:'',
             materialPrice:'',
             numberOfSteps:'',
-            pageNumber : '03'
+            pageNumber : '03',
+            patchName:'',
+            landType:'',
+            farmingAreaInDecimal:'',
+            costOfCultivatinPerTenDecimal:'',
+            costPerKg:'',
+            productionInKg:'',
+            cost:'',
+            netProfit:''
         }
         this.state._id = this.props.route.params._id
         this.state.cropName = this.props.route.params.cropName
         this.state.imageFile = this.props.route.params.imageFile
+        this.state.patchName = this.props.route.params.patchName
+        this.state.landType = this.props.route.params.landType
+        this.state.farmingAreaInDecimal = this.props.route.params.farmingAreaInDecimal
+        this.state.costOfCultivatinPerTenDecimal = this.props.route.params.costOfCultivatinPerTenDecimal
+        this.state.costPerKg = this.props.route.params.costPerKg
+        this.state.productionInKg = this.props.route.params.productionInKg
+        this.state.cost = this.props.route.params.cost
+        this.state.netProfit = this.props.route.params.netProfit
     }
 
     componentDidMount() {
@@ -108,7 +124,15 @@ export default class StepOneScreen extends Component {
                 params: {
                     cropName: this.state.cropName,
                     _id: this.state._id,
-                    imageFile: this.state.imageFile
+                    imageFile: this.state.imageFile,
+                    patchName : this.state.patchName,
+                    landType: this.state.landType,
+                    farmingAreaInDecimal : this.state.farmingAreaInDecimal,
+                    costOfCultivatinPerTenDecimal : this.state.costOfCultivatinPerTenDecimal,
+                    costPerKg : this.state.costPerKg,
+                    productionInKg : this.state.productionInKg,
+                    cost : this.state.cost,
+                    netProfit : this.state.netProfit
                 }
             })
         }

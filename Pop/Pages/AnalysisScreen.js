@@ -28,7 +28,8 @@ export default class LandTypeScreen extends Component {
             productionInKg:'',
             netProfit :'',
             cost:'',
-            imageFile:''
+            imageFile:'',
+            patchName:''
         }
         this.state.landType = this.props.route.params.landType
         this.state._id = this.props.route.params._id
@@ -39,7 +40,7 @@ export default class LandTypeScreen extends Component {
         this.state.productionInKg = this.props.route.params.productionInKg
         this.state.cost = this.props.route.params.cost
         this.state.imageFile = this.props.route.params.imageFile
-
+        this.state.patchName = this.props.route.params.patchName
 
         this.netProfitCalculation()
 
@@ -56,7 +57,15 @@ export default class LandTypeScreen extends Component {
             params: {
                 cropName: this.state.cropName,
                 _id: this.state._id,
-                imageFile : this.state.imageFile
+                imageFile : this.state.imageFile,
+                patchName : this.state.patchName,
+                landType: this.state.landType,
+                farmingAreaInDecimal : this.state.farmingAreaInDecimal,
+                costOfCultivatinPerTenDecimal : this.state.costOfCultivatinPerTenDecimal,
+                costPerKg : this.state.costPerKg,
+                productionInKg : this.state.productionInKg,
+                cost : this.state.cost,
+                netProfit : this.state.netProfit
             }
         })
     }

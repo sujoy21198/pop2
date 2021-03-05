@@ -30,11 +30,34 @@ export default class CostBenifitAnalysisScreen extends Component {
             imageFile : '',
             materialPrice:'',
             numberOfSteps:'',
-            pageNumber : '05'
+            pageNumber : '05',
+            patchName:'',
+            landType:'',
+            farmingAreaInDecimal:'',
+            costOfCultivatinPerTenDecimal:'',
+            costPerKg:'',
+            productionInKg:'',
+            cost:'',
+            netProfit:'',
+            actualCulCostScreenProductionInKg : '',
+            actualCulCostScreenCostPerKg:'',
+            actualCulCostScreenTotalExpense:''
         }
         this.state._id = this.props.route.params._id
         this.state.cropName = this.props.route.params.cropName
         this.state.imageFile = this.props.route.params.imageFile
+        this.state.patchName = this.props.route.params.patchName
+        this.state.landType = this.props.route.params.landType
+        this.state.farmingAreaInDecimal = this.props.route.params.farmingAreaInDecimal
+        this.state.costOfCultivatinPerTenDecimal = this.props.route.params.costOfCultivatinPerTenDecimal
+        this.state.costPerKg = this.props.route.params.costPerKg
+        this.state.productionInKg = this.props.route.params.productionInKg
+        this.state.cost = this.props.route.params.cost
+        this.state.netProfit = this.props.route.params.netProfit
+        this.state.actualCulCostScreenProductionInKg = this.props.route.params.actualCulCostScreenProductionInKg
+        this.state.actualCulCostScreenCostPerKg = this.props.route.params.actualCulCostScreenCostPerKg
+        this.state.actualCulCostScreenTotalExpense = this.props.route.params.actualCulCostScreenTotalExpense
+        
     }
     render() {
         return (
@@ -121,14 +144,14 @@ export default class CostBenifitAnalysisScreen extends Component {
                             <View style={{ flexDirection: 'row' }}>
                                 <View style={{ marginTop: heightToDp("4%"), marginLeft: widthToDp("2%") }}>
                                     <Text style={{fontFamily:'Oswald-Medium'}}>LAND TYPE</Text>
-                                    <Text style={{fontFamily:'Oswald-Light'}}>Low Land</Text>
+                                    <Text style={{fontFamily:'Oswald-Light'}}>{this.state.landType}</Text>
 
                                     <Text style={{ marginTop: heightToDp("3%"),fontFamily:'Oswald-Medium' }}>AREA</Text>
-                                    <Text style={{fontFamily:'Oswald-Light'}}>Area 0.92 Decimal</Text>
+                                    <Text style={{fontFamily:'Oswald-Light'}}>Area {this.state.farmingAreaInDecimal} Decimal</Text>
                                 </View>
                                 <Image
                                     style={{ height: heightToDp("20%"), width: widthToDp("50%"), marginTop: heightToDp("2%"), marginLeft: widthToDp("7%"), borderRadius: 10 }}
-                                    source={{ uri: DataAccess.BaseUrl+DataAccess.CropImage+'steps/'+this.state.imageFile }}
+                                    source={{ uri: DataAccess.BaseUrl + DataAccess.CropImage + this.state.imageFile }}
                                 />
                             </View>
                         </View>
@@ -145,24 +168,24 @@ export default class CostBenifitAnalysisScreen extends Component {
                             <View style={{ borderBottomColor: 'black', borderBottomWidth: 1, marginTop: heightToDp('1.5%'), width: widthToDp("90%") }}></View>
                             <View style={{ flexDirection: 'row', marginLeft: widthToDp("4%"), marginTop: heightToDp('2%') }}>
                                 <Text style={{fontFamily:'Oswald-Medium'}}>Total cost of cultivation</Text>
-                                <Text style={{ marginLeft: widthToDp("35%"),fontFamily:'Oswald-Medium' }}>Amount</Text>
+                                <Text style={{ marginLeft: widthToDp("35%"),fontFamily:'Oswald-Medium' }}>₹ {this.state.costOfCultivatinPerTenDecimal}</Text>
                             </View>
                             <View style={{ flexDirection: 'row', marginLeft: widthToDp("4%"), marginTop: heightToDp('2%') }}>
                                 <Text style={{fontFamily:'Oswald-Medium'}}>Total income from crop</Text>
-                                <Text style={{ marginLeft: widthToDp("36%"),fontFamily:'Oswald-Medium' }}>Amount</Text>
+                                <Text style={{ marginLeft: widthToDp("36%"),fontFamily:'Oswald-Medium' }}>₹ {this.state.costPerKg}</Text>
                             </View>
                             <View style={{ flexDirection: 'row', marginLeft: widthToDp("4%"), marginTop: heightToDp('2%') }}>
                                 <Text style={{fontFamily:'Oswald-Medium'}}>Production</Text>
-                                <Text style={{ marginLeft: widthToDp("52%"),fontFamily:'Oswald-Medium' }}>Amount</Text>
+                                <Text style={{ marginLeft: widthToDp("52%"),fontFamily:'Oswald-Medium' }}>{this.state.productionInKg} KG</Text>
                             </View>
                             <View style={{ flexDirection: 'row', marginLeft: widthToDp("4%"), marginTop: heightToDp('2%') }}>
                                 <Text style={{fontFamily:'Oswald-Medium'}}>Cost Per kg</Text>
-                                <Text style={{ marginLeft: widthToDp("51%"),fontFamily:'Oswald-Medium' }}>Amount</Text>
+                                <Text style={{ marginLeft: widthToDp("51%"),fontFamily:'Oswald-Medium' }}>₹ {this.state.cost}</Text>
                             </View>
                             <View style={{ borderBottomColor: 'black', borderBottomWidth: 1, marginTop: heightToDp('1.5%'), width: widthToDp("90%") }}></View>
                             <View style={{ flexDirection: 'row',  marginTop: heightToDp('1%'),alignSelf:'center' }}>
                                 <Text style={{fontSize: widthToDp("6%"),fontFamily:'Oswald-Bold' }}>Net Profit</Text>
-                                <Text style={{ marginLeft: widthToDp("40%"), fontWeight: 'bold', fontSize: widthToDp("6%"),fontFamily:'Oswald-Bold' }}>Amount</Text>
+                                <Text style={{ marginLeft: widthToDp("40%"), fontWeight: 'bold', fontSize: widthToDp("6%"),fontFamily:'Oswald-Bold' }}>₹ {this.state.netProfit}</Text>
                             </View>
                         </View>
                     </View>
@@ -176,24 +199,24 @@ export default class CostBenifitAnalysisScreen extends Component {
                             <View style={{ borderBottomColor: 'black', borderBottomWidth: 1, marginTop: heightToDp('1.5%'), width: widthToDp("90%") }}></View>
                             <View style={{ flexDirection: 'row', marginLeft: widthToDp("4%"), marginTop: heightToDp('2%') }}>
                                 <Text style={{fontFamily:'Oswald-Medium'}}>Total cost of cultivation</Text>
-                                <Text style={{ marginLeft: widthToDp("35%"),fontFamily:'Oswald-Medium' }}>Amount</Text>
+                                <Text style={{ marginLeft: widthToDp("35%"),fontFamily:'Oswald-Medium' }}>₹ 00.00</Text>
                             </View>
                             <View style={{ flexDirection: 'row', marginLeft: widthToDp("4%"), marginTop: heightToDp('2%') }}>
                                 <Text style={{fontFamily:'Oswald-Medium'}}>Total income from crop</Text>
-                                <Text style={{ marginLeft: widthToDp("36%"),fontFamily:'Oswald-Medium' }}>Amount</Text>
+                                <Text style={{ marginLeft: widthToDp("36%"),fontFamily:'Oswald-Medium' }}>₹ {this.state.actualCulCostScreenTotalExpense}</Text>
                             </View>
                             <View style={{ flexDirection: 'row', marginLeft: widthToDp("4%"), marginTop: heightToDp('2%') }}>
                                 <Text style={{fontFamily:'Oswald-Medium'}}>Production</Text>
-                                <Text style={{ marginLeft: widthToDp("52%"),fontFamily:'Oswald-Medium' }}>Amount</Text>
+                                <Text style={{ marginLeft: widthToDp("52%"),fontFamily:'Oswald-Medium' }}>₹ {this.state.actualCulCostScreenCostPerKg}</Text>
                             </View>
                             <View style={{ flexDirection: 'row', marginLeft: widthToDp("4%"), marginTop: heightToDp('2%') }}>
                                 <Text style={{fontFamily:'Oswald-Medium'}}>Cost Per kg</Text>
-                                <Text style={{ marginLeft: widthToDp("51%"),fontFamily:'Oswald-Medium' }}>Amount</Text>
+                                <Text style={{ marginLeft: widthToDp("51%"),fontFamily:'Oswald-Medium' }}>{this.state.actualCulCostScreenProductionInKg} KG</Text>
                             </View>
                             <View style={{ borderBottomColor: 'black', borderBottomWidth: 1, marginTop: heightToDp('1.5%'), width: widthToDp("90%") }}></View>
                             <View style={{ flexDirection: 'row', alignSelf:'center', marginTop: heightToDp('1%') }}>
                                 <Text style={{fontSize: widthToDp("6%"),fontFamily:'Oswald-Bold' }}>Net Profit</Text>
-                                <Text style={{ marginLeft: widthToDp("40%"), fontWeight: 'bold', fontSize: widthToDp("6%"),fontFamily:'Oswald-Bold' }}>Amount</Text>
+                                <Text style={{ marginLeft: widthToDp("40%"), fontWeight: 'bold', fontSize: widthToDp("6%"),fontFamily:'Oswald-Bold' }}>₹ 160000</Text>
                             </View>
                         </View>
                     </View>
