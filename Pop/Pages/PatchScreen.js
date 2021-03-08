@@ -20,9 +20,9 @@ export default class PatchScreen extends Component {
             languages: [],
             data: [],
             isDialogVisible: false,
-            cropName:'',
+            cropName: '',
             imageFile: '',
-            landType:''
+            landType: ''
         }
         this.state.languages = Languages
         this.state._id = this.props.route.params._id
@@ -30,47 +30,87 @@ export default class PatchScreen extends Component {
         this.state.imageFile = this.props.route.params.imageFile
         this.state.landType = this.props.route.params.landType
     }
-    componentDidMount(){
+    componentDidMount() {
         //this.setPatch()
 
         this.showData()
+        //this.test()
     }
 
-    setPatch = async(data) => {
-        try{
-            const patchObject = { 'name' : data}
+    // test = () => {
+    //     if(this.state.landType === 'HIGH LAND'){
+    //         alert("bal")
+    //     }
+    // }
+
+    setPatch = async (data) => {
+        try {
+
             let username = await AsyncStorage.getItem('username')
             let user = await AsyncStorage.getItem('user')
-            let parsed = JSON.parse(user)
+
+
+            if (this.state.landType === 'HIGH LAND') {
+                const patchObject = { 'name': data }
+                let parsed = JSON.parse(user)
+                var sepcific = parsed.find((i) => i.username === username)
+                sepcific.highLand.push(patchObject)
+                await AsyncStorage.setItem('user', JSON.stringify(parsed))
+                this.setState({ data: sepcific.highLand })
+                this.setState({ isDialogVisible: false })
+            }else if(this.state.landType === 'LOW LAND'){
+                const patchObject = { 'name': data }
+                let parsed = JSON.parse(user)
+                var sepcific = parsed.find((i) => i.username === username)
+                sepcific.lowLand.push(patchObject)
+                await AsyncStorage.setItem('user', JSON.stringify(parsed))
+                this.setState({ data: sepcific.lowLand })
+                this.setState({ isDialogVisible: false })
+            }else if(this.state.landType === 'MEDIUM LAND'){
+                const patchObject = { 'name': data }
+                let parsed = JSON.parse(user)
+                var sepcific = parsed.find((i) => i.username === username)
+                sepcific.mediumLand.push(patchObject)
+                await AsyncStorage.setItem('user', JSON.stringify(parsed))
+                this.setState({ data: sepcific.mediumLand })
+                this.setState({ isDialogVisible: false })
+            }
+
+
             //var testy = user.filter((i) => i.username === username)
-            var sepcific = parsed.find((i) => i.username === username)
-            sepcific.patch.push(patchObject)
+
+
             //sepcific.patch = []
-            
+
             //console.log(sepcific.patch )
-            await AsyncStorage.setItem('user',JSON.stringify(parsed))
-            this.setState({ data: sepcific.patch})
-            this.setState({ isDialogVisible: false })
-        }catch(error){
+
+        } catch (error) {
             console.log(error)
         }
     }
 
 
-    showData = async() => {
-        try{
+    showData = async () => {
+        try {
             let username = await AsyncStorage.getItem('username')
             let user = await AsyncStorage.getItem('user')
             let parsed = JSON.parse(user)
             var sepcific = parsed.find((i) => i.username === username)
-            this.setState({ data: sepcific.patch})
-            console.log(JSON.stringify(parsed))
-        }catch(error){
+            if(this.state.landType === 'HIGH LAND'){
+                this.setState({ data: sepcific.highLand })
+            }else if(this.state.landType === 'LOW LAND'){
+                this.setState({ data: sepcific.lowLand })
+            }else if(this.state.landType === 'MEDIUM LAND'){
+                this.setState({ data: sepcific.mediumLand })
+            }
+            
+            console.log(JSON.stringify(sepcific.highLand))
+        } catch (error) {
             alert(error)
         }
     }
 
-    
+
 
 
 
@@ -92,9 +132,9 @@ export default class PatchScreen extends Component {
             params: {
                 _id: this.state._id,
                 cropName: this.state.cropName,
-                imageFile : this.state.imageFile,
+                imageFile: this.state.imageFile,
                 patchName: patchName,
-                landType : this.state.landType
+                landType: this.state.landType
             }
         })
     }
@@ -198,7 +238,7 @@ export default class PatchScreen extends Component {
                         style={{ marginBottom: heightToDp("80%") }}
                         renderItem={({ item }) =>
 
-                            <TouchableOpacity onPress={() => {this.navigateToPatch(item.name)}}>
+                            <TouchableOpacity onPress={() => { this.navigateToPatch(item.name) }}>
                                 <View style={{ width: widthToDp("90%"), backgroundColor: 'white', margin: widthToDp("3%"), borderRadius: 20, height: heightToDp("5%") }}>
                                     <Text style={{ alignSelf: 'center', justifyContent: 'center', marginTop: heightToDp("0.5%"), fontSize: widthToDp("5%"), color: "#000", fontFamily: 'Oswald-Medium' }}>{item.name}</Text>
                                 </View>

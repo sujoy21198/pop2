@@ -12,9 +12,9 @@ import Languages from '../Core/Languages'
 
 
 const data = [
-    { name: 'HIGH LAND', code: 'https://shramajeewiki.com/images/English/00214136.jpg' },
-    { name: 'MEDIUM LAND', code: 'https://timesofindia.indiatimes.com/thumb/msid-60012970,imgsize-2640154,width-400,resizemode-4/60012970.jpg' },
-    { name: 'LOW LAND', code: 'https://www.biggovernment.news/wp-content/uploads/sites/59/2017/06/farmer-plow-field.jpg' }
+    { name: 'HIGH LAND', code: require('../assets/00214136.jpg') },
+    { name: 'MEDIUM LAND', code: require('../assets/60012970.jpg') },
+    { name: 'LOW LAND', code: require('../assets/farmer-plow-field.jpg') }
 ]
 
 export default class LandTypeScreen extends Component {
@@ -169,7 +169,7 @@ export default class LandTypeScreen extends Component {
                                 <TouchableOpacity onPress={() => this.selectLandType(item.name)}>
                                     <Image
                                         style={{ width: widthToDp("93%"), height: heightToDp("22.8%"), marginLeft: widthToDp("0.4%"), borderRadius: 2, marginTop: heightToDp("1%"), borderBottomLeftRadius: 20, borderBottomRightRadius: 20 }}
-                                        source={{ uri: item.code }}
+                                        source={item.code}
                                     />
                                 </TouchableOpacity>
                             </Card>
