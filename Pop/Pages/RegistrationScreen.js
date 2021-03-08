@@ -56,6 +56,8 @@ export default class RegistrationScreen extends Component {
       selectedLanguage: '',
       statesApi:[],
       distApi:[],
+      gramApi:[],
+      villageApi:[],
       block:'BLOCK',
       blockId:''
     }
@@ -71,20 +73,26 @@ export default class RegistrationScreen extends Component {
   getStateAndDist = async() => {
     var statesApi= []
     var distApi = []
+    var gramApi = []
+    var villageApi = []
     await axios.get("http://161.35.122.165:3020/api/v1/zones",{
       headers:{
         'Content-Type': 'application/json'
       }
     }).then(function (response) {
-      console.log(response.data.districtsAndBlocks)
+      console.log(response.data.gramPanchayatVillage[0].villageData)
       statesApi = response.data.states
       distApi = response.data.districtsAndBlocks
+      gramApi = response.data.gramPanchayatVillage
+      villageApi = response.data.gramPanchayatVillage[0].villageData
     }).catch(function (error) {
       console.log(error.message)
   })
 
   this.setState({statesApi : statesApi})
   this.setState({distApi : distApi})
+  this.setState({gramApi : gramApi})
+  this.setState({villageApi : villageApi})
   }
 
   checkStatus = (value) => {
@@ -268,6 +276,10 @@ export default class RegistrationScreen extends Component {
     statesApi = this.state.statesApi
     var distApi = []
     distApi = this.state.distApi
+    var gramApi = []
+    gramApi = this.state.gramApi
+    var villageApi = []
+    villageApi = this.state.villageApi
     return (
       <KeyboardAwareScrollView style={{ backgroundColor: BaseColor.BackgroundColor, flex: 1 }}
         keyboardShouldPersistTaps='handled'>
@@ -567,18 +579,19 @@ export default class RegistrationScreen extends Component {
               }
             }}
           >
-            <TouchableOpacity onPress={() => this.gramPicker("JHARGRAM")}>
-              <Text style={{ fontSize: widthToDp("4.6%"), marginLeft: widthToDp("2%"), fontFamily: 'Oswald-Medium' }}>JHARGRAM</Text>
-            </TouchableOpacity>
-            <View style={{ borderBottomColor: 'black', borderBottomWidth: 1, marginTop: heightToDp('0.1%'), width: widthToDp("80%"), marginLeft: widthToDp("8.2%") }}></View>
-            <TouchableOpacity onPress={() => this.gramPicker("LALGARH")}>
-              <Text style={{ fontSize: widthToDp("4.6%"), marginLeft: widthToDp("2%"), fontFamily: 'Oswald-Medium', marginTop: heightToDp('3%') }}>LALGARH</Text>
-            </TouchableOpacity>
-            <View style={{ borderBottomColor: 'black', borderBottomWidth: 1, marginTop: heightToDp('0.1%'), width: widthToDp("80%"), marginLeft: widthToDp("8.2%") }}></View>
-            <TouchableOpacity onPress={() => this.gramPicker("BINPUR")}>
-              <Text style={{ fontSize: widthToDp("4.6%"), marginLeft: widthToDp("2%"), fontFamily: 'Oswald-Medium', marginTop: heightToDp('3%') }}>BINPUR</Text>
-            </TouchableOpacity>
-            <View style={{ borderBottomColor: 'black', borderBottomWidth: 1, marginTop: heightToDp('0.1%'), width: widthToDp("80%"), marginLeft: widthToDp("8.2%") }}></View>
+            <ScrollView>
+            {
+              gramApi.map((i)=> {
+                return(
+                  <TouchableOpacity onPress={() => this.gramPicker(i.gramPanchayat)}>
+                    <Text style={{ fontSize: widthToDp("4.6%"), alignSelf:'center', fontFamily: 'Oswald-Medium' }}>{i.gramPanchayat}</Text>
+                    <View style={{ borderBottomColor: 'black', borderBottomWidth: 1, marginTop: heightToDp('0.1%'), width: widthToDp("80%"), marginLeft: widthToDp("8.2%") }}></View>
+                  </TouchableOpacity>
+                )
+              })
+            }
+            </ScrollView>
+            {/* <View style={{ borderBottomColor: 'black', borderBottomWidth: 1, marginTop: heightToDp('0.1%'), width: widthToDp("80%"), marginLeft: widthToDp("8.2%") }}></View> */}
           </RBSheet2>
         </View>
         <View style={{ borderBottomColor: 'black', borderBottomWidth: 1, marginTop: heightToDp('0.1%'), width: widthToDp("80%"), marginLeft: widthToDp("8.2%") }}></View>
@@ -610,10 +623,18 @@ export default class RegistrationScreen extends Component {
               }
             }}
           >
-            <TouchableOpacity onPress={() => this.villagePicker("CHATRA")}>
-              <Text style={{ fontSize: widthToDp("4.6%"), marginLeft: widthToDp("2%"), fontFamily: 'Oswald-Medium' }}>CHATRA</Text>
-            </TouchableOpacity>
-            <View style={{ borderBottomColor: 'black', borderBottomWidth: 1, marginTop: heightToDp('0.1%'), width: widthToDp("80%"), marginLeft: widthToDp("8.2%") }}></View>
+            <ScrollView>
+            {
+              villageApi.map((i) => {
+                return(
+                  <TouchableOpacity onPress={() => this.villagePicker(i.village)}>
+                    <Text style={{ fontSize: widthToDp("4.6%"), alignSelf:'center', fontFamily: 'Oswald-Medium' }}>{i.village}</Text>
+                    <View style={{ borderBottomColor: 'black', borderBottomWidth: 1, marginTop: heightToDp('0.1%'), width: widthToDp("80%"), marginLeft: widthToDp("8.2%") }}></View>
+                  </TouchableOpacity>
+                );
+              })
+            }
+            </ScrollView>
 
           </RBSheet5>
         </View>

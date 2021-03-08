@@ -150,8 +150,9 @@ export default class ActualCultivationCost extends Component {
                 <View style={{ borderBottomColor: BaseColor.Stroke, borderBottomWidth: 1, marginTop: heightToDp('1.5%'), width: widthToDp("100%") }}></View>
                 <Text style={{ fontSize: widthToDp("6%"), marginLeft: widthToDp("3%"), marginTop: heightToDp("1%"), fontFamily: 'Oswald-Medium' }}>ACTUAL CULTIVATION COST</Text>
                 
-                <View style={{ backgroundColor: 'white',height:heightToDp("40%"),width:widthToDp("95%"),alignSelf:'center',marginTop:heightToDp("3%"),borderRadius:10 }}>
+                <View style={{ backgroundColor: 'white',height:heightToDp("50%"),width:widthToDp("95%"),alignSelf:'center',marginTop:heightToDp("3%"),borderRadius:10 }}>
                     <Text style={{ fontFamily: 'Oswald-Light',marginLeft:widthToDp("2%"),marginTop:heightToDp("1%") }}>PRODUCTION IN KGs</Text>
+                    <View style={{ marginTop: heightToDp("2.5%"), marginLeft: widthToDp("1%") }}>
                     <FloatingLabel
                         labelStyle={styles.labelInput}
                         inputStyle={styles.input}
@@ -160,7 +161,10 @@ export default class ActualCultivationCost extends Component {
                         onChangeText={(text) => { this.setState({ actualCulCostScreenProductionInKg : text }) }}
                     // onBlur={this.onBlur}
                     >KG</FloatingLabel>
+                    </View>
+                    
                     <Text style={{ fontFamily: 'Oswald-Light' ,marginLeft:widthToDp("2%"),marginTop:heightToDp("1%")}}>COST PER KG</Text>
+                    <View style={{ marginTop: heightToDp("2.5%"), marginLeft: widthToDp("1%") }}>
                     <FloatingLabel
                         labelStyle={styles.labelInput}
                         inputStyle={styles.input}
@@ -169,7 +173,10 @@ export default class ActualCultivationCost extends Component {
                         onChangeText={(text) => { this.setState({ actualCulCostScreenCostPerKg : text }) }}
                     // onBlur={this.onBlur}
                     >₹</FloatingLabel>
+                    </View>
+                    
                     <Text style={{ fontFamily: 'Oswald-Light' ,marginLeft:widthToDp("2%"),marginTop:heightToDp("1%")}}>TOTAL EXPENSE</Text>
+                    <View style={{ marginTop: heightToDp("2%"), marginLeft: widthToDp("1%") }}>
                     <FloatingLabel
                         labelStyle={styles.labelInput}
                         inputStyle={styles.input}
@@ -178,6 +185,8 @@ export default class ActualCultivationCost extends Component {
                         onChangeText={(text) => { this.setState({ actualCulCostScreenTotalExpense : text }) }}
                     // onBlur={this.onBlur}
                     >₹</FloatingLabel>
+                    </View>
+                    
                 </View>
 
                 <View style={{ height: heightToDp("10%") }}>
