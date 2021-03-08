@@ -46,7 +46,7 @@ export default class SigninScreen extends Component {
         var token = await AsyncStorage.getItem('token')
         var encodedUsername = base64.encode(this.state.username)
         var cropObjectsToBeSaved,cropStepsObjectsToBeSaved,cropsMaterialsObjectsToBeSaved,livestockObjectsToBeSaved,liveStockStepMaterialsObjectsToBeSaved,liveStockBreedsObjectsToBeSaved,breedCategoriesObjectsToBeSaved,importantLinksObjectsToBeSaved;
-        await axios.get("http://161.35.122.165:3021/api/v1/get-all-data",{
+        await axios.get("http://161.35.122.165:3020/api/v1/get-all-data",{
             headers:{
                 'Content-type': "application/json",
                 'X-Information': encodedUsername,

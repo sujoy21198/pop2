@@ -21,12 +21,14 @@ export default class PatchScreen extends Component {
             data: [],
             isDialogVisible: false,
             cropName:'',
-            imageFile: ''
+            imageFile: '',
+            landType:''
         }
         this.state.languages = Languages
         this.state._id = this.props.route.params._id
         this.state.cropName = this.props.route.params.cropName
         this.state.imageFile = this.props.route.params.imageFile
+        this.state.landType = this.props.route.params.landType
     }
     componentDidMount(){
         //this.setPatch()
@@ -86,12 +88,13 @@ export default class PatchScreen extends Component {
 
     navigateToPatch = (patchName) => {
         this.props.navigation.navigate({
-            name: 'LandTypeScreen',
+            name: 'SelectFarmingAreaScreen',
             params: {
                 _id: this.state._id,
                 cropName: this.state.cropName,
                 imageFile : this.state.imageFile,
-                patchName: patchName
+                patchName: patchName,
+                landType : this.state.landType
             }
         })
     }

@@ -92,9 +92,9 @@ export default class CropsScreen extends Component {
     }
 
     navigateToLandScreen = (data,name,imageFile) => {
-        
+        console.log(data)
         this.props.navigation.navigate({
-            name: 'PatchScreen',
+            name: 'LandTypeScreen',
             params: {
                 _id: data,
                 cropName:name,
