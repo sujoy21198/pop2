@@ -105,7 +105,23 @@ export default class StepOneScreen extends Component {
             this.setState({ decimalPrice: decimalPrice })
             this.setState({numberOfSteps : cropFilter.length})
         } catch (error) {
-            alert(error)
+            alert("No More Steps Available")
+            this.props.navigation.navigate({
+                name: 'ActualCultivationCostScreen',
+                params: {
+                    cropName: this.state.cropName,
+                    _id: this.state._id,
+                    imageFile : this.state.imageFile,
+                    patchName : this.state.patchName,
+                    landType: this.state.landType,
+                    farmingAreaInDecimal : this.state.farmingAreaInDecimal,
+                    costOfCultivatinPerTenDecimal : this.state.costOfCultivatinPerTenDecimal,
+                    costPerKg : this.state.costPerKg,
+                    productionInKg : this.state.productionInKg,
+                    cost : this.state.cost,
+                    netProfit : this.state.netProfit
+                }
+            })
         }
     }
 

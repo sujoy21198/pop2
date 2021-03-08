@@ -104,7 +104,7 @@ export default class PatchScreen extends Component {
                 this.setState({ data: sepcific.mediumLand })
             }
             
-            console.log(JSON.stringify(sepcific.highLand))
+            //console.log(JSON.stringify(sepcific.highLand))
         } catch (error) {
             alert(error)
         }

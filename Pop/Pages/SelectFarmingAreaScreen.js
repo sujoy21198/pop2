@@ -36,7 +36,11 @@ export default class SelectFarmingAreaScreen extends Component {
         if (operation === 'plus') {
             this.setState({ verticalCounter: this.state.verticalCounter + 1 })
         } else if (operation === 'minus') {
-            this.setState({ verticalCounter: this.state.verticalCounter - 1 })
+            if(this.state.verticalCounter <= 0){
+                return alert("Not Allowed")
+            }else{
+                this.setState({ verticalCounter: this.state.verticalCounter -1 })
+            }
         }
     }
 
@@ -44,7 +48,11 @@ export default class SelectFarmingAreaScreen extends Component {
         if (operation === 'plus') {
             this.setState({ horizontalCounter: this.state.horizontalCounter + 1 })
         } else if (operation === 'minus') {
-            this.setState({ horizontalCounter: this.state.horizontalCounter - 1 })
+            if(this.state.horizontalCounter <= 0){
+                return alert("Not Allowed")
+            }else{
+                this.setState({ horizontalCounter: this.state.horizontalCounter -1 })
+            }
         }
     }
 
