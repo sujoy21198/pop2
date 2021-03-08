@@ -43,7 +43,19 @@ export default class DashBoardScreen extends Component {
     }
 
     componentDidMount(){
-        
+        this.getOfflineData()
+    }
+
+    getOfflineData = async() => {
+        try{
+            let username = await AsyncStorage.getItem('username')
+            let user = await AsyncStorage.getItem('offlineData');
+            let parsed = JSON.parse(user);
+            var specificObject = parsed.find((i) => i.username === username)
+            console.log(specificObject.nutrationGraden)
+        }catch(error){
+            console.log(error)
+        }
     }
 
     changeLanguage = (id) => {
@@ -70,7 +82,7 @@ export default class DashBoardScreen extends Component {
             })
         }else if(data === LanguageChange.importantLinks){
             this.props.navigation.navigate({
-                name:"ImportantLinksScreen"
+                name:"ImportantLinksSubCategoryScreen"
             })
         }
     }

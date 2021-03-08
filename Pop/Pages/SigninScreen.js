@@ -45,7 +45,7 @@ export default class SigninScreen extends Component {
         var allusername = await AsyncStorage.getItem('username')
         var token = await AsyncStorage.getItem('token')
         var encodedUsername = base64.encode(this.state.username)
-        var cropObjectsToBeSaved,cropStepsObjectsToBeSaved,cropsMaterialsObjectsToBeSaved,livestockObjectsToBeSaved,liveStockStepMaterialsObjectsToBeSaved,liveStockBreedsObjectsToBeSaved,breedCategoriesObjectsToBeSaved,importantLinksObjectsToBeSaved;
+        var cropObjectsToBeSaved,cropStepsObjectsToBeSaved,cropsMaterialsObjectsToBeSaved,livestockObjectsToBeSaved,liveStockStepMaterialsObjectsToBeSaved,liveStockBreedsObjectsToBeSaved,breedCategoriesObjectsToBeSaved,importantLinksObjectsToBeSaved,nutrationGradenObjectsToBeSaved;
         await axios.get("http://161.35.122.165:3020/api/v1/get-all-data",{
             headers:{
                 'Content-type': "application/json",
@@ -78,11 +78,14 @@ export default class SigninScreen extends Component {
             //var importantLinksObjects = importantLinks.substring(1,importantLinks.length-1)
             importantLinksObjectsToBeSaved = importantLinks
             //console.log(importantLinksObjectsToBeSaved)
+
+            var nutrationGraden = response.data.nutrationGraden
+            nutrationGradenObjectsToBeSaved = nutrationGraden
         }).catch(function(error){
             console.log(error)
         })
 
-        const offlineDataToBeSaved = {'username': this.state.username , 'crops':cropObjectsToBeSaved ,'cropSteps':cropStepsObjectsToBeSaved,'cropsMaterials':cropsMaterialsObjectsToBeSaved,'livestock':livestockObjectsToBeSaved , 'liveStockStepMaterials':liveStockStepMaterialsObjectsToBeSaved , 'liveStockBreeds':liveStockBreedsObjectsToBeSaved , 'breedCategories':breedCategoriesObjectsToBeSaved , 'importantLinks':importantLinksObjectsToBeSaved }
+        const offlineDataToBeSaved = {'username': this.state.username , 'crops':cropObjectsToBeSaved ,'cropSteps':cropStepsObjectsToBeSaved,'cropsMaterials':cropsMaterialsObjectsToBeSaved,'livestock':livestockObjectsToBeSaved , 'liveStockStepMaterials':liveStockStepMaterialsObjectsToBeSaved , 'liveStockBreeds':liveStockBreedsObjectsToBeSaved , 'breedCategories':breedCategoriesObjectsToBeSaved , 'importantLinks':importantLinksObjectsToBeSaved ,'nutrationGraden':nutrationGradenObjectsToBeSaved}
         // offlineDataToBeSaved.crops.push(cropObjectsToBeSaved)
         // offlineDataToBeSaved.cropsMaterials.push(cropsMaterialsObjectsToBeSaved)
         // offlineDataToBeSaved.livestock.push(livestockObjectsToBeSaved)
