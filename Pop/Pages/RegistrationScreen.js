@@ -16,6 +16,7 @@ import RBSheet2 from "react-native-raw-bottom-sheet"
 import RBSheet3 from "react-native-raw-bottom-sheet"
 import RBSheet4 from "react-native-raw-bottom-sheet"
 import RBSheet5 from "react-native-raw-bottom-sheet"
+import RBSheet6 from "react-native-raw-bottom-sheet"
 import RadioForm, { RadioButton, RadioButtonInput, RadioButtonLabel } from 'react-native-simple-radio-button'
 import DataAccess from '../Core/DataAccess'
 import CustomIndicator from '../Core/CustomIndicator'
@@ -52,7 +53,11 @@ export default class RegistrationScreen extends Component {
       status: '',
       passwordVisibility: true,
       isLoading: false,
-      selectedLanguage: ''
+      selectedLanguage: '',
+      statesApi:[],
+      distApi:[],
+      block:'BLOCK',
+      blockId:''
     }
 
     this.state.selectedLanguage = this.props.route.params.selectedLanguage
@@ -64,15 +69,22 @@ export default class RegistrationScreen extends Component {
   }
 
   getStateAndDist = async() => {
-    await axios.get("http://161.35.122.165:3022/api/v1/zones",{
+    var statesApi= []
+    var distApi = []
+    await axios.get("http://161.35.122.165:3020/api/v1/zones",{
       headers:{
         'Content-Type': 'application/json'
       }
     }).then(function (response) {
-      console.log(response.data)
+      console.log(response.data.districtsAndBlocks)
+      statesApi = response.data.states
+      distApi = response.data.districtsAndBlocks
     }).catch(function (error) {
       console.log(error.message)
   })
+
+  this.setState({statesApi : statesApi})
+  this.setState({distApi : distApi})
   }
 
   checkStatus = (value) => {
@@ -135,7 +147,8 @@ export default class RegistrationScreen extends Component {
       village: this.state.village,
       participantNumber: this.state.participantNumber,
       blockPassword: this.state.fieldOfficerPass,
-      deviceId: this.state.deviceId
+      deviceId: this.state.deviceId,
+      blockInfo: this.state.blockId
     }, {
       headers: {
         'Content-type': 'application/json'
@@ -231,6 +244,17 @@ export default class RegistrationScreen extends Component {
     this.RBSheet5.close()
   }
 
+  blockPicker = (value,id) => {
+    this.setState({
+      block : value
+    })
+    this.state.blockId = id
+
+    //alert(this.state.blockId)
+
+    this.RBSheet6.close()
+  }
+
 
 
   FullName = (value) => {
@@ -240,6 +264,10 @@ export default class RegistrationScreen extends Component {
   }
 
   render() {
+    var statesApi = []
+    statesApi = this.state.statesApi
+    var distApi = []
+    distApi = this.state.distApi
     return (
       <KeyboardAwareScrollView style={{ backgroundColor: BaseColor.BackgroundColor, flex: 1 }}
         keyboardShouldPersistTaps='handled'>
@@ -379,7 +407,7 @@ export default class RegistrationScreen extends Component {
             ref={ref => {
               this.RBSheet3 = ref;
             }}
-            height={heightToDp("20%")}
+            height={heightToDp("40%")}
             // openDuration={250}
             customStyles={{
               container: {
@@ -390,10 +418,22 @@ export default class RegistrationScreen extends Component {
               }
             }}
           >
-            <TouchableOpacity onPress={() => this.statePicker("JHARKHAND")}>
+            <ScrollView>
+            {
+              statesApi.map((i) => {
+                return(
+                  <TouchableOpacity onPress={() => this.statePicker(i.state)}>
+                    <Text style={{ fontSize: widthToDp("4.6%"), alignSelf:'center', fontFamily: 'Oswald-Medium' }}>{i.state}</Text>
+                    <View style={{ borderBottomColor: 'black', borderBottomWidth: 1, marginTop: heightToDp('0.1%'), width: widthToDp("80%"), marginLeft: widthToDp("8.2%") }}></View>
+                  </TouchableOpacity>
+                );
+              })
+            }
+            </ScrollView>
+            {/* <TouchableOpacity onPress={() => this.statePicker("JHARKHAND")}>
               <Text style={{ fontSize: widthToDp("4.6%"), marginLeft: widthToDp("2%"), fontFamily: 'Oswald-Medium' }}>JHARKHAND</Text>
-            </TouchableOpacity>
-            <View style={{ borderBottomColor: 'black', borderBottomWidth: 1, marginTop: heightToDp('0.1%'), width: widthToDp("80%"), marginLeft: widthToDp("8.2%") }}></View>
+            </TouchableOpacity> */}
+            
           </RBSheet3>
         </View>
         <View style={{ borderBottomColor: 'black', borderBottomWidth: 1, marginTop: heightToDp('0.1%'), width: widthToDp("80%"), marginLeft: widthToDp("8.2%") }}></View>
@@ -432,11 +472,71 @@ export default class RegistrationScreen extends Component {
               }
             }}
           >
-            <TouchableOpacity onPress={() => this.districtPicker("BOKARO")}>
+            <ScrollView>
+            {
+              distApi.map((i) => {
+                return(
+                  <TouchableOpacity onPress={() => this.districtPicker(i.district)}>
+                    <Text style={{ fontSize: widthToDp("4.6%"), alignSelf:'center', fontFamily: 'Oswald-Medium' }}>{i.district}</Text>
+                    <View style={{ borderBottomColor: 'black', borderBottomWidth: 1, marginTop: heightToDp('0.1%'), width: widthToDp("80%"), marginLeft: widthToDp("8.2%") }}></View>
+                  </TouchableOpacity>
+                )
+              })
+            }
+            </ScrollView>
+            
+            {/* <TouchableOpacity onPress={() => this.districtPicker("BOKARO")}>
               <Text style={{ fontSize: widthToDp("4.6%"), marginLeft: widthToDp("2%"), fontFamily: 'Oswald-Medium' }}>BOKARO</Text>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
             <View style={{ borderBottomColor: 'black', borderBottomWidth: 1, marginTop: heightToDp('0.1%'), width: widthToDp("80%"), marginLeft: widthToDp("8.2%") }}></View>
           </RBSheet4>
+        </View>
+        <View style={{ borderBottomColor: 'black', borderBottomWidth: 1, marginTop: heightToDp('0.1%'), width: widthToDp("80%"), marginLeft: widthToDp("8.2%") }}></View>
+
+        <View style={{ marginTop: heightToDp("5%"), marginLeft: widthToDp("8%") }}>
+          <TouchableOpacity style={{ flexDirection: 'row' }} onPress={() => this.RBSheet6.open()}>
+            <View style={{ width: widthToDp("30%") }}>
+              <Text style={{ fontSize: widthToDp("4.6%"), marginLeft: widthToDp("2%"), fontFamily: 'Oswald-Medium' }}>{this.state.block}</Text>
+            </View>
+
+            <Icon
+              name="chevron-down"
+              size={40}
+              style={{ marginLeft: widthToDp("43%") }}
+            />
+          </TouchableOpacity>
+          <RBSheet6
+            ref={ref => {
+              this.RBSheet6 = ref;
+            }}
+            height={heightToDp("20%")}
+            // openDuration={250}
+            customStyles={{
+              container: {
+                justifyContent: "center",
+                alignItems: "center",
+                backgroundColor: 'rgba(51,204,51,0.9)',
+                borderRadius: 30
+              }
+            }}
+          >
+            <ScrollView>
+            {
+              distApi.map((i) => {
+                return(
+                  <TouchableOpacity onPress={() => this.blockPicker(i.block,i._id)}>
+                    <Text style={{ fontSize: widthToDp("4.6%"), alignSelf:'center', fontFamily: 'Oswald-Medium' }}>{i.block}</Text>
+                    <View style={{ borderBottomColor: 'black', borderBottomWidth: 1, marginTop: heightToDp('0.1%'), width: widthToDp("80%"), marginLeft: widthToDp("8.2%") }}></View>
+                  </TouchableOpacity>
+                )
+              })
+            }
+            </ScrollView>
+            {/* <TouchableOpacity onPress={() => this.districtPicker("BOKARO")}>
+              <Text style={{ fontSize: widthToDp("4.6%"), marginLeft: widthToDp("2%"), fontFamily: 'Oswald-Medium' }}>BOKAROoooooooooo</Text>
+            </TouchableOpacity>
+            <View style={{ borderBottomColor: 'black', borderBottomWidth: 1, marginTop: heightToDp('0.1%'), width: widthToDp("80%"), marginLeft: widthToDp("8.2%") }}></View> */}
+          </RBSheet6>
         </View>
         <View style={{ borderBottomColor: 'black', borderBottomWidth: 1, marginTop: heightToDp('0.1%'), width: widthToDp("80%"), marginLeft: widthToDp("8.2%") }}></View>
 

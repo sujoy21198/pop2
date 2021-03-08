@@ -215,16 +215,17 @@ export default class SigninScreen extends Component {
         this.setState({ isLoading: true })
         var name = this.state.username
         var redirect = false
+        var saveOffline = false
 
 
         if(this.state.username === ''){
-            Toast.show({
+            return Toast.show({
                 text: "please enter username",
                 type: 'danger',
                 duration: 3000
             })
         }else if(this.state.password === ''){
-            Toast.show({
+            return Toast.show({
                 text: "please enter password",
                 type: 'danger',
                 duration: 3000
@@ -248,6 +249,7 @@ export default class SigninScreen extends Component {
             // console.log(response.data.data.username)
             if (response.data.status === 1) {
                 console.log("yes")
+                saveOffline = true
                 redirect = true
                 Toast.show({
                     text: "Welcome" + " " + name,
@@ -315,7 +317,16 @@ export default class SigninScreen extends Component {
             });
         }
 
-        this.getAllData()
+        if(saveOffline === true){
+            this.getAllData()
+        }else{
+            Toast.show({
+                text: "Please Login To Save Offline Data",
+                duration: 3000,
+                type: 'danger'
+              })
+        }
+        
     }
 
     displayData = async() => {
