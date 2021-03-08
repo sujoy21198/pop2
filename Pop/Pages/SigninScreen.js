@@ -36,24 +36,41 @@ export default class SigninScreen extends Component {
 
     componentDidMount() {
         this.getCustodianMobileNumber()
-        this.setCustodianNumber()
+        //this.setCustodianNumber()
+        this.setCustodian()
         //this.getAllData()
     }
 
+    setCustodian = async () => {
+        let cus = await AsyncStorage.getItem("cus")
+        this.setState({ loadPhoneNumber: false })
+        
+        NetInfo.fetch().then(state => {
+            var isConnected = state.isConnected
+            console.log(isConnected)
+            if (isConnected === true) {
+                console.log("connected")
+            } else {
+                this.setState({ phoneNumber: cus })
+            }
+        })
 
-    getAllData = async() => {
+    }
+
+
+    getAllData = async () => {
         var allusername = await AsyncStorage.getItem('username')
         var token = await AsyncStorage.getItem('token')
         var encodedUsername = base64.encode(this.state.username)
-        var cropObjectsToBeSaved,cropStepsObjectsToBeSaved,cropsMaterialsObjectsToBeSaved,livestockObjectsToBeSaved,liveStockStepMaterialsObjectsToBeSaved,liveStockBreedsObjectsToBeSaved,breedCategoriesObjectsToBeSaved,importantLinksObjectsToBeSaved,nutrationGradenObjectsToBeSaved;
-        await axios.get("http://161.35.122.165:3020/api/v1/get-all-data",{
-            headers:{
+        var cropObjectsToBeSaved, cropStepsObjectsToBeSaved, cropsMaterialsObjectsToBeSaved, livestockObjectsToBeSaved, liveStockStepMaterialsObjectsToBeSaved, liveStockBreedsObjectsToBeSaved, breedCategoriesObjectsToBeSaved, importantLinksObjectsToBeSaved, nutrationGradenObjectsToBeSaved;
+        await axios.get("http://161.35.122.165:3020/api/v1/get-all-data", {
+            headers: {
                 'Content-type': "application/json",
                 'X-Information': encodedUsername,
                 'Authorization': "POP " + token
             }
-        }).then(function(response){
-            console.log(response.data,"CROPS NAMES")
+        }).then(function (response) {
+            console.log(response.data, "CROPS NAMES")
             var crops = response.data.crops
             //var cropObjects = crops.substring(1,crops.length-1)
             cropObjectsToBeSaved = crops
@@ -81,11 +98,11 @@ export default class SigninScreen extends Component {
 
             var nutrationGraden = response.data.nutrationGraden
             nutrationGradenObjectsToBeSaved = nutrationGraden
-        }).catch(function(error){
+        }).catch(function (error) {
             console.log(error)
         })
 
-        const offlineDataToBeSaved = {'username': this.state.username , 'crops':cropObjectsToBeSaved ,'cropSteps':cropStepsObjectsToBeSaved,'cropsMaterials':cropsMaterialsObjectsToBeSaved,'livestock':livestockObjectsToBeSaved , 'liveStockStepMaterials':liveStockStepMaterialsObjectsToBeSaved , 'liveStockBreeds':liveStockBreedsObjectsToBeSaved , 'breedCategories':breedCategoriesObjectsToBeSaved , 'importantLinks':importantLinksObjectsToBeSaved ,'nutrationGraden':nutrationGradenObjectsToBeSaved}
+        const offlineDataToBeSaved = { 'username': this.state.username, 'crops': cropObjectsToBeSaved, 'cropSteps': cropStepsObjectsToBeSaved, 'cropsMaterials': cropsMaterialsObjectsToBeSaved, 'livestock': livestockObjectsToBeSaved, 'liveStockStepMaterials': liveStockStepMaterialsObjectsToBeSaved, 'liveStockBreeds': liveStockBreedsObjectsToBeSaved, 'breedCategories': breedCategoriesObjectsToBeSaved, 'importantLinks': importantLinksObjectsToBeSaved, 'nutrationGraden': nutrationGradenObjectsToBeSaved }
         // offlineDataToBeSaved.crops.push(cropObjectsToBeSaved)
         // offlineDataToBeSaved.cropsMaterials.push(cropsMaterialsObjectsToBeSaved)
         // offlineDataToBeSaved.livestock.push(livestockObjectsToBeSaved)
@@ -96,14 +113,14 @@ export default class SigninScreen extends Component {
 
         const exsistingOfflineData = await AsyncStorage.getItem('offlineData')
         let newOfflineData = JSON.parse(exsistingOfflineData)
-        if(!newOfflineData){
+        if (!newOfflineData) {
             newOfflineData = []
         }
 
-        var offlineArr = newOfflineData.map(function(item){return item.username})
-        if(offlineArr.includes(this.state.username)){
+        var offlineArr = newOfflineData.map(function (item) { return item.username })
+        if (offlineArr.includes(this.state.username)) {
             console.log("NO")
-        }else{
+        } else {
             newOfflineData.push(offlineDataToBeSaved)
         }
 
@@ -115,7 +132,7 @@ export default class SigninScreen extends Component {
                     text: "Offline Data saved successfully",
                     duration: 3000,
                     type: 'success'
-                  })
+                })
             })
             .catch(() => {
                 console.log('‘There was an error saving the product’')
@@ -123,25 +140,25 @@ export default class SigninScreen extends Component {
 
     }
 
-    setCustodianNumber  =  async() => {
+    setCustodianNumber = async () => {
         let cus = await AsyncStorage.getItem("cus")
         this.setState({ loadPhoneNumber: false })
-        this.setState({phoneNumber: cus})
+        this.setState({ phoneNumber: cus })
     }
 
     checkConnection = () => {
         NetInfo.fetch().then(state => {
             var isConnected = state.isConnected
             console.log(isConnected)
-            if(isConnected === true){
+            if (isConnected === true) {
                 return this.signIn()
-            }else{
+            } else {
                 return this.offlineMode()
             }
         })
     }
 
-    offlineMode = async() => {
+    offlineMode = async () => {
         // let user = await AsyncStorage.getItem('user')
         // let parsed = JSON.stringify(user)
         // console.log(JSON.stringify(parsed))
@@ -156,14 +173,14 @@ export default class SigninScreen extends Component {
             var specificObject = parsed.find((i) => i.username === this.state.username)
             console.log(specificObject.password)
             offlinePassword = specificObject.password
-            if(offlinePassword === this.state.password){
+            if (offlinePassword === this.state.password) {
                 this.props.navigation.reset({
                     index: 0,
                     routes: [
                         { name: "DashBoardScreen" }
                     ]
                 });
-            }else{
+            } else {
                 alert("please enter a valid password")
             }
             // var valueArr = parsed.map(function(item){ return item.userId });
@@ -185,11 +202,11 @@ export default class SigninScreen extends Component {
         catch (error) {
             alert(error)
         }
-        
+
     }
 
     getCustodianMobileNumber = async () => {
-        
+
         let deviceId = await DeviceInfo.getAndroidId()
         //var load = true
         //this.setState({ loadPhoneNumber: true })
@@ -199,7 +216,7 @@ export default class SigninScreen extends Component {
             //load = false
             console.log(response.data.data.phone)
             phone = response.data.data.phone
-            AsyncStorage.setItem("cus",JSON.stringify(response.data.data.phone))
+            AsyncStorage.setItem("cus", JSON.stringify(response.data.data.phone))
         }).catch(function (error) {
             console.log(error)
         })
@@ -218,13 +235,13 @@ export default class SigninScreen extends Component {
         var saveOffline = false
 
 
-        if(this.state.username === ''){
+        if (this.state.username === '') {
             return Toast.show({
                 text: "please enter username",
                 type: 'danger',
                 duration: 3000
             })
-        }else if(this.state.password === ''){
+        } else if (this.state.password === '') {
             return Toast.show({
                 text: "please enter password",
                 type: 'danger',
@@ -238,7 +255,7 @@ export default class SigninScreen extends Component {
             password: this.state.password
         }, {
             headers: {
-                
+
                 'Content-type': 'application/json'
             }
         }).then(function (response) {
@@ -283,17 +300,17 @@ export default class SigninScreen extends Component {
         let token = await AsyncStorage.getItem('token')
         let username = await AsyncStorage.getItem('username')
 
-        const userToBeSaved = {'_id': _id , 'name' : reqname,'password': this.state.password, 'token':token, 'username':username , 'syncStatus':false, 'patch':[], 'cropData' : [], 'livestockData':[], 'moneyManagerData':[] }
+        const userToBeSaved = { '_id': _id, 'name': reqname, 'password': this.state.password, 'token': token, 'username': username, 'syncStatus': false, 'lowLand': [], 'highLand': [], 'mediumLand': [], 'patch': [], 'cropData': [], 'livestockData': [], 'moneyManagerData': [] }
         const exsistingUser = await AsyncStorage.getItem('user')
         let newUser = JSON.parse(exsistingUser)
-        if(!newUser){
+        if (!newUser) {
             newUser = []
         }
 
-        var valueArr = newUser.map(function(item){return item._id})
-        if(valueArr.includes(_id)){
+        var valueArr = newUser.map(function (item) { return item._id })
+        if (valueArr.includes(_id)) {
             console.log("NO")
-        }else{
+        } else {
             newUser.push(userToBeSaved)
         }
 
@@ -317,19 +334,19 @@ export default class SigninScreen extends Component {
             });
         }
 
-        if(saveOffline === true){
+        if (saveOffline === true) {
             this.getAllData()
-        }else{
+        } else {
             Toast.show({
                 text: "Please Login To Save Offline Data",
                 duration: 3000,
                 type: 'danger'
-              })
+            })
         }
-        
+
     }
 
-    displayData = async() => {
+    displayData = async () => {
         try {
             //var count = 8
             let user = await AsyncStorage.getItem('offlineData');
@@ -379,9 +396,9 @@ export default class SigninScreen extends Component {
                         <Text style={{ fontSize: widthToDp("7%"), alignSelf: 'center', fontFamily: 'Oswald-SemiBold' }}>{LanguageChange.signIn}</Text>
                     </View>
                     <View style={{ marginTop: heightToDp("5%"), marginLeft: widthToDp("8%") }}>
-                    {
-                        this.state.loadPhoneNumber ? <CustomIndicator IsLoading={this.state.loadPhoneNumber} /> : null
-                    }
+                        {
+                            this.state.loadPhoneNumber ? <CustomIndicator IsLoading={this.state.loadPhoneNumber} /> : null
+                        }
                         <Text style={{ fontSize: widthToDp("4.6%"), marginLeft: widthToDp("2%"), fontFamily: 'Oswald-Medium' }}>{this.state.phoneNumber}</Text>
                         <View style={{ borderBottomColor: 'black', borderBottomWidth: 1, marginTop: heightToDp('0.1%'), width: widthToDp("80%"), marginLeft: widthToDp("2%") }}></View>
                     </View>
