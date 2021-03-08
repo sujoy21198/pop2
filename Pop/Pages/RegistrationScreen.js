@@ -25,7 +25,7 @@ import Language from '../Core/Languages'
 
 const radio_props = [
   { label: "OTP", value: 0 },
-  { label: "FIELD OFFICER PASSWORD", value: 1 }
+  { label: "BLOCK PASSWORD", value: 1 }
 ]
 
 export default class RegistrationScreen extends Component {
@@ -60,7 +60,19 @@ export default class RegistrationScreen extends Component {
 
   componentDidMount() {
     this.getDeviceId()
+    this.getStateAndDist()
+  }
 
+  getStateAndDist = async() => {
+    await axios.get("http://161.35.122.165:3022/api/v1/zones",{
+      headers:{
+        'Content-Type': 'application/json'
+      }
+    }).then(function (response) {
+      console.log(response.data)
+    }).catch(function (error) {
+      console.log(error.message)
+  })
   }
 
   checkStatus = (value) => {

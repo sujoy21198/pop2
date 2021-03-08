@@ -11,7 +11,8 @@ const DataAccess = {
     ImportantLinks:'important-links/',
     ImportantLinksImage : 'app-property/uploads/important-links/',
     CustodianNumber :'get-custodian/',
-    GetAllData: 'get-all-data'
+    GetAllData: 'get-all-data',
+    State : 'zones'
 }
 
 export default DataAccess
