@@ -10,6 +10,7 @@ const DataAccess = {
     Breeds: '/breeds/',
     ImportantLinks:'important-links/',
     ImportantLinksImage : 'app-property/uploads/important-links/',
+    NutritionGardenImage:'app-property/uploads/nutrition-garden/',
     CustodianNumber :'get-custodian/',
     GetAllData: 'get-all-data',
     State : 'zones'

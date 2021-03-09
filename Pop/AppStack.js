@@ -35,6 +35,8 @@ import PatchScreen from './Pages/PatchScreen'
 import LiveStockEnterQuantityScreen from './Pages/LiveStockEnterQuantityScreen'
 import LiveStockExpectedProfitAnalysisScreen from './Pages/LiveStockExpectedProfitAnalysisScreen'
 import ImportantLinksDetailsScreen from './Pages/ImportantLinksDetailsScreen'
+import NutritionGardenScreen from './Pages/NutritionGardenScreen'
+import NutritionGardenDetailsScreen from './Pages/NutritionGardenDetailsScreen'
 
 const Stack = createStackNavigator();
 
@@ -74,6 +76,8 @@ function AppStack(){
                 <Stack.Screen name="LiveStockEnterQuantityScreen" component={LiveStockEnterQuantityScreen}/>
                 <Stack.Screen name="LiveStockExpectedProfitAnalysisScreen" component={LiveStockExpectedProfitAnalysisScreen}/>
                 <Stack.Screen name="ImportantLinksDetailsScreen" component={ImportantLinksDetailsScreen}/>
+                <Stack.Screen name="NutritionGardenScreen" component={NutritionGardenScreen}/>
+                <Stack.Screen name="NutritionGardenDetailsScreen" component={NutritionGardenDetailsScreen}/>
             </Stack.Navigator>
         </NavigationContainer>
     );

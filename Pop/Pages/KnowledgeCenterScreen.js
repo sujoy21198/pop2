@@ -52,6 +52,7 @@ export default class KnowledgeCenterScreen extends Component {
 
 
     checkNavigation = (data) => {
+        //alert(data)
         if(data === LanguageChange.crops){
             this.props.navigation.navigate({
                 name: 'CropsScreen'
@@ -59,6 +60,10 @@ export default class KnowledgeCenterScreen extends Component {
         }else if(data === LanguageChange.livestock){
             this.props.navigation.navigate({
                 name:"LiveStockScreen"
+            })
+        }else if(data === LanguageChange.nutrition){
+            this.props.navigation.navigate({
+                name:"NutritionGardenScreen"
             })
         }
     }
