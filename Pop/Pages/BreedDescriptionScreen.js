@@ -22,17 +22,35 @@ export default class BreedDescriptionScreen extends Component {
             _id:'',
             isLoading:false,
             breedname:'',
-            imageFile: ''
+            imageFile: '',
+            stepName:'',
+            stepDescription:''
         }
         this.state._id = this.props.route.params._id
         this.state.breedname = this.props.route.params.breedname
         this.state.imageFile = this.props.route.params.imageFile
         //alert(this.state._id)
+        this.loadBreedFromStorage()
+    }
+
+    loadBreedFromStorage = async() => {
+        try{
+            let username = await AsyncStorage.getItem('username')
+            let user = await AsyncStorage.getItem('offlineData');
+            let parsed = JSON.parse(user);
+            var specific = parsed.find((i) => i.username === username)
+            var breedData  = specific.livestockStep.filter((i) => i.livestockId === this.state._id)
+            console.log(breedData[0].name)
+            this.setState({stepName : breedData[0].name})
+            this.setState({stepDescription : breedData[0].english})
+        }catch(error){
+            alert(error)
+        }
     }
 
     nextButton = () => {
         this.props.navigation.navigate({
-            name: 'LiveStockEnterQuantityScreen',
+            name: 'LiveStockStepTwoScreen',
             params:{
                 _id:this.state._id,
                 breedname:this.state.breedname,
@@ -41,6 +59,8 @@ export default class BreedDescriptionScreen extends Component {
         })
     }
     render() {
+        var stepData = []
+        stepData = this.state.breed[0]
         return (
             <View style={{ backgroundColor: BaseColor.BackgroundColor,flex:1 }}>
                 <View style={{ backgroundColor: 'white', width: widthToDp("100%"), height: heightToDp("13%"),flexDirection: 'row' }}>
@@ -120,23 +140,21 @@ export default class BreedDescriptionScreen extends Component {
                     </TouchableOpacity>
                 </View>
                 <View style={{ borderBottomColor: BaseColor.Stroke, borderBottomWidth: 1, marginTop: heightToDp('1.5%'), width: widthToDp("100%") }}></View>
-                <Text style={{marginLeft:widthToDp("3%"),marginTop:heightToDp("2%"),fontSize:widthToDp("7%"),fontFamily:'Oswald-Medium'}}>BREED</Text>
+                <Text style={{marginLeft:widthToDp("3%"),marginTop:heightToDp("2%"),fontSize:widthToDp("7%"),fontFamily:'Oswald-Medium'}}>{this.state.breedname}</Text>
                 <ScrollView>
                     <View style={{backgroundColor:BaseColor.Red,height:heightToDp("60%"),alignSelf:'center',width:widthToDp("90%"),borderRadius:10, marginTop: heightToDp('1.5%')}}>
-                    <Text style={{color: "#fff", fontSize: widthToDp("5%"),marginLeft:widthToDp("5%"), marginTop: heightToDp("1%"),fontFamily:'Oswald-Medium'}}>{this.state.breedname}</Text>
+                    <Text style={{color: "#fff", fontSize: widthToDp("5%"),marginLeft:widthToDp("5%"), marginTop: heightToDp("1%"),fontFamily:'Oswald-Medium'}}>{this.state.stepName}</Text>
                         <View style={{backgroundColor:"white",height:heightToDp("54.5%"),alignSelf:'center',width:widthToDp("90%"), marginTop: heightToDp('2%'),borderBottomLeftRadius:10,borderBottomRightRadius:10}}>
+                            <View style={{}}>
                             <Image
                             source={{uri:DataAccess.BaseUrl+"app-property/uploads/livestocks/"+this.state.imageFile}}
                             style={{height:heightToDp("15%"),width:widthToDp("80%"),alignSelf:'center',marginTop:heightToDp("1%"),borderRadius:10}}
                             />
-                            <View style={{flexDirection:'row'}}>
-                            <View style={{width:widthToDp("23%"),marginLeft:widthToDp("5%"), marginTop: heightToDp("1%")}}>
-                                <Text style={{fontFamily:'Oswald-Medium',fontSize: widthToDp("4%")}}>DESCRIPTION</Text>
                             </View>
-                            <View style={{width:widthToDp("23%"),marginLeft:widthToDp("40%"), marginTop: heightToDp("1%")}}>
-                                <Text style={{fontFamily:'Oswald-Medium',fontSize: widthToDp("4%")}}>RATE BY %</Text>
+                            <View>
+                            <Text style={{fontFamily:'Oswald-Medium',fontSize: widthToDp("4%"),marginLeft:widthToDp("2%")}}>DESCRIPTION</Text>
                             </View>
-                            </View>
+                            <Text style={{fontFamily:'Oswald-Medium',fontSize: widthToDp("4%"),marginLeft:widthToDp("2%")}}>{this.state.stepDescription}</Text>
                             
                         </View>
                     </View>

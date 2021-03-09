@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Image, TouchableOpacity } from 'react-native'
+import { View, Image, TouchableOpacity , ScrollView} from 'react-native'
 import BaseColor from '../Core/BaseTheme'
 import { Text } from 'native-base'
 import TopLogo from '../assets/TopLogo'
@@ -12,7 +12,7 @@ import axios from 'axios'
 import DataAccess from '../Core/DataAccess'
 import CustomIndicator from '../Core/CustomIndicator'
 
-export default class BreedScreen extends Component {
+export default class LiveStockStepThreeScreen extends Component {
 
     constructor(props){
         super(props)
@@ -20,14 +20,15 @@ export default class BreedScreen extends Component {
             breed:[],
             _id:'',
             isLoading:false,
-            name:''
+            breedname:'',
+            imageFile: '',
+            stepName:'',
+            stepDescription:''
         }
         this.state._id = this.props.route.params._id
-        this.state.name = this.props.route.params.name
+        this.state.breedname = this.props.route.params.breedname
+        this.state.imageFile = this.props.route.params.imageFile
         //alert(this.state._id)
-    }
-    componentDidMount(){
-        //this.loadLiveStocks()
         this.loadBreedFromStorage()
     }
 
@@ -37,79 +38,28 @@ export default class BreedScreen extends Component {
             let user = await AsyncStorage.getItem('offlineData');
             let parsed = JSON.parse(user);
             var specific = parsed.find((i) => i.username === username)
-            var breedData  = specific.liveStockBreeds.filter((i) => i.livestockId === this.state._id)
-            console.log(breedData)
-            this.setState({
-                breed: breedData
-            })
+            var breedData  = specific.livestockStep.filter((i) => i.livestockId === this.state._id)
+            //console.log(breedData[1].name)
+            this.setState({stepName : breedData[2].name})
+            this.setState({stepDescription : breedData[2].english})
         }catch(error){
             alert(error)
         }
     }
 
-    loadLiveStocks = async() => {
-        this.setState({isLoading:true})
-        var load = true
-        var username = await AsyncStorage.getItem('username')
-        var token = await AsyncStorage.getItem('token')
-        var encodedUsername = base64.encode(username)
-        var cropsArray = []
-        //console.log(token)
-        // await axios.get(DataAccess.BaseUrl+DataAccess.Crops,{
-        //     headers:{
-        //         'Content-type': 'application/json',
-        //         'X-Information': this.state.encodedUsername,
-        //         'Authorization': 'POP '+ this.state.token
-        //     }
-        // }).then(function(response){
-        //     console.log(response.data)
-        // }).catch(function(error){
-        //     console.log(error)
-        // })
-        await axios.get(DataAccess.BaseUrl+DataAccess.AccessUrl+DataAccess.LiveStocks+DataAccess.Breeds+this.state._id,{
-            headers:{
-                'Content-type': "accept",
-                'X-Information': encodedUsername,
-                'Authorization': "POP "+ token
-            }
-        }).then(function(response){
-            //console.log(response.data.data)
-            cropsArray = response.data.data
-            if(response.data.status === 1){
-                load = false
-            }
-            // console.log(cropsArray)
-            // var id = cropsArray
-            // console.log(id)
-            
-        }).catch(function(error){
-            console.log(error.message)
-        })
-
-        if(load === false){
-            this.setState({isLoading:false})
-        }
-
-        this.setState({
-            breed: cropsArray
-        })
-    }
-    
-    navigationController = (data,name,imageFile) => {
+    nextButton = () => {
         this.props.navigation.navigate({
-            name: 'BreedDescriptionScreen',
+            name: 'LiveStockEnterQuantityScreen',
             params:{
                 _id:this.state._id,
-                breedname:name,
-                imageFile : imageFile
+                breedname:this.state.breedname,
+                imageFile : this.state.imageFile
             }
         })
     }
     render() {
-        var breedArray = []
-        breedArray = this.state.breed
         return (
-            <View style={{ backgroundColor: BaseColor.BackgroundColor }}>
+            <View style={{ backgroundColor: BaseColor.BackgroundColor,flex:1 }}>
                 <View style={{ backgroundColor: 'white', width: widthToDp("100%"), height: heightToDp("13%"),flexDirection: 'row' }}>
                     <View style={{ marginTop: heightToDp("3%"), marginLeft: widthToDp("3%") }}>
                         <TopLogo />
@@ -121,6 +71,7 @@ export default class BreedScreen extends Component {
                         onPress={() => this.props.navigation.navigate('NotificationsScreen')}
                     />
                 </View>
+
                 <View style={{ flexDirection: 'row', marginTop: heightToDp("1%"), marginLeft: widthToDp("1%") }}>
                     <TouchableOpacity onPress={() => this.props.navigation.navigate('SigninScreen')}>
                         <View style={{ backgroundColor: BaseColor.English, width: widthToDp("30%"), height: heightToDp("6%"), marginLeft: widthToDp("2%"), borderRadius: 100, flexDirection: 'row' }}>
@@ -158,6 +109,8 @@ export default class BreedScreen extends Component {
                         </View>
                         </TouchableOpacity>
                 </View>
+
+
                 <View style={{ flexDirection: 'row', marginTop: heightToDp("1%"), marginLeft: widthToDp("1%"),alignSelf:'center' }}>
                 <TouchableOpacity>
                         <View style={{ backgroundColor: BaseColor.Uridia, width: widthToDp("30%"), height: heightToDp("6%"), borderRadius: 100,flexDirection:'row' }}>
@@ -184,29 +137,32 @@ export default class BreedScreen extends Component {
                     </TouchableOpacity>
                 </View>
                 <View style={{ borderBottomColor: BaseColor.Stroke, borderBottomWidth: 1, marginTop: heightToDp('1.5%'), width: widthToDp("100%") }}></View>
-                <Text style={{marginLeft:widthToDp("3%"),marginTop:heightToDp("2%"),fontSize:widthToDp("7%"),fontFamily:'Oswald-Medium'}}>{(this.state.name)} - SELECT BREED TYPE</Text>
-                {
-                    this.state.isLoading ? <View style={{justifyContent:'center',marginTop:heightToDp("20%")}}><CustomIndicator IsLoading={this.state.isLoading} /></View> : null
-                }
-                <View>
-                    <FlatGrid
-                        style={{ marginTop: heightToDp("1%"), marginBottom: heightToDp("74%") }}
-                        bounces={true}
-                        itemDimension={130}
-                        data={Object.values(breedArray)}
-                        bouncesZoom={true}
-                        renderItem={({ item }) => (
-                            <TouchableOpacity onPress={() => this.navigationController(item._id,item.name,item.imageFile)}>
-                                <View style={{backgroundColor:BaseColor.Red,width:widthToDp("47%"),height:heightToDp("30%"), elevation: 10, borderRadius: 10}}>
-                                    <Text style={{color: "#fff", fontSize: widthToDp("5%"),marginLeft:widthToDp("5%"), marginTop: heightToDp("0.4%"),fontFamily:'Oswald-Medium'}}>{item.name}</Text>
-                                    <Image
-                                style={{ width: widthToDp("47%"), height: heightToDp("25%") ,borderBottomLeftRadius:10,borderBottomRightRadius:10, marginTop: heightToDp("1%")}}
-                                source={{ uri: DataAccess.BaseUrl+"app-property/uploads/livestocks/"+item.imageFile}}
-                                />
-                                </View>
-                            </TouchableOpacity>
-                        )}
-                    />
+                <Text style={{marginLeft:widthToDp("3%"),marginTop:heightToDp("2%"),fontSize:widthToDp("7%"),fontFamily:'Oswald-Medium'}}>{this.state.breedname}</Text>
+                <ScrollView>
+                    <View style={{backgroundColor:BaseColor.Red,height:heightToDp("60%"),alignSelf:'center',width:widthToDp("90%"),borderRadius:10, marginTop: heightToDp('1.5%')}}>
+                    <Text style={{color: "#fff", fontSize: widthToDp("5%"),marginLeft:widthToDp("5%"), marginTop: heightToDp("1%"),fontFamily:'Oswald-Medium'}}>{this.state.stepName}</Text>
+                        <View style={{backgroundColor:"white",height:heightToDp("54.5%"),alignSelf:'center',width:widthToDp("90%"), marginTop: heightToDp('2%'),borderBottomLeftRadius:10,borderBottomRightRadius:10}}>
+                            <View style={{}}>
+                            <Image
+                            source={{uri:DataAccess.BaseUrl+"app-property/uploads/livestocks/"+this.state.imageFile}}
+                            style={{height:heightToDp("15%"),width:widthToDp("80%"),alignSelf:'center',marginTop:heightToDp("1%"),borderRadius:10}}
+                            />
+                            </View>
+                            <View>
+                            <Text style={{fontFamily:'Oswald-Medium',fontSize: widthToDp("4%"),marginLeft:widthToDp("2%")}}>DESCRIPTION</Text>
+                            </View>
+                            <Text style={{fontFamily:'Oswald-Medium',fontSize: widthToDp("4%"),marginLeft:widthToDp("2%")}}>{this.state.stepDescription}</Text>
+                            
+                        </View>
+                    </View>
+                    <View style={{ marginTop: heightToDp("10%") }}></View>
+                </ScrollView>
+                <View style={{ height: heightToDp("10%") }}>
+                        <TouchableOpacity onPress={() => this.nextButton()}>
+                            <View style={{ backgroundColor: "#fff", height: heightToDp("6%"), width: widthToDp("30%"), borderRadius: 100, alignSelf:'center', marginTop: heightToDp("2%") }}>
+                                <Text style={{ fontSize: widthToDp("4%"), color: "#000", marginTop: heightToDp("1.3%"), alignSelf: 'center',fontFamily:'Oswald-Medium' }}>NEXT</Text>
+                            </View>
+                        </TouchableOpacity>
                 </View>
             </View>
         );
