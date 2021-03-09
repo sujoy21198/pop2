@@ -44,7 +44,7 @@ export default class BreedDescriptionScreen extends Component {
             this.setState({stepName : breedData[0].name})
             this.setState({stepDescription : breedData[0].english})
         }catch(error){
-            alert(error)
+            alert("No More steps")
         }
     }
 

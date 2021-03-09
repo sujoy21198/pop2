@@ -43,7 +43,7 @@ export default class LiveStockStepThreeScreen extends Component {
             this.setState({stepName : breedData[2].name})
             this.setState({stepDescription : breedData[2].english})
         }catch(error){
-            alert(error)
+            alert("No more steps")
         }
     }
 

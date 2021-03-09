@@ -43,7 +43,7 @@ export default class LiveStockStepTwoScreen extends Component {
             this.setState({stepName : breedData[1].name})
             this.setState({stepDescription : breedData[1].english})
         }catch(error){
-            alert(error)
+            alert("No more steps")
         }
     }
 
