@@ -116,13 +116,13 @@ export default class NutritionGardenScreen extends Component {
     }
 
 
-    goToDetailsPage = (name,description,containArea) => {
+    goToDetailsPage = (name,description,contentArea) => {
         //alert(category)
         this.props.navigation.navigate({
             name: 'NutritionGardenDetailsScreen',
             params: {
                 name: name,
-                containArea: containArea,
+                contentArea: contentArea,
                 description: description
             }
         })
@@ -242,7 +242,7 @@ export default class NutritionGardenScreen extends Component {
                                     </TouchableOpacity>
 
                                 </View>
-                                <TouchableOpacity onPress={() => this.goToDetailsPage(item.name, item.descEnglish, item.containArea)}>
+                                <TouchableOpacity onPress={() => this.goToDetailsPage(item.name, item.descEnglish, item.contentArea)}>
                                     <Image
                                         style={{ width: widthToDp("93.7%"), height: heightToDp("24%"), marginLeft: widthToDp("0%"), borderRadius: 2, marginTop: heightToDp("1%"), borderBottomLeftRadius: 20, borderBottomRightRadius: 20 }}
                                         source={{ uri: DataAccess.BaseUrl + DataAccess.NutritionGardenImage + item.imageFile }}

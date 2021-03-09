@@ -30,13 +30,13 @@ export default class NutritionGardenDetailsScreen extends Component {
         super(props)
         this.state = {
             name: '',
-            containArea: '',
+            contentArea: '',
             description: '',
             languages: []
         }
         this.state.languages = Languages
         this.state.name = this.props.route.params.name
-        this.state.containArea = this.props.route.params.containArea
+        this.state.contentArea = this.props.route.params.contentArea
         this.state.description = this.props.route.params.description
         //alert(this.state.value)
     }
@@ -221,7 +221,7 @@ export default class NutritionGardenDetailsScreen extends Component {
                             {/* <Hyperlink linkStyle={{ color: '#2980b9' }} onPress={() => this.openLink(this.state.link)}>
                             <Text style={{ color: 'black', marginLeft: widthToDp("4%"), marginTop: heightToDp('1.5%'), fontSize: widthToDp("4%"), fontFamily: 'Oswald-Light' }}>{this.state.containArea}</Text>
                         </Hyperlink> */}
-                            <HTML source={{ html: this.state.containArea }} containerStyle={{elevation:10,marginTop:heightToDp("2%"),marginLeft:widthToDp("2%")}} />
+                            <HTML source={{ html: this.state.contentArea }} containerStyle={{elevation:10,marginTop:heightToDp("2%"),marginLeft:widthToDp("2%")}} />
                         </ScrollView>
                     </View>
                 </View>
