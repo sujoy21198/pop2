@@ -58,7 +58,7 @@ export default class PatchScreen extends Component {
                 await AsyncStorage.setItem('user', JSON.stringify(parsed))
                 this.setState({ data: sepcific.highLand })
                 this.setState({ isDialogVisible: false })
-            }else if(this.state.landType === 'LOW LAND'){
+            } else if (this.state.landType === 'LOW LAND') {
                 const patchObject = { 'name': data }
                 let parsed = JSON.parse(user)
                 var sepcific = parsed.find((i) => i.username === username)
@@ -66,7 +66,7 @@ export default class PatchScreen extends Component {
                 await AsyncStorage.setItem('user', JSON.stringify(parsed))
                 this.setState({ data: sepcific.lowLand })
                 this.setState({ isDialogVisible: false })
-            }else if(this.state.landType === 'MEDIUM LAND'){
+            } else if (this.state.landType === 'MEDIUM LAND') {
                 const patchObject = { 'name': data }
                 let parsed = JSON.parse(user)
                 var sepcific = parsed.find((i) => i.username === username)
@@ -96,14 +96,14 @@ export default class PatchScreen extends Component {
             let user = await AsyncStorage.getItem('user')
             let parsed = JSON.parse(user)
             var sepcific = parsed.find((i) => i.username === username)
-            if(this.state.landType === 'HIGH LAND'){
+            if (this.state.landType === 'HIGH LAND') {
                 this.setState({ data: sepcific.highLand })
-            }else if(this.state.landType === 'LOW LAND'){
+            } else if (this.state.landType === 'LOW LAND') {
                 this.setState({ data: sepcific.lowLand })
-            }else if(this.state.landType === 'MEDIUM LAND'){
+            } else if (this.state.landType === 'MEDIUM LAND') {
                 this.setState({ data: sepcific.mediumLand })
             }
-            
+
             //console.log(JSON.stringify(sepcific.highLand))
         } catch (error) {
             alert(error)
@@ -126,18 +126,39 @@ export default class PatchScreen extends Component {
         this.setState({ isDialogVisible: true })
     }
 
-    navigateToPatch = (patchName) => {
-        this.props.navigation.navigate({
-            name: 'SelectFarmingAreaScreen',
-            params: {
-                _id: this.state._id,
-                cropName: this.state.cropName,
-                imageFile: this.state.imageFile,
-                patchName: patchName,
-                landType: this.state.landType
+    navigateToPatch = async (patchName) => {
+        try {
+            const patchArrayObject = { 'cropId': this.state._id, 'patchName': patchName, 'landType': this.state.landType, 'step1': '', 'step2': '', 'step3': '', 'step4': '', 'step5': '', 'step6': '', 'step7': '', 'step8': '' }
+            let username = await AsyncStorage.getItem('username')
+            let user = await AsyncStorage.getItem('user')
+            let parsed = JSON.parse(user)
+            var sepcific = parsed.find((i) => i.username === username)
+            var valueArr = sepcific.patch.map(function (item) { return item.patchName })
+            if (valueArr.includes(patchName)) {
+                console.log("Already created")
+            } else {
+                sepcific.patch.push(patchArrayObject)
+                await AsyncStorage.setItem('user', JSON.stringify(parsed))
             }
-        })
-         
+            // sepcific.patch.push(patchArrayObject)
+
+            // await AsyncStorage.setItem('user', JSON.stringify(parsed))
+            console.log(sepcific.patch)
+            this.props.navigation.navigate({
+                name: 'SelectFarmingAreaScreen',
+                params: {
+                    _id: this.state._id,
+                    cropName: this.state.cropName,
+                    imageFile: this.state.imageFile,
+                    patchName: patchName,
+                    landType: this.state.landType
+                }
+            })
+        } catch (error) {
+            console.log(error)
+        }
+
+
     }
     render() {
         return (

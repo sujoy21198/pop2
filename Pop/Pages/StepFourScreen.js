@@ -55,6 +55,54 @@ export default class StepOneScreen extends Component {
         this.getStepDataFromLocal()
     }
 
+    setMaterialPrice = async(data) => {
+        AsyncStorage.setItem("stepFour",data)
+
+        let stepFourPrice = await AsyncStorage.getItem('stepFour')
+        //console.log(stepOnePrice)
+        this.setState({materialPrice : stepFourPrice})
+    }
+
+    setStepDataIntoPatch = async() => {
+        try{
+            //const patchObject = { 'cropId': this.state._id , 'patchName': this.state.patchName , 'landType': this.state.landType , 'step1' : '' , 'step2':'' , 'step3':'' , 'step4':'' , 'step5':'' , 'step6' : '' , 'step7':'' , 'step8': ''}
+            let username = await AsyncStorage.getItem('username')
+            let stepFourPrice = await AsyncStorage.getItem('stepFour')
+            let user = await AsyncStorage.getItem('user')
+            let parsed = JSON.parse(user)
+            var sepcific = parsed.find((i) => i.username === username)
+            var patchFind = sepcific.patch.find((i) => i.patchName === this.state.patchName)
+            patchFind.step4 = stepFourPrice
+            await AsyncStorage.setItem('user', JSON.stringify(parsed))
+
+            console.log(patchFind)
+        }catch(error){
+            console.log(error)
+        }
+
+        if(this.state.materialPrice === ''){
+            alert("please enter a value")
+        }else{
+            this.props.navigation.navigate({
+                name: 'StepFiveScreen',
+                params: {
+                    cropName: this.state.cropName,
+                    _id: this.state._id,
+                    imageFile : this.state.imageFile,
+                    patchName : this.state.patchName,
+                    landType: this.state.landType,
+                    farmingAreaInDecimal : this.state.farmingAreaInDecimal,
+                    costOfCultivatinPerTenDecimal : this.state.costOfCultivatinPerTenDecimal,
+                    costPerKg : this.state.costPerKg,
+                    productionInKg : this.state.productionInKg,
+                    cost : this.state.cost,
+                    netProfit : this.state.netProfit
+                }
+            })
+        }
+    }
+
+
     getStepDataFromLocal = async () => {
         try {
             var stepData = []
@@ -361,7 +409,7 @@ export default class StepOneScreen extends Component {
                                             <Input
                                                 placeholder= {this.state.decimalPrice}
                                                 keyboardType='number-pad'
-                                                onChangeText={(data) => {this.setState({materialPrice : data})}}
+                                                onChangeText={(data) => this.setMaterialPrice(data)}
                                                 style={{marginLeft: widthToDp("33%"), fontFamily: 'Oswald-Medium',width:widthToDp("20%"), marginTop: heightToDp("-2%")}}
                                             />
                                         </View>
@@ -384,7 +432,7 @@ export default class StepOneScreen extends Component {
                             <Text style={{ fontSize: widthToDp("4%"), color: "#000", marginTop: heightToDp("1.3%"), alignSelf: 'center', fontFamily: 'Oswald-Medium' }}>SAVE</Text>
                         </View>
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={() => {this.stepFiveScreen()}}>
+                    <TouchableOpacity onPress={() => {this.setStepDataIntoPatch()}}>
                         <View style={{ backgroundColor: "#fff", height: heightToDp("6%"), width: widthToDp("30%"), borderRadius: 100, marginLeft: widthToDp("1%"), marginTop: heightToDp("2%") }}>
                             <Text style={{ fontSize: widthToDp("4%"), color: "#000", marginTop: heightToDp("1.3%"), alignSelf: 'center', fontFamily: 'Oswald-Medium' }}>NEXT</Text>
                         </View>
