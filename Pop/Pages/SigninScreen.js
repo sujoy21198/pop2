@@ -44,7 +44,7 @@ export default class SigninScreen extends Component {
     setCustodian = async () => {
         let cus = await AsyncStorage.getItem("cus")
         this.setState({ loadPhoneNumber: false })
-        
+
         NetInfo.fetch().then(state => {
             var isConnected = state.isConnected
             console.log(isConnected)
@@ -214,9 +214,12 @@ export default class SigninScreen extends Component {
         await axios.get(DataAccess.BaseUrl + DataAccess.AccessUrl + DataAccess.CustodianNumber + deviceId, {
         }).then(function (response) {
             //load = false
-            console.log(response.data.data.phone)
-            phone = response.data.data.phone
-            AsyncStorage.setItem("cus", JSON.stringify(response.data.data.phone))
+            console.log(response.data.status)
+            if (response.data.status === 1) {
+                phone = response.data.data.phone
+                AsyncStorage.setItem("cus", JSON.stringify(response.data.data.phone))
+            }
+
         }).catch(function (error) {
             console.log(error)
         })
@@ -437,7 +440,6 @@ export default class SigninScreen extends Component {
                     {
                         this.state.isLoading ? <CustomIndicator IsLoading={this.state.isLoading} /> : null
                     }
-
                     <TouchableOpacity onPress={() => this.checkConnection()}>
                         <View style={{ backgroundColor: BaseColor.SecondaryColor, marginTop: heightToDp("5%"), width: widthToDp("37%"), alignSelf: 'center', height: heightToDp("5%"), borderRadius: 100 }}>
                             <Text style={{ alignSelf: 'center', marginTop: heightToDp("0.5%"), fontWeight: '500', fontSize: widthToDp("5%"), fontFamily: 'Oswald-Medium' }}>{LanguageChange.signIn}</Text>

@@ -27,13 +27,11 @@ export default class LandTypeScreen extends Component {
             languages:[],
             cropName:'',
             imageFile:'',
-            patchName:''
         }
         this.state.languages = Languages
         this.state._id = this.props.route.params._id
         this.state.cropName = this.props.route.params.cropName
         this.state.imageFile = this.props.route.params.imageFile
-        this.state.patchName = this.props.route.params.patchName
     }
 
 

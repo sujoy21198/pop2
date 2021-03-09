@@ -43,6 +43,7 @@ export default class LandTypeScreen extends Component {
         this.state.patchName = this.props.route.params.patchName
 
         this.netProfitCalculation()
+        //alert(this.state.patchName)
 
     }
 
@@ -68,6 +69,7 @@ export default class LandTypeScreen extends Component {
                 netProfit : this.state.netProfit
             }
         })
+        //alert(this.state.patchName)
     }
 
     render() {

@@ -50,16 +50,19 @@ export default class StepOneScreen extends Component {
         this.state.productionInKg = this.props.route.params.productionInKg
         this.state.cost = this.props.route.params.cost
         this.state.netProfit = this.props.route.params.netProfit
-        //alert(this.state._id)
+        //alert(this.state.patchName)
+        //alert(this.state.patchName)
     }
 
     componentDidMount() {
         //this.getStepData()
         this.getStepDataFromLocal()
+        this.setStepDataIntoPatch()
         //this.displayData()
     }
 
     displayData = async() => {
+        
         try {
             //var count = 8
             let user = await AsyncStorage.getItem('offlineData');
@@ -83,6 +86,20 @@ export default class StepOneScreen extends Component {
         }
         catch (error) {
             alert(error)
+        }
+    }
+
+
+    setStepDataIntoPatch = async() => {
+        try{
+            const patchObject = { 'cropId': this.state._id , 'patchName': this.state.patchName , 'landType': this.state.landType , 'step1' : '' , 'step2':'' , 'step3':'' , 'step4':'' , 'step5':'' , 'step6' : '' , 'step7':'' , 'step8': ''}
+            let username = await AsyncStorage.getItem('username')
+            let user = await AsyncStorage.getItem('user')
+            let parsed = JSON.parse(user)
+            var sepcific = parsed.find((i) => i.username === username)
+            console.log(sepcific.patch)
+        }catch(error){
+            console.log(error)
         }
     }
 
@@ -185,6 +202,13 @@ export default class StepOneScreen extends Component {
             })
         }
 
+    }
+
+    setMaterialPrice = async(data) => {
+        AsyncStorage.setItem("stepOne",data)
+
+        let stepOnePrice = await AsyncStorage.getItem('stepOne')
+        this.setState({materialPrice : stepOnePrice})
     }
 
     saveButton = () => {
@@ -393,7 +417,7 @@ export default class StepOneScreen extends Component {
                                             <Input
                                                 placeholder={this.state.decimalPrice}
                                                 keyboardType='number-pad'
-                                                onChangeText={(data) => { this.setState({ materialPrice: data }) }}
+                                                onChangeText={(data) => this.setMaterialPrice(data)}
                                                 style={{ marginLeft: widthToDp("33%"), fontFamily: 'Oswald-Medium', width: widthToDp("20%"), marginTop: heightToDp("-2%") }}
                                             />
 

@@ -82,6 +82,8 @@ export default class SelectFarmingAreaScreen extends Component {
                 }
             })
 
+            //alert(this.state.patchName)
+
         }else if(this.state.cropName === 'Chilli'){
             var length = this.state.horizontalCounter * 5
             var width = this.state.verticalCounter * 5

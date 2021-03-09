@@ -137,6 +137,7 @@ export default class PatchScreen extends Component {
                 landType: this.state.landType
             }
         })
+         
     }
     render() {
         return (
