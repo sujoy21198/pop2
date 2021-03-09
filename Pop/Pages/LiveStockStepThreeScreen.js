@@ -49,7 +49,7 @@ export default class LiveStockStepThreeScreen extends Component {
 
     nextButton = () => {
         this.props.navigation.navigate({
-            name: 'LiveStockEnterQuantityScreen',
+            name: 'LivestockTableScreen',
             params:{
                 _id:this.state._id,
                 breedname:this.state.breedname,

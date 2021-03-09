@@ -12,60 +12,24 @@ import axios from 'axios'
 import DataAccess from '../Core/DataAccess'
 import CustomIndicator from '../Core/CustomIndicator'
 
-export default class BreedNewScreen extends Component {
+const months = [
+    {'name':'JAN','vaccine1':'Deworming', 'vaccine2':'Lasota'},
+    {'name': 'FEB','vaccine1':'', 'vaccine2':'Lasota'},
+    {'name': 'MAR','vaccine1':'', 'vaccine2':''},
+    {'name': 'APR','vaccine1':'Deworming', 'vaccine2':'Lasota'},
+    {'name': 'MAY','vaccine1':'', 'vaccine2':''},
+    {'name': 'JUN','vaccine1':'', 'vaccine2':''},
+    {'name': 'JUL','vaccine1':'Deworming', 'vaccine2':'Lasota'},
+    {'name': 'AUG','vaccine1':'', 'vaccine2':''},
+    {'name': 'SEP','vaccine1':'', 'vaccine2':'Lasota'},
+    {'name': 'OCT','vaccine1':'Deworming', 'vaccine2':'Pox'},
+    {'name': 'NOV','vaccine1':'', 'vaccine2':''},
+    {'name': 'DEC','vaccine1':'', 'vaccine2':''}
+]
 
-
-    constructor(props){
-        super(props)
-        this.state={
-            breed:[],
-            _id:'',
-            isLoading:false,
-            breedname:'',
-            imageFile: '',
-            stepName:'',
-            stepDescription:'',
-            breedId:'',
-            breedDescription:''
-        }
-        this.state._id = this.props.route.params._id
-        this.state.breedname = this.props.route.params.breedname
-        this.state.imageFile = this.props.route.params.imageFile
-        this.state.breedId = this.props.route.params.breedId
-        this.state.breedDescription = this.props.route.params.breedDescription
-        //alert(this.state._id)
-        this.loadBreedFromStorage()
-    }
-
-    loadBreedFromStorage = async() => {
-        try{
-            let username = await AsyncStorage.getItem('username')
-            let user = await AsyncStorage.getItem('offlineData');
-            let parsed = JSON.parse(user);
-            var specific = parsed.find((i) => i.username === username)
-            var breedData  = specific.liveStockBreeds.filter((i) => i.livestockId === this.state.breedId)
-            console.log(specific.liveStockBreeds)
-            // this.setState({stepName : breedData[0].name})
-            // this.setState({stepDescription : breedData[0].english})
-        }catch(error){
-            alert(error)
-        }
-    }
-
-    nextButton = () => {
-        this.props.navigation.navigate({
-            name: 'BreedDescriptionScreen',
-            params:{
-                _id:this.state._id,
-                breedname:this.state.breedname,
-                imageFile : this.state.imageFile
-            }
-        })
-    }
-    render() {
-        var stepData = []
-        stepData = this.state.breed[0]
-        return (
+export default class LivestockTableScreen extends Component{
+    render(){
+        return(
             <View style={{ backgroundColor: BaseColor.BackgroundColor,flex:1 }}>
                 <View style={{ backgroundColor: 'white', width: widthToDp("100%"), height: heightToDp("13%"),flexDirection: 'row' }}>
                     <View style={{ marginTop: heightToDp("3%"), marginLeft: widthToDp("3%") }}>
@@ -144,22 +108,53 @@ export default class BreedNewScreen extends Component {
                     </TouchableOpacity>
                 </View>
                 <View style={{ borderBottomColor: BaseColor.Stroke, borderBottomWidth: 1, marginTop: heightToDp('1.5%'), width: widthToDp("100%") }}></View>
-                <Text style={{marginLeft:widthToDp("3%"),marginTop:heightToDp("2%"),fontSize:widthToDp("7%"),fontFamily:'Oswald-Medium'}}>{this.state.breedname}</Text>
                 <ScrollView>
                     <View style={{backgroundColor:BaseColor.Red,height:heightToDp("60%"),alignSelf:'center',width:widthToDp("90%"),borderRadius:10, marginTop: heightToDp('1.5%')}}>
-                    <Text style={{color: "#fff", fontSize: widthToDp("5%"),marginLeft:widthToDp("5%"), marginTop: heightToDp("1%"),fontFamily:'Oswald-Medium'}}>{this.state.stepName}</Text>
+                    <Text style={{color: "#fff", fontSize: widthToDp("5%"),marginLeft:widthToDp("5%"), marginTop: heightToDp("1%"),fontFamily:'Oswald-Medium'}}>Immunisation Calendar</Text>
                         <View style={{backgroundColor:"white",height:heightToDp("54.5%"),alignSelf:'center',width:widthToDp("90%"), marginTop: heightToDp('2%'),borderBottomLeftRadius:10,borderBottomRightRadius:10}}>
-                            <View style={{}}>
-                            <Image
-                            source={{uri:DataAccess.BaseUrl+"app-property/uploads/livestocks/"+this.state.imageFile}}
-                            style={{height:heightToDp("15%"),width:widthToDp("80%"),alignSelf:'center',marginTop:heightToDp("1%"),borderRadius:10}}
-                            />
+                            <View style={{borderWidth:1,height:heightToDp("40%"), width:widthToDp("85%"),marginTop:heightToDp("2%"),marginLeft:widthToDp("2%")}}>
+                                <View style={{flexDirection:'row'}}>
+                                <View style={{borderWidth:1,height:heightToDp("38%"), width:widthToDp("28%"),marginTop:heightToDp("2%")}}>
+                                    {
+                                        months.map((i) => {
+                                            return(
+                                                <View>
+                                                    <Text style={{fontSize:widthToDp("5%")}}>{i.name}</Text>
+                                                    <View style={{ borderBottomColor: "black", borderBottomWidth: 1,width: widthToDp("84%") }}></View>
+                                                </View>
+                                                
+                                            )
+                                        })
+                                    }
+                                </View>
+                                <View style={{borderWidth:1,height:heightToDp("38%"), width:widthToDp("28%"),marginTop:heightToDp("2%")}}>
+                                {
+                                        months.map((i) => {
+                                            return(
+                                                <View>
+                                                    <Text style={{fontSize:widthToDp("5%")}}>{i.vaccine1}</Text>
+                                                    <View style={{ borderBottomColor: "black", borderBottomWidth: 1,width: widthToDp("0%") }}></View>
+                                                </View>
+                                                
+                                            )
+                                        })
+                                    }
+                                </View>
+                                <View style={{borderWidth:1,height:heightToDp("38%"), width:widthToDp("28.50%"),marginTop:heightToDp("2%")}}>
+                                {
+                                        months.map((i) => {
+                                            return(
+                                                <View>
+                                                    <Text style={{fontSize:widthToDp("5%")}}>{i.vaccine2}</Text>
+                                                    <View style={{ borderBottomColor: "black", borderBottomWidth: 1,width: widthToDp("0%") }}></View>
+                                                </View>
+                                                
+                                            )
+                                        })
+                                    }
+                                </View>
+                                </View>
                             </View>
-                            <View>
-                            <Text style={{fontFamily:'Oswald-Medium',fontSize: widthToDp("4%"),marginLeft:widthToDp("2%")}}>DESCRIPTION</Text>
-                            </View>
-                            <Text style={{fontFamily:'Oswald-Medium',fontSize: widthToDp("4%"),marginLeft:widthToDp("2%")}}>{this.state.breedDescription}</Text>
-                            
                         </View>
                     </View>
                     <View style={{ marginTop: heightToDp("10%") }}></View>

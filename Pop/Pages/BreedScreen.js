@@ -95,14 +95,16 @@ export default class BreedScreen extends Component {
         })
     }
     
-    navigationController = (data,name,imageFile) => {
+    navigationController = (data,name,imageFile,description) => {
+        //alert(description)
         this.props.navigation.navigate({
             name: 'BreedNewScreen',
             params:{
                 _id:this.state._id,
                 breedname:name,
                 imageFile : imageFile,
-                breeId : data
+                breeId : data,
+                breedDescription : description
             }
         })
     }
@@ -197,7 +199,7 @@ export default class BreedScreen extends Component {
                         data={Object.values(breedArray)}
                         bouncesZoom={true}
                         renderItem={({ item }) => (
-                            <TouchableOpacity onPress={() => this.navigationController(item._id,item.name,item.imageFile)}>
+                            <TouchableOpacity onPress={() => this.navigationController(item._id,item.name,item.imageFile,item.descEnglish)}>
                                 <View style={{backgroundColor:BaseColor.Red,width:widthToDp("47%"),height:heightToDp("30%"), elevation: 10, borderRadius: 10}}>
                                     <Text style={{color: "#fff", fontSize: widthToDp("5%"),marginLeft:widthToDp("5%"), marginTop: heightToDp("0.4%"),fontFamily:'Oswald-Medium'}}>{item.name}</Text>
                                     <Image

@@ -40,6 +40,7 @@ import NutritionGardenDetailsScreen from './Pages/NutritionGardenDetailsScreen'
 import LiveStockStepTwoScreen from './Pages/LiveStockStepTwoScreen'
 import LiveStockStepThreeScreen from './Pages/LiveStockStepThreeScreen'
 import BreedNewScreen from './Pages/BreedNewScreen'
+import LivestockTableScreen from './Pages/LivestockTableScreen'
 
 const Stack = createStackNavigator();
 
@@ -84,6 +85,7 @@ function AppStack(){
                 <Stack.Screen name="LiveStockStepTwoScreen" component={LiveStockStepTwoScreen}/>
                 <Stack.Screen name="LiveStockStepThreeScreen" component={LiveStockStepThreeScreen}/>
                 <Stack.Screen name="BreedNewScreen" component={BreedNewScreen}/>
+                <Stack.Screen name="LivestockTableScreen" component={LivestockTableScreen}/>
             </Stack.Navigator>
         </NavigationContainer>
     );
