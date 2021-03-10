@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Image, TouchableOpacity, FlatList, Linking } from 'react-native'
+import { View, Image, TouchableOpacity, FlatList, Linking, ScrollView } from 'react-native'
 import BaseColor from '../Core/BaseTheme'
 import { Card, Text } from 'native-base'
 import TopLogo from '../assets/TopLogo'
@@ -14,6 +14,7 @@ import CustomIndicator from '../Core/CustomIndicator'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import Languages from '../Core/Languages'
 import LanguageChange from '../Core/LanguageChange'
+import HTML from "react-native-render-html";
 
 const Sound = require('react-native-sound')
 
@@ -28,7 +29,10 @@ export default class NutritionGardenScreen extends Component {
             title: '',
             data: [],
             isLoading: false,
-            languages: []
+            languages: [],
+            screensData: '',
+            pageCounter: 0,
+            lengthOfData: ''
         }
         this.state.languages = Languages
         //alert(this.state.value)
@@ -68,13 +72,19 @@ export default class NutritionGardenScreen extends Component {
             let user = await AsyncStorage.getItem('offlineData');
             let parsed = JSON.parse(user);
             var specificObject = parsed.find((i) => i.username === username)
-            var descri = specificObject.nutrationGraden
-            console.log(specificObject.nutrationGraden)
+            //alert(specificObject.nutrationGraden.length)
+            this.setState({ lengthOfData: specificObject.nutrationGraden.length })
+
+            var descri = specificObject.nutrationGraden[this.state.pageCounter]
+            this.setState({ screensData: specificObject.nutrationGraden[this.state.pageCounter] })
+            console.log(this.state.screensData)
         } catch (error) {
             console.log(error)
         }
 
         this.setState({ data: descri })
+
+        this.setState({})
     }
 
 
@@ -116,7 +126,7 @@ export default class NutritionGardenScreen extends Component {
     }
 
 
-    goToDetailsPage = (name,description,contentArea) => {
+    goToDetailsPage = (name, description, contentArea) => {
         //alert(category)
         this.props.navigation.navigate({
             name: 'NutritionGardenDetailsScreen',
@@ -135,13 +145,30 @@ export default class NutritionGardenScreen extends Component {
         this.sound.play()
     }
 
+    nextButton = () => {
+        var length = parseInt(this.state.lengthOfData)
+        //alert(length)
+
+        this.state.pageCounter = this.state.pageCounter + 1
+        
+        if (this.state.pageCounter === length) {
+            this.props.navigation.reset({
+                index: 0,
+                routes: [{ name: "DashBoardScreen" }]
+            })
+        }else{
+            this.getDetailsFromOffline()
+        }
+        //alert(this.state.pageCounter)
+
+    }
 
     render() {
         var valueArray = []
         valueArray = this.state.data
         //console.log(valueArray)
         return (
-            <View style={{ backgroundColor: BaseColor.BackgroundColor }}>
+            <View style={{ backgroundColor: BaseColor.BackgroundColor, flex: 1 }}>
                 <View style={{ backgroundColor: 'white', width: widthToDp("100%"), height: heightToDp("13%"), flexDirection: 'row' }}>
                     <View style={{ marginTop: heightToDp("3%"), marginLeft: widthToDp("3%") }}>
                         <TopLogo />
@@ -217,41 +244,39 @@ export default class NutritionGardenScreen extends Component {
                     </TouchableOpacity>
                 </View>
                 <View style={{ borderBottomColor: BaseColor.Stroke, borderBottomWidth: 1, marginTop: heightToDp('1.5%'), width: widthToDp("100%") }}></View>
-                <Text style={{ marginLeft: widthToDp("3%"), marginTop: heightToDp("2%"), fontSize: widthToDp("7%"), fontFamily: 'Oswald-Medium' }}>{this.state.title}</Text>
                 {
                     this.state.isLoading ? <View style={{ justifyContent: 'center', marginTop: heightToDp("20%") }}><CustomIndicator IsLoading={this.state.isLoading} /></View> : null
                 }
-                <View>
 
-                    <FlatList
-                        data={Object.values(valueArray)}
-                        style={{ marginBottom: heightToDp("74%") }}
-                        renderItem={({ item }) =>
-
-                            <Card style={{ width: widthToDp("94%"), marginLeft: widthToDp("3%"), height: heightToDp("30%"), marginBottom: heightToDp("1%"), borderRadius: 20, backgroundColor: BaseColor.Red }}>
-                                <View style={{ flexDirection: 'row' }}>
-                                    <View style={{ width: widthToDp("45%") }}>
-                                        <Text style={{ color: 'white', marginLeft: widthToDp("6%"), marginTop: heightToDp("1%"), fontSize: widthToDp("5%"), fontFamily: 'Oswald-Medium' }}>{item.name}</Text>
-                                    </View>
-                                    <TouchableOpacity onPress={() => this.speak(item.category)}>
-                                        <Icon
-                                            name="microphone"
-                                            size={23}
-                                            style={{ color: 'white', marginTop: heightToDp("2%"), marginLeft: widthToDp("36%") }}
-                                        />
-                                    </TouchableOpacity>
-
-                                </View>
-                                <TouchableOpacity onPress={() => this.goToDetailsPage(item.name, item.descEnglish, item.contentArea)}>
-                                    <Image
-                                        style={{ width: widthToDp("93.7%"), height: heightToDp("24%"), marginLeft: widthToDp("0%"), borderRadius: 2, marginTop: heightToDp("1%"), borderBottomLeftRadius: 20, borderBottomRightRadius: 20 }}
-                                        source={{ uri: DataAccess.BaseUrl + DataAccess.NutritionGardenImage + item.imageFile }}
-                                    />
-                                </TouchableOpacity>
-                            </Card>
-                        }
-                    />
+                <View style={{ backgroundColor: BaseColor.Red, height: heightToDp("50%"), alignSelf: 'center', width: widthToDp("90%"), borderRadius: 10, marginTop: heightToDp('1.5%') }}>
+                    <Text style={{ color: "#fff", fontSize: widthToDp("5%"), marginLeft: widthToDp("5%"), marginTop: heightToDp("1%"), fontFamily: 'Oswald-Medium' }}>{this.state.screensData.name}</Text>
+                    <View style={{ backgroundColor: "white", height: heightToDp("45%"), alignSelf: 'center', width: widthToDp("90%"), marginTop: heightToDp('2%'), borderBottomLeftRadius: 10, borderBottomRightRadius: 10 }}>
+                        <View style={{}}>
+                            <Image
+                                source={{ uri: DataAccess.BaseUrl + DataAccess.NutritionGardenImage + this.state.screensData.imageFile }}
+                                style={{ height: heightToDp("15%"), width: widthToDp("80%"), alignSelf: 'center', marginTop: heightToDp("1%"), borderRadius: 10 }}
+                            />
+                        </View>
+                        <View>
+                            <Text style={{ fontFamily: 'Oswald-Medium', fontSize: widthToDp("4%"), marginLeft: widthToDp("2%") }}>DESCRIPTION</Text>
+                        </View>
+                        <ScrollView>
+                            <Text style={{ fontFamily: 'Oswald-Medium', fontSize: widthToDp("4%"), marginLeft: widthToDp("2%") }}>{this.state.screensData.descEnglish}</Text>
+                            <HTML source={{ html: this.state.screensData.contentArea || '<p></p>' }} containerStyle={{ elevation: 10, marginTop: heightToDp("2%"), marginLeft: widthToDp("2%") }} />
+                            <View style={{ marginTop: heightToDp("2%") }}></View>
+                        </ScrollView>
+                    </View>
                 </View>
+
+                <View style={{ height: heightToDp("10%"), marginTop: heightToDp("3%") }}>
+                    <TouchableOpacity onPress={() => this.nextButton()}>
+                        <View style={{ backgroundColor: "#fff", height: heightToDp("6%"), width: widthToDp("30%"), borderRadius: 100, alignSelf: 'center', marginTop: heightToDp("2%") }}>
+                            <Text style={{ fontSize: widthToDp("4%"), color: "#000", marginTop: heightToDp("1.3%"), alignSelf: 'center', fontFamily: 'Oswald-Medium' }}>NEXT</Text>
+                        </View>
+                    </TouchableOpacity>
+                </View>
+
+
             </View>
         );
     }
