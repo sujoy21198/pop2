@@ -24,11 +24,13 @@ export default class BreedDescriptionScreen extends Component {
             breedname:'',
             imageFile: '',
             stepName:'',
-            stepDescription:''
+            stepDescription:'',
+            livestockName : ''
         }
         this.state._id = this.props.route.params._id
         this.state.breedname = this.props.route.params.breedname
         this.state.imageFile = this.props.route.params.imageFile
+        this.state.livestockName = this.props.route.params.livestockName
         //alert(this.state._id)
         this.loadBreedFromStorage()
     }
@@ -54,7 +56,8 @@ export default class BreedDescriptionScreen extends Component {
             params:{
                 _id:this.state._id,
                 breedname:this.state.breedname,
-                imageFile : this.state.imageFile
+                imageFile : this.state.imageFile,
+                livestockName : this.state.livestockName
             }
         })
     }

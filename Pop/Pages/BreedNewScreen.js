@@ -26,14 +26,16 @@ export default class BreedNewScreen extends Component {
             stepName:'',
             stepDescription:'',
             breedId:'',
-            breedDescription:''
+            breedDescription:'',
+            livestockName:''
         }
         this.state._id = this.props.route.params._id
         this.state.breedname = this.props.route.params.breedname
         this.state.imageFile = this.props.route.params.imageFile
         this.state.breedId = this.props.route.params.breedId
         this.state.breedDescription = this.props.route.params.breedDescription
-        //alert(this.state._id)
+        this.state.livestockName = this.props.route.params.livestockName
+        //alert(this.state.livestockName)
         this.loadBreedFromStorage()
     }
 
@@ -58,7 +60,8 @@ export default class BreedNewScreen extends Component {
             params:{
                 _id:this.state._id,
                 breedname:this.state.breedname,
-                imageFile : this.state.imageFile
+                imageFile : this.state.imageFile,
+                livestockName : this.state.livestockName
             }
         })
     }

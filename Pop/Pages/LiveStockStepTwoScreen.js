@@ -23,12 +23,14 @@ export default class LiveStockStepTwoScreen extends Component {
             breedname:'',
             imageFile: '',
             stepName:'',
-            stepDescription:''
+            stepDescription:'',
+            livestockName:''
         }
         this.state._id = this.props.route.params._id
         this.state.breedname = this.props.route.params.breedname
         this.state.imageFile = this.props.route.params.imageFile
-        //alert(this.state._id)
+        this.state.livestockName = this.props.route.params.livestockName
+        //alert(this.state.livestockName)
         this.loadBreedFromStorage()
     }
 
@@ -43,7 +45,15 @@ export default class LiveStockStepTwoScreen extends Component {
             this.setState({stepName : breedData[1].name})
             this.setState({stepDescription : breedData[1].english})
         }catch(error){
-            alert(error)
+            this.props.navigation.navigate({
+                name: 'LivestockTableScreen',
+                params:{
+                    _id:this.state._id,
+                    breedname:this.state.breedname,
+                    imageFile : this.state.imageFile,
+                    livestockName : this.state.livestockName
+                }
+            })
         }
     }
 
@@ -53,7 +63,8 @@ export default class LiveStockStepTwoScreen extends Component {
             params:{
                 _id:this.state._id,
                 breedname:this.state.breedname,
-                imageFile : this.state.imageFile
+                imageFile : this.state.imageFile,
+                livestockName: this.state.livestockName
             }
         })
     }

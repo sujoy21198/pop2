@@ -257,9 +257,7 @@ export default class NutritionGardenScreen extends Component {
                                 style={{ height: heightToDp("15%"), width: widthToDp("80%"), alignSelf: 'center', marginTop: heightToDp("1%"), borderRadius: 10 }}
                             />
                         </View>
-                        <View>
-                            <Text style={{ fontFamily: 'Oswald-Medium', fontSize: widthToDp("4%"), marginLeft: widthToDp("2%") }}>DESCRIPTION</Text>
-                        </View>
+                        
                         <ScrollView>
                             <Text style={{ fontFamily: 'Oswald-Medium', fontSize: widthToDp("4%"), marginLeft: widthToDp("2%") }}>{this.state.screensData.descEnglish}</Text>
                             <HTML source={{ html: this.state.screensData.contentArea || '<p></p>' }} containerStyle={{ elevation: 10, marginTop: heightToDp("2%"), marginLeft: widthToDp("2%") }} />

@@ -23,12 +23,14 @@ export default class LiveStockStepThreeScreen extends Component {
             breedname:'',
             imageFile: '',
             stepName:'',
-            stepDescription:''
+            stepDescription:'',
+            livestockName:''
         }
         this.state._id = this.props.route.params._id
         this.state.breedname = this.props.route.params.breedname
         this.state.imageFile = this.props.route.params.imageFile
-        //alert(this.state._id)
+        this.state.livestockName = this.props.route.params.livestockName
+        //alert(this.state.livestockName)
         this.loadBreedFromStorage()
     }
 
@@ -43,19 +45,33 @@ export default class LiveStockStepThreeScreen extends Component {
             this.setState({stepName : breedData[2].name})
             this.setState({stepDescription : breedData[2].english})
         }catch(error){
-            alert(error)
+            if(this.state.livestockName === 'Goat'){
+                this.props.navigation.navigate({
+                    name: 'LivestockTableScreen',
+                    params:{
+                        _id:this.state._id,
+                        breedname:this.state.breedname,
+                        imageFile : this.state.imageFile,
+                        livestockName : this.state.livestockName
+                    }
+                })
+            }
+            
         }
     }
 
     nextButton = () => {
-        this.props.navigation.navigate({
-            name: 'LivestockTableScreen',
-            params:{
-                _id:this.state._id,
-                breedname:this.state.breedname,
-                imageFile : this.state.imageFile
-            }
-        })
+        if(this.state.livestockName === 'Goat'){
+            this.props.navigation.navigate({
+                name: 'LivestockTableScreen',
+                params:{
+                    _id:this.state._id,
+                    breedname:this.state.breedname,
+                    imageFile : this.state.imageFile,
+                    livestockName : this.state.livestockName
+                }
+            })
+        }
     }
     render() {
         return (

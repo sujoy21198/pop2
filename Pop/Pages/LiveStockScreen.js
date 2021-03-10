@@ -90,7 +90,7 @@ export default class LiveStockScreen extends Component {
     }
     
     navigationController = (data,name) => {
-        //alert(data)
+        //alert(name)
         this.props.navigation.navigate({
             name: 'BreedScreen',
             params : {_id:data,

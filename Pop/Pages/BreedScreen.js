@@ -104,7 +104,8 @@ export default class BreedScreen extends Component {
                 breedname:name,
                 imageFile : imageFile,
                 breeId : data,
-                breedDescription : description
+                breedDescription : description,
+                livestockName : this.state.name
             }
         })
     }
