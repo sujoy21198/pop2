@@ -82,14 +82,14 @@ export default class PultryTableScreen extends Component {
     }
 
     next = () => {
-        // this.props.navigation.reset({
-        //     index: 0,
-        //     routes: [{ name: "DashBoardScreen" }]
-        // })
-        this.props.navigation.navigate({
-            name: 'VaccinationScreen',
-            params: { value: 1 }
+        this.props.navigation.reset({
+            index: 0,
+            routes: [{ name: "DashBoardScreen" }]
         })
+        // this.props.navigation.navigate({
+        //     name: 'VaccinationScreen',
+        //     params: { value: 1 }
+        // })
     }
     render() {
         var tableHeading = []

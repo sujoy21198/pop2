@@ -90,10 +90,41 @@ export default class VaccinationScreen extends Component {
     }
 
     next = () => {
-        this.props.navigation.reset({
-            index: 0,
-            routes: [{ name: "DashBoardScreen" }]
-        })
+        // this.props.navigation.reset({
+        //     index: 0,
+        //     routes: [{ name: "DashBoardScreen" }]
+        // })
+        if (this.state.value === 0) {
+            this.props.navigation.navigate({
+                name: 'LivestockTableScreen',
+                params: {
+                    _id: this.state._id,
+                    breedname: this.state.breedname,
+                    imageFile: this.state.imageFile,
+                    livestockName: this.state.livestockName
+                }
+            })
+        } else if (this.state.value === 1) {
+            this.props.navigation.navigate({
+                name: 'PultryTableScreen',
+                params: {
+                    _id: this.state._id,
+                    breedname: this.state.breedname,
+                    imageFile: this.state.imageFile,
+                    livestockName: this.state.livestockName
+                }
+            })
+        } else if (this.state.value === 2) {
+            this.props.navigation.navigate({
+                name: 'PigTableScreen',
+                params: {
+                    _id: this.state._id,
+                    breedname: this.state.breedname,
+                    imageFile: this.state.imageFile,
+                    livestockName: this.state.livestockName
+                }
+            })
+        }
     }
     render() {
         var tableHeading = []

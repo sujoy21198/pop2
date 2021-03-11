@@ -47,34 +47,46 @@ export default class LiveStockStepThreeScreen extends Component {
         }catch(error){
             var test =  this.state.livestockName
             if(this.state.livestockName === 'Goat'){
+                // this.props.navigation.navigate({
+                //     name: 'LivestockTableScreen',
+                //     params:{
+                //         _id:this.state._id,
+                //         breedname:this.state.breedname,
+                //         imageFile : this.state.imageFile,
+                //         livestockName : this.state.livestockName
+                //     }
+                // })
                 this.props.navigation.navigate({
-                    name: 'LivestockTableScreen',
-                    params:{
-                        _id:this.state._id,
-                        breedname:this.state.breedname,
-                        imageFile : this.state.imageFile,
-                        livestockName : this.state.livestockName
-                    }
+                    name: 'VaccinationScreen',
+                    params: { value: 0 }
                 })
             }else if(this.state.livestockName === test){
+                // this.props.navigation.navigate({
+                //     name: 'PultryTableScreen',
+                //     params:{
+                //         _id:this.state._id,
+                //         breedname:this.state.breedname,
+                //         imageFile : this.state.imageFile,
+                //         livestockName : this.state.livestockName
+                //     }
+                // })
                 this.props.navigation.navigate({
-                    name: 'PultryTableScreen',
-                    params:{
-                        _id:this.state._id,
-                        breedname:this.state.breedname,
-                        imageFile : this.state.imageFile,
-                        livestockName : this.state.livestockName
-                    }
+                    name: 'VaccinationScreen',
+                    params: { value: 1 }
                 })
             }else if(this.state.livestockName === 'Pig'){
+                // this.props.navigation.navigate({
+                //     name: 'PigTableScreen',
+                //     params:{
+                //         _id:this.state._id,
+                //         breedname:this.state.breedname,
+                //         imageFile : this.state.imageFile,
+                //         livestockName : this.state.livestockName
+                //     }
+                // })
                 this.props.navigation.navigate({
-                    name: 'PigTableScreen',
-                    params:{
-                        _id:this.state._id,
-                        breedname:this.state.breedname,
-                        imageFile : this.state.imageFile,
-                        livestockName : this.state.livestockName
-                    }
+                    name: 'VaccinationScreen',
+                    params: { value: 2 }
                 })
             }
             
@@ -84,34 +96,46 @@ export default class LiveStockStepThreeScreen extends Component {
     nextButton = () => {
         var test =  this.state.livestockName
         if(this.state.livestockName === 'Goat'){
+            // this.props.navigation.navigate({
+            //     name: 'LivestockTableScreen',
+            //     params:{
+            //         _id:this.state._id,
+            //         breedname:this.state.breedname,
+            //         imageFile : this.state.imageFile,
+            //         livestockName : this.state.livestockName
+            //     }
+            // })
             this.props.navigation.navigate({
-                name: 'LivestockTableScreen',
-                params:{
-                    _id:this.state._id,
-                    breedname:this.state.breedname,
-                    imageFile : this.state.imageFile,
-                    livestockName : this.state.livestockName
-                }
+                name: 'VaccinationScreen',
+                params: { value: 0 }
             })
         }else if(this.state.livestockName === test){
+            // this.props.navigation.navigate({
+            //     name: 'PultryTableScreen',
+            //     params:{
+            //         _id:this.state._id,
+            //         breedname:this.state.breedname,
+            //         imageFile : this.state.imageFile,
+            //         livestockName : this.state.livestockName
+            //     }
+            // })
             this.props.navigation.navigate({
-                name: 'PultryTableScreen',
-                params:{
-                    _id:this.state._id,
-                    breedname:this.state.breedname,
-                    imageFile : this.state.imageFile,
-                    livestockName : this.state.livestockName
-                }
+                name: 'VaccinationScreen',
+                params: { value: 1 }
             })
         }else if(this.state.livestockName === 'Pig'){
+            // this.props.navigation.navigate({
+            //     name: 'PigTableScreen',
+            //     params:{
+            //         _id:this.state._id,
+            //         breedname:this.state.breedname,
+            //         imageFile : this.state.imageFile,
+            //         livestockName : this.state.livestockName
+            //     }
+            // })
             this.props.navigation.navigate({
-                name: 'PigTableScreen',
-                params:{
-                    _id:this.state._id,
-                    breedname:this.state.breedname,
-                    imageFile : this.state.imageFile,
-                    livestockName : this.state.livestockName
-                }
+                name: 'VaccinationScreen',
+                params: { value: 2 }
             })
         }
     }

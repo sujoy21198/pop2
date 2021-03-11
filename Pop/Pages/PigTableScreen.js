@@ -88,14 +88,14 @@ export default class PigTableScreen extends Component {
 
     }
     next = () => {
-        // this.props.navigation.reset({
-        //     index: 0,
-        //     routes: [{ name: "DashBoardScreen" }]
-        // })
-        this.props.navigation.navigate({
-            name: 'VaccinationScreen',
-            params: { value: 2 }
+        this.props.navigation.reset({
+            index: 0,
+            routes: [{ name: "DashBoardScreen" }]
         })
+        // this.props.navigation.navigate({
+        //     name: 'VaccinationScreen',
+        //     params: { value: 2 }
+        // })
     }
     render() {
         var tableHeading = []
