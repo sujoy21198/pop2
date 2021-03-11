@@ -226,7 +226,7 @@ export default class LiveStockStepThreeScreen extends Component {
                         <View style={{backgroundColor:"white",height:heightToDp("54.5%"),alignSelf:'center',width:widthToDp("90%"), marginTop: heightToDp('2%'),borderBottomLeftRadius:10,borderBottomRightRadius:10}}>
                             <View style={{}}>
                             <Image
-                            source={{uri:DataAccess.BaseUrl+"app-property/uploads/livestocks/"+this.state.imageFile}}
+                            source={{uri:DataAccess.BaseUrl+"app-property/uploads/livestocks/breeds/"+this.state.imageFile}}
                             style={{height:heightToDp("15%"),width:widthToDp("80%"),alignSelf:'center',marginTop:heightToDp("1%"),borderRadius:10}}
                             />
                             </View>
