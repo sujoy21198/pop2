@@ -82,7 +82,7 @@ export default class DashBoardScreen extends Component {
             })
         }else if(data === LanguageChange.importantLinks){
             this.props.navigation.navigate({
-                name:"ImportantLinksSubCategoryScreen"
+                name:"ImportantLinksScreen"
             })
         }
     }

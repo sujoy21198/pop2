@@ -38,7 +38,7 @@ export default class ImportantLinksSubCategoryScreen extends Component {
             languages: []
         }
         this.state.languages = Languages
-        //alert(this.state.value)
+        this.state.value = this.props.route.params.value
     }
 
     componentDidMount() {
@@ -76,7 +76,8 @@ export default class ImportantLinksSubCategoryScreen extends Component {
             let parsed = JSON.parse(user);
             var specificObject = parsed.find((i) => i.username === username)
             var descri = specificObject.importantLinks
-            console.log(specificObject.importantLinks)
+            var filter = descri.find((i) => i.type === this.state.value)
+            console.log(filter)
         } catch (error) {
             console.log(error)
         }
