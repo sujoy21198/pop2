@@ -88,6 +88,10 @@ export default class DashBoardScreen extends Component {
             this.props.navigation.navigate({
                 name:"ContactScreen"
             })
+        }else if(data === LanguageChange.moneyManager){
+            this.props.navigation.navigate({
+                name:"MoneyManagerScreen"
+            })
         }
     }
     render() {

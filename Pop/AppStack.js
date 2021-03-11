@@ -55,6 +55,8 @@ import VegetableVendingFirstTableScreen from './Pages/VegetableVendingFirstTable
 import VegetableVendingSecondTableScreen from './Pages/VegetableVendingSecondTableScreen'
 import SmallGroceryShopFirstTableScreen from './Pages/SmallGroceryShopFirstTableScreen'
 import SmallGroceryShopSecondTableScreen from './Pages/SmallGroceryShopSecondTableScreen'
+import MoneyManagerScreen from './Pages/MoneyManagerScreen'
+import AllTransactionScreen from './Pages/AllTransactionScreen'
 
 const Stack = createStackNavigator();
 
@@ -114,6 +116,8 @@ function AppStack(){
                 <Stack.Screen name="VegetableVendingSecondTableScreen" component={VegetableVendingSecondTableScreen} options={{ headerShown: false }}/>
                 <Stack.Screen name="SmallGroceryShopFirstTableScreen" component={SmallGroceryShopFirstTableScreen} options={{ headerShown: false }}/>
                 <Stack.Screen name="SmallGroceryShopSecondTableScreen" component={SmallGroceryShopSecondTableScreen}/>
+                <Stack.Screen name="MoneyManagerScreen" component={MoneyManagerScreen}/>
+                <Stack.Screen name="AllTransactionScreen" component={AllTransactionScreen}/>
             </Stack.Navigator>
         </NavigationContainer>
     );
