@@ -90,19 +90,19 @@ export default class SmallGroceryShopFirstTableScreen extends Component {
     }
 
     next = () => {
-        this.props.navigation.reset({
-            index: 0,
-            routes: [{ name: "DashBoardScreen" }]
-        })
-        // this.props.navigation.navigate({
-        //     name: 'SmallGroceryShopSecondTableScreen',
-        //     params: {
-        //         _id: this.state._id,
-        //         breedname: this.state.breedname,
-        //         imageFile: this.state.imageFile,
-        //         livestockName: this.state.livestockName
-        //     }
+        // this.props.navigation.reset({
+        //     index: 0,
+        //     routes: [{ name: "DashBoardScreen" }]
         // })
+        this.props.navigation.navigate({
+            name: 'SmallGroceryShopSecondTableScreen',
+            params: {
+                _id: this.state._id,
+                breedname: this.state.breedname,
+                imageFile: this.state.imageFile,
+                livestockName: this.state.livestockName
+            }
+        })
         // if (this.state.value === 0) {
         //     this.props.navigation.navigate({
         //         name: 'LivestockTableScreen',

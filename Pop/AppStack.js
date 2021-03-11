@@ -54,6 +54,7 @@ import DryFishSellingSecondTableScreen from './Pages/DryFishSellingSecondTableSc
 import VegetableVendingFirstTableScreen from './Pages/VegetableVendingFirstTableScreen'
 import VegetableVendingSecondTableScreen from './Pages/VegetableVendingSecondTableScreen'
 import SmallGroceryShopFirstTableScreen from './Pages/SmallGroceryShopFirstTableScreen'
+import SmallGroceryShopSecondTableScreen from './Pages/SmallGroceryShopSecondTableScreen'
 
 const Stack = createStackNavigator();
 
@@ -112,6 +113,7 @@ function AppStack(){
                 <Stack.Screen name="VegetableVendingFirstTableScreen" component={VegetableVendingFirstTableScreen} options={{ headerShown: false }}/>
                 <Stack.Screen name="VegetableVendingSecondTableScreen" component={VegetableVendingSecondTableScreen} options={{ headerShown: false }}/>
                 <Stack.Screen name="SmallGroceryShopFirstTableScreen" component={SmallGroceryShopFirstTableScreen} options={{ headerShown: false }}/>
+                <Stack.Screen name="SmallGroceryShopSecondTableScreen" component={SmallGroceryShopSecondTableScreen}/>
             </Stack.Navigator>
         </NavigationContainer>
     );
