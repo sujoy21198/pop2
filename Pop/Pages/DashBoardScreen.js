@@ -84,6 +84,10 @@ export default class DashBoardScreen extends Component {
             this.props.navigation.navigate({
                 name:"ImportantLinksScreen"
             })
+        }else if(data === LanguageChange.contact){
+            this.props.navigation.navigate({
+                name:"ContactScreen"
+            })
         }
     }
     render() {

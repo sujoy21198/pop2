@@ -43,6 +43,7 @@ import BreedNewScreen from './Pages/BreedNewScreen'
 import LivestockTableScreen from './Pages/LivestockTableScreen'
 import PigTableScreen from './Pages/PigTableScreen'
 import PultryTableScreen from './Pages/PultryTableScreen'
+import ContactScreen from './Pages/ContactScreen'
 
 const Stack = createStackNavigator();
 
@@ -90,6 +91,7 @@ function AppStack(){
                 <Stack.Screen name="LivestockTableScreen" component={LivestockTableScreen}/>
                 <Stack.Screen name="PigTableScreen" component={PigTableScreen}/>
                 <Stack.Screen name="PultryTableScreen" component={PultryTableScreen}/>
+                <Stack.Screen name="ContactScreen" component={ContactScreen}/>
             </Stack.Navigator>
         </NavigationContainer>
     );
