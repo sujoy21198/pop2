@@ -77,7 +77,7 @@ export default class DryFishScreen extends Component {
 
             var descri = specificObject.dryFish[this.state.pageCounter]
             this.setState({ screensData: specificObject.dryFish[this.state.pageCounter] })
-            console.log(specificObject.dryFish[3])
+            console.log(specificObject)
         } catch (error) {
             console.log(error)
         }

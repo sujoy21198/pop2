@@ -53,6 +53,7 @@ import DryFishSellingFirstTable from './Pages/DryFishSellingFirstTable'
 import DryFishSellingSecondTableScreen from './Pages/DryFishSellingSecondTableScreen'
 import VegetableVendingFirstTableScreen from './Pages/VegetableVendingFirstTableScreen'
 import VegetableVendingSecondTableScreen from './Pages/VegetableVendingSecondTableScreen'
+import SmallGroceryShopFirstTableScreen from './Pages/SmallGroceryShopFirstTableScreen'
 
 const Stack = createStackNavigator();
 
@@ -60,56 +61,57 @@ function AppStack(){
     return(
         <NavigationContainer>
             <Stack.Navigator>
-                <Stack.Screen name="LanguageScreen" component={LanguageScreen}/>
-                <Stack.Screen name="RegistrationScreen" component={RegistrationScreen}/>
-                <Stack.Screen name="SigninScreen" component={SigninScreen}/>
-                <Stack.Screen name="DashBoardScreen" component={DashBoardScreen}/>
-                <Stack.Screen name="NotificationsScreen" component={NotificationsScreen}/>
-                <Stack.Screen name="NotificationDetailsScreen" component={NotificationDetailsScreen}/>
-                <Stack.Screen name="KnowledgeCenterScreen" component={KnowledgeCenterScreen}/>
-                <Stack.Screen name="CropsScreen" component={CropsScreen}/>
-                <Stack.Screen name="LandTypeScreen" component={LandTypeScreen}/>
-                <Stack.Screen name="AnalysisScreen" component={AnalysisScreen}/>
-                <Stack.Screen name="StepOneScreen" component={StepOneScreen}/>
-                <Stack.Screen name="StepTwoScreen" component={StepTwoScreen}/>
-                <Stack.Screen name="StepThreeScreen" component={StepThreeScreen}/>
-                <Stack.Screen name="StepFourScreen" component={StepFourScreen}/>
-                <Stack.Screen name="StepFiveScreen" component={StepFiveScreen}/>
-                <Stack.Screen name="StepSixScreen" component={StepSixScreen}/>
-                <Stack.Screen name="StepSevenScreen" component={StepSevenScreen}/>
-                <Stack.Screen name="StepEightScreen" component={StepEightScreen}/>
-                <Stack.Screen name="ActualCultivationCostScreen" component={ActualCultivationCostScreen}/>
-                <Stack.Screen name="CostBenifitAnalysisScreen" component={CostBenifitAnalysisScreen}/>
-                <Stack.Screen name="LiveStockScreen" component={LiveStockScreen}/>
-                <Stack.Screen name="IncomeScreen" component={IncomeScreen} />
-                <Stack.Screen name="GeneralSettingsScreen" component={GeneralSettingsScreen}/>
-                <Stack.Screen name="BreedScreen" component={BreedScreen}/>
-                <Stack.Screen name="SelectFarmingAreaScreen" component={SelectFarmingAreaScreen}/>
-                <Stack.Screen name="ImportantLinksScreen" component={ImportantLinksScreen}/>
-                <Stack.Screen name="ImportantLinksSubCategoryScreen" component={ImportantLinksSubCategoryScreen}/>
-                <Stack.Screen name="BreedDescriptionScreen" component={BreedDescriptionScreen}/>
-                <Stack.Screen name="PatchScreen" component={PatchScreen}/>
-                <Stack.Screen name="LiveStockEnterQuantityScreen" component={LiveStockEnterQuantityScreen}/>
-                <Stack.Screen name="LiveStockExpectedProfitAnalysisScreen" component={LiveStockExpectedProfitAnalysisScreen}/>
-                <Stack.Screen name="ImportantLinksDetailsScreen" component={ImportantLinksDetailsScreen}/>
-                <Stack.Screen name="NutritionGardenScreen" component={NutritionGardenScreen}/>
-                <Stack.Screen name="NutritionGardenDetailsScreen" component={NutritionGardenDetailsScreen}/>
-                <Stack.Screen name="LiveStockStepTwoScreen" component={LiveStockStepTwoScreen}/>
-                <Stack.Screen name="LiveStockStepThreeScreen" component={LiveStockStepThreeScreen}/>
-                <Stack.Screen name="BreedNewScreen" component={BreedNewScreen}/>
-                <Stack.Screen name="LivestockTableScreen" component={LivestockTableScreen}/>
-                <Stack.Screen name="PigTableScreen" component={PigTableScreen}/>
-                <Stack.Screen name="PultryTableScreen" component={PultryTableScreen}/>
-                <Stack.Screen name="ContactScreen" component={ContactScreen}/>
-                <Stack.Screen name="SmallBusinessScreen" component={SmallBusinessScreen}/>
-                <Stack.Screen name="VaccinationScreen" component={VaccinationScreen}/>
-                <Stack.Screen name="DryFishScreen" component={DryFishScreen}/>
-                <Stack.Screen name="VegetableVendingScreen" component={VegetableVendingScreen}/>
-                <Stack.Screen name="SmallGroceryShopScreen" component={SmallGroceryShopScreen}/>
-                <Stack.Screen name="DryFishSellingFirstTable" component={DryFishSellingFirstTable}/>
-                <Stack.Screen name="DryFishSellingSecondTableScreen" component={DryFishSellingSecondTableScreen}/>
-                <Stack.Screen name="VegetableVendingFirstTableScreen" component={VegetableVendingFirstTableScreen}/>
-                <Stack.Screen name="VegetableVendingSecondTableScreen" component={VegetableVendingSecondTableScreen}/>
+                <Stack.Screen name="LanguageScreen" component={LanguageScreen} options={{ headerShown: false }}/>
+                <Stack.Screen name="RegistrationScreen" component={RegistrationScreen} options={{ headerShown: false }}/>
+                <Stack.Screen name="SigninScreen" component={SigninScreen} options={{ headerShown: false }}/>
+                <Stack.Screen name="DashBoardScreen" component={DashBoardScreen} options={{ headerShown: false }}/>
+                <Stack.Screen name="NotificationsScreen" component={NotificationsScreen} options={{ headerShown: false }}/>
+                <Stack.Screen name="NotificationDetailsScreen" component={NotificationDetailsScreen} options={{ headerShown: false }}/>
+                <Stack.Screen name="KnowledgeCenterScreen" component={KnowledgeCenterScreen} options={{ headerShown: false }}/>
+                <Stack.Screen name="CropsScreen" component={CropsScreen} options={{ headerShown: false }}/>
+                <Stack.Screen name="LandTypeScreen" component={LandTypeScreen} options={{ headerShown: false }}/>
+                <Stack.Screen name="AnalysisScreen" component={AnalysisScreen} options={{ headerShown: false }}/>
+                <Stack.Screen name="StepOneScreen" component={StepOneScreen} options={{ headerShown: false }}/>
+                <Stack.Screen name="StepTwoScreen" component={StepTwoScreen} options={{ headerShown: false }}/>
+                <Stack.Screen name="StepThreeScreen" component={StepThreeScreen} options={{ headerShown: false }}/>
+                <Stack.Screen name="StepFourScreen" component={StepFourScreen} options={{ headerShown: false }}/>
+                <Stack.Screen name="StepFiveScreen" component={StepFiveScreen} options={{ headerShown: false }}/>
+                <Stack.Screen name="StepSixScreen" component={StepSixScreen} options={{ headerShown: false }}/>
+                <Stack.Screen name="StepSevenScreen" component={StepSevenScreen} options={{ headerShown: false }}/>
+                <Stack.Screen name="StepEightScreen" component={StepEightScreen} options={{ headerShown: false }}/>
+                <Stack.Screen name="ActualCultivationCostScreen" component={ActualCultivationCostScreen} options={{ headerShown: false }}/>
+                <Stack.Screen name="CostBenifitAnalysisScreen" component={CostBenifitAnalysisScreen} options={{ headerShown: false }}/>
+                <Stack.Screen name="LiveStockScreen" component={LiveStockScreen} options={{ headerShown: false }}/>
+                <Stack.Screen name="IncomeScreen" component={IncomeScreen} options={{ headerShown: false }}/>
+                <Stack.Screen name="GeneralSettingsScreen" component={GeneralSettingsScreen} options={{ headerShown: false }}/>
+                <Stack.Screen name="BreedScreen" component={BreedScreen} options={{ headerShown: false }}/>
+                <Stack.Screen name="SelectFarmingAreaScreen" component={SelectFarmingAreaScreen} options={{ headerShown: false }}/>
+                <Stack.Screen name="ImportantLinksScreen" component={ImportantLinksScreen} options={{ headerShown: false }}/>
+                <Stack.Screen name="ImportantLinksSubCategoryScreen" component={ImportantLinksSubCategoryScreen} options={{ headerShown: false }}/>
+                <Stack.Screen name="BreedDescriptionScreen" component={BreedDescriptionScreen} options={{ headerShown: false }}/>
+                <Stack.Screen name="PatchScreen" component={PatchScreen} options={{ headerShown: false }}/>
+                <Stack.Screen name="LiveStockEnterQuantityScreen" component={LiveStockEnterQuantityScreen} options={{ headerShown: false }}/>
+                <Stack.Screen name="LiveStockExpectedProfitAnalysisScreen" component={LiveStockExpectedProfitAnalysisScreen} options={{ headerShown: false }}/>
+                <Stack.Screen name="ImportantLinksDetailsScreen" component={ImportantLinksDetailsScreen} options={{ headerShown: false }}/>
+                <Stack.Screen name="NutritionGardenScreen" component={NutritionGardenScreen} options={{ headerShown: false }}/>
+                <Stack.Screen name="NutritionGardenDetailsScreen" component={NutritionGardenDetailsScreen} options={{ headerShown: false }}/>
+                <Stack.Screen name="LiveStockStepTwoScreen" component={LiveStockStepTwoScreen} options={{ headerShown: false }}/>
+                <Stack.Screen name="LiveStockStepThreeScreen" component={LiveStockStepThreeScreen} options={{ headerShown: false }}/>
+                <Stack.Screen name="BreedNewScreen" component={BreedNewScreen} options={{ headerShown: false }}/>
+                <Stack.Screen name="LivestockTableScreen" component={LivestockTableScreen} options={{ headerShown: false }}/>
+                <Stack.Screen name="PigTableScreen" component={PigTableScreen} options={{ headerShown: false }}/>
+                <Stack.Screen name="PultryTableScreen" component={PultryTableScreen} options={{ headerShown: false }}/>
+                <Stack.Screen name="ContactScreen" component={ContactScreen} options={{ headerShown: false }}/>
+                <Stack.Screen name="SmallBusinessScreen" component={SmallBusinessScreen} options={{ headerShown: false }}/>
+                <Stack.Screen name="VaccinationScreen" component={VaccinationScreen} options={{ headerShown: false }}/>
+                <Stack.Screen name="DryFishScreen" component={DryFishScreen} options={{ headerShown: false }}/>
+                <Stack.Screen name="VegetableVendingScreen" component={VegetableVendingScreen} options={{ headerShown: false }}/>
+                <Stack.Screen name="SmallGroceryShopScreen" component={SmallGroceryShopScreen} options={{ headerShown: false }}/>
+                <Stack.Screen name="DryFishSellingFirstTable" component={DryFishSellingFirstTable} options={{ headerShown: false }}/>
+                <Stack.Screen name="DryFishSellingSecondTableScreen" component={DryFishSellingSecondTableScreen} options={{ headerShown: false }}/>
+                <Stack.Screen name="VegetableVendingFirstTableScreen" component={VegetableVendingFirstTableScreen} options={{ headerShown: false }}/>
+                <Stack.Screen name="VegetableVendingSecondTableScreen" component={VegetableVendingSecondTableScreen} options={{ headerShown: false }}/>
+                <Stack.Screen name="SmallGroceryShopFirstTableScreen" component={SmallGroceryShopFirstTableScreen} options={{ headerShown: false }}/>
             </Stack.Navigator>
         </NavigationContainer>
     );
