@@ -19,7 +19,7 @@ const data = [
 ]
 
 export default class KnowledgeCenterScreen extends Component {
-
+    
     constructor(props){
         super(props)
         this.state={

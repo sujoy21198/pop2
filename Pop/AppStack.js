@@ -46,6 +46,9 @@ import PultryTableScreen from './Pages/PultryTableScreen'
 import ContactScreen from './Pages/ContactScreen'
 import SmallBusinessScreen from './Pages/SmallBusinessScreen'
 import VaccinationScreen from './Pages/VaccinationScreen'
+import DryFishScreen from './Pages/DryFishScreen'
+import VegetableVendingScreen from './Pages/VegetableVendingScreen'
+import SmallGroceryShopScreen from './Pages/SmallGroceryShopScreen'
 
 const Stack = createStackNavigator();
 
@@ -96,6 +99,9 @@ function AppStack(){
                 <Stack.Screen name="ContactScreen" component={ContactScreen}/>
                 <Stack.Screen name="SmallBusinessScreen" component={SmallBusinessScreen}/>
                 <Stack.Screen name="VaccinationScreen" component={VaccinationScreen}/>
+                <Stack.Screen name="DryFishScreen" component={DryFishScreen}/>
+                <Stack.Screen name="VegetableVendingScreen" component={VegetableVendingScreen}/>
+                <Stack.Screen name="SmallGroceryShopScreen" component={SmallGroceryShopScreen}/>
             </Stack.Navigator>
         </NavigationContainer>
     );

@@ -33,9 +33,9 @@ export default class SmallBusinessScreen extends Component {
 
     changeLanguage = (id) => {
         //alert(id)
-        AsyncStorage.setItem('language',id)
+        AsyncStorage.setItem('language', id)
         LanguageChange.setLanguage(id)
-        this.setState({data : data})
+        this.setState({ data: data })
         this.state.data[0].name = LanguageChange.wash
         this.state.data[1].name = LanguageChange.health
         this.state.data[2].name = LanguageChange.covid
@@ -43,30 +43,51 @@ export default class SmallBusinessScreen extends Component {
     }
 
 
-    selectLandType = (data) => {
-        if (data === LanguageChange.wash) {
+    selectCategory = (data) => {
+        if (data === 'VEGETABLE VENDING') {
             this.props.navigation.navigate({
-                name: 'ImportantLinksSubCategoryScreen',
+                name: 'VegetableVendingScreen',
                 params: { value: 0 }
             })
-        } else if (data === LanguageChange.health) {
+        } else if (data === 'SMALL GROCERY SHOP') {
             this.props.navigation.navigate({
-                name: 'ImportantLinksSubCategoryScreen',
-                params: { value: 1 }
+                name: 'SmallGroceryShopScreen',
+                params: { value: 0 }
             })
-        } else if (data === LanguageChange.covid) {
+        } else if (data === 'DRY FISH SELLING') {
             this.props.navigation.navigate({
-                name: 'ImportantLinksSubCategoryScreen',
-                params: { value: 2 }
-            })
-        } else if (data === LanguageChange.govtSchemes) {
-            this.props.navigation.navigate({
-                name: 'ImportantLinksSubCategoryScreen',
-                params: { value: 3 }
+                name: 'DryFishScreen',
+                params: { value: 0 }
             })
         }
+
     }
-    
+
+
+    // selectLandType = (data) => {
+    //     if (data === LanguageChange.wash) {
+    //         this.props.navigation.navigate({
+    //             name: 'ImportantLinksSubCategoryScreen',
+    //             params: { value: 0 }
+    //         })
+    //     } else if (data === LanguageChange.health) {
+    //         this.props.navigation.navigate({
+    //             name: 'ImportantLinksSubCategoryScreen',
+    //             params: { value: 1 }
+    //         })
+    //     } else if (data === LanguageChange.covid) {
+    //         this.props.navigation.navigate({
+    //             name: 'ImportantLinksSubCategoryScreen',
+    //             params: { value: 2 }
+    //         })
+    //     } else if (data === LanguageChange.govtSchemes) {
+    //         this.props.navigation.navigate({
+    //             name: 'ImportantLinksSubCategoryScreen',
+    //             params: { value: 3 }
+    //         })
+    //     }
+    // }
+
     render() {
         return (
             <View style={{ backgroundColor: BaseColor.BackgroundColor }}>
@@ -156,7 +177,7 @@ export default class SmallBusinessScreen extends Component {
                         data={data}
                         bouncesZoom={true}
                         renderItem={({ item }) => (
-                            <TouchableOpacity onPress={() => this.selectLandType(item.name)}>
+                            <TouchableOpacity onPress={() => this.selectCategory(item.name)}>
                                 <View style={{ backgroundColor: BaseColor.Red, width: widthToDp("47%"), height: heightToDp("30%"), elevation: 10, borderRadius: 10 }}>
                                     <Text style={{ color: "#fff", fontSize: widthToDp("5%"), marginLeft: widthToDp("5%"), marginTop: heightToDp("0.4%"), fontFamily: 'Oswald-Medium' }}>{item.name}</Text>
                                     <Image

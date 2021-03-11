@@ -62,7 +62,7 @@ export default class SigninScreen extends Component {
         var allusername = await AsyncStorage.getItem('username')
         var token = await AsyncStorage.getItem('token')
         var encodedUsername = base64.encode(this.state.username)
-        var cropObjectsToBeSaved, cropStepsObjectsToBeSaved, cropsMaterialsObjectsToBeSaved, livestockObjectsToBeSaved, liveStockStepMaterialsObjectsToBeSaved, liveStockBreedsObjectsToBeSaved, breedCategoriesObjectsToBeSaved, importantLinksObjectsToBeSaved, nutrationGradenObjectsToBeSaved, livestockStepObjectsToBeSaved,vaccinationToBeSaved,contactListToBeSaved;
+        var cropObjectsToBeSaved, cropStepsObjectsToBeSaved, cropsMaterialsObjectsToBeSaved, livestockObjectsToBeSaved, liveStockStepMaterialsObjectsToBeSaved, liveStockBreedsObjectsToBeSaved, breedCategoriesObjectsToBeSaved, importantLinksObjectsToBeSaved, nutrationGradenObjectsToBeSaved, livestockStepObjectsToBeSaved,vaccinationToBeSaved,contactListToBeSaved,dryFishObjectsToBeSaved,vegetableVendingObjectsToBeSaved,smallGroceryShopToBeSaved;
         await axios.get("http://161.35.122.165:3020/api/v1/get-all-data", {
             headers: {
                 'Content-type': "application/json",
@@ -107,11 +107,20 @@ export default class SigninScreen extends Component {
 
             var contactList = response.data.contactList
             contactListToBeSaved = contactList
+
+            var dryFish = response.data.dryFish
+            dryFishObjectsToBeSaved = dryFish
+
+            var vegetableVending = response.data.vegetableVending
+            vegetableVendingObjectsToBeSaved = vegetableVending
+
+            var smallGroceryShop = response.data.smallGroceryShop
+            smallGroceryShopToBeSaved = smallGroceryShop
         }).catch(function (error) {
             console.log(error)
         })
 
-        const offlineDataToBeSaved = { 'username': this.state.username, 'crops': cropObjectsToBeSaved, 'cropSteps': cropStepsObjectsToBeSaved, 'cropsMaterials': cropsMaterialsObjectsToBeSaved, 'livestock': livestockObjectsToBeSaved, 'livestockStep': livestockStepObjectsToBeSaved,'liveStockStepMaterials': liveStockStepMaterialsObjectsToBeSaved, 'liveStockBreeds': liveStockBreedsObjectsToBeSaved, 'breedCategories': breedCategoriesObjectsToBeSaved, 'importantLinks': importantLinksObjectsToBeSaved, 'nutrationGraden': nutrationGradenObjectsToBeSaved , 'vaccination': vaccinationToBeSaved , 'contactList': contactListToBeSaved }
+        const offlineDataToBeSaved = { 'username': this.state.username, 'crops': cropObjectsToBeSaved, 'cropSteps': cropStepsObjectsToBeSaved, 'cropsMaterials': cropsMaterialsObjectsToBeSaved, 'livestock': livestockObjectsToBeSaved, 'livestockStep': livestockStepObjectsToBeSaved,'liveStockStepMaterials': liveStockStepMaterialsObjectsToBeSaved, 'liveStockBreeds': liveStockBreedsObjectsToBeSaved, 'breedCategories': breedCategoriesObjectsToBeSaved, 'importantLinks': importantLinksObjectsToBeSaved, 'nutrationGraden': nutrationGradenObjectsToBeSaved , 'vaccination': vaccinationToBeSaved , 'contactList': contactListToBeSaved , 'dryFish':dryFishObjectsToBeSaved , 'vegetableVending':vegetableVendingObjectsToBeSaved , 'smallGroceryShop' : smallGroceryShopToBeSaved }
         // offlineDataToBeSaved.crops.push(cropObjectsToBeSaved)
         // offlineDataToBeSaved.cropsMaterials.push(cropsMaterialsObjectsToBeSaved)
         // offlineDataToBeSaved.livestock.push(livestockObjectsToBeSaved)
