@@ -65,6 +65,10 @@ export default class KnowledgeCenterScreen extends Component {
             this.props.navigation.navigate({
                 name:"NutritionGardenScreen"
             })
+        }else if(data === LanguageChange.smallBusiness){
+            this.props.navigation.navigate({
+                name:"SmallBusinessScreen"
+            })
         }
     }
 
