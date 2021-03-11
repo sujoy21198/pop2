@@ -205,7 +205,7 @@ export default class BreedScreen extends Component {
                                     <Text style={{color: "#fff", fontSize: widthToDp("5%"),marginLeft:widthToDp("5%"), marginTop: heightToDp("0.4%"),fontFamily:'Oswald-Medium'}}>{item.name}</Text>
                                     <Image
                                 style={{ width: widthToDp("47%"), height: heightToDp("25%") ,borderBottomLeftRadius:10,borderBottomRightRadius:10, marginTop: heightToDp("1%")}}
-                                source={{ uri: DataAccess.BaseUrl+"app-property/uploads/livestocks/"+item.imageFile}}
+                                source={{ uri: DataAccess.BaseUrl+"app-property/uploads/livestocks/breeds/"+item.imageFile}}
                                 />
                                 </View>
                             </TouchableOpacity>

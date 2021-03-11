@@ -49,6 +49,8 @@ import VaccinationScreen from './Pages/VaccinationScreen'
 import DryFishScreen from './Pages/DryFishScreen'
 import VegetableVendingScreen from './Pages/VegetableVendingScreen'
 import SmallGroceryShopScreen from './Pages/SmallGroceryShopScreen'
+import DryFishSellingFirstTable from './Pages/DryFishSellingFirstTable'
+import DryFishSellingSecondTableScreen from './Pages/DryFishSellingSecondTableScreen'
 
 const Stack = createStackNavigator();
 
@@ -102,6 +104,8 @@ function AppStack(){
                 <Stack.Screen name="DryFishScreen" component={DryFishScreen}/>
                 <Stack.Screen name="VegetableVendingScreen" component={VegetableVendingScreen}/>
                 <Stack.Screen name="SmallGroceryShopScreen" component={SmallGroceryShopScreen}/>
+                <Stack.Screen name="DryFishSellingFirstTable" component={DryFishSellingFirstTable}/>
+                <Stack.Screen name="DryFishSellingSecondTableScreen" component={DryFishSellingSecondTableScreen}/>
             </Stack.Navigator>
         </NavigationContainer>
     );
