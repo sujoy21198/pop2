@@ -76,13 +76,13 @@ export default class ImportantLinksSubCategoryScreen extends Component {
             let parsed = JSON.parse(user);
             var specificObject = parsed.find((i) => i.username === username)
             var descri = specificObject.importantLinks
-            var filter = descri.find((i) => i.type === this.state.value)
+            var filter = descri.filter((i) => i.type === this.state.value)
             console.log(filter)
         } catch (error) {
             console.log(error)
         }
 
-        this.setState({ data: descri })
+        this.setState({ data: filter })
     }
 
 

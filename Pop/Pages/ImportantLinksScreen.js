@@ -13,10 +13,10 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 
 
 const data = [
-    { name: 'WASH', code: 'https://shramajeewiki.com/images/English/00214136.jpg' },
-    { name: 'HEALTH', code: 'https://timesofindia.indiatimes.com/thumb/msid-60012970,imgsize-2640154,width-400,resizemode-4/60012970.jpg' },
-    { name: 'COVID', code: 'https://www.biggovernment.news/wp-content/uploads/sites/59/2017/06/farmer-plow-field.jpg' },
-    { name: 'GOVT SCHEMES', code: 'https://shramajeewiki.com/images/English/00214136.jpg' }
+    { name: 'WASH', code: 'https://files.qatarliving.com/styles/image_h_xlarge_1600x900/s3/post/2020/10/15/Global-Handwashing-day-2020-qatar-living.jpg?itok=xGwcmQkE' },
+    { name: 'HEALTH', code: 'https://drmehtablog.com/wp-content/uploads/2016/01/Cardiology-1.jpg' },
+    { name: 'COVID', code: 'https://www.universiteitleiden.nl/binaries/content/gallery/ul2/main-images/campus-the-hague/bsk/covid---19-afbeelding.jpg' },
+    { name: 'GOVT SCHEMES', code: 'https://empiawards.files.wordpress.com/2014/05/indian-health-care.jpg' }
 ]
 
 export default class ImportantLinksScreen extends Component {
