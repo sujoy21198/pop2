@@ -7,6 +7,7 @@ import { widthToDp, heightToDp } from '../Responsive'
 import { FlatGrid, SectionGrid } from 'react-native-super-grid'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import DataAccess from '../Core/DataAccess'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 
 
@@ -70,6 +71,31 @@ export default class CostBenifitAnalysisScreen extends Component {
         this.state.profit = income - expense
 
         
+    }
+
+    
+
+    goToHomeScreen = async() => {
+        try{
+            const expenseObject={'type':'expense','category':'Crops','amount':this.state.actualCulCostScreenTotalExpense}
+            const incomeObject ={'type':'income','category':'Crops','amount':this.state.totalincomefromcrop}
+            let username = await AsyncStorage.getItem('username')
+            let user = await AsyncStorage.getItem('user');
+            let parsed = JSON.parse(user);
+            var specificObject = parsed.find((i) => i.username === username)
+            specificObject.moneyManagerData.push(expenseObject)
+            specificObject.moneyManagerData.push(incomeObject)
+            //await AsyncStorage.setItem('user', JSON.stringify(parsed))
+            console.log(specificObject.moneyManagerData)
+        }catch(error){
+            console.log(error)
+        }
+
+        this.props.navigation.reset({
+            index: 0,
+            routes: [{ name: "DashBoardScreen" }]
+        })
+
     }
     render() {
         return (
@@ -241,7 +267,7 @@ export default class CostBenifitAnalysisScreen extends Component {
                                 <Text style={{ fontSize: widthToDp("4%"), color: "#000", marginTop: heightToDp("1.4%"), alignSelf: 'center',fontFamily:'Oswald-Medium' }}>CANCEL</Text>
                             </View>
                         </TouchableOpacity>
-                        <TouchableOpacity onPress={() => this.props.navigation.navigate('DashBoardScreen')}>
+                        <TouchableOpacity onPress={() => this.goToHomeScreen()}>
                             <View style={{ backgroundColor: "#fff", height: heightToDp("6%"), width: widthToDp("30%"), borderRadius: 100, marginLeft: widthToDp("2%"), marginTop: heightToDp("2%") }}>
                                 <Text style={{ fontSize: widthToDp("4%"), color: "#000", marginTop: heightToDp("1.4%"), alignSelf: 'center' ,fontFamily:'Oswald-Medium'}}>DONE</Text>
                             </View>
