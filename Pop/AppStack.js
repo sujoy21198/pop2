@@ -45,6 +45,7 @@ import PigTableScreen from './Pages/PigTableScreen'
 import PultryTableScreen from './Pages/PultryTableScreen'
 import ContactScreen from './Pages/ContactScreen'
 import SmallBusinessScreen from './Pages/SmallBusinessScreen'
+import VaccinationScreen from './Pages/VaccinationScreen'
 
 const Stack = createStackNavigator();
 
@@ -94,6 +95,7 @@ function AppStack(){
                 <Stack.Screen name="PultryTableScreen" component={PultryTableScreen}/>
                 <Stack.Screen name="ContactScreen" component={ContactScreen}/>
                 <Stack.Screen name="SmallBusinessScreen" component={SmallBusinessScreen}/>
+                <Stack.Screen name="VaccinationScreen" component={VaccinationScreen}/>
             </Stack.Navigator>
         </NavigationContainer>
     );

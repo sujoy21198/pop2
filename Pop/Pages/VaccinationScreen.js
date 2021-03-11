@@ -30,76 +30,76 @@ const months = [
 
 const tableHeading = [
     { 'name': 'Items', 'birth': '1st Birth', 'age': '16 months old', 'numbers': '1', 'unitPrice': '4000', 'totalPriceInRupees': '5000' },
-    { 'name': 'Nos', 'birth': '2nd Birth', 'age': '8 months old', 'numbers': '1', 'unitPrice': '4000', 'totalPriceInRupees': '5000' },
-    { 'name': 'Unit Cost', 'birth': '3rd Birth', 'age': 'kid', 'numbers': '1', 'unitPrice': '4000', 'totalPriceInRupees': '5000' },
-    { 'name': 'Total Cost' },
+    { 'name': 'No of vaccines', 'birth': '2nd Birth', 'age': '8 months old', 'numbers': '1', 'unitPrice': '4000', 'totalPriceInRupees': '5000' },
+    { 'name': 'Cost(RS)', 'birth': '3rd Birth', 'age': 'kid', 'numbers': '1', 'unitPrice': '4000', 'totalPriceInRupees': '5000' },
+    { 'name': 'Interval' },
 ]
 
-export default class PigTableScreen extends Component {
+export default class VaccinationScreen extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            numberPigs: '1',
             tableHeading: [],
-            unitCostmotherPig:'2500',
-            unitCostmalePig:'2500',
-            total:'8500',
-            unitCostshedConstruction : '1000',
-            totalCostmotherpig:'2500',
-            totalcostMalePig:'2500',
-            totalCostShedConstruction:'1000',
-            totalCostfeeding:'2000',
-            totalcostVaccine:'500'
+            value: '',
+            vaccine: []
         }
         this.state.tableHeading = tableHeading
+        this.state.value = this.props.route.params.value
+        //alert(this.state.value)
     }
     componentDidMount() {
         this.getVaccinesFromOffline()
     }
     getVaccinesFromOffline = async () => {
         try {
+            var vaccine = []
             let username = await AsyncStorage.getItem('username')
             let user = await AsyncStorage.getItem('offlineData');
             let parsed = JSON.parse(user);
             var specificObject = parsed.find((i) => i.username === username)
-            console.log(specificObject.vaccination)
+            var livestockwisevaccine = specificObject.vaccination.filter((i) => i.type === this.state.value)
+            vaccine = livestockwisevaccine
+            this.setState({ vaccine: vaccine })
+            //console.log(livestockwisevaccine)
         } catch (error) {
             alert(error)
         }
     }
 
-    calculation = (data) => {
-        this.state.numberPigs  = data
-        var unitCostmotherPig = this.state.numberPigs * 2500
-        var unitCostmalePig = this.state.numberPigs * 2500
-        var unitCostshedConstruction = this.state.numberPigs * 1000
-        var totalCostmotherpig = this.state.numberPigs * 2500
-        var totalcostMalePig = this.state.numberPigs * 2500
-        var totalCostShedConstruction = this.state.numberPigs * 1000
-        var total = totalCostmotherpig+totalcostMalePig+totalCostShedConstruction+2000+500
+    // calculation = (data) => {
+    //     this.state.numberhens = data
+    //     var eggQuantity = this.state.eggQuantity * 30
+    //     var birdQuantity = this.state.birdQuantity * 8
+    //     var totalPriceAdultBrids = this.state.totalPriceAdultBrids * 2400
+    //     var totalPriceEggs = this.state.totalPriceEggs * 150
+    //     var total = totalPriceAdultBrids + totalPriceEggs
 
-        this.setState({unitCostmotherPig : unitCostmotherPig})
-        this.setState({unitCostmalePig : unitCostmalePig})
-        this.setState({unitCostshedConstruction : unitCostshedConstruction})
-        this.setState({totalCostmotherpig : totalCostmotherpig})
-        this.setState({totalcostMalePig : totalcostMalePig})
-        this.setState({totalCostShedConstruction : totalCostShedConstruction})
-        this.setState({total : total})
+    //     this.setState({ eggQuantity: eggQuantity })
+    //     this.setState({ birdQuantity: birdQuantity })
+    //     this.setState({ totalPriceAdultBrids: totalPriceAdultBrids })
+    //     this.setState({ totalPriceEggs: totalPriceEggs })
 
+    //     this.setState({ total: total })
+
+    // }
+
+    inputValue = (data) => {
+        var numberofVaccines = []
+        numberofVaccines.concat(data)
+        console.log(numberofVaccines)
     }
+
     next = () => {
-        // this.props.navigation.reset({
-        //     index: 0,
-        //     routes: [{ name: "DashBoardScreen" }]
-        // })
-        this.props.navigation.navigate({
-            name: 'VaccinationScreen',
-            params: { value: 2 }
+        this.props.navigation.reset({
+            index: 0,
+            routes: [{ name: "DashBoardScreen" }]
         })
     }
     render() {
         var tableHeading = []
         tableHeading = this.state.tableHeading
+        var vaccine = []
+        vaccine = this.state.vaccine
         //console.log(tableHeading)
         return (
             <View style={{ backgroundColor: BaseColor.BackgroundColor, flex: 1 }}>
@@ -182,28 +182,28 @@ export default class PigTableScreen extends Component {
                 <View style={{ borderBottomColor: BaseColor.Stroke, borderBottomWidth: 1, marginTop: heightToDp('1.5%'), width: widthToDp("100%") }}></View>
                 <ScrollView>
                     <View style={{ backgroundColor: BaseColor.Red, height: heightToDp("90%"), alignSelf: 'center', width: widthToDp("90%"), borderRadius: 10, marginTop: heightToDp('1.5%') }}>
-                        <Text style={{ color: "#fff", fontSize: widthToDp("5%"), marginLeft: widthToDp("5%"), marginTop: heightToDp("1%"), fontFamily: 'Oswald-Medium' }}>Income from mother pig per year</Text>
+                        <Text style={{ color: "#fff", fontSize: widthToDp("5%"), marginLeft: widthToDp("5%"), marginTop: heightToDp("1%"), fontFamily: 'Oswald-Medium' }}>Immunization cost table </Text>
                         <View style={{ backgroundColor: "white", height: heightToDp("85.5%"), alignSelf: 'center', width: widthToDp("90%"), marginTop: heightToDp('2%'), borderBottomLeftRadius: 10, borderBottomRightRadius: 10 }}>
-                            <View style={{ flexDirection: 'row' }}>
+                            {/* <View style={{ flexDirection: 'row' }}>
                                 <Text style={{ fontSize: widthToDp("5%"), marginLeft: widthToDp("5%"), marginTop: heightToDp("1.5%"), fontFamily: 'Oswald-Medium' }}>Income from </Text>
                                 <Input
                                     keyboardType='number-pad'
-                                    defaultValue={this.state.numberPigs}
+                                    defaultValue={this.state.numberhens}
                                     onChangeText={(data) => this.calculation(data)}
                                     style={{ marginLeft: widthToDp("1%"), fontFamily: 'Oswald-Medium', width: widthToDp("10%"), marginTop: heightToDp("1%"), borderWidth: 1 }}
                                 />
-                                <Text style={{ fontSize: widthToDp("5%"), marginLeft: widthToDp("1%"), marginTop: heightToDp("1.5%"), fontFamily: 'Oswald-Medium', marginRight: widthToDp("20%") }}>mother pigs</Text>
+                                <Text style={{ fontSize: widthToDp("5%"), marginLeft: widthToDp("1%"), marginTop: heightToDp("1.5%"), fontFamily: 'Oswald-Medium', marginRight: widthToDp("20%") }}>hens</Text>
                             </View>
                             <View>
-                                <Text>One mother pig gives birth to 16 to 24 kids per years in an interval of 6 months. Let’s assume 12 pig survived till the year end.</Text>
-                            </View>
+                                <Text>One desi hen gives 50 eggs in a year If a farmer keeps 4 hens, then he will get 200 eggs in a year.</Text>
+                            </View> */}
                             <View style={{ borderWidth: 1, height: heightToDp("8%"), width: widthToDp("83%"), marginLeft: widthToDp("3%"), marginTop: heightToDp("1.5%"), flexDirection: 'row' }}>
                                 {
                                     tableHeading.map((i) => {
                                         return (
                                             <View style={{ width: widthToDp("19%"), marginLeft: widthToDp("1.5%") }}>
 
-                                                <Text style={{marginTop: heightToDp("2%")}}>{i.name}</Text>
+                                                <Text style={{ marginTop: heightToDp("2%") }}>{i.name}</Text>
 
                                             </View>
 
@@ -212,7 +212,7 @@ export default class PigTableScreen extends Component {
                                 }
                             </View>
 
-                            <View style={{ borderWidth: 1, height: heightToDp("40%"), width: widthToDp("83%"), marginLeft: widthToDp("3%"), marginTop: heightToDp("0%") }}>
+                            <View style={{ borderWidth: 1, height: heightToDp("30%"), width: widthToDp("83%"), marginLeft: widthToDp("3%"), marginTop: heightToDp("0%") }}>
                                 {/* {
                                     tableHeading.map((i) => {
                                         return (
@@ -239,12 +239,16 @@ export default class PigTableScreen extends Component {
                                     })
                                 } */}
                                 <View style={{ flexDirection: 'row' }}>
-                                    <View style={{ width: widthToDp("18%"), marginLeft: widthToDp("1.5%") }}>
-                                        <Text style={{ marginTop: heightToDp("2%") }}>Mother Pig(Gilt)</Text>
-                                        <Text style={{ marginTop: heightToDp("2%") }}>Male Pig(Boar)</Text>
-                                        <Text style={{ marginTop: heightToDp("2%") }}>Shed construction</Text>
-                                        <Text style={{ marginTop: heightToDp("2%") }}>Feeding per year</Text>
-                                        <Text style={{ marginTop: heightToDp("2%") }}>Vaccination Per year</Text>
+                                    <View style={{ width: widthToDp("15%"), marginLeft: widthToDp("1.5%") }}>
+                                        {/* <Text style={{ marginTop: heightToDp("2%") }}>Eggs</Text>
+                                        <Text style={{ marginTop: heightToDp("5%") }}>Adult Bird</Text> */}
+                                        {
+                                            vaccine.map((i) => {
+                                                return (
+                                                    <Text style={{ marginBottom: heightToDp("3.5%") }}>{i.item}</Text>
+                                                )
+                                            })
+                                        }
                                     </View>
 
                                     {/* <View style={{ width: widthToDp("17%"), marginLeft: widthToDp("1.5%") }}>
@@ -252,32 +256,59 @@ export default class PigTableScreen extends Component {
                                         <Text style={{ marginTop: heightToDp("2%") }}>8 months old</Text>
                                         <Text style={{ marginTop: heightToDp("2%") }}>kids</Text>
                                     </View> */}
-                                    <View style={{ width: widthToDp("18%"), marginLeft: widthToDp("6%") }}>
-                                        <Text style={{ marginTop: heightToDp("2%") }}>{this.state.numberPigs}</Text>
-                                        <Text style={{ marginTop: heightToDp("5%") }}>{this.state.numberPigs}</Text>
-                                        <Text style={{ marginTop: heightToDp("5%") }}>{this.state.numberPigs}</Text>
-                                        <Text style={{ marginTop: heightToDp("3%") }}>2 (adults)and 12 piglets</Text>
-                                        <Text style={{ marginTop: heightToDp("3%") }}>2 (adults)and 12 piglets</Text>
+                                    <View style={{ width: widthToDp("18%"), marginLeft: widthToDp("6%"), height: heightToDp("30%") }}>
+                                        {/* <Text style={{ marginTop: heightToDp("2%") }}>{this.state.eggQuantity}</Text>
+                                        <Text style={{ marginTop: heightToDp("5%") }}>{this.state.birdQuantity}</Text> */}
+                                        {
+                                            vaccine.map((i) => {
+                                                return (
+                                                    <View style={{ height: heightToDp("6%") }}>
+                                                        {/* <Text style={{ marginBottom: heightToDp("1.5%") }}>{i.noOfTime}</Text> */}
+                                                        <Input
+                                                            style={{ borderWidth: 1 }}
+                                                            onChangeText={(data) => this.inputValue(data)}
+                                                            keyboardType="number-pad"
+                                                        />
+                                                    </View>
+
+                                                )
+                                            })
+                                        }
+
                                     </View>
                                     <View style={{ width: widthToDp("14%"), marginLeft: widthToDp("1.5%") }}>
-                                        <Text style={{ marginTop: heightToDp("2%") }}>{this.state.unitCostmotherPig}</Text>
-                                        <Text style={{ marginTop: heightToDp("5%") }}>{this.state.unitCostmalePig}</Text>
-                                        <Text style={{ marginTop: heightToDp("5%") }}>{this.state.unitCostshedConstruction}</Text>
-                                        <Text style={{ marginTop: heightToDp("5%") }}>LS</Text>
-                                        <Text style={{ marginTop: heightToDp("5%") }}>LS</Text>
+                                        {/* <Text style={{ marginTop: heightToDp("2%") }}>Rs 5.00 per piece</Text>
+                                        <Text style={{ marginTop: heightToDp("2%") }}>Rs 300 per bird</Text> */}
+                                        {
+                                            vaccine.map((i) => {
+                                                return (
+                                                    <Text style={{ marginBottom: heightToDp("4%"), marginLeft: widthToDp("5%") }}>{i.cost}</Text>
+                                                )
+                                            })
+                                        }
+
                                     </View>
-                                    <View style={{ width: widthToDp("14%"), marginLeft: widthToDp("1.5%") }}>
-                                        <Text style={{ marginTop: heightToDp("2%") }}>Rs {this.state.totalCostmotherpig}</Text>
-                                        <Text style={{ marginTop: heightToDp("5%") }}>Rs {this.state.totalcostMalePig}</Text>
-                                        <Text style={{ marginTop: heightToDp("5%") }}>Rs {this.state.totalCostShedConstruction}</Text>
-                                        <Text style={{ marginTop: heightToDp("5%") }}>Rs {this.state.totalCostfeeding}</Text>
-                                        <Text style={{ marginTop: heightToDp("5%") }}>Rs {this.state.totalcostVaccine}</Text>
+                                    <View style={{ width: widthToDp("14%"), marginLeft: widthToDp("10%") }}>
+                                        {/* <Text style={{ marginTop: heightToDp("2%") }}>Rs {this.state.totalPriceEggs}</Text>
+                                        <Text style={{ marginTop: heightToDp("5%") }}>Rs {this.state.totalPriceAdultBrids}</Text> */}
+                                        {
+                                            vaccine.map((i) => {
+                                                return (
+                                                    <Text style={{ marginBottom: heightToDp("4%") }}>{i.interval}</Text>
+                                                )
+                                            })
+                                        }
+
                                     </View>
                                 </View>
                             </View>
                             <View style={{ borderWidth: 1, height: heightToDp("8%"), width: widthToDp("83%"), marginLeft: widthToDp("3%"), marginTop: heightToDp("0%"), flexDirection: 'row' }}>
                                 <Text>Total (A)</Text>
-                                <Text style={{ marginLeft: widthToDp("40%") }}>Rs {this.state.total}</Text>
+                                <Input
+                                    style={{ borderWidth: 1 }}
+                                    onChangeText={(data) => this.inputValue(data)}
+                                    keyboardType="number-pad"
+                                />
                             </View>
                         </View>
                     </View>
