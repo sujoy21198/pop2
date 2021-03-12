@@ -19,7 +19,7 @@ export default class IncomeScreen extends Component {
         }
         this.state.type = this.props.route.params.type
         this.state.category = this.props.route.params.category
-        alert(this.state.type)
+        //alert(this.state.type)
     }
 
     clear = () => {

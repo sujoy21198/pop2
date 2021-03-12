@@ -35,7 +35,8 @@ export default class StepOneScreen extends Component {
             costPerKg:'',
             productionInKg:'',
             cost:'',
-            netProfit:''
+            netProfit:'',
+            materialQuantity:''
         }
         this.state._id = this.props.route.params._id
         this.state.cropName = this.props.route.params.cropName
@@ -106,7 +107,7 @@ export default class StepOneScreen extends Component {
     getStepDataFromLocal = async () => {
         try {
             var stepData = []
-            var decimalPrice, materialName
+            var decimalPrice, materialName,materialQuantity
             let username = await AsyncStorage.getItem('username')
             let user = await AsyncStorage.getItem('offlineData');
             let parsed = JSON.parse(user);
@@ -115,11 +116,13 @@ export default class StepOneScreen extends Component {
             stepData = cropFilter[3].stepData
             decimalPrice = cropFilter[3].decimalPrice
             materialName =cropFilter[3].materialName
+            materialQuantity = cropFilter[3].qty
             console.log(cropFilter)
             this.setState({ stepData: stepData })
             this.setState({ materialName: materialName })
             this.setState({ decimalPrice: decimalPrice })
             this.setState({numberOfSteps : cropFilter.length})
+            this.setState({materialQuantity : materialQuantity})
         } catch (error) {
             alert("No More Steps Available")
             this.props.navigation.navigate({
@@ -402,15 +405,17 @@ export default class StepOneScreen extends Component {
                                     <View style={{ backgroundColor: 'white', width: widthToDp("90%"), height: heightToDp("17%"), borderBottomLeftRadius: 10, borderBottomRightRadius: 10, marginTop: heightToDp("2%") }}>
                                         <View style={{ flexDirection: 'row', marginLeft: widthToDp("3%"), marginTop: heightToDp("2%") }}>
                                             <Text style={{ color: BaseColor.Red, fontFamily: 'Oswald-Medium' }}>Description</Text>
-                                            <Text style={{ color: BaseColor.Red, fontFamily: 'Oswald-Medium', marginLeft: widthToDp("50%") }}>Amount</Text>
+                                            <Text style={{ color: BaseColor.Red, fontFamily: 'Oswald-Medium' , marginLeft: widthToDp("20%") }}>Quantity</Text>
+                                            <Text style={{ color: BaseColor.Red, fontFamily: 'Oswald-Medium', marginLeft: widthToDp("20%") }}>Amount</Text>
                                         </View>
                                         <View style={{ flexDirection: 'row', marginLeft: widthToDp("3%"), marginTop: heightToDp("2%") }}>
                                             <Text style={{ fontFamily: 'Oswald-Medium', width: widthToDp("30%") }}>{this.state.materialName}</Text>
+                                            <Text style={{ fontFamily: 'Oswald-Medium', width: widthToDp("25%"), marginLeft: widthToDp("10%") }}>{this.state.materialQuantity}</Text>
                                             <Input
                                                 placeholder= {this.state.decimalPrice}
                                                 keyboardType='number-pad'
                                                 onChangeText={(data) => this.setMaterialPrice(data)}
-                                                style={{marginLeft: widthToDp("33%"), fontFamily: 'Oswald-Medium',width:widthToDp("20%"), marginTop: heightToDp("-2%")}}
+                                                style={{marginLeft: widthToDp("0%"), fontFamily: 'Oswald-Medium',width:widthToDp("20%"), marginTop: heightToDp("-2%"),borderWidth:1,marginRight:widthToDp("5%")}}
                                             />
                                         </View>
                                     </View>
