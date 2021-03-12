@@ -87,6 +87,21 @@ export default class LivestockTableScreen extends Component {
 
     }
 
+    saveButton = async() => {
+        try{
+            const incomeObject ={'type':'income','category':'Livestock','amount':this.state.totalValueAfter2years}
+            let username = await AsyncStorage.getItem('username')
+            let user = await AsyncStorage.getItem('user');
+            let parsed = JSON.parse(user);
+            var specificObject = parsed.find((i) => i.username === username)
+            specificObject.moneyManagerData.push(incomeObject)
+            await AsyncStorage.setItem('user', JSON.stringify(parsed))
+            console.log(specificObject.moneyManagerData)
+        }catch(error){
+            console.log(error)
+        }
+    }
+
     next = () => {
         this.props.navigation.reset({
             index: 0,
@@ -286,7 +301,7 @@ export default class LivestockTableScreen extends Component {
                             <Text style={{ fontSize: widthToDp("4%"), color: "#000", marginTop: heightToDp("1.3%"), alignSelf: 'center', fontFamily: 'Oswald-Medium' }}>BACK</Text>
                         </View>
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={() => { }}>
+                    <TouchableOpacity onPress={() => { this.saveButton()}}>
                         <View style={{ backgroundColor: "#fff", height: heightToDp("6%"), width: widthToDp("30%"), borderRadius: 100, marginLeft: widthToDp("1%"), marginTop: heightToDp("2%") }}>
                             <Text style={{ fontSize: widthToDp("4%"), color: "#000", marginTop: heightToDp("1.3%"), alignSelf: 'center', fontFamily: 'Oswald-Medium' }}>SAVE</Text>
                         </View>

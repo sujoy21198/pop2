@@ -83,8 +83,8 @@ function AppStack(){
                 <Stack.Screen name="StepSixScreen" component={StepSixScreen} options={{ headerShown: false }}/>
                 <Stack.Screen name="StepSevenScreen" component={StepSevenScreen} options={{ headerShown: false }}/>
                 <Stack.Screen name="StepEightScreen" component={StepEightScreen} options={{ headerShown: false }}/>
-                <Stack.Screen name="ActualCultivationCostScreen" component={ActualCultivationCostScreen} />
-                <Stack.Screen name="CostBenifitAnalysisScreen" component={CostBenifitAnalysisScreen} />
+                <Stack.Screen name="ActualCultivationCostScreen" component={ActualCultivationCostScreen} options={{ headerShown: false }} />
+                <Stack.Screen name="CostBenifitAnalysisScreen" component={CostBenifitAnalysisScreen} options={{ headerShown: false }}/>
                 <Stack.Screen name="LiveStockScreen" component={LiveStockScreen} options={{ headerShown: false }}/>
                 <Stack.Screen name="IncomeScreen" component={IncomeScreen} options={{ headerShown: false }}/>
                 <Stack.Screen name="GeneralSettingsScreen" component={GeneralSettingsScreen} options={{ headerShown: false }}/>
@@ -116,10 +116,10 @@ function AppStack(){
                 <Stack.Screen name="VegetableVendingFirstTableScreen" component={VegetableVendingFirstTableScreen} options={{ headerShown: false }}/>
                 <Stack.Screen name="VegetableVendingSecondTableScreen" component={VegetableVendingSecondTableScreen} options={{ headerShown: false }}/>
                 <Stack.Screen name="SmallGroceryShopFirstTableScreen" component={SmallGroceryShopFirstTableScreen} options={{ headerShown: false }}/>
-                <Stack.Screen name="SmallGroceryShopSecondTableScreen" component={SmallGroceryShopSecondTableScreen}/>
-                <Stack.Screen name="MoneyManagerScreen" component={MoneyManagerScreen}/>
-                <Stack.Screen name="AllTransactionScreen" component={AllTransactionScreen}/>
-                <Stack.Screen name="MoneyManagerCategoriesScreen" component={MoneyManagerCategoriesScreen}/>
+                <Stack.Screen name="SmallGroceryShopSecondTableScreen" component={SmallGroceryShopSecondTableScreen} options={{ headerShown: false }}/>
+                <Stack.Screen name="MoneyManagerScreen" component={MoneyManagerScreen} options={{ headerShown: false }}/>
+                <Stack.Screen name="AllTransactionScreen" component={AllTransactionScreen} options={{ headerShown: false }}/>
+                <Stack.Screen name="MoneyManagerCategoriesScreen" component={MoneyManagerCategoriesScreen} options={{ headerShown: false }}/>
             </Stack.Navigator>
         </NavigationContainer>
     );
