@@ -28,23 +28,23 @@ export default class CostBenifitAnalysisScreen extends Component {
             materialName: '',
             decimalPrice: '',
             isLoading: false,
-            imageFile : '',
-            materialPrice:'',
-            numberOfSteps:'',
-            pageNumber : '05',
-            patchName:'',
-            landType:'',
-            farmingAreaInDecimal:'',
-            costOfCultivatinPerTenDecimal:'',
-            costPerKg:'',
-            productionInKg:'',
-            cost:'',
-            netProfit:'',
-            actualCulCostScreenProductionInKg : '',
-            actualCulCostScreenCostPerKg:'',
-            actualCulCostScreenTotalExpense:'',
-            totalincomefromcrop:'',
-            profit:''
+            imageFile: '',
+            materialPrice: '',
+            numberOfSteps: '',
+            pageNumber: '05',
+            patchName: '',
+            landType: '',
+            farmingAreaInDecimal: '',
+            costOfCultivatinPerTenDecimal: '',
+            costPerKg: '',
+            productionInKg: '',
+            cost: '',
+            netProfit: '',
+            actualCulCostScreenProductionInKg: '',
+            actualCulCostScreenCostPerKg: '',
+            actualCulCostScreenTotalExpense: '',
+            totalincomefromcrop: '',
+            profit: ''
         }
         this.state._id = this.props.route.params._id
         this.state.cropName = this.props.route.params.cropName
@@ -63,22 +63,22 @@ export default class CostBenifitAnalysisScreen extends Component {
 
         var value1 = this.state.actualCulCostScreenProductionInKg
         var value2 = this.state.actualCulCostScreenCostPerKg
-        this.state.totalincomefromcrop = value1*value2
+        this.state.totalincomefromcrop = value1 * value2
         //alert(this.state.totalincomefromcrop)
 
         var income = this.state.totalincomefromcrop
         var expense = this.state.actualCulCostScreenTotalExpense
         this.state.profit = income - expense
 
-        
+
     }
 
-    
 
-    goToHomeScreen = async() => {
-        try{
-            const expenseObject={'type':'expense','category':'Crops','amount':this.state.actualCulCostScreenTotalExpense}
-            const incomeObject ={'type':'income','category':'Crops','amount':this.state.totalincomefromcrop}
+
+    goToHomeScreen = async () => {
+        try {
+            const expenseObject = { 'type': 'expense', 'category': 'Crops', 'amount': this.state.actualCulCostScreenTotalExpense }
+            const incomeObject = { 'type': 'income', 'category': 'Crops', 'amount': this.state.totalincomefromcrop }
             let username = await AsyncStorage.getItem('username')
             let user = await AsyncStorage.getItem('user');
             let parsed = JSON.parse(user);
@@ -87,7 +87,7 @@ export default class CostBenifitAnalysisScreen extends Component {
             specificObject.moneyManagerData.push(incomeObject)
             await AsyncStorage.setItem('user', JSON.stringify(parsed))
             console.log(specificObject.moneyManagerData)
-        }catch(error){
+        } catch (error) {
             console.log(error)
         }
 
@@ -100,7 +100,7 @@ export default class CostBenifitAnalysisScreen extends Component {
     render() {
         return (
             <View style={{ backgroundColor: BaseColor.BackgroundColor, flex: 1 }}>
-                <View style={{ backgroundColor: 'white', width: widthToDp("100%"), height: heightToDp("13%"),flexDirection: 'row' }}>
+                <View style={{ backgroundColor: 'white', width: widthToDp("100%"), height: heightToDp("13%"), flexDirection: 'row' }}>
                     <View style={{ marginTop: heightToDp("3%"), marginLeft: widthToDp("3%") }}>
                         <TopLogo />
                     </View>
@@ -125,67 +125,67 @@ export default class CostBenifitAnalysisScreen extends Component {
                     </TouchableOpacity>
 
                     <TouchableOpacity >
-                        <View style={{ backgroundColor: BaseColor.Hindi, width: widthToDp("30%"), height: heightToDp("6%"), marginLeft: widthToDp("2%"), borderRadius: 100,flexDirection:'row' }}>
-                            <Text style={{ color: '#fff', marginTop: heightToDp("1.7%"), marginLeft:widthToDp("5%"),fontWeight:'bold',fontSize:widthToDp("4.3%") }}>हिन्दी</Text>
+                        <View style={{ backgroundColor: BaseColor.Hindi, width: widthToDp("30%"), height: heightToDp("6%"), marginLeft: widthToDp("2%"), borderRadius: 100, flexDirection: 'row' }}>
+                            <Text style={{ color: '#fff', marginTop: heightToDp("1.7%"), marginLeft: widthToDp("5%"), fontWeight: 'bold', fontSize: widthToDp("4.3%") }}>हिन्दी</Text>
                             <Icon
-                            name="microphone"
-                            color="white"
-                            size={20}
-                            style={{marginTop:heightToDp("1.8%"),marginLeft:widthToDp("9%")}}
+                                name="microphone"
+                                color="white"
+                                size={20}
+                                style={{ marginTop: heightToDp("1.8%"), marginLeft: widthToDp("9%") }}
                             />
                         </View>
-                        </TouchableOpacity>
+                    </TouchableOpacity>
 
-                        <TouchableOpacity>
-                        <View style={{ backgroundColor: BaseColor.Ho, width: widthToDp("30%"), height: heightToDp("6%"), marginLeft: widthToDp("2%"), borderRadius: 100,flexDirection:'row' }}>
-                            <Text style={{ color: '#fff', marginTop: heightToDp("1.5%"), marginLeft:widthToDp("5%"),fontWeight:'bold',fontSize:widthToDp("4.3%") }}>ʤʌgʌr</Text>
+                    <TouchableOpacity>
+                        <View style={{ backgroundColor: BaseColor.Ho, width: widthToDp("30%"), height: heightToDp("6%"), marginLeft: widthToDp("2%"), borderRadius: 100, flexDirection: 'row' }}>
+                            <Text style={{ color: '#fff', marginTop: heightToDp("1.5%"), marginLeft: widthToDp("5%"), fontWeight: 'bold', fontSize: widthToDp("4.3%") }}>ʤʌgʌr</Text>
                             <Icon
-                            name="microphone"
-                            color="white"
-                            size={20}
-                            style={{marginTop:heightToDp("1.8%"),marginLeft:widthToDp("6.3%")}}
+                                name="microphone"
+                                color="white"
+                                size={20}
+                                style={{ marginTop: heightToDp("1.8%"), marginLeft: widthToDp("6.3%") }}
                             />
                         </View>
-                        </TouchableOpacity>
+                    </TouchableOpacity>
                 </View>
-                <View style={{ flexDirection: 'row', marginTop: heightToDp("1%"), marginLeft: widthToDp("1%"),alignSelf:'center' }}>
-                <TouchableOpacity>
-                        <View style={{ backgroundColor: BaseColor.Uridia, width: widthToDp("30%"), height: heightToDp("6%"), borderRadius: 100,flexDirection:'row' }}>
-                            <Text style={{ color: '#fff', marginTop: heightToDp("1.7%"),marginLeft:widthToDp("4.7%"),fontWeight:'bold',fontSize:widthToDp("4.3%") }}>ଓଡ଼ିଆ</Text>
+                <View style={{ flexDirection: 'row', marginTop: heightToDp("1%"), marginLeft: widthToDp("1%"), alignSelf: 'center' }}>
+                    <TouchableOpacity>
+                        <View style={{ backgroundColor: BaseColor.Uridia, width: widthToDp("30%"), height: heightToDp("6%"), borderRadius: 100, flexDirection: 'row' }}>
+                            <Text style={{ color: '#fff', marginTop: heightToDp("1.7%"), marginLeft: widthToDp("4.7%"), fontWeight: 'bold', fontSize: widthToDp("4.3%") }}>ଓଡ଼ିଆ</Text>
                             <Icon
-                            name="microphone"
-                            color="white"
-                            size={20}
-                            style={{marginTop:heightToDp("1.8%"),marginLeft:widthToDp("6.9%")}}
+                                name="microphone"
+                                color="white"
+                                size={20}
+                                style={{ marginTop: heightToDp("1.8%"), marginLeft: widthToDp("6.9%") }}
                             />
                         </View>
-                        </TouchableOpacity>
+                    </TouchableOpacity>
 
-                        <TouchableOpacity>
-                    <View style={{backgroundColor:BaseColor.Santhali, width: widthToDp("30%"), height: heightToDp("6%"),  borderRadius: 100, marginLeft: widthToDp("2%"),flexDirection:'row' }}>
-                        <Text style={{ color: '#fff', marginTop: heightToDp("1.7%"), marginLeft:widthToDp("3.4%"),fontWeight:'bold',fontSize:widthToDp("4.3%") }}>ᱥᱟᱱᱛᱟᱲᱤ</Text>
-                        <Icon
-                            name="microphone"
-                            color="white"
-                            size={20}
-                            style={{marginTop:heightToDp("1.8%"),marginLeft:widthToDp("3%")}}
+                    <TouchableOpacity>
+                        <View style={{ backgroundColor: BaseColor.Santhali, width: widthToDp("30%"), height: heightToDp("6%"), borderRadius: 100, marginLeft: widthToDp("2%"), flexDirection: 'row' }}>
+                            <Text style={{ color: '#fff', marginTop: heightToDp("1.7%"), marginLeft: widthToDp("3.4%"), fontWeight: 'bold', fontSize: widthToDp("4.3%") }}>ᱥᱟᱱᱛᱟᱲᱤ</Text>
+                            <Icon
+                                name="microphone"
+                                color="white"
+                                size={20}
+                                style={{ marginTop: heightToDp("1.8%"), marginLeft: widthToDp("3%") }}
                             />
-                    </View>
+                        </View>
                     </TouchableOpacity>
                 </View>
                 <View style={{ borderBottomColor: BaseColor.Stroke, borderBottomWidth: 1, marginTop: heightToDp('1.5%'), width: widthToDp("100%") }}></View>
-                
+
                 <ScrollView>
                     <View style={{ backgroundColor: BaseColor.Red, width: widthToDp("90%"), height: heightToDp("30%"), alignSelf: 'center', marginTop: heightToDp("2%"), borderRadius: 10 }}>
-                        <Text style={{ color: 'white', marginLeft: widthToDp("4%"), marginTop: heightToDp('1.5%'), fontSize: widthToDp("5%"),fontFamily:'Oswald-Medium' }}>COST BENEFIT ANALYSIS</Text>
+                        <Text style={{ color: 'white', marginLeft: widthToDp("4%"), marginTop: heightToDp('1.5%'), fontSize: widthToDp("5%"), fontFamily: 'Oswald-Medium' }}>COST BENEFIT ANALYSIS</Text>
                         <View style={{ backgroundColor: 'white', width: widthToDp("90%"), height: heightToDp("23.5%"), borderBottomLeftRadius: 10, borderBottomRightRadius: 10, marginTop: heightToDp("2%") }}>
                             <View style={{ flexDirection: 'row' }}>
                                 <View style={{ marginTop: heightToDp("4%"), marginLeft: widthToDp("2%") }}>
-                                    <Text style={{fontFamily:'Oswald-Medium'}}>LAND TYPE</Text>
-                                    <Text style={{fontFamily:'Oswald-Light'}}>{this.state.landType}</Text>
+                                    <Text style={{ fontFamily: 'Oswald-Medium' }}>LAND TYPE</Text>
+                                    <Text style={{ fontFamily: 'Oswald-Light' }}>{this.state.landType}</Text>
 
-                                    <Text style={{ marginTop: heightToDp("3%"),fontFamily:'Oswald-Medium' }}>AREA</Text>
-                                    <Text style={{fontFamily:'Oswald-Light'}}>Area {this.state.farmingAreaInDecimal} Decimal</Text>
+                                    <Text style={{ marginTop: heightToDp("3%"), fontFamily: 'Oswald-Medium' }}>AREA</Text>
+                                    <Text style={{ fontFamily: 'Oswald-Light' }}>Area {this.state.farmingAreaInDecimal} Decimal</Text>
                                 </View>
                                 <Image
                                     style={{ height: heightToDp("20%"), width: widthToDp("50%"), marginTop: heightToDp("2%"), marginLeft: widthToDp("7%"), borderRadius: 10 }}
@@ -196,65 +196,98 @@ export default class CostBenifitAnalysisScreen extends Component {
                     </View>
 
 
-                    <View style={{ backgroundColor: BaseColor.Red, width: widthToDp("90%"), height: heightToDp("39%"), alignSelf: 'center', marginTop: heightToDp("2%"), borderRadius: 10 }}>
-                        <Text style={{ color: 'white', marginLeft: widthToDp("4%"), marginTop: heightToDp('1.5%'), fontSize: widthToDp("5%"),fontFamily:'Oswald-Medium' }}>EXPECTED ANALYSIS</Text>
-                        <View style={{ backgroundColor: 'white', width: widthToDp("90%"), height: heightToDp("32%"), borderBottomLeftRadius: 10, borderBottomRightRadius: 10, marginTop: heightToDp("2%") }}>
+                    <View style={{ backgroundColor: BaseColor.Red, width: widthToDp("90%"), height: heightToDp("50%"), alignSelf: 'center', marginTop: heightToDp("2%"), borderRadius: 10 }}>
+                        <Text style={{ color: 'white', marginLeft: widthToDp("4%"), marginTop: heightToDp('1.5%'), fontSize: widthToDp("5%"), fontFamily: 'Oswald-Medium' }}>EXPECTED ANALYSIS</Text>
+                        <View style={{ backgroundColor: 'white', width: widthToDp("90%"), height: heightToDp("43%"), borderBottomLeftRadius: 10, borderBottomRightRadius: 10, marginTop: heightToDp("2%") }}>
                             <View style={{ flexDirection: 'row', marginLeft: widthToDp("4%"), marginTop: heightToDp('1%') }}>
-                                <Text style={{fontFamily:'Oswald-Medium'}}>Description</Text>
-                                <Text style={{ marginLeft: widthToDp("52%"),fontFamily:'Oswald-Medium' }}>Amount</Text>
+                                <Text style={{ fontFamily: 'Oswald-Medium' }}>Description</Text>
+                                <Text style={{ marginLeft: widthToDp("52%"), fontFamily: 'Oswald-Medium' }}>Amount</Text>
                             </View>
                             <View style={{ borderBottomColor: 'black', borderBottomWidth: 1, marginTop: heightToDp('1.5%'), width: widthToDp("90%") }}></View>
                             <View style={{ flexDirection: 'row', marginLeft: widthToDp("4%"), marginTop: heightToDp('2%') }}>
-                                <Text style={{fontFamily:'Oswald-Medium'}}>Total cost of cultivation</Text>
-                                <Text style={{ marginLeft: widthToDp("35%"),fontFamily:'Oswald-Medium' }}>₹ {this.state.costOfCultivatinPerTenDecimal}</Text>
+                                <View style={{ width: widthToDp("70%") }}>
+                                    <Text style={{ fontFamily: 'Oswald-Medium' }}>Total cost of cultivation</Text>
+                                </View>
+
+                                <Text style={{ marginLeft: widthToDp("0%"), fontFamily: 'Oswald-Medium' }}>₹ {this.state.costOfCultivatinPerTenDecimal}</Text>
                             </View>
                             <View style={{ flexDirection: 'row', marginLeft: widthToDp("4%"), marginTop: heightToDp('2%') }}>
-                                <Text style={{fontFamily:'Oswald-Medium'}}>Total income from crop</Text>
-                                <Text style={{ marginLeft: widthToDp("36%"),fontFamily:'Oswald-Medium' }}>₹ {this.state.costPerKg}</Text>
+                                <View style={{ width: widthToDp("70%") }}>
+                                    <Text style={{ fontFamily: 'Oswald-Medium' }}>Total income from crop</Text>
+                                </View>
+
+                                <Text style={{ marginLeft: widthToDp("0%"), fontFamily: 'Oswald-Medium' }}>₹ {this.state.costPerKg}</Text>
                             </View>
                             <View style={{ flexDirection: 'row', marginLeft: widthToDp("4%"), marginTop: heightToDp('2%') }}>
-                                <Text style={{fontFamily:'Oswald-Medium'}}>Production</Text>
-                                <Text style={{ marginLeft: widthToDp("52%"),fontFamily:'Oswald-Medium' }}>{this.state.productionInKg} KG</Text>
+                                <View style={{ width: widthToDp("70%") }}>
+                                    <Text style={{ fontFamily: 'Oswald-Medium' }}>Production</Text>
+                                </View>
+
+                                <Text style={{ marginLeft: widthToDp("0%"), fontFamily: 'Oswald-Medium' }}>{this.state.productionInKg} KG</Text>
                             </View>
                             <View style={{ flexDirection: 'row', marginLeft: widthToDp("4%"), marginTop: heightToDp('2%') }}>
-                                <Text style={{fontFamily:'Oswald-Medium'}}>Cost Per kg</Text>
-                                <Text style={{ marginLeft: widthToDp("51%"),fontFamily:'Oswald-Medium' }}>₹ {this.state.cost}</Text>
+                                <Text style={{ fontFamily: 'Oswald-Medium' }}>Cost Per kg</Text>
+                                <Text style={{ marginLeft: widthToDp("51%"), fontFamily: 'Oswald-Medium' }}>₹ {this.state.cost}</Text>
                             </View>
                             <View style={{ borderBottomColor: 'black', borderBottomWidth: 1, marginTop: heightToDp('1.5%'), width: widthToDp("90%") }}></View>
-                            <View style={{ flexDirection: 'row',  marginTop: heightToDp('1%'),alignSelf:'center' }}>
-                                <Text style={{fontSize: widthToDp("6%"),fontFamily:'Oswald-Bold' }}>Net Profit</Text>
-                                <Text style={{ marginLeft: widthToDp("40%"), fontWeight: 'bold', fontSize: widthToDp("6%"),fontFamily:'Oswald-Bold' }}>₹ {this.state.netProfit}</Text>
+                            <View style={{ flexDirection: 'row', marginTop: heightToDp('1%'), alignSelf: 'center' }}>
+                                <Text style={{ fontSize: widthToDp("6%"), fontFamily: 'Oswald-Bold' }}>Net Profit</Text>
+                                <Text style={{ marginLeft: widthToDp("40%"), fontWeight: 'bold', fontSize: widthToDp("6%"), fontFamily: 'Oswald-Bold' }}>₹ {this.state.netProfit}</Text>
                             </View>
                         </View>
                     </View>
-                    <View style={{ backgroundColor: BaseColor.Red, width: widthToDp("90%"), height: heightToDp("30%"), alignSelf: 'center', marginTop: heightToDp("2%"), borderRadius: 10 }}>
-                        <Text style={{ color: 'white', marginLeft: widthToDp("4%"), marginTop: heightToDp('1.5%'), fontSize: widthToDp("5%"),fontFamily:'Oswald-Medium' }}>ACTUAL ANALYSIS</Text>
-                        <View style={{ backgroundColor: 'white', width: widthToDp("90%"), height: heightToDp("32%"), borderBottomLeftRadius: 10, borderBottomRightRadius: 10, marginTop: heightToDp("2%") }}>
+                    <View style={{ backgroundColor: BaseColor.Red, width: widthToDp("90%"), height: heightToDp("65%"), alignSelf: 'center', marginTop: heightToDp("2%"), borderRadius: 10 }}>
+                        <Text style={{ color: 'white', marginLeft: widthToDp("4%"), marginTop: heightToDp('1.5%'), fontSize: widthToDp("5%"), fontFamily: 'Oswald-Medium' }}>ACTUAL ANALYSIS</Text>
+                        <View style={{ backgroundColor: 'white', width: widthToDp("90%"), height: heightToDp("54%"), borderBottomLeftRadius: 10, borderBottomRightRadius: 10, marginTop: heightToDp("2%") }}>
                             <View style={{ flexDirection: 'row', marginLeft: widthToDp("4%"), marginTop: heightToDp('1%') }}>
-                                <Text style={{fontFamily:'Oswald-Medium'}}>Description</Text>
-                                <Text style={{ marginLeft: widthToDp("52%"),fontFamily:'Oswald-Medium' }}>Amount</Text>
+                                <Text style={{ fontFamily: 'Oswald-Medium' }}>Description</Text>
+                                <Text style={{ marginLeft: widthToDp("52%"), fontFamily: 'Oswald-Medium' }}>Amount</Text>
                             </View>
                             <View style={{ borderBottomColor: 'black', borderBottomWidth: 1, marginTop: heightToDp('1.5%'), width: widthToDp("90%") }}></View>
                             <View style={{ flexDirection: 'row', marginLeft: widthToDp("4%"), marginTop: heightToDp('2%') }}>
-                                <Text style={{fontFamily:'Oswald-Medium'}}>Total cost of cultivation</Text>
-                                <Text style={{ marginLeft: widthToDp("35%"),fontFamily:'Oswald-Medium' }}>₹ {this.state.actualCulCostScreenTotalExpense}</Text>
+                                <View style={{ width: widthToDp("70%") }}>
+                                    <Text style={{ fontFamily: 'Oswald-Medium' }}>Total cost of cultivation</Text>
+                                </View>
+
+                                <Text style={{ marginLeft: widthToDp("0%"), fontFamily: 'Oswald-Medium' }}>₹ {this.state.actualCulCostScreenTotalExpense}</Text>
                             </View>
                             <View style={{ flexDirection: 'row', marginLeft: widthToDp("4%"), marginTop: heightToDp('2%') }}>
-                                <Text style={{fontFamily:'Oswald-Medium'}}>Total income from crop</Text>
-                                <Text style={{ marginLeft: widthToDp("36%"),fontFamily:'Oswald-Medium' }}>₹ {this.state.totalincomefromcrop}</Text>
+                                <View style={{ width: widthToDp("70%") }}>
+                                    <Text style={{ fontFamily: 'Oswald-Medium' }}>Total income from crop</Text>
+                                </View>
+                                <View style={{ width: widthToDp("10%") }}>
+                                    <Text style={{ marginLeft: widthToDp("0%"), fontFamily: 'Oswald-Medium' }}>₹ {this.state.totalincomefromcrop}</Text>
+                                </View>
+
                             </View>
                             <View style={{ flexDirection: 'row', marginLeft: widthToDp("4%"), marginTop: heightToDp('2%') }}>
-                                <Text style={{fontFamily:'Oswald-Medium'}}>Production</Text>
-                                <Text style={{ marginLeft: widthToDp("52%"),fontFamily:'Oswald-Medium' }}>{this.state.actualCulCostScreenProductionInKg} KG</Text>
+                                <View style={{ width: widthToDp("70%") }}>
+                                    <Text style={{ fontFamily: 'Oswald-Medium' }}>Production</Text>
+                                </View>
+                                <View style={{ width: widthToDp("10%") }}>
+                                    <Text style={{ marginLeft: widthToDp("0%"), fontFamily: 'Oswald-Medium' }}>{this.state.actualCulCostScreenProductionInKg} KG</Text>
+                                </View>
+
                             </View>
                             <View style={{ flexDirection: 'row', marginLeft: widthToDp("4%"), marginTop: heightToDp('2%') }}>
-                                <Text style={{fontFamily:'Oswald-Medium'}}>Cost Per kg</Text>
-                                <Text style={{ marginLeft: widthToDp("51%"),fontFamily:'Oswald-Medium' }}>{this.state.actualCulCostScreenCostPerKg} KG</Text>
+                                <View style={{ width: widthToDp("70%") }}>
+                                    <Text style={{ fontFamily: 'Oswald-Medium' }}>Cost Per kg</Text>
+                                </View>
+                                <View style={{width:widthToDp("10%")}}>
+                                    <Text style={{ marginLeft: widthToDp("51%"), fontFamily: 'Oswald-Medium' }}>{this.state.actualCulCostScreenCostPerKg} KG</Text>
+                                </View>
+
+
                             </View>
                             <View style={{ borderBottomColor: 'black', borderBottomWidth: 1, marginTop: heightToDp('1.5%'), width: widthToDp("90%") }}></View>
-                            <View style={{ flexDirection: 'row', alignSelf:'center', marginTop: heightToDp('1%') }}>
-                                <Text style={{fontSize: widthToDp("6%"),fontFamily:'Oswald-Bold' }}>Net Profit</Text>
-                                <Text style={{ marginLeft: widthToDp("40%"), fontWeight: 'bold', fontSize: widthToDp("6%"),fontFamily:'Oswald-Bold' }}>₹ {this.state.profit}</Text>
+                            <View style={{ flexDirection: 'row', alignSelf: 'center', marginTop: heightToDp('1%') }}>
+                                <View style={{width:widthToDp("70%")}}>
+                                <Text style={{ fontSize: widthToDp("6%"), fontFamily: 'Oswald-Bold' }}>Net Profit</Text>
+                                </View>
+                                <View style={{width:widthToDp("10%")}}>
+                                <Text style={{ marginLeft: widthToDp("40%"), fontWeight: 'bold', fontSize: widthToDp("6%"), fontFamily: 'Oswald-Bold' }}>₹ {this.state.profit}</Text>
+                                </View>
+                                
                             </View>
                         </View>
                     </View>
@@ -264,12 +297,12 @@ export default class CostBenifitAnalysisScreen extends Component {
                     <View style={{ flexDirection: 'row' }}>
                         <TouchableOpacity>
                             <View style={{ backgroundColor: "#fff", height: heightToDp("6%"), width: widthToDp("30%"), borderRadius: 100, marginLeft: widthToDp("20%"), marginTop: heightToDp("2%") }}>
-                                <Text style={{ fontSize: widthToDp("4%"), color: "#000", marginTop: heightToDp("1.4%"), alignSelf: 'center',fontFamily:'Oswald-Medium' }}>CANCEL</Text>
+                                <Text style={{ fontSize: widthToDp("4%"), color: "#000", marginTop: heightToDp("1.4%"), alignSelf: 'center', fontFamily: 'Oswald-Medium' }}>CANCEL</Text>
                             </View>
                         </TouchableOpacity>
                         <TouchableOpacity onPress={() => this.goToHomeScreen()}>
                             <View style={{ backgroundColor: "#fff", height: heightToDp("6%"), width: widthToDp("30%"), borderRadius: 100, marginLeft: widthToDp("2%"), marginTop: heightToDp("2%") }}>
-                                <Text style={{ fontSize: widthToDp("4%"), color: "#000", marginTop: heightToDp("1.4%"), alignSelf: 'center' ,fontFamily:'Oswald-Medium'}}>DONE</Text>
+                                <Text style={{ fontSize: widthToDp("4%"), color: "#000", marginTop: heightToDp("1.4%"), alignSelf: 'center', fontFamily: 'Oswald-Medium' }}>DONE</Text>
                             </View>
                         </TouchableOpacity>
                     </View>

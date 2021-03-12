@@ -446,8 +446,8 @@ export default class StepOneScreen extends Component {
                                     <View style={{ backgroundColor: 'white', width: widthToDp("90%"), height: heightToDp("17%"), borderBottomLeftRadius: 10, borderBottomRightRadius: 10, marginTop: heightToDp("2%") }}>
                                         <View style={{ flexDirection: 'row', marginLeft: widthToDp("3%"), marginTop: heightToDp("2%") }}>
                                             <Text style={{ color: BaseColor.Red, fontFamily: 'Oswald-Medium' }}>Description</Text>
-                                            <Text style={{ color: BaseColor.Red, fontFamily: 'Oswald-Medium' , marginLeft: widthToDp("20%") }}>Quantity</Text>
-                                            <Text style={{ color: BaseColor.Red, fontFamily: 'Oswald-Medium', marginLeft: widthToDp("20%") }}>Amount</Text>
+                                            <Text style={{ color: BaseColor.Red, fontFamily: 'Oswald-Medium' , marginLeft: widthToDp("18%") }}>Quantity</Text>
+                                            <Text style={{ color: BaseColor.Red, fontFamily: 'Oswald-Medium', marginLeft: widthToDp("18%") }}>Amount</Text>
                                         </View>
                                         <View style={{ flexDirection: 'row', marginLeft: widthToDp("3%"), marginTop: heightToDp("2%") }}>
                                             <Text style={{ fontFamily: 'Oswald-Medium', width: widthToDp("30%") }}>{this.state.materialName}</Text>

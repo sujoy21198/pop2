@@ -41,7 +41,8 @@ export default class DryFishSellingSecondTableScreen extends Component {
             totalsellingpricedryfishsalt:'',
             totalsellingpricedryfishsalt:'',
             perdaysellingvaluetotal:'',
-            profitperday : ''
+            profitperday : '',
+            try:'2'
         }
         this.state.tableHeading = tableHeading
         //this.state.value = this.props.route.params.value
@@ -293,10 +294,13 @@ export default class DryFishSellingSecondTableScreen extends Component {
                             </View>
                             <View style={{ borderWidth: 1, height: heightToDp("8%"), width: widthToDp("83%"), marginLeft: widthToDp("3%"), marginTop: heightToDp("0%"), flexDirection: 'row' }}>
                                 <Text>Expenditure per day/lot (A)</Text>
-                                <Text style={{ marginLeft: widthToDp("20%") }}>Rs 2050</Text>
+                                <View style={{width:widthToDp("20%")}}>
+                                <Text style={{ marginLeft: widthToDp("0%"), marginLeft: widthToDp("3%") }}>Rs 2050</Text>
+                                </View>
+                                
                             </View>
 
-                            <View style={{ borderWidth: 1, height: heightToDp("18%"), width: widthToDp("83%"), marginLeft: widthToDp("3%"), marginTop: heightToDp("1.5%"), flexDirection: 'row' }}>
+                            <View style={{ borderWidth: 1, height: heightToDp("24%"), width: widthToDp("83%"), marginLeft: widthToDp("3%"), marginTop: heightToDp("1.5%"), flexDirection: 'row' }}>
                                 {
                                     tableHeading2.map((i) => {
                                         return (
@@ -397,7 +401,7 @@ export default class DryFishSellingSecondTableScreen extends Component {
                                 <Text>profit per day/lot</Text>
                                 <Text style={{ marginLeft: widthToDp("20%") }}>Rs {this.state.profitperday}</Text>
                             </View>
-                            <View style={{ borderWidth: 1, height: heightToDp("8%"), width: widthToDp("83%"), marginLeft: widthToDp("3%"), marginTop: heightToDp("0%"), flexDirection: 'row' }}>
+                            <View style={{ borderWidth: 1, height: heightToDp("10%"), width: widthToDp("83%"), marginLeft: widthToDp("3%"), marginTop: heightToDp("0%"), flexDirection: 'row' }}>
                                 <Text>Assuming there is 15 lot selling per month, then monthly profit = Rs 350 *15    Rs 5250</Text>
                             </View>
                             

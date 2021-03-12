@@ -199,10 +199,10 @@ export default class SmallGroceryShopSecondTableScreen extends Component {
                 </View>
                 <View style={{ borderBottomColor: BaseColor.Stroke, borderBottomWidth: 1, marginTop: heightToDp('1.5%'), width: widthToDp("100%") }}></View>
                 <ScrollView>
-                    <View style={{ backgroundColor: BaseColor.Red, height: heightToDp("160%"), alignSelf: 'center', width: widthToDp("90%"), borderRadius: 10, marginTop: heightToDp('1.5%') }}>
+                    <View style={{ backgroundColor: BaseColor.Red, height: heightToDp("210%"), alignSelf: 'center', width: widthToDp("90%"), borderRadius: 10, marginTop: heightToDp('1.5%') }}>
                         <Text style={{ color: "#fff", fontSize: widthToDp("5%"), marginLeft: widthToDp("5%"), marginTop: heightToDp("1%"), fontFamily: 'Oswald-Medium' }}>Expenditure & Profit </Text>
-                        <View style={{ backgroundColor: "white", height: heightToDp("160%"), alignSelf: 'center', width: widthToDp("90%"), marginTop: heightToDp('2%'), borderBottomLeftRadius: 10, borderBottomRightRadius: 10 }}>
-                            <View style={{ borderWidth: 1, height: heightToDp("18%"), width: widthToDp("83%"), marginLeft: widthToDp("3%"), marginTop: heightToDp("1.5%"), flexDirection: 'row' }}>
+                        <View style={{ backgroundColor: "white", height: heightToDp("210%"), alignSelf: 'center', width: widthToDp("90%"), marginTop: heightToDp('2%'), borderBottomLeftRadius: 10, borderBottomRightRadius: 10 }}>
+                            <View style={{ borderWidth: 1, height: heightToDp("22%"), width: widthToDp("83%"), marginLeft: widthToDp("3%"), marginTop: heightToDp("1.5%"), flexDirection: 'row' }}>
                                 {
                                     tableHeading2.map((i) => {
                                         return (
@@ -217,7 +217,7 @@ export default class SmallGroceryShopSecondTableScreen extends Component {
                                 }
                             </View>
 
-                            <View style={{ borderWidth: 1, height: heightToDp("70%"), width: widthToDp("83%"), marginLeft: widthToDp("3%"), marginTop: heightToDp("0%") }}>
+                            <View style={{ borderWidth: 1, height: heightToDp("100%"), width: widthToDp("83%"), marginLeft: widthToDp("3%"), marginTop: heightToDp("0%") }}>
                                 <View style={{ flexDirection: 'row' }}>
                                     <View style={{ width: widthToDp("15%"), marginLeft: widthToDp("1.5%") }}>
                                         {/* <Text style={{ marginTop: heightToDp("2%") }}>Eggs</Text>
@@ -321,7 +321,7 @@ export default class SmallGroceryShopSecondTableScreen extends Component {
 
                                 </View>
                             </View>
-                            <View style={{ borderWidth: 1, height: heightToDp("10%"), width: widthToDp("83%"), marginLeft: widthToDp("3%"), marginTop: heightToDp("0%"), flexDirection: 'row' }}>
+                            <View style={{ borderWidth: 1, height: heightToDp("18%"), width: widthToDp("83%"), marginLeft: widthToDp("3%"), marginTop: heightToDp("0%"), flexDirection: 'row' }}>
                                 <View style={{ width: widthToDp("30%") }}>
                                     <Text>Per cycle (15 days) expenditure and profit</Text>
                                 </View>
@@ -357,7 +357,7 @@ export default class SmallGroceryShopSecondTableScreen extends Component {
                                 </View>
 
                             </View>
-                            <View style={{ borderWidth: 1, height: heightToDp("10%"), width: widthToDp("83%"), marginLeft: widthToDp("3%"), marginTop: heightToDp("0%"), flexDirection: 'row' }}>
+                            <View style={{ borderWidth: 1, height: heightToDp("14%"), width: widthToDp("83%"), marginLeft: widthToDp("3%"), marginTop: heightToDp("0%"), flexDirection: 'row' }}>
                                 <View style={{ width: widthToDp("60%") }}>
                                     <Text>Loss (Assuming 2% of profit) due to rodent, insects, termites, and damping of food items</Text>
                                 </View>

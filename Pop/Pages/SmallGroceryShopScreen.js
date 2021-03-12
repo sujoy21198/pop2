@@ -265,7 +265,7 @@ export default class SmallGroceryShopScreen extends Component {
                     </View>
                 </View>
 
-                <View style={{ height: heightToDp("10%"), marginTop: heightToDp("3%") }}>
+                <View style={{ height: heightToDp("10%"), marginTop: heightToDp("5%") }}>
                     <TouchableOpacity onPress={() => this.nextButton()}>
                         <View style={{ backgroundColor: "#fff", height: heightToDp("6%"), width: widthToDp("30%"), borderRadius: 100, alignSelf: 'center', marginTop: heightToDp("2%") }}>
                             <Text style={{ fontSize: widthToDp("4%"), color: "#000", marginTop: heightToDp("1.3%"), alignSelf: 'center', fontFamily: 'Oswald-Medium' }}>NEXT</Text>

@@ -34,14 +34,14 @@ export default class DryFishSellingSecondTableScreen extends Component {
             tableHeading: [],
             value: '',
             vaccine: [],
-            unitDryfishsalt:'',
-            unitDryfish:'',
-            sellingpricedryfishsalt:'',
-            sellingpricedryfish:'',
-            totalsellingpricedryfishsalt:'',
-            totalsellingpricedryfishsalt:'',
-            perdaysellingvaluetotal:'',
-            profitperday : ''
+            unitDryfishsalt: '',
+            unitDryfish: '',
+            sellingpricedryfishsalt: '',
+            sellingpricedryfish: '',
+            totalsellingpricedryfishsalt: '',
+            totalsellingpricedryfishsalt: '',
+            perdaysellingvaluetotal: '',
+            profitperday: ''
         }
         this.state.tableHeading = tableHeading
         //this.state.value = this.props.route.params.value
@@ -69,13 +69,13 @@ export default class DryFishSellingSecondTableScreen extends Component {
 
     calculation = () => {
         var result = this.state.unitDryfishsalt * this.state.sellingpricedryfishsalt
-        this.setState({totalsellingpricedryfishsalt : result})
+        this.setState({ totalsellingpricedryfishsalt: result })
         var result1 = this.state.unitDryfish * this.state.sellingpricedryfish
-        this.setState({totalsellingpricedryfish : result1})
+        this.setState({ totalsellingpricedryfish: result1 })
         var result3 = result + result1
-        this.setState({perdaysellingvaluetotal : result3})
+        this.setState({ perdaysellingvaluetotal: result3 })
         var result4 = result3 - 1460
-        this.setState({profitperday : result4})
+        this.setState({ profitperday: result4 })
         console.log(this.state.totalsellingpricedryfishsalt)
     }
 
@@ -90,7 +90,7 @@ export default class DryFishSellingSecondTableScreen extends Component {
             index: 0,
             routes: [{ name: "DashBoardScreen" }]
         })
-        
+
     }
     render() {
         var tableHeading = []
@@ -293,10 +293,13 @@ export default class DryFishSellingSecondTableScreen extends Component {
                             </View>
                             <View style={{ borderWidth: 1, height: heightToDp("8%"), width: widthToDp("83%"), marginLeft: widthToDp("3%"), marginTop: heightToDp("0%"), flexDirection: 'row' }}>
                                 <Text>Expenditure per day/lot (A)</Text>
-                                <Text style={{ marginLeft: widthToDp("20%") }}>Rs 2050</Text>
+                                <View style={{width:widthToDp("20%")}}>
+                                    <Text style={{ marginLeft: widthToDp("3%") }}>Rs 2050</Text>
+                                </View>
+
                             </View>
 
-                            <View style={{ borderWidth: 1, height: heightToDp("18%"), width: widthToDp("83%"), marginLeft: widthToDp("3%"), marginTop: heightToDp("1.5%"), flexDirection: 'row' }}>
+                            <View style={{ borderWidth: 1, height: heightToDp("22%"), width: widthToDp("83%"), marginLeft: widthToDp("3%"), marginTop: heightToDp("1.5%"), flexDirection: 'row' }}>
                                 {
                                     tableHeading2.map((i) => {
                                         return (
@@ -337,7 +340,7 @@ export default class DryFishSellingSecondTableScreen extends Component {
                                             {/* <Text style={{ marginBottom: heightToDp("1.5%") }}>{i.noOfTime}</Text> */}
                                             <Input
                                                 style={{ borderWidth: 1 }}
-                                                onChangeText={(data) => this.setState({unitDryfishsalt : data})}
+                                                onChangeText={(data) => this.setState({ unitDryfishsalt: data })}
                                                 keyboardType="number-pad"
                                             />
                                         </View>
@@ -346,7 +349,7 @@ export default class DryFishSellingSecondTableScreen extends Component {
                                             {/* <Text style={{ marginBottom: heightToDp("1.5%") }}>{i.noOfTime}</Text> */}
                                             <Input
                                                 style={{ borderWidth: 1 }}
-                                                onChangeText={(data) => this.setState({unitDryfish : data})}
+                                                onChangeText={(data) => this.setState({ unitDryfish: data })}
                                                 keyboardType="number-pad"
                                             />
                                         </View>
@@ -359,7 +362,7 @@ export default class DryFishSellingSecondTableScreen extends Component {
                                             {/* <Text style={{ marginBottom: heightToDp("1.5%") }}>{i.noOfTime}</Text> */}
                                             <Input
                                                 style={{ borderWidth: 1 }}
-                                                onChangeText={(data) => this.setState({sellingpricedryfishsalt : data})}
+                                                onChangeText={(data) => this.setState({ sellingpricedryfishsalt: data })}
                                                 keyboardType="number-pad"
                                             />
                                         </View>
@@ -368,7 +371,7 @@ export default class DryFishSellingSecondTableScreen extends Component {
                                             {/* <Text style={{ marginBottom: heightToDp("1.5%") }}>{i.noOfTime}</Text> */}
                                             <Input
                                                 style={{ borderWidth: 1 }}
-                                                onChangeText={(data) => this.setState({sellingpricedryfish : data})}
+                                                onChangeText={(data) => this.setState({ sellingpricedryfish: data })}
                                                 keyboardType="number-pad"
                                             />
                                         </View>
@@ -400,7 +403,7 @@ export default class DryFishSellingSecondTableScreen extends Component {
                             <View style={{ borderWidth: 1, height: heightToDp("8%"), width: widthToDp("83%"), marginLeft: widthToDp("3%"), marginTop: heightToDp("0%"), flexDirection: 'row' }}>
                                 <Text>15 lot selling per month. (monthly profit) Rs 152*15=  Rs 2280</Text>
                             </View>
-                            
+
                         </View>
                     </View>
                     <View style={{ marginTop: heightToDp("10%") }}></View>
@@ -411,7 +414,7 @@ export default class DryFishSellingSecondTableScreen extends Component {
                             <Text style={{ fontSize: widthToDp("4%"), color: "#000", marginTop: heightToDp("1.3%"), alignSelf: 'center', fontFamily: 'Oswald-Medium' }}>BACK</Text>
                         </View>
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={() => {this.calculation()}}>
+                    <TouchableOpacity onPress={() => { this.calculation() }}>
                         <View style={{ backgroundColor: "#fff", height: heightToDp("6%"), width: widthToDp("30%"), borderRadius: 100, marginLeft: widthToDp("1%"), marginTop: heightToDp("2%") }}>
                             <Text style={{ fontSize: widthToDp("4%"), color: "#000", marginTop: heightToDp("1.3%"), alignSelf: 'center', fontFamily: 'Oswald-Medium' }}>SAVE</Text>
                         </View>
