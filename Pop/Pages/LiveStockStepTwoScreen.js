@@ -11,6 +11,7 @@ import base64 from 'react-native-base64'
 import axios from 'axios'
 import DataAccess from '../Core/DataAccess'
 import CustomIndicator from '../Core/CustomIndicator'
+import HTML from "react-native-render-html";
 
 export default class LiveStockStepTwoScreen extends Component {
 
@@ -24,7 +25,8 @@ export default class LiveStockStepTwoScreen extends Component {
             imageFile: '',
             stepName:'',
             stepDescription:'',
-            livestockName:''
+            livestockName:'',
+            contentArea: ''
         }
         this.state._id = this.props.route.params._id
         this.state.breedname = this.props.route.params.breedname
@@ -44,6 +46,7 @@ export default class LiveStockStepTwoScreen extends Component {
             //console.log(breedData[1].name)
             this.setState({stepName : breedData[1].name})
             this.setState({stepDescription : breedData[1].english})
+            this.setState({ contentArea: breedData[1].contentAreaEnglish })
         }catch(error){
             this.props.navigation.navigate({
                 name: 'LivestockTableScreen',
@@ -150,9 +153,9 @@ export default class LiveStockStepTwoScreen extends Component {
                 <View style={{ borderBottomColor: BaseColor.Stroke, borderBottomWidth: 1, marginTop: heightToDp('1.5%'), width: widthToDp("100%") }}></View>
                 <Text style={{marginLeft:widthToDp("3%"),marginTop:heightToDp("2%"),fontSize:widthToDp("7%"),fontFamily:'Oswald-Medium'}}>{this.state.breedname}</Text>
                 <ScrollView>
-                    <View style={{backgroundColor:BaseColor.Red,height:heightToDp("60%"),alignSelf:'center',width:widthToDp("90%"),borderRadius:10, marginTop: heightToDp('1.5%')}}>
+                    <View style={{backgroundColor:BaseColor.Red,height:heightToDp("100%"),alignSelf:'center',width:widthToDp("90%"),borderRadius:10, marginTop: heightToDp('1.5%')}}>
                     <Text style={{color: "#fff", fontSize: widthToDp("5%"),marginLeft:widthToDp("5%"), marginTop: heightToDp("1%"),fontFamily:'Oswald-Medium'}}>{this.state.stepName}</Text>
-                        <View style={{backgroundColor:"white",height:heightToDp("54.5%"),alignSelf:'center',width:widthToDp("90%"), marginTop: heightToDp('2%'),borderBottomLeftRadius:10,borderBottomRightRadius:10}}>
+                        <View style={{backgroundColor:"white",height:heightToDp("98.5%"),alignSelf:'center',width:widthToDp("90%"), marginTop: heightToDp('2%'),borderBottomLeftRadius:10,borderBottomRightRadius:10}}>
                             <View style={{}}>
                             <Image
                             source={{uri:DataAccess.BaseUrl+"app-property/uploads/livestocks/breeds/"+this.state.imageFile}}
@@ -163,6 +166,7 @@ export default class LiveStockStepTwoScreen extends Component {
                             <Text style={{fontFamily:'Oswald-Medium',fontSize: widthToDp("4%"),marginLeft:widthToDp("2%")}}>DESCRIPTION</Text>
                             </View>
                             <Text style={{fontFamily:'Oswald-Medium',fontSize: widthToDp("4%"),marginLeft:widthToDp("2%")}}>{this.state.stepDescription}</Text>
+                            <HTML source={{ html: this.state.contentArea || '<p></p>' }} containerStyle={{ elevation: 10, marginTop: heightToDp("2%"), marginLeft: widthToDp("2%") }} />
                             
                         </View>
                     </View>

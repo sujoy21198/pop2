@@ -13,14 +13,14 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 
 
 const data = [
-    { name: 'AGRICULTURE', code: 'https://files.qatarliving.com/styles/image_h_xlarge_1600x900/s3/post/2020/10/15/Global-Handwashing-day-2020-qatar-living.jpg?itok=xGwcmQkE' },
-    { name: 'LIVESTOCK', code: 'https://drmehtablog.com/wp-content/uploads/2016/01/Cardiology-1.jpg' },
-    { name: 'SMALL BUSINESS', code: 'https://www.universiteitleiden.nl/binaries/content/gallery/ul2/main-images/campus-the-hague/bsk/covid---19-afbeelding.jpg' },
-    { name: 'HEALTH', code: 'https://empiawards.files.wordpress.com/2014/05/indian-health-care.jpg' },
-    { name: 'EDUCATION', code: 'https://empiawards.files.wordpress.com/2014/05/indian-health-care.jpg' },
-    { name: 'LOAN SAVINGS', code: 'https://empiawards.files.wordpress.com/2014/05/indian-health-care.jpg' },
-    { name: 'PENSION', code: 'https://empiawards.files.wordpress.com/2014/05/indian-health-care.jpg' },
-    { name: 'OTHERS', code: 'https://empiawards.files.wordpress.com/2014/05/indian-health-care.jpg' },
+    { name: 'AGRICULTURE', code: 'https://spontaneousorder.in/wp-content/uploads/2020/02/Swatantra.jpg' },
+    { name: 'LIVESTOCK', code: 'https://d3hnfqimznafg0.cloudfront.net/images/Article_Images/ImageForArticle_838(1).jpg' },
+    { name: 'SMALL BUSINESS', code: 'https://www.sba.gov/build/71bd57d80e04f91d53641835ce6d7acc.png' },
+    { name: 'HEALTH', code: 'https://images.hu-production.be/static/img/home/homepageicons-03.png' },
+    { name: 'EDUCATION', code: 'https://images.theconversation.com/files/45159/original/rptgtpxd-1396254731.jpg?ixlib=rb-1.1.0&q=45&auto=format&w=754&fit=clipg' },
+    { name: 'LOAN SAVINGS', code: 'https://cdn.corporatefinanceinstitute.com/assets/Loans-1.jpeg' },
+    { name: 'PENSION', code: 'https://img.theweek.in/content/dam/week/news/biz-tech/images/2019/2/1/pension-plan.jpg' },
+    { name: 'OTHERS', code: 'https://logos.flamingtext.com/Word-Logos/others-design-sketch-name.png' },
 ]
 
 export default class MoneyManagerCategoriesScreen extends Component {
