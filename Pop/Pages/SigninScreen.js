@@ -41,6 +41,14 @@ export default class SigninScreen extends Component {
         //this.getAllData()
     }
 
+    guestSignIn = () => {
+        this.state.username = 'anonymous@abc.com'
+        this.state.password = 'Test@12345'
+        this.signIn()
+        // this.setState({username : 'anonymous@abc.com'})
+        // this.setState({password : 'Test@12345'})
+    }
+
     setCustodian = async () => {
         let cus = await AsyncStorage.getItem("cus")
         this.setState({ loadPhoneNumber: false })
@@ -472,7 +480,7 @@ export default class SigninScreen extends Component {
 
                     <View style={{ borderBottomColor: BaseColor.Stroke, borderBottomWidth: 1, marginTop: heightToDp('1.5%'), width: widthToDp("100%") }}></View>
 
-                    <TouchableOpacity onPress={() => this.displayData()}>
+                    <TouchableOpacity onPress={() => this.guestSignIn()}>
                         <View style={{ backgroundColor: BaseColor.SecondaryColor, marginTop: heightToDp("3%"), width: widthToDp("37%"), alignSelf: 'center', height: heightToDp("5%"), borderRadius: 100 }}>
                             <Text style={{ alignSelf: 'center', marginTop: heightToDp("0.4%"), fontWeight: '500', fontSize: widthToDp("5%"), fontFamily: 'Oswald-Medium' }}>{LanguageChange.guestSignIn}</Text>
                         </View>
