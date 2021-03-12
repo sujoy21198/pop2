@@ -34,14 +34,14 @@ export default class DryFishSellingSecondTableScreen extends Component {
             tableHeading: [],
             value: '',
             vaccine: [],
-            unitDryfishsalt: '',
-            unitDryfish: '',
-            sellingpricedryfishsalt: '',
-            sellingpricedryfish: '',
-            totalsellingpricedryfishsalt: '',
-            totalsellingpricedryfishsalt: '',
-            perdaysellingvaluetotal: '',
-            profitperday: ''
+            unitDryfishsalt: '2',
+            unitDryfish: '2',
+            sellingpricedryfishsalt: '600',
+            sellingpricedryfish: '600',
+            totalsellingpricedryfishsalt: '1200',
+            totalsellingpricedryfishsalt: '1200',
+            perdaysellingvaluetotal: '2400',
+            profitperday: '350'
         }
         this.state.tableHeading = tableHeading
         //this.state.value = this.props.route.params.value

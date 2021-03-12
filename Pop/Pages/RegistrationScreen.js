@@ -22,6 +22,7 @@ import DataAccess from '../Core/DataAccess'
 import CustomIndicator from '../Core/CustomIndicator'
 import LanguageChange from '../Core/LanguageChange'
 import Language from '../Core/Languages'
+import DialogInput from 'react-native-dialog-input';
 
 
 const radio_props = [
@@ -59,7 +60,8 @@ export default class RegistrationScreen extends Component {
       gramApi: [],
       villageApi: [],
       block: 'BLOCK',
-      blockId: ''
+      blockId: '',
+      isDialogVisible: false
     }
 
     this.state.selectedLanguage = this.props.route.params.selectedLanguage
@@ -102,6 +104,10 @@ export default class RegistrationScreen extends Component {
     } else {
       this.setState({ status: false })
     }
+
+    // if (value === 0) {
+    //   this.setState({ isDialogVisible: true })
+    // }
   }
 
   getDeviceId = async () => {
@@ -115,6 +121,9 @@ export default class RegistrationScreen extends Component {
     var redirect = false;
     var load = true
     this.setState({ isLoading: true })
+    if(this.state.value === 0 && this.state.phoneNumber != ''){
+      this.setState({ isDialogVisible: true })
+    }
     if (this.state.age < 12) {
       this.setState({ isLoading: false })
       return Toast.show({
@@ -176,7 +185,7 @@ export default class RegistrationScreen extends Component {
         load = false
         Toast.show({
           text: response.data.msg,
-          type: 'success',
+          type: 'danger',
           duration: 3000
         })
       }
@@ -720,6 +729,16 @@ export default class RegistrationScreen extends Component {
             />
           </View> : null
         }
+
+        <DialogInput isDialogVisible={this.state.isDialogVisible}
+          title={"Verify OTP"}
+          // message={"Message for DialogInput #1"}
+          hintInput={"Please enter the otp"}
+          submitInput={(inputText) => { this.setPatch(inputText) }}
+          closeDialog={() => { this.setState({ isDialogVisible: false }) }}
+          submitText={"Verify"}
+          >
+        </DialogInput>
 
         <TouchableOpacity onPress={() => this.signup()}>
           <View style={{ backgroundColor: BaseColor.SecondaryColor, marginTop: heightToDp("5%"), width: widthToDp("37%"), alignSelf: 'center', height: heightToDp("5%"), borderRadius: 100 }}>

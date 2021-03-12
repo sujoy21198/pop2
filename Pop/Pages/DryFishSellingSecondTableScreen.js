@@ -34,14 +34,14 @@ export default class DryFishSellingSecondTableScreen extends Component {
             tableHeading: [],
             value: '',
             vaccine: [],
-            unitDryfishsalt:'',
-            unitDryfish:'',
-            sellingpricedryfishsalt:'',
-            sellingpricedryfish:'',
-            totalsellingpricedryfishsalt:'',
-            totalsellingpricedryfishsalt:'',
-            perdaysellingvaluetotal:'',
-            profitperday : '',
+            unitDryfishsalt:'2',
+            unitDryfish:'2',
+            sellingpricedryfishsalt:'600',
+            sellingpricedryfish:'600',
+            totalsellingpricedryfishsalt:'1200',
+            totalsellingpricedryfish:'1200',
+            perdaysellingvaluetotal:'2400',
+            profitperday : '350',
             try:'2'
         }
         this.state.tableHeading = tableHeading
@@ -343,6 +343,7 @@ export default class DryFishSellingSecondTableScreen extends Component {
                                                 style={{ borderWidth: 1 }}
                                                 onChangeText={(data) => this.setState({unitDryfishsalt : data})}
                                                 keyboardType="number-pad"
+                                                defaultValue={this.state.unitDryfishsalt}
                                             />
                                         </View>
 
@@ -352,6 +353,7 @@ export default class DryFishSellingSecondTableScreen extends Component {
                                                 style={{ borderWidth: 1 }}
                                                 onChangeText={(data) => this.setState({unitDryfish : data})}
                                                 keyboardType="number-pad"
+                                                defaultValue={this.state.unitDryfish}
                                             />
                                         </View>
 
@@ -365,6 +367,7 @@ export default class DryFishSellingSecondTableScreen extends Component {
                                                 style={{ borderWidth: 1 }}
                                                 onChangeText={(data) => this.setState({sellingpricedryfishsalt : data})}
                                                 keyboardType="number-pad"
+                                                defaultValue={this.state.sellingpricedryfishsalt}
                                             />
                                         </View>
 
@@ -374,6 +377,7 @@ export default class DryFishSellingSecondTableScreen extends Component {
                                                 style={{ borderWidth: 1 }}
                                                 onChangeText={(data) => this.setState({sellingpricedryfish : data})}
                                                 keyboardType="number-pad"
+                                                defaultValue={this.state.sellingpricedryfish}
                                             />
                                         </View>
 
