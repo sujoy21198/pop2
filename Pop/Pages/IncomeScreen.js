@@ -6,9 +6,50 @@ import { heightToDp, widthToDp } from '../Responsive'
 import TopLogo from '../assets/TopLogo'
 import Income from '../assets/Income'
 import Icon from 'react-native-vector-icons/FontAwesome'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 
 export default class IncomeScreen extends Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            type:'',
+            category:'',
+            amount:'0'
+        }
+        this.state.type = this.props.route.params.type
+        this.state.category = this.props.route.params.category
+        alert(this.state.type)
+    }
+
+    clear = () => {
+        this.setState({amount : '0'})
+    }
+
+    calculation = (data) => {
+        var result = parseInt(this.state.amount) + parseInt(data)
+        this.setState({amount : result})
+    }
+
+    doneButton = async() => {
+        try{
+            const moneyObject={'type':this.state.type,'category':this.state.category,'amount':this.state.amount}
+            //const incomeObject ={'type':'income','category':'Crops','amount':this.state.totalincomefromcrop}
+            let username = await AsyncStorage.getItem('username')
+            let user = await AsyncStorage.getItem('user');
+            let parsed = JSON.parse(user);
+            var specificObject = parsed.find((i) => i.username === username)
+            specificObject.moneyManagerData.push(moneyObject)
+            await AsyncStorage.setItem('user', JSON.stringify(parsed))
+            console.log(specificObject.moneyManagerData)
+        }catch(error){
+            console.log(error)
+        }
+
+        this.props.navigation.navigate({
+            name: 'MoneyManagerScreen'
+        })
+    }
     render() {
         return (
             <View style={{ backgroundColor: BaseColor.BackgroundColor, flex: 1 }}>
@@ -86,15 +127,15 @@ export default class IncomeScreen extends Component {
                     </TouchableOpacity>
                 </View>
                 <View style={{ borderBottomColor: BaseColor.Stroke, borderBottomWidth: 1, marginTop: heightToDp('1.5%'), width: widthToDp("100%") }}></View>
-                <Text style={{ marginLeft: widthToDp("3%"), marginTop: heightToDp("2%"), fontSize: widthToDp("7%"), fontFamily: 'Oswald-Medium' }}>LIVESTOCK</Text>
+                <Text style={{ marginLeft: widthToDp("3%"), marginTop: heightToDp("2%"), fontSize: widthToDp("7%"), fontFamily: 'Oswald-Medium' }}>{this.state.category}</Text>
                 <View style={{ backgroundColor: BaseColor.Red, height: heightToDp("6%"), width: widthToDp("90%"), marginLeft: widthToDp("3%"), marginTop: heightToDp("1%"), borderRadius: 10 }}>
                     <View style={{ marginLeft: widthToDp("3%"), marginTop: heightToDp("0.7%"), flexDirection: 'row' }}>
                         <View style={{ flexDirection: 'row', width: widthToDp("20%") }}>
                             <Income />
-                            <Text style={{ marginLeft: widthToDp("3%"), fontSize: widthToDp("5%"), fontFamily: 'Oswald-Medium', color: 'white' }}>INCOME</Text>
+                            <Text style={{ marginLeft: widthToDp("3%"), fontSize: widthToDp("5%"), fontFamily: 'Oswald-Medium', color: 'white' }}>{this.state.type}</Text>
                         </View>
                         <Text style={{ marginLeft: widthToDp("45%"), fontSize: widthToDp("5%"), fontFamily: 'Oswald-Medium', color: 'white' }}>₹</Text>
-                        <Text style={{ marginLeft: widthToDp("3%"), fontSize: widthToDp("5%"), fontFamily: 'Oswald-Medium', color: 'white' }}>6000</Text>
+                        <Text style={{ marginLeft: widthToDp("3%"), fontSize: widthToDp("5%"), fontFamily: 'Oswald-Medium', color: 'white' }}>{this.state.amount}</Text>
                     </View>
                 </View>
 
@@ -103,10 +144,10 @@ export default class IncomeScreen extends Component {
                         <View style={{ width: widthToDp("8%"), height: heightToDp("9%") }}>
                             <Text style={{ marginLeft: widthToDp("3%"), fontSize: widthToDp("7%"), fontFamily: 'Oswald-Medium', color: 'black', marginTop: heightToDp("1.3%") }}>₹</Text>
                         </View>
-                        <Text style={{ marginLeft: widthToDp("8%"), fontSize: widthToDp("8%"), fontFamily: 'Oswald-Medium', color: 'black', marginTop: heightToDp("1%") }}>23000</Text>
+                        <Text style={{ marginLeft: widthToDp("8%"), fontSize: widthToDp("8%"), fontFamily: 'Oswald-Medium', color: 'black', marginTop: heightToDp("1%") }}>{this.state.amount}</Text>
                     </View>
 
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={() => this.clear()}>
                         <View style={{ backgroundColor: "#fff", height: heightToDp("6%"), width: widthToDp("25%"), borderRadius: 100, marginTop: heightToDp("3.5%"), marginLeft: widthToDp("24%") }}>
                             <Text style={{ fontSize: widthToDp("4%"), color: "#000", marginTop: heightToDp("1.5%"), alignSelf: 'center', fontFamily: 'Oswald-Medium' }}>CLEAR</Text>
                         </View>
@@ -115,14 +156,14 @@ export default class IncomeScreen extends Component {
 
                 <ScrollView>
                     <View style={{ flexDirection: 'row', marginTop: heightToDp("3%"), marginLeft: widthToDp("3%") }}>
-                        <TouchableOpacity>
+                        <TouchableOpacity onPress={() => this.calculation(2000)}>
                         <Image
                             source={require('../assets/2000-Note.png')}
                             style={{ height: heightToDp("9%"), width: widthToDp("45%"), borderRadius: 10 }}
                         />
                         </TouchableOpacity>
 
-                        <TouchableOpacity>
+                        <TouchableOpacity onPress={() => this.calculation(500)}>
                         <Image
                             source={require('../assets/500-Note.jpg')}
                             style={{ height: heightToDp("9%"), width: widthToDp("40%"), borderRadius: 10, marginLeft: widthToDp("3.5%") }}
@@ -133,14 +174,14 @@ export default class IncomeScreen extends Component {
 
                     <View style={{ flexDirection: 'row', marginTop: heightToDp("3%"), marginLeft: widthToDp("3%") }}>
 
-                        <TouchableOpacity>
+                        <TouchableOpacity onPress={() => this.calculation('200')}>
                         <Image
                             source={require('../assets/200-Note.jpg')}
                             style={{ height: heightToDp("9%"), width: widthToDp("45%"), borderRadius: 10 }}
                         />
                         </TouchableOpacity>
                         
-                        <TouchableOpacity>
+                        <TouchableOpacity onPress={() => this.calculation(100)}>
                         <Image
                             source={require('../assets/100-Note.png')}
                             style={{ height: heightToDp("9%"), width: widthToDp("40%"), borderRadius: 10, marginLeft: widthToDp("3.5%") }}
@@ -151,14 +192,14 @@ export default class IncomeScreen extends Component {
 
                     <View style={{ flexDirection: 'row', marginTop: heightToDp("3%"), marginLeft: widthToDp("3%") }}>
 
-                        <TouchableOpacity>
+                        <TouchableOpacity onPress={() => this.calculation(50)}>
                         <Image
                             source={require('../assets/50-Note.jpg')}
                             style={{ height: heightToDp("9%"), width: widthToDp("45%"), borderRadius: 10 }}
                         />
                         </TouchableOpacity>
 
-                        <TouchableOpacity>
+                        <TouchableOpacity onPress={() => this.calculation(20)}>
                         <Image
                             source={require('../assets/20-Note.png')}
                             style={{ height: heightToDp("9%"), width: widthToDp("40%"), borderRadius: 10, marginLeft: widthToDp("3.5%") }}
@@ -168,13 +209,13 @@ export default class IncomeScreen extends Component {
                     </View>
 
                     <View style={{ flexDirection: 'row', marginTop: heightToDp("3%"), marginLeft: widthToDp("3%") }}>
-                        <TouchableOpacity>
+                        <TouchableOpacity onPress={() => this.calculation(10)}>
                         <Image
                             source={require('../assets/10-Note.png')}
                             style={{ height: heightToDp("9%"), width: widthToDp("45%"), borderRadius: 10 }}
                         />
                         </TouchableOpacity>
-                        <TouchableOpacity>
+                        <TouchableOpacity onPress={() => this.calculation(5)}>
                         <Image
                             source={require('../assets/5-Note.jpg')}
                             style={{ height: heightToDp("9%"), width: widthToDp("40%"), borderRadius: 10, marginLeft: widthToDp("3.5%") }}
@@ -182,7 +223,7 @@ export default class IncomeScreen extends Component {
                         </TouchableOpacity>
                     </View>
 
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={() => this.doneButton()}>
                         <View style={{ backgroundColor: "#fff", height: heightToDp("6%"), width: widthToDp("30%"), borderRadius: 100, alignSelf: 'center', marginTop: heightToDp("2%") }}>
                             <Text style={{ fontSize: widthToDp("4%"), color: "#000", marginTop: heightToDp("1.7%"), alignSelf: 'center', fontFamily: 'Oswald-Medium' }}>NEXT</Text>
                         </View>

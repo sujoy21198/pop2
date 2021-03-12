@@ -26,6 +26,20 @@ export default class MoneyManagerScreen extends Component {
         //alert(this.state.value)
     }
 
+    expense = () => {
+        this.props.navigation.navigate({
+            name: 'MoneyManagerCategoriesScreen',
+            params: { type: 'expense' }
+        })
+    }
+
+    income = () => {
+        this.props.navigation.navigate({
+            name: 'MoneyManagerCategoriesScreen',
+            params: { type: 'income' }
+        })
+    }
+
     render() {
         return (
             <View style={{ backgroundColor: BaseColor.BackgroundColor, flex: 1 }}>
@@ -105,13 +119,20 @@ export default class MoneyManagerScreen extends Component {
                 </View>
                 <View style={{ borderBottomColor: BaseColor.Stroke, borderBottomWidth: 1, marginTop: heightToDp('1.5%'), width: widthToDp("100%") }}></View>
                 <Text style={{ marginLeft: widthToDp("3%"), marginTop: heightToDp("2%"), fontSize: widthToDp("7%"), fontFamily: 'Oswald-Medium' }}>MONEY MANAGER</Text>
-                <View style={{ alignSelf: 'center', marginTop: heightToDp("3%"), backgroundColor: BaseColor.Red, height: heightToDp("10%"), width: widthToDp("80%"), borderRadius: 20 }}>
-                    <Text style={{ fontSize: widthToDp("7%"), fontFamily: 'Oswald-Medium', alignSelf: 'center', marginTop: heightToDp("2%"), color: 'white' }}>EXPENSE</Text>
-                </View>
 
-                <View style={{ alignSelf: 'center', marginTop: heightToDp("3%"), backgroundColor: BaseColor.Red, height: heightToDp("10%"), width: widthToDp("80%"), borderRadius: 20 }}>
-                    <Text style={{ fontSize: widthToDp("7%"), fontFamily: 'Oswald-Medium', alignSelf: 'center', marginTop: heightToDp("2%"), color: 'white' }}>INCOME</Text>
-                </View>
+                <TouchableOpacity onPress={() => this.expense()}>
+                    <View style={{ alignSelf: 'center', marginTop: heightToDp("3%"), backgroundColor: BaseColor.Red, height: heightToDp("10%"), width: widthToDp("80%"), borderRadius: 20 }}>
+                        <Text style={{ fontSize: widthToDp("7%"), fontFamily: 'Oswald-Medium', alignSelf: 'center', marginTop: heightToDp("2%"), color: 'white' }}>EXPENSE</Text>
+                    </View>
+                </TouchableOpacity>
+
+
+                <TouchableOpacity onPress={() => this.income()}>
+                    <View style={{ alignSelf: 'center', marginTop: heightToDp("3%"), backgroundColor: BaseColor.Red, height: heightToDp("10%"), width: widthToDp("80%"), borderRadius: 20 }}>
+                        <Text style={{ fontSize: widthToDp("7%"), fontFamily: 'Oswald-Medium', alignSelf: 'center', marginTop: heightToDp("2%"), color: 'white' }}>INCOME</Text>
+                    </View>
+                </TouchableOpacity>
+
 
                 <TouchableOpacity onPress={() => this.props.navigation.navigate('AllTransactionScreen')}>
                     <View style={{ alignSelf: 'center', marginTop: heightToDp("3%"), backgroundColor: BaseColor.Red, height: heightToDp("10%"), width: widthToDp("80%"), borderRadius: 20 }}>
