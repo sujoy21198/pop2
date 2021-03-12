@@ -7,6 +7,8 @@ import { widthToDp, heightToDp } from '../Responsive'
 import { FlatGrid, SectionGrid } from 'react-native-super-grid'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import DataAccess from '../Core/DataAccess'
+import AsyncStorage from '@react-native-async-storage/async-storage'
+
 
 
 const data = [
@@ -44,7 +46,29 @@ export default class LandTypeScreen extends Component {
 
         this.netProfitCalculation()
         //alert(this.state.patchName)
+        this.saveToOfflineAnalysis()
 
+    }
+
+    saveToOfflineAnalysis = async() => {
+        try{
+            const analysisObject = {'cropName': this.state.cropName,'_id': this.state._id,'imageFile' : this.state.imageFile,'patchName' : this.state.patchName,'landType': this.state.landType,'farmingAreaInDecimal' : this.state.farmingAreaInDecimal,'costOfCultivatinPerTenDecimal' : this.state.costOfCultivatinPerTenDecimal,'costPerKg' : this.state.costPerKg,'productionInKg' : this.state.productionInKg,'cost' : this.state.cost,'netProfit' : this.state.netProfit}
+            let username = await AsyncStorage.getItem('username')
+            let user = await AsyncStorage.getItem('user')
+            let parsed = JSON.parse(user)
+            var sepcific = parsed.find((i) => i.username === username)
+            var valueArr = sepcific.costBenifitAnalysis.map(function (item) { return item.patchName })
+            if (valueArr.includes(this.state.patchName)) {
+                console.log("Already created")
+                //console.log(sepcific.costBenifitAnalysis)
+            } else {
+                sepcific.costBenifitAnalysis.push(analysisObject)
+                console.log(sepcific.costBenifitAnalysis)
+                await AsyncStorage.setItem('user', JSON.stringify(parsed))
+            }
+        }catch(error){
+            console.log(error)
+        }
     }
 
     netProfitCalculation = () => {

@@ -37,11 +37,7 @@ export default class PatchScreen extends Component {
         //this.test()
     }
 
-    // test = () => {
-    //     if(this.state.landType === 'HIGH LAND'){
-    //         alert("bal")
-    //     }
-    // }
+    
 
     setPatch = async (data) => {
         try {
@@ -140,20 +136,95 @@ export default class PatchScreen extends Component {
                 sepcific.patch.push(patchArrayObject)
                 await AsyncStorage.setItem('user', JSON.stringify(parsed))
             }
+
+            var jump = sepcific.patch.find((i) => i.patchName === patchName)
+            var jumpNavigation = sepcific.costBenifitAnalysis.find((i) => i.patchName === patchName)
+            console.log(sepcific.costBenifitAnalysis.find((i) => i.patchName === patchName),"hi")
+            if(jump.step1 === '' && jump.step2 === '' && jump.step3 === '' && jump.step4 === '' && jump.step5 === ''){
+                this.props.navigation.navigate({
+                    name: 'SelectFarmingAreaScreen',
+                    params: {
+                        _id: this.state._id,
+                        cropName: this.state.cropName,
+                        imageFile: this.state.imageFile,
+                        patchName: patchName,
+                        landType: this.state.landType
+                    }
+                })
+            }else if(jump.step2 === ''){
+                this.props.navigation.navigate({
+                    name: 'StepTwoScreen',
+                    params: {
+                        cropName: jumpNavigation.cropName,
+                        _id: jumpNavigation._id,
+                        imageFile: jumpNavigation.imageFile,
+                        patchName : jumpNavigation.patchName,
+                        landType: jumpNavigation.landType,
+                        farmingAreaInDecimal : jumpNavigation.farmingAreaInDecimal,
+                        costOfCultivatinPerTenDecimal : jumpNavigation.costOfCultivatinPerTenDecimal,
+                        costPerKg : jumpNavigation.costPerKg,
+                        productionInKg : jumpNavigation.productionInKg,
+                        cost : jumpNavigation.cost,
+                        netProfit : jumpNavigation.netProfit
+                    }
+                })
+            }else if(jump.step3 === ''){
+                this.props.navigation.navigate({
+                    name: 'StepThreeScreen',
+                    params: {
+                        cropName: jumpNavigation.cropName,
+                        _id: jumpNavigation._id,
+                        imageFile: jumpNavigation.imageFile,
+                        patchName : jumpNavigation.patchName,
+                        landType: jumpNavigation.landType,
+                        farmingAreaInDecimal : jumpNavigation.farmingAreaInDecimal,
+                        costOfCultivatinPerTenDecimal : jumpNavigation.costOfCultivatinPerTenDecimal,
+                        costPerKg : jumpNavigation.costPerKg,
+                        productionInKg : jumpNavigation.productionInKg,
+                        cost : jumpNavigation.cost,
+                        netProfit : jumpNavigation.netProfit
+                    }
+                })
+            }else if(jump.step4 === ''){
+                this.props.navigation.navigate({
+                    name: 'StepFourScreen',
+                    params: {
+                        cropName: jumpNavigation.cropName,
+                        _id: jumpNavigation._id,
+                        imageFile: jumpNavigation.imageFile,
+                        patchName : jumpNavigation.patchName,
+                        landType: jumpNavigation.landType,
+                        farmingAreaInDecimal : jumpNavigation.farmingAreaInDecimal,
+                        costOfCultivatinPerTenDecimal : jumpNavigation.costOfCultivatinPerTenDecimal,
+                        costPerKg : jumpNavigation.costPerKg,
+                        productionInKg : jumpNavigation.productionInKg,
+                        cost : jumpNavigation.cost,
+                        netProfit : jumpNavigation.netProfit
+                    }
+                })
+            }else if(jump.step5 === ''){
+                this.props.navigation.navigate({
+                    name: 'StepFiveScreen',
+                    params: {
+                        cropName: jumpNavigation.cropName,
+                        _id: jumpNavigation._id,
+                        imageFile: jumpNavigation.imageFile,
+                        patchName : jumpNavigation.patchName,
+                        landType: jumpNavigation.landType,
+                        farmingAreaInDecimal : jumpNavigation.farmingAreaInDecimal,
+                        costOfCultivatinPerTenDecimal : jumpNavigation.costOfCultivatinPerTenDecimal,
+                        costPerKg : jumpNavigation.costPerKg,
+                        productionInKg : jumpNavigation.productionInKg,
+                        cost : jumpNavigation.cost,
+                        netProfit : jumpNavigation.netProfit
+                    }
+                })
+            }
             // sepcific.patch.push(patchArrayObject)
 
             // await AsyncStorage.setItem('user', JSON.stringify(parsed))
             console.log(sepcific.patch)
-            this.props.navigation.navigate({
-                name: 'SelectFarmingAreaScreen',
-                params: {
-                    _id: this.state._id,
-                    cropName: this.state.cropName,
-                    imageFile: this.state.imageFile,
-                    patchName: patchName,
-                    landType: this.state.landType
-                }
-            })
+            
         } catch (error) {
             console.log(error)
         }

@@ -273,7 +273,7 @@ export default class CostBenifitAnalysisScreen extends Component {
                                 <View style={{ width: widthToDp("70%") }}>
                                     <Text style={{ fontFamily: 'Oswald-Medium' }}>Cost Per kg</Text>
                                 </View>
-                                <View style={{width:widthToDp("10%")}}>
+                                <View style={{ width: widthToDp("10%") }}>
                                     <Text style={{ marginLeft: widthToDp("51%"), fontFamily: 'Oswald-Medium' }}>{this.state.actualCulCostScreenCostPerKg} KG</Text>
                                 </View>
 
@@ -281,13 +281,12 @@ export default class CostBenifitAnalysisScreen extends Component {
                             </View>
                             <View style={{ borderBottomColor: 'black', borderBottomWidth: 1, marginTop: heightToDp('1.5%'), width: widthToDp("90%") }}></View>
                             <View style={{ flexDirection: 'row', alignSelf: 'center', marginTop: heightToDp('1%') }}>
-                                <View style={{width:widthToDp("70%")}}>
-                                <Text style={{ fontSize: widthToDp("6%"), fontFamily: 'Oswald-Bold' }}>Net Profit</Text>
+                                <View style={{ width: widthToDp("70%") }}>
+                                    <Text style={{ fontSize: widthToDp("6%"), fontFamily: 'Oswald-Bold' }}>Net Profit</Text>
                                 </View>
-                                <View style={{width:widthToDp("10%")}}>
-                                <Text style={{ marginLeft: widthToDp("40%"), fontWeight: 'bold', fontSize: widthToDp("6%"), fontFamily: 'Oswald-Bold' }}>₹ {this.state.profit}</Text>
+                                <View style={{ width: widthToDp("10%") }}>
+                                    <Text style={{ marginLeft: widthToDp("0%"), fontWeight: 'bold', fontSize: widthToDp("6%"), fontFamily: 'Oswald-Bold' }}>₹ {this.state.profit}</Text>
                                 </View>
-                                
                             </View>
                         </View>
                     </View>

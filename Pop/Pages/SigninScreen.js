@@ -329,7 +329,7 @@ export default class SigninScreen extends Component {
         let token = await AsyncStorage.getItem('token')
         let username = await AsyncStorage.getItem('username')
 
-        const userToBeSaved = { '_id': _id, 'name': reqname, 'password': this.state.password, 'token': token, 'username': username, 'syncStatus': false, 'lowLand': [], 'highLand': [], 'mediumLand': [], 'patch': [], 'cropData': [], 'livestockData': [], 'moneyManagerData': [] }
+        const userToBeSaved = { '_id': _id, 'name': reqname, 'password': this.state.password, 'token': token, 'username': username, 'syncStatus': false, 'lowLand': [], 'highLand': [], 'mediumLand': [], 'patch': [], 'cropData': [], 'livestockData': [], 'moneyManagerData': [] , 'costBenifitAnalysis':[] }
         const exsistingUser = await AsyncStorage.getItem('user')
         let newUser = JSON.parse(exsistingUser)
         if (!newUser) {
