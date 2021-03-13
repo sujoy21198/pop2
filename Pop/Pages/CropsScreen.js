@@ -24,13 +24,15 @@ export default class CropsScreen extends Component {
             crops: [],
             isLoading: false,
             languages: [],
-            isFetching: false
+            isFetching: false,
+            textLanguageChange : ''
         }
         this.state.languages = Languages
     }
     componentDidMount() {
         //this.loadCrops()
         this.loadCropsFromStorage()
+        this.setLanguageOnMount()
     }
 
     loadCropsFromStorage = async() => {
@@ -103,6 +105,41 @@ export default class CropsScreen extends Component {
         })
     }
 
+    setLanguageOnMount = async() => {
+        let defaultLanguage = await AsyncStorage.getItem('language')
+        if(defaultLanguage === 'en'){
+            this.setState({textLanguageChange : '0'})
+        }else if(defaultLanguage === 'hi'){
+            this.setState({textLanguageChange : '1'})
+        }else if(defaultLanguage === 'ho'){
+            this.setState({textLanguageChange : '2'})
+        }else if(defaultLanguage === 'od'){
+            this.setState({textLanguageChange : '3'})
+        }else if(defaultLanguage === 'san'){
+            this.setState({textLanguageChange : '4'})
+        }
+    }
+
+    languageChangeFunction = async(data) => {
+        
+        if(data === 'en'){
+            AsyncStorage.setItem('language','en')
+            this.setState({textLanguageChange : '0'})
+        }else if(data === 'hi'){
+            this.setState({textLanguageChange : '1'})
+            AsyncStorage.setItem('language','hi')
+        }else if(data === 'ho'){
+            this.setState({textLanguageChange : '2'})
+            AsyncStorage.setItem('language','ho')
+        }else if(data === 'od'){
+            this.setState({textLanguageChange : '3'})
+            AsyncStorage.setItem('language','od')
+        }else if(data === 'san'){
+            AsyncStorage.setItem('language','san')
+            this.setState({textLanguageChange : '4'})
+        }
+    }
+
     onRefresh = () => {
         this.setState({ isFetching: true }, function () { this.loadCrops() });
     }
@@ -125,7 +162,7 @@ export default class CropsScreen extends Component {
                     />
                 </View>
                 <View style={{ flexDirection: 'row', marginTop: heightToDp("1%"), marginLeft: widthToDp("1%") }}>
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={() =>this.languageChangeFunction(this.state.languages[0].id)}>
                         <View style={{ backgroundColor: BaseColor.English, width: widthToDp("30%"), height: heightToDp("6%"), marginLeft: widthToDp("2%"), borderRadius: 100, flexDirection: 'row' }}>
                             <Text style={{ color: '#fff', marginTop: heightToDp("1.5%"), fontFamily: 'Oswald-Medium', marginLeft: widthToDp("5%") }}>{this.state.languages[0].value}</Text>
                             <Icon
@@ -137,7 +174,7 @@ export default class CropsScreen extends Component {
                         </View>
                     </TouchableOpacity>
 
-                    <TouchableOpacity >
+                    <TouchableOpacity onPress={() => this.languageChangeFunction(this.state.languages[1].id)}>
                         <View style={{ backgroundColor: BaseColor.Hindi, width: widthToDp("30%"), height: heightToDp("6%"), marginLeft: widthToDp("2%"), borderRadius: 100, flexDirection: 'row' }}>
                             <Text style={{ color: '#fff', marginTop: heightToDp("1.7%"), marginLeft: widthToDp("5%"), fontWeight: 'bold', fontSize: widthToDp("4.3%") }}>{this.state.languages[1].value}</Text>
                             <Icon
@@ -149,7 +186,7 @@ export default class CropsScreen extends Component {
                         </View>
                     </TouchableOpacity>
 
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={() => this.languageChangeFunction(this.state.languages[2].id)}>
                         <View style={{ backgroundColor: BaseColor.Ho, width: widthToDp("30%"), height: heightToDp("6%"), marginLeft: widthToDp("2%"), borderRadius: 100, flexDirection: 'row' }}>
                             <Text style={{ color: '#fff', marginTop: heightToDp("1.5%"), marginLeft: widthToDp("5%"), fontWeight: 'bold', fontSize: widthToDp("4.3%") }}>{this.state.languages[2].value}</Text>
                             <Icon
@@ -162,7 +199,7 @@ export default class CropsScreen extends Component {
                     </TouchableOpacity>
                 </View>
                 <View style={{ flexDirection: 'row', marginTop: heightToDp("1%"), marginLeft: widthToDp("1%"), alignSelf: 'center' }}>
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={() => this.languageChangeFunction(this.state.languages[3].id)}>
                         <View style={{ backgroundColor: BaseColor.Uridia, width: widthToDp("30%"), height: heightToDp("6%"), borderRadius: 100, flexDirection: 'row' }}>
                             <Text style={{ color: '#fff', marginTop: heightToDp("1.7%"), marginLeft: widthToDp("4.7%"), fontWeight: 'bold', fontSize: widthToDp("4.3%") }}>{this.state.languages[3].value}</Text>
                             <Icon
@@ -174,7 +211,7 @@ export default class CropsScreen extends Component {
                         </View>
                     </TouchableOpacity>
 
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={() => this.languageChangeFunction(this.state.languages[4].id)}>
                         <View style={{ backgroundColor: BaseColor.Santhali, width: widthToDp("30%"), height: heightToDp("6%"), borderRadius: 100, marginLeft: widthToDp("2%"), flexDirection: 'row' }}>
                             <Text style={{ color: '#fff', marginTop: heightToDp("1.7%"), marginLeft: widthToDp("3.4%"), fontWeight: 'bold', fontSize: widthToDp("4.3%") }}>{this.state.languages[4].value}</Text>
                             <Icon
@@ -200,9 +237,12 @@ export default class CropsScreen extends Component {
                                 onRefresh={() => this.onRefresh()}
                                 refreshing={this.state.isFetching}
                                 renderItem={({ item }) => (
-                                    <TouchableOpacity onPress={() => this.navigateToLandScreen(item._id, item.name , item.imageFile)}>
+                                    <TouchableOpacity onPress={() => this.navigateToLandScreen(item._id, item.nameEnglish , item.imageFile)}>
                                         <View style={{ backgroundColor: BaseColor.Red, width: widthToDp("47%"), height: heightToDp("30%"), elevation: 10, borderRadius: 10 }}>
-                                            <Text style={{ color: "#fff", fontSize: widthToDp("5%"), marginLeft: widthToDp("5%"), marginTop: heightToDp("0.4%"), fontFamily: 'Oswald-Medium' }}>{item.name}</Text>
+                                            {
+                                                this.state.textLanguageChange==='0'? <Text style={{ color: "#fff", fontSize: widthToDp("5%"), marginLeft: widthToDp("5%"), marginTop: heightToDp("0.4%"), fontFamily: 'Oswald-Medium' }}>{item.nameEnglish}</Text> : ((this.state.textLanguageChange === '1') ? <Text style={{ color: "#fff", fontSize: widthToDp("5%"), marginLeft: widthToDp("5%"), marginTop: heightToDp("0.4%"), fontFamily: 'Oswald-Medium' }}>{item.nameHindi}</Text> : ((this.state.textLanguageChange === '2') ? <Text style={{ color: "#fff", fontSize: widthToDp("5%"), marginLeft: widthToDp("5%"), marginTop: heightToDp("0.4%"), fontFamily: 'Oswald-Medium' }}>{item.nameHo}</Text> : ((this.state.textLanguageChange === '3') ? <Text style={{ color: "#fff", fontSize: widthToDp("5%"), marginLeft: widthToDp("5%"), marginTop: heightToDp("0.4%"), fontFamily: 'Oswald-Medium' }}>{item.nameOdia}</Text>: ((this.state.textLanguageChange === '4') ? <Text style={{ color: "#fff", fontSize: widthToDp("5%"), marginLeft: widthToDp("5%"), marginTop: heightToDp("0.4%"), fontFamily: 'Oswald-Medium' }}>{item.nameSanthali}</Text> : null))) )
+                                            }
+                                            
                                             <Image
                                                 style={{ width: widthToDp("47%"), height: heightToDp("25%"), borderBottomLeftRadius: 10, borderBottomRightRadius: 10, marginTop: heightToDp("1%") }}
                                                 source={{ uri: DataAccess.BaseUrl + DataAccess.CropImage + item.imageFile }}

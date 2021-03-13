@@ -6,13 +6,13 @@ const Languages = [
         id:'hi', value:'हिन्दी', headerLanguage : 'Hindi'
     },
     {
-        id:3, value:'ʤʌgʌr', headerLanguage : 'Ho'
+        id:'ho', value:'ʤʌgʌr', headerLanguage : 'Ho'
     },
     {
         id:'od', value:'ଓଡ଼ିଆ', headerLanguage : 'Odia'
     },
     {
-        id:5, value:'ᱥᱟᱱᱛᱟᱲᱤ', headerLanguage : 'Santhali'
+        id:'san', value:'ᱥᱟᱱᱛᱟᱲᱤ', headerLanguage : 'Santhali'
     }
 ]
 
