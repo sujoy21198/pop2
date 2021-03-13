@@ -24,7 +24,7 @@ export default class BreedScreen extends Component {
         }
         this.state._id = this.props.route.params._id
         this.state.name = this.props.route.params.name
-        //alert(this.state._id)
+        //alert(this.state.name)
     }
     componentDidMount(){
         //this.loadLiveStocks()

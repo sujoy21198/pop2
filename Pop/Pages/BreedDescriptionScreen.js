@@ -31,7 +31,7 @@ export default class BreedDescriptionScreen extends Component {
         this.state.breedname = this.props.route.params.breedname
         this.state.imageFile = this.props.route.params.imageFile
         this.state.livestockName = this.props.route.params.livestockName
-        //alert(this.state._id)
+        //alert(this.state.livestockName)
         this.loadBreedFromStorage()
     }
 

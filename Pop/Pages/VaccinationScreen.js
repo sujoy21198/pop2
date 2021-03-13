@@ -298,6 +298,7 @@ export default class VaccinationScreen extends Component {
                                                         <Input
                                                             style={{ borderWidth: 1 }}
                                                             onChangeText={(data) => this.inputValue(data)}
+                                                            placeholder={'1'}
                                                             keyboardType="number-pad"
                                                         />
                                                     </View>
@@ -333,14 +334,7 @@ export default class VaccinationScreen extends Component {
                                     </View>
                                 </View>
                             </View>
-                            <View style={{ borderWidth: 1, height: heightToDp("8%"), width: widthToDp("83%"), marginLeft: widthToDp("3%"), marginTop: heightToDp("0%"), flexDirection: 'row' }}>
-                                <Text>Total (A)</Text>
-                                <Input
-                                    style={{ borderWidth: 1 }}
-                                    onChangeText={(data) => this.inputValue(data)}
-                                    keyboardType="number-pad"
-                                />
-                            </View>
+                            
                         </View>
                     </View>
                     <View style={{ marginTop: heightToDp("10%") }}></View>
