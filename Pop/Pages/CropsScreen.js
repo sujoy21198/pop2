@@ -24,7 +24,8 @@ export default class CropsScreen extends Component {
             crops: [],
             isLoading: false,
             isFetching: false,
-            textLanguageChange : ''
+            textLanguageChange : '',
+            languages: []
         }
         this.state.languages = Languages
     }

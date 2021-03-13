@@ -12,6 +12,8 @@ import axios from 'axios'
 import DataAccess from '../Core/DataAccess'
 import CustomIndicator from '../Core/CustomIndicator'
 import HTML from "react-native-render-html";
+import Languages from '../Core/Languages'
+import LanguageChange from '../Core/LanguageChange'
 
 export default class LiveStockStepThreeScreen extends Component {
 
@@ -26,14 +28,21 @@ export default class LiveStockStepThreeScreen extends Component {
             stepName: '',
             stepDescription: '',
             livestockName: '',
-            contentArea: ''
+            contentArea: '',
+            languages: [],
+            textLanguageChange: '',
         }
+        this.state.languages = Languages
         this.state._id = this.props.route.params._id
         this.state.breedname = this.props.route.params.breedname
         this.state.imageFile = this.props.route.params.imageFile
         this.state.livestockName = this.props.route.params.livestockName
         //alert(this.state.livestockName)
         this.loadBreedFromStorage()
+    }
+
+    componentDidMount() {
+        this.setLanguageOnMount()
     }
 
     loadBreedFromStorage = async () => {
@@ -44,10 +53,27 @@ export default class LiveStockStepThreeScreen extends Component {
             var specific = parsed.find((i) => i.username === username)
             var breedData = specific.livestockStep.filter((i) => i.livestockId === this.state._id)
             //console.log(breedData[1].name)
-            this.setState({ stepName: breedData[2].name })
-            this.setState({ stepDescription: breedData[2].english })
+            // this.setState({ stepName: breedData[2].name })
+            // this.setState({ stepDescription: breedData[2].english })
             this.setState({ contentArea: breedData[2].contentAreaEnglish })
-            console.log(breedData[2].contentAreaEnglish)
+            // console.log(breedData[2].contentAreaEnglish)
+            if (this.state.textLanguageChange === '0') {
+                this.setState({ stepName: breedData[2].nameEnglish })
+                this.setState({ stepDescription: breedData[2].english })
+            }else if(this.state.textLanguageChange === '1'){
+                this.setState({ stepName: breedData[2].nameHindi })
+                this.setState({ stepDescription: breedData[2].hindi })
+            }else if(this.state.textLanguageChange === '2'){
+                this.setState({ stepName: breedData[2].nameHo })
+                this.setState({ stepDescription: breedData[2].ho })
+            }else if(this.state.textLanguageChange === '3'){
+                this.setState({ stepName: breedData[2].nameOdia })
+                this.setState({ stepDescription: breedData[2].od })
+            }else if(this.state.textLanguageChange === '4'){
+                this.setState({ stepName: breedData[2].nameSanthali })
+                this.setState({ stepDescription: breedData[2].santhali })
+            }
+
         } catch (error) {
             this.nextButton()
             // var test = this.state.livestockName
@@ -147,6 +173,51 @@ export default class LiveStockStepThreeScreen extends Component {
             })
         }
     }
+
+    setLanguageOnMount = async () => {
+        let defaultLanguage = await AsyncStorage.getItem('language')
+        if (defaultLanguage === 'en') {
+            this.setState({ textLanguageChange: '0' })
+            this.loadBreedFromStorage()
+        } else if (defaultLanguage === 'hi') {
+            this.setState({ textLanguageChange: '1' })
+            this.loadBreedFromStorage()
+        } else if (defaultLanguage === 'ho') {
+            this.setState({ textLanguageChange: '2' })
+            this.loadBreedFromStorage()
+        } else if (defaultLanguage === 'od') {
+            this.setState({ textLanguageChange: '3' })
+            this.loadBreedFromStorage()
+        } else if (defaultLanguage === 'san') {
+            this.setState({ textLanguageChange: '4' })
+            this.loadBreedFromStorage()
+        }
+    }
+
+    languageChangeFunction = async (data) => {
+
+        if (data === 'en') {
+            AsyncStorage.setItem('language', 'en')
+            this.setState({ textLanguageChange: '0' })
+            this.loadBreedFromStorage()
+        } else if (data === 'hi') {
+            this.setState({ textLanguageChange: '1' })
+            AsyncStorage.setItem('language', 'hi')
+            this.loadBreedFromStorage()
+        } else if (data === 'ho') {
+            this.setState({ textLanguageChange: '2' })
+            AsyncStorage.setItem('language', 'ho')
+            this.loadBreedFromStorage()
+        } else if (data === 'od') {
+            this.setState({ textLanguageChange: '3' })
+            AsyncStorage.setItem('language', 'od')
+            this.loadBreedFromStorage()
+        } else if (data === 'san') {
+            AsyncStorage.setItem('language', 'san')
+            this.setState({ textLanguageChange: '4' })
+            this.loadBreedFromStorage()
+        }
+    }
     render() {
         return (
             <View style={{ backgroundColor: BaseColor.BackgroundColor, flex: 1 }}>
@@ -163,9 +234,9 @@ export default class LiveStockStepThreeScreen extends Component {
                 </View>
 
                 <View style={{ flexDirection: 'row', marginTop: heightToDp("1%"), marginLeft: widthToDp("1%") }}>
-                    <TouchableOpacity onPress={() => this.props.navigation.navigate('SigninScreen')}>
+                    <TouchableOpacity onPress={() => this.languageChangeFunction(this.state.languages[0].id)}>
                         <View style={{ backgroundColor: BaseColor.English, width: widthToDp("30%"), height: heightToDp("6%"), marginLeft: widthToDp("2%"), borderRadius: 100, flexDirection: 'row' }}>
-                            <Text style={{ color: '#fff', marginTop: heightToDp("1.5%"), fontFamily: 'Oswald-Medium', marginLeft: widthToDp("5%") }}>ENGLISH</Text>
+                            <Text style={{ color: '#fff', marginTop: heightToDp("1.5%"), fontFamily: 'Oswald-Medium', marginLeft: widthToDp("5%") }}>{this.state.languages[0].value}</Text>
                             <Icon
                                 name="microphone"
                                 color="white"
@@ -175,9 +246,9 @@ export default class LiveStockStepThreeScreen extends Component {
                         </View>
                     </TouchableOpacity>
 
-                    <TouchableOpacity >
+                    <TouchableOpacity onPress={() => this.languageChangeFunction(this.state.languages[1].id)}>
                         <View style={{ backgroundColor: BaseColor.Hindi, width: widthToDp("30%"), height: heightToDp("6%"), marginLeft: widthToDp("2%"), borderRadius: 100, flexDirection: 'row' }}>
-                            <Text style={{ color: '#fff', marginTop: heightToDp("1.7%"), marginLeft: widthToDp("5%"), fontWeight: 'bold', fontSize: widthToDp("4.3%") }}>हिन्दी</Text>
+                            <Text style={{ color: '#fff', marginTop: heightToDp("1.7%"), marginLeft: widthToDp("5%"), fontWeight: 'bold', fontSize: widthToDp("4.3%") }}>{this.state.languages[1].value}</Text>
                             <Icon
                                 name="microphone"
                                 color="white"
@@ -187,9 +258,9 @@ export default class LiveStockStepThreeScreen extends Component {
                         </View>
                     </TouchableOpacity>
 
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={() => this.languageChangeFunction(this.state.languages[2].id)}>
                         <View style={{ backgroundColor: BaseColor.Ho, width: widthToDp("30%"), height: heightToDp("6%"), marginLeft: widthToDp("2%"), borderRadius: 100, flexDirection: 'row' }}>
-                            <Text style={{ color: '#fff', marginTop: heightToDp("1.5%"), marginLeft: widthToDp("5%"), fontWeight: 'bold', fontSize: widthToDp("4.3%") }}>ʤʌgʌr</Text>
+                            <Text style={{ color: '#fff', marginTop: heightToDp("1.5%"), marginLeft: widthToDp("5%"), fontWeight: 'bold', fontSize: widthToDp("4.3%") }}>{this.state.languages[2].value}</Text>
                             <Icon
                                 name="microphone"
                                 color="white"
@@ -199,12 +270,10 @@ export default class LiveStockStepThreeScreen extends Component {
                         </View>
                     </TouchableOpacity>
                 </View>
-
-
                 <View style={{ flexDirection: 'row', marginTop: heightToDp("1%"), marginLeft: widthToDp("1%"), alignSelf: 'center' }}>
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={() => this.languageChangeFunction(this.state.languages[3].id)}>
                         <View style={{ backgroundColor: BaseColor.Uridia, width: widthToDp("30%"), height: heightToDp("6%"), borderRadius: 100, flexDirection: 'row' }}>
-                            <Text style={{ color: '#fff', marginTop: heightToDp("1.7%"), marginLeft: widthToDp("4.7%"), fontWeight: 'bold', fontSize: widthToDp("4.3%") }}>ଓଡ଼ିଆ</Text>
+                            <Text style={{ color: '#fff', marginTop: heightToDp("1.7%"), marginLeft: widthToDp("4.7%"), fontWeight: 'bold', fontSize: widthToDp("4.3%") }}>{this.state.languages[3].value}</Text>
                             <Icon
                                 name="microphone"
                                 color="white"
@@ -214,9 +283,9 @@ export default class LiveStockStepThreeScreen extends Component {
                         </View>
                     </TouchableOpacity>
 
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={() => this.languageChangeFunction(this.state.languages[4].id)}>
                         <View style={{ backgroundColor: BaseColor.Santhali, width: widthToDp("30%"), height: heightToDp("6%"), borderRadius: 100, marginLeft: widthToDp("2%"), flexDirection: 'row' }}>
-                            <Text style={{ color: '#fff', marginTop: heightToDp("1.7%"), marginLeft: widthToDp("3.4%"), fontWeight: 'bold', fontSize: widthToDp("4.3%") }}>ᱥᱟᱱᱛᱟᱲᱤ</Text>
+                            <Text style={{ color: '#fff', marginTop: heightToDp("1.7%"), marginLeft: widthToDp("3.4%"), fontWeight: 'bold', fontSize: widthToDp("4.3%") }}>{this.state.languages[4].value}</Text>
                             <Icon
                                 name="microphone"
                                 color="white"
