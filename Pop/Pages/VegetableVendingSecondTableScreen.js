@@ -14,9 +14,9 @@ import CustomIndicator from '../Core/CustomIndicator'
 
 
 const tableHeading = [
-    { 'name': 'Items', 'items': 'Dry Fish(without salt)', 'unit': '2', 'unitPrice': 'Rs 500 perKG', 'totalPrice': '1000' },
-    { 'name': 'Unit', 'items': 'Dry fish(salted)', 'unit': '2', 'unitPrice': 'Rs 500 perKG', 'totalPrice': '1000' },
-    { 'name': 'Unit Price', 'items': 'DryFishSellingSecondTableScreen' },
+    { 'name': 'Items', 'items': '2 to 3 Sessional vegetable', 'unit': '40Kg', 'unitPrice': '30', 'totalPrice': '1200' },
+    { 'name': 'Unit', 'items': 'Spices', 'unit': '2Kg', 'unitPrice': '80', 'totalPrice': '160' },
+    { 'name': 'Unit Price', 'items': 'Miscellaneous', 'unit': 'LS' , 'totalPrice': '100'},
     { 'name': 'Total Price' },
 ]
 
@@ -259,7 +259,7 @@ export default class DryFishSellingSecondTableScreen extends Component {
                                         {
                                             tableHeading.map((i) => {
                                                 return (
-                                                    <Text style={{ marginTop: heightToDp("4%") }}>{i.unit}</Text>
+                                                    <Text style={{ marginTop: heightToDp("2.6%") }}>{i.unit}</Text>
                                                 )
                                             })
                                         }
