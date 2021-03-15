@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { View, Image, TouchableOpacity, FlatList, ScrollView } from 'react-native'
 import BaseColor from '../Core/BaseTheme'
-import { Card, Text,Input } from 'native-base'
+import { Card, Text, Input } from 'native-base'
 import TopLogo from '../assets/TopLogo'
 import { widthToDp, heightToDp } from '../Responsive'
 import { FlatGrid, SectionGrid } from 'react-native-super-grid'
@@ -11,6 +11,8 @@ import DataAccess from '../Core/DataAccess'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import base64 from 'react-native-base64'
 import CustomIndicator from '../Core/CustomIndicator'
+import Languages from '../Core/Languages'
+import LanguageChange from '../Core/LanguageChange'
 
 
 export default class StepOneScreen extends Component {
@@ -24,20 +26,24 @@ export default class StepOneScreen extends Component {
             materialName: '',
             decimalPrice: '',
             isLoading: false,
-            imageFile:'',
-            materialPrice:'',
-            numberOfSteps:'',
-            pageNumber : '04',
-            patchName:'',
-            landType:'',
-            farmingAreaInDecimal:'',
-            costOfCultivatinPerTenDecimal:'',
-            costPerKg:'',
-            productionInKg:'',
-            cost:'',
-            netProfit:'',
-            materialQuantity:''
+            imageFile: '',
+            materialPrice: '',
+            numberOfSteps: '',
+            pageNumber: '04',
+            patchName: '',
+            landType: '',
+            farmingAreaInDecimal: '',
+            costOfCultivatinPerTenDecimal: '',
+            costPerKg: '',
+            productionInKg: '',
+            cost: '',
+            netProfit: '',
+            materialQuantity: '',
+            languages: [],
+            textLanguageChange: '',
+            cropNameLanguageChangeArray: []
         }
+        this.state.languages = Languages
         this.state._id = this.props.route.params._id
         this.state.cropName = this.props.route.params.cropName
         this.state.imageFile = this.props.route.params.imageFile
@@ -54,18 +60,19 @@ export default class StepOneScreen extends Component {
     componentDidMount() {
         //this.getStepData()
         this.getStepDataFromLocal()
+        this.setLanguageOnMount()
     }
 
-    setMaterialPrice = async(data) => {
-        AsyncStorage.setItem("stepFour",data)
+    setMaterialPrice = async (data) => {
+        AsyncStorage.setItem("stepFour", data)
 
         let stepFourPrice = await AsyncStorage.getItem('stepFour')
         //console.log(stepOnePrice)
-        this.setState({materialPrice : stepFourPrice})
+        this.setState({ materialPrice: stepFourPrice })
     }
 
-    setStepDataIntoPatch = async() => {
-        try{
+    setStepDataIntoPatch = async () => {
+        try {
             //const patchObject = { 'cropId': this.state._id , 'patchName': this.state.patchName , 'landType': this.state.landType , 'step1' : '' , 'step2':'' , 'step3':'' , 'step4':'' , 'step5':'' , 'step6' : '' , 'step7':'' , 'step8': ''}
             let username = await AsyncStorage.getItem('username')
             let stepFourPrice = await AsyncStorage.getItem('stepFour')
@@ -77,27 +84,27 @@ export default class StepOneScreen extends Component {
             await AsyncStorage.setItem('user', JSON.stringify(parsed))
 
             console.log(patchFind)
-        }catch(error){
+        } catch (error) {
             console.log(error)
         }
 
-        if(this.state.materialPrice === ''){
+        if (this.state.materialPrice === '') {
             alert("please enter a value")
-        }else{
+        } else {
             this.props.navigation.navigate({
                 name: 'StepFiveScreen',
                 params: {
                     cropName: this.state.cropName,
                     _id: this.state._id,
-                    imageFile : this.state.imageFile,
-                    patchName : this.state.patchName,
+                    imageFile: this.state.imageFile,
+                    patchName: this.state.patchName,
                     landType: this.state.landType,
-                    farmingAreaInDecimal : this.state.farmingAreaInDecimal,
-                    costOfCultivatinPerTenDecimal : this.state.costOfCultivatinPerTenDecimal,
-                    costPerKg : this.state.costPerKg,
-                    productionInKg : this.state.productionInKg,
-                    cost : this.state.cost,
-                    netProfit : this.state.netProfit
+                    farmingAreaInDecimal: this.state.farmingAreaInDecimal,
+                    costOfCultivatinPerTenDecimal: this.state.costOfCultivatinPerTenDecimal,
+                    costPerKg: this.state.costPerKg,
+                    productionInKg: this.state.productionInKg,
+                    cost: this.state.cost,
+                    netProfit: this.state.netProfit
                 }
             })
         }
@@ -107,7 +114,8 @@ export default class StepOneScreen extends Component {
     getStepDataFromLocal = async () => {
         try {
             var stepData = []
-            var decimalPrice, materialName,materialQuantity
+            var cropNameLanguageChangeArray = []
+            var decimalPrice, materialName, materialQuantity
             let username = await AsyncStorage.getItem('username')
             let user = await AsyncStorage.getItem('offlineData');
             let parsed = JSON.parse(user);
@@ -115,30 +123,48 @@ export default class StepOneScreen extends Component {
             var cropFilter = specific.cropsMaterials.filter((i) => i.cropId === this.state._id)
             stepData = cropFilter[3].stepData
             decimalPrice = cropFilter[3].decimalPrice
-            materialName =cropFilter[3].materialName
+            // materialName =cropFilter[3].materialNameEnglish
             materialQuantity = cropFilter[3].qty
+            cropNameLanguageChangeArray = stepData[0].cropData
+            if (this.state.textLanguageChange === '0') {
+                this.setState({ materialName: cropFilter[0].materialNameEnglish })
+
+            } else if (this.state.textLanguageChange === '1') {
+                this.setState({ materialName: cropFilter[0].materialNameHindi })
+
+            } else if (this.state.textLanguageChange === '2') {
+                this.setState({ materialName: cropFilter[0].materialNameHo })
+
+            } else if (this.state.textLanguageChange === '3') {
+                this.setState({ materialName: cropFilter[0].materialNameOdia })
+
+            } else if (this.state.textLanguageChange === '4') {
+                this.setState({ materialName: cropFilter[0].materialNameSanthali })
+
+            }
             console.log(cropFilter)
             this.setState({ stepData: stepData })
-            this.setState({ materialName: materialName })
+            //this.setState({ materialName: materialName })
             this.setState({ decimalPrice: decimalPrice })
-            this.setState({numberOfSteps : cropFilter.length})
-            this.setState({materialQuantity : materialQuantity})
+            this.setState({ numberOfSteps: cropFilter.length })
+            this.setState({ materialQuantity: materialQuantity })
+            this.setState({ cropNameLanguageChangeArray: cropNameLanguageChangeArray })
         } catch (error) {
-            alert("No More Steps Available")
+            //alert("No More Steps Available")
             this.props.navigation.navigate({
                 name: 'ActualCultivationCostScreen',
                 params: {
                     cropName: this.state.cropName,
                     _id: this.state._id,
-                    imageFile : this.state.imageFile,
-                    patchName : this.state.patchName,
+                    imageFile: this.state.imageFile,
+                    patchName: this.state.patchName,
                     landType: this.state.landType,
-                    farmingAreaInDecimal : this.state.farmingAreaInDecimal,
-                    costOfCultivatinPerTenDecimal : this.state.costOfCultivatinPerTenDecimal,
-                    costPerKg : this.state.costPerKg,
-                    productionInKg : this.state.productionInKg,
-                    cost : this.state.cost,
-                    netProfit : this.state.netProfit
+                    farmingAreaInDecimal: this.state.farmingAreaInDecimal,
+                    costOfCultivatinPerTenDecimal: this.state.costOfCultivatinPerTenDecimal,
+                    costPerKg: this.state.costPerKg,
+                    productionInKg: this.state.productionInKg,
+                    cost: this.state.cost,
+                    netProfit: this.state.netProfit
                 }
             })
         }
@@ -183,36 +209,36 @@ export default class StepOneScreen extends Component {
     }
 
     stepFiveScreen = () => {
-        if(this.state.materialPrice === ''){
+        if (this.state.materialPrice === '') {
             alert("please enter a value")
-        }else{
+        } else {
             this.props.navigation.navigate({
                 name: 'StepFiveScreen',
                 params: {
                     cropName: this.state.cropName,
                     _id: this.state._id,
-                    imageFile : this.state.imageFile,
-                    patchName : this.state.patchName,
+                    imageFile: this.state.imageFile,
+                    patchName: this.state.patchName,
                     landType: this.state.landType,
-                    farmingAreaInDecimal : this.state.farmingAreaInDecimal,
-                    costOfCultivatinPerTenDecimal : this.state.costOfCultivatinPerTenDecimal,
-                    costPerKg : this.state.costPerKg,
-                    productionInKg : this.state.productionInKg,
-                    cost : this.state.cost,
-                    netProfit : this.state.netProfit
+                    farmingAreaInDecimal: this.state.farmingAreaInDecimal,
+                    costOfCultivatinPerTenDecimal: this.state.costOfCultivatinPerTenDecimal,
+                    costPerKg: this.state.costPerKg,
+                    productionInKg: this.state.productionInKg,
+                    cost: this.state.cost,
+                    netProfit: this.state.netProfit
                 }
             })
         }
-        
+
     }
 
     saveButton = () => {
-        if(this.state.materialPrice === ''){
+        if (this.state.materialPrice === '') {
             alert("please enter a value")
-        }else{
+        } else {
             alert("AMOUNT SAVED")
         }
-        
+
     }
     // getSteps = async() => {
     //     var username = await AsyncStorage.getItem('username')
@@ -275,9 +301,57 @@ export default class StepOneScreen extends Component {
 
     // }
 
+    setLanguageOnMount = async () => {
+        let defaultLanguage = await AsyncStorage.getItem('language')
+        if (defaultLanguage === 'en') {
+            this.setState({ textLanguageChange: '0' })
+            this.getStepDataFromLocal()
+        } else if (defaultLanguage === 'hi') {
+            this.setState({ textLanguageChange: '1' })
+            this.getStepDataFromLocal()
+        } else if (defaultLanguage === 'ho') {
+            this.setState({ textLanguageChange: '2' })
+            this.getStepDataFromLocal()
+        } else if (defaultLanguage === 'od') {
+            this.setState({ textLanguageChange: '3' })
+            this.getStepDataFromLocal()
+        } else if (defaultLanguage === 'san') {
+            this.setState({ textLanguageChange: '4' })
+            this.getStepDataFromLocal()
+        }
+    }
+
+
+    languageChangeFunction = async (data) => {
+
+        if (data === 'en') {
+            AsyncStorage.setItem('language', 'en')
+            this.setState({ textLanguageChange: '0' })
+            this.getStepDataFromLocal()
+        } else if (data === 'hi') {
+            this.setState({ textLanguageChange: '1' })
+            AsyncStorage.setItem('language', 'hi')
+            this.getStepDataFromLocal()
+        } else if (data === 'ho') {
+            this.setState({ textLanguageChange: '2' })
+            AsyncStorage.setItem('language', 'ho')
+            this.getStepDataFromLocal()
+        } else if (data === 'od') {
+            this.setState({ textLanguageChange: '3' })
+            AsyncStorage.setItem('language', 'od')
+            this.getStepDataFromLocal()
+        } else if (data === 'san') {
+            AsyncStorage.setItem('language', 'san')
+            this.setState({ textLanguageChange: '4' })
+            this.getStepDataFromLocal()
+        }
+    }
+
     render() {
         var stepData = []
         stepData = this.state.stepData
+        var cropNameLanguageChangeArray = []
+        cropNameLanguageChangeArray = this.state.cropNameLanguageChangeArray
         return (
             <View style={{ backgroundColor: BaseColor.BackgroundColor, flex: 1 }}>
                 <View style={{ backgroundColor: 'white', width: widthToDp("100%"), height: heightToDp("13%"), flexDirection: 'row' }}>
@@ -292,9 +366,9 @@ export default class StepOneScreen extends Component {
                     />
                 </View>
                 <View style={{ flexDirection: 'row', marginTop: heightToDp("1%"), marginLeft: widthToDp("1%") }}>
-                    <TouchableOpacity onPress={() => this.props.navigation.navigate('SigninScreen')}>
+                    <TouchableOpacity onPress={() => this.languageChangeFunction(this.state.languages[0].id)}>
                         <View style={{ backgroundColor: BaseColor.English, width: widthToDp("30%"), height: heightToDp("6%"), marginLeft: widthToDp("2%"), borderRadius: 100, flexDirection: 'row' }}>
-                            <Text style={{ color: '#fff', marginTop: heightToDp("1.5%"), fontFamily: 'Oswald-Medium', marginLeft: widthToDp("5%") }}>ENGLISH</Text>
+                            <Text style={{ color: '#fff', marginTop: heightToDp("1.5%"), fontFamily: 'Oswald-Medium', marginLeft: widthToDp("5%") }}>{this.state.languages[0].value}</Text>
                             <Icon
                                 name="microphone"
                                 color="white"
@@ -304,9 +378,9 @@ export default class StepOneScreen extends Component {
                         </View>
                     </TouchableOpacity>
 
-                    <TouchableOpacity >
+                    <TouchableOpacity onPress={() => this.languageChangeFunction(this.state.languages[1].id)}>
                         <View style={{ backgroundColor: BaseColor.Hindi, width: widthToDp("30%"), height: heightToDp("6%"), marginLeft: widthToDp("2%"), borderRadius: 100, flexDirection: 'row' }}>
-                            <Text style={{ color: '#fff', marginTop: heightToDp("1.7%"), marginLeft: widthToDp("5%"), fontWeight: 'bold', fontSize: widthToDp("4.3%") }}>हिन्दी</Text>
+                            <Text style={{ color: '#fff', marginTop: heightToDp("1.7%"), marginLeft: widthToDp("5%"), fontWeight: 'bold', fontSize: widthToDp("4.3%") }}>{this.state.languages[1].value}</Text>
                             <Icon
                                 name="microphone"
                                 color="white"
@@ -316,9 +390,9 @@ export default class StepOneScreen extends Component {
                         </View>
                     </TouchableOpacity>
 
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={() => this.languageChangeFunction(this.state.languages[2].id)}>
                         <View style={{ backgroundColor: BaseColor.Ho, width: widthToDp("30%"), height: heightToDp("6%"), marginLeft: widthToDp("2%"), borderRadius: 100, flexDirection: 'row' }}>
-                            <Text style={{ color: '#fff', marginTop: heightToDp("1.5%"), marginLeft: widthToDp("5%"), fontWeight: 'bold', fontSize: widthToDp("4.3%") }}>ʤʌgʌr</Text>
+                            <Text style={{ color: '#fff', marginTop: heightToDp("1.5%"), marginLeft: widthToDp("5%"), fontWeight: 'bold', fontSize: widthToDp("4.3%") }}>{this.state.languages[2].value}</Text>
                             <Icon
                                 name="microphone"
                                 color="white"
@@ -329,9 +403,9 @@ export default class StepOneScreen extends Component {
                     </TouchableOpacity>
                 </View>
                 <View style={{ flexDirection: 'row', marginTop: heightToDp("1%"), marginLeft: widthToDp("1%"), alignSelf: 'center' }}>
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={() => this.languageChangeFunction(this.state.languages[3].id)}>
                         <View style={{ backgroundColor: BaseColor.Uridia, width: widthToDp("30%"), height: heightToDp("6%"), borderRadius: 100, flexDirection: 'row' }}>
-                            <Text style={{ color: '#fff', marginTop: heightToDp("1.7%"), marginLeft: widthToDp("4.7%"), fontWeight: 'bold', fontSize: widthToDp("4.3%") }}>ଓଡ଼ିଆ</Text>
+                            <Text style={{ color: '#fff', marginTop: heightToDp("1.7%"), marginLeft: widthToDp("4.7%"), fontWeight: 'bold', fontSize: widthToDp("4.3%") }}>{this.state.languages[3].value}</Text>
                             <Icon
                                 name="microphone"
                                 color="white"
@@ -341,9 +415,9 @@ export default class StepOneScreen extends Component {
                         </View>
                     </TouchableOpacity>
 
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={() => this.languageChangeFunction(this.state.languages[4].id)}>
                         <View style={{ backgroundColor: BaseColor.Santhali, width: widthToDp("30%"), height: heightToDp("6%"), borderRadius: 100, marginLeft: widthToDp("2%"), flexDirection: 'row' }}>
-                            <Text style={{ color: '#fff', marginTop: heightToDp("1.7%"), marginLeft: widthToDp("3.4%"), fontWeight: 'bold', fontSize: widthToDp("4.3%") }}>ᱥᱟᱱᱛᱟᱲᱤ</Text>
+                            <Text style={{ color: '#fff', marginTop: heightToDp("1.7%"), marginLeft: widthToDp("3.4%"), fontWeight: 'bold', fontSize: widthToDp("4.3%") }}>{this.state.languages[4].value}</Text>
                             <Icon
                                 name="microphone"
                                 color="white"
@@ -355,21 +429,23 @@ export default class StepOneScreen extends Component {
                 </View>
                 <View style={{ borderBottomColor: BaseColor.Stroke, borderBottomWidth: 1, marginTop: heightToDp('1.5%'), width: widthToDp("100%") }}></View>
                 <Text style={{ fontSize: widthToDp("6%"), marginLeft: widthToDp("3%"), marginTop: heightToDp("1%"), fontFamily: 'Oswald-Medium' }}>STEP - {this.state.pageNumber}/08</Text>
-                
+
                 {
-                    this.state.isLoading ? <View style={{ justifyContent: 'center', marginTop: heightToDp("20%"),backgroundColor: BaseColor.BackgroundColor,marginBottom:heightToDp("30%") }}><CustomIndicator IsLoading={this.state.isLoading} /></View> :null
+                    this.state.isLoading ? <View style={{ justifyContent: 'center', marginTop: heightToDp("20%"), backgroundColor: BaseColor.BackgroundColor, marginBottom: heightToDp("30%") }}><CustomIndicator IsLoading={this.state.isLoading} /></View> : null
                 }
                 {
                     stepData.map((i) => {
                         return (
                             <ScrollView>
                                 <View style={{ backgroundColor: BaseColor.Red, width: widthToDp("90%"), height: heightToDp("26%"), alignSelf: 'center', marginTop: heightToDp("2%"), borderRadius: 10 }}>
-                                    <Text style={{ color: 'white', marginLeft: widthToDp("4%"), marginTop: heightToDp('1.5%'), fontSize: widthToDp("5%"), fontFamily: 'Oswald-Medium' }}>{i.name}</Text>
+                                    {
+                                        this.state.textLanguageChange === '0' ? <Text style={{ color: 'white', marginLeft: widthToDp("4%"), marginTop: heightToDp('1.5%'), fontSize: widthToDp("5%"), fontFamily: 'Oswald-Medium' }}>{i.nameEnglish}</Text> : ((this.state.textLanguageChange === '1') ? <Text style={{ color: 'white', marginLeft: widthToDp("4%"), marginTop: heightToDp('1.5%'), fontSize: widthToDp("5%"), fontFamily: 'Oswald-Medium' }}>{i.nameHindi}</Text> : ((this.state.textLanguageChange === '2') ? <Text style={{ color: 'white', marginLeft: widthToDp("4%"), marginTop: heightToDp('1.5%'), fontSize: widthToDp("5%"), fontFamily: 'Oswald-Medium' }}>{i.nameHo}</Text> : ((this.state.textLanguageChange === '3') ? <Text style={{ color: 'white', marginLeft: widthToDp("4%"), marginTop: heightToDp('1.5%'), fontSize: widthToDp("5%"), fontFamily: 'Oswald-Medium' }}>{i.nameOdia}</Text> : ((this.state.textLanguageChange === '4') ? <Text style={{ color: 'white', marginLeft: widthToDp("4%"), marginTop: heightToDp('1.5%'), fontSize: widthToDp("5%"), fontFamily: 'Oswald-Medium' }}>{i.nameSanthali}</Text> : null))))
+                                    }
                                     <View style={{ backgroundColor: 'white', width: widthToDp("90%"), height: heightToDp("20%"), borderBottomLeftRadius: 10, borderBottomRightRadius: 10, marginTop: heightToDp("1%") }}>
                                         <View>
                                             <Image
                                                 style={{ height: heightToDp("20%"), width: widthToDp("90%"), borderBottomLeftRadius: 10, borderBottomRightRadius: 10 }}
-                                                source={{ uri: DataAccess.BaseUrl+DataAccess.CropImage+'steps/'+i.imageFile }}
+                                                source={{ uri: DataAccess.BaseUrl + DataAccess.CropImage + 'steps/' + i.imageFile }}
                                             />
                                         </View>
                                     </View>
@@ -379,7 +455,9 @@ export default class StepOneScreen extends Component {
                                 <View style={{ backgroundColor: BaseColor.Red, width: widthToDp("90%"), height: heightToDp("50%"), alignSelf: 'center', marginTop: heightToDp("2%"), borderRadius: 10 }}>
                                     <Text style={{ color: 'white', marginLeft: widthToDp("4%"), marginTop: heightToDp('1.5%'), fontSize: widthToDp("5%"), fontFamily: 'Oswald-Medium' }}>DESCRIPTION</Text>
                                     <View style={{ backgroundColor: 'white', width: widthToDp("90%"), height: heightToDp("43%"), borderBottomLeftRadius: 10, borderBottomRightRadius: 10, marginTop: heightToDp("2%") }}>
-                                        <Text style={{ marginLeft: widthToDp("2%"), marginTop: heightToDp("1%"), fontFamily: 'Oswald-Light' }}>{i.english}</Text>
+                                        {
+                                            this.state.textLanguageChange === '0' ? <Text style={{ marginLeft: widthToDp("2%"), marginTop: heightToDp("1%"), fontFamily: 'Oswald-Light' }}>{i.english}</Text> : ((this.state.textLanguageChange === '1') ? <Text style={{ marginLeft: widthToDp("2%"), marginTop: heightToDp("1%"), fontFamily: 'Oswald-Light' }}>{i.hindi}</Text> : ((this.state.textLanguageChange === '2') ? <Text style={{ marginLeft: widthToDp("2%"), marginTop: heightToDp("1%"), fontFamily: 'Oswald-Light' }}>{i.ho}</Text> : ((this.state.textLanguageChange === '3') ? <Text style={{ marginLeft: widthToDp("2%"), marginTop: heightToDp("1%"), fontFamily: 'Oswald-Light' }}>{i.odia}</Text> : ((this.state.textLanguageChange === '4') ? <Text style={{ marginLeft: widthToDp("2%"), marginTop: heightToDp("1%"), fontFamily: 'Oswald-Light' }}>{i.santhali}</Text> : null))))
+                                        }
                                     </View>
                                 </View>
 
@@ -390,7 +468,17 @@ export default class StepOneScreen extends Component {
                                         <View style={{ flexDirection: 'row' }}>
                                             <View style={{ marginTop: heightToDp("1%"), marginLeft: widthToDp("2%") }}>
                                                 <Text style={{ fontSize: widthToDp("4%"), fontFamily: 'Oswald-Medium' }}>Ploughing Type</Text>
-                                                <Text style={{ fontSize: widthToDp("5%"), fontFamily: 'Oswald-Light' }}>{this.state.cropName}</Text>
+                                                {
+                                                    cropNameLanguageChangeArray.map((i) => {
+                                                        return (
+                                                            <View>
+                                                                {
+                                                                    this.state.textLanguageChange === '0' ? <Text style={{ fontSize: widthToDp("5%"), fontFamily: 'Oswald-Light' }}>{i.nameEnglish}</Text> : ((this.state.textLanguageChange === '1') ? <Text style={{ fontSize: widthToDp("5%"), fontFamily: 'Oswald-Light' }}>{i.nameHindi}</Text> : ((this.state.textLanguageChange === '2') ? <Text style={{ fontSize: widthToDp("5%"), fontFamily: 'Oswald-Light' }}>{i.nameHo}</Text> : ((this.state.textLanguageChange === '3') ? <Text style={{ fontSize: widthToDp("5%"), fontFamily: 'Oswald-Light' }}>{i.nameOdia}</Text> : ((this.state.textLanguageChange === '4') ? <Text style={{ fontSize: widthToDp("5%"), fontFamily: 'Oswald-Light' }}>{i.nameSanthali}</Text> : null))))
+                                                                }
+                                                            </View>
+                                                        )
+                                                    })
+                                                }
                                             </View>
                                             <Image
                                                 style={{ height: heightToDp("20%"), width: widthToDp("50%"), marginTop: heightToDp("2%"), marginLeft: widthToDp("7%"), borderRadius: 10 }}
@@ -405,17 +493,17 @@ export default class StepOneScreen extends Component {
                                     <View style={{ backgroundColor: 'white', width: widthToDp("90%"), height: heightToDp("17%"), borderBottomLeftRadius: 10, borderBottomRightRadius: 10, marginTop: heightToDp("2%") }}>
                                         <View style={{ flexDirection: 'row', marginLeft: widthToDp("3%"), marginTop: heightToDp("2%") }}>
                                             <Text style={{ color: BaseColor.Red, fontFamily: 'Oswald-Medium' }}>Description</Text>
-                                            <Text style={{ color: BaseColor.Red, fontFamily: 'Oswald-Medium' , marginLeft: widthToDp("18%") }}>Quantity</Text>
+                                            <Text style={{ color: BaseColor.Red, fontFamily: 'Oswald-Medium', marginLeft: widthToDp("18%") }}>Quantity</Text>
                                             <Text style={{ color: BaseColor.Red, fontFamily: 'Oswald-Medium', marginLeft: widthToDp("17%") }}>Amount</Text>
                                         </View>
                                         <View style={{ flexDirection: 'row', marginLeft: widthToDp("3%"), marginTop: heightToDp("2%") }}>
                                             <Text style={{ fontFamily: 'Oswald-Medium', width: widthToDp("30%") }}>{this.state.materialName}</Text>
-                                            <Text style={{ fontFamily: 'Oswald-Medium', width: widthToDp("25%"), marginLeft: widthToDp("10%") }}>{this.state.materialQuantity}</Text>
+                                            <Text style={{ fontFamily: 'Oswald-Medium', width: widthToDp("25%"), marginLeft: widthToDp("3%") }}>{this.state.materialQuantity}</Text>
                                             <Input
-                                                placeholder= {this.state.decimalPrice}
+                                                placeholder={this.state.decimalPrice}
                                                 keyboardType='number-pad'
                                                 onChangeText={(data) => this.setMaterialPrice(data)}
-                                                style={{marginLeft: widthToDp("0%"), fontFamily: 'Oswald-Medium',width:widthToDp("20%"), marginTop: heightToDp("-2%"),borderWidth:1,marginRight:widthToDp("5%")}}
+                                                style={{ marginLeft: widthToDp("0%"), fontFamily: 'Oswald-Medium', width: widthToDp("20%"), marginTop: heightToDp("-2%"), borderWidth: 1, marginRight: widthToDp("5%") }}
                                             />
                                         </View>
                                     </View>
@@ -426,18 +514,18 @@ export default class StepOneScreen extends Component {
                         )
                     })
                 }
-                <View style={{ flexDirection: 'row', height: heightToDp("10%"),alignSelf:'center' }}>
+                <View style={{ flexDirection: 'row', height: heightToDp("10%"), alignSelf: 'center' }}>
                     <TouchableOpacity onPress={() => this.props.navigation.goBack()}>
                         <View style={{ backgroundColor: "#fff", height: heightToDp("6%"), width: widthToDp("30%"), borderRadius: 100, alignSelf: 'center', marginTop: heightToDp("2%") }}>
                             <Text style={{ fontSize: widthToDp("4%"), color: "#000", marginTop: heightToDp("1.3%"), alignSelf: 'center', fontFamily: 'Oswald-Medium' }}>BACK</Text>
                         </View>
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={() => {}}>
-                        <View style={{ backgroundColor: "#fff", height: heightToDp("6%"), width: widthToDp("30%"), borderRadius: 100,  marginLeft: widthToDp("1%"), marginTop: heightToDp("2%") }}>
+                    <TouchableOpacity onPress={() => { }}>
+                        <View style={{ backgroundColor: "#fff", height: heightToDp("6%"), width: widthToDp("30%"), borderRadius: 100, marginLeft: widthToDp("1%"), marginTop: heightToDp("2%") }}>
                             <Text style={{ fontSize: widthToDp("4%"), color: "#000", marginTop: heightToDp("1.3%"), alignSelf: 'center', fontFamily: 'Oswald-Medium' }}>SAVE</Text>
                         </View>
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={() => {this.setStepDataIntoPatch()}}>
+                    <TouchableOpacity onPress={() => { this.setStepDataIntoPatch() }}>
                         <View style={{ backgroundColor: "#fff", height: heightToDp("6%"), width: widthToDp("30%"), borderRadius: 100, marginLeft: widthToDp("1%"), marginTop: heightToDp("2%") }}>
                             <Text style={{ fontSize: widthToDp("4%"), color: "#000", marginTop: heightToDp("1.3%"), alignSelf: 'center', fontFamily: 'Oswald-Medium' }}>NEXT</Text>
                         </View>

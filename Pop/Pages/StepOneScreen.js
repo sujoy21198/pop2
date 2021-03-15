@@ -158,18 +158,34 @@ export default class StepOneScreen extends Component {
             var cropFilter = specific.cropsMaterials.filter((i) => i.cropId === this.state._id)
             stepData = cropFilter[0].stepData
             decimalPrice = cropFilter[0].decimalPrice
-            materialName = cropFilter[0].materialName
+            //materialName = cropFilter[0].materialNameEnglish
             materialQuantity = cropFilter[0].qty
             cropNameLanguageChangeArray = stepData[0].cropData
-            console.log(stepData[0].cropData)
+            if (this.state.textLanguageChange === '0') {
+                this.setState({ materialName: cropFilter[0].materialNameEnglish })
+               
+            }else if(this.state.textLanguageChange === '1'){
+                this.setState({ materialName: cropFilter[0].materialNameHindi })
+                
+            }else if(this.state.textLanguageChange === '2'){
+                this.setState({ materialName: cropFilter[0].materialNameHo })
+                
+            }else if(this.state.textLanguageChange === '3'){
+                this.setState({ materialName: cropFilter[0].materialNameOdia })
+                
+            }else if(this.state.textLanguageChange === '4'){
+                this.setState({ materialName: cropFilter[0].materialNameSanthali })
+                
+            }
+            console.log(cropFilter , "hihihihihihihihihihihih")
             this.setState({ stepData: stepData })
-            this.setState({ materialName: materialName })
+            //this.setState({ materialName: materialName })
             this.setState({ decimalPrice: decimalPrice })
             this.setState({ numberOfSteps: cropFilter.length })
             this.setState({ materialQuantity: materialQuantity })
             this.setState({ cropNameLanguageChangeArray: cropNameLanguageChangeArray })
         } catch (error) {
-            alert("No More Steps Available")
+            //alert("No More Steps Available")
             this.props.navigation.navigate({
                 name: 'ActualCultivationCostScreen',
                 params: {
@@ -333,14 +349,19 @@ export default class StepOneScreen extends Component {
         let defaultLanguage = await AsyncStorage.getItem('language')
         if (defaultLanguage === 'en') {
             this.setState({ textLanguageChange: '0' })
+            this.getStepDataFromLocal()
         } else if (defaultLanguage === 'hi') {
             this.setState({ textLanguageChange: '1' })
+            this.getStepDataFromLocal()
         } else if (defaultLanguage === 'ho') {
             this.setState({ textLanguageChange: '2' })
+            this.getStepDataFromLocal()
         } else if (defaultLanguage === 'od') {
             this.setState({ textLanguageChange: '3' })
+            this.getStepDataFromLocal()
         } else if (defaultLanguage === 'san') {
             this.setState({ textLanguageChange: '4' })
+            this.getStepDataFromLocal()
         }
     }
 
@@ -350,18 +371,23 @@ export default class StepOneScreen extends Component {
         if (data === 'en') {
             AsyncStorage.setItem('language', 'en')
             this.setState({ textLanguageChange: '0' })
+            this.getStepDataFromLocal()
         } else if (data === 'hi') {
             this.setState({ textLanguageChange: '1' })
             AsyncStorage.setItem('language', 'hi')
+            this.getStepDataFromLocal()
         } else if (data === 'ho') {
             this.setState({ textLanguageChange: '2' })
             AsyncStorage.setItem('language', 'ho')
+            this.getStepDataFromLocal()
         } else if (data === 'od') {
             this.setState({ textLanguageChange: '3' })
             AsyncStorage.setItem('language', 'od')
+            this.getStepDataFromLocal()
         } else if (data === 'san') {
             AsyncStorage.setItem('language', 'san')
             this.setState({ textLanguageChange: '4' })
+            this.getStepDataFromLocal()
         }
     }
 
@@ -518,7 +544,7 @@ export default class StepOneScreen extends Component {
                                         </View>
                                         <View style={{ flexDirection: 'row', marginLeft: widthToDp("3%"), marginTop: heightToDp("2%") }}>
                                             <Text style={{ fontFamily: 'Oswald-Medium', width: widthToDp("30%") }}>{this.state.materialName}</Text>
-                                            <Text style={{ fontFamily: 'Oswald-Medium', width: widthToDp("25%"), marginLeft: widthToDp("10%") }}>{this.state.materialQuantity}</Text>
+                                            <Text style={{ fontFamily: 'Oswald-Medium', width: widthToDp("25%"), marginLeft: widthToDp("3%") }}>{this.state.materialQuantity}</Text>
                                             {/* <Text style={{ marginLeft: widthToDp("35%"), fontFamily: 'Oswald-Medium' }}>₹ {this.state.decimalPrice}</Text> */}
                                             <Input
                                                 placeholder={this.state.decimalPrice}
