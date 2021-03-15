@@ -102,7 +102,7 @@ export default class BreedScreen extends Component {
     }
 
     navigationController = (data, name, imageFile, descEnglish,descHindi,descHo,descOdia,descSanthali) => {
-        //alert(description)
+        //alert(this.state.name)
         this.props.navigation.navigate({
             name: 'BreedNewScreen',
             params: {

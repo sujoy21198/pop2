@@ -48,6 +48,7 @@ export default class BreedNewScreen extends Component {
         this.state.descOdia = this.props.route.params.descOdia
         this.state.descEnglish = this.props.route.params.descEnglish
         this.state.descSanthali = this.props.route.params.descSanthali
+        this.state.livestockName = this.props.route.params.livestockName
         //alert(this.state.livestockName)
         this.loadBreedFromStorage()
     }
@@ -72,6 +73,7 @@ export default class BreedNewScreen extends Component {
     }
 
     nextButton = () => {
+        //alert(this.state.livestockName)
         this.props.navigation.navigate({
             name: 'BreedDescriptionScreen',
             params: {
