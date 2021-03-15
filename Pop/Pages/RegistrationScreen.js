@@ -124,10 +124,10 @@ export default class RegistrationScreen extends Component {
     if(this.state.value === 0 && this.state.phoneNumber != ''){
       this.setState({ isDialogVisible: true })
     }
-    if (this.state.age < 12) {
+    if (this.state.age < 12 && this.state.age >=60) {
       this.setState({ isLoading: false })
       return Toast.show({
-        text: "Age must be grater than 12",
+        text: "Age must be grater than 12 and less than 60",
         duration: 3000,
         type: 'danger'
       })

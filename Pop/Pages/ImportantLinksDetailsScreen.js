@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Image, TouchableOpacity, FlatList,Linking } from 'react-native'
+import { View, Image, TouchableOpacity, FlatList, Linking } from 'react-native'
 import BaseColor from '../Core/BaseTheme'
 import { Card, Text } from 'native-base'
 import TopLogo from '../assets/TopLogo'
@@ -15,6 +15,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import Languages from '../Core/Languages'
 import LanguageChange from '../Core/LanguageChange'
 import Hyperlink from 'react-native-hyperlink'
+import { ScrollView } from 'react-native-gesture-handler'
 
 const Sound = require('react-native-sound')
 
@@ -23,12 +24,12 @@ export default class ImportantLinksDetailsScreen extends Component {
 
     //sound = new Sound('http://commondatastorage.googleapis.com/codeskulptor-assets/jump.ogg')
 
-    constructor(props){
+    constructor(props) {
         super(props)
-        this.state={
-            category:'',
-            link:'',
-            description:'',
+        this.state = {
+            category: '',
+            link: '',
+            description: '',
             languages: []
         }
         this.state.languages = Languages
@@ -133,7 +134,7 @@ export default class ImportantLinksDetailsScreen extends Component {
         valueArray = this.state.data
         //console.log(valueArray)
         return (
-            <View style={{ backgroundColor: BaseColor.BackgroundColor, flex:1 }}>
+            <View style={{ backgroundColor: BaseColor.BackgroundColor, flex: 1 }}>
                 <View style={{ backgroundColor: 'white', width: widthToDp("100%"), height: heightToDp("13%"), flexDirection: 'row' }}>
                     <View style={{ marginTop: heightToDp("3%"), marginLeft: widthToDp("3%") }}>
                         <TopLogo />
@@ -211,12 +212,14 @@ export default class ImportantLinksDetailsScreen extends Component {
                 <View style={{ borderBottomColor: BaseColor.Stroke, borderBottomWidth: 1, marginTop: heightToDp('1.5%'), width: widthToDp("100%") }}></View>
                 <Text style={{ marginLeft: widthToDp("3%"), marginTop: heightToDp("2%"), fontSize: widthToDp("7%"), fontFamily: 'Oswald-Medium' }}>{this.state.title}</Text>
                 <View style={{ backgroundColor: BaseColor.Red, width: widthToDp("90%"), height: heightToDp("30%"), alignSelf: 'center', marginTop: heightToDp("2%"), borderRadius: 10 }}>
-                <Text style={{ color: 'white', marginLeft: widthToDp("4%"), marginTop: heightToDp('1.5%'), fontSize: widthToDp("5%"),fontFamily:'Oswald-Medium' }}>{this.state.category}</Text>
+                    <Text style={{ color: 'white', marginLeft: widthToDp("4%"), marginTop: heightToDp('1.5%'), fontSize: widthToDp("5%"), fontFamily: 'Oswald-Medium' }}>{this.state.category}</Text>
                     <View style={{ backgroundColor: 'white', width: widthToDp("90%"), height: heightToDp("45%"), borderBottomLeftRadius: 10, borderBottomRightRadius: 10, marginTop: heightToDp("2%") }}>
-                    <Text style={{ color: 'black', marginLeft: widthToDp("4%"), marginTop: heightToDp('1.5%'), fontSize: widthToDp("4%"),fontFamily:'Oswald-Light' }}>{this.state.description}</Text>
-                    <Hyperlink linkStyle={ { color: '#2980b9'} } onPress={()=> this.openLink(this.state.link)}>
-                    <Text style={{ color: 'black', marginLeft: widthToDp("4%"), marginTop: heightToDp('1.5%'), fontSize: widthToDp("4%"),fontFamily:'Oswald-Light' }}>{this.state.link}</Text>
-                    </Hyperlink>
+                        <ScrollView>
+                            <Text style={{ color: 'black', marginLeft: widthToDp("4%"), marginTop: heightToDp('1.5%'), fontSize: widthToDp("4%"), fontFamily: 'Oswald-Light' }}>{this.state.description}</Text>
+                            <Hyperlink linkStyle={{ color: '#2980b9' }} onPress={() => this.openLink(this.state.link)}>
+                                <Text style={{ color: 'black', marginLeft: widthToDp("4%"), marginTop: heightToDp('1.5%'), fontSize: widthToDp("4%"), fontFamily: 'Oswald-Light' }}>{this.state.link}</Text>
+                            </Hyperlink>
+                        </ScrollView>
                     </View>
                 </View>
             </View>

@@ -8,6 +8,8 @@ import { FlatGrid, SectionGrid } from 'react-native-super-grid'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import tts from 'react-native-tts'
 import Languages from '../Core/Languages'
+import AsyncStorage from '@react-native-async-storage/async-storage'
+
 
 
 
@@ -32,6 +34,24 @@ export default class LandTypeScreen extends Component {
         this.state._id = this.props.route.params._id
         this.state.cropName = this.props.route.params.cropName
         this.state.imageFile = this.props.route.params.imageFile
+    }
+
+    componentDidMount(){
+        this.loadlabelsFromStorage()
+    }
+
+    loadlabelsFromStorage = async() => {
+        try{
+            let username = await AsyncStorage.getItem('username')
+            let user = await AsyncStorage.getItem('offlineData');
+            let parsed = JSON.parse(user);
+            var specificObject = parsed.find((i) => i.username === username)
+            var labelsFilter = specificObject.labels.find((i) => i.nameEnglish === 'No Account')
+            console.log(labelsFilter)
+        }catch(error){
+            alert(error)
+        }
+        this.setState({crops : specificObject.crops})
     }
 
 
