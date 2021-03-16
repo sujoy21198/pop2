@@ -7,6 +7,8 @@ import TopLogo from '../assets/TopLogo'
 import Income from '../assets/Income'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import Languages from '../Core/Languages'
+import LanguageChange from '../Core/LanguageChange'
 
 
 export default class IncomeScreen extends Component {
@@ -15,8 +17,10 @@ export default class IncomeScreen extends Component {
         this.state = {
             type:'',
             category:'',
-            amount:'0'
+            amount:'0',
+            languages: [],
         }
+        this.state.languages = Languages
         this.state.type = this.props.route.params.type
         this.state.category = this.props.route.params.category
         //alert(this.state.type)
@@ -50,6 +54,47 @@ export default class IncomeScreen extends Component {
             name: 'MoneyManagerScreen'
         })
     }
+
+    languageChangeFunction = async (data) => {
+        alert(data)
+        if (data === 'en') {
+            AsyncStorage.setItem('language', 'en')
+            
+            this.props.navigation.reset({
+                index: 0,
+                routes: [{ name: "DashBoardScreen" }]
+            });
+            LanguageChange.setLanguage(id)
+        } else if (data === 'hi') {
+            
+            AsyncStorage.setItem('language', 'hi')
+            this.props.navigation.reset({
+                index: 0,
+                routes: [{ name: "DashBoardScreen" }]
+            });
+            LanguageChange.setLanguage(id)
+        } else if (data === 'ho') {
+          
+            AsyncStorage.setItem('language', 'ho')
+            this.props.navigation.reset({
+                index: 0,
+                routes: [{ name: "DashBoardScreen" }]
+            });
+        } else if (data === 'od') {
+            
+            AsyncStorage.setItem('language', 'od')
+            this.props.navigation.reset({
+                index: 0,
+                routes: [{ name: "DashBoardScreen" }]
+            });
+        } else if (data === 'san') {
+            AsyncStorage.setItem('language', 'san')
+            this.props.navigation.reset({
+                index: 0,
+                routes: [{ name: "DashBoardScreen" }]
+            });
+        }
+    }
     render() {
         return (
             <View style={{ backgroundColor: BaseColor.BackgroundColor, flex: 1 }}>
@@ -65,9 +110,9 @@ export default class IncomeScreen extends Component {
                     />
                 </View>
                 <View style={{ flexDirection: 'row', marginTop: heightToDp("1%"), marginLeft: widthToDp("1%") }}>
-                    <TouchableOpacity onPress={() => this.props.navigation.navigate('SigninScreen')}>
+                    <TouchableOpacity onPress={() => this.languageChangeFunction(this.state.languages[0].id)}>
                         <View style={{ backgroundColor: BaseColor.English, width: widthToDp("30%"), height: heightToDp("6%"), marginLeft: widthToDp("2%"), borderRadius: 100, flexDirection: 'row' }}>
-                            <Text style={{ color: '#fff', marginTop: heightToDp("1.5%"), fontFamily: 'Oswald-Medium', marginLeft: widthToDp("5%") }}>ENGLISH</Text>
+                            <Text style={{ color: '#fff', marginTop: heightToDp("1.5%"), fontFamily: 'Oswald-Medium', marginLeft: widthToDp("5%") }}>{this.state.languages[0].value}</Text>
                             <Icon
                                 name="microphone"
                                 color="white"
@@ -77,53 +122,53 @@ export default class IncomeScreen extends Component {
                         </View>
                     </TouchableOpacity>
 
-                    <TouchableOpacity >
-                        <View style={{ backgroundColor: BaseColor.Hindi, width: widthToDp("30%"), height: heightToDp("6%"), marginLeft: widthToDp("2%"), borderRadius: 100,flexDirection:'row' }}>
-                            <Text style={{ color: '#fff', marginTop: heightToDp("1.7%"), marginLeft:widthToDp("5%"),fontWeight:'bold',fontSize:widthToDp("4.3%") }}>हिन्दी</Text>
+                    <TouchableOpacity onPress={() => this.languageChangeFunction(this.state.languages[1].id)}>
+                        <View style={{ backgroundColor: BaseColor.Hindi, width: widthToDp("30%"), height: heightToDp("6%"), marginLeft: widthToDp("2%"), borderRadius: 100, flexDirection: 'row' }}>
+                            <Text style={{ color: '#fff', marginTop: heightToDp("1.7%"), marginLeft: widthToDp("5%"), fontWeight: 'bold', fontSize: widthToDp("4.3%") }}>{this.state.languages[1].value}</Text>
                             <Icon
-                            name="microphone"
-                            color="white"
-                            size={20}
-                            style={{marginTop:heightToDp("1.8%"),marginLeft:widthToDp("9%")}}
+                                name="microphone"
+                                color="white"
+                                size={20}
+                                style={{ marginTop: heightToDp("1.8%"), marginLeft: widthToDp("9%") }}
                             />
                         </View>
-                        </TouchableOpacity>
+                    </TouchableOpacity>
 
-                        <TouchableOpacity>
-                        <View style={{ backgroundColor: BaseColor.Ho, width: widthToDp("30%"), height: heightToDp("6%"), marginLeft: widthToDp("2%"), borderRadius: 100,flexDirection:'row' }}>
-                            <Text style={{ color: '#fff', marginTop: heightToDp("1.5%"), marginLeft:widthToDp("5%"),fontWeight:'bold',fontSize:widthToDp("4.3%") }}>ʤʌgʌr</Text>
+                    <TouchableOpacity onPress={() => this.languageChangeFunction(this.state.languages[2].id)}>
+                        <View style={{ backgroundColor: BaseColor.Ho, width: widthToDp("30%"), height: heightToDp("6%"), marginLeft: widthToDp("2%"), borderRadius: 100, flexDirection: 'row' }}>
+                            <Text style={{ color: '#fff', marginTop: heightToDp("1.5%"), marginLeft: widthToDp("5%"), fontWeight: 'bold', fontSize: widthToDp("4.3%") }}>{this.state.languages[2].value}</Text>
                             <Icon
-                            name="microphone"
-                            color="white"
-                            size={20}
-                            style={{marginTop:heightToDp("1.8%"),marginLeft:widthToDp("6.3%")}}
+                                name="microphone"
+                                color="white"
+                                size={20}
+                                style={{ marginTop: heightToDp("1.8%"), marginLeft: widthToDp("6.3%") }}
                             />
                         </View>
-                        </TouchableOpacity>
+                    </TouchableOpacity>
                 </View>
-                <View style={{ flexDirection: 'row', marginTop: heightToDp("1%"), marginLeft: widthToDp("1%"),alignSelf:'center' }}>
-                <TouchableOpacity>
-                        <View style={{ backgroundColor: BaseColor.Uridia, width: widthToDp("30%"), height: heightToDp("6%"), borderRadius: 100,flexDirection:'row' }}>
-                            <Text style={{ color: '#fff', marginTop: heightToDp("1.7%"),marginLeft:widthToDp("4.7%"),fontWeight:'bold',fontSize:widthToDp("4.3%") }}>ଓଡ଼ିଆ</Text>
+                <View style={{ flexDirection: 'row', marginTop: heightToDp("1%"), marginLeft: widthToDp("1%"), alignSelf: 'center' }}>
+                    <TouchableOpacity onPress={() => this.languageChangeFunction(this.state.languages[3].id)}>
+                        <View style={{ backgroundColor: BaseColor.Uridia, width: widthToDp("30%"), height: heightToDp("6%"), borderRadius: 100, flexDirection: 'row' }}>
+                            <Text style={{ color: '#fff', marginTop: heightToDp("1.7%"), marginLeft: widthToDp("4.7%"), fontWeight: 'bold', fontSize: widthToDp("4.3%") }}>{this.state.languages[3].value}</Text>
                             <Icon
-                            name="microphone"
-                            color="white"
-                            size={20}
-                            style={{marginTop:heightToDp("1.8%"),marginLeft:widthToDp("6.9%")}}
+                                name="microphone"
+                                color="white"
+                                size={20}
+                                style={{ marginTop: heightToDp("1.8%"), marginLeft: widthToDp("6.9%") }}
                             />
                         </View>
-                        </TouchableOpacity>
+                    </TouchableOpacity>
 
-                        <TouchableOpacity>
-                    <View style={{backgroundColor:BaseColor.Santhali, width: widthToDp("30%"), height: heightToDp("6%"),  borderRadius: 100, marginLeft: widthToDp("2%"),flexDirection:'row' }}>
-                        <Text style={{ color: '#fff', marginTop: heightToDp("1.7%"), marginLeft:widthToDp("3.4%"),fontWeight:'bold',fontSize:widthToDp("4.3%") }}>ᱥᱟᱱᱛᱟᱲᱤ</Text>
-                        <Icon
-                            name="microphone"
-                            color="white"
-                            size={20}
-                            style={{marginTop:heightToDp("1.8%"),marginLeft:widthToDp("3%")}}
+                    <TouchableOpacity onPress={() => this.languageChangeFunction(this.state.languages[4].id)}>
+                        <View style={{ backgroundColor: BaseColor.Santhali, width: widthToDp("30%"), height: heightToDp("6%"), borderRadius: 100, marginLeft: widthToDp("2%"), flexDirection: 'row' }}>
+                            <Text style={{ color: '#fff', marginTop: heightToDp("1.7%"), marginLeft: widthToDp("3.4%"), fontWeight: 'bold', fontSize: widthToDp("4.3%") }}>{this.state.languages[4].value}</Text>
+                            <Icon
+                                name="microphone"
+                                color="white"
+                                size={20}
+                                style={{ marginTop: heightToDp("1.8%"), marginLeft: widthToDp("3%") }}
                             />
-                    </View>
+                        </View>
                     </TouchableOpacity>
                 </View>
                 <View style={{ borderBottomColor: BaseColor.Stroke, borderBottomWidth: 1, marginTop: heightToDp('1.5%'), width: widthToDp("100%") }}></View>

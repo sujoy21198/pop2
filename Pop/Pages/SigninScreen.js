@@ -292,7 +292,7 @@ export default class SigninScreen extends Component {
                 'Content-type': 'application/json'
             }
         }).then(function (response) {
-            // console.log(response.data.data._id)
+            console.log(response.data.data._id)
             // console.log(response.data.data.name)
             // console.log(response.data.data.token)
             // console.log(response.data.data.type)

@@ -121,9 +121,8 @@ export default class RegistrationScreen extends Component {
     var redirect = false;
     var load = true
     this.setState({ isLoading: true })
-    if(this.state.value === 0 && this.state.phoneNumber != ''){
-      this.setState({ isDialogVisible: true })
-    }
+    //otp
+    
     if (this.state.age < 12 && this.state.age >=60) {
       this.setState({ isLoading: false })
       return Toast.show({
@@ -171,11 +170,11 @@ export default class RegistrationScreen extends Component {
         'Content-type': 'application/json'
       }
     }).then(function (response) {
-      console.log(response.data)
+      console.log(response.data.data)
       // alert(response.data.msg)
       if (response.data.status === 1) {
         console.log("yes")
-        redirect = true
+        // redirect = true
         Toast.show({
           text: name + ' ' + response.data.msg,
           type: 'success',
@@ -198,7 +197,7 @@ export default class RegistrationScreen extends Component {
       this.setState({ isLoading: false })
     }
 
-    if (redirect === true) {
+    if (this.state.value === 1) {
       // this.props.navigation.navigate({
       //     name: 'DashBoardScreen'
       // })
@@ -209,6 +208,8 @@ export default class RegistrationScreen extends Component {
           params: { selectedLanguage: this.state.selectedLanguage }
         }]
       });
+    }else if(this.state.value === 0 && this.state.phoneNumber != ''){
+      this.setState({ isDialogVisible: true })
     }
   }
 
@@ -734,9 +735,10 @@ export default class RegistrationScreen extends Component {
           title={"Verify OTP"}
           // message={"Message for DialogInput #1"}
           hintInput={"Please enter the otp"}
-          submitInput={(inputText) => { this.setPatch(inputText) }}
+          submitInput={(inputText) => { this.verify(inputText) }}
           closeDialog={() => { this.setState({ isDialogVisible: false }) }}
           submitText={"Verify"}
+          keyboardType='numeric'
           >
         </DialogInput>
 
