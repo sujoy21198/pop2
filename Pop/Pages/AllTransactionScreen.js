@@ -22,7 +22,9 @@ export default class AllTransactionScreen extends Component {
         super(props)
         this.state = {
             languages: [],
-            moneyManagerData: []
+            moneyManagerData: [],
+            textLanguageChange:'',
+            allTransactionsLabel:''
         }
         this.state.languages = Languages
         //alert(this.state.value)
@@ -30,6 +32,76 @@ export default class AllTransactionScreen extends Component {
 
     componentDidMount() {
         this.getUserData()
+        this.setLanguageOnMount()
+    }
+
+    loadlabelsFromStorage = async () => {
+        try {
+            let username = await AsyncStorage.getItem('username')
+            let user = await AsyncStorage.getItem('offlineData');
+            let parsed = JSON.parse(user);
+            var specificObject = parsed.find((i) => i.username === username)
+            var allTransactions = specificObject.labels.find((i) => i.type === 44)
+            if (this.state.textLanguageChange === '0') {
+                //this.state.allTransactionsLabel = allTransactions.nameEnglish
+                this.setState({allTransactionsLabel: allTransactions.nameEnglish})
+                // this.state.data[1].name = livestock.nameEnglish
+                // this.state.data[2].name = smallBusiness.nameEnglish
+                // this.state.data[3].name = health.nameEnglish
+                // this.state.data[4].name = education.nameEnglish
+                // this.state.data[5].name = loanSavings.nameEnglish
+                // this.state.data[6].name = pension.nameEnglish
+                // this.state.data[7].name = others.nameEnglish
+                // this.setState({ moneyManagerLabel: moneyManagerLabel.nameEnglish })
+                // this.setState({ expenseLabel: expenseLabel.nameEnglish })
+                // this.setState({ incomeLabel: incomeLabel.nameEnglish })
+                // this.setState({ allTransactionLabel: allTransactionLabel.nameEnglish })
+            } else if (this.state.textLanguageChange === '1') {
+                //this.state.allTransactionsLabel = allTransactions.nameHindi
+                this.setState({allTransactionsLabel: allTransactions.nameHindi})
+                // this.state.data[1].name = livestock.nameHindi
+                // this.state.data[2].name = smallBusiness.nameHindi
+                // this.state.data[3].name = health.nameHindi
+                // this.state.data[4].name = education.nameHindi
+                // this.state.data[5].name = loanSavings.nameHindi
+                // this.state.data[6].name = pension.nameHindi
+                // this.state.data[7].name = others.nameHindi
+            } else if (this.state.textLanguageChange === '2') {
+                //this.state.data[0].name = allTransactions.nameHo
+                this.setState({allTransactionsLabel: allTransactions.nameHo})
+                // this.state.data[1].name = livestock.nameHo
+                // this.state.data[2].name = smallBusiness.nameHo
+                // this.state.data[3].name = health.nameHo
+                // this.state.data[4].name = education.nameHo
+                // this.state.data[5].name = loanSavings.nameHo
+                // this.state.data[6].name = pension.nameHo
+                // this.state.data[7].name = others.nameHo
+            } else if (this.state.textLanguageChange === '3') {
+                //this.state.data[0].name = allTransactions.nameOdia
+                this.setState({allTransactionsLabel: allTransactions.nameOdia})
+                // this.state.data[1].name = livestock.nameOdia
+                // this.state.data[2].name = smallBusiness.nameOdia
+                // this.state.data[3].name = health.nameOdia
+                // this.state.data[4].name = education.nameOdia
+                // this.state.data[5].name = loanSavings.nameOdia
+                // this.state.data[6].name = pension.nameOdia
+                // this.state.data[7].name = others.nameOdia
+            } else if (this.state.textLanguageChange === '4') {
+                //this.state.data[0].name = allTransactions.nameSanthali
+                this.setState({allTransactionsLabel: allTransactions.nameSanthali})
+                // this.state.data[1].name = livestock.nameSanthali
+                // this.state.data[2].name = smallBusiness.nameSanthali
+                // this.state.data[3].name = health.nameSanthali
+                // this.state.data[4].name = education.nameSanthali
+                // this.state.data[5].name = loanSavings.nameSanthali
+                // this.state.data[6].name = pension.nameSanthali
+                // this.state.data[7].name = others.nameSanthali
+            }
+            
+        } catch (error) {
+            alert(error)
+        }
+        this.setState({ crops: specificObject.crops })
     }
 
     getUserData = async () => {
@@ -45,6 +117,52 @@ export default class AllTransactionScreen extends Component {
             console.log(error)
         }
         this.setState({ moneyManagerData: moneyManagerData })
+    }
+
+
+    setLanguageOnMount = async() => {
+        let defaultLanguage = await AsyncStorage.getItem('language')
+        if(defaultLanguage === 'en'){
+            this.setState({textLanguageChange : '0'})
+            this.loadlabelsFromStorage()
+        }else if(defaultLanguage === 'hi'){
+            this.setState({textLanguageChange : '1'})
+            this.loadlabelsFromStorage()
+        }else if(defaultLanguage === 'ho'){
+            this.setState({textLanguageChange : '2'})
+            this.loadlabelsFromStorage()
+        }else if(defaultLanguage === 'od'){
+            this.setState({textLanguageChange : '3'})
+            this.loadlabelsFromStorage()
+        }else if(defaultLanguage === 'san'){
+            this.setState({textLanguageChange : '4'})
+            this.loadlabelsFromStorage()
+        }
+    }
+
+    languageChangeFunction = async(data) => {
+        
+        if(data === 'en'){
+            AsyncStorage.setItem('language','en')
+            this.setState({textLanguageChange : '0'})
+            this.loadlabelsFromStorage()
+        }else if(data === 'hi'){
+            this.setState({textLanguageChange : '1'})
+            AsyncStorage.setItem('language','hi')
+            this.loadlabelsFromStorage()
+        }else if(data === 'ho'){
+            this.setState({textLanguageChange : '2'})
+            AsyncStorage.setItem('language','ho')
+            this.loadlabelsFromStorage()
+        }else if(data === 'od'){
+            this.setState({textLanguageChange : '3'})
+            AsyncStorage.setItem('language','od')
+            this.loadlabelsFromStorage()
+        }else if(data === 'san'){
+            AsyncStorage.setItem('language','san')
+            this.setState({textLanguageChange : '4'})
+            this.loadlabelsFromStorage()
+        }
     }
 
     render() {
@@ -65,7 +183,7 @@ export default class AllTransactionScreen extends Component {
                 </View>
 
                 <View style={{ flexDirection: 'row', marginTop: heightToDp("1%"), marginLeft: widthToDp("1%") }}>
-                    <TouchableOpacity onPress={() => this.changeLanguage(this.state.languages[0].id)}>
+                    <TouchableOpacity onPress={() =>this.languageChangeFunction(this.state.languages[0].id)}>
                         <View style={{ backgroundColor: BaseColor.English, width: widthToDp("30%"), height: heightToDp("6%"), marginLeft: widthToDp("2%"), borderRadius: 100, flexDirection: 'row' }}>
                             <Text style={{ color: '#fff', marginTop: heightToDp("1.5%"), fontFamily: 'Oswald-Medium', marginLeft: widthToDp("5%") }}>{this.state.languages[0].value}</Text>
                             <Icon
@@ -77,7 +195,7 @@ export default class AllTransactionScreen extends Component {
                         </View>
                     </TouchableOpacity>
 
-                    <TouchableOpacity onPress={() => this.changeLanguage(this.state.languages[1].id)}>
+                    <TouchableOpacity onPress={() => this.languageChangeFunction(this.state.languages[1].id)}>
                         <View style={{ backgroundColor: BaseColor.Hindi, width: widthToDp("30%"), height: heightToDp("6%"), marginLeft: widthToDp("2%"), borderRadius: 100, flexDirection: 'row' }}>
                             <Text style={{ color: '#fff', marginTop: heightToDp("1.7%"), marginLeft: widthToDp("5%"), fontWeight: 'bold', fontSize: widthToDp("4.3%") }}>{this.state.languages[1].value}</Text>
                             <Icon
@@ -89,7 +207,7 @@ export default class AllTransactionScreen extends Component {
                         </View>
                     </TouchableOpacity>
 
-                    <TouchableOpacity >
+                    <TouchableOpacity onPress={() => this.languageChangeFunction(this.state.languages[2].id)}>
                         <View style={{ backgroundColor: BaseColor.Ho, width: widthToDp("30%"), height: heightToDp("6%"), marginLeft: widthToDp("2%"), borderRadius: 100, flexDirection: 'row' }}>
                             <Text style={{ color: '#fff', marginTop: heightToDp("1.5%"), marginLeft: widthToDp("5%"), fontWeight: 'bold', fontSize: widthToDp("4.3%") }}>{this.state.languages[2].value}</Text>
                             <Icon
@@ -102,7 +220,7 @@ export default class AllTransactionScreen extends Component {
                     </TouchableOpacity>
                 </View>
                 <View style={{ flexDirection: 'row', marginTop: heightToDp("1%"), marginLeft: widthToDp("1%"), alignSelf: 'center' }}>
-                    <TouchableOpacity onPress={() => this.changeLanguage(this.state.languages[3].id)}>
+                    <TouchableOpacity onPress={() => this.languageChangeFunction(this.state.languages[3].id)}>
                         <View style={{ backgroundColor: BaseColor.Uridia, width: widthToDp("30%"), height: heightToDp("6%"), borderRadius: 100, flexDirection: 'row' }}>
                             <Text style={{ color: '#fff', marginTop: heightToDp("1.7%"), marginLeft: widthToDp("4.7%"), fontWeight: 'bold', fontSize: widthToDp("4.3%") }}>{this.state.languages[3].value}</Text>
                             <Icon
@@ -114,7 +232,7 @@ export default class AllTransactionScreen extends Component {
                         </View>
                     </TouchableOpacity>
 
-                    <TouchableOpacity >
+                    <TouchableOpacity onPress={() => this.languageChangeFunction(this.state.languages[4].id)}>
                         <View style={{ backgroundColor: BaseColor.Santhali, width: widthToDp("30%"), height: heightToDp("6%"), borderRadius: 100, marginLeft: widthToDp("2%"), flexDirection: 'row' }}>
                             <Text style={{ color: '#fff', marginTop: heightToDp("1.7%"), marginLeft: widthToDp("3.4%"), fontWeight: 'bold', fontSize: widthToDp("4.3%") }}>{this.state.languages[4].value}</Text>
                             <Icon
@@ -127,7 +245,7 @@ export default class AllTransactionScreen extends Component {
                     </TouchableOpacity>
                 </View>
                 <View style={{ borderBottomColor: BaseColor.Stroke, borderBottomWidth: 1, marginTop: heightToDp('1.5%'), width: widthToDp("100%") }}></View>
-                <Text style={{ marginLeft: widthToDp("3%"), marginTop: heightToDp("2%"), fontSize: widthToDp("7%"), fontFamily: 'Oswald-Medium' }}>ALL TRANSACTION</Text>
+                <Text style={{ marginLeft: widthToDp("3%"), marginTop: heightToDp("2%"), fontSize: widthToDp("7%"), fontFamily: 'Oswald-Medium' }}>{this.state.allTransactionsLabel}</Text>
                 <ScrollView>
                 {
                     moneyManagerData.map((i) => {

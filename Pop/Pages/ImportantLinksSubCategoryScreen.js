@@ -35,7 +35,8 @@ export default class ImportantLinksSubCategoryScreen extends Component {
             title: '',
             data: [],
             isLoading: false,
-            languages: []
+            languages: [],
+            textLanguageChange: ''
         }
         this.state.languages = Languages
         this.state.value = this.props.route.params.value
@@ -44,28 +45,10 @@ export default class ImportantLinksSubCategoryScreen extends Component {
     componentDidMount() {
         //this.getDetails()
         this.getDetailsFromOffline()
+        this.setLanguageOnMount()
     }
 
 
-    changeLanguage = (id) => {
-        //alert(id)
-        AsyncStorage.setItem('language', id)
-        LanguageChange.setLanguage(id)
-        if (this.state.value === 0) {
-            this.setState({ title: LanguageChange.wash })
-        } else if (this.state.value === 1) {
-            this.setState({ title: LanguageChange.health })
-        } else if (this.state.value === 2) {
-            this.setState({ title: LanguageChange.covid })
-        } else if (this.state.value === 3) {
-            this.setState({ title: LanguageChange.govtSchemes })
-        }
-        // this.setState({data : data})
-        // this.state.data[0].name = LanguageChange.wash
-        // this.state.data[1].name = LanguageChange.health
-        // this.state.data[2].name = LanguageChange.covid
-        // this.state.data[3].name = LanguageChange.govtSchemes
-    }
 
 
     getDetailsFromOffline = async () => {
@@ -124,14 +107,21 @@ export default class ImportantLinksSubCategoryScreen extends Component {
     }
 
 
-    goToDetailsPage = (category, link, description) => {
-        //alert(category)
+    goToDetailsPage = (categoryEnglish,categoryHindi,categoryOdia,categoryHo,categorySanthali, link, descEnglish , descHindi , descHo , descOdia , descSanthali) => {
+        //alert(categoryEnglish)
         this.props.navigation.navigate({
             name: 'ImportantLinksDetailsScreen',
             params: {
-                category: category,
-                link: link,
-                description: description
+                categoryEnglish: categoryEnglish,
+                categoryHindi: categoryHindi,
+                categoryOdia: categoryOdia,
+                categoryHo:categoryHo,
+                categorySanthali:categorySanthali,
+                descEnglish: descEnglish,
+                descHindi:descHindi,
+                descHo:descHo,
+                descOdia:descOdia,
+                descSanthali:descSanthali
             }
         })
     }
@@ -143,6 +133,40 @@ export default class ImportantLinksSubCategoryScreen extends Component {
         this.sound.play()
     }
 
+    setLanguageOnMount = async () => {
+        let defaultLanguage = await AsyncStorage.getItem('language')
+        if (defaultLanguage === 'en') {
+            this.setState({ textLanguageChange: '0' })
+        } else if (defaultLanguage === 'hi') {
+            this.setState({ textLanguageChange: '1' })
+        } else if (defaultLanguage === 'ho') {
+            this.setState({ textLanguageChange: '2' })
+        } else if (defaultLanguage === 'od') {
+            this.setState({ textLanguageChange: '3' })
+        } else if (defaultLanguage === 'san') {
+            this.setState({ textLanguageChange: '4' })
+        }
+    }
+
+    languageChangeFunction = async (data) => {
+
+        if (data === 'en') {
+            AsyncStorage.setItem('language', 'en')
+            this.setState({ textLanguageChange: '0' })
+        } else if (data === 'hi') {
+            this.setState({ textLanguageChange: '1' })
+            AsyncStorage.setItem('language', 'hi')
+        } else if (data === 'ho') {
+            this.setState({ textLanguageChange: '2' })
+            AsyncStorage.setItem('language', 'ho')
+        } else if (data === 'od') {
+            this.setState({ textLanguageChange: '3' })
+            AsyncStorage.setItem('language', 'od')
+        } else if (data === 'san') {
+            AsyncStorage.setItem('language', 'san')
+            this.setState({ textLanguageChange: '4' })
+        }
+    }
 
     render() {
         var valueArray = []
@@ -163,7 +187,7 @@ export default class ImportantLinksSubCategoryScreen extends Component {
                 </View>
 
                 <View style={{ flexDirection: 'row', marginTop: heightToDp("1%"), marginLeft: widthToDp("1%") }}>
-                    <TouchableOpacity onPress={() => this.changeLanguage(this.state.languages[0].id)}>
+                    <TouchableOpacity onPress={() =>this.languageChangeFunction(this.state.languages[0].id)}>
                         <View style={{ backgroundColor: BaseColor.English, width: widthToDp("30%"), height: heightToDp("6%"), marginLeft: widthToDp("2%"), borderRadius: 100, flexDirection: 'row' }}>
                             <Text style={{ color: '#fff', marginTop: heightToDp("1.5%"), fontFamily: 'Oswald-Medium', marginLeft: widthToDp("5%") }}>{this.state.languages[0].value}</Text>
                             <Icon
@@ -175,7 +199,7 @@ export default class ImportantLinksSubCategoryScreen extends Component {
                         </View>
                     </TouchableOpacity>
 
-                    <TouchableOpacity onPress={() => this.changeLanguage(this.state.languages[1].id)}>
+                    <TouchableOpacity onPress={() => this.languageChangeFunction(this.state.languages[1].id)}>
                         <View style={{ backgroundColor: BaseColor.Hindi, width: widthToDp("30%"), height: heightToDp("6%"), marginLeft: widthToDp("2%"), borderRadius: 100, flexDirection: 'row' }}>
                             <Text style={{ color: '#fff', marginTop: heightToDp("1.7%"), marginLeft: widthToDp("5%"), fontWeight: 'bold', fontSize: widthToDp("4.3%") }}>{this.state.languages[1].value}</Text>
                             <Icon
@@ -187,7 +211,7 @@ export default class ImportantLinksSubCategoryScreen extends Component {
                         </View>
                     </TouchableOpacity>
 
-                    <TouchableOpacity >
+                    <TouchableOpacity onPress={() => this.languageChangeFunction(this.state.languages[2].id)}>
                         <View style={{ backgroundColor: BaseColor.Ho, width: widthToDp("30%"), height: heightToDp("6%"), marginLeft: widthToDp("2%"), borderRadius: 100, flexDirection: 'row' }}>
                             <Text style={{ color: '#fff', marginTop: heightToDp("1.5%"), marginLeft: widthToDp("5%"), fontWeight: 'bold', fontSize: widthToDp("4.3%") }}>{this.state.languages[2].value}</Text>
                             <Icon
@@ -200,7 +224,7 @@ export default class ImportantLinksSubCategoryScreen extends Component {
                     </TouchableOpacity>
                 </View>
                 <View style={{ flexDirection: 'row', marginTop: heightToDp("1%"), marginLeft: widthToDp("1%"), alignSelf: 'center' }}>
-                    <TouchableOpacity onPress={() => this.changeLanguage(this.state.languages[3].id)}>
+                    <TouchableOpacity onPress={() => this.languageChangeFunction(this.state.languages[3].id)}>
                         <View style={{ backgroundColor: BaseColor.Uridia, width: widthToDp("30%"), height: heightToDp("6%"), borderRadius: 100, flexDirection: 'row' }}>
                             <Text style={{ color: '#fff', marginTop: heightToDp("1.7%"), marginLeft: widthToDp("4.7%"), fontWeight: 'bold', fontSize: widthToDp("4.3%") }}>{this.state.languages[3].value}</Text>
                             <Icon
@@ -212,7 +236,7 @@ export default class ImportantLinksSubCategoryScreen extends Component {
                         </View>
                     </TouchableOpacity>
 
-                    <TouchableOpacity >
+                    <TouchableOpacity onPress={() => this.languageChangeFunction(this.state.languages[4].id)}>
                         <View style={{ backgroundColor: BaseColor.Santhali, width: widthToDp("30%"), height: heightToDp("6%"), borderRadius: 100, marginLeft: widthToDp("2%"), flexDirection: 'row' }}>
                             <Text style={{ color: '#fff', marginTop: heightToDp("1.7%"), marginLeft: widthToDp("3.4%"), fontWeight: 'bold', fontSize: widthToDp("4.3%") }}>{this.state.languages[4].value}</Text>
                             <Icon
@@ -239,7 +263,10 @@ export default class ImportantLinksSubCategoryScreen extends Component {
                             <Card style={{ width: widthToDp("94%"), marginLeft: widthToDp("3%"), height: heightToDp("30%"), marginBottom: heightToDp("1%"), borderRadius: 20, backgroundColor: BaseColor.Red }}>
                                 <View style={{ flexDirection: 'row' }}>
                                     <View style={{ width: widthToDp("45%") }}>
-                                        <Text style={{ color: 'white', marginLeft: widthToDp("6%"), marginTop: heightToDp("1%"), fontSize: widthToDp("5%"), fontFamily: 'Oswald-Medium' }}>{item.category}</Text>
+                                        {
+                                            this.state.textLanguageChange === '0' ? <Text style={{ color: 'white', marginLeft: widthToDp("6%"), marginTop: heightToDp("1%"), fontSize: widthToDp("5%"), fontFamily: 'Oswald-Medium' }}>{item.categoryEnglish}</Text> : ((this.state.textLanguageChange === '1') ? <Text style={{ color: 'white', marginLeft: widthToDp("6%"), marginTop: heightToDp("1%"), fontSize: widthToDp("5%"), fontFamily: 'Oswald-Medium' }}>{item.categoryHindi}</Text> : ((this.state.textLanguageChange === '2') ? <Text style={{ color: 'white', marginLeft: widthToDp("6%"), marginTop: heightToDp("1%"), fontSize: widthToDp("5%"), fontFamily: 'Oswald-Medium' }}>{item.categoryHo}</Text> : ((this.state.textLanguageChange === '3') ? <Text style={{ color: 'white', marginLeft: widthToDp("6%"), marginTop: heightToDp("1%"), fontSize: widthToDp("5%"), fontFamily: 'Oswald-Medium' }}>{item.categoryOdia}</Text> : ((this.state.textLanguageChange === '4') ? <Text style={{ color: 'white', marginLeft: widthToDp("6%"), marginTop: heightToDp("1%"), fontSize: widthToDp("5%"), fontFamily: 'Oswald-Medium' }}>{item.categorySanthali}</Text> : null))))
+                                        }
+                                        
                                     </View>
                                     <TouchableOpacity onPress={() => this.speak(item.category)}>
                                         <Icon
@@ -250,7 +277,7 @@ export default class ImportantLinksSubCategoryScreen extends Component {
                                     </TouchableOpacity>
 
                                 </View>
-                                <TouchableOpacity onPress={() => this.goToDetailsPage(item.category, item.link, item.descEnglish)}>
+                                <TouchableOpacity onPress={() => this.goToDetailsPage(item.categoryEnglish,item.categoryHindi,item.categoryOdia,item.categoryHo,item.categorySanthali, item.link, item.descEnglish , item.descHindi , item.descHo , item.descOdia , item.descSanthali)}>
                                     <Image
                                         style={{ width: widthToDp("93.7%"), height: heightToDp("24%"), marginLeft: widthToDp("0%"), borderRadius: 2, marginTop: heightToDp("1%"), borderBottomLeftRadius: 20, borderBottomRightRadius: 20 }}
                                         source={{ uri: DataAccess.BaseUrl + DataAccess.ImportantLinksImage + item.image }}

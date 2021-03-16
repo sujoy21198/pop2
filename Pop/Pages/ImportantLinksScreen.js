@@ -31,45 +31,147 @@ export default class ImportantLinksScreen extends Component {
 
         this.state.languages = Languages
         this.state.data = data
-        this.state.data[0].name = LanguageChange.wash
-        this.state.data[1].name = LanguageChange.health
-        this.state.data[2].name = LanguageChange.covid
-        this.state.data[3].name = LanguageChange.govtSchemes
+        // this.state.data[0].name = LanguageChange.wash
+        // this.state.data[1].name = LanguageChange.health
+        // this.state.data[2].name = LanguageChange.covid
+        // this.state.data[3].name = LanguageChange.govtSchemes
     }
 
-    changeLanguage = (id) => {
-        //alert(id)
-        AsyncStorage.setItem('language',id)
-        LanguageChange.setLanguage(id)
-        this.setState({data : data})
-        this.state.data[0].name = LanguageChange.wash
-        this.state.data[1].name = LanguageChange.health
-        this.state.data[2].name = LanguageChange.covid
-        this.state.data[3].name = LanguageChange.govtSchemes
+    componentDidMount(){
+        this.setLanguageOnMount()
     }
+
+    // changeLanguage = (id) => {
+    //     //alert(id)
+    //     AsyncStorage.setItem('language',id)
+    //     LanguageChange.setLanguage(id)
+    //     this.setState({data : data})
+    //     this.state.data[0].name = LanguageChange.wash
+    //     this.state.data[1].name = LanguageChange.health
+    //     this.state.data[2].name = LanguageChange.covid
+    //     this.state.data[3].name = LanguageChange.govtSchemes
+    // }
 
 
     selectLandType = (data) => {
-        if (data === LanguageChange.wash) {
+        if (data === this.state.data[0].name) {
             this.props.navigation.navigate({
                 name: 'ImportantLinksSubCategoryScreen',
                 params: { value: 0 }
             })
-        } else if (data === LanguageChange.health) {
+        } else if (data === this.state.data[1].name) {
             this.props.navigation.navigate({
                 name: 'ImportantLinksSubCategoryScreen',
                 params: { value: 1 }
             })
-        } else if (data === LanguageChange.covid) {
+        } else if (data === this.state.data[2].name) {
             this.props.navigation.navigate({
                 name: 'ImportantLinksSubCategoryScreen',
                 params: { value: 2 }
             })
-        } else if (data === LanguageChange.govtSchemes) {
+        } else if (data === this.state.data[3].name) {
             this.props.navigation.navigate({
                 name: 'ImportantLinksSubCategoryScreen',
                 params: { value: 3 }
             })
+        }
+    }
+
+    loadlabelsFromStorage = async () => {
+        try {
+            let username = await AsyncStorage.getItem('username')
+            let user = await AsyncStorage.getItem('offlineData');
+            let parsed = JSON.parse(user);
+            var specificObject = parsed.find((i) => i.username === username)
+            var wash = specificObject.labels.find((i) => i.type === 32)
+            var health = specificObject.labels.find((i) => i.type === 33)
+            var covid = specificObject.labels.find((i) => i.type === 34)
+            var governmentSchemes = specificObject.labels.find((i) => i.type === 35)
+        
+            if (this.state.textLanguageChange === '0') {
+                this.state.data[0].name = wash.nameEnglish
+                this.state.data[1].name = health.nameEnglish
+                this.state.data[2].name = covid.nameEnglish
+                this.state.data[3].name = governmentSchemes.nameEnglish
+                
+                // this.setState({ moneyManagerLabel: moneyManagerLabel.nameEnglish })
+                // this.setState({ expenseLabel: expenseLabel.nameEnglish })
+                // this.setState({ incomeLabel: incomeLabel.nameEnglish })
+                // this.setState({ allTransactionLabel: allTransactionLabel.nameEnglish })
+            } else if (this.state.textLanguageChange === '1') {
+                this.state.data[0].name = wash.nameHindi
+                this.state.data[1].name = health.nameHindi
+                this.state.data[2].name = covid.nameHindi
+                this.state.data[3].name = governmentSchemes.nameHindi
+                
+            } else if (this.state.textLanguageChange === '2') {
+                this.state.data[0].name = wash.nameHo
+                this.state.data[1].name = health.nameHo
+                this.state.data[2].name = covid.nameHo
+                this.state.data[3].name = governmentSchemes.nameHo
+                
+            } else if (this.state.textLanguageChange === '3') {
+                this.state.data[0].name = wash.nameOdia
+                this.state.data[1].name = health.nameOdia
+                this.state.data[2].name = covid.nameOdia
+                this.state.data[3].name = governmentSchemes.nameOdia
+                
+            } else if (this.state.textLanguageChange === '4') {
+                this.state.data[0].name = wash.nameSanthali
+                this.state.data[1].name = health.nameSanthali
+                this.state.data[2].name = covid.nameSanthali
+                this.state.data[3].name = governmentSchemes.nameSanthali
+               
+            }
+            
+        } catch (error) {
+            alert(error)
+        }
+        this.setState({ crops: specificObject.crops })
+    }
+
+    setLanguageOnMount = async () => {
+        let defaultLanguage = await AsyncStorage.getItem('language')
+        if (defaultLanguage === 'en') {
+            this.setState({ textLanguageChange: '0' })
+            this.loadlabelsFromStorage()
+        } else if (defaultLanguage === 'hi') {
+            this.setState({ textLanguageChange: '1' })
+            this.loadlabelsFromStorage()
+        } else if (defaultLanguage === 'ho') {
+            this.setState({ textLanguageChange: '2' })
+            this.loadlabelsFromStorage()
+        } else if (defaultLanguage === 'od') {
+            this.setState({ textLanguageChange: '3' })
+            this.loadlabelsFromStorage()
+        } else if (defaultLanguage === 'san') {
+            this.setState({ textLanguageChange: '4' })
+            this.loadlabelsFromStorage()
+        }
+    }
+
+    languageChangeFunction = async (data) => {
+
+        if (data === 'en') {
+            AsyncStorage.setItem('language', 'en')
+            this.setState({ textLanguageChange: '0' })
+            this.loadlabelsFromStorage()
+        } else if (data === 'hi') {
+            this.setState({ textLanguageChange: '1' })
+            AsyncStorage.setItem('language', 'hi')
+            this.loadlabelsFromStorage()
+        } else if (data === 'ho') {
+            this.setState({ textLanguageChange: '2' })
+            AsyncStorage.setItem('language', 'ho')
+            this.loadlabelsFromStorage()
+        } else if (data === 'od') {
+            this.setState({ textLanguageChange: '3' })
+            AsyncStorage.setItem('language', 'od')
+            this.loadlabelsFromStorage()
+        } else if (data === 'san') {
+            AsyncStorage.setItem('language', 'san')
+            this.setState({ textLanguageChange: '4' })
+            this.loadlabelsFromStorage()
         }
     }
     
@@ -89,7 +191,7 @@ export default class ImportantLinksScreen extends Component {
                 </View>
 
                 <View style={{ flexDirection: 'row', marginTop: heightToDp("1%"), marginLeft: widthToDp("1%") }}>
-                    <TouchableOpacity onPress={() => this.changeLanguage(this.state.languages[0].id)}>
+                    <TouchableOpacity onPress={() => this.languageChangeFunction(this.state.languages[0].id)}>
                         <View style={{ backgroundColor: BaseColor.English, width: widthToDp("30%"), height: heightToDp("6%"), marginLeft: widthToDp("2%"), borderRadius: 100, flexDirection: 'row' }}>
                             <Text style={{ color: '#fff', marginTop: heightToDp("1.5%"), fontFamily: 'Oswald-Medium', marginLeft: widthToDp("5%") }}>{this.state.languages[0].value}</Text>
                             <Icon
@@ -101,7 +203,7 @@ export default class ImportantLinksScreen extends Component {
                         </View>
                     </TouchableOpacity>
 
-                    <TouchableOpacity onPress={() => this.changeLanguage(this.state.languages[1].id)}>
+                    <TouchableOpacity onPress={() => this.languageChangeFunction(this.state.languages[1].id)}>
                         <View style={{ backgroundColor: BaseColor.Hindi, width: widthToDp("30%"), height: heightToDp("6%"), marginLeft: widthToDp("2%"), borderRadius: 100, flexDirection: 'row' }}>
                             <Text style={{ color: '#fff', marginTop: heightToDp("1.7%"), marginLeft: widthToDp("5%"), fontWeight: 'bold', fontSize: widthToDp("4.3%") }}>{this.state.languages[1].value}</Text>
                             <Icon
@@ -113,7 +215,7 @@ export default class ImportantLinksScreen extends Component {
                         </View>
                     </TouchableOpacity>
 
-                    <TouchableOpacity >
+                    <TouchableOpacity onPress={() => this.languageChangeFunction(this.state.languages[2].id)}>
                         <View style={{ backgroundColor: BaseColor.Ho, width: widthToDp("30%"), height: heightToDp("6%"), marginLeft: widthToDp("2%"), borderRadius: 100, flexDirection: 'row' }}>
                             <Text style={{ color: '#fff', marginTop: heightToDp("1.5%"), marginLeft: widthToDp("5%"), fontWeight: 'bold', fontSize: widthToDp("4.3%") }}>{this.state.languages[2].value}</Text>
                             <Icon
@@ -126,7 +228,7 @@ export default class ImportantLinksScreen extends Component {
                     </TouchableOpacity>
                 </View>
                 <View style={{ flexDirection: 'row', marginTop: heightToDp("1%"), marginLeft: widthToDp("1%"), alignSelf: 'center' }}>
-                    <TouchableOpacity onPress={() => this.changeLanguage(this.state.languages[3].id)}>
+                    <TouchableOpacity onPress={() => this.languageChangeFunction(this.state.languages[3].id)}>
                         <View style={{ backgroundColor: BaseColor.Uridia, width: widthToDp("30%"), height: heightToDp("6%"), borderRadius: 100, flexDirection: 'row' }}>
                             <Text style={{ color: '#fff', marginTop: heightToDp("1.7%"), marginLeft: widthToDp("4.7%"), fontWeight: 'bold', fontSize: widthToDp("4.3%") }}>{this.state.languages[3].value}</Text>
                             <Icon
@@ -138,7 +240,7 @@ export default class ImportantLinksScreen extends Component {
                         </View>
                     </TouchableOpacity>
 
-                    <TouchableOpacity >
+                    <TouchableOpacity onPress={() => this.languageChangeFunction(this.state.languages[4].id)}>
                         <View style={{ backgroundColor: BaseColor.Santhali, width: widthToDp("30%"), height: heightToDp("6%"), borderRadius: 100, marginLeft: widthToDp("2%"), flexDirection: 'row' }}>
                             <Text style={{ color: '#fff', marginTop: heightToDp("1.7%"), marginLeft: widthToDp("3.4%"), fontWeight: 'bold', fontSize: widthToDp("4.3%") }}>{this.state.languages[4].value}</Text>
                             <Icon

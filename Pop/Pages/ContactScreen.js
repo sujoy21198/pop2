@@ -25,13 +25,16 @@ export default class ContactScreen extends Component {
             languages: [],
             blockList: [],
             blockName: 'Select Block',
-            fieldOfficerData: []
+            fieldOfficerData: [],
+            textLanguageChange:'',
+            contactLabel:''
         }
         this.state.languages = Languages
         //this.state.value = this.props.route.params.value
     }
     componentDidMount() {
         this.getContacts()
+        this.setLanguageOnMount()
     }
     blockPicker = (value) => {
         this.setState({
@@ -78,6 +81,79 @@ export default class ContactScreen extends Component {
             alert(error)
         }
     }
+
+    setLanguageOnMount = async () => {
+        let defaultLanguage = await AsyncStorage.getItem('language')
+        if (defaultLanguage === 'en') {
+            this.setState({ textLanguageChange: '0' })
+            this.loadlabelsFromStorage()
+        } else if (defaultLanguage === 'hi') {
+            this.setState({ textLanguageChange: '1' })
+            this.loadlabelsFromStorage()
+        } else if (defaultLanguage === 'ho') {
+            this.setState({ textLanguageChange: '2' })
+            this.loadlabelsFromStorage()
+        } else if (defaultLanguage === 'od') {
+            this.setState({ textLanguageChange: '3' })
+            this.loadlabelsFromStorage()
+        } else if (defaultLanguage === 'san') {
+            this.setState({ textLanguageChange: '4' })
+            this.loadlabelsFromStorage()
+        }
+    }
+
+    languageChangeFunction = async (data) => {
+
+        if (data === 'en') {
+            AsyncStorage.setItem('language', 'en')
+            this.setState({ textLanguageChange: '0' })
+            this.loadlabelsFromStorage()
+        } else if (data === 'hi') {
+            this.setState({ textLanguageChange: '1' })
+            AsyncStorage.setItem('language', 'hi')
+            this.loadlabelsFromStorage()
+        } else if (data === 'ho') {
+            this.setState({ textLanguageChange: '2' })
+            AsyncStorage.setItem('language', 'ho')
+            this.loadlabelsFromStorage()
+        } else if (data === 'od') {
+            this.setState({ textLanguageChange: '3' })
+            AsyncStorage.setItem('language', 'od')
+            this.loadlabelsFromStorage()
+        } else if (data === 'san') {
+            AsyncStorage.setItem('language', 'san')
+            this.setState({ textLanguageChange: '4' })
+            this.loadlabelsFromStorage()
+        }
+    }
+
+    loadlabelsFromStorage = async () => {
+        try {
+            let username = await AsyncStorage.getItem('username')
+            let user = await AsyncStorage.getItem('offlineData');
+            let parsed = JSON.parse(user);
+            var specificObject = parsed.find((i) => i.username === username)
+            var contactLabel = specificObject.labels.find((i) => i.type === 46)
+            if (this.state.textLanguageChange === '0') {
+                this.setState({ contactLabel: contactLabel.nameEnglish })
+            } else if (this.state.textLanguageChange === '1') {
+                this.setState({ contactLabel: contactLabel.nameHindi })
+            } else if (this.state.textLanguageChange === '2') {
+                this.setState({ contactLabel: contactLabel.nameHo })
+            } else if (this.state.textLanguageChange === '3') {
+                this.setState({ contactLabel: contactLabel.nameOdia })
+               
+            } else if (this.state.textLanguageChange === '4') {
+                this.setState({ contactLabel: contactLabel.nameSanthali})
+                
+            }
+            
+        } catch (error) {
+            alert(error)
+        }
+        this.setState({ crops: specificObject.crops })
+    }
+
     render() {
         var blockList = []
         blockList = this.state.blockList
@@ -98,7 +174,7 @@ export default class ContactScreen extends Component {
                 </View>
 
                 <View style={{ flexDirection: 'row', marginTop: heightToDp("1%"), marginLeft: widthToDp("1%") }}>
-                    <TouchableOpacity onPress={() => this.changeLanguage(this.state.languages[0].id)}>
+                    <TouchableOpacity onPress={() => this.languageChangeFunction(this.state.languages[0].id)}>
                         <View style={{ backgroundColor: BaseColor.English, width: widthToDp("30%"), height: heightToDp("6%"), marginLeft: widthToDp("2%"), borderRadius: 100, flexDirection: 'row' }}>
                             <Text style={{ color: '#fff', marginTop: heightToDp("1.5%"), fontFamily: 'Oswald-Medium', marginLeft: widthToDp("5%") }}>{this.state.languages[0].value}</Text>
                             <Icon
@@ -110,7 +186,7 @@ export default class ContactScreen extends Component {
                         </View>
                     </TouchableOpacity>
 
-                    <TouchableOpacity onPress={() => this.changeLanguage(this.state.languages[1].id)}>
+                    <TouchableOpacity onPress={() => this.languageChangeFunction(this.state.languages[1].id)}>
                         <View style={{ backgroundColor: BaseColor.Hindi, width: widthToDp("30%"), height: heightToDp("6%"), marginLeft: widthToDp("2%"), borderRadius: 100, flexDirection: 'row' }}>
                             <Text style={{ color: '#fff', marginTop: heightToDp("1.7%"), marginLeft: widthToDp("5%"), fontWeight: 'bold', fontSize: widthToDp("4.3%") }}>{this.state.languages[1].value}</Text>
                             <Icon
@@ -122,7 +198,7 @@ export default class ContactScreen extends Component {
                         </View>
                     </TouchableOpacity>
 
-                    <TouchableOpacity >
+                    <TouchableOpacity onPress={() => this.languageChangeFunction(this.state.languages[2].id)}>
                         <View style={{ backgroundColor: BaseColor.Ho, width: widthToDp("30%"), height: heightToDp("6%"), marginLeft: widthToDp("2%"), borderRadius: 100, flexDirection: 'row' }}>
                             <Text style={{ color: '#fff', marginTop: heightToDp("1.5%"), marginLeft: widthToDp("5%"), fontWeight: 'bold', fontSize: widthToDp("4.3%") }}>{this.state.languages[2].value}</Text>
                             <Icon
@@ -135,7 +211,7 @@ export default class ContactScreen extends Component {
                     </TouchableOpacity>
                 </View>
                 <View style={{ flexDirection: 'row', marginTop: heightToDp("1%"), marginLeft: widthToDp("1%"), alignSelf: 'center' }}>
-                    <TouchableOpacity onPress={() => this.changeLanguage(this.state.languages[3].id)}>
+                    <TouchableOpacity onPress={() => this.languageChangeFunction(this.state.languages[3].id)}>
                         <View style={{ backgroundColor: BaseColor.Uridia, width: widthToDp("30%"), height: heightToDp("6%"), borderRadius: 100, flexDirection: 'row' }}>
                             <Text style={{ color: '#fff', marginTop: heightToDp("1.7%"), marginLeft: widthToDp("4.7%"), fontWeight: 'bold', fontSize: widthToDp("4.3%") }}>{this.state.languages[3].value}</Text>
                             <Icon
@@ -147,7 +223,7 @@ export default class ContactScreen extends Component {
                         </View>
                     </TouchableOpacity>
 
-                    <TouchableOpacity >
+                    <TouchableOpacity onPress={() => this.languageChangeFunction(this.state.languages[4].id)}>
                         <View style={{ backgroundColor: BaseColor.Santhali, width: widthToDp("30%"), height: heightToDp("6%"), borderRadius: 100, marginLeft: widthToDp("2%"), flexDirection: 'row' }}>
                             <Text style={{ color: '#fff', marginTop: heightToDp("1.7%"), marginLeft: widthToDp("3.4%"), fontWeight: 'bold', fontSize: widthToDp("4.3%") }}>{this.state.languages[4].value}</Text>
                             <Icon
@@ -161,7 +237,7 @@ export default class ContactScreen extends Component {
                 </View>
                 <View style={{ borderBottomColor: BaseColor.Stroke, borderBottomWidth: 1, marginTop: heightToDp('1.5%'), width: widthToDp("100%") }}></View>
                 <View style={{ marginTop: heightToDp("5%"), flexDirection: 'row' }}>
-                    <Text style={{ fontSize: widthToDp("7%"), marginLeft: widthToDp("3%"), fontFamily: 'Oswald-Medium' }}>{LanguageChange.contact}</Text>
+                    <Text style={{ fontSize: widthToDp("7%"), marginLeft: widthToDp("3%"), fontFamily: 'Oswald-Medium' }}>{this.state.contactLabel}</Text>
                     <View style={{ backgroundColor: 'white', height: heightToDp("8%"), width: widthToDp("50%"), marginLeft: widthToDp("5%"), borderRadius: 20 }}>
                         <TouchableOpacity onPress={() => this.RBSheet.open()}>
                             <View style={{ flexDirection: 'row' }}>
@@ -212,8 +288,19 @@ export default class ContactScreen extends Component {
                         style={{ marginBottom: heightToDp("45%") }}
                         renderItem={({ item }) =>
                             <View style={{ backgroundColor: 'white', width: widthToDp("90%"), height: heightToDp("30%"), alignSelf: 'center', marginTop: heightToDp("2%"), borderRadius: 20 }}>
-                                <Text style={{ fontSize: widthToDp("4%"), marginLeft: widthToDp("5%"), fontFamily: 'Oswald-Medium', marginTop: heightToDp("2%") }}>FULL NAME</Text>
-                                <Text style={{ fontSize: widthToDp("7%"), marginLeft: widthToDp("5%"), fontFamily: 'Oswald-Medium', marginTop: heightToDp("2%") }}>{item.officerName}</Text>
+                                <View style={{ flexDirection: 'row' }}>
+                                    <View style={{ width: widthToDp("50%") }}>
+                                        <Text style={{ fontSize: widthToDp("4%"), marginLeft: widthToDp("5%"), fontFamily: 'Oswald-Medium', marginTop: heightToDp("2%") }}>FULL NAME</Text>
+                                        <Text style={{ fontSize: widthToDp("7%"), marginLeft: widthToDp("5%"), fontFamily: 'Oswald-Medium', marginTop: heightToDp("2%") }}>{item.officerName}</Text>
+                                    </View>
+                                    <Image
+                                        style={{ height: heightToDp("10%"), width: widthToDp("30%"), borderRadius: 10 }}
+                                        source={{ uri: DataAccess.BaseUrl + '/app-property/uploads/field-officers/' + item.image }}
+                                    // source={{uri:'https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__340.jpg'}}
+                                    />
+                                </View>
+
+
                                 <View style={{ borderBottomColor: "black", borderBottomWidth: 1, marginTop: heightToDp('1.5%'), width: widthToDp("80%") }}></View>
                                 {/* <Text style={{ fontSize: widthToDp("4%"), marginLeft: widthToDp("5%"), fontFamily: 'Oswald-Medium', marginTop: heightToDp("2%") }}>DESIGNATION</Text>
                                 <Text style={{ fontSize: widthToDp("7%"), marginLeft: widthToDp("5%"), fontFamily: 'Oswald-Medium', marginTop: heightToDp("2%") }}>{item.officerName}</Text>
