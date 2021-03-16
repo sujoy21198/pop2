@@ -24,51 +24,198 @@ export default class KnowledgeCenterScreen extends Component {
         super(props)
         this.state={
             languages:[],
-            data:[]
+            data:[],
+            textLanguageChange : '',
+            knowledgeCenterLabel:''
         }
         this.state.languages = Languages
         this.state.data = data
-        this.state.data[0].name = LanguageChange.crops
-        this.state.data[1].name = LanguageChange.livestock
-        this.state.data[2].name = LanguageChange.smallBusiness
-        this.state.data[3].name = LanguageChange.nutrition
+        // this.state.data[0].name = LanguageChange.crops
+        // this.state.data[1].name = LanguageChange.livestock
+        // this.state.data[2].name = LanguageChange.smallBusiness
+        // this.state.data[3].name = LanguageChange.nutrition
     }
 
-    changeLanguage = (id) => {
-        //alert(id)
-        AsyncStorage.setItem('language',id)
-        LanguageChange.setLanguage(id)
-        this.setState({data : data})
-        this.state.data[0].name = LanguageChange.crops
-        this.state.data[1].name = LanguageChange.livestock
-        this.state.data[2].name = LanguageChange.smallBusiness
-        this.state.data[3].name = LanguageChange.nutrition
-        this.props.navigation.reset({
-            index: 0,
-            routes: [{ name: "DashBoardScreen" }]
-        });
-        
+    componentDidMount(){
+        this.setLanguageOnMount()
     }
+    // changeLanguage = (id) => {
+    //     //alert(id)
+    //     AsyncStorage.setItem('language',id)
+    //     LanguageChange.setLanguage(id)
+    //     this.setState({data : data})
+    //     this.state.data[0].name = LanguageChange.crops
+    //     this.state.data[1].name = LanguageChange.livestock
+    //     this.state.data[2].name = LanguageChange.smallBusiness
+    //     this.state.data[3].name = LanguageChange.nutrition
+        // this.props.navigation.reset({
+        //     index: 0,
+        //     routes: [{ name: "DashBoardScreen" }]
+        // });
+        
+    // }
 
 
     checkNavigation = (data) => {
         //alert(data)
-        if(data === LanguageChange.crops){
+        if(data === this.state.data[0].name){
             this.props.navigation.navigate({
                 name: 'CropsScreen'
             })
-        }else if(data === LanguageChange.livestock){
+        }else if(data === this.state.data[1].name){
             this.props.navigation.navigate({
                 name:"LiveStockScreen"
             })
-        }else if(data === LanguageChange.nutrition){
+        }else if(data === this.state.data[3].name){
             this.props.navigation.navigate({
                 name:"NutritionGardenScreen"
             })
-        }else if(data === LanguageChange.smallBusiness){
+        }else if(data === this.state.data[2].name){
             this.props.navigation.navigate({
                 name:"SmallBusinessScreen"
             })
+        }
+    }
+
+    loadlabelsFromStorage = async () => {
+        try {
+            let username = await AsyncStorage.getItem('username')
+            let user = await AsyncStorage.getItem('offlineData');
+            let parsed = JSON.parse(user);
+            var specificObject = parsed.find((i) => i.username === username)
+            var knowledgeCenter = specificObject.labels.find((i) => i.type === 22)
+            var crops = specificObject.labels.find((i) => i.type === 28)
+            var livestock = specificObject.labels.find((i) => i.type === 29)
+            var smallBusiness = specificObject.labels.find((i) => i.type === 30)
+            var nutrationGraden = specificObject.labels.find((i) => i.type === 31)
+            // var message = specificObject.labels.find((i) => i.type === 26)
+            // var generalSettings = specificObject.labels.find((i) => i.type === 27)
+            // var pension = specificObject.labels.find((i) => i.type === 51)
+            // var others = specificObject.labels.find((i) => i.type === 52)
+            if (this.state.textLanguageChange === '0') {
+                this.state.data[0].name = crops.nameEnglish
+                this.state.data[1].name = livestock.nameEnglish
+                this.state.data[2].name = smallBusiness.nameEnglish
+                this.state.data[3].name = nutrationGraden.nameEnglish
+                this.setState({knowledgeCenterLabel : knowledgeCenter.nameEnglish})
+                // this.state.data[4].name = message.nameEnglish
+                // this.state.data[5].name = generalSettings.nameEnglish
+                // this.state.data[6].name = pension.nameEnglish
+                // this.state.data[7].name = others.nameEnglish
+                // this.setState({ moneyManagerLabel: moneyManagerLabel.nameEnglish })
+                // this.setState({ expenseLabel: expenseLabel.nameEnglish })
+                // this.setState({ incomeLabel: incomeLabel.nameEnglish })
+                // this.setState({ allTransactionLabel: allTransactionLabel.nameEnglish })
+            } else if (this.state.textLanguageChange === '1') {
+                this.state.data[0].name = crops.nameHindi
+                this.state.data[1].name = livestock.nameHindi
+                this.state.data[2].name = smallBusiness.nameHindi
+                this.state.data[3].name = nutrationGraden.nameHindi
+                this.setState({knowledgeCenterLabel : knowledgeCenter.nameHindi})
+                // this.state.data[4].name = message.nameHindi
+                // this.state.data[5].name = generalSettings.nameHindi
+                // this.state.data[6].name = pension.nameHindi
+                // this.state.data[7].name = others.nameHindi
+            } else if (this.state.textLanguageChange === '2') {
+                this.state.data[0].name = crops.nameHo
+                this.state.data[1].name = livestock.nameHo
+                this.state.data[2].name = smallBusiness.nameHo
+                this.state.data[3].name = nutrationGraden.nameHo
+                this.setState({knowledgeCenterLabel : knowledgeCenter.nameHo})
+                // this.state.data[4].name = message.nameHo
+                // this.state.data[5].name = generalSettings.nameHo
+                // this.state.data[6].name = pension.nameHo
+                // this.state.data[7].name = others.nameHo
+            } else if (this.state.textLanguageChange === '3') {
+                this.state.data[0].name = crops.nameOdia
+                this.state.data[1].name = livestock.nameOdia
+                this.state.data[2].name = smallBusiness.nameOdia
+                this.state.data[3].name = nutrationGraden.nameOdia
+                this.setState({knowledgeCenterLabel : knowledgeCenter.nameOdia})
+                // this.state.data[4].name = message.nameOdia
+                // this.state.data[5].name = generalSettings.nameOdia
+                // this.state.data[6].name = pension.nameOdia
+                // this.state.data[7].name = others.nameOdia
+            } else if (this.state.textLanguageChange === '4') {
+                this.state.data[0].name = crops.nameSanthali
+                this.state.data[1].name = livestock.nameSanthali
+                this.state.data[2].name = smallBusiness.nameSanthali
+                this.state.data[3].name = nutrationGraden.nameSanthali
+                this.setState({knowledgeCenterLabel : knowledgeCenter.nameSanthali})
+                // this.state.data[4].name = message.nameSanthali
+                // this.state.data[5].name = generalSettings.nameSanthali
+                // this.state.data[6].name = pension.nameSanthali
+                // this.state.data[7].name = others.nameSanthali
+            }
+            
+        } catch (error) {
+            alert(error)
+        }
+        this.setState({ crops: specificObject.crops })
+    }
+
+    setLanguageOnMount = async () => {
+        let defaultLanguage = await AsyncStorage.getItem('language')
+        if (defaultLanguage === 'en') {
+            this.setState({ textLanguageChange: '0' })
+            this.loadlabelsFromStorage()
+        } else if (defaultLanguage === 'hi') {
+            this.setState({ textLanguageChange: '1' })
+            this.loadlabelsFromStorage()
+        } else if (defaultLanguage === 'ho') {
+            this.setState({ textLanguageChange: '2' })
+            this.loadlabelsFromStorage()
+        } else if (defaultLanguage === 'od') {
+            this.setState({ textLanguageChange: '3' })
+            this.loadlabelsFromStorage()
+        } else if (defaultLanguage === 'san') {
+            this.setState({ textLanguageChange: '4' })
+            this.loadlabelsFromStorage()
+        }
+    }
+
+    languageChangeFunction = async (data) => {
+
+        if (data === 'en') {
+            AsyncStorage.setItem('language', 'en')
+            this.setState({ textLanguageChange: '0' })
+            this.loadlabelsFromStorage()
+            this.props.navigation.reset({
+                index: 0,
+                routes: [{ name: "DashBoardScreen" }]
+            });
+        } else if (data === 'hi') {
+            this.setState({ textLanguageChange: '1' })
+            AsyncStorage.setItem('language', 'hi')
+            this.loadlabelsFromStorage()
+            this.props.navigation.reset({
+                index: 0,
+                routes: [{ name: "DashBoardScreen" }]
+            });
+        } else if (data === 'ho') {
+            this.setState({ textLanguageChange: '2' })
+            AsyncStorage.setItem('language', 'ho')
+            this.loadlabelsFromStorage()
+            this.props.navigation.reset({
+                index: 0,
+                routes: [{ name: "DashBoardScreen" }]
+            });
+        } else if (data === 'od') {
+            this.setState({ textLanguageChange: '3' })
+            AsyncStorage.setItem('language', 'od')
+            this.loadlabelsFromStorage()
+            this.props.navigation.reset({
+                index: 0,
+                routes: [{ name: "DashBoardScreen" }]
+            });
+        } else if (data === 'san') {
+            AsyncStorage.setItem('language', 'san')
+            this.setState({ textLanguageChange: '4' })
+            this.loadlabelsFromStorage()
+            this.props.navigation.reset({
+                index: 0,
+                routes: [{ name: "DashBoardScreen" }]
+            });
         }
     }
 
@@ -87,7 +234,7 @@ export default class KnowledgeCenterScreen extends Component {
                     />
                 </View>
                 <View style={{ flexDirection: 'row', marginTop: heightToDp("1%"), marginLeft: widthToDp("1%") }}>
-                    <TouchableOpacity onPress={() => this.changeLanguage(this.state.languages[0].id)}>
+                    <TouchableOpacity onPress={() => this.languageChangeFunction(this.state.languages[0].id)}>
                         <View style={{ backgroundColor: BaseColor.English, width: widthToDp("30%"), height: heightToDp("6%"), marginLeft: widthToDp("2%"), borderRadius: 100, flexDirection: 'row' }}>
                             <Text style={{ color: '#fff', marginTop: heightToDp("1.5%"), fontFamily: 'Oswald-Medium', marginLeft: widthToDp("5%") }}>{this.state.languages[0].value}</Text>
                             <Icon
@@ -99,57 +246,57 @@ export default class KnowledgeCenterScreen extends Component {
                         </View>
                     </TouchableOpacity>
 
-                    <TouchableOpacity onPress={() => this.changeLanguage(this.state.languages[1].id)}>
-                        <View style={{ backgroundColor: BaseColor.Hindi, width: widthToDp("30%"), height: heightToDp("6%"), marginLeft: widthToDp("2%"), borderRadius: 100,flexDirection:'row' }}>
-                            <Text style={{ color: '#fff', marginTop: heightToDp("1.7%"), marginLeft:widthToDp("5%"),fontWeight:'bold',fontSize:widthToDp("4.3%") }}>{this.state.languages[1].value}</Text>
+                    <TouchableOpacity onPress={() => this.languageChangeFunction(this.state.languages[1].id)}>
+                        <View style={{ backgroundColor: BaseColor.Hindi, width: widthToDp("30%"), height: heightToDp("6%"), marginLeft: widthToDp("2%"), borderRadius: 100, flexDirection: 'row' }}>
+                            <Text style={{ color: '#fff', marginTop: heightToDp("1.7%"), marginLeft: widthToDp("5%"), fontWeight: 'bold', fontSize: widthToDp("4.3%") }}>{this.state.languages[1].value}</Text>
                             <Icon
-                            name="microphone"
-                            color="white"
-                            size={20}
-                            style={{marginTop:heightToDp("1.8%"),marginLeft:widthToDp("9%")}}
+                                name="microphone"
+                                color="white"
+                                size={20}
+                                style={{ marginTop: heightToDp("1.8%"), marginLeft: widthToDp("9%") }}
                             />
                         </View>
-                        </TouchableOpacity>
+                    </TouchableOpacity>
 
-                        <TouchableOpacity>
-                        <View style={{ backgroundColor: BaseColor.Ho, width: widthToDp("30%"), height: heightToDp("6%"), marginLeft: widthToDp("2%"), borderRadius: 100,flexDirection:'row' }}>
-                            <Text style={{ color: '#fff', marginTop: heightToDp("1.5%"), marginLeft:widthToDp("5%"),fontWeight:'bold',fontSize:widthToDp("4.3%") }}>{this.state.languages[2].value}</Text>
+                    <TouchableOpacity onPress={() => this.languageChangeFunction(this.state.languages[2].id)}>
+                        <View style={{ backgroundColor: BaseColor.Ho, width: widthToDp("30%"), height: heightToDp("6%"), marginLeft: widthToDp("2%"), borderRadius: 100, flexDirection: 'row' }}>
+                            <Text style={{ color: '#fff', marginTop: heightToDp("1.5%"), marginLeft: widthToDp("5%"), fontWeight: 'bold', fontSize: widthToDp("4.3%") }}>{this.state.languages[2].value}</Text>
                             <Icon
-                            name="microphone"
-                            color="white"
-                            size={20}
-                            style={{marginTop:heightToDp("1.8%"),marginLeft:widthToDp("6.3%")}}
+                                name="microphone"
+                                color="white"
+                                size={20}
+                                style={{ marginTop: heightToDp("1.8%"), marginLeft: widthToDp("6.3%") }}
                             />
                         </View>
-                        </TouchableOpacity>
+                    </TouchableOpacity>
                 </View>
-                <View style={{ flexDirection: 'row', marginTop: heightToDp("1%"), marginLeft: widthToDp("1%"),alignSelf:'center' }}>
-                <TouchableOpacity onPress={() => this.changeLanguage(this.state.languages[3].id)}>
-                        <View style={{ backgroundColor: BaseColor.Uridia, width: widthToDp("30%"), height: heightToDp("6%"), borderRadius: 100,flexDirection:'row' }}>
-                            <Text style={{ color: '#fff', marginTop: heightToDp("1.7%"),marginLeft:widthToDp("4.7%"),fontWeight:'bold',fontSize:widthToDp("4.3%") }}>{this.state.languages[3].value}</Text>
+                <View style={{ flexDirection: 'row', marginTop: heightToDp("1%"), marginLeft: widthToDp("1%"), alignSelf: 'center' }}>
+                    <TouchableOpacity onPress={() => this.languageChangeFunction(this.state.languages[3].id)}>
+                        <View style={{ backgroundColor: BaseColor.Uridia, width: widthToDp("30%"), height: heightToDp("6%"), borderRadius: 100, flexDirection: 'row' }}>
+                            <Text style={{ color: '#fff', marginTop: heightToDp("1.7%"), marginLeft: widthToDp("4.7%"), fontWeight: 'bold', fontSize: widthToDp("4.3%") }}>{this.state.languages[3].value}</Text>
                             <Icon
-                            name="microphone"
-                            color="white"
-                            size={20}
-                            style={{marginTop:heightToDp("1.8%"),marginLeft:widthToDp("6.9%")}}
+                                name="microphone"
+                                color="white"
+                                size={20}
+                                style={{ marginTop: heightToDp("1.8%"), marginLeft: widthToDp("6.9%") }}
                             />
                         </View>
-                        </TouchableOpacity>
+                    </TouchableOpacity>
 
-                        <TouchableOpacity>
-                    <View style={{backgroundColor:BaseColor.Santhali, width: widthToDp("30%"), height: heightToDp("6%"),  borderRadius: 100, marginLeft: widthToDp("2%"),flexDirection:'row' }}>
-                        <Text style={{ color: '#fff', marginTop: heightToDp("1.7%"), marginLeft:widthToDp("3.4%"),fontWeight:'bold',fontSize:widthToDp("4.3%") }}>{this.state.languages[4].value}</Text>
-                        <Icon
-                            name="microphone"
-                            color="white"
-                            size={20}
-                            style={{marginTop:heightToDp("1.8%"),marginLeft:widthToDp("3%")}}
+                    <TouchableOpacity onPress={() => this.languageChangeFunction(this.state.languages[4].id)}>
+                        <View style={{ backgroundColor: BaseColor.Santhali, width: widthToDp("30%"), height: heightToDp("6%"), borderRadius: 100, marginLeft: widthToDp("2%"), flexDirection: 'row' }}>
+                            <Text style={{ color: '#fff', marginTop: heightToDp("1.7%"), marginLeft: widthToDp("3.4%"), fontWeight: 'bold', fontSize: widthToDp("4.3%") }}>{this.state.languages[4].value}</Text>
+                            <Icon
+                                name="microphone"
+                                color="white"
+                                size={20}
+                                style={{ marginTop: heightToDp("1.8%"), marginLeft: widthToDp("3%") }}
                             />
-                    </View>
+                        </View>
                     </TouchableOpacity>
                 </View>
                 <View style={{ borderBottomColor: BaseColor.Stroke, borderBottomWidth: 1, marginTop: heightToDp('1.5%'), width: widthToDp("100%") }}></View>
-                <Text style={{marginLeft:widthToDp("3%"),marginTop:heightToDp("2%"),fontSize:widthToDp("7%"),fontFamily:'Oswald-Medium'}}>{LanguageChange.knowledgeCenter}</Text>
+                <Text style={{marginLeft:widthToDp("3%"),marginTop:heightToDp("2%"),fontSize:widthToDp("7%"),fontFamily:'Oswald-Medium'}}>{this.state.knowledgeCenterLabel}</Text>
                 <View>
                     <FlatGrid
                         style={{ marginTop: heightToDp("1%"), marginBottom: heightToDp("74%") }}
