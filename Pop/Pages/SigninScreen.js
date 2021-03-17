@@ -157,6 +157,12 @@ export default class SigninScreen extends Component {
 
         await AsyncStorage.setItem("offlineData", JSON.stringify(newOfflineData))
             .then(() => {
+                this.props.navigation.reset({
+                    index: 0,
+                    routes: [
+                        { name: "DashBoardScreen" }
+                    ]
+                });
                 //alert('‘Offline Data saved successfully’')
                 Toast.show({
                     text: "Offline Data saved successfully",
@@ -300,12 +306,13 @@ export default class SigninScreen extends Component {
             if (response.data.status === 1) {
                 console.log("yes")
                 saveOffline = true
-                redirect = true
+                //redirect = true
                 Toast.show({
                     text: "Welcome" + " " + name,
                     type: 'success',
                     duration: 3000
                 })
+                
                 AsyncStorage.setItem("_id", response.data.data._id)
                 AsyncStorage.setItem("name", response.data.data.name)
                 AsyncStorage.setItem("token", response.data.data.token)
@@ -355,19 +362,24 @@ export default class SigninScreen extends Component {
                 console.log('‘There was an error saving the product’')
             })
 
-        if (redirect === true) {
-            // this.props.navigation.navigate({
-            //     name: 'DashBoardScreen'
-            // })
-            this.props.navigation.reset({
-                index: 0,
-                routes: [
-                    { name: "DashBoardScreen" }
-                ]
-            });
-        }
+        // if (redirect === true) {
+        //     // this.props.navigation.navigate({
+        //     //     name: 'DashBoardScreen'
+        //     // })
+        //     this.props.navigation.reset({
+        //         index: 0,
+        //         routes: [
+        //             { name: "DashBoardScreen" }
+        //         ]
+        //     });
+        // }
 
         if (saveOffline === true) {
+            Toast.show({
+                text: "Please wait while we save your data",
+                type: 'success',
+                duration: 6000
+            })
             this.getAllData()
         } else {
             Toast.show({

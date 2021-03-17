@@ -26,8 +26,8 @@ export default class ContactScreen extends Component {
             blockList: [],
             blockName: 'Select Block',
             fieldOfficerData: [],
-            textLanguageChange:'',
-            contactLabel:''
+            textLanguageChange: '',
+            contactLabel: ''
         }
         this.state.languages = Languages
         //this.state.value = this.props.route.params.value
@@ -162,12 +162,12 @@ export default class ContactScreen extends Component {
                 this.setState({ contactLabel: contactLabel.nameHo })
             } else if (this.state.textLanguageChange === '3') {
                 this.setState({ contactLabel: contactLabel.nameOdia })
-               
+
             } else if (this.state.textLanguageChange === '4') {
-                this.setState({ contactLabel: contactLabel.nameSanthali})
-                
+                this.setState({ contactLabel: contactLabel.nameSanthali })
+
             }
-            
+
         } catch (error) {
             alert(error)
         }
@@ -313,11 +313,14 @@ export default class ContactScreen extends Component {
                                         <Text style={{ fontSize: widthToDp("4%"), marginLeft: widthToDp("5%"), fontFamily: 'Oswald-Medium', marginTop: heightToDp("2%") }}>FULL NAME</Text>
                                         <Text style={{ fontSize: widthToDp("7%"), marginLeft: widthToDp("5%"), fontFamily: 'Oswald-Medium', marginTop: heightToDp("2%") }}>{item.officerName}</Text>
                                     </View>
-                                    <Image
-                                        style={{ height: heightToDp("10%"), width: widthToDp("30%"), borderRadius: 10 }}
-                                        source={{ uri: DataAccess.BaseUrl + '/app-property/uploads/field-officers/' + item.image }}
-                                    // source={{uri:'https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__340.jpg'}}
-                                    />
+                                    <View style={{marginTop: heightToDp("2%")}}>
+                                        <Image
+                                            style={{ height: heightToDp("10%"), width: widthToDp("30%"), borderRadius: 10 }}
+                                            source={{ uri: DataAccess.BaseUrl + 'app-property/uploads/field-officers/' + item.image }}
+                                        // source={{uri:'https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__340.jpg'}}
+                                        />
+                                    </View>
+
                                 </View>
 
 
