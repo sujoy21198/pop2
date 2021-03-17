@@ -71,7 +71,7 @@ export default class SigninScreen extends Component {
         var allusername = await AsyncStorage.getItem('username')
         var token = await AsyncStorage.getItem('token')
         var encodedUsername = base64.encode(this.state.username)
-        var cropObjectsToBeSaved, cropStepsObjectsToBeSaved, cropsMaterialsObjectsToBeSaved, livestockObjectsToBeSaved, liveStockStepMaterialsObjectsToBeSaved, liveStockBreedsObjectsToBeSaved, breedCategoriesObjectsToBeSaved, importantLinksObjectsToBeSaved, nutrationGradenObjectsToBeSaved, livestockStepObjectsToBeSaved,vaccinationToBeSaved,contactListToBeSaved,dryFishObjectsToBeSaved,vegetableVendingObjectsToBeSaved,smallGroceryShopToBeSaved , labelsObjectsToBeSaved;
+        var cropObjectsToBeSaved, cropStepsObjectsToBeSaved, cropsMaterialsObjectsToBeSaved, livestockObjectsToBeSaved, liveStockStepMaterialsObjectsToBeSaved, liveStockBreedsObjectsToBeSaved, breedCategoriesObjectsToBeSaved, importantLinksObjectsToBeSaved, nutrationGradenObjectsToBeSaved, livestockStepObjectsToBeSaved, vaccinationToBeSaved, contactListToBeSaved, dryFishObjectsToBeSaved, vegetableVendingObjectsToBeSaved, smallGroceryShopToBeSaved, labelsObjectsToBeSaved;
         await axios.get("http://161.35.122.165:3020/api/v1/get-all-data", {
             headers: {
                 'Content-type': "application/json",
@@ -132,7 +132,7 @@ export default class SigninScreen extends Component {
             console.log(error)
         })
 
-        const offlineDataToBeSaved = { 'username': this.state.username, 'crops': cropObjectsToBeSaved, 'cropSteps': cropStepsObjectsToBeSaved, 'cropsMaterials': cropsMaterialsObjectsToBeSaved, 'livestock': livestockObjectsToBeSaved, 'livestockStep': livestockStepObjectsToBeSaved,'liveStockStepMaterials': liveStockStepMaterialsObjectsToBeSaved, 'liveStockBreeds': liveStockBreedsObjectsToBeSaved, 'breedCategories': breedCategoriesObjectsToBeSaved, 'importantLinks': importantLinksObjectsToBeSaved, 'nutrationGraden': nutrationGradenObjectsToBeSaved , 'vaccination': vaccinationToBeSaved , 'contactList': contactListToBeSaved , 'dryFish':dryFishObjectsToBeSaved , 'vegetableVending':vegetableVendingObjectsToBeSaved , 'smallGroceryShop' : smallGroceryShopToBeSaved ,'labels': labelsObjectsToBeSaved}
+        const offlineDataToBeSaved = { 'username': this.state.username, 'crops': cropObjectsToBeSaved, 'cropSteps': cropStepsObjectsToBeSaved, 'cropsMaterials': cropsMaterialsObjectsToBeSaved, 'livestock': livestockObjectsToBeSaved, 'livestockStep': livestockStepObjectsToBeSaved, 'liveStockStepMaterials': liveStockStepMaterialsObjectsToBeSaved, 'liveStockBreeds': liveStockBreedsObjectsToBeSaved, 'breedCategories': breedCategoriesObjectsToBeSaved, 'importantLinks': importantLinksObjectsToBeSaved, 'nutrationGraden': nutrationGradenObjectsToBeSaved, 'vaccination': vaccinationToBeSaved, 'contactList': contactListToBeSaved, 'dryFish': dryFishObjectsToBeSaved, 'vegetableVending': vegetableVendingObjectsToBeSaved, 'smallGroceryShop': smallGroceryShopToBeSaved, 'labels': labelsObjectsToBeSaved }
         // offlineDataToBeSaved.crops.push(cropObjectsToBeSaved)
         // offlineDataToBeSaved.cropsMaterials.push(cropsMaterialsObjectsToBeSaved)
         // offlineDataToBeSaved.livestock.push(livestockObjectsToBeSaved)
@@ -312,7 +312,7 @@ export default class SigninScreen extends Component {
                     type: 'success',
                     duration: 3000
                 })
-                
+
                 AsyncStorage.setItem("_id", response.data.data._id)
                 AsyncStorage.setItem("name", response.data.data.name)
                 AsyncStorage.setItem("token", response.data.data.token)
@@ -340,7 +340,7 @@ export default class SigninScreen extends Component {
         let token = await AsyncStorage.getItem('token')
         let username = await AsyncStorage.getItem('username')
 
-        const userToBeSaved = { '_id': _id, 'name': reqname, 'password': this.state.password, 'token': token, 'username': username, 'syncStatus': false, 'lowLand': [], 'highLand': [], 'mediumLand': [], 'patch': [], 'cropData': [], 'livestockData': [], 'moneyManagerData': [] , 'costBenifitAnalysis':[] }
+        const userToBeSaved = { '_id': _id, 'name': reqname, 'password': this.state.password, 'token': token, 'username': username, 'syncStatus': false, 'lowLand': [], 'highLand': [], 'mediumLand': [], 'patch': [], 'cropData': [], 'livestockData': [], 'moneyManagerData': [], 'costBenifitAnalysis': [] }
         const exsistingUser = await AsyncStorage.getItem('user')
         let newUser = JSON.parse(exsistingUser)
         if (!newUser) {
@@ -454,6 +454,7 @@ export default class SigninScreen extends Component {
                     <Text style={{ fontSize: widthToDp("6%") }}>1234567890</Text>
                 </View>
                 <View style={{ borderBottomColor: 'black', borderBottomWidth: 1, marginTop: heightToDp('1.5%'), width: widthToDp("80%"), alignSelf: 'center' }}></View> */}
+                    <ScrollView>
                     <View style={{ marginTop: heightToDp("2%"), marginLeft: widthToDp("10%") }}>
                         <FloatingLabel
                             labelStyle={styles.labelInput}
@@ -476,8 +477,8 @@ export default class SigninScreen extends Component {
                         >{LanguageChange.password}</FloatingLabel>
                     </View>
                     {/* <View style={{ borderBottomColor: 'black', borderBottomWidth: 1, marginTop: heightToDp('1.5%'), width: widthToDp("80%"), alignSelf: 'center' }}></View> */}
-                    <View style={{ marginLeft: widthToDp("60.5%"), marginTop: heightToDp("0.5%") }}>
-                        <Text style={{ fontFamily: 'Oswald-Medium' }}>{LanguageChange.forgotPassword}</Text>
+                    <View style={{ marginLeft: widthToDp("50%"), marginTop: heightToDp("0.5%"),width:widthToDp("37%") }}>
+                        <Text style={{ fontFamily: 'Oswald-Medium',fontSize:widthToDp("4%") }}>{LanguageChange.forgotPassword}</Text>
                     </View>
                     {
                         this.state.isLoading ? <CustomIndicator IsLoading={this.state.isLoading} /> : null
@@ -501,6 +502,8 @@ export default class SigninScreen extends Component {
                             <Text style={{ alignSelf: 'center', marginTop: heightToDp("0.4%"), fontWeight: '500', fontSize: widthToDp("5%"), fontFamily: 'Oswald-Medium' }}>{LanguageChange.guestSignIn}</Text>
                         </View>
                     </TouchableOpacity>
+                    <View style={{marginTop:20}}></View>
+                    </ScrollView>
                 </View>
             </KeyboardAwareScrollView>
         );

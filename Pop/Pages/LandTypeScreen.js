@@ -102,36 +102,21 @@ export default class LandTypeScreen extends Component {
                     <TouchableOpacity>
                         <View style={{ backgroundColor: BaseColor.English, width: widthToDp("30%"), height: heightToDp("6%"), marginLeft: widthToDp("2%"), borderRadius: 100, flexDirection: 'row' }}>
                             <Text style={{ color: '#fff', marginTop: heightToDp("1.5%"), fontFamily: 'Oswald-Medium', marginLeft: widthToDp("5%") }}>{this.state.languages[0].value}</Text>
-                            <Icon
-                                name="microphone"
-                                color="white"
-                                size={20}
-                                style={{ marginTop: heightToDp("1.8%"), marginLeft: widthToDp("6%") }}
-                            />
+                            
                         </View>
                     </TouchableOpacity>
 
                     <TouchableOpacity >
                         <View style={{ backgroundColor: BaseColor.Hindi, width: widthToDp("30%"), height: heightToDp("6%"), marginLeft: widthToDp("2%"), borderRadius: 100,flexDirection:'row' }}>
                             <Text style={{ color: '#fff', marginTop: heightToDp("1.7%"), marginLeft:widthToDp("5%"),fontWeight:'bold',fontSize:widthToDp("4.3%") }}>{this.state.languages[1].value}</Text>
-                            <Icon
-                            name="microphone"
-                            color="white"
-                            size={20}
-                            style={{marginTop:heightToDp("1.8%"),marginLeft:widthToDp("9%")}}
-                            />
+                            
                         </View>
                         </TouchableOpacity>
 
                         <TouchableOpacity>
                         <View style={{ backgroundColor: BaseColor.Ho, width: widthToDp("30%"), height: heightToDp("6%"), marginLeft: widthToDp("2%"), borderRadius: 100,flexDirection:'row' }}>
                             <Text style={{ color: '#fff', marginTop: heightToDp("1.5%"), marginLeft:widthToDp("5%"),fontWeight:'bold',fontSize:widthToDp("4.3%") }}>{this.state.languages[2].value}</Text>
-                            <Icon
-                            name="microphone"
-                            color="white"
-                            size={20}
-                            style={{marginTop:heightToDp("1.8%"),marginLeft:widthToDp("6.3%")}}
-                            />
+                            
                         </View>
                         </TouchableOpacity>
                 </View>
@@ -139,24 +124,14 @@ export default class LandTypeScreen extends Component {
                 <TouchableOpacity>
                         <View style={{ backgroundColor: BaseColor.Uridia, width: widthToDp("30%"), height: heightToDp("6%"), borderRadius: 100,flexDirection:'row' }}>
                             <Text style={{ color: '#fff', marginTop: heightToDp("1.7%"),marginLeft:widthToDp("4.7%"),fontWeight:'bold',fontSize:widthToDp("4.3%") }}>{this.state.languages[3].value}</Text>
-                            <Icon
-                            name="microphone"
-                            color="white"
-                            size={20}
-                            style={{marginTop:heightToDp("1.8%"),marginLeft:widthToDp("6.9%")}}
-                            />
+                            
                         </View>
                         </TouchableOpacity>
 
                         <TouchableOpacity>
                     <View style={{backgroundColor:BaseColor.Santhali, width: widthToDp("30%"), height: heightToDp("6%"),  borderRadius: 100, marginLeft: widthToDp("2%"),flexDirection:'row' }}>
                         <Text style={{ color: '#fff', marginTop: heightToDp("1.7%"), marginLeft:widthToDp("3.4%"),fontWeight:'bold',fontSize:widthToDp("4.3%") }}>{this.state.languages[4].value}</Text>
-                        <Icon
-                            name="microphone"
-                            color="white"
-                            size={20}
-                            style={{marginTop:heightToDp("1.8%"),marginLeft:widthToDp("3%")}}
-                            />
+                        
                     </View>
                     </TouchableOpacity>
                 </View>
@@ -172,8 +147,8 @@ export default class LandTypeScreen extends Component {
 
                             <Card style={{ width: widthToDp("94%"), marginLeft: widthToDp("3%"), height: heightToDp("30%"), marginBottom: heightToDp("1%"), borderRadius: 20, backgroundColor: BaseColor.Red }}>
                                 <View style={{ flexDirection: 'row' }}>
-                                    <View style={{ width: widthToDp("45%") }}>
-                                        <Text style={{ color: 'white', marginLeft: widthToDp("6%"), marginTop: heightToDp("1%"), fontSize: widthToDp("7%"), fontFamily: 'Oswald-Medium' }}>{item.name}</Text>
+                                    <View style={{ width: widthToDp("45%"),height:heightToDp("6%") }}>
+                                        <Text style={{ color: 'white', marginLeft: widthToDp("6%"), marginTop: heightToDp("1%"), fontSize: widthToDp("5%"), fontFamily: 'Oswald-Medium' }}>{item.name}</Text>
                                     </View>
                                     <TouchableOpacity onPress={() => this.speak(item.name)}>
                                     <Icon

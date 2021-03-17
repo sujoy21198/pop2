@@ -163,21 +163,21 @@ export default class StepOneScreen extends Component {
             cropNameLanguageChangeArray = stepData[0].cropData
             if (this.state.textLanguageChange === '0') {
                 this.setState({ materialName: cropFilter[0].materialNameEnglish })
-               
-            }else if(this.state.textLanguageChange === '1'){
+
+            } else if (this.state.textLanguageChange === '1') {
                 this.setState({ materialName: cropFilter[0].materialNameHindi })
-                
-            }else if(this.state.textLanguageChange === '2'){
+
+            } else if (this.state.textLanguageChange === '2') {
                 this.setState({ materialName: cropFilter[0].materialNameHo })
-                
-            }else if(this.state.textLanguageChange === '3'){
+
+            } else if (this.state.textLanguageChange === '3') {
                 this.setState({ materialName: cropFilter[0].materialNameOdia })
-                
-            }else if(this.state.textLanguageChange === '4'){
+
+            } else if (this.state.textLanguageChange === '4') {
                 this.setState({ materialName: cropFilter[0].materialNameSanthali })
-                
+
             }
-            console.log(cropFilter , "hihihihihihihihihihihih")
+            console.log(cropFilter, "hihihihihihihihihihihih")
             this.setState({ stepData: stepData })
             //this.setState({ materialName: materialName })
             this.setState({ decimalPrice: decimalPrice })
@@ -413,36 +413,21 @@ export default class StepOneScreen extends Component {
                     <TouchableOpacity onPress={() => this.languageChangeFunction(this.state.languages[0].id)}>
                         <View style={{ backgroundColor: BaseColor.English, width: widthToDp("30%"), height: heightToDp("6%"), marginLeft: widthToDp("2%"), borderRadius: 100, flexDirection: 'row' }}>
                             <Text style={{ color: '#fff', marginTop: heightToDp("1.5%"), fontFamily: 'Oswald-Medium', marginLeft: widthToDp("5%") }}>{this.state.languages[0].value}</Text>
-                            <Icon
-                                name="microphone"
-                                color="white"
-                                size={20}
-                                style={{ marginTop: heightToDp("1.8%"), marginLeft: widthToDp("6%") }}
-                            />
+
                         </View>
                     </TouchableOpacity>
 
                     <TouchableOpacity onPress={() => this.languageChangeFunction(this.state.languages[1].id)}>
                         <View style={{ backgroundColor: BaseColor.Hindi, width: widthToDp("30%"), height: heightToDp("6%"), marginLeft: widthToDp("2%"), borderRadius: 100, flexDirection: 'row' }}>
                             <Text style={{ color: '#fff', marginTop: heightToDp("1.7%"), marginLeft: widthToDp("5%"), fontWeight: 'bold', fontSize: widthToDp("4.3%") }}>{this.state.languages[1].value}</Text>
-                            <Icon
-                                name="microphone"
-                                color="white"
-                                size={20}
-                                style={{ marginTop: heightToDp("1.8%"), marginLeft: widthToDp("9%") }}
-                            />
+
                         </View>
                     </TouchableOpacity>
 
                     <TouchableOpacity onPress={() => this.languageChangeFunction(this.state.languages[2].id)}>
                         <View style={{ backgroundColor: BaseColor.Ho, width: widthToDp("30%"), height: heightToDp("6%"), marginLeft: widthToDp("2%"), borderRadius: 100, flexDirection: 'row' }}>
                             <Text style={{ color: '#fff', marginTop: heightToDp("1.5%"), marginLeft: widthToDp("5%"), fontWeight: 'bold', fontSize: widthToDp("4.3%") }}>{this.state.languages[2].value}</Text>
-                            <Icon
-                                name="microphone"
-                                color="white"
-                                size={20}
-                                style={{ marginTop: heightToDp("1.8%"), marginLeft: widthToDp("6.3%") }}
-                            />
+
                         </View>
                     </TouchableOpacity>
                 </View>
@@ -450,24 +435,14 @@ export default class StepOneScreen extends Component {
                     <TouchableOpacity onPress={() => this.languageChangeFunction(this.state.languages[3].id)}>
                         <View style={{ backgroundColor: BaseColor.Uridia, width: widthToDp("30%"), height: heightToDp("6%"), borderRadius: 100, flexDirection: 'row' }}>
                             <Text style={{ color: '#fff', marginTop: heightToDp("1.7%"), marginLeft: widthToDp("4.7%"), fontWeight: 'bold', fontSize: widthToDp("4.3%") }}>{this.state.languages[3].value}</Text>
-                            <Icon
-                                name="microphone"
-                                color="white"
-                                size={20}
-                                style={{ marginTop: heightToDp("1.8%"), marginLeft: widthToDp("6.9%") }}
-                            />
+
                         </View>
                     </TouchableOpacity>
 
                     <TouchableOpacity onPress={() => this.languageChangeFunction(this.state.languages[4].id)}>
                         <View style={{ backgroundColor: BaseColor.Santhali, width: widthToDp("30%"), height: heightToDp("6%"), borderRadius: 100, marginLeft: widthToDp("2%"), flexDirection: 'row' }}>
                             <Text style={{ color: '#fff', marginTop: heightToDp("1.7%"), marginLeft: widthToDp("3.4%"), fontWeight: 'bold', fontSize: widthToDp("4.3%") }}>{this.state.languages[4].value}</Text>
-                            <Icon
-                                name="microphone"
-                                color="white"
-                                size={20}
-                                style={{ marginTop: heightToDp("1.8%"), marginLeft: widthToDp("3%") }}
-                            />
+
                         </View>
                     </TouchableOpacity>
                 </View>
@@ -502,7 +477,6 @@ export default class StepOneScreen extends Component {
                                         {
                                             this.state.textLanguageChange === '0' ? <Text style={{ marginLeft: widthToDp("2%"), marginTop: heightToDp("1%"), fontFamily: 'Oswald-Light' }}>{i.english}</Text> : ((this.state.textLanguageChange === '1') ? <Text style={{ marginLeft: widthToDp("2%"), marginTop: heightToDp("1%"), fontFamily: 'Oswald-Light' }}>{i.hindi}</Text> : ((this.state.textLanguageChange === '2') ? <Text style={{ marginLeft: widthToDp("2%"), marginTop: heightToDp("1%"), fontFamily: 'Oswald-Light' }}>{i.ho}</Text> : ((this.state.textLanguageChange === '3') ? <Text style={{ marginLeft: widthToDp("2%"), marginTop: heightToDp("1%"), fontFamily: 'Oswald-Light' }}>{i.odia}</Text> : ((this.state.textLanguageChange === '4') ? <Text style={{ marginLeft: widthToDp("2%"), marginTop: heightToDp("1%"), fontFamily: 'Oswald-Light' }}>{i.santhali}</Text> : null))))
                                         }
-
                                     </View>
                                 </View>
 
@@ -524,7 +498,7 @@ export default class StepOneScreen extends Component {
                                                         )
                                                     })
                                                 }
-                                                
+
                                             </View>
                                             <Image
                                                 style={{ height: heightToDp("20%"), width: widthToDp("50%"), marginTop: heightToDp("2%"), marginLeft: widthToDp("7%"), borderRadius: 10 }}
@@ -538,21 +512,39 @@ export default class StepOneScreen extends Component {
                                     <Text style={{ color: 'white', marginLeft: widthToDp("4%"), marginTop: heightToDp('1.5%'), fontSize: widthToDp("5%"), fontFamily: 'Oswald-Medium' }}>MATERIAL NEEDED</Text>
                                     <View style={{ backgroundColor: 'white', width: widthToDp("90%"), height: heightToDp("17%"), borderBottomLeftRadius: 10, borderBottomRightRadius: 10, marginTop: heightToDp("2%") }}>
                                         <View style={{ flexDirection: 'row', marginLeft: widthToDp("3%"), marginTop: heightToDp("2%") }}>
-                                            <Text style={{ color: BaseColor.Red, fontFamily: 'Oswald-Medium' }}>Description</Text>
-                                            <Text style={{ color: BaseColor.Red, fontFamily: 'Oswald-Medium', marginLeft: widthToDp("18%") }}>Quantity</Text>
-                                            <Text style={{ color: BaseColor.Red, fontFamily: 'Oswald-Medium', marginLeft: widthToDp("18%") }}>Amount</Text>
+                                            <View style={{ width: widthToDp("20%") }}>
+                                                <Text style={{ color: BaseColor.Red, fontFamily: 'Oswald-Medium', fontSize: widthToDp("3.5%") }}>Description</Text>
+                                            </View>
+                                            <View style={{ width: widthToDp("25%") }}>
+                                                <Text style={{ color: BaseColor.Red, fontFamily: 'Oswald-Medium', marginLeft: widthToDp("10%"), fontSize: widthToDp("3.5%") }}>Quantity</Text>
+                                            </View>
+                                            <View style={{ width: widthToDp("30%") }}>
+                                                <Text style={{ color: BaseColor.Red, fontFamily: 'Oswald-Medium', marginLeft: widthToDp("15%"), fontSize: widthToDp("3.5%") }}>Amount</Text>
+                                            </View>
+
+
+
                                         </View>
                                         <View style={{ flexDirection: 'row', marginLeft: widthToDp("3%"), marginTop: heightToDp("2%") }}>
-                                            <Text style={{ fontFamily: 'Oswald-Medium', width: widthToDp("30%") }}>{this.state.materialName}</Text>
-                                            <Text style={{ fontFamily: 'Oswald-Medium', width: widthToDp("25%"), marginLeft: widthToDp("3%") }}>{this.state.materialQuantity}</Text>
+                                            <View style={{ width: widthToDp("20%") }}>
+                                                <Text style={{ fontFamily: 'Oswald-Medium' }}>{this.state.materialName}</Text>
+                                            </View>
+                                            <View style={{ width: widthToDp("30%"), marginLeft: widthToDp("9%") }}>
+                                                <Text style={{ fontFamily: 'Oswald-Medium' }}>{this.state.materialQuantity}</Text>
+                                            </View>
+                                            <View style={{ width: widthToDp("30%"), marginLeft: widthToDp("0%") }}>
+                                                <Input
+                                                    placeholder={this.state.decimalPrice}
+                                                    keyboardType='number-pad'
+                                                    defaultValue={this.state.decimalPrice}
+                                                    onChangeText={(data) => this.setMaterialPrice(data)}
+                                                    style={{ marginLeft: widthToDp("0%"), fontFamily: 'Oswald-Medium', width: widthToDp("20%"), marginTop: heightToDp("-2%"), borderWidth: 1, marginRight: widthToDp("5%") }}
+                                                />
+                                            </View>
+
+
                                             {/* <Text style={{ marginLeft: widthToDp("35%"), fontFamily: 'Oswald-Medium' }}>₹ {this.state.decimalPrice}</Text> */}
-                                            <Input
-                                                placeholder={this.state.decimalPrice}
-                                                keyboardType='number-pad'
-                                                defaultValue={this.state.decimalPrice}
-                                                onChangeText={(data) => this.setMaterialPrice(data)}
-                                                style={{ marginLeft: widthToDp("0%"), fontFamily: 'Oswald-Medium', width: widthToDp("20%"), marginTop: heightToDp("-2%"), borderWidth: 1, marginRight: widthToDp("5%") }}
-                                            />
+
 
 
                                         </View>
