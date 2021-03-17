@@ -124,22 +124,42 @@ export default class LiveStockStepTwoScreen extends Component {
             AsyncStorage.setItem('language', 'en')
             this.setState({ textLanguageChange: '0' })
             this.loadBreedFromStorage()
+            this.props.navigation.reset({
+                index: 0,
+                routes: [{ name: "DashBoardScreen" }]
+            });
         } else if (data === 'hi') {
             this.setState({ textLanguageChange: '1' })
             AsyncStorage.setItem('language', 'hi')
             this.loadBreedFromStorage()
+            this.props.navigation.reset({
+                index: 0,
+                routes: [{ name: "DashBoardScreen" }]
+            });
         } else if (data === 'ho') {
             this.setState({ textLanguageChange: '2' })
             AsyncStorage.setItem('language', 'ho')
             this.loadBreedFromStorage()
+            this.props.navigation.reset({
+                index: 0,
+                routes: [{ name: "DashBoardScreen" }]
+            });
         } else if (data === 'od') {
             this.setState({ textLanguageChange: '3' })
             AsyncStorage.setItem('language', 'od')
             this.loadBreedFromStorage()
+            this.props.navigation.reset({
+                index: 0,
+                routes: [{ name: "DashBoardScreen" }]
+            });
         } else if (data === 'san') {
             AsyncStorage.setItem('language', 'san')
             this.setState({ textLanguageChange: '4' })
             this.loadBreedFromStorage()
+            this.props.navigation.reset({
+                index: 0,
+                routes: [{ name: "DashBoardScreen" }]
+            });
         }
     }
     render() {
@@ -227,7 +247,7 @@ export default class LiveStockStepTwoScreen extends Component {
                         <View style={{backgroundColor:"white",height:heightToDp("98.5%"),alignSelf:'center',width:widthToDp("90%"), marginTop: heightToDp('2%'),borderBottomLeftRadius:10,borderBottomRightRadius:10}}>
                             <View style={{}}>
                             <Image
-                            source={{uri:DataAccess.BaseUrl+"app-property/uploads/livestocks/breeds/"+this.state.imageFile}}
+                            source={{uri:'file:///storage/emulated/0/Pictures/image_'+this.state.imageFile}}
                             style={{height:heightToDp("15%"),width:widthToDp("80%"),alignSelf:'center',marginTop:heightToDp("1%"),borderRadius:10}}
                             />
                             </View>

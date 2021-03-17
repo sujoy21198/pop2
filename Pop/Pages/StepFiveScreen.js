@@ -338,22 +338,42 @@ export default class StepOneScreen extends Component {
             AsyncStorage.setItem('language', 'en')
             this.setState({ textLanguageChange: '0' })
             this.getStepDataFromLocal()
+            this.props.navigation.reset({
+                index: 0,
+                routes: [{ name: "DashBoardScreen" }]
+            });
         } else if (data === 'hi') {
             this.setState({ textLanguageChange: '1' })
             AsyncStorage.setItem('language', 'hi')
             this.getStepDataFromLocal()
+            this.props.navigation.reset({
+                index: 0,
+                routes: [{ name: "DashBoardScreen" }]
+            });
         } else if (data === 'ho') {
             this.setState({ textLanguageChange: '2' })
             AsyncStorage.setItem('language', 'ho')
             this.getStepDataFromLocal()
+            this.props.navigation.reset({
+                index: 0,
+                routes: [{ name: "DashBoardScreen" }]
+            });
         } else if (data === 'od') {
             this.setState({ textLanguageChange: '3' })
             AsyncStorage.setItem('language', 'od')
             this.getStepDataFromLocal()
+            this.props.navigation.reset({
+                index: 0,
+                routes: [{ name: "DashBoardScreen" }]
+            });
         } else if (data === 'san') {
             AsyncStorage.setItem('language', 'san')
             this.setState({ textLanguageChange: '4' })
             this.getStepDataFromLocal()
+            this.props.navigation.reset({
+                index: 0,
+                routes: [{ name: "DashBoardScreen" }]
+            });
         }
     }
 
@@ -455,7 +475,7 @@ export default class StepOneScreen extends Component {
                                         <View>
                                             <Image
                                                 style={{ height: heightToDp("20%"), width: widthToDp("90%"), borderBottomLeftRadius: 10, borderBottomRightRadius: 10 }}
-                                                source={{ uri: DataAccess.BaseUrl + DataAccess.CropImage + 'steps/' + i.imageFile }}
+                                                source={{ uri: 'file:///storage/emulated/0/Pictures/image_'+ i.imageFile }}
                                             />
                                         </View>
                                     </View>
@@ -492,7 +512,7 @@ export default class StepOneScreen extends Component {
                                             </View>
                                             <Image
                                                 style={{ height: heightToDp("20%"), width: widthToDp("50%"), marginTop: heightToDp("2%"), marginLeft: widthToDp("7%"), borderRadius: 10 }}
-                                                source={{ uri: DataAccess.BaseUrl + DataAccess.CropImage + this.state.imageFile }}
+                                                source={{ uri: 'file:///storage/emulated/0/Pictures/image_'+ this.state.imageFile }}
                                             />
                                         </View>
                                     </View>

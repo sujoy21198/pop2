@@ -125,18 +125,38 @@ export default class CropsScreen extends Component {
         if(data === 'en'){
             AsyncStorage.setItem('language','en')
             this.setState({textLanguageChange : '0'})
+            this.props.navigation.reset({
+                index: 0,
+                routes: [{ name: "DashBoardScreen" }]
+            });
         }else if(data === 'hi'){
             this.setState({textLanguageChange : '1'})
             AsyncStorage.setItem('language','hi')
+            this.props.navigation.reset({
+                index: 0,
+                routes: [{ name: "DashBoardScreen" }]
+            });
         }else if(data === 'ho'){
             this.setState({textLanguageChange : '2'})
             AsyncStorage.setItem('language','ho')
+            this.props.navigation.reset({
+                index: 0,
+                routes: [{ name: "DashBoardScreen" }]
+            });
         }else if(data === 'od'){
             this.setState({textLanguageChange : '3'})
             AsyncStorage.setItem('language','od')
+            this.props.navigation.reset({
+                index: 0,
+                routes: [{ name: "DashBoardScreen" }]
+            });
         }else if(data === 'san'){
             AsyncStorage.setItem('language','san')
             this.setState({textLanguageChange : '4'})
+            this.props.navigation.reset({
+                index: 0,
+                routes: [{ name: "DashBoardScreen" }]
+            });
         }
     }
 
@@ -220,7 +240,7 @@ export default class CropsScreen extends Component {
                                             
                                             <Image
                                                 style={{ width: widthToDp("47%"), height: heightToDp("25%"), borderBottomLeftRadius: 10, borderBottomRightRadius: 10, marginTop: heightToDp("1%") }}
-                                                source={{ uri: DataAccess.BaseUrl + DataAccess.CropImage + item.imageFile }}
+                                                source={{ uri: 'file:///storage/emulated/0/Pictures/image_'+item.imageFile }}
                                             />
                                         </View>
                                     </TouchableOpacity>

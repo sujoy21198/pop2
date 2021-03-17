@@ -16,6 +16,7 @@ import LanguageChange from '../Core/LanguageChange'
 import DeviceInfo from 'react-native-device-info'
 import NetInfo from '@react-native-community/netinfo'
 import base64 from 'react-native-base64'
+import RNFetchBlob from 'rn-fetch-blob'
 
 
 export default class SigninScreen extends Component {
@@ -27,7 +28,16 @@ export default class SigninScreen extends Component {
             password: '',
             isLoading: false,
             selectedLanguage: '',
-            loadPhoneNumber: false
+            loadPhoneNumber: false,
+            cropScreenImages: [],
+            cropStepImages: [],
+            cropMaterialImages: [],
+            livestockScreenImages: [],
+            liveStockStepImages: [],
+            breedScreenImages: [],
+            importantLinksScreen: [],
+            nutritionGardenImages: [],
+            smallBusinessImages: []
         }
 
         this.state.selectedLanguage = this.props.route.params.selectedLanguage
@@ -39,7 +49,501 @@ export default class SigninScreen extends Component {
         //this.setCustodianNumber()
         this.setCustodian()
         //this.getAllData()
+        this.downloadImagesForOffline()
     }
+
+    downloadImagesForOffline = async () => {
+        var cropScreenImageArray = [];
+        var cropStepImagesArray = []
+        var cropMaterialImagesArray = []
+        var livestockScreenImagesArray = []
+        var liveStockStepImagesArray = []
+        var breedScreenImagesArray = []
+        var importantLinksScreenArray = []
+        var nutritionGardenImagesArray = []
+        var smallBusinessImagesArray = []
+        
+
+        await axios.get(DataAccess.BaseUrl + DataAccess.AccessUrl + 'files', {
+        }).then(function (response) {
+            //console.log(response.data.data)
+            var crop = response.data.data.find((i) => i.name === 'crop')
+            var cropStep = response.data.data.find((i) => i.name === 'cropStep')
+            var cropMaterial = response.data.data.find((i) => i.name === 'cropMaterial')
+            var livestock = response.data.data.find((i) => i.name === 'livestock')
+            var livestockStep = response.data.data.find((i) => i.name === 'livestockStep')
+            var breed = response.data.data.find((i) => i.name === 'breed')
+            var importantLink = response.data.data.find((i) => i.name === 'importantLink')
+            var nutritionGarden = response.data.data.find((i) => i.name === 'nutritionGarden')
+            var smallBusiness = response.data.data.find((i) => i.name === 'smallBusiness')
+            cropScreenImageArray = crop.fileNames
+            cropStepImagesArray = cropStep.fileNames
+            cropMaterialImagesArray = cropMaterial.fileNames
+            livestockScreenImagesArray = livestock.fileNames
+            liveStockStepImagesArray = livestockStep.fileNames
+            breedScreenImagesArray = breed.fileNames
+            importantLinksScreenArray = importantLink.fileNames
+            nutritionGardenImagesArray = nutritionGarden.fileNames
+            smallBusinessImagesArray = smallBusiness.fileNames
+
+            //totalImages = cropScreenImageArray.concat(cropStepImagesArray, cropMaterialImagesArray, livestockScreenImagesArray,liveStockStepImagesArray,breedScreenImagesArray,importantLinksScreenArray,nutritionGardenImagesArray,smallBusinessImagesArray)
+            //console.log(cropScreenImageArray)
+        }).catch(function (error) {
+            console.log(error)
+        })
+        this.setState({ cropScreenImages : cropScreenImageArray })
+        this.setState({cropStepImages : cropStepImagesArray})
+        this.setState({cropMaterialImages : cropMaterialImagesArray})
+        this.setState({livestockScreenImages : livestockScreenImagesArray})
+        this.setState({liveStockStepImages : liveStockStepImagesArray})
+        this.setState({breedScreenImages : breedScreenImagesArray})
+        this.setState({importantLinksScreen : importantLinksScreenArray})
+        this.setState({nutritionGardenImages : nutritionGardenImagesArray})
+        this.setState({smallBusinessImages : smallBusinessImagesArray})
+        //console.log(this.state.cropScreenImages,"hi")
+        this.getCropImage()
+    }
+
+
+    getCropImage = () => {
+        var cropImages = []
+        var fileNames = []
+        var imageUrls = []
+        var ext = []
+        cropImages = this.state.cropScreenImages
+        //alert(cropImages.length)
+        for (var i = 0; i < cropImages.length; i++) {
+            var names = cropImages[i]
+            var editedNames = names.substr(0, names.indexOf('.'))
+            var extNames = names.substr(names.indexOf('.') + 1)
+            console.log(ext)
+            console.log(editedNames)
+            fileNames.push(editedNames)
+            ext.push(extNames)
+            imageUrls.push("http://161.35.122.165:3020/app-property/uploads/crops/" + cropImages[i])
+        }
+
+        for (var i = 0; i < imageUrls.length; i++) {
+            const { config, fs } = RNFetchBlob;
+            let PictureDir = fs.dirs.PictureDir;
+            console.log(PictureDir)
+            let options = {
+                fileCache: true,
+                addAndroidDownloads: {
+                    useDownloadManager: true,
+                    notification: true,
+                    path:
+                        PictureDir +
+                        '/image_' +
+                        fileNames[i] + '.' +
+                        ext[i],
+                    description: 'Image',
+                }
+            };
+            config(options)
+                .fetch('GET', imageUrls[i])
+                .then(res => {
+                    // Showing alert after successful downloading
+                    console.log('res -> ', JSON.stringify(res));
+                    // alert('Image Downloaded Successfully.');
+                });
+        }
+        console.log(fileNames)
+        console.log(imageUrls)
+        this.getCropStepImages()
+    }
+
+    getCropStepImages = () => {
+        var cropImages = []
+        var fileNames = []
+        var imageUrls = []
+        var ext = []
+        cropImages = this.state.cropStepImages
+        alert(cropImages.length)
+        for (var i = 0; i < cropImages.length; i++) {
+            var names = cropImages[i]
+            var editedNames = names.substr(0, names.indexOf('.'))
+            var extNames = names.substr(names.indexOf('.') + 1)
+            console.log(ext)
+            console.log(editedNames)
+            fileNames.push(editedNames)
+            ext.push(extNames)
+            imageUrls.push("http://161.35.122.165:3020/app-property/uploads/crops/steps/" + cropImages[i])
+        }
+
+        for (var i = 0; i < imageUrls.length; i++) {
+            const { config, fs } = RNFetchBlob;
+            let PictureDir = fs.dirs.PictureDir;
+            console.log(PictureDir)
+            let options = {
+                fileCache: true,
+                addAndroidDownloads: {
+                    useDownloadManager: true,
+                    notification: true,
+                    path:
+                        PictureDir +
+                        '/image_' +
+                        fileNames[i] + '.' +
+                        ext[i],
+                    description: 'Image',
+                }
+            };
+            config(options)
+                .fetch('GET', imageUrls[i])
+                .then(res => {
+                    // Showing alert after successful downloading
+                    console.log('res -> ', JSON.stringify(res));
+                    // alert('Image Downloaded Successfully.');
+                });
+        }
+        console.log(fileNames)
+        console.log(imageUrls)
+        this.getcropMaterial()
+    }
+
+
+    getcropMaterial = () => {
+        var cropImages = []
+        var fileNames = []
+        var imageUrls = []
+        var ext = []
+        cropImages = this.state.cropMaterialImages
+        alert(cropImages.length)
+        for (var i = 0; i < cropImages.length; i++) {
+            var names = cropImages[i]
+            var editedNames = names.substr(0, names.indexOf('.'))
+            var extNames = names.substr(names.indexOf('.') + 1)
+            console.log(ext)
+            console.log(editedNames)
+            fileNames.push(editedNames)
+            ext.push(extNames)
+            imageUrls.push("http://161.35.122.165:3020/app-property/uploads/crops/materials/" + cropImages[i])
+        }
+
+        for (var i = 0; i < imageUrls.length; i++) {
+            const { config, fs } = RNFetchBlob;
+            let PictureDir = fs.dirs.PictureDir;
+            console.log(PictureDir)
+            let options = {
+                fileCache: true,
+                addAndroidDownloads: {
+                    useDownloadManager: true,
+                    notification: true,
+                    path:
+                        PictureDir +
+                        '/image_' +
+                        fileNames[i] + '.' +
+                        ext[i],
+                    description: 'Image',
+                }
+            };
+            config(options)
+                .fetch('GET', imageUrls[i])
+                .then(res => {
+                    // Showing alert after successful downloading
+                    console.log('res -> ', JSON.stringify(res));
+                    // alert('Image Downloaded Successfully.');
+                });
+        }
+        console.log(fileNames)
+        console.log(imageUrls)
+        this.getlivestock()
+    }
+
+
+    getlivestock = () => {
+        var cropImages = []
+        var fileNames = []
+        var imageUrls = []
+        var ext = []
+        cropImages = this.state.livestockScreenImages
+        alert(cropImages.length)
+        for (var i = 0; i < cropImages.length; i++) {
+            var names = cropImages[i]
+            var editedNames = names.substr(0, names.indexOf('.'))
+            var extNames = names.substr(names.indexOf('.') + 1)
+            console.log(ext)
+            console.log(editedNames)
+            fileNames.push(editedNames)
+            ext.push(extNames)
+            imageUrls.push("http://161.35.122.165:3020/app-property/uploads/livestocks/" + cropImages[i])
+        }
+
+        for (var i = 0; i < imageUrls.length; i++) {
+            const { config, fs } = RNFetchBlob;
+            let PictureDir = fs.dirs.PictureDir;
+            console.log(PictureDir)
+            let options = {
+                fileCache: true,
+                addAndroidDownloads: {
+                    useDownloadManager: true,
+                    notification: true,
+                    path:
+                        PictureDir +
+                        '/image_' +
+                        fileNames[i] + '.' +
+                        ext[i],
+                    description: 'Image',
+                }
+            };
+            config(options)
+                .fetch('GET', imageUrls[i])
+                .then(res => {
+                    // Showing alert after successful downloading
+                    console.log('res -> ', JSON.stringify(res));
+                    // alert('Image Downloaded Successfully.');
+                });
+        }
+        console.log(fileNames)
+        console.log(imageUrls)
+        this.getlivestockStep()
+    }
+
+
+    getlivestockStep = () => {
+        var cropImages = []
+        var fileNames = []
+        var imageUrls = []
+        var ext = []
+        cropImages = this.state.liveStockStepImages
+        alert(cropImages.length)
+        for (var i = 0; i < cropImages.length; i++) {
+            var names = cropImages[i]
+            var editedNames = names.substr(0, names.indexOf('.'))
+            var extNames = names.substr(names.indexOf('.') + 1)
+            console.log(ext)
+            console.log(editedNames)
+            fileNames.push(editedNames)
+            ext.push(extNames)
+            imageUrls.push("http://161.35.122.165:3020/app-property/uploads/livestocks/steps/" + cropImages[i])
+        }
+
+        for (var i = 0; i < imageUrls.length; i++) {
+            const { config, fs } = RNFetchBlob;
+            let PictureDir = fs.dirs.PictureDir;
+            console.log(PictureDir)
+            let options = {
+                fileCache: true,
+                addAndroidDownloads: {
+                    useDownloadManager: true,
+                    notification: true,
+                    path:
+                        PictureDir +
+                        '/image_' +
+                        fileNames[i] + '.' +
+                        ext[i],
+                    description: 'Image',
+                }
+            };
+            config(options)
+                .fetch('GET', imageUrls[i])
+                .then(res => {
+                    // Showing alert after successful downloading
+                    console.log('res -> ', JSON.stringify(res));
+                    // alert('Image Downloaded Successfully.');
+                });
+        }
+        console.log(fileNames)
+        console.log(imageUrls)
+        this.getbreed()
+    }
+
+
+    getbreed = () => {
+        var cropImages = []
+        var fileNames = []
+        var imageUrls = []
+        var ext = []
+        cropImages = this.state.breedScreenImages
+        alert(cropImages.length)
+        for (var i = 0; i < cropImages.length; i++) {
+            var names = cropImages[i]
+            var editedNames = names.substr(0, names.indexOf('.'))
+            var extNames = names.substr(names.indexOf('.') + 1)
+            console.log(ext)
+            console.log(editedNames)
+            fileNames.push(editedNames)
+            ext.push(extNames)
+            imageUrls.push("http://161.35.122.165:3020/app-property/uploads/livestocks/breeds/" + cropImages[i])
+        }
+
+        for (var i = 0; i < imageUrls.length; i++) {
+            const { config, fs } = RNFetchBlob;
+            let PictureDir = fs.dirs.PictureDir;
+            console.log(PictureDir)
+            let options = {
+                fileCache: true,
+                addAndroidDownloads: {
+                    useDownloadManager: true,
+                    notification: true,
+                    path:
+                        PictureDir +
+                        '/image_' +
+                        fileNames[i] + '.' +
+                        ext[i],
+                    description: 'Image',
+                }
+            };
+            config(options)
+                .fetch('GET', imageUrls[i])
+                .then(res => {
+                    // Showing alert after successful downloading
+                    console.log('res -> ', JSON.stringify(res));
+                    // alert('Image Downloaded Successfully.');
+                });
+        }
+        console.log(fileNames)
+        console.log(imageUrls)
+        this.getimportantLink()
+    }
+
+
+    getimportantLink = () => {
+        var cropImages = []
+        var fileNames = []
+        var imageUrls = []
+        var ext = []
+        cropImages = this.state.importantLinksScreen
+        alert(cropImages.length)
+        for (var i = 0; i < cropImages.length; i++) {
+            var names = cropImages[i]
+            var editedNames = names.substr(0, names.indexOf('.'))
+            var extNames = names.substr(names.indexOf('.') + 1)
+            console.log(ext)
+            console.log(editedNames)
+            fileNames.push(editedNames)
+            ext.push(extNames)
+            imageUrls.push("http://161.35.122.165:3020/app-property/uploads/important-links/" + cropImages[i])
+        }
+
+        for (var i = 0; i < imageUrls.length; i++) {
+            const { config, fs } = RNFetchBlob;
+            let PictureDir = fs.dirs.PictureDir;
+            console.log(PictureDir)
+            let options = {
+                fileCache: true,
+                addAndroidDownloads: {
+                    useDownloadManager: true,
+                    notification: true,
+                    path:
+                        PictureDir +
+                        '/image_' +
+                        fileNames[i] + '.' +
+                        ext[i],
+                    description: 'Image',
+                }
+            };
+            config(options)
+                .fetch('GET', imageUrls[i])
+                .then(res => {
+                    // Showing alert after successful downloading
+                    console.log('res -> ', JSON.stringify(res));
+                    // alert('Image Downloaded Successfully.');
+                });
+        }
+        console.log(fileNames)
+        console.log(imageUrls)
+        this.getnutritionGarden()
+    }
+
+
+
+    getnutritionGarden = () => {
+        var cropImages = []
+        var fileNames = []
+        var imageUrls = []
+        var ext = []
+        cropImages = this.state.nutritionGardenImages
+        alert(cropImages.length)
+        for (var i = 0; i < cropImages.length; i++) {
+            var names = cropImages[i]
+            var editedNames = names.substr(0, names.indexOf('.'))
+            var extNames = names.substr(names.indexOf('.') + 1)
+            console.log(ext)
+            console.log(editedNames)
+            fileNames.push(editedNames)
+            ext.push(extNames)
+            imageUrls.push("http://161.35.122.165:3020/app-property/uploads/nutrition-garden/" + cropImages[i])
+        }
+
+        for (var i = 0; i < imageUrls.length; i++) {
+            const { config, fs } = RNFetchBlob;
+            let PictureDir = fs.dirs.PictureDir;
+            console.log(PictureDir)
+            let options = {
+                fileCache: true,
+                addAndroidDownloads: {
+                    useDownloadManager: true,
+                    notification: true,
+                    path:
+                        PictureDir +
+                        '/image_' +
+                        fileNames[i] + '.' +
+                        ext[i],
+                    description: 'Image',
+                }
+            };
+            config(options)
+                .fetch('GET', imageUrls[i])
+                .then(res => {
+                    // Showing alert after successful downloading
+                    console.log('res -> ', JSON.stringify(res));
+                    // alert('Image Downloaded Successfully.');
+                });
+        }
+        console.log(fileNames)
+        console.log(imageUrls)
+        this.getsmallBusiness()
+    }
+
+
+    getsmallBusiness = () => {
+        var cropImages = []
+        var fileNames = []
+        var imageUrls = []
+        var ext = []
+        cropImages = this.state.smallBusinessImages
+        alert(cropImages.length)
+        for (var i = 0; i < cropImages.length; i++) {
+            var names = cropImages[i]
+            var editedNames = names.substr(0, names.indexOf('.'))
+            var extNames = names.substr(names.indexOf('.') + 1)
+            console.log(ext)
+            console.log(editedNames)
+            fileNames.push(editedNames)
+            ext.push(extNames)
+            imageUrls.push("http://161.35.122.165:3020/app-property/uploads/small-business/" + cropImages[i])
+        }
+
+        for (var i = 0; i < imageUrls.length; i++) {
+            const { config, fs } = RNFetchBlob;
+            let PictureDir = fs.dirs.PictureDir;
+            console.log(PictureDir)
+            let options = {
+                fileCache: true,
+                addAndroidDownloads: {
+                    useDownloadManager: true,
+                    notification: true,
+                    path:
+                        PictureDir +
+                        '/image_' +
+                        fileNames[i] + '.' +
+                        ext[i],
+                    description: 'Image',
+                }
+            };
+            config(options)
+                .fetch('GET', imageUrls[i])
+                .then(res => {
+                    // Showing alert after successful downloading
+                    console.log('res -> ', JSON.stringify(res));
+                    // alert('Image Downloaded Successfully.');
+                });
+        }
+        console.log(fileNames)
+        console.log(imageUrls)
+    }
+
 
     guestSignIn = () => {
         this.state.phoneNumber = '1000000000'
@@ -455,54 +959,54 @@ export default class SigninScreen extends Component {
                 </View>
                 <View style={{ borderBottomColor: 'black', borderBottomWidth: 1, marginTop: heightToDp('1.5%'), width: widthToDp("80%"), alignSelf: 'center' }}></View> */}
                     <ScrollView>
-                    <View style={{ marginTop: heightToDp("2%"), marginLeft: widthToDp("10%") }}>
-                        <FloatingLabel
-                            labelStyle={styles.labelInput}
-                            inputStyle={styles.input}
-                            style={styles.formInput}
+                        <View style={{ marginTop: heightToDp("2%"), marginLeft: widthToDp("10%") }}>
+                            <FloatingLabel
+                                labelStyle={styles.labelInput}
+                                inputStyle={styles.input}
+                                style={styles.formInput}
+                                // onBlur={this.onBlur}
+                                onChangeText={(text) => { this.setState({ username: text }) }}
+                            >{LanguageChange.username}</FloatingLabel>
+                        </View>
+                        {/* <View style={{ borderBottomColor: 'black', borderBottomWidth: 1, marginTop: heightToDp('1.5%'), width: widthToDp("80%"), alignSelf: 'center' }}></View> */}
+                        <View style={{ marginTop: heightToDp("2%"), marginLeft: widthToDp("10%"), flexDirection: 'row' }}>
+                            <FloatingLabel
+                                labelStyle={styles.labelInput}
+                                inputStyle={styles.input}
+                                style={styles.formInput}
+                                password={true}
+
+                                onChangeText={(text) => { this.setState({ password: text }) }}
                             // onBlur={this.onBlur}
-                            onChangeText={(text) => { this.setState({ username: text }) }}
-                        >{LanguageChange.username}</FloatingLabel>
-                    </View>
-                    {/* <View style={{ borderBottomColor: 'black', borderBottomWidth: 1, marginTop: heightToDp('1.5%'), width: widthToDp("80%"), alignSelf: 'center' }}></View> */}
-                    <View style={{ marginTop: heightToDp("2%"), marginLeft: widthToDp("10%"), flexDirection: 'row' }}>
-                        <FloatingLabel
-                            labelStyle={styles.labelInput}
-                            inputStyle={styles.input}
-                            style={styles.formInput}
-                            password={true}
-
-                            onChangeText={(text) => { this.setState({ password: text }) }}
-                        // onBlur={this.onBlur}
-                        >{LanguageChange.password}</FloatingLabel>
-                    </View>
-                    {/* <View style={{ borderBottomColor: 'black', borderBottomWidth: 1, marginTop: heightToDp('1.5%'), width: widthToDp("80%"), alignSelf: 'center' }}></View> */}
-                    <View style={{ marginLeft: widthToDp("50%"), marginTop: heightToDp("0.5%"),width:widthToDp("37%") }}>
-                        <Text style={{ fontFamily: 'Oswald-Medium',fontSize:widthToDp("4%") }}>{LanguageChange.forgotPassword}</Text>
-                    </View>
-                    {
-                        this.state.isLoading ? <CustomIndicator IsLoading={this.state.isLoading} /> : null
-                    }
-                    <TouchableOpacity onPress={() => this.checkConnection()}>
-                        <View style={{ backgroundColor: BaseColor.SecondaryColor, marginTop: heightToDp("5%"), width: widthToDp("37%"), alignSelf: 'center', height: heightToDp("5%"), borderRadius: 100 }}>
-                            <Text style={{ alignSelf: 'center', marginTop: heightToDp("0.5%"), fontWeight: '500', fontSize: widthToDp("5%"), fontFamily: 'Oswald-Medium' }}>{LanguageChange.signIn}</Text>
+                            >{LanguageChange.password}</FloatingLabel>
                         </View>
-                    </TouchableOpacity>
-                    <View style={{ flexDirection: 'row', alignSelf: 'center', marginTop: heightToDp('1.5%') }}>
-                        <Text style={{ fontFamily: 'Oswald-Medium' }}>{LanguageChange.noAccount}</Text>
-                        <TouchableOpacity onPress={() => this.navigateToRegistration()}>
-                            <Text style={{ color: BaseColor.Red, fontFamily: 'Oswald-Medium' }}> {LanguageChange.pleaseSignUp}</Text>
+                        {/* <View style={{ borderBottomColor: 'black', borderBottomWidth: 1, marginTop: heightToDp('1.5%'), width: widthToDp("80%"), alignSelf: 'center' }}></View> */}
+                        <View style={{ marginLeft: widthToDp("50%"), marginTop: heightToDp("0.5%"), width: widthToDp("37%") }}>
+                            <Text style={{ fontFamily: 'Oswald-Medium', fontSize: widthToDp("4%") }}>{LanguageChange.forgotPassword}</Text>
+                        </View>
+                        {
+                            this.state.isLoading ? <CustomIndicator IsLoading={this.state.isLoading} /> : null
+                        }
+                        <TouchableOpacity onPress={() => this.checkConnection()}>
+                            <View style={{ backgroundColor: BaseColor.SecondaryColor, marginTop: heightToDp("5%"), width: widthToDp("37%"), alignSelf: 'center', height: heightToDp("5%"), borderRadius: 100 }}>
+                                <Text style={{ alignSelf: 'center', marginTop: heightToDp("0.5%"), fontWeight: '500', fontSize: widthToDp("5%"), fontFamily: 'Oswald-Medium' }}>{LanguageChange.signIn}</Text>
+                            </View>
                         </TouchableOpacity>
-                    </View>
-
-                    <View style={{ borderBottomColor: BaseColor.Stroke, borderBottomWidth: 1, marginTop: heightToDp('1.5%'), width: widthToDp("100%") }}></View>
-
-                    <TouchableOpacity onPress={() => this.guestSignIn()}>
-                        <View style={{ backgroundColor: BaseColor.SecondaryColor, marginTop: heightToDp("3%"), width: widthToDp("37%"), alignSelf: 'center', height: heightToDp("5%"), borderRadius: 100 }}>
-                            <Text style={{ alignSelf: 'center', marginTop: heightToDp("0.4%"), fontWeight: '500', fontSize: widthToDp("5%"), fontFamily: 'Oswald-Medium' }}>{LanguageChange.guestSignIn}</Text>
+                        <View style={{ flexDirection: 'row', alignSelf: 'center', marginTop: heightToDp('1.5%') }}>
+                            <Text style={{ fontFamily: 'Oswald-Medium' }}>{LanguageChange.noAccount}</Text>
+                            <TouchableOpacity onPress={() => this.navigateToRegistration()}>
+                                <Text style={{ color: BaseColor.Red, fontFamily: 'Oswald-Medium' }}> {LanguageChange.pleaseSignUp}</Text>
+                            </TouchableOpacity>
                         </View>
-                    </TouchableOpacity>
-                    <View style={{marginTop:20}}></View>
+
+                        <View style={{ borderBottomColor: BaseColor.Stroke, borderBottomWidth: 1, marginTop: heightToDp('1.5%'), width: widthToDp("100%") }}></View>
+
+                        <TouchableOpacity onPress={() => this.guestSignIn()}>
+                            <View style={{ backgroundColor: BaseColor.SecondaryColor, marginTop: heightToDp("3%"), width: widthToDp("37%"), alignSelf: 'center', height: heightToDp("5%"), borderRadius: 100 }}>
+                                <Text style={{ alignSelf: 'center', marginTop: heightToDp("0.4%"), fontWeight: '500', fontSize: widthToDp("5%"), fontFamily: 'Oswald-Medium' }}>{LanguageChange.guestSignIn}</Text>
+                            </View>
+                        </TouchableOpacity>
+                        <View style={{ marginTop: 20 }}></View>
                     </ScrollView>
                 </View>
             </KeyboardAwareScrollView>
