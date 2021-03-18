@@ -1,5 +1,5 @@
 import React, { Component, useEffect, useState } from 'react'
-import { View, TouchableOpacity, StyleSheet } from 'react-native'
+import { View, TouchableOpacity, StyleSheet, PermissionsAndroid } from 'react-native'
 import { Button, Text } from 'native-base'
 import Logo from '../assets/Logo'
 import { heightToDp, widthToDp } from '../Responsive'
@@ -52,8 +52,22 @@ export default class LanguageScreen extends Component {
 
     componentDidMount() {
         this.checkSession()
-        
+        //this.requestStoragePermission()
+        this.permision()
     }
+
+    permision = () => {
+        const granted = PermissionsAndroid.check(PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE, PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE)
+        if (granted) {
+            console.log("You can use the External storage")
+        }
+        else {
+            console.log("External permission denied")
+        }
+    }
+
+
+
 
     checkSession = async () => {
         let value = await AsyncStorage.getItem('_id')
@@ -73,7 +87,7 @@ export default class LanguageScreen extends Component {
     }
 
 
-    
+
 
     render() {
         return (

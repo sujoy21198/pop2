@@ -62,7 +62,7 @@ export default class SigninScreen extends Component {
         var importantLinksScreenArray = []
         var nutritionGardenImagesArray = []
         var smallBusinessImagesArray = []
-        
+
 
         await axios.get(DataAccess.BaseUrl + DataAccess.AccessUrl + 'files', {
         }).then(function (response) {
@@ -91,15 +91,15 @@ export default class SigninScreen extends Component {
         }).catch(function (error) {
             console.log(error)
         })
-        this.setState({ cropScreenImages : cropScreenImageArray })
-        this.setState({cropStepImages : cropStepImagesArray})
-        this.setState({cropMaterialImages : cropMaterialImagesArray})
-        this.setState({livestockScreenImages : livestockScreenImagesArray})
-        this.setState({liveStockStepImages : liveStockStepImagesArray})
-        this.setState({breedScreenImages : breedScreenImagesArray})
-        this.setState({importantLinksScreen : importantLinksScreenArray})
-        this.setState({nutritionGardenImages : nutritionGardenImagesArray})
-        this.setState({smallBusinessImages : smallBusinessImagesArray})
+        this.setState({ cropScreenImages: cropScreenImageArray })
+        this.setState({ cropStepImages: cropStepImagesArray })
+        this.setState({ cropMaterialImages: cropMaterialImagesArray })
+        this.setState({ livestockScreenImages: livestockScreenImagesArray })
+        this.setState({ liveStockStepImages: liveStockStepImagesArray })
+        this.setState({ breedScreenImages: breedScreenImagesArray })
+        this.setState({ importantLinksScreen: importantLinksScreenArray })
+        this.setState({ nutritionGardenImages: nutritionGardenImagesArray })
+        this.setState({ smallBusinessImages: smallBusinessImagesArray })
         //console.log(this.state.cropScreenImages,"hi")
         this.getCropImage()
     }
@@ -159,7 +159,7 @@ export default class SigninScreen extends Component {
         var imageUrls = []
         var ext = []
         cropImages = this.state.cropStepImages
-        alert(cropImages.length)
+        //alert(cropImages.length)
         for (var i = 0; i < cropImages.length; i++) {
             var names = cropImages[i]
             var editedNames = names.substr(0, names.indexOf('.'))
@@ -208,7 +208,7 @@ export default class SigninScreen extends Component {
         var imageUrls = []
         var ext = []
         cropImages = this.state.cropMaterialImages
-        alert(cropImages.length)
+        //alert(cropImages.length)
         for (var i = 0; i < cropImages.length; i++) {
             var names = cropImages[i]
             var editedNames = names.substr(0, names.indexOf('.'))
@@ -257,7 +257,7 @@ export default class SigninScreen extends Component {
         var imageUrls = []
         var ext = []
         cropImages = this.state.livestockScreenImages
-        alert(cropImages.length)
+        //alert(cropImages.length)
         for (var i = 0; i < cropImages.length; i++) {
             var names = cropImages[i]
             var editedNames = names.substr(0, names.indexOf('.'))
@@ -306,7 +306,7 @@ export default class SigninScreen extends Component {
         var imageUrls = []
         var ext = []
         cropImages = this.state.liveStockStepImages
-        alert(cropImages.length)
+        //alert(cropImages.length)
         for (var i = 0; i < cropImages.length; i++) {
             var names = cropImages[i]
             var editedNames = names.substr(0, names.indexOf('.'))
@@ -355,7 +355,7 @@ export default class SigninScreen extends Component {
         var imageUrls = []
         var ext = []
         cropImages = this.state.breedScreenImages
-        alert(cropImages.length)
+        //alert(cropImages.length)
         for (var i = 0; i < cropImages.length; i++) {
             var names = cropImages[i]
             var editedNames = names.substr(0, names.indexOf('.'))
@@ -404,7 +404,7 @@ export default class SigninScreen extends Component {
         var imageUrls = []
         var ext = []
         cropImages = this.state.importantLinksScreen
-        alert(cropImages.length)
+        //alert(cropImages.length)
         for (var i = 0; i < cropImages.length; i++) {
             var names = cropImages[i]
             var editedNames = names.substr(0, names.indexOf('.'))
@@ -454,7 +454,7 @@ export default class SigninScreen extends Component {
         var imageUrls = []
         var ext = []
         cropImages = this.state.nutritionGardenImages
-        alert(cropImages.length)
+        //alert(cropImages.length)
         for (var i = 0; i < cropImages.length; i++) {
             var names = cropImages[i]
             var editedNames = names.substr(0, names.indexOf('.'))
@@ -503,7 +503,7 @@ export default class SigninScreen extends Component {
         var imageUrls = []
         var ext = []
         cropImages = this.state.smallBusinessImages
-        alert(cropImages.length)
+        //alert(cropImages.length)
         for (var i = 0; i < cropImages.length; i++) {
             var names = cropImages[i]
             var editedNames = names.substr(0, names.indexOf('.'))
@@ -537,9 +537,10 @@ export default class SigninScreen extends Component {
                 .then(res => {
                     // Showing alert after successful downloading
                     console.log('res -> ', JSON.stringify(res));
-                    // alert('Image Downloaded Successfully.');
+                    //alert('Image Downloaded Successfully.');
                 });
         }
+        alert("images downloaded successfully")
         console.log(fileNames)
         console.log(imageUrls)
     }
