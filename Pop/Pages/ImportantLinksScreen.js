@@ -13,7 +13,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 
 
 const data = [
-    { name: 'WASH', code: 'https://files.qatarliving.com/styles/image_h_xlarge_1600x900/s3/post/2020/10/15/Global-Handwashing-day-2020-qatar-living.jpg?itok=xGwcmQkE' },
+    { name: 'WASH', code: 'https://www.cdc.gov/handwashing/images/GettyImages-514363103-medium.jpg' },
     { name: 'HEALTH', code: 'https://drmehtablog.com/wp-content/uploads/2016/01/Cardiology-1.jpg' },
     { name: 'COVID', code: 'https://www.universiteitleiden.nl/binaries/content/gallery/ul2/main-images/campus-the-hague/bsk/covid---19-afbeelding.jpg' },
     { name: 'GOVT SCHEMES', code: 'https://empiawards.files.wordpress.com/2014/05/indian-health-care.jpg' }
@@ -286,7 +286,7 @@ export default class ImportantLinksScreen extends Component {
                         renderItem={({ item }) => (
                             <TouchableOpacity onPress={() => this.selectLandType(item.name)}>
                                 <View style={{ backgroundColor: BaseColor.Red, width: widthToDp("47%"), height: heightToDp("30%"), elevation: 10, borderRadius: 10 }}>
-                                    <Text style={{ color: "#fff", fontSize: widthToDp("5%"), marginLeft: widthToDp("5%"), marginTop: heightToDp("0.4%"), fontFamily: 'Oswald-Medium' }}>{item.name}</Text>
+                                    <Text style={{ color: "#fff", fontSize: widthToDp("5%"), marginLeft: widthToDp("5%"), marginTop: heightToDp("0.4%"), fontFamily: 'Oswald-Medium', height:heightToDp("4%") }}>{item.name}</Text>
                                     <Image
                                         style={{ width: widthToDp("47%"), height: heightToDp("25%"), borderBottomLeftRadius: 10, borderBottomRightRadius: 10, marginTop: heightToDp("1%") }}
                                         source={{ uri: item.code }}

@@ -17,7 +17,7 @@ const data = [
     { name: 'LIVESTOCK', code: 'https://d3hnfqimznafg0.cloudfront.net/images/Article_Images/ImageForArticle_838(1).jpg' },
     { name: 'SMALL BUSINESS', code: 'https://www.sba.gov/build/71bd57d80e04f91d53641835ce6d7acc.png' },
     { name: 'HEALTH', code: 'https://images.hu-production.be/static/img/home/homepageicons-03.png' },
-    { name: 'EDUCATION', code: 'https://images.theconversation.com/files/45159/original/rptgtpxd-1396254731.jpg?ixlib=rb-1.1.0&q=45&auto=format&w=754&fit=clipg' },
+    { name: 'EDUCATION', code: 'https://prod-discovery.edx-cdn.org/media/course/image/ee4f4f12-e6ec-45ac-94df-b90b4b022903-aaf6257f767b.jpeg' },
     { name: 'LOAN SAVINGS', code: 'https://cdn.corporatefinanceinstitute.com/assets/Loans-1.jpeg' },
     { name: 'PENSION', code: 'https://img.theweek.in/content/dam/week/news/biz-tech/images/2019/2/1/pension-plan.jpg' },
     { name: 'OTHERS', code: 'https://logos.flamingtext.com/Word-Logos/others-design-sketch-name.png' },

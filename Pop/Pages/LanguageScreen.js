@@ -13,8 +13,34 @@ import NetInfo from '@react-native-community/netinfo'
 import axios from 'axios'
 import DataAccess from '../Core/DataAccess'
 import RNFetchBlob from 'rn-fetch-blob'
+import {check,PERMISSIONS,RESULTS} from 'react-native-permissions'
 
 const Sound = require('react-native-sound')
+
+
+const requestCameraPermission = async () => {
+    try {
+      const granted = await PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.CAMERA,
+        {
+          title: "Cool Photo App Camera Permission",
+          message:
+            "Cool Photo App needs access to your camera " +
+            "so you can take awesome pictures.",
+          buttonNeutral: "Ask Me Later",
+          buttonNegative: "Cancel",
+          buttonPositive: "OK"
+        }
+      );
+      if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+        console.log("You can use the camera");
+      } else {
+        console.log("Camera permission denied");
+      }
+    } catch (err) {
+      console.warn(err);
+    }
+  };
 
 
 export default class LanguageScreen extends Component {
@@ -27,6 +53,7 @@ export default class LanguageScreen extends Component {
         }
 
         this.state.languages = Languages
+        requestCameraPermission()
         //console.log(this.state.languages)
     }
 
@@ -57,11 +84,12 @@ export default class LanguageScreen extends Component {
     }
 
     permision = () => {
-        const granted = PermissionsAndroid.check(PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE, PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE)
+        const granted = PermissionsAndroid.check(PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE)
         if (granted) {
             console.log("You can use the External storage")
         }
         else {
+            PermissionsAndroid.request( PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE)
             console.log("External permission denied")
         }
     }
