@@ -29,12 +29,8 @@ export default class LandTypeScreen extends Component {
             languages:[],
             cropName:'',
             imageFile:'',
-            textLanguageChange:'',
-            landTypeLabel:'',
-            data:[]
         }
         this.state.languages = Languages
-        this.state.data = data
         this.state._id = this.props.route.params._id
         this.state.cropName = this.props.route.params.cropName
         this.state.imageFile = this.props.route.params.imageFile
@@ -42,41 +38,106 @@ export default class LandTypeScreen extends Component {
 
     componentDidMount(){
         this.loadlabelsFromStorage()
-        this.setLanguageOnMount()
     }
 
-    // loadlabelsFromStorage = async() => {
-    //     try{
-    //         let username = await AsyncStorage.getItem('username')
-    //         let user = await AsyncStorage.getItem('offlineData');
-    //         let parsed = JSON.parse(user);
-    //         var specificObject = parsed.find((i) => i.username === username)
-    //         var labelsFilter = specificObject.labels.find((i) => i.nameEnglish === 'No Account')
-    //         console.log(labelsFilter)
-    //     }catch(error){
-    //         alert(error)
-    //     }
-    //     this.setState({crops : specificObject.crops})
-    // }
+    loadlabelsFromStorage = async() => {
+        try{
+            let username = await AsyncStorage.getItem('username')
+            let user = await AsyncStorage.getItem('offlineData');
+            let parsed = JSON.parse(user);
+            var specificObject = parsed.find((i) => i.username === username)
+            var labelsFilter = specificObject.labels.find((i) => i.nameEnglish === 'No Account')
+            console.log(labelsFilter)
+        }catch(error){
+            alert(error)
+        }
+        this.setState({crops : specificObject.crops})
+    }
 
 
 
     selectLandType = (data) => {
-        if(data === this.state.data[0].name){
+        if(data === 'HIGH LAND'){
             this.props.navigation.navigate({
                 name: 'PatchScreen',
                 params : {landType:data, _id:this.state._id , cropName: this.state.cropName , imageFile: this.state.imageFile}
             })
-        }else if(data === this.state.data[1].name){
+        }else if(data === 'MEDIUM LAND'){
             this.props.navigation.navigate({
                 name: 'PatchScreen',
                 params : {landType:data, _id:this.state._id, cropName: this.state.cropName, imageFile: this.state.imageFile}
             })
-        }else if(data === this.state.data[2].name){
+        }else if(data === 'LOW LAND'){
             this.props.navigation.navigate({
                 name: 'PatchScreen',
                 params : {landType:data, _id:this.state._id, cropName: this.state.cropName, imageFile: this.state.imageFile}
             })
+        }
+    }
+
+
+    setLanguageOnMount = async () => {
+        let defaultLanguage = await AsyncStorage.getItem('language')
+        if (defaultLanguage === 'en') {
+            this.setState({ textLanguageChange: '0' })
+            this.loadlabelsFromStorage()
+        } else if (defaultLanguage === 'hi') {
+            this.setState({ textLanguageChange: '1' })
+            this.loadlabelsFromStorage()
+        } else if (defaultLanguage === 'ho') {
+            this.setState({ textLanguageChange: '2' })
+            this.loadlabelsFromStorage()
+        } else if (defaultLanguage === 'od') {
+            this.setState({ textLanguageChange: '3' })
+            this.loadlabelsFromStorage()
+        } else if (defaultLanguage === 'san') {
+            this.setState({ textLanguageChange: '4' })
+            this.loadlabelsFromStorage()
+        }
+    }
+
+    languageChangeFunction = async (data) => {
+
+        if (data === 'en') {
+            AsyncStorage.setItem('language', 'en')
+            this.setState({ textLanguageChange: '0' })
+            this.loadlabelsFromStorage()
+            this.props.navigation.reset({
+                index: 0,
+                routes: [{ name: "DashBoardScreen" }]
+            });
+        } else if (data === 'hi') {
+            this.setState({ textLanguageChange: '1' })
+            AsyncStorage.setItem('language', 'hi')
+            this.loadlabelsFromStorage()
+            this.props.navigation.reset({
+                index: 0,
+                routes: [{ name: "DashBoardScreen" }]
+            });
+        } else if (data === 'ho') {
+            this.setState({ textLanguageChange: '2' })
+            AsyncStorage.setItem('language', 'ho')
+            this.loadlabelsFromStorage()
+            this.props.navigation.reset({
+                index: 0,
+                routes: [{ name: "DashBoardScreen" }]
+            });
+        } else if (data === 'od') {
+            this.setState({ textLanguageChange: '3' })
+            AsyncStorage.setItem('language', 'od')
+            this.loadlabelsFromStorage()
+            this.props.navigation.reset({
+                index: 0,
+                routes: [{ name: "DashBoardScreen" }]
+            });
+        } else if (data === 'san') {
+            AsyncStorage.setItem('language', 'san')
+            this.setState({ textLanguageChange: '4' })
+            this.loadlabelsFromStorage()
+            this.props.navigation.reset({
+                index: 0,
+                routes: [{ name: "DashBoardScreen" }]
+            });
         }
     }
     speak = (data) => {
@@ -88,136 +149,6 @@ export default class LandTypeScreen extends Component {
             tts.speak('LOW LAND')
         }
     }
-
-    loadlabelsFromStorage = async () => {
-        try {
-            let username = await AsyncStorage.getItem('username')
-            let user = await AsyncStorage.getItem('offlineData');
-            let parsed = JSON.parse(user);
-            var specificObject = parsed.find((i) => i.username === username)
-            var landTypeLabel = specificObject.labels.find((i) => i.type === 56)
-            var highLand = specificObject.labels.find((i) => i.type === 53)
-            var lowLand = specificObject.labels.find((i) => i.type === 55)
-            var MediumLand = specificObject.labels.find((i) => i.type === 54)
-            // var message = specificObject.labels.find((i) => i.type === 26)
-            // var generalSettings = specificObject.labels.find((i) => i.type === 27)
-            // var pension = specificObject.labels.find((i) => i.type === 51)
-            // var others = specificObject.labels.find((i) => i.type === 52)
-            if (this.state.textLanguageChange === '0') {
-                this.state.data[0].name = highLand.nameEnglish
-                this.state.data[1].name = MediumLand.nameEnglish
-                this.state.data[2].name = lowLand.nameEnglish
-                this.setState({landTypeLabel : landTypeLabel.nameEnglish})
-                // this.state.data[4].name = message.nameEnglish
-                // this.state.data[5].name = generalSettings.nameEnglish
-                // this.state.data[6].name = pension.nameEnglish
-                // this.state.data[7].name = others.nameEnglish
-                // this.setState({ moneyManagerLabel: moneyManagerLabel.nameEnglish })
-                // this.setState({ expenseLabel: expenseLabel.nameEnglish })
-                // this.setState({ incomeLabel: incomeLabel.nameEnglish })
-                // this.setState({ allTransactionLabel: allTransactionLabel.nameEnglish })
-            } else if (this.state.textLanguageChange === '1') {
-                this.state.data[0].name = highLand.nameHindi
-                this.state.data[1].name = MediumLand.nameHindi
-                this.state.data[2].name = lowLand.nameHindi
-                this.setState({landTypeLabel : landTypeLabel.nameHindi})
-                // this.state.data[4].name = message.nameHindi
-                // this.state.data[5].name = generalSettings.nameHindi
-                // this.state.data[6].name = pension.nameHindi
-                // this.state.data[7].name = others.nameHindi
-            } else if (this.state.textLanguageChange === '2') {
-                this.state.data[0].name = highLand.nameHo
-                this.state.data[1].name = MediumLand.nameHo
-                this.state.data[2].name = lowLand.nameHo
-                this.setState({landTypeLabel : landTypeLabel.nameHo})
-                // this.state.data[4].name = message.nameHo
-                // this.state.data[5].name = generalSettings.nameHo
-                // this.state.data[6].name = pension.nameHo
-                // this.state.data[7].name = others.nameHo
-            } else if (this.state.textLanguageChange === '3') {
-                this.state.data[0].name = highLand.nameOdia
-                this.state.data[1].name = MediumLand.nameOdia
-                this.state.data[2].name = lowLand.nameOdia
-                this.setState({landTypeLabel : landTypeLabel.nameOdia})
-                // this.state.data[4].name = message.nameOdia
-                // this.state.data[5].name = generalSettings.nameOdia
-                // this.state.data[6].name = pension.nameOdia
-                // this.state.data[7].name = others.nameOdia
-            } else if (this.state.textLanguageChange === '4') {
-                this.state.data[0].name = highLand.nameSanthali
-                this.state.data[1].name = MediumLand.nameSanthali
-                this.state.data[2].name = lowLand.nameSanthali
-                this.setState({landTypeLabel : landTypeLabel.nameSanthali})
-                // this.state.data[4].name = message.nameSanthali
-                // this.state.data[5].name = generalSettings.nameSanthali
-                // this.state.data[6].name = pension.nameSanthali
-                // this.state.data[7].name = others.nameSanthali
-            }
-            
-        } catch (error) {
-            alert(error)
-        }
-        this.setState({ crops: specificObject.crops })
-    }
-
-
-
-    setLanguageOnMount = async() => {
-        let defaultLanguage = await AsyncStorage.getItem('language')
-        if(defaultLanguage === 'en'){
-            this.setState({textLanguageChange : '0'})
-        }else if(defaultLanguage === 'hi'){
-            this.setState({textLanguageChange : '1'})
-        }else if(defaultLanguage === 'ho'){
-            this.setState({textLanguageChange : '2'})
-        }else if(defaultLanguage === 'od'){
-            this.setState({textLanguageChange : '3'})
-        }else if(defaultLanguage === 'san'){
-            this.setState({textLanguageChange : '4'})
-        }
-    }
-
-    languageChangeFunction = async(data) => {
-        
-        if(data === 'en'){
-            AsyncStorage.setItem('language','en')
-            this.setState({textLanguageChange : '0'})
-            this.props.navigation.reset({
-                index: 0,
-                routes: [{ name: "DashBoardScreen" }]
-            });
-        }else if(data === 'hi'){
-            this.setState({textLanguageChange : '1'})
-            AsyncStorage.setItem('language','hi')
-            this.props.navigation.reset({
-                index: 0,
-                routes: [{ name: "DashBoardScreen" }]
-            });
-        }else if(data === 'ho'){
-            this.setState({textLanguageChange : '2'})
-            AsyncStorage.setItem('language','ho')
-            this.props.navigation.reset({
-                index: 0,
-                routes: [{ name: "DashBoardScreen" }]
-            });
-        }else if(data === 'od'){
-            this.setState({textLanguageChange : '3'})
-            AsyncStorage.setItem('language','od')
-            this.props.navigation.reset({
-                index: 0,
-                routes: [{ name: "DashBoardScreen" }]
-            });
-        }else if(data === 'san'){
-            AsyncStorage.setItem('language','san')
-            this.setState({textLanguageChange : '4'})
-            this.props.navigation.reset({
-                index: 0,
-                routes: [{ name: "DashBoardScreen" }]
-            });
-        }
-    }
-
-
     render() {
         return (
             <View style={{ backgroundColor: BaseColor.BackgroundColor }}>
@@ -234,7 +165,7 @@ export default class LandTypeScreen extends Component {
                 </View>
 
                 <View style={{ flexDirection: 'row', marginTop: heightToDp("1%"), marginLeft: widthToDp("1%") }}>
-                    <TouchableOpacity onPress={() =>this.languageChangeFunction(this.state.languages[0].id)}>
+                    <TouchableOpacity onPress={() => this.languageChangeFunction(this.state.languages[0].id)}>
                         <View style={{ backgroundColor: BaseColor.English, width: widthToDp("30%"), height: heightToDp("6%"), marginLeft: widthToDp("2%"), borderRadius: 100, flexDirection: 'row' }}>
                             <Text style={{ color: '#fff', marginTop: heightToDp("1.5%"), fontFamily: 'Oswald-Medium', marginLeft: widthToDp("5%") }}>{this.state.languages[0].value}</Text>
                             
@@ -271,7 +202,7 @@ export default class LandTypeScreen extends Component {
                     </TouchableOpacity>
                 </View>
                 <View style={{ borderBottomColor: BaseColor.Stroke, borderBottomWidth: 1, marginTop: heightToDp('1.5%'), width: widthToDp("100%") }}></View>
-                <Text style={{ marginLeft: widthToDp("3%"), marginTop: heightToDp("2%"), fontSize: widthToDp("7%"), fontFamily: 'Oswald-Medium' }}>{this.state.landTypeLabel}</Text>
+                <Text style={{ marginLeft: widthToDp("3%"), marginTop: heightToDp("2%"), fontSize: widthToDp("7%"), fontFamily: 'Oswald-Medium' }}>LAND TYPE</Text>
                 
                 <View>
                    
