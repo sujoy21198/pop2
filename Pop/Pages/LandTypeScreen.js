@@ -22,55 +22,122 @@ const data = [
 export default class LandTypeScreen extends Component {
 
 
-    constructor(props){
+    constructor(props) {
         super(props)
-        this.state={
-            _id : '',
-            languages:[],
-            cropName:'',
-            imageFile:'',
+        this.state = {
+            _id: '',
+            languages: [],
+            cropName: '',
+            imageFile: '',
+            landTypeLabel:'',
+            data:[]
         }
         this.state.languages = Languages
+        this.state.data = data
         this.state._id = this.props.route.params._id
         this.state.cropName = this.props.route.params.cropName
         this.state.imageFile = this.props.route.params.imageFile
     }
 
-    componentDidMount(){
+    componentDidMount() {
         this.loadlabelsFromStorage()
+        this.setLanguageOnMount()
     }
 
-    loadlabelsFromStorage = async() => {
-        try{
+    loadlabelsFromStorage = async () => {
+        try {
             let username = await AsyncStorage.getItem('username')
             let user = await AsyncStorage.getItem('offlineData');
             let parsed = JSON.parse(user);
             var specificObject = parsed.find((i) => i.username === username)
-            var labelsFilter = specificObject.labels.find((i) => i.nameEnglish === 'No Account')
-            console.log(labelsFilter)
-        }catch(error){
+            var landTypeLabel = specificObject.labels.find((i) => i.type === 56)
+            var highLand = specificObject.labels.find((i) => i.type === 53)
+            var lowLand = specificObject.labels.find((i) => i.type === 55)
+            var mediumLand = specificObject.labels.find((i) => i.type === 54)
+            
+            //var nutrationGraden = specificObject.labels.find((i) => i.type === 31)
+            // var message = specificObject.labels.find((i) => i.type === 26)
+            // var generalSettings = specificObject.labels.find((i) => i.type === 27)
+            // var pension = specificObject.labels.find((i) => i.type === 51)
+            // var others = specificObject.labels.find((i) => i.type === 52)
+            // High Land: 53
+            // Medium Land: 54
+            // Low Land: 55
+            // Land Type : 56
+            if (this.state.textLanguageChange === '0') {
+                this.state.data[0].name = highLand.nameEnglish
+                this.state.data[1].name = mediumLand.nameEnglish
+                this.state.data[2].name = lowLand.nameEnglish
+                this.setState({ landTypeLabel: landTypeLabel.nameEnglish })
+                // this.state.data[4].name = message.nameEnglish
+                // this.state.data[5].name = generalSettings.nameEnglish
+                // this.state.data[6].name = pension.nameEnglish
+                // this.state.data[7].name = others.nameEnglish
+                // this.setState({ moneyManagerLabel: moneyManagerLabel.nameEnglish })
+                // this.setState({ expenseLabel: expenseLabel.nameEnglish })
+                // this.setState({ incomeLabel: incomeLabel.nameEnglish })
+                // this.setState({ allTransactionLabel: allTransactionLabel.nameEnglish })
+            } else if (this.state.textLanguageChange === '1') {
+                this.state.data[0].name = highLand.nameHindi
+                this.state.data[1].name = mediumLand.nameHindi
+                this.state.data[2].name = lowLand.nameHindi
+                this.setState({ landTypeLabel: landTypeLabel.nameHindi })
+                // this.state.data[4].name = message.nameHindi
+                // this.state.data[5].name = generalSettings.nameHindi
+                // this.state.data[6].name = pension.nameHindi
+                // this.state.data[7].name = others.nameHindi
+            } else if (this.state.textLanguageChange === '2') {
+                this.state.data[0].name = highLand.nameHo
+                this.state.data[1].name = mediumLand.nameHo
+                this.state.data[2].name = lowLand.nameHo
+                this.setState({ landTypeLabel: landTypeLabel.nameHo })
+                // this.state.data[4].name = message.nameHo
+                // this.state.data[5].name = generalSettings.nameHo
+                // this.state.data[6].name = pension.nameHo
+                // this.state.data[7].name = others.nameHo
+            } else if (this.state.textLanguageChange === '3') {
+                this.state.data[0].name = highLand.nameOdia
+                this.state.data[1].name = mediumLand.nameOdia
+                this.state.data[2].name = lowLand.nameOdia
+                this.setState({ landTypeLabel: landTypeLabel.nameOdia })
+                // this.state.data[4].name = message.nameOdia
+                // this.state.data[5].name = generalSettings.nameOdia
+                // this.state.data[6].name = pension.nameOdia
+                // this.state.data[7].name = others.nameOdia
+            } else if (this.state.textLanguageChange === '4') {
+                this.state.data[0].name = highLand.nameSanthali
+                this.state.data[1].name = mediumLand.nameSanthali
+                this.state.data[2].name = lowLand.nameSanthali
+                this.setState({ landTypeLabel: landTypeLabel.nameSanthali })
+                // this.state.data[4].name = message.nameSanthali
+                // this.state.data[5].name = generalSettings.nameSanthali
+                // this.state.data[6].name = pension.nameSanthali
+                // this.state.data[7].name = others.nameSanthali
+            }
+
+        } catch (error) {
             alert(error)
         }
-        this.setState({crops : specificObject.crops})
+        this.setState({ crops: specificObject.crops })
     }
 
 
 
     selectLandType = (data) => {
-        if(data === 'HIGH LAND'){
+        if (data === this.state.data[0].name) {
             this.props.navigation.navigate({
                 name: 'PatchScreen',
-                params : {landType:data, _id:this.state._id , cropName: this.state.cropName , imageFile: this.state.imageFile}
+                params: { landType: data, _id: this.state._id, cropName: this.state.cropName, imageFile: this.state.imageFile }
             })
-        }else if(data === 'MEDIUM LAND'){
+        } else if (data === this.state.data[1].name) {
             this.props.navigation.navigate({
                 name: 'PatchScreen',
-                params : {landType:data, _id:this.state._id, cropName: this.state.cropName, imageFile: this.state.imageFile}
+                params: { landType: data, _id: this.state._id, cropName: this.state.cropName, imageFile: this.state.imageFile }
             })
-        }else if(data === 'LOW LAND'){
+        } else if (data === this.state.data[2].name) {
             this.props.navigation.navigate({
                 name: 'PatchScreen',
-                params : {landType:data, _id:this.state._id, cropName: this.state.cropName, imageFile: this.state.imageFile}
+                params: { landType: data, _id: this.state._id, cropName: this.state.cropName, imageFile: this.state.imageFile }
             })
         }
     }
@@ -141,11 +208,11 @@ export default class LandTypeScreen extends Component {
         }
     }
     speak = (data) => {
-        if(data === 'HIGH LAND'){
+        if (data === 'HIGH LAND') {
             tts.speak('HIGH LAND')
-        }else if(data === 'MEDIUM LAND'){
+        } else if (data === 'MEDIUM LAND') {
             tts.speak('MEDIUM LAND')
-        }else if(data === 'LOW LAND'){
+        } else if (data === 'LOW LAND') {
             tts.speak('LOW LAND')
         }
     }
@@ -168,21 +235,21 @@ export default class LandTypeScreen extends Component {
                     <TouchableOpacity onPress={() => this.languageChangeFunction(this.state.languages[0].id)}>
                         <View style={{ backgroundColor: BaseColor.English, width: widthToDp("30%"), height: heightToDp("6%"), marginLeft: widthToDp("2%"), borderRadius: 100, flexDirection: 'row' }}>
                             <Text style={{ color: '#fff', marginTop: heightToDp("1.5%"), fontFamily: 'Oswald-Medium', marginLeft: widthToDp("5%") }}>{this.state.languages[0].value}</Text>
-                            
+
                         </View>
                     </TouchableOpacity>
 
                     <TouchableOpacity onPress={() => this.languageChangeFunction(this.state.languages[1].id)}>
                         <View style={{ backgroundColor: BaseColor.Hindi, width: widthToDp("30%"), height: heightToDp("6%"), marginLeft: widthToDp("2%"), borderRadius: 100, flexDirection: 'row' }}>
                             <Text style={{ color: '#fff', marginTop: heightToDp("1.7%"), marginLeft: widthToDp("5%"), fontWeight: 'bold', fontSize: widthToDp("4.3%") }}>{this.state.languages[1].value}</Text>
-                            
+
                         </View>
                     </TouchableOpacity>
 
                     <TouchableOpacity onPress={() => this.languageChangeFunction(this.state.languages[2].id)}>
                         <View style={{ backgroundColor: BaseColor.Ho, width: widthToDp("30%"), height: heightToDp("6%"), marginLeft: widthToDp("2%"), borderRadius: 100, flexDirection: 'row' }}>
                             <Text style={{ color: '#fff', marginTop: heightToDp("1.5%"), marginLeft: widthToDp("5%"), fontWeight: 'bold', fontSize: widthToDp("4.3%") }}>{this.state.languages[2].value}</Text>
-                            
+
                         </View>
                     </TouchableOpacity>
                 </View>
@@ -190,22 +257,22 @@ export default class LandTypeScreen extends Component {
                     <TouchableOpacity onPress={() => this.languageChangeFunction(this.state.languages[3].id)}>
                         <View style={{ backgroundColor: BaseColor.Uridia, width: widthToDp("30%"), height: heightToDp("6%"), borderRadius: 100, flexDirection: 'row' }}>
                             <Text style={{ color: '#fff', marginTop: heightToDp("1.7%"), marginLeft: widthToDp("4.7%"), fontWeight: 'bold', fontSize: widthToDp("4.3%") }}>{this.state.languages[3].value}</Text>
-                            
+
                         </View>
                     </TouchableOpacity>
 
                     <TouchableOpacity onPress={() => this.languageChangeFunction(this.state.languages[4].id)}>
                         <View style={{ backgroundColor: BaseColor.Santhali, width: widthToDp("30%"), height: heightToDp("6%"), borderRadius: 100, marginLeft: widthToDp("2%"), flexDirection: 'row' }}>
                             <Text style={{ color: '#fff', marginTop: heightToDp("1.7%"), marginLeft: widthToDp("3.4%"), fontWeight: 'bold', fontSize: widthToDp("4.3%") }}>{this.state.languages[4].value}</Text>
-                            
+
                         </View>
                     </TouchableOpacity>
                 </View>
                 <View style={{ borderBottomColor: BaseColor.Stroke, borderBottomWidth: 1, marginTop: heightToDp('1.5%'), width: widthToDp("100%") }}></View>
-                <Text style={{ marginLeft: widthToDp("3%"), marginTop: heightToDp("2%"), fontSize: widthToDp("7%"), fontFamily: 'Oswald-Medium' }}>LAND TYPE</Text>
-                
+                <Text style={{ marginLeft: widthToDp("3%"), marginTop: heightToDp("2%"), fontSize: widthToDp("7%"), fontFamily: 'Oswald-Medium' }}>{this.state.landTypeLabel}</Text>
+
                 <View>
-                   
+
                     <FlatList
                         data={data}
                         style={{ marginBottom: heightToDp("74%") }}
@@ -213,17 +280,17 @@ export default class LandTypeScreen extends Component {
 
                             <Card style={{ width: widthToDp("94%"), marginLeft: widthToDp("3%"), height: heightToDp("30%"), marginBottom: heightToDp("1%"), borderRadius: 20, backgroundColor: BaseColor.Red }}>
                                 <View style={{ flexDirection: 'row' }}>
-                                    <View style={{ width: widthToDp("45%"),height:heightToDp("6%") }}>
+                                    <View style={{ width: widthToDp("45%"), height: heightToDp("6%") }}>
                                         <Text style={{ color: 'white', marginLeft: widthToDp("6%"), marginTop: heightToDp("1%"), fontSize: widthToDp("5%"), fontFamily: 'Oswald-Medium' }}>{item.name}</Text>
                                     </View>
                                     <TouchableOpacity onPress={() => this.speak(item.name)}>
-                                    <Icon
-                                        name="microphone"
-                                        size={23}
-                                        style={{ color: 'white', marginTop: heightToDp("2%"), marginLeft: widthToDp("36%") }}
-                                    />
+                                        <Icon
+                                            name="microphone"
+                                            size={23}
+                                            style={{ color: 'white', marginTop: heightToDp("2%"), marginLeft: widthToDp("36%") }}
+                                        />
                                     </TouchableOpacity>
-                                    
+
                                 </View>
                                 <TouchableOpacity onPress={() => this.selectLandType(item.name)}>
                                     <Image

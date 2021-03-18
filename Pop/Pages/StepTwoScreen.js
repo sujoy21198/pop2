@@ -41,7 +41,15 @@ export default class StepOneScreen extends Component {
             materialQuantity: '',
             languages: [],
             textLanguageChange: '',
-            cropNameLanguageChangeArray: []
+            cropNameLanguageChangeArray: [],
+            descriptionLabel:'',
+            backButtonText:'',
+            saveButtonText:'',
+            nextButtonText:'',
+            selectedItemLabel:'',
+            material:'',
+            quantityLabel:'',
+            amountLabel:''
         }
         this.state.languages = Languages
         this.state._id = this.props.route.params._id
@@ -61,8 +69,111 @@ export default class StepOneScreen extends Component {
         //this.getStepData()
         this.getStepDataFromLocal()
         this.setLanguageOnMount()
+        this.loadlabelsFromStorage()
         //this.setStepDataIntoPatch()
     }
+
+
+    loadlabelsFromStorage = async () => {
+        try {
+            let username = await AsyncStorage.getItem('username')
+            let user = await AsyncStorage.getItem('offlineData');
+            let parsed = JSON.parse(user);
+            var specificObject = parsed.find((i) => i.username === username)
+            var descriptionLabel = specificObject.labels.find((i) => i.type === 68)
+            var backButtonText = specificObject.labels.find((i) => i.type === 64)
+            var saveButtonText = specificObject.labels.find((i) => i.type === 63)
+            var nextButtonText = specificObject.labels.find((i) => i.type === 62)
+            var selectedItemLabel = specificObject.labels.find((i) => i.type === 76)
+            var material = specificObject.labels.find((i) => i.type === 77)
+            var quantityLabel = specificObject.labels.find((i) => i.type === 79)
+            var amountLabel = specificObject.labels.find((i) => i.type === 69)
+            // var message = specificObject.labels.find((i) => i.type === 26)
+            // var generalSettings = specificObject.labels.find((i) => i.type === 27)
+            // var pension = specificObject.labels.find((i) => i.type === 51)
+            // var others = specificObject.labels.find((i) => i.type === 52)
+            if (this.state.textLanguageChange === '0') {
+                this.setState({descriptionLabel : descriptionLabel.nameEnglish})
+                this.setState({backButtonText : backButtonText.nameEnglish})
+                this.setState({saveButtonText : saveButtonText.nameEnglish})
+                this.setState({nextButtonText : nextButtonText.nameEnglish})
+                this.setState({selectedItemLabel : selectedItemLabel.nameEnglish})
+                this.setState({material : material.nameEnglish})
+                this.setState({quantityLabel : quantityLabel.nameEnglish})
+                this.setState({amountLabel : amountLabel.nameEnglish})
+                // this.state.data[4].name = message.nameEnglish
+                // this.state.data[5].name = generalSettings.nameEnglish
+                // this.state.data[6].name = pension.nameEnglish
+                // this.state.data[7].name = others.nameEnglish
+                // this.setState({ moneyManagerLabel: moneyManagerLabel.nameEnglish })
+                // this.setState({ expenseLabel: expenseLabel.nameEnglish })
+                // this.setState({ incomeLabel: incomeLabel.nameEnglish })
+                // this.setState({ allTransactionLabel: allTransactionLabel.nameEnglish })
+            } else if (this.state.textLanguageChange === '1') {
+                this.setState({descriptionLabel : descriptionLabel.nameHindi})
+                this.setState({backButtonText : backButtonText.nameHindi})
+                this.setState({saveButtonText : saveButtonText.nameHindi})
+                this.setState({nextButtonText : nextButtonText.nameHindi})
+                this.setState({selectedItemLabel : selectedItemLabel.nameHindi})
+                this.setState({material : material.nameHindi})
+                this.setState({quantityLabel : quantityLabel.nameHindi})
+                this.setState({amountLabel : amountLabel.nameHindi})
+                // this.state.data[4].name = message.nameHindi
+                // this.state.data[5].name = generalSettings.nameHindi
+                // this.state.data[6].name = pension.nameHindi
+                // this.state.data[7].name = others.nameHindi
+            } else if (this.state.textLanguageChange === '2') {
+                this.setState({descriptionLabel : descriptionLabel.nameHo})
+                this.setState({backButtonText : backButtonText.nameHo})
+                this.setState({saveButtonText : saveButtonText.nameHo})
+                this.setState({nextButtonText : nextButtonText.nameHo})
+                this.setState({selectedItemLabel : selectedItemLabel.nameHo})
+                this.setState({material : material.nameHo})
+                this.setState({quantityLabel : quantityLabel.nameHo})
+                this.setState({amountLabel : amountLabel.nameHo})
+                // this.state.data[4].name = message.nameHindi
+                // this.state.data[4].name = message.nameHo
+                // this.state.data[5].name = generalSettings.nameHo
+                // this.state.data[6].name = pension.nameHo
+                // this.state.data[7].name = others.nameHo
+            } else if (this.state.textLanguageChange === '3') {
+                this.setState({descriptionLabel : descriptionLabel.nameOdia})
+                this.setState({backButtonText : backButtonText.nameOdia})
+                this.setState({saveButtonText : saveButtonText.nameOdia})
+                this.setState({nextButtonText : nextButtonText.nameOdia})
+                this.setState({selectedItemLabel : selectedItemLabel.nameOdia})
+                this.setState({material : material.nameOdia})
+                this.setState({quantityLabel : quantityLabel.nameOdia})
+                this.setState({amountLabel : amountLabel.nameOdia})
+                // this.state.data[4].name = message.nameOdia
+                // this.state.data[5].name = generalSettings.nameOdia
+                // this.state.data[6].name = pension.nameOdia
+                // this.state.data[7].name = others.nameOdia
+            } else if (this.state.textLanguageChange === '4') {
+                this.setState({descriptionLabel : descriptionLabel.nameSanthali})
+                this.setState({backButtonText : backButtonText.nameSanthali})
+                this.setState({saveButtonText : saveButtonText.nameSanthali})
+                this.setState({nextButtonText : nextButtonText.nameSanthali})
+                this.setState({selectedItemLabel : selectedItemLabel.nameSanthali})
+                this.setState({material : material.nameSanthali})
+                this.setState({quantityLabel : quantityLabel.nameSanthali})
+                this.setState({amountLabel : amountLabel.nameSanthali})
+                // this.state.data[4].name = message.nameSanthali
+                // this.state.data[5].name = generalSettings.nameSanthali
+                // this.state.data[6].name = pension.nameSanthali
+                // this.state.data[7].name = others.nameSanthali
+            }
+            console.log(this.state.highLand)
+            console.log(this.state.mediumLand)
+            console.log(this.state.lowLand)
+        } catch (error) {
+            alert(error)
+        }
+        this.setState({ crops: specificObject.crops })
+        this.showData()
+    }
+
+
 
     setStepDataIntoPatch = async () => {
         try {
@@ -473,7 +584,7 @@ export default class StepOneScreen extends Component {
 
 
                                 <View style={{ backgroundColor: BaseColor.Red, width: widthToDp("90%"), height: heightToDp("50%"), alignSelf: 'center', marginTop: heightToDp("2%"), borderRadius: 10 }}>
-                                    <Text style={{ color: 'white', marginLeft: widthToDp("4%"), marginTop: heightToDp('1.5%'), fontSize: widthToDp("5%"), fontFamily: 'Oswald-Medium' }}>DESCRIPTION</Text>
+                                    <Text style={{ color: 'white', marginLeft: widthToDp("4%"), marginTop: heightToDp('1.5%'), fontSize: widthToDp("5%"), fontFamily: 'Oswald-Medium' }}>{this.state.descriptionLabel}</Text>
                                     <View style={{ backgroundColor: 'white', width: widthToDp("90%"), height: heightToDp("43%"), borderBottomLeftRadius: 10, borderBottomRightRadius: 10, marginTop: heightToDp("2%") }}>
                                         {
                                             this.state.textLanguageChange === '0' ? <Text style={{ marginLeft: widthToDp("2%"), marginTop: heightToDp("1%"), fontFamily: 'Oswald-Light' }}>{i.english}</Text> : ((this.state.textLanguageChange === '1') ? <Text style={{ marginLeft: widthToDp("2%"), marginTop: heightToDp("1%"), fontFamily: 'Oswald-Light' }}>{i.hindi}</Text> : ((this.state.textLanguageChange === '2') ? <Text style={{ marginLeft: widthToDp("2%"), marginTop: heightToDp("1%"), fontFamily: 'Oswald-Light' }}>{i.ho}</Text> : ((this.state.textLanguageChange === '3') ? <Text style={{ marginLeft: widthToDp("2%"), marginTop: heightToDp("1%"), fontFamily: 'Oswald-Light' }}>{i.odia}</Text> : ((this.state.textLanguageChange === '4') ? <Text style={{ marginLeft: widthToDp("2%"), marginTop: heightToDp("1%"), fontFamily: 'Oswald-Light' }}>{i.santhali}</Text> : null))))
@@ -484,7 +595,7 @@ export default class StepOneScreen extends Component {
 
 
                                 <View style={{ backgroundColor: BaseColor.Red, width: widthToDp("90%"), height: heightToDp("30%"), alignSelf: 'center', marginTop: heightToDp("2%"), borderRadius: 10 }}>
-                                    <Text style={{ color: 'white', marginLeft: widthToDp("4%"), marginTop: heightToDp('1.5%'), fontSize: widthToDp("5%"), fontFamily: 'Oswald-Medium' }}>SELECTED ITEM</Text>
+                                    <Text style={{ color: 'white', marginLeft: widthToDp("4%"), marginTop: heightToDp('1.5%'), fontSize: widthToDp("5%"), fontFamily: 'Oswald-Medium' }}>{this.state.selectedItemLabel}</Text>
                                     <View style={{ backgroundColor: 'white', width: widthToDp("90%"), height: heightToDp("23.5%"), borderBottomLeftRadius: 10, borderBottomRightRadius: 10, marginTop: heightToDp("2%") }}>
                                         <View style={{ flexDirection: 'row' }}>
                                             <View style={{ marginTop: heightToDp("1%"), marginLeft: widthToDp("2%") }}>
@@ -510,12 +621,12 @@ export default class StepOneScreen extends Component {
                                 </View>
 
                                 <View style={{ backgroundColor: BaseColor.Red, width: widthToDp("90%"), height: heightToDp("20%"), alignSelf: 'center', marginTop: heightToDp("2%"), borderRadius: 10 }}>
-                                    <Text style={{ color: 'white', marginLeft: widthToDp("4%"), marginTop: heightToDp('1.5%'), fontSize: widthToDp("5%"), fontFamily: 'Oswald-Medium' }}>MATERIAL NEEDED</Text>
+                                    <Text style={{ color: 'white', marginLeft: widthToDp("4%"), marginTop: heightToDp('1.5%'), fontSize: widthToDp("5%"), fontFamily: 'Oswald-Medium' }}>{this.state.material}</Text>
                                     <View style={{ backgroundColor: 'white', width: widthToDp("90%"), height: heightToDp("17%"), borderBottomLeftRadius: 10, borderBottomRightRadius: 10, marginTop: heightToDp("2%") }}>
                                         <View style={{ flexDirection: 'row', marginLeft: widthToDp("3%"), marginTop: heightToDp("2%") }}>
-                                            <Text style={{ color: BaseColor.Red, fontFamily: 'Oswald-Medium' }}>Description</Text>
-                                            <Text style={{ color: BaseColor.Red, fontFamily: 'Oswald-Medium', marginLeft: widthToDp("18%") }}>Quantity</Text>
-                                            <Text style={{ color: BaseColor.Red, fontFamily: 'Oswald-Medium', marginLeft: widthToDp("17%") }}>Amount</Text>
+                                            <Text style={{ color: BaseColor.Red, fontFamily: 'Oswald-Medium' }}>{this.state.descriptionLabel}</Text>
+                                            <Text style={{ color: BaseColor.Red, fontFamily: 'Oswald-Medium', marginLeft: widthToDp("18%") }}>{this.state.quantityLabel}</Text>
+                                            <Text style={{ color: BaseColor.Red, fontFamily: 'Oswald-Medium', marginLeft: widthToDp("17%") }}>{this.state.amountLabel}</Text>
                                         </View>
                                         <View style={{ flexDirection: 'row', marginLeft: widthToDp("3%"), marginTop: heightToDp("2%") }}>
                                             <Text style={{ fontFamily: 'Oswald-Medium', width: widthToDp("30%") }}>{this.state.materialName}</Text>
@@ -540,17 +651,17 @@ export default class StepOneScreen extends Component {
                 <View style={{ flexDirection: 'row', height: heightToDp("10%"), alignSelf: 'center' }}>
                     <TouchableOpacity onPress={() => this.props.navigation.goBack()}>
                         <View style={{ backgroundColor: "#fff", height: heightToDp("6%"), width: widthToDp("30%"), borderRadius: 100, alignSelf: 'center', marginTop: heightToDp("2%") }}>
-                            <Text style={{ fontSize: widthToDp("4%"), color: "#000", marginTop: heightToDp("1.3%"), alignSelf: 'center', fontFamily: 'Oswald-Medium' }}>BACK</Text>
+                            <Text style={{ fontSize: widthToDp("4%"), color: "#000", marginTop: heightToDp("1.3%"), alignSelf: 'center', fontFamily: 'Oswald-Medium' }}>{this.state.backButtonText}</Text>
                         </View>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={() => { this.saveButton() }}>
                         <View style={{ backgroundColor: "#fff", height: heightToDp("6%"), width: widthToDp("30%"), borderRadius: 100, marginLeft: widthToDp("1%"), marginTop: heightToDp("2%") }}>
-                            <Text style={{ fontSize: widthToDp("4%"), color: "#000", marginTop: heightToDp("1.3%"), alignSelf: 'center', fontFamily: 'Oswald-Medium' }}>SAVE</Text>
+                            <Text style={{ fontSize: widthToDp("4%"), color: "#000", marginTop: heightToDp("1.3%"), alignSelf: 'center', fontFamily: 'Oswald-Medium' }}>{this.state.saveButtonText}</Text>
                         </View>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={() => { this.setStepDataIntoPatch() }}>
                         <View style={{ backgroundColor: "#fff", height: heightToDp("6%"), width: widthToDp("30%"), borderRadius: 100, marginLeft: widthToDp("1%"), marginTop: heightToDp("2%") }}>
-                            <Text style={{ fontSize: widthToDp("4%"), color: "#000", marginTop: heightToDp("1.3%"), alignSelf: 'center', fontFamily: 'Oswald-Medium' }}>NEXT</Text>
+                            <Text style={{ fontSize: widthToDp("4%"), color: "#000", marginTop: heightToDp("1.3%"), alignSelf: 'center', fontFamily: 'Oswald-Medium' }}>{this.state.nextButtonText}</Text>
                         </View>
                     </TouchableOpacity>
                 </View>

@@ -23,20 +23,102 @@ export default class PatchScreen extends Component {
             isDialogVisible: false,
             cropName: '',
             imageFile: '',
-            landType: ''
+            landType: '',
+            highLand:'',
+            lowLand:'',
+            mediumLand:'',
+            patchButtonText:''
         }
         this.state.languages = Languages
         this.state._id = this.props.route.params._id
         this.state.cropName = this.props.route.params.cropName
         this.state.imageFile = this.props.route.params.imageFile
         this.state.landType = this.props.route.params.landType
+        //alert(this.state.landType)
     }
     componentDidMount() {
         //this.setPatch()
 
         this.showData()
         this.setLanguageOnMount()
+        this.loadlabelsFromStorage()
         //this.test()
+    }
+
+
+    loadlabelsFromStorage = async () => {
+        try {
+            let username = await AsyncStorage.getItem('username')
+            let user = await AsyncStorage.getItem('offlineData');
+            let parsed = JSON.parse(user);
+            var specificObject = parsed.find((i) => i.username === username)
+            var highLand = specificObject.labels.find((i) => i.type === 53)
+            var lowLand = specificObject.labels.find((i) => i.type === 55)
+            var mediumLand = specificObject.labels.find((i) => i.type === 54)
+            var patchButtonText = specificObject.labels.find((i) => i.type === 58)
+            // var message = specificObject.labels.find((i) => i.type === 26)
+            // var generalSettings = specificObject.labels.find((i) => i.type === 27)
+            // var pension = specificObject.labels.find((i) => i.type === 51)
+            // var others = specificObject.labels.find((i) => i.type === 52)
+            if (this.state.textLanguageChange === '0') {
+                this.setState({highLand : highLand.nameEnglish})
+                this.setState({mediumLand : mediumLand.nameEnglish})
+                this.setState({lowLand : lowLand.nameEnglish})
+                this.setState({patchButtonText : patchButtonText.nameEnglish})
+                // this.state.data[4].name = message.nameEnglish
+                // this.state.data[5].name = generalSettings.nameEnglish
+                // this.state.data[6].name = pension.nameEnglish
+                // this.state.data[7].name = others.nameEnglish
+                // this.setState({ moneyManagerLabel: moneyManagerLabel.nameEnglish })
+                // this.setState({ expenseLabel: expenseLabel.nameEnglish })
+                // this.setState({ incomeLabel: incomeLabel.nameEnglish })
+                // this.setState({ allTransactionLabel: allTransactionLabel.nameEnglish })
+            } else if (this.state.textLanguageChange === '1') {
+                this.setState({highLand : highLand.nameHindi})
+                this.setState({mediumLand : mediumLand.nameHindi})
+                this.setState({lowLand : lowLand.nameHindi})
+                this.setState({patchButtonText : patchButtonText.nameHindi})
+                // this.state.data[4].name = message.nameHindi
+                // this.state.data[5].name = generalSettings.nameHindi
+                // this.state.data[6].name = pension.nameHindi
+                // this.state.data[7].name = others.nameHindi
+            } else if (this.state.textLanguageChange === '2') {
+                this.setState({highLand : highLand.nameHo})
+                this.setState({mediumLand : mediumLand.nameHo})
+                this.setState({lowLand : lowLand.nameHo})
+                this.setState({patchButtonText : patchButtonText.nameHo})
+                // this.state.data[4].name = message.nameHindi
+                // this.state.data[4].name = message.nameHo
+                // this.state.data[5].name = generalSettings.nameHo
+                // this.state.data[6].name = pension.nameHo
+                // this.state.data[7].name = others.nameHo
+            } else if (this.state.textLanguageChange === '3') {
+                this.setState({highLand : highLand.nameOdia})
+                this.setState({mediumLand : mediumLand.nameOdia})
+                this.setState({lowLand : lowLand.nameOdia})
+                this.setState({patchButtonText : patchButtonText.nameOdia})
+                // this.state.data[4].name = message.nameOdia
+                // this.state.data[5].name = generalSettings.nameOdia
+                // this.state.data[6].name = pension.nameOdia
+                // this.state.data[7].name = others.nameOdia
+            } else if (this.state.textLanguageChange === '4') {
+                this.setState({highLand : highLand.nameSanthali})
+                this.setState({mediumLand : mediumLand.nameSanthali})
+                this.setState({lowLand : lowLand.nameSanthali})
+                this.setState({patchButtonText : patchButtonText.nameSanthali})
+                // this.state.data[4].name = message.nameSanthali
+                // this.state.data[5].name = generalSettings.nameSanthali
+                // this.state.data[6].name = pension.nameSanthali
+                // this.state.data[7].name = others.nameSanthali
+            }
+            console.log(this.state.highLand)
+            console.log(this.state.mediumLand)
+            console.log(this.state.lowLand)
+        } catch (error) {
+            alert(error)
+        }
+        this.setState({ crops: specificObject.crops })
+        this.showData()
     }
 
     setLanguageOnMount = async() => {
@@ -103,7 +185,7 @@ export default class PatchScreen extends Component {
             let user = await AsyncStorage.getItem('user')
 
 
-            if (this.state.landType === 'HIGH LAND') {
+            if (this.state.landType === this.state.highLand) {
                 const patchObject = { 'name': data }
                 let parsed = JSON.parse(user)
                 var sepcific = parsed.find((i) => i.username === username)
@@ -111,7 +193,7 @@ export default class PatchScreen extends Component {
                 await AsyncStorage.setItem('user', JSON.stringify(parsed))
                 this.setState({ data: sepcific.highLand })
                 this.setState({ isDialogVisible: false })
-            } else if (this.state.landType === 'LOW LAND') {
+            } else if (this.state.landType === this.state.lowLand) {
                 const patchObject = { 'name': data }
                 let parsed = JSON.parse(user)
                 var sepcific = parsed.find((i) => i.username === username)
@@ -119,7 +201,7 @@ export default class PatchScreen extends Component {
                 await AsyncStorage.setItem('user', JSON.stringify(parsed))
                 this.setState({ data: sepcific.lowLand })
                 this.setState({ isDialogVisible: false })
-            } else if (this.state.landType === 'MEDIUM LAND') {
+            } else if (this.state.landType === this.state.mediumLand) {
                 const patchObject = { 'name': data }
                 let parsed = JSON.parse(user)
                 var sepcific = parsed.find((i) => i.username === username)
@@ -149,11 +231,11 @@ export default class PatchScreen extends Component {
             let user = await AsyncStorage.getItem('user')
             let parsed = JSON.parse(user)
             var sepcific = parsed.find((i) => i.username === username)
-            if (this.state.landType === 'HIGH LAND') {
+            if (this.state.landType === this.state.highLand) {
                 this.setState({ data: sepcific.highLand })
-            } else if (this.state.landType === 'LOW LAND') {
+            } else if (this.state.landType === this.state.lowLand) {
                 this.setState({ data: sepcific.lowLand })
-            } else if (this.state.landType === 'MEDIUM LAND') {
+            } else if (this.state.landType === this.state.mediumLand) {
                 this.setState({ data: sepcific.mediumLand })
             }
 
@@ -345,7 +427,7 @@ export default class PatchScreen extends Component {
                 <View style={{ height: heightToDp("10%") }}>
                     <TouchableOpacity onPress={() => this.showCustomAlert()}>
                         <View style={{ backgroundColor: "#fff", height: heightToDp("6%"), width: widthToDp("30%"), borderRadius: 100, alignSelf: 'center', marginTop: heightToDp("2%") }}>
-                            <Text style={{ fontSize: widthToDp("4%"), color: "#000", marginTop: heightToDp("1.3%"), alignSelf: 'center', fontFamily: 'Oswald-Medium' }}>ADD PATCH</Text>
+                            <Text style={{ fontSize: widthToDp("4%"), color: "#000", marginTop: heightToDp("1.3%"), alignSelf: 'center', fontFamily: 'Oswald-Medium' }}>{this.state.patchButtonText}</Text>
                         </View>
                     </TouchableOpacity>
                 </View>
