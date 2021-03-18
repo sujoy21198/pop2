@@ -25,6 +25,7 @@ export default class BreedScreen extends Component {
             name: '',
             languages: [],
             textLanguageChange : '',
+            breedLabel:''
         }
         this.state._id = this.props.route.params._id
         this.state.name = this.props.route.params.name
@@ -126,14 +127,19 @@ export default class BreedScreen extends Component {
         let defaultLanguage = await AsyncStorage.getItem('language')
         if (defaultLanguage === 'en') {
             this.setState({ textLanguageChange: '0' })
+            this.loadlabelsFromStorage()
         } else if (defaultLanguage === 'hi') {
             this.setState({ textLanguageChange: '1' })
+            this.loadlabelsFromStorage()
         } else if (defaultLanguage === 'ho') {
             this.setState({ textLanguageChange: '2' })
+            this.loadlabelsFromStorage()
         } else if (defaultLanguage === 'od') {
             this.setState({ textLanguageChange: '3' })
+            this.loadlabelsFromStorage()
         } else if (defaultLanguage === 'san') {
             this.setState({ textLanguageChange: '4' })
+            this.loadlabelsFromStorage()
         }
     }
 
@@ -142,19 +148,93 @@ export default class BreedScreen extends Component {
         if (data === 'en') {
             AsyncStorage.setItem('language', 'en')
             this.setState({ textLanguageChange: '0' })
+            this.props.navigation.reset({
+                index: 0,
+                routes: [{ name: "DashBoardScreen" }]
+            });
         } else if (data === 'hi') {
             this.setState({ textLanguageChange: '1' })
             AsyncStorage.setItem('language', 'hi')
+            this.props.navigation.reset({
+                index: 0,
+                routes: [{ name: "DashBoardScreen" }]
+            });
         } else if (data === 'ho') {
             this.setState({ textLanguageChange: '2' })
             AsyncStorage.setItem('language', 'ho')
+            this.props.navigation.reset({
+                index: 0,
+                routes: [{ name: "DashBoardScreen" }]
+            });
         } else if (data === 'od') {
             this.setState({ textLanguageChange: '3' })
             AsyncStorage.setItem('language', 'od')
+            this.props.navigation.reset({
+                index: 0,
+                routes: [{ name: "DashBoardScreen" }]
+            });
         } else if (data === 'san') {
             AsyncStorage.setItem('language', 'san')
             this.setState({ textLanguageChange: '4' })
+            this.props.navigation.reset({
+                index: 0,
+                routes: [{ name: "DashBoardScreen" }]
+            });
         }
+    }
+
+    loadlabelsFromStorage = async () => {
+        try {
+            let username = await AsyncStorage.getItem('username')
+            let user = await AsyncStorage.getItem('offlineData');
+            let parsed = JSON.parse(user);
+            var specificObject = parsed.find((i) => i.username === username)
+            var breedLabel = specificObject.labels.find((i) => i.type === 41)
+            if (this.state.textLanguageChange === '0') {
+              
+                this.setState({breedLabel : breedLabel.nameEnglish})
+                // this.state.data[4].name = message.nameEnglish
+                // this.state.data[5].name = generalSettings.nameEnglish
+                // this.state.data[6].name = pension.nameEnglish
+                // this.state.data[7].name = others.nameEnglish
+                // this.setState({ moneyManagerLabel: moneyManagerLabel.nameEnglish })
+                // this.setState({ expenseLabel: expenseLabel.nameEnglish })
+                // this.setState({ incomeLabel: incomeLabel.nameEnglish })
+                // this.setState({ allTransactionLabel: allTransactionLabel.nameEnglish })
+            } else if (this.state.textLanguageChange === '1') {
+             
+                this.setState({breedLabel : breedLabel.nameHindi})
+                // this.state.data[4].name = message.nameHindi
+                // this.state.data[5].name = generalSettings.nameHindi
+                // this.state.data[6].name = pension.nameHindi
+                // this.state.data[7].name = others.nameHindi
+            } else if (this.state.textLanguageChange === '2') {
+           
+                this.setState({breedLabel : breedLabel.nameHo})
+                // this.state.data[4].name = message.nameHo
+                // this.state.data[5].name = generalSettings.nameHo
+                // this.state.data[6].name = pension.nameHo
+                // this.state.data[7].name = others.nameHo
+            } else if (this.state.textLanguageChange === '3') {
+                
+                this.setState({breedLabel : breedLabel.nameOdia})
+                // this.state.data[4].name = message.nameOdia
+                // this.state.data[5].name = generalSettings.nameOdia
+                // this.state.data[6].name = pension.nameOdia
+                // this.state.data[7].name = others.nameOdia
+            } else if (this.state.textLanguageChange === '4') {
+               
+                this.setState({breedLabel : breedLabel.nameSanthali})
+                // this.state.data[4].name = message.nameSanthali
+                // this.state.data[5].name = generalSettings.nameSanthali
+                // this.state.data[6].name = pension.nameSanthali
+                // this.state.data[7].name = others.nameSanthali
+            }
+            
+        } catch (error) {
+            alert(error)
+        }
+        this.setState({ crops: specificObject.crops })
     }
 
     render() {
@@ -236,7 +316,7 @@ export default class BreedScreen extends Component {
                     </TouchableOpacity>
                 </View>
                 <View style={{ borderBottomColor: BaseColor.Stroke, borderBottomWidth: 1, marginTop: heightToDp('1.5%'), width: widthToDp("100%") }}></View>
-                <Text style={{ marginLeft: widthToDp("3%"), marginTop: heightToDp("2%"), fontSize: widthToDp("7%"), fontFamily: 'Oswald-Medium' }}>{(this.state.name)} - SELECT BREED TYPE</Text>
+                <Text style={{ marginLeft: widthToDp("3%"), marginTop: heightToDp("2%"), fontSize: widthToDp("7%"), fontFamily: 'Oswald-Medium' }}>{(this.state.breedLabel)}</Text>
                 {
                     this.state.isLoading ? <View style={{ justifyContent: 'center', marginTop: heightToDp("20%") }}><CustomIndicator IsLoading={this.state.isLoading} /></View> : null
                 }

@@ -66,10 +66,11 @@ export default class PultryTableScreen extends Component {
 
     calculation = (data) => {
         this.state.numberhens = data
-        var eggQuantity = this.state.eggQuantity * 30
-        var birdQuantity = this.state.birdQuantity * 8
-        var totalPriceAdultBrids = this.state.totalPriceAdultBrids * 2400
-        var totalPriceEggs = this.state.totalPriceEggs * 150
+        
+        var eggQuantity = 30 * data
+        var birdQuantity = 8 * data
+        var totalPriceAdultBrids = birdQuantity * 300
+        var totalPriceEggs = this.state.eggQuantity * 5
         var total = totalPriceAdultBrids + totalPriceEggs
 
         this.setState({ eggQuantity: eggQuantity })
