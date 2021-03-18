@@ -82,7 +82,7 @@ export default class StepOneScreen extends Component {
         }
 
         if (this.state.materialPrice === '') {
-            alert("please enter a value")
+            alert("Please enter the amount in the material section")
         } else {
             this.props.navigation.navigate({
                 name: 'StepThreeScreen',
@@ -235,9 +235,9 @@ export default class StepOneScreen extends Component {
 
     saveButton = () => {
         if (this.state.materialPrice === '') {
-            alert("please enter the value")
+            alert("Please enter the amount in the material section")
         } else {
-            alert("AMOUNT SAVED")
+            alert("Saved")
         }
 
     }

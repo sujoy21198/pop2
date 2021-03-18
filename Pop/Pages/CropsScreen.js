@@ -25,7 +25,8 @@ export default class CropsScreen extends Component {
             isLoading: false,
             isFetching: false,
             textLanguageChange : '',
-            languages: []
+            languages: [],
+            cropLabel:''
         }
         this.state.languages = Languages
     }
@@ -33,6 +34,76 @@ export default class CropsScreen extends Component {
         //this.loadCrops()
         this.loadCropsFromStorage()
         this.setLanguageOnMount()
+    }
+
+
+    loadlabelsFromStorage = async () => {
+        try {
+            let username = await AsyncStorage.getItem('username')
+            let user = await AsyncStorage.getItem('offlineData');
+            let parsed = JSON.parse(user);
+            var specificObject = parsed.find((i) => i.username === username)
+            var cropLabel = specificObject.labels.find((i) => i.type === 28)
+            if (this.state.textLanguageChange === '0') {
+                //this.state.allTransactionsLabel = allTransactions.nameEnglish
+                this.setState({cropLabel: cropLabel.nameEnglish})
+                // this.state.data[1].name = livestock.nameEnglish
+                // this.state.data[2].name = smallBusiness.nameEnglish
+                // this.state.data[3].name = health.nameEnglish
+                // this.state.data[4].name = education.nameEnglish
+                // this.state.data[5].name = loanSavings.nameEnglish
+                // this.state.data[6].name = pension.nameEnglish
+                // this.state.data[7].name = others.nameEnglish
+                // this.setState({ moneyManagerLabel: moneyManagerLabel.nameEnglish })
+                // this.setState({ expenseLabel: expenseLabel.nameEnglish })
+                // this.setState({ incomeLabel: incomeLabel.nameEnglish })
+                // this.setState({ allTransactionLabel: allTransactionLabel.nameEnglish })
+            } else if (this.state.textLanguageChange === '1') {
+                //this.state.allTransactionsLabel = allTransactions.nameHindi
+                this.setState({cropLabel: cropLabel.nameHindi})
+                // this.state.data[1].name = livestock.nameHindi
+                // this.state.data[2].name = smallBusiness.nameHindi
+                // this.state.data[3].name = health.nameHindi
+                // this.state.data[4].name = education.nameHindi
+                // this.state.data[5].name = loanSavings.nameHindi
+                // this.state.data[6].name = pension.nameHindi
+                // this.state.data[7].name = others.nameHindi
+            } else if (this.state.textLanguageChange === '2') {
+                //this.state.data[0].name = allTransactions.nameHo
+                this.setState({cropLabel: cropLabel.nameHo})
+                // this.state.data[1].name = livestock.nameHo
+                // this.state.data[2].name = smallBusiness.nameHo
+                // this.state.data[3].name = health.nameHo
+                // this.state.data[4].name = education.nameHo
+                // this.state.data[5].name = loanSavings.nameHo
+                // this.state.data[6].name = pension.nameHo
+                // this.state.data[7].name = others.nameHo
+            } else if (this.state.textLanguageChange === '3') {
+                //this.state.data[0].name = allTransactions.nameOdia
+                this.setState({cropLabel: cropLabel.nameOdia})
+                // this.state.data[1].name = livestock.nameOdia
+                // this.state.data[2].name = smallBusiness.nameOdia
+                // this.state.data[3].name = health.nameOdia
+                // this.state.data[4].name = education.nameOdia
+                // this.state.data[5].name = loanSavings.nameOdia
+                // this.state.data[6].name = pension.nameOdia
+                // this.state.data[7].name = others.nameOdia
+            } else if (this.state.textLanguageChange === '4') {
+                //this.state.data[0].name = allTransactions.nameSanthali
+                this.setState({cropLabel: cropLabel.nameSanthali})
+                // this.state.data[1].name = livestock.nameSanthali
+                // this.state.data[2].name = smallBusiness.nameSanthali
+                // this.state.data[3].name = health.nameSanthali
+                // this.state.data[4].name = education.nameSanthali
+                // this.state.data[5].name = loanSavings.nameSanthali
+                // this.state.data[6].name = pension.nameSanthali
+                // this.state.data[7].name = others.nameSanthali
+            }
+            
+        } catch (error) {
+            alert(error)
+        }
+        this.setState({ crops: specificObject.crops })
     }
 
     loadCropsFromStorage = async() => {
@@ -109,14 +180,19 @@ export default class CropsScreen extends Component {
         let defaultLanguage = await AsyncStorage.getItem('language')
         if(defaultLanguage === 'en'){
             this.setState({textLanguageChange : '0'})
+            this.loadlabelsFromStorage()
         }else if(defaultLanguage === 'hi'){
             this.setState({textLanguageChange : '1'})
+            this.loadlabelsFromStorage()
         }else if(defaultLanguage === 'ho'){
             this.setState({textLanguageChange : '2'})
+            this.loadlabelsFromStorage()
         }else if(defaultLanguage === 'od'){
             this.setState({textLanguageChange : '3'})
+            this.loadlabelsFromStorage()
         }else if(defaultLanguage === 'san'){
             this.setState({textLanguageChange : '4'})
+            this.loadlabelsFromStorage()
         }
     }
 
@@ -125,12 +201,14 @@ export default class CropsScreen extends Component {
         if(data === 'en'){
             AsyncStorage.setItem('language','en')
             this.setState({textLanguageChange : '0'})
+            this.loadlabelsFromStorage()
             this.props.navigation.reset({
                 index: 0,
                 routes: [{ name: "DashBoardScreen" }]
             });
         }else if(data === 'hi'){
             this.setState({textLanguageChange : '1'})
+            this.loadlabelsFromStorage()
             AsyncStorage.setItem('language','hi')
             this.props.navigation.reset({
                 index: 0,
@@ -138,6 +216,7 @@ export default class CropsScreen extends Component {
             });
         }else if(data === 'ho'){
             this.setState({textLanguageChange : '2'})
+            this.loadlabelsFromStorage()
             AsyncStorage.setItem('language','ho')
             this.props.navigation.reset({
                 index: 0,
@@ -145,6 +224,7 @@ export default class CropsScreen extends Component {
             });
         }else if(data === 'od'){
             this.setState({textLanguageChange : '3'})
+            this.loadlabelsFromStorage()
             AsyncStorage.setItem('language','od')
             this.props.navigation.reset({
                 index: 0,
@@ -153,6 +233,7 @@ export default class CropsScreen extends Component {
         }else if(data === 'san'){
             AsyncStorage.setItem('language','san')
             this.setState({textLanguageChange : '4'})
+            this.loadlabelsFromStorage()
             this.props.navigation.reset({
                 index: 0,
                 routes: [{ name: "DashBoardScreen" }]
@@ -219,7 +300,7 @@ export default class CropsScreen extends Component {
                     </TouchableOpacity>
                 </View>
                 <View style={{ borderBottomColor: BaseColor.Stroke, borderBottomWidth: 1, marginTop: heightToDp('1.5%'), width: widthToDp("100%") }}></View>
-                <Text style={{ marginLeft: widthToDp("3%"), marginTop: heightToDp("2%"), fontSize: widthToDp("7%"), fontFamily: 'Oswald-Medium' }}>{LanguageChange.crops}</Text>
+                <Text style={{ marginLeft: widthToDp("3%"), marginTop: heightToDp("2%"), fontSize: widthToDp("7%"), fontFamily: 'Oswald-Medium' }}>{this.state.cropLabel}</Text>
                 {
                     this.state.isLoading ? <View style={{ justifyContent: 'center', marginTop: heightToDp("20%"),backgroundColor: BaseColor.BackgroundColor }}><CustomIndicator IsLoading={this.state.isLoading} /></View> :
                         <View>

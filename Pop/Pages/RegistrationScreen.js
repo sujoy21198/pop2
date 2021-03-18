@@ -201,13 +201,14 @@ export default class RegistrationScreen extends Component {
       // this.props.navigation.navigate({
       //     name: 'DashBoardScreen'
       // })
-      this.props.navigation.reset({
-        index: 0,
-        routes: [{
-          name: "SigninScreen",
-          params: { selectedLanguage: this.state.selectedLanguage }
-        }]
-      });
+      
+      // this.props.navigation.reset({
+      //   index: 0,
+      //   routes: [{
+      //     name: "SigninScreen",
+      //     params: { selectedLanguage: this.state.selectedLanguage }
+      //   }]
+      // });
     }else if(this.state.value === 0 && this.state.phoneNumber != ''){
       this.setState({ isDialogVisible: true })
     }
