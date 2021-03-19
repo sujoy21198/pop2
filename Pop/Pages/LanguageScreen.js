@@ -13,34 +13,9 @@ import NetInfo from '@react-native-community/netinfo'
 import axios from 'axios'
 import DataAccess from '../Core/DataAccess'
 import RNFetchBlob from 'rn-fetch-blob'
-import { check, PERMISSIONS, RESULTS, request } from 'react-native-permissions'
+import { check, PERMISSIONS, RESULTS, request , checkMultiple, requestMultiple } from 'react-native-permissions'
 
 const Sound = require('react-native-sound')
-
-
-const requestCameraPermission = async () => {
-    try {
-        const granted = await PermissionsAndroid.request(
-            PermissionsAndroid.PERMISSIONS.CAMERA,
-            {
-                title: "Cool Photo App Camera Permission",
-                message:
-                    "Cool Photo App needs access to your camera " +
-                    "so you can take awesome pictures.",
-                buttonNeutral: "Ask Me Later",
-                buttonNegative: "Cancel",
-                buttonPositive: "OK"
-            }
-        );
-        if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-            console.log("You can use the camera");
-        } else {
-            console.log("Camera permission denied");
-        }
-    } catch (err) {
-        console.warn(err);
-    }
-};
 
 
 export default class LanguageScreen extends Component {
@@ -53,7 +28,6 @@ export default class LanguageScreen extends Component {
         }
 
         this.state.languages = Languages
-        requestCameraPermission()
         //console.log(this.state.languages)
     }
 
@@ -80,8 +54,9 @@ export default class LanguageScreen extends Component {
     componentDidMount() {
         this.checkSession()
         //this.requestStoragePermission()
-        this.permision()
-        this.testPermision()
+        
+        this.acceptPermissionDialogBox()
+        
     }
 
     testPermision = () => {
@@ -91,7 +66,8 @@ export default class LanguageScreen extends Component {
                     console.log('unavailable')
                     break;
                 case RESULTS.DENIED:
-                    console.log("denieddd")
+                    this.acceptPermissionDialogBox()
+                   console.log("deniiiiid")
                     break;
                 case RESULTS.GRANTED:
                     console.log("granted")
@@ -99,21 +75,23 @@ export default class LanguageScreen extends Component {
             }
         })
 
-        request(PERMISSIONS.ANDROID.READ_EXTERNAL_STORAGE).then((result) => {
+        // request(PERMISSIONS.ANDROID.READ_PHONE_STATE).then((result) => {
+        //     console.log(result)
+        // })
+
+
+        
+    }
+
+    acceptPermissionDialogBox = () => {
+        requestMultiple([PERMISSIONS.ANDROID.READ_EXTERNAL_STORAGE , PERMISSIONS.ANDROID.WRITE_EXTERNAL_STORAGE , PERMISSIONS.ANDROID.READ_PHONE_STATE]).then((result) => {
             console.log(result)
+        }).catch((error) => {
+            console.log(error)
         })
     }
 
-    permision = () => {
-        const granted = PermissionsAndroid.check(PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE)
-        if (granted) {
-            console.log("You can use the External storage")
-        }
-        else {
-            PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE)
-            console.log("External permission denied")
-        }
-    }
+   
 
 
 

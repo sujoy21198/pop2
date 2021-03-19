@@ -49,7 +49,19 @@ export default class StepOneScreen extends Component {
             selectedItemLabel:'',
             material:'',
             quantityLabel:'',
-            amountLabel:''
+            amountLabel:'',
+            englishDescription: '',
+            hindiDescription: '',
+            hoDescription: '',
+            santhaliDescription: '',
+            odiaDescription: '',
+            englishTitleDescription: '',
+            hindiTitleDescription: '',
+            hoTitleDescription: '',
+            santhaliTitleDescription: '',
+            odiaTitleDescription: '',
+            stepImage: '',
+            multipleMaterials: []
         }
         this.state.languages = Languages
         this.state._id = this.props.route.params._id
@@ -67,7 +79,7 @@ export default class StepOneScreen extends Component {
 
     componentDidMount() {
         //this.getStepData()
-        this.getStepDataFromLocal()
+        this.getOnlSteps()
         this.setLanguageOnMount()
         this.loadlabelsFromStorage()
     }
@@ -218,43 +230,75 @@ export default class StepOneScreen extends Component {
         }
     }
 
-    getStepDataFromLocal = async () => {
+    getOnlSteps = async () => {
         try {
-            var stepData = []
             var cropNameLanguageChangeArray = []
-            var decimalPrice, materialName, materialQuantity
+            let username = await AsyncStorage.getItem('username')
+            let user = await AsyncStorage.getItem('offlineData');
+            let parsed = JSON.parse(user);
+            var specific = parsed.find((i) => i.username === username)
+            var cropFilter = specific.cropSteps.filter((i) => i.cropId === this.state._id)
+            cropNameLanguageChangeArray = cropFilter[1].cropData
+            this.setState({ englishDescription: cropFilter[1].english })
+            this.setState({ hindiDescription: cropFilter[1].hindi })
+            this.setState({ hoDescription: cropFilter[1].ho })
+            this.setState({ odiaDescription: cropFilter[1].odia })
+            this.setState({ santhaliDescription: cropFilter[1].santhali })
+            this.setState({ englishTitleDescription: cropFilter[1].nameEnglish })
+            this.setState({ hindiTitleDescription: cropFilter[1].nameHindi })
+            this.setState({ hoTitleDescription: cropFilter[1].nameHo })
+            this.setState({ odiaTitleDescription: cropFilter[1].nameOdia })
+            this.setState({ santhaliTitleDescription: cropFilter[1].nameSanthali })
+            this.setState({ stepImage: cropFilter[1].imageFile })
+            this.setState({ cropNameLanguageChangeArray: cropNameLanguageChangeArray })
+            this.getStepDataFromLocal(cropFilter[1]._id)
+            // console.log(cropFilter[3].ho,"BICHI")
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+
+    getStepDataFromLocal = async (id) => {
+        try {
+            var multipleMaterials = []
             let username = await AsyncStorage.getItem('username')
             let user = await AsyncStorage.getItem('offlineData');
             let parsed = JSON.parse(user);
             var specific = parsed.find((i) => i.username === username)
             var cropFilter = specific.cropsMaterials.filter((i) => i.cropId === this.state._id)
-            stepData = cropFilter[4].stepData
-            decimalPrice = cropFilter[4].decimalPrice
-            //materialName =cropFilter[4].materialName
-            materialQuantity = cropFilter[4].qty
-            cropNameLanguageChangeArray = stepData[0].cropData
-            if (this.state.textLanguageChange === '0') {
-                this.setState({ materialName: cropFilter[4].materialNameEnglish })
+            var stepwiseMaterials = cropFilter.filter((i) => i.stepId === id)
+            console.log(stepwiseMaterials, "SUJOY SAHA")
+            multipleMaterials = stepwiseMaterials
+            this.setState({ multipleMaterials: stepwiseMaterials })
+            // // console.log("HI HELLO TATA", specific.cropSteps)
+            // stepData = cropFilter[0].stepData
+            // decimalPrice = cropFilter[0].decimalPrice
+            // //materialName = cropFilter[0].materialNameEnglish
+            // materialQuantity = cropFilter[0].qty
+            // if (this.state.textLanguageChange === '0') {
+            //     this.setState({ materialName: cropFilter[0].materialNameEnglish })
 
-            } else if (this.state.textLanguageChange === '1') {
-                this.setState({ materialName: cropFilter[4].materialNameHindi })
+            // } else if (this.state.textLanguageChange === '1') {
+            //     this.setState({ materialName: cropFilter[0].materialNameHindi })
 
-            } else if (this.state.textLanguageChange === '2') {
-                this.setState({ materialName: cropFilter[4].materialNameHo })
+            // } else if (this.state.textLanguageChange === '2') {
+            //     this.setState({ materialName: cropFilter[0].materialNameHo })
 
-            } else if (this.state.textLanguageChange === '3') {
-                this.setState({ materialName: cropFilter[4].materialNameOdia })
+            // } else if (this.state.textLanguageChange === '3') {
+            //     this.setState({ materialName: cropFilter[0].materialNameOdia })
 
-            } else if (this.state.textLanguageChange === '4') {
-                this.setState({ materialName: cropFilter[4].materialNameSanthali })
+            // } else if (this.state.textLanguageChange === '4') {
+            //     this.setState({ materialName: cropFilter[0].materialNameSanthali })
 
-            }
-            console.log(cropFilter)
-            this.setState({ stepData: stepData })
-            //this.setState({ materialName: materialName })
-            this.setState({ decimalPrice: decimalPrice })
-            this.setState({ numberOfSteps: cropFilter.length })
-            this.setState({ materialQuantity: materialQuantity })
+            // }
+            // //console.log(cropFilter, "hihihihihihihihihihihih")
+            // this.setState({ stepData: stepData })
+            // //this.setState({ materialName: materialName })
+            // this.setState({ decimalPrice: decimalPrice })
+            // this.setState({ numberOfSteps: cropFilter.length })
+            // this.setState({ materialQuantity: materialQuantity })
+
         } catch (error) {
             //alert("No More Steps Available")
             this.props.navigation.navigate({
@@ -490,6 +534,8 @@ export default class StepOneScreen extends Component {
         stepData = this.state.stepData
         var cropNameLanguageChangeArray = []
         cropNameLanguageChangeArray = this.state.cropNameLanguageChangeArray
+        var multipleMaterials = []
+        multipleMaterials = this.state.multipleMaterials
         return (
             <View style={{ backgroundColor: BaseColor.BackgroundColor, flex: 1 }}>
                 <View style={{ backgroundColor: 'white', width: widthToDp("100%"), height: heightToDp("13%"), flexDirection: 'row' }}>
@@ -507,36 +553,21 @@ export default class StepOneScreen extends Component {
                     <TouchableOpacity onPress={() => this.languageChangeFunction(this.state.languages[0].id)}>
                         <View style={{ backgroundColor: BaseColor.English, width: widthToDp("30%"), height: heightToDp("6%"), marginLeft: widthToDp("2%"), borderRadius: 100, flexDirection: 'row' }}>
                             <Text style={{ color: '#fff', marginTop: heightToDp("1.5%"), fontFamily: 'Oswald-Medium', marginLeft: widthToDp("5%") }}>{this.state.languages[0].value}</Text>
-                            <Icon
-                                name="microphone"
-                                color="white"
-                                size={20}
-                                style={{ marginTop: heightToDp("1.8%"), marginLeft: widthToDp("6%") }}
-                            />
+
                         </View>
                     </TouchableOpacity>
 
                     <TouchableOpacity onPress={() => this.languageChangeFunction(this.state.languages[1].id)}>
                         <View style={{ backgroundColor: BaseColor.Hindi, width: widthToDp("30%"), height: heightToDp("6%"), marginLeft: widthToDp("2%"), borderRadius: 100, flexDirection: 'row' }}>
                             <Text style={{ color: '#fff', marginTop: heightToDp("1.7%"), marginLeft: widthToDp("5%"), fontWeight: 'bold', fontSize: widthToDp("4.3%") }}>{this.state.languages[1].value}</Text>
-                            <Icon
-                                name="microphone"
-                                color="white"
-                                size={20}
-                                style={{ marginTop: heightToDp("1.8%"), marginLeft: widthToDp("9%") }}
-                            />
+
                         </View>
                     </TouchableOpacity>
 
                     <TouchableOpacity onPress={() => this.languageChangeFunction(this.state.languages[2].id)}>
                         <View style={{ backgroundColor: BaseColor.Ho, width: widthToDp("30%"), height: heightToDp("6%"), marginLeft: widthToDp("2%"), borderRadius: 100, flexDirection: 'row' }}>
                             <Text style={{ color: '#fff', marginTop: heightToDp("1.5%"), marginLeft: widthToDp("5%"), fontWeight: 'bold', fontSize: widthToDp("4.3%") }}>{this.state.languages[2].value}</Text>
-                            <Icon
-                                name="microphone"
-                                color="white"
-                                size={20}
-                                style={{ marginTop: heightToDp("1.8%"), marginLeft: widthToDp("6.3%") }}
-                            />
+
                         </View>
                     </TouchableOpacity>
                 </View>
@@ -544,114 +575,136 @@ export default class StepOneScreen extends Component {
                     <TouchableOpacity onPress={() => this.languageChangeFunction(this.state.languages[3].id)}>
                         <View style={{ backgroundColor: BaseColor.Uridia, width: widthToDp("30%"), height: heightToDp("6%"), borderRadius: 100, flexDirection: 'row' }}>
                             <Text style={{ color: '#fff', marginTop: heightToDp("1.7%"), marginLeft: widthToDp("4.7%"), fontWeight: 'bold', fontSize: widthToDp("4.3%") }}>{this.state.languages[3].value}</Text>
-                            <Icon
-                                name="microphone"
-                                color="white"
-                                size={20}
-                                style={{ marginTop: heightToDp("1.8%"), marginLeft: widthToDp("6.9%") }}
-                            />
+
                         </View>
                     </TouchableOpacity>
 
                     <TouchableOpacity onPress={() => this.languageChangeFunction(this.state.languages[4].id)}>
                         <View style={{ backgroundColor: BaseColor.Santhali, width: widthToDp("30%"), height: heightToDp("6%"), borderRadius: 100, marginLeft: widthToDp("2%"), flexDirection: 'row' }}>
                             <Text style={{ color: '#fff', marginTop: heightToDp("1.7%"), marginLeft: widthToDp("3.4%"), fontWeight: 'bold', fontSize: widthToDp("4.3%") }}>{this.state.languages[4].value}</Text>
-                            <Icon
-                                name="microphone"
-                                color="white"
-                                size={20}
-                                style={{ marginTop: heightToDp("1.8%"), marginLeft: widthToDp("3%") }}
-                            />
+
                         </View>
                     </TouchableOpacity>
                 </View>
                 <View style={{ borderBottomColor: BaseColor.Stroke, borderBottomWidth: 1, marginTop: heightToDp('1.5%'), width: widthToDp("100%") }}></View>
                 <Text style={{ fontSize: widthToDp("6%"), marginLeft: widthToDp("3%"), marginTop: heightToDp("1%"), fontFamily: 'Oswald-Medium' }}>STEP - {this.state.pageNumber}/08</Text>
-
                 {
                     this.state.isLoading ? <View style={{ justifyContent: 'center', marginTop: heightToDp("20%"), backgroundColor: BaseColor.BackgroundColor, marginBottom: heightToDp("30%") }}><CustomIndicator IsLoading={this.state.isLoading} /></View> : null
                 }
-                {
-                    stepData.map((i) => {
-                        return (
-                            <ScrollView>
-                                <View style={{ backgroundColor: BaseColor.Red, width: widthToDp("90%"), height: heightToDp("26%"), alignSelf: 'center', marginTop: heightToDp("2%"), borderRadius: 10 }}>
+                <ScrollView nestedScrollEnabled={true}>
+                    <View style={{ backgroundColor: BaseColor.Red, width: widthToDp("90%"), height: heightToDp("26%"), alignSelf: 'center', marginTop: heightToDp("2%"), borderRadius: 10 }}>
+                        {
+                            this.state.textLanguageChange === '0' ? <Text style={{ color: 'white', marginLeft: widthToDp("4%"), marginTop: heightToDp('1.5%'), fontSize: widthToDp("5%"), fontFamily: 'Oswald-Medium' }}>{this.state.englishTitleDescription}</Text> : ((this.state.textLanguageChange === '1') ? <Text style={{ color: 'white', marginLeft: widthToDp("4%"), marginTop: heightToDp('1.5%'), fontSize: widthToDp("5%"), fontFamily: 'Oswald-Medium' }}>{this.state.hindiTitleDescription}</Text> : ((this.state.textLanguageChange === '2') ? <Text style={{ color: 'white', marginLeft: widthToDp("4%"), marginTop: heightToDp('1.5%'), fontSize: widthToDp("5%"), fontFamily: 'Oswald-Medium' }}>{this.state.hoTitleDescription}</Text> : ((this.state.textLanguageChange === '3') ? <Text style={{ color: 'white', marginLeft: widthToDp("4%"), marginTop: heightToDp('1.5%'), fontSize: widthToDp("5%"), fontFamily: 'Oswald-Medium' }}>{this.state.odiaTitleDescription}</Text> : ((this.state.textLanguageChange === '4') ? <Text style={{ color: 'white', marginLeft: widthToDp("4%"), marginTop: heightToDp('1.5%'), fontSize: widthToDp("5%"), fontFamily: 'Oswald-Medium' }}>{this.state.santhaliTitleDescription}</Text> : null))))
+                        }
+
+                        <View style={{ backgroundColor: 'white', width: widthToDp("90%"), height: heightToDp("20%"), borderBottomLeftRadius: 10, borderBottomRightRadius: 10, marginTop: heightToDp("1%") }}>
+                            <View>
+                                <Image
+                                    style={{ height: heightToDp("20%"), width: widthToDp("90%"), borderBottomLeftRadius: 10, borderBottomRightRadius: 10 }}
+                                    source={{ uri: 'file:///storage/emulated/0/Pictures/image_' + this.state.stepImage }}
+                                />
+                            </View>
+                        </View>
+                    </View>
+
+
+                    <View style={{ backgroundColor: BaseColor.Red, width: widthToDp("90%"), height: heightToDp("50%"), alignSelf: 'center', marginTop: heightToDp("2%"), borderRadius: 10 }}>
+                        <Text style={{ color: 'white', marginLeft: widthToDp("4%"), marginTop: heightToDp('1.5%'), fontSize: widthToDp("5%"), fontFamily: 'Oswald-Medium' }}>{this.state.descriptionLabel}</Text>
+                        <ScrollView nestedScrollEnabled={true}>
+                            <View style={{ backgroundColor: 'white', width: widthToDp("90%"), height: heightToDp("43%"), borderBottomLeftRadius: 10, borderBottomRightRadius: 10, marginTop: heightToDp("2%") }}>
+                                {
+                                    this.state.textLanguageChange === '0' ? <Text style={{ marginLeft: widthToDp("2%"), marginTop: heightToDp("1%"), fontFamily: 'Oswald-Light' }}>{this.state.englishDescription}</Text> : ((this.state.textLanguageChange === '1') ? <Text style={{ marginLeft: widthToDp("2%"), marginTop: heightToDp("1%"), fontFamily: 'Oswald-Light' }}>{this.state.hindiDescription}</Text> : ((this.state.textLanguageChange === '2') ? <Text style={{ marginLeft: widthToDp("2%"), marginTop: heightToDp("1%"), fontFamily: 'Oswald-Light' }}>{this.state.hoDescription}</Text> : ((this.state.textLanguageChange === '3') ? <Text style={{ marginLeft: widthToDp("2%"), marginTop: heightToDp("1%"), fontFamily: 'Oswald-Light' }}>{this.state.odiaDescription}</Text> : ((this.state.textLanguageChange === '4') ? <Text style={{ marginLeft: widthToDp("2%"), marginTop: heightToDp("1%"), fontFamily: 'Oswald-Light' }}>{this.state.santhaliDescription}</Text> : null))))
+                                }
+                            </View>
+                        </ScrollView>
+
+
+                    </View>
+
+
+                    <View style={{ backgroundColor: BaseColor.Red, width: widthToDp("90%"), height: heightToDp("30%"), alignSelf: 'center', marginTop: heightToDp("2%"), borderRadius: 10 }}>
+                        <Text style={{ color: 'white', marginLeft: widthToDp("4%"), marginTop: heightToDp('1.5%'), fontSize: widthToDp("5%"), fontFamily: 'Oswald-Medium' }}>{this.state.selectedItemLabel}</Text>
+                        <View style={{ backgroundColor: 'white', width: widthToDp("90%"), height: heightToDp("23.5%"), borderBottomLeftRadius: 10, borderBottomRightRadius: 10, marginTop: heightToDp("2%") }}>
+                            <View style={{ flexDirection: 'row' }}>
+                                <View style={{ marginTop: heightToDp("1%"), marginLeft: widthToDp("2%") }}>
+                                    <Text style={{ fontSize: widthToDp("4%"), fontFamily: 'Oswald-Medium' }}>Ploughing Type</Text>
                                     {
-                                        this.state.textLanguageChange === '0' ? <Text style={{ color: 'white', marginLeft: widthToDp("4%"), marginTop: heightToDp('1.5%'), fontSize: widthToDp("5%"), fontFamily: 'Oswald-Medium' }}>{i.nameEnglish}</Text> : ((this.state.textLanguageChange === '1') ? <Text style={{ color: 'white', marginLeft: widthToDp("4%"), marginTop: heightToDp('1.5%'), fontSize: widthToDp("5%"), fontFamily: 'Oswald-Medium' }}>{i.nameHindi}</Text> : ((this.state.textLanguageChange === '2') ? <Text style={{ color: 'white', marginLeft: widthToDp("4%"), marginTop: heightToDp('1.5%'), fontSize: widthToDp("5%"), fontFamily: 'Oswald-Medium' }}>{i.nameHo}</Text> : ((this.state.textLanguageChange === '3') ? <Text style={{ color: 'white', marginLeft: widthToDp("4%"), marginTop: heightToDp('1.5%'), fontSize: widthToDp("5%"), fontFamily: 'Oswald-Medium' }}>{i.nameOdia}</Text> : ((this.state.textLanguageChange === '4') ? <Text style={{ color: 'white', marginLeft: widthToDp("4%"), marginTop: heightToDp('1.5%'), fontSize: widthToDp("5%"), fontFamily: 'Oswald-Medium' }}>{i.nameSanthali}</Text> : null))))
+                                        cropNameLanguageChangeArray.map((i) => {
+                                            return (
+                                                <View>
+                                                    {
+                                                        this.state.textLanguageChange === '0' ? <Text style={{ fontSize: widthToDp("5%"), fontFamily: 'Oswald-Light' }}>{i.nameEnglish}</Text> : ((this.state.textLanguageChange === '1') ? <Text style={{ fontSize: widthToDp("5%"), fontFamily: 'Oswald-Light' }}>{i.nameHindi}</Text> : ((this.state.textLanguageChange === '2') ? <Text style={{ fontSize: widthToDp("5%"), fontFamily: 'Oswald-Light' }}>{i.nameHo}</Text> : ((this.state.textLanguageChange === '3') ? <Text style={{ fontSize: widthToDp("5%"), fontFamily: 'Oswald-Light' }}>{i.nameOdia}</Text> : ((this.state.textLanguageChange === '4') ? <Text style={{ fontSize: widthToDp("5%"), fontFamily: 'Oswald-Light' }}>{i.nameSanthali}</Text> : null))))
+                                                    }
+                                                </View>
+                                            )
+                                        })
                                     }
-                                    <View style={{ backgroundColor: 'white', width: widthToDp("90%"), height: heightToDp("20%"), borderBottomLeftRadius: 10, borderBottomRightRadius: 10, marginTop: heightToDp("1%") }}>
-                                        <View>
-                                            <Image
-                                                style={{ height: heightToDp("20%"), width: widthToDp("90%"), borderBottomLeftRadius: 10, borderBottomRightRadius: 10 }}
-                                                source={{ uri: 'file:///storage/emulated/0/Pictures/image_'+ i.imageFile }}
-                                            />
-                                        </View>
-                                    </View>
+
+                                </View>
+                                <Image
+                                    style={{ height: heightToDp("20%"), width: widthToDp("50%"), marginTop: heightToDp("2%"), marginLeft: widthToDp("7%"), borderRadius: 10 }}
+                                    source={{ uri: 'file:///storage/emulated/0/Pictures/image_' + this.state.imageFile }}
+                                />
+                            </View>
+                        </View>
+                    </View>
+
+                    <View style={{ backgroundColor: BaseColor.Red, width: widthToDp("90%"), height: heightToDp("20%"), alignSelf: 'center', marginTop: heightToDp("2%"), borderRadius: 10 }}>
+                        <Text style={{ color: 'white', marginLeft: widthToDp("4%"), marginTop: heightToDp('1.5%'), fontSize: widthToDp("5%"), fontFamily: 'Oswald-Medium' }}>{this.state.material}</Text>
+                        <View style={{ backgroundColor: 'white', width: widthToDp("90%"), height: heightToDp("17%"), borderBottomLeftRadius: 10, borderBottomRightRadius: 10, marginTop: heightToDp("2%") }}>
+                            <View style={{ flexDirection: 'row', marginLeft: widthToDp("3%"), marginTop: heightToDp("2%") }}>
+                                <View style={{ width: widthToDp("20%") }}>
+                                    <Text style={{ color: BaseColor.Red, fontFamily: 'Oswald-Medium', fontSize: widthToDp("3.5%") }}>{this.state.descriptionLabel}</Text>
+                                </View>
+                                <View style={{ width: widthToDp("25%") }}>
+                                    <Text style={{ color: BaseColor.Red, fontFamily: 'Oswald-Medium', marginLeft: widthToDp("10%"), fontSize: widthToDp("3.5%") }}>{this.state.quantityLabel}</Text>
+                                </View>
+                                <View style={{ width: widthToDp("30%") }}>
+                                    <Text style={{ color: BaseColor.Red, fontFamily: 'Oswald-Medium', marginLeft: widthToDp("15%"), fontSize: widthToDp("3.5%") }}>{this.state.amountLabel}</Text>
                                 </View>
 
 
-                                <View style={{ backgroundColor: BaseColor.Red, width: widthToDp("90%"), height: heightToDp("50%"), alignSelf: 'center', marginTop: heightToDp("2%"), borderRadius: 10 }}>
-                                    <Text style={{ color: 'white', marginLeft: widthToDp("4%"), marginTop: heightToDp('1.5%'), fontSize: widthToDp("5%"), fontFamily: 'Oswald-Medium' }}>{this.state.descriptionLabel}</Text>
-                                    <View style={{ backgroundColor: 'white', width: widthToDp("90%"), height: heightToDp("43%"), borderBottomLeftRadius: 10, borderBottomRightRadius: 10, marginTop: heightToDp("2%") }}>
-                                    {
-                                        this.state.textLanguageChange === '0' ? <Text style={{ color: 'white', marginLeft: widthToDp("4%"), marginTop: heightToDp('1.5%'), fontSize: widthToDp("5%"), fontFamily: 'Oswald-Medium' }}>{i.nameEnglish}</Text> : ((this.state.textLanguageChange === '1') ? <Text style={{ color: 'white', marginLeft: widthToDp("4%"), marginTop: heightToDp('1.5%'), fontSize: widthToDp("5%"), fontFamily: 'Oswald-Medium' }}>{i.nameHindi}</Text> : ((this.state.textLanguageChange === '2') ? <Text style={{ color: 'white', marginLeft: widthToDp("4%"), marginTop: heightToDp('1.5%'), fontSize: widthToDp("5%"), fontFamily: 'Oswald-Medium' }}>{i.nameHo}</Text> : ((this.state.textLanguageChange === '3') ? <Text style={{ color: 'white', marginLeft: widthToDp("4%"), marginTop: heightToDp('1.5%'), fontSize: widthToDp("5%"), fontFamily: 'Oswald-Medium' }}>{i.nameOdia}</Text> : ((this.state.textLanguageChange === '4') ? <Text style={{ color: 'white', marginLeft: widthToDp("4%"), marginTop: heightToDp('1.5%'), fontSize: widthToDp("5%"), fontFamily: 'Oswald-Medium' }}>{i.nameSanthali}</Text> : null))))
-                                    }
-                                    </View>
-                                </View>
 
-
-                                <View style={{ backgroundColor: BaseColor.Red, width: widthToDp("90%"), height: heightToDp("30%"), alignSelf: 'center', marginTop: heightToDp("2%"), borderRadius: 10 }}>
-                                    <Text style={{ color: 'white', marginLeft: widthToDp("4%"), marginTop: heightToDp('1.5%'), fontSize: widthToDp("5%"), fontFamily: 'Oswald-Medium' }}>{this.state.selectedItemLabel}</Text>
-                                    <View style={{ backgroundColor: 'white', width: widthToDp("90%"), height: heightToDp("23.5%"), borderBottomLeftRadius: 10, borderBottomRightRadius: 10, marginTop: heightToDp("2%") }}>
-                                        <View style={{ flexDirection: 'row' }}>
-                                            <View style={{ marginTop: heightToDp("1%"), marginLeft: widthToDp("2%") }}>
-                                                <Text style={{ fontSize: widthToDp("4%"), fontFamily: 'Oswald-Medium' }}>Ploughing Type</Text>
-                                                {
-                                                    cropNameLanguageChangeArray.map((i) => {
-                                                        return (
-                                                            <View>
-                                                                {
-                                                                    this.state.textLanguageChange === '0' ? <Text style={{ fontSize: widthToDp("5%"), fontFamily: 'Oswald-Light' }}>{i.nameEnglish}</Text> : ((this.state.textLanguageChange === '1') ? <Text style={{ fontSize: widthToDp("5%"), fontFamily: 'Oswald-Light' }}>{i.nameHindi}</Text> : ((this.state.textLanguageChange === '2') ? <Text style={{ fontSize: widthToDp("5%"), fontFamily: 'Oswald-Light' }}>{i.nameHo}</Text> : ((this.state.textLanguageChange === '3') ? <Text style={{ fontSize: widthToDp("5%"), fontFamily: 'Oswald-Light' }}>{i.nameOdia}</Text> : ((this.state.textLanguageChange === '4') ? <Text style={{ fontSize: widthToDp("5%"), fontFamily: 'Oswald-Light' }}>{i.nameSanthali}</Text> : null))))
-                                                                }
-                                                            </View>
-                                                        )
-                                                    })
-                                                }
+                            </View>
+                            <ScrollView nestedScrollEnabled={true}>
+                                {
+                                    multipleMaterials.map((i) => {
+                                        return (
+                                            <View style={{ flexDirection: 'row', marginLeft: widthToDp("3%"), marginTop: heightToDp("2%") }}>
+                                                <View style={{ width: widthToDp("25%") }}>
+                                                    <Text style={{ fontFamily: 'Oswald-Medium' }}>{i.materialNameEnglish}</Text>
+                                                </View>
+                                                <View style={{ width: widthToDp("30%"), marginLeft: widthToDp("9%") }}>
+                                                    <Text style={{ fontFamily: 'Oswald-Medium' }}>{i.qty}</Text>
+                                                </View>
+                                                <View style={{ width: widthToDp("30%"), marginLeft: widthToDp("0%") }}>
+                                                    <Input
+                                                        placeholder={this.state.decimalPrice}
+                                                        keyboardType='number-pad'
+                                                        defaultValue={i.decimalPrice}
+                                                        onChangeText={(data) => this.setMaterialPrice(data)}
+                                                        style={{ marginLeft: widthToDp("0%"), fontFamily: 'Oswald-Medium', width: widthToDp("20%"), marginTop: heightToDp("-2%"), borderWidth: 1, marginRight: widthToDp("5%") }}
+                                                    />
+                                                </View>
                                             </View>
-                                            <Image
-                                                style={{ height: heightToDp("20%"), width: widthToDp("50%"), marginTop: heightToDp("2%"), marginLeft: widthToDp("7%"), borderRadius: 10 }}
-                                                source={{ uri: 'file:///storage/emulated/0/Pictures/image_'+ this.state.imageFile }}
-                                            />
-                                        </View>
-                                    </View>
-                                </View>
-
-                                <View style={{ backgroundColor: BaseColor.Red, width: widthToDp("90%"), height: heightToDp("20%"), alignSelf: 'center', marginTop: heightToDp("2%"), borderRadius: 10 }}>
-                                    <Text style={{ color: 'white', marginLeft: widthToDp("4%"), marginTop: heightToDp('1.5%'), fontSize: widthToDp("5%"), fontFamily: 'Oswald-Medium' }}>{this.state.material}</Text>
-                                    <View style={{ backgroundColor: 'white', width: widthToDp("90%"), height: heightToDp("17%"), borderBottomLeftRadius: 10, borderBottomRightRadius: 10, marginTop: heightToDp("2%") }}>
-                                        <View style={{ flexDirection: 'row', marginLeft: widthToDp("3%"), marginTop: heightToDp("2%") }}>
-                                            <Text style={{ color: BaseColor.Red, fontFamily: 'Oswald-Medium' }}>{this.state.descriptionLabel}</Text>
-                                            <Text style={{ color: BaseColor.Red, fontFamily: 'Oswald-Medium', marginLeft: widthToDp("18%") }}>{this.state.quantityLabel}</Text>
-                                            <Text style={{ color: BaseColor.Red, fontFamily: 'Oswald-Medium', marginLeft: widthToDp("17%") }}>{this.state.amountLabel}</Text>
-                                        </View>
-                                        <View style={{ flexDirection: 'row', marginLeft: widthToDp("3%"), marginTop: heightToDp("2%") }}>
-                                            <Text style={{ fontFamily: 'Oswald-Medium', width: widthToDp("30%") }}>{this.state.materialName}</Text>
-                                            <Text style={{ fontFamily: 'Oswald-Medium', width: widthToDp("25%"), marginLeft: widthToDp("10%") }}>{this.state.materialQuantity}</Text>
-                                            <Input
-                                                placeholder={this.state.decimalPrice}
-                                                keyboardType='number-pad'
-                                                onChangeText={(data) => this.setMaterialPrice(data)}
-                                                style={{ marginLeft: widthToDp("0%"), fontFamily: 'Oswald-Medium', width: widthToDp("20%"), marginTop: heightToDp("-2%"), borderWidth: 1, marginRight: widthToDp("5%") }}
-                                            />
-                                        </View>
-                                    </View>
-                                </View>
-
-                                <View style={{ marginBottom: heightToDp("10%") }}></View>
+                                        )
+                                    })
+                                }
                             </ScrollView>
-                        )
-                    })
-                }
+
+
+
+
+                            {/* <Text style={{ marginLeft: widthToDp("35%"), fontFamily: 'Oswald-Medium' }}>₹ {this.state.decimalPrice}</Text> */}
+
+
+
+
+                        </View>
+                    </View>
+
+                    <View style={{ marginBottom: heightToDp("10%") }}></View>
+                </ScrollView>
                 <View style={{ flexDirection: 'row', height: heightToDp("10%"), alignSelf: 'center' }}>
                     <TouchableOpacity onPress={() => this.props.navigation.goBack()}>
                         <View style={{ backgroundColor: "#fff", height: heightToDp("6%"), width: widthToDp("30%"), borderRadius: 100, alignSelf: 'center', marginTop: heightToDp("2%") }}>

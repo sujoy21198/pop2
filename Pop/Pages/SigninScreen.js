@@ -548,8 +548,8 @@ export default class SigninScreen extends Component {
 
     guestSignIn = () => {
         this.state.phoneNumber = '1000000000'
-        this.state.username = 'anonymous@abc.com'
-        this.state.password = 'Test@12345'
+        this.state.username = 'Guest'
+        this.state.password = '12'
         this.signIn()
         // this.setState({username : 'anonymous@abc.com'})
         // this.setState({password : 'Test@12345'})
