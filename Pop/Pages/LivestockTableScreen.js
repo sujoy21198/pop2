@@ -42,13 +42,17 @@ export default class LivestockTableScreen extends Component {
         this.state = {
             numberGoats: '1',
             tableHeading: [],
-            unitPrice1stBirth:'4000',
-            unitPrice2ndBirth:'3000',
-            unitPrice3rdBirth:'500',
-            totalPrice1stBirth:'5000',
-            totalPrice2ndBirth:'4000',
-            totalPrice3rdBirth:'500',
-            totalValueAfter2years:'9500'
+            unitPrice1stBirth: '4000',
+            unitPrice2ndBirth: '3000',
+            unitPrice3rdBirth: '500',
+            totalPrice1stBirth: '5000',
+            totalPrice2ndBirth: '4000',
+            totalPrice3rdBirth: '500',
+            totalValueAfter2years: '9500',
+            totalExpenseforNgoats:'130',
+            expenseForSupplementary:'120',
+            b:'250',
+            totalProfitFromNgoats:''
         }
         this.state.tableHeading = tableHeading
     }
@@ -68,28 +72,36 @@ export default class LivestockTableScreen extends Component {
     }
 
     calculation = (data) => {
-        this.state.numberGoats  = data
+        this.state.numberGoats = data
         var unitPriceFor1stBirth = this.state.numberGoats * 4000
         var unitPriceFor2ndBirth = this.state.numberGoats * 3000
         var unitPriceFor3rdBirth = this.state.numberGoats * 500
         var totalPrice1stBirth = this.state.numberGoats * 5000
         var totalPrice2ndBirth = this.state.numberGoats * 4000
         var totalPrice3rdBirth = this.state.numberGoats * 500
-        var totalValueAfter2years = totalPrice1stBirth+totalPrice2ndBirth+totalPrice3rdBirth
+        var totalValueAfter2years = totalPrice1stBirth + totalPrice2ndBirth + totalPrice3rdBirth
+        var totalExpenseforNgoats = this.state.numberGoats * 130
+        var expenseForSupplementary = this.state.numberGoats * 120
+        var b = totalExpenseforNgoats + expenseForSupplementary
+        var totalProfitFromNgoats = totalValueAfter2years - b
 
-        this.setState({unitPriceFor1stBirth : unitPriceFor1stBirth})
-        this.setState({unitPriceFor2ndBirth : unitPriceFor2ndBirth})
-        this.setState({unitPriceFor3rdBirth : unitPriceFor3rdBirth})
-        this.setState({totalPrice1stBirth : totalPrice1stBirth})
-        this.setState({totalPrice2ndBirth : totalPrice2ndBirth})
-        this.setState({totalPrice3rdBirth : totalPrice3rdBirth})
-        this.setState({totalValueAfter2years : totalValueAfter2years})
+        this.setState({ unitPriceFor1stBirth: unitPriceFor1stBirth })
+        this.setState({ unitPriceFor2ndBirth: unitPriceFor2ndBirth })
+        this.setState({ unitPriceFor3rdBirth: unitPriceFor3rdBirth })
+        this.setState({ totalPrice1stBirth: totalPrice1stBirth })
+        this.setState({ totalPrice2ndBirth: totalPrice2ndBirth })
+        this.setState({ totalPrice3rdBirth: totalPrice3rdBirth })
+        this.setState({ totalValueAfter2years: totalValueAfter2years })
+        this.setState({ totalExpenseforNgoats : totalExpenseforNgoats})
+        this.setState({expenseForSupplementary : expenseForSupplementary})
+        this.setState({b : b})
+        this.setState({totalProfitFromNgoats : totalProfitFromNgoats})
 
     }
 
-    saveButton = async() => {
-        try{
-            const incomeObject ={'type':'income','category':'Livestock','amount':this.state.totalValueAfter2years}
+    saveButton = async () => {
+        try {
+            const incomeObject = { 'type': 'income', 'category': 'Livestock', 'amount': this.state.totalValueAfter2years }
             let username = await AsyncStorage.getItem('username')
             let user = await AsyncStorage.getItem('user');
             let parsed = JSON.parse(user);
@@ -97,7 +109,7 @@ export default class LivestockTableScreen extends Component {
             specificObject.moneyManagerData.push(incomeObject)
             await AsyncStorage.setItem('user', JSON.stringify(parsed))
             console.log(specificObject.moneyManagerData)
-        }catch(error){
+        } catch (error) {
             console.log(error)
         }
     }
@@ -195,7 +207,7 @@ export default class LivestockTableScreen extends Component {
                     </TouchableOpacity>
                 </View>
                 <View style={{ borderBottomColor: BaseColor.Stroke, borderBottomWidth: 1, marginTop: heightToDp('1.5%'), width: widthToDp("100%") }}></View>
-                <ScrollView>
+                <ScrollView nestedScrollEnabled={true}>
                     <View style={{ backgroundColor: BaseColor.Red, height: heightToDp("90%"), alignSelf: 'center', width: widthToDp("90%"), borderRadius: 10, marginTop: heightToDp('1.5%') }}>
                         <Text style={{ color: "#fff", fontSize: widthToDp("5%"), marginLeft: widthToDp("5%"), marginTop: heightToDp("1%"), fontFamily: 'Oswald-Medium' }}>Income from mother goats per year</Text>
                         <View style={{ backgroundColor: "white", height: heightToDp("85.5%"), alignSelf: 'center', width: widthToDp("90%"), marginTop: heightToDp('2%'), borderBottomLeftRadius: 10, borderBottomRightRadius: 10 }}>
@@ -212,7 +224,8 @@ export default class LivestockTableScreen extends Component {
                             <View>
                                 <Text>One mother goat gives birth to 4 to 5 kids per 2 years in an interval of 8 months Out of that 3 kids survive.</Text>
                             </View>
-                            <View style={{ borderWidth: 1, height: heightToDp("8%"), width: widthToDp("83%"), marginLeft: widthToDp("3%"), marginTop: heightToDp("1.5%"), flexDirection: 'row' }}>
+                            <ScrollView nestedScrollEnabled={true}>
+                                <View style={{ borderWidth: 1, height: heightToDp("8%"), width: widthToDp("83%"), marginLeft: widthToDp("3%"), marginTop: heightToDp("1.5%"), flexDirection: 'row' }}>
                                 {
                                     tableHeading.map((i) => {
                                         return (
@@ -286,11 +299,35 @@ export default class LivestockTableScreen extends Component {
                                 <Text>Total value after 2 year</Text>
                                 <Text style={{ marginLeft: widthToDp("20%") }}>Rs {this.state.totalValueAfter2years}</Text>
                             </View>
-                            <View style={{marginLeft: widthToDp("3%")}}>
-                                <Text>Total value after 2 years from 2 mother goat will be Rs 19000.00 per 2 year</Text>
-                                <Text style={{marginTop:heightToDp("3%")}}>Total value annually from 2 mother goat will be Rs 9500.00 (A)</Text>
+                            <View style={{ marginLeft: widthToDp("3%") }}>
+                                <Text>Total value after 2 years from {this.state.numberGoats} mother goat will be Rs {this.state.totalValueAfter2years} per 2 year</Text>
+                                <Text style={{ marginTop: heightToDp("3%") }}>Total value annually from 2 mother goat will be Rs 9500.00 (A)</Text>
                             </View>
 
+                            <View style={{ marginLeft: widthToDp("3%"),marginTop:heightToDp("2%") }}>
+                                <Text>Total expenses for {this.state.numberGoats} goats in 2 years is Rs {this.state.totalExpenseforNgoats} ({this.state.numberGoats}*130, immunization cost)</Text>
+                            </View>
+
+                            <View style={{ marginLeft: widthToDp("3%"),marginTop:heightToDp("2%") }}>
+                                <Text>Supplementary feed for 120 days for 1 mother goat per two year @ Rs 1.00 per day = Rs 120.00</Text>
+                            </View>
+
+                            <View style={{ marginLeft: widthToDp("3%"),marginTop:heightToDp("2%") }}>
+                                <Text>Expense for Supplementary feed for {this.state.numberGoats} mother goats per 2 year : {this.state.numberGoats}*120 = {this.state.expenseForSupplementary}</Text>
+                            </View>
+
+
+                            <View style={{ marginLeft: widthToDp("3%"),marginTop:heightToDp("2%") }}>
+                                <Text>Total expenses for {this.state.numberGoats} goats per 2 year : {this.state.totalExpenseforNgoats} + {this.state.expenseForSupplementary} = Rs. {this.state.b} (B)</Text>
+                            </View>
+
+
+                            <View style={{ marginLeft: widthToDp("3%"),marginTop:heightToDp("2%") }}>
+                                <Text>TOTAL PROFIT FROM 4 MOTHER GOAT PER 2 YEAR (A)- (B) = Rs {this.state.totalValueAfter2years} – Rs {this.state.b} = Rs {this.state.totalProfitFromNgoats} </Text>
+                            </View>
+
+                            </ScrollView>
+                            
                         </View>
                     </View>
                     <View style={{ marginTop: heightToDp("10%") }}></View>
@@ -301,7 +338,7 @@ export default class LivestockTableScreen extends Component {
                             <Text style={{ fontSize: widthToDp("4%"), color: "#000", marginTop: heightToDp("1.3%"), alignSelf: 'center', fontFamily: 'Oswald-Medium' }}>BACK</Text>
                         </View>
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={() => { this.saveButton()}}>
+                    <TouchableOpacity onPress={() => { this.saveButton() }}>
                         <View style={{ backgroundColor: "#fff", height: heightToDp("6%"), width: widthToDp("30%"), borderRadius: 100, marginLeft: widthToDp("1%"), marginTop: heightToDp("2%") }}>
                             <Text style={{ fontSize: widthToDp("4%"), color: "#000", marginTop: heightToDp("1.3%"), alignSelf: 'center', fontFamily: 'Oswald-Medium' }}>SAVE</Text>
                         </View>

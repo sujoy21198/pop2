@@ -31,7 +31,7 @@ const months = [
 const tableHeading = [
     { 'name': 'Items', 'birth': '1st Birth', 'age': '16 months old', 'numbers': '1', 'unitPrice': '4000', 'totalPriceInRupees': '5000' },
     { 'name': 'No of vaccines', 'birth': '2nd Birth', 'age': '8 months old', 'numbers': '1', 'unitPrice': '4000', 'totalPriceInRupees': '5000' },
-    { 'name': 'Cost(RS)', 'birth': '3rd Birth', 'age': 'kid', 'numbers': '1', 'unitPrice': '4000', 'totalPriceInRupees': '5000' },
+    { 'name': 'Cost(INR)', 'birth': '3rd Birth', 'age': 'kid', 'numbers': '1', 'unitPrice': '4000', 'totalPriceInRupees': '5000' },
     { 'name': 'Interval' },
 ]
 
@@ -296,9 +296,10 @@ export default class VaccinationScreen extends Component {
                                                     <View style={{ height: heightToDp("6%") }}>
                                                         {/* <Text style={{ marginBottom: heightToDp("1.5%") }}>{i.noOfTime}</Text> */}
                                                         <Input
-                                                            style={{ borderWidth: 1 }}
+                                                            style={{}}
+                                                            editable={false}
                                                             onChangeText={(data) => this.inputValue(data)}
-                                                            placeholder={'1'}
+                                                            defaultValue={'1'}
                                                             keyboardType="number-pad"
                                                         />
                                                     </View>
@@ -334,7 +335,18 @@ export default class VaccinationScreen extends Component {
                                     </View>
                                 </View>
                             </View>
-                            
+
+                            <View style={{ borderWidth: 1, height: heightToDp("8%"), width: widthToDp("83%"), marginLeft: widthToDp("3%"), marginTop: heightToDp("0%"), flexDirection: 'row' }}>
+                                <View style={{marginTop:heightToDp("2%"),marginLeft:widthToDp("2%"),width:widthToDp("11%")}}>
+                                    <Text>TOTAL</Text>
+                                </View>
+
+                                <View style={{marginTop:heightToDp("2%"),marginLeft:widthToDp("30%"),width:widthToDp("20%")}}>
+                                    <Text>130</Text>
+                                </View>
+
+                            </View>
+
                         </View>
                     </View>
                     <View style={{ marginTop: heightToDp("10%") }}></View>
