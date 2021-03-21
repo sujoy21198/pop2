@@ -14,9 +14,13 @@ import CustomIndicator from '../Core/CustomIndicator'
 import Languages from '../Core/Languages'
 import LanguageChange from '../Core/LanguageChange'
 
+const Sound = require('react-native-sound')
+
 
 
 export default class CropsScreen extends Component {
+
+    sound = new Sound('/storage/emulated/0/Pictures/image_audioc345fcafd5815b65d045f9d1ca0b38a8COVID-19.mp3')
 
     constructor(props) {
         super(props)
@@ -24,9 +28,9 @@ export default class CropsScreen extends Component {
             crops: [],
             isLoading: false,
             isFetching: false,
-            textLanguageChange : '',
+            textLanguageChange: '',
             languages: [],
-            cropLabel:''
+            cropLabel: ''
         }
         this.state.languages = Languages
     }
@@ -46,7 +50,7 @@ export default class CropsScreen extends Component {
             var cropLabel = specificObject.labels.find((i) => i.type === 28)
             if (this.state.textLanguageChange === '0') {
                 //this.state.allTransactionsLabel = allTransactions.nameEnglish
-                this.setState({cropLabel: cropLabel.nameEnglish})
+                this.setState({ cropLabel: cropLabel.nameEnglish })
                 // this.state.data[1].name = livestock.nameEnglish
                 // this.state.data[2].name = smallBusiness.nameEnglish
                 // this.state.data[3].name = health.nameEnglish
@@ -60,7 +64,7 @@ export default class CropsScreen extends Component {
                 // this.setState({ allTransactionLabel: allTransactionLabel.nameEnglish })
             } else if (this.state.textLanguageChange === '1') {
                 //this.state.allTransactionsLabel = allTransactions.nameHindi
-                this.setState({cropLabel: cropLabel.nameHindi})
+                this.setState({ cropLabel: cropLabel.nameHindi })
                 // this.state.data[1].name = livestock.nameHindi
                 // this.state.data[2].name = smallBusiness.nameHindi
                 // this.state.data[3].name = health.nameHindi
@@ -70,7 +74,7 @@ export default class CropsScreen extends Component {
                 // this.state.data[7].name = others.nameHindi
             } else if (this.state.textLanguageChange === '2') {
                 //this.state.data[0].name = allTransactions.nameHo
-                this.setState({cropLabel: cropLabel.nameHo})
+                this.setState({ cropLabel: cropLabel.nameHo })
                 // this.state.data[1].name = livestock.nameHo
                 // this.state.data[2].name = smallBusiness.nameHo
                 // this.state.data[3].name = health.nameHo
@@ -80,7 +84,7 @@ export default class CropsScreen extends Component {
                 // this.state.data[7].name = others.nameHo
             } else if (this.state.textLanguageChange === '3') {
                 //this.state.data[0].name = allTransactions.nameOdia
-                this.setState({cropLabel: cropLabel.nameOdia})
+                this.setState({ cropLabel: cropLabel.nameOdia })
                 // this.state.data[1].name = livestock.nameOdia
                 // this.state.data[2].name = smallBusiness.nameOdia
                 // this.state.data[3].name = health.nameOdia
@@ -90,7 +94,7 @@ export default class CropsScreen extends Component {
                 // this.state.data[7].name = others.nameOdia
             } else if (this.state.textLanguageChange === '4') {
                 //this.state.data[0].name = allTransactions.nameSanthali
-                this.setState({cropLabel: cropLabel.nameSanthali})
+                this.setState({ cropLabel: cropLabel.nameSanthali })
                 // this.state.data[1].name = livestock.nameSanthali
                 // this.state.data[2].name = smallBusiness.nameSanthali
                 // this.state.data[3].name = health.nameSanthali
@@ -99,24 +103,24 @@ export default class CropsScreen extends Component {
                 // this.state.data[6].name = pension.nameSanthali
                 // this.state.data[7].name = others.nameSanthali
             }
-            
+
         } catch (error) {
             alert(error)
         }
         this.setState({ crops: specificObject.crops })
     }
 
-    loadCropsFromStorage = async() => {
-        try{
+    loadCropsFromStorage = async () => {
+        try {
             let username = await AsyncStorage.getItem('username')
             let user = await AsyncStorage.getItem('offlineData');
             let parsed = JSON.parse(user);
             var specificObject = parsed.find((i) => i.username === username)
             console.log(specificObject.crops)
-        }catch(error){
+        } catch (error) {
             alert(error)
         }
-        this.setState({crops : specificObject.crops})
+        this.setState({ crops: specificObject.crops })
     }
 
     loadCrops = async () => {
@@ -134,7 +138,7 @@ export default class CropsScreen extends Component {
                 'Content-type': "accept",
                 'X-Information': encodedUsername,
                 'Authorization': "POP " + token,
-                'Accept-Language':""
+                'Accept-Language': ""
             }
         }).then(function (response) {
             console.log(response.data)
@@ -164,81 +168,85 @@ export default class CropsScreen extends Component {
         })
     }
 
-    navigateToLandScreen = (data,name,imageFile) => {
+    navigateToLandScreen = (data, name, imageFile) => {
         console.log(data)
         this.props.navigation.navigate({
             name: 'LandTypeScreen',
             params: {
                 _id: data,
-                cropName:name,
-                imageFile : imageFile
+                cropName: name,
+                imageFile: imageFile
             }
         })
     }
 
-    setLanguageOnMount = async() => {
+    setLanguageOnMount = async () => {
         let defaultLanguage = await AsyncStorage.getItem('language')
-        if(defaultLanguage === 'en'){
-            this.setState({textLanguageChange : '0'})
+        if (defaultLanguage === 'en') {
+            this.setState({ textLanguageChange: '0' })
             this.loadlabelsFromStorage()
-        }else if(defaultLanguage === 'hi'){
-            this.setState({textLanguageChange : '1'})
+        } else if (defaultLanguage === 'hi') {
+            this.setState({ textLanguageChange: '1' })
             this.loadlabelsFromStorage()
-        }else if(defaultLanguage === 'ho'){
-            this.setState({textLanguageChange : '2'})
+        } else if (defaultLanguage === 'ho') {
+            this.setState({ textLanguageChange: '2' })
             this.loadlabelsFromStorage()
-        }else if(defaultLanguage === 'od'){
-            this.setState({textLanguageChange : '3'})
+        } else if (defaultLanguage === 'od') {
+            this.setState({ textLanguageChange: '3' })
             this.loadlabelsFromStorage()
-        }else if(defaultLanguage === 'san'){
-            this.setState({textLanguageChange : '4'})
+        } else if (defaultLanguage === 'san') {
+            this.setState({ textLanguageChange: '4' })
             this.loadlabelsFromStorage()
         }
     }
 
-    languageChangeFunction = async(data) => {
-        
-        if(data === 'en'){
-            AsyncStorage.setItem('language','en')
-            this.setState({textLanguageChange : '0'})
+    languageChangeFunction = async (data) => {
+
+        if (data === 'en') {
+            AsyncStorage.setItem('language', 'en')
+            this.setState({ textLanguageChange: '0' })
             this.loadlabelsFromStorage()
             this.props.navigation.reset({
                 index: 0,
                 routes: [{ name: "DashBoardScreen" }]
             });
-        }else if(data === 'hi'){
-            this.setState({textLanguageChange : '1'})
+        } else if (data === 'hi') {
+            this.setState({ textLanguageChange: '1' })
             this.loadlabelsFromStorage()
-            AsyncStorage.setItem('language','hi')
+            AsyncStorage.setItem('language', 'hi')
             this.props.navigation.reset({
                 index: 0,
                 routes: [{ name: "DashBoardScreen" }]
             });
-        }else if(data === 'ho'){
-            this.setState({textLanguageChange : '2'})
+        } else if (data === 'ho') {
+            this.setState({ textLanguageChange: '2' })
             this.loadlabelsFromStorage()
-            AsyncStorage.setItem('language','ho')
+            AsyncStorage.setItem('language', 'ho')
             this.props.navigation.reset({
                 index: 0,
                 routes: [{ name: "DashBoardScreen" }]
             });
-        }else if(data === 'od'){
-            this.setState({textLanguageChange : '3'})
+        } else if (data === 'od') {
+            this.setState({ textLanguageChange: '3' })
             this.loadlabelsFromStorage()
-            AsyncStorage.setItem('language','od')
+            AsyncStorage.setItem('language', 'od')
             this.props.navigation.reset({
                 index: 0,
                 routes: [{ name: "DashBoardScreen" }]
             });
-        }else if(data === 'san'){
-            AsyncStorage.setItem('language','san')
-            this.setState({textLanguageChange : '4'})
+        } else if (data === 'san') {
+            AsyncStorage.setItem('language', 'san')
+            this.setState({ textLanguageChange: '4' })
             this.loadlabelsFromStorage()
             this.props.navigation.reset({
                 index: 0,
                 routes: [{ name: "DashBoardScreen" }]
             });
         }
+    }
+
+    speak = () => {
+        this.sound.play()
     }
 
     onRefresh = () => {
@@ -250,7 +258,7 @@ export default class CropsScreen extends Component {
         cropsArray = this.state.crops
         //console.log(cropsArray)
         return (
-            <View style={{ backgroundColor: BaseColor.BackgroundColor}}>
+            <View style={{ backgroundColor: BaseColor.BackgroundColor }}>
                 <View style={{ backgroundColor: 'white', width: widthToDp("100%"), height: heightToDp("13%"), flexDirection: 'row' }}>
                     <View style={{ marginTop: heightToDp("3%"), marginLeft: widthToDp("3%") }}>
                         <TopLogo />
@@ -263,24 +271,24 @@ export default class CropsScreen extends Component {
                     />
                 </View>
                 <View style={{ flexDirection: 'row', marginTop: heightToDp("1%"), marginLeft: widthToDp("1%") }}>
-                    <TouchableOpacity onPress={() =>this.languageChangeFunction(this.state.languages[0].id)}>
+                    <TouchableOpacity onPress={() => this.languageChangeFunction(this.state.languages[0].id)}>
                         <View style={{ backgroundColor: BaseColor.English, width: widthToDp("30%"), height: heightToDp("6%"), marginLeft: widthToDp("2%"), borderRadius: 100, flexDirection: 'row' }}>
                             <Text style={{ color: '#fff', marginTop: heightToDp("1.5%"), fontFamily: 'Oswald-Medium', marginLeft: widthToDp("5%") }}>{this.state.languages[0].value}</Text>
-                            
+
                         </View>
                     </TouchableOpacity>
 
                     <TouchableOpacity onPress={() => this.languageChangeFunction(this.state.languages[1].id)}>
                         <View style={{ backgroundColor: BaseColor.Hindi, width: widthToDp("30%"), height: heightToDp("6%"), marginLeft: widthToDp("2%"), borderRadius: 100, flexDirection: 'row' }}>
                             <Text style={{ color: '#fff', marginTop: heightToDp("1.7%"), marginLeft: widthToDp("5%"), fontWeight: 'bold', fontSize: widthToDp("4.3%") }}>{this.state.languages[1].value}</Text>
-                            
+
                         </View>
                     </TouchableOpacity>
 
                     <TouchableOpacity onPress={() => this.languageChangeFunction(this.state.languages[2].id)}>
                         <View style={{ backgroundColor: BaseColor.Ho, width: widthToDp("30%"), height: heightToDp("6%"), marginLeft: widthToDp("2%"), borderRadius: 100, flexDirection: 'row' }}>
                             <Text style={{ color: '#fff', marginTop: heightToDp("1.5%"), marginLeft: widthToDp("5%"), fontWeight: 'bold', fontSize: widthToDp("4.3%") }}>{this.state.languages[2].value}</Text>
-                            
+
                         </View>
                     </TouchableOpacity>
                 </View>
@@ -288,24 +296,24 @@ export default class CropsScreen extends Component {
                     <TouchableOpacity onPress={() => this.languageChangeFunction(this.state.languages[3].id)}>
                         <View style={{ backgroundColor: BaseColor.Uridia, width: widthToDp("30%"), height: heightToDp("6%"), borderRadius: 100, flexDirection: 'row' }}>
                             <Text style={{ color: '#fff', marginTop: heightToDp("1.7%"), marginLeft: widthToDp("4.7%"), fontWeight: 'bold', fontSize: widthToDp("4.3%") }}>{this.state.languages[3].value}</Text>
-                            
+
                         </View>
                     </TouchableOpacity>
 
                     <TouchableOpacity onPress={() => this.languageChangeFunction(this.state.languages[4].id)}>
                         <View style={{ backgroundColor: BaseColor.Santhali, width: widthToDp("30%"), height: heightToDp("6%"), borderRadius: 100, marginLeft: widthToDp("2%"), flexDirection: 'row' }}>
                             <Text style={{ color: '#fff', marginTop: heightToDp("1.7%"), marginLeft: widthToDp("3.4%"), fontWeight: 'bold', fontSize: widthToDp("4.3%") }}>{this.state.languages[4].value}</Text>
-                            
+
                         </View>
                     </TouchableOpacity>
                 </View>
                 <View style={{ borderBottomColor: BaseColor.Stroke, borderBottomWidth: 1, marginTop: heightToDp('1.5%'), width: widthToDp("100%") }}></View>
                 <Text style={{ marginLeft: widthToDp("3%"), marginTop: heightToDp("2%"), fontSize: widthToDp("7%"), fontFamily: 'Oswald-Medium' }}>{this.state.cropLabel}</Text>
                 {
-                    this.state.isLoading ? <View style={{ justifyContent: 'center', marginTop: heightToDp("20%"),backgroundColor: BaseColor.BackgroundColor }}><CustomIndicator IsLoading={this.state.isLoading} /></View> :
+                    this.state.isLoading ? <View style={{ justifyContent: 'center', marginTop: heightToDp("20%"), backgroundColor: BaseColor.BackgroundColor }}><CustomIndicator IsLoading={this.state.isLoading} /></View> :
                         <View>
                             <FlatGrid
-                                style={{ marginTop: heightToDp("1%"), marginBottom: heightToDp("74%"),backgroundColor:BaseColor.BackgroundColor }}
+                                style={{ marginTop: heightToDp("1%"), marginBottom: heightToDp("74%"), backgroundColor: BaseColor.BackgroundColor }}
                                 bounces={true}
                                 itemDimension={130}
                                 data={Object.values(cropsArray)}
@@ -313,18 +321,29 @@ export default class CropsScreen extends Component {
                                 onRefresh={() => this.onRefresh()}
                                 refreshing={this.state.isFetching}
                                 renderItem={({ item }) => (
-                                    <TouchableOpacity onPress={() => this.navigateToLandScreen(item._id, item.nameEnglish , item.imageFile)}>
+                                    
                                         <View style={{ backgroundColor: BaseColor.Red, width: widthToDp("47%"), height: heightToDp("30%"), elevation: 10, borderRadius: 10 }}>
-                                            {
-                                                this.state.textLanguageChange==='0'? <Text style={{ color: "#fff", fontSize: widthToDp("5%"), marginLeft: widthToDp("5%"), marginTop: heightToDp("0.4%"), fontFamily: 'Oswald-Medium' }}>{item.nameEnglish}</Text> : ((this.state.textLanguageChange === '1') ? <Text style={{ color: "#fff", fontSize: widthToDp("5%"), marginLeft: widthToDp("5%"), marginTop: heightToDp("0.4%"), fontFamily: 'Oswald-Medium' }}>{item.nameHindi}</Text> : ((this.state.textLanguageChange === '2') ? <Text style={{ color: "#fff", fontSize: widthToDp("5%"), marginLeft: widthToDp("5%"), marginTop: heightToDp("0.4%"), fontFamily: 'Oswald-Medium' }}>{item.nameHo}</Text> : ((this.state.textLanguageChange === '3') ? <Text style={{ color: "#fff", fontSize: widthToDp("5%"), marginLeft: widthToDp("5%"), marginTop: heightToDp("0.4%"), fontFamily: 'Oswald-Medium' }}>{item.nameOdia}</Text>: ((this.state.textLanguageChange === '4') ? <Text style={{ color: "#fff", fontSize: widthToDp("5%"), marginLeft: widthToDp("5%"), marginTop: heightToDp("0.4%"), fontFamily: 'Oswald-Medium' }}>{item.nameSanthali}</Text> : null))) )
-                                            }
-                                            
+                                            <View style={{ flexDirection: 'row' }}>
+                                                {
+                                                    this.state.textLanguageChange === '0' ? <Text style={{ color: "#fff", fontSize: widthToDp("5%"), marginLeft: widthToDp("5%"), marginTop: heightToDp("0.4%"), fontFamily: 'Oswald-Medium', height: heightToDp("4%") }}>{item.nameEnglish}</Text> : ((this.state.textLanguageChange === '1') ? <Text style={{ color: "#fff", fontSize: widthToDp("5%"), marginLeft: widthToDp("5%"), marginTop: heightToDp("0.4%"), fontFamily: 'Oswald-Medium', height: heightToDp("4%") }}>{item.nameHindi}</Text> : ((this.state.textLanguageChange === '2') ? <Text style={{ color: "#fff", fontSize: widthToDp("5%"), marginLeft: widthToDp("5%"), marginTop: heightToDp("0.4%"), fontFamily: 'Oswald-Medium', height: heightToDp("4%") }}>{item.nameHo}</Text> : ((this.state.textLanguageChange === '3') ? <Text style={{ color: "#fff", fontSize: widthToDp("5%"), marginLeft: widthToDp("5%"), marginTop: heightToDp("0.4%"), fontFamily: 'Oswald-Medium', height: heightToDp("4%") }}>{item.nameOdia}</Text> : ((this.state.textLanguageChange === '4') ? <Text style={{ color: "#fff", fontSize: widthToDp("5%"), marginLeft: widthToDp("5%"), marginTop: heightToDp("0.4%"), fontFamily: 'Oswald-Medium', height: heightToDp("4%") }}>{item.nameSanthali}</Text> : null))))
+                                                }
+                                                <TouchableOpacity onPress={() => this.speak()}>
+                                                <Icon
+                                                    name="microphone"
+                                                    color="white"
+                                                    size={20}
+                                                    style={{ marginTop: heightToDp("1.8%"), marginLeft: widthToDp("10%") }}
+                                                />
+                                                </TouchableOpacity>
+                                            </View>
+                                            <TouchableOpacity onPress={() => this.navigateToLandScreen(item._id, item.nameEnglish, item.imageFile)}>
                                             <Image
                                                 style={{ width: widthToDp("47%"), height: heightToDp("25%"), borderBottomLeftRadius: 10, borderBottomRightRadius: 10, marginTop: heightToDp("1%") }}
-                                                source={{ uri: 'file:///storage/emulated/0/Pictures/image_'+item.imageFile }}
+                                                source={{ uri: 'file:///storage/emulated/0/Pictures/image_' + item.imageFile }}
                                             />
+                                            </TouchableOpacity>
                                         </View>
-                                    </TouchableOpacity>
+                                    
                                 )}
                             />
                         </View>

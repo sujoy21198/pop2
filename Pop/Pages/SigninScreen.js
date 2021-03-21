@@ -37,7 +37,10 @@ export default class SigninScreen extends Component {
             breedScreenImages: [],
             importantLinksScreen: [],
             nutritionGardenImages: [],
-            smallBusinessImages: []
+            smallBusinessImages: [],
+            labels: [],
+            imageloaded: true,
+            imageLoading: true
         }
 
         this.state.selectedLanguage = this.props.route.params.selectedLanguage
@@ -62,6 +65,7 @@ export default class SigninScreen extends Component {
         var importantLinksScreenArray = []
         var nutritionGardenImagesArray = []
         var smallBusinessImagesArray = []
+        var labelArray = []
 
 
         await axios.get(DataAccess.BaseUrl + DataAccess.AccessUrl + 'files', {
@@ -76,6 +80,7 @@ export default class SigninScreen extends Component {
             var importantLink = response.data.data.find((i) => i.name === 'importantLink')
             var nutritionGarden = response.data.data.find((i) => i.name === 'nutritionGarden')
             var smallBusiness = response.data.data.find((i) => i.name === 'smallBusiness')
+            var label = response.data.data.find((i) => i.name === 'label')
             cropScreenImageArray = crop.fileNames
             cropStepImagesArray = cropStep.fileNames
             cropMaterialImagesArray = cropMaterial.fileNames
@@ -85,6 +90,7 @@ export default class SigninScreen extends Component {
             importantLinksScreenArray = importantLink.fileNames
             nutritionGardenImagesArray = nutritionGarden.fileNames
             smallBusinessImagesArray = smallBusiness.fileNames
+            labelArray = label.fileNames
 
             //totalImages = cropScreenImageArray.concat(cropStepImagesArray, cropMaterialImagesArray, livestockScreenImagesArray,liveStockStepImagesArray,breedScreenImagesArray,importantLinksScreenArray,nutritionGardenImagesArray,smallBusinessImagesArray)
             //console.log(cropScreenImageArray)
@@ -100,6 +106,7 @@ export default class SigninScreen extends Component {
         this.setState({ importantLinksScreen: importantLinksScreenArray })
         this.setState({ nutritionGardenImages: nutritionGardenImagesArray })
         this.setState({ smallBusinessImages: smallBusinessImagesArray })
+        this.setState({ labels: labelArray })
         //console.log(this.state.cropScreenImages,"hi")
         this.getCropImage()
     }
@@ -540,7 +547,66 @@ export default class SigninScreen extends Component {
                     //alert('Image Downloaded Successfully.');
                 });
         }
-        alert("images downloaded successfully")
+        //alert("images downloaded successfully")
+        console.log(fileNames)
+        console.log(imageUrls)
+        this.getLabelAudio()
+    }
+
+
+    getLabelAudio = () => {
+        var cropImages = []
+        var fileNames = []
+        var imageUrls = []
+        var ext = []
+        cropImages = this.state.labels
+        //alert(cropImages.length)
+        for (var i = 0; i < cropImages.length; i++) {
+            var names = cropImages[i]
+            var editedNames = names.substr(0, names.indexOf('.'))
+            var extNames = names.substr(names.indexOf('.') + 1)
+            console.log(ext)
+            console.log(editedNames)
+            fileNames.push(editedNames)
+            ext.push(extNames)
+            imageUrls.push("http://161.35.122.165:3020/app-property/uploads/label/" + cropImages[i])
+        }
+
+        for (var i = 0; i < imageUrls.length; i++) {
+            const { config, fs } = RNFetchBlob;
+            let PictureDir = fs.dirs.PictureDir;
+            console.log(PictureDir)
+            let options = {
+                fileCache: true,
+                addAndroidDownloads: {
+                    useDownloadManager: true,
+                    notification: true,
+                    path:
+                        PictureDir +
+                        '/image_' +
+                        fileNames[i] + '.' +
+                        ext[i],
+                    description: 'Image',
+                }
+            };
+            config(options)
+                .fetch('GET', imageUrls[i])
+                .then(res => {
+                    // Showing alert after successful downloading
+                    console.log('res -> ', JSON.stringify(res));
+                    //alert('Image Downloaded Successfully.');
+                });
+        }
+        // alert("images downloaded successfully")
+        this.setState({ imageloaded: false })
+        if(this.state.imageloaded === false){
+            Toast.show({
+            text: "images downloaded successfully",
+            duration: 6000,
+            type: 'success'
+        })
+        }
+        
         console.log(fileNames)
         console.log(imageUrls)
     }
@@ -945,70 +1011,83 @@ export default class SigninScreen extends Component {
                     <View style={{ marginTop: heightToDp("5%") }}>
                         <Text style={{ fontSize: widthToDp("7%"), alignSelf: 'center', fontFamily: 'Oswald-SemiBold' }}>{LanguageChange.signIn}</Text>
                     </View>
-                    <View style={{ marginTop: heightToDp("5%"), marginLeft: widthToDp("8%") }}>
-                        {
-                            this.state.loadPhoneNumber ? <CustomIndicator IsLoading={this.state.loadPhoneNumber} /> : null
-                        }
-                        <Text style={{ fontSize: widthToDp("4.6%"), marginLeft: widthToDp("2%"), fontFamily: 'Oswald-Medium' }}>{this.state.phoneNumber}</Text>
-                        <View style={{ borderBottomColor: 'black', borderBottomWidth: 1, marginTop: heightToDp('0.1%'), width: widthToDp("80%"), marginLeft: widthToDp("2%") }}></View>
-                    </View>
-                    {/* <View style={{ marginTop: heightToDp("5%"), marginLeft: widthToDp("10%") }}>
+                    {
+                        this.state.imageloaded ? <View>
+                            <View style={{ marginTop: heightToDp("5%") }}>
+                                <CustomIndicator IsLoading={this.state.imageLoading} />
+                                <View style={{ marginTop: heightToDp("5%") , alignSelf:'center' }}>
+                                    <Text style={{fontSize:widthToDp("6%"),fontFamily: 'Oswald-Medium'}}>Please wait while image is downloading</Text>
+                                </View>
+                            </View>
+
+                        </View> :
+                            <View>
+                                <View style={{ marginTop: heightToDp("5%"), marginLeft: widthToDp("8%") }}>
+                                    {
+                                        this.state.loadPhoneNumber ? <CustomIndicator IsLoading={this.state.loadPhoneNumber} /> : null
+                                    }
+                                    <Text style={{ fontSize: widthToDp("4.6%"), marginLeft: widthToDp("2%"), fontFamily: 'Oswald-Medium' }}>{this.state.phoneNumber}</Text>
+                                    <View style={{ borderBottomColor: 'black', borderBottomWidth: 1, marginTop: heightToDp('0.1%'), width: widthToDp("80%"), marginLeft: widthToDp("2%") }}></View>
+                                </View>
+                                {/* <View style={{ marginTop: heightToDp("5%"), marginLeft: widthToDp("10%") }}>
                     <Text style={{ fontSize: widthToDp("5%") }}>CONTACT NUMBER</Text>
                 </View>
                 <View style={{ marginTop: heightToDp("1%"), marginLeft: widthToDp("10%") }}>
                     <Text style={{ fontSize: widthToDp("6%") }}>1234567890</Text>
                 </View>
                 <View style={{ borderBottomColor: 'black', borderBottomWidth: 1, marginTop: heightToDp('1.5%'), width: widthToDp("80%"), alignSelf: 'center' }}></View> */}
-                    <ScrollView>
-                        <View style={{ marginTop: heightToDp("2%"), marginLeft: widthToDp("10%") }}>
-                            <FloatingLabel
-                                labelStyle={styles.labelInput}
-                                inputStyle={styles.input}
-                                style={styles.formInput}
-                                // onBlur={this.onBlur}
-                                onChangeText={(text) => { this.setState({ username: text }) }}
-                            >{LanguageChange.username}</FloatingLabel>
-                        </View>
-                        {/* <View style={{ borderBottomColor: 'black', borderBottomWidth: 1, marginTop: heightToDp('1.5%'), width: widthToDp("80%"), alignSelf: 'center' }}></View> */}
-                        <View style={{ marginTop: heightToDp("2%"), marginLeft: widthToDp("10%"), flexDirection: 'row' }}>
-                            <FloatingLabel
-                                labelStyle={styles.labelInput}
-                                inputStyle={styles.input}
-                                style={styles.formInput}
-                                password={true}
+                                <ScrollView>
+                                    <View style={{ marginTop: heightToDp("2%"), marginLeft: widthToDp("10%") }}>
+                                        <FloatingLabel
+                                            labelStyle={styles.labelInput}
+                                            inputStyle={styles.input}
+                                            style={styles.formInput}
+                                            // onBlur={this.onBlur}
+                                            onChangeText={(text) => { this.setState({ username: text }) }}
+                                        >{LanguageChange.username}</FloatingLabel>
+                                    </View>
+                                    {/* <View style={{ borderBottomColor: 'black', borderBottomWidth: 1, marginTop: heightToDp('1.5%'), width: widthToDp("80%"), alignSelf: 'center' }}></View> */}
+                                    <View style={{ marginTop: heightToDp("2%"), marginLeft: widthToDp("10%"), flexDirection: 'row' }}>
+                                        <FloatingLabel
+                                            labelStyle={styles.labelInput}
+                                            inputStyle={styles.input}
+                                            style={styles.formInput}
+                                            password={true}
 
-                                onChangeText={(text) => { this.setState({ password: text }) }}
-                            // onBlur={this.onBlur}
-                            >{LanguageChange.password}</FloatingLabel>
-                        </View>
-                        {/* <View style={{ borderBottomColor: 'black', borderBottomWidth: 1, marginTop: heightToDp('1.5%'), width: widthToDp("80%"), alignSelf: 'center' }}></View> */}
-                        <View style={{ marginLeft: widthToDp("50%"), marginTop: heightToDp("0.5%"), width: widthToDp("37%") }}>
-                            <Text style={{ fontFamily: 'Oswald-Medium', fontSize: widthToDp("4%") }}>{LanguageChange.forgotPassword}</Text>
-                        </View>
-                        {
-                            this.state.isLoading ? <CustomIndicator IsLoading={this.state.isLoading} /> : null
-                        }
-                        <TouchableOpacity onPress={() => this.checkConnection()}>
-                            <View style={{ backgroundColor: BaseColor.SecondaryColor, marginTop: heightToDp("5%"), width: widthToDp("37%"), alignSelf: 'center', height: heightToDp("5%"), borderRadius: 100 }}>
-                                <Text style={{ alignSelf: 'center', marginTop: heightToDp("0.5%"), fontWeight: '500', fontSize: widthToDp("5%"), fontFamily: 'Oswald-Medium' }}>{LanguageChange.signIn}</Text>
+                                            onChangeText={(text) => { this.setState({ password: text }) }}
+                                        // onBlur={this.onBlur}
+                                        >{LanguageChange.password}</FloatingLabel>
+                                    </View>
+                                    {/* <View style={{ borderBottomColor: 'black', borderBottomWidth: 1, marginTop: heightToDp('1.5%'), width: widthToDp("80%"), alignSelf: 'center' }}></View> */}
+                                    <View style={{ marginLeft: widthToDp("50%"), marginTop: heightToDp("0.5%"), width: widthToDp("37%") }}>
+                                        <Text style={{ fontFamily: 'Oswald-Medium', fontSize: widthToDp("4%") }}>{LanguageChange.forgotPassword}</Text>
+                                    </View>
+                                    {
+                                        this.state.isLoading ? <CustomIndicator IsLoading={this.state.isLoading} /> : null
+                                    }
+                                    <TouchableOpacity onPress={() => this.checkConnection()}>
+                                        <View style={{ backgroundColor: BaseColor.SecondaryColor, marginTop: heightToDp("5%"), width: widthToDp("37%"), alignSelf: 'center', height: heightToDp("5%"), borderRadius: 100 }}>
+                                            <Text style={{ alignSelf: 'center', marginTop: heightToDp("0.5%"), fontWeight: '500', fontSize: widthToDp("5%"), fontFamily: 'Oswald-Medium' }}>{LanguageChange.signIn}</Text>
+                                        </View>
+                                    </TouchableOpacity>
+                                    <View style={{ flexDirection: 'row', alignSelf: 'center', marginTop: heightToDp('1.5%') }}>
+                                        <Text style={{ fontFamily: 'Oswald-Medium' }}>{LanguageChange.noAccount}</Text>
+                                        <TouchableOpacity onPress={() => this.navigateToRegistration()}>
+                                            <Text style={{ color: BaseColor.Red, fontFamily: 'Oswald-Medium' }}> {LanguageChange.pleaseSignUp}</Text>
+                                        </TouchableOpacity>
+                                    </View>
+
+                                    <View style={{ borderBottomColor: BaseColor.Stroke, borderBottomWidth: 1, marginTop: heightToDp('1.5%'), width: widthToDp("100%") }}></View>
+
+                                    <TouchableOpacity onPress={() => this.guestSignIn()}>
+                                        <View style={{ backgroundColor: BaseColor.SecondaryColor, marginTop: heightToDp("3%"), width: widthToDp("37%"), alignSelf: 'center', height: heightToDp("5%"), borderRadius: 100 }}>
+                                            <Text style={{ alignSelf: 'center', marginTop: heightToDp("0.4%"), fontWeight: '500', fontSize: widthToDp("5%"), fontFamily: 'Oswald-Medium' }}>{LanguageChange.guestSignIn}</Text>
+                                        </View>
+                                    </TouchableOpacity>
+                                    <View style={{ marginTop: 20 }}></View>
+                                </ScrollView>
                             </View>
-                        </TouchableOpacity>
-                        <View style={{ flexDirection: 'row', alignSelf: 'center', marginTop: heightToDp('1.5%') }}>
-                            <Text style={{ fontFamily: 'Oswald-Medium' }}>{LanguageChange.noAccount}</Text>
-                            <TouchableOpacity onPress={() => this.navigateToRegistration()}>
-                                <Text style={{ color: BaseColor.Red, fontFamily: 'Oswald-Medium' }}> {LanguageChange.pleaseSignUp}</Text>
-                            </TouchableOpacity>
-                        </View>
-
-                        <View style={{ borderBottomColor: BaseColor.Stroke, borderBottomWidth: 1, marginTop: heightToDp('1.5%'), width: widthToDp("100%") }}></View>
-
-                        <TouchableOpacity onPress={() => this.guestSignIn()}>
-                            <View style={{ backgroundColor: BaseColor.SecondaryColor, marginTop: heightToDp("3%"), width: widthToDp("37%"), alignSelf: 'center', height: heightToDp("5%"), borderRadius: 100 }}>
-                                <Text style={{ alignSelf: 'center', marginTop: heightToDp("0.4%"), fontWeight: '500', fontSize: widthToDp("5%"), fontFamily: 'Oswald-Medium' }}>{LanguageChange.guestSignIn}</Text>
-                            </View>
-                        </TouchableOpacity>
-                        <View style={{ marginTop: 20 }}></View>
-                    </ScrollView>
+                    }
                 </View>
             </KeyboardAwareScrollView>
         );
