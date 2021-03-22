@@ -252,6 +252,7 @@ export default class AllTransactionScreen extends Component {
                         return (
                             <View style={{ backgroundColor: 'white', height: heightToDp("20%"), alignSelf: 'center', width: widthToDp("85%"), borderRadius: 20, marginTop: heightToDp("3%") }}>
                                 <Text style={{ marginLeft: widthToDp("3%"), marginTop: heightToDp("2%"), fontSize: widthToDp("5%"), fontFamily: 'Oswald-Light' }}>{i.type}</Text>
+                                <Text style={{ marginLeft: widthToDp("3%"), marginTop: heightToDp("0%"), fontSize: widthToDp("5%"), fontFamily: 'Oswald-Light' }}>{i.date}</Text>
                                 <Text style={{ marginLeft: widthToDp("3%"), marginTop: heightToDp("0%"), fontSize: widthToDp("7%"), fontFamily: 'Oswald-Medium' }}>{i.category}</Text>
                                 <Text style={{ marginLeft: widthToDp("3%"), marginTop: heightToDp("0%"), fontSize: widthToDp("7%"), fontFamily: 'Oswald-Medium' }}>Rs {i.amount}</Text>
                             </View>

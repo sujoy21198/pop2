@@ -77,8 +77,11 @@ export default class CostBenifitAnalysisScreen extends Component {
 
     goToHomeScreen = async () => {
         try {
-            const expenseObject = { 'type': 'expense', 'category': 'Crops', 'amount': this.state.actualCulCostScreenTotalExpense }
-            const incomeObject = { 'type': 'income', 'category': 'Crops', 'amount': this.state.totalincomefromcrop }
+            var date = new Date().getDate()
+            var month = new Date().getMonth()+1
+            var year = new Date().getFullYear()
+            const expenseObject = { 'type': 'expense', 'category': 'Crops', 'amount': this.state.actualCulCostScreenTotalExpense , 'date': date + "/" + month + "/" + year }
+            const incomeObject = { 'type': 'income', 'category': 'Crops', 'amount': this.state.totalincomefromcrop , 'date': date + "/" + month + "/" + year}
             let username = await AsyncStorage.getItem('username')
             let user = await AsyncStorage.getItem('user');
             let parsed = JSON.parse(user);

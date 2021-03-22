@@ -37,7 +37,10 @@ export default class IncomeScreen extends Component {
 
     doneButton = async() => {
         try{
-            const moneyObject={'type':this.state.type,'category':this.state.category,'amount':this.state.amount}
+            var date = new Date().getDate()
+            var month = new Date().getMonth()+1
+            var year = new Date().getFullYear()
+            const moneyObject={'type':this.state.type,'category':this.state.category,'amount':this.state.amount, 'date': date + "/" + month + "/" + year}
             //const incomeObject ={'type':'income','category':'Crops','amount':this.state.totalincomefromcrop}
             let username = await AsyncStorage.getItem('username')
             let user = await AsyncStorage.getItem('user');

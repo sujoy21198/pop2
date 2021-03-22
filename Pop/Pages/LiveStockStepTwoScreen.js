@@ -117,7 +117,7 @@ export default class LiveStockStepTwoScreen extends Component {
             alert(error)
         }
         this.setState({ crops: specificObject.crops })
-        this.showData()
+        //this.showData()
     }
 
     loadBreedFromStorage = async() => {
