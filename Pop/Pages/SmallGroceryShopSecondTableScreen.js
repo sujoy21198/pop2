@@ -252,6 +252,7 @@ export default class SmallGroceryShopSecondTableScreen extends Component {
                                             {/* <Text style={{ marginBottom: heightToDp("1.5%") }}>{i.noOfTime}</Text> */}
                                             <Input
                                                 style={{ borderWidth: 1 }}
+                                                placeholder={this.state.category1BuyingPrice}
                                                 onChangeText={(data) => this.setState({ category1BuyingPrice: data })}
                                                 keyboardType="number-pad"
                                             />
@@ -261,6 +262,7 @@ export default class SmallGroceryShopSecondTableScreen extends Component {
                                             {/* <Text style={{ marginBottom: heightToDp("1.5%") }}>{i.noOfTime}</Text> */}
                                             <Input
                                                 style={{ borderWidth: 1 }}
+                                                placeholder={this.state.categor2BuyingPrice}
                                                 onChangeText={(data) => this.setState({ categor2BuyingPrice: data })}
                                                 keyboardType="number-pad"
                                             />
@@ -270,6 +272,7 @@ export default class SmallGroceryShopSecondTableScreen extends Component {
                                             {/* <Text style={{ marginBottom: heightToDp("1.5%") }}>{i.noOfTime}</Text> */}
                                             <Input
                                                 style={{ borderWidth: 1 }}
+                                                placeholder={this.state.category3BuyingPrice}
                                                 onChangeText={(data) => this.setState({ category3BuyingPrice: data })}
                                                 keyboardType="number-pad"
                                             />
@@ -283,6 +286,7 @@ export default class SmallGroceryShopSecondTableScreen extends Component {
                                             {/* <Text style={{ marginBottom: heightToDp("1.5%") }}>{i.noOfTime}</Text> */}
                                             <Input
                                                 style={{ borderWidth: 1 }}
+                                                placeholder={this.state.category1SellingPrice}
                                                 onChangeText={(data) => this.setState({ category1SellingPrice: data })}
                                                 keyboardType="number-pad"
                                             />
@@ -292,6 +296,7 @@ export default class SmallGroceryShopSecondTableScreen extends Component {
                                             {/* <Text style={{ marginBottom: heightToDp("1.5%") }}>{i.noOfTime}</Text> */}
                                             <Input
                                                 style={{ borderWidth: 1 }}
+                                                placeholder={this.state.category2SellingPrice}
                                                 onChangeText={(data) => this.setState({ category2SellingPrice: data })}
                                                 keyboardType="number-pad"
                                             />
@@ -302,6 +307,7 @@ export default class SmallGroceryShopSecondTableScreen extends Component {
                                             {/* <Text style={{ marginBottom: heightToDp("1.5%") }}>{i.noOfTime}</Text> */}
                                             <Input
                                                 style={{ borderWidth: 1 }}
+                                                placeholder={this.state.category3SellingPrice}
                                                 onChangeText={(data) => this.setState({ category3SellingPrice: data })}
                                                 keyboardType="number-pad"
                                             />
@@ -393,12 +399,12 @@ export default class SmallGroceryShopSecondTableScreen extends Component {
                     </TouchableOpacity>
                     <TouchableOpacity onPress={() => { this.calculation() }}>
                         <View style={{ backgroundColor: "#fff", height: heightToDp("6%"), width: widthToDp("30%"), borderRadius: 100, marginLeft: widthToDp("1%"), marginTop: heightToDp("2%") }}>
-                            <Text style={{ fontSize: widthToDp("4%"), color: "#000", marginTop: heightToDp("1.3%"), alignSelf: 'center', fontFamily: 'Oswald-Medium' }}>SAVE</Text>
+                            <Text style={{ fontSize: widthToDp("4%"), color: "#000", marginTop: heightToDp("1.3%"), alignSelf: 'center', fontFamily: 'Oswald-Medium' }}>CALCULATE</Text>
                         </View>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={() => { this.next() }}>
                         <View style={{ backgroundColor: "#fff", height: heightToDp("6%"), width: widthToDp("30%"), borderRadius: 100, marginLeft: widthToDp("1%"), marginTop: heightToDp("2%") }}>
-                            <Text style={{ fontSize: widthToDp("4%"), color: "#000", marginTop: heightToDp("1.3%"), alignSelf: 'center', fontFamily: 'Oswald-Medium' }}>NEXT</Text>
+                            <Text style={{ fontSize: widthToDp("4%"), color: "#000", marginTop: heightToDp("1.3%"), alignSelf: 'center', fontFamily: 'Oswald-Medium' }}>SAVE/NEXT</Text>
                         </View>
                     </TouchableOpacity>
                 </View>

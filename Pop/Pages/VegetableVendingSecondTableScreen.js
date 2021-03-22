@@ -33,19 +33,20 @@ export default class DryFishSellingSecondTableScreen extends Component {
         this.state = {
             tableHeading: [],
             value: '',
-            sessionalVegInput:'',
-            spicesInput:'',
+            sessionalVegInput:'40',
+            spicesInput:'2',
             sessionalVegTotal:'1200',
             spicesTotal:'160',
             expenditurePerDayA:'1460',
-            sessionalVegProfitUnit:'',
-            sessionalVegProfitUnitPrice:'',
-            spicesProfitUnit:'',
-            spicesProfitUnitPrice:'',
-            perDaySellingValue:'',
+            sessionalVegProfitUnit:'40',
+            sessionalVegProfitUnitPrice:'36',
+            spicesProfitUnit:'2',
+            spicesProfitUnitPrice:'86',
+            perDaySellingValue:'1612',
             sessionalVegSellingPrice:'1440',
             spicesVegSellingPrice:'172',
-            profit:''
+            profit:'152',
+            profit15:'2280'
         }
         this.state.tableHeading = tableHeading
         //this.state.value = this.props.route.params.value
@@ -72,6 +73,7 @@ export default class DryFishSellingSecondTableScreen extends Component {
     }
 
     calculation = () => {
+        //alert(this.state.sessionalVegInput)
         var sessionalVegTotal = this.state.sessionalVegInput * 30
         var spicesTotal = this.state.spicesInput * 80
         var expenditurePerDayA = sessionalVegTotal+spicesTotal+100
@@ -80,14 +82,18 @@ export default class DryFishSellingSecondTableScreen extends Component {
 
         var perdaysellingvaluetotal = sessionalVegSellingPrice + spicesVegSellingPrice
         var profit = perdaysellingvaluetotal - expenditurePerDayA
+        var profit15 = profit *15
 
         this.setState({sessionalVegTotal : sessionalVegTotal})
         this.setState({spicesTotal : spicesTotal})
         this.setState({expenditurePerDayA : expenditurePerDayA})
         this.setState({sessionalVegSellingPrice : sessionalVegSellingPrice})
         this.setState({spicesVegSellingPrice : spicesVegSellingPrice})
-        this.setState({perdaysellingvaluetotal : perdaysellingvaluetotal})
+        this.setState({perDaySellingValue : perdaysellingvaluetotal})
         this.setState({profit : profit})
+        this.setState({profit15 : profit15})
+
+        
     }
 
     inputValue = (data) => {
@@ -355,7 +361,7 @@ export default class DryFishSellingSecondTableScreen extends Component {
                                             {/* <Text style={{ marginBottom: heightToDp("1.5%") }}>{i.noOfTime}</Text> */}
                                             <Input
                                                 style={{ borderWidth: 1 }}
-                                                
+                                                placeholder={"40"}
                                                 onChangeText={(data) => this.setState({ sessionalVegProfitUnit: data })}
                                                 keyboardType="number-pad"
                                             />
@@ -365,6 +371,7 @@ export default class DryFishSellingSecondTableScreen extends Component {
                                             {/* <Text style={{ marginBottom: heightToDp("1.5%") }}>{i.noOfTime}</Text> */}
                                             <Input
                                                 style={{ borderWidth: 1 }}
+                                                placeholder={"2"}
                                                 onChangeText={(data) => this.setState({ spicesProfitUnit: data })}
                                                 keyboardType="number-pad"
                                             />
@@ -378,6 +385,7 @@ export default class DryFishSellingSecondTableScreen extends Component {
                                             {/* <Text style={{ marginBottom: heightToDp("1.5%") }}>{i.noOfTime}</Text> */}
                                             <Input
                                                 style={{ borderWidth: 1 }}
+                                                placeholder={"36"}
                                                 onChangeText={(data) => this.setState({ sessionalVegProfitUnitPrice: data })}
                                                 keyboardType="number-pad"
                                             />
@@ -387,7 +395,7 @@ export default class DryFishSellingSecondTableScreen extends Component {
                                             {/* <Text style={{ marginBottom: heightToDp("1.5%") }}>{i.noOfTime}</Text> */}
                                             <Input
                                                 style={{ borderWidth: 1 }}
-                                                
+                                                placeholder={"86"}
                                                 onChangeText={(data) => this.setState({ spicesProfitUnitPrice: data })}
                                                 keyboardType="number-pad"
                                             />
@@ -418,7 +426,7 @@ export default class DryFishSellingSecondTableScreen extends Component {
                                 <Text style={{ marginLeft: widthToDp("20%") }}>Rs {this.state.profit}</Text>
                             </View>
                             <View style={{ borderWidth: 1, height: heightToDp("8%"), width: widthToDp("83%"), marginLeft: widthToDp("3%"), marginTop: heightToDp("0%"), flexDirection: 'row' }}>
-                                <Text>15 lot selling per month. (monthly profit) Rs 152*15=  Rs 2280</Text>
+                                <Text>15 lot selling per month. (monthly profit) Rs {this.state.profit}*15=  Rs {this.state.profit15}</Text>
                             </View>
 
                         </View>
@@ -433,12 +441,12 @@ export default class DryFishSellingSecondTableScreen extends Component {
                     </TouchableOpacity>
                     <TouchableOpacity onPress={() => { this.calculation() }}>
                         <View style={{ backgroundColor: "#fff", height: heightToDp("6%"), width: widthToDp("30%"), borderRadius: 100, marginLeft: widthToDp("1%"), marginTop: heightToDp("2%") }}>
-                            <Text style={{ fontSize: widthToDp("4%"), color: "#000", marginTop: heightToDp("1.3%"), alignSelf: 'center', fontFamily: 'Oswald-Medium' }}>SAVE</Text>
+                            <Text style={{ fontSize: widthToDp("4%"), color: "#000", marginTop: heightToDp("1.3%"), alignSelf: 'center', fontFamily: 'Oswald-Medium' }}>CALCULATE</Text>
                         </View>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={() => { this.next() }}>
                         <View style={{ backgroundColor: "#fff", height: heightToDp("6%"), width: widthToDp("30%"), borderRadius: 100, marginLeft: widthToDp("1%"), marginTop: heightToDp("2%") }}>
-                            <Text style={{ fontSize: widthToDp("4%"), color: "#000", marginTop: heightToDp("1.3%"), alignSelf: 'center', fontFamily: 'Oswald-Medium' }}>NEXT</Text>
+                            <Text style={{ fontSize: widthToDp("4%"), color: "#000", marginTop: heightToDp("1.3%"), alignSelf: 'center', fontFamily: 'Oswald-Medium' }}>SAVE/NEXT</Text>
                         </View>
                     </TouchableOpacity>
                 </View>
