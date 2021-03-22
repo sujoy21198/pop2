@@ -44,14 +44,17 @@ export default class SmallGroceryShopSecondTableScreen extends Component {
             category1Profit: '600',
             category2Profit: '300',
             category3Profit: '100',
-            totalOfTotalBuyingPrice: '5000',
-            totalOfTotalSellingPrice: '6000',
-            totalOfProfit: '1000',
+            totalOfTotalBuyingPrice: '',
+            totalOfTotalSellingPrice: '',
+            totalOfProfit: '',
             lossPercentage:'40',
             netProfitPerMonth:'1960',
             monthlyBuyingPrice:'10000',
             monthlySellingPrice:'12000',
-            monthlyProfit:'2000'
+            monthlyProfit:'2000',
+            catcat2cat3BuyingPrice:'',
+            cat1cat2cat3SellingPrice:'',
+            cat1cat2cat3Profit:''
         }
         this.state.tableHeading = tableHeading
         //this.state.value = this.props.route.params.value
@@ -78,15 +81,15 @@ export default class SmallGroceryShopSecondTableScreen extends Component {
     }
 
     calculation = () => {
-        var result = this.state.category1BuyingPrice - this.state.category1SellingPrice
+        var result =  this.state.category1SellingPrice  - this.state.category1BuyingPrice
         this.setState({ category1Profit: result })
-        var result1 = this.state.categor2BuyingPrice - this.state.category2SellingPrice
+        var result1 = this.state.category2SellingPrice - this.state.categor2BuyingPrice
         this.setState({ category2Profit: result1 })
-        var result2 = this.state.category3BuyingPrice - this.state.category3SellingPrice
+        var result2 = this.state.category3SellingPrice - this.state.category3BuyingPrice
         this.setState({ category3Profit: result2 })
-        var result3 = this.state.category1BuyingPrice + this.state.categor2BuyingPrice + this.state.category3BuyingPrice
+        var result3 = parseInt(this.state.category1BuyingPrice) + parseInt(this.state.categor2BuyingPrice) + parseInt(this.state.category3BuyingPrice)
         this.setState({ totalOfTotalBuyingPrice: result3 })
-        var result4 = this.state.category1SellingPrice + this.state.category2SellingPrice + this.state.category3SellingPrice
+        var result4 = parseInt(this.state.category1SellingPrice) + parseInt(this.state.category2SellingPrice) + parseInt(this.state.category3SellingPrice)
         this.setState({ totalOfTotalSellingPrice: result4 })
         var result5 = result + result1 + result2
         this.setState({ totalOfProfit: result5 })
@@ -326,17 +329,16 @@ export default class SmallGroceryShopSecondTableScreen extends Component {
                                     <Text>Per cycle (15 days) expenditure and profit</Text>
                                 </View>
                                 <View style={{ width: widthToDp("17%") }}>
-                                    <Text style={{ marginLeft: widthToDp("3%") }}>Rs 9</Text>
+                                    <Text style={{ marginLeft: widthToDp("3%") }}>Rs {this.state.totalOfTotalBuyingPrice}</Text>
                                 </View>
 
                                 <View style={{ width: widthToDp("17%") }}>
-                                    <Text style={{ marginLeft: widthToDp("3%") }}>Rs {this.state.perdaysellingvaluetotal}</Text>
+                                    <Text style={{ marginLeft: widthToDp("3%") }}>Rs {this.state.totalOfTotalSellingPrice}</Text>
                                 </View>
 
                                 <View style={{ width: widthToDp("17%") }}>
-                                    <Text style={{ marginLeft: widthToDp("3%") }}>Rs {this.state.perdaysellingvaluetotal}</Text>
+                                    <Text style={{ marginLeft: widthToDp("3%") }}>Rs {this.state.totalOfProfit}</Text>
                                 </View>
-
                             </View>
 
 
@@ -365,6 +367,7 @@ export default class SmallGroceryShopSecondTableScreen extends Component {
                                     <Input
                                         style={{ borderWidth: 1 }}
                                         onChangeText={(data) => this.setState({ lossPercentage: data })}
+                                        defaultValue={"40"}
                                         keyboardType="number-pad"
                                     />
                                 </View>
