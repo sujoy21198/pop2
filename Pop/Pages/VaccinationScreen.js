@@ -42,7 +42,8 @@ export default class VaccinationScreen extends Component {
             tableHeading: [],
             value: '',
             vaccine: [],
-            livestockName:''
+            livestockName:'',
+            vaccineTotalCost: 0
         }
         this.state.tableHeading = tableHeading
         this.state.value = this.props.route.params.value
@@ -50,7 +51,7 @@ export default class VaccinationScreen extends Component {
         //alert(this.state.livestockName)
     }
     componentDidMount() {
-        this.getVaccinesFromOffline()
+        this.getVaccinesFromOffline();
     }
     getVaccinesFromOffline = async () => {
         try {
@@ -61,7 +62,13 @@ export default class VaccinationScreen extends Component {
             var specificObject = parsed.find((i) => i.username === username)
             var livestockwisevaccine = specificObject.vaccination.filter((i) => i.type === this.state.value)
             vaccine = livestockwisevaccine
-            this.setState({ vaccine: vaccine })
+            let vaccineTotalCost = 0;
+            vaccine.map(i => {
+                if(i.cost) {
+                    vaccineTotalCost += i.cost;
+                }
+            })
+            this.setState({ vaccine: vaccine, vaccineTotalCost }, () => vaccineTotalCost = 0);
             //console.log(livestockwisevaccine)
         } catch (error) {
             alert(error)
@@ -271,8 +278,8 @@ export default class VaccinationScreen extends Component {
                                         )
                                     })
                                 } */}
-                                <View style={{ flexDirection: 'row' }}>
-                                    <View style={{ width: widthToDp("15%"), marginLeft: widthToDp("1.5%") }}>
+                                <View style={{ flexDirection: 'row', width: widthToDp("100%") }}>
+                                    <View style={{ width: widthToDp("33%"), marginLeft: widthToDp("1.5%") }}>
                                         {/* <Text style={{ marginTop: heightToDp("2%") }}>Eggs</Text>
                                         <Text style={{ marginTop: heightToDp("5%") }}>Adult Bird</Text> */}
                                         {
@@ -290,7 +297,7 @@ export default class VaccinationScreen extends Component {
                                         <Text style={{ marginTop: heightToDp("2%") }}>kids</Text>
                                     </View> */}
                                     
-                                    <View style={{ width: widthToDp("14%"), marginLeft: widthToDp("1.5%") }}>
+                                    <View style={{ width: widthToDp("15%"), marginLeft: widthToDp("3.3%") }}>
                                         {/* <Text style={{ marginTop: heightToDp("2%") }}>Rs 5.00 per piece</Text>
                                         <Text style={{ marginTop: heightToDp("2%") }}>Rs 300 per bird</Text> */}
                                         {
@@ -302,14 +309,16 @@ export default class VaccinationScreen extends Component {
                                         }
 
                                     </View>
-                                    <View style={{ width: widthToDp("14%"), marginLeft: widthToDp("10%") }}>
+                                    <View style={{ width: widthToDp("25%"), marginLeft: widthToDp("10%") }}>
                                         {/* <Text style={{ marginTop: heightToDp("2%") }}>Rs {this.state.totalPriceEggs}</Text>
                                         <Text style={{ marginTop: heightToDp("5%") }}>Rs {this.state.totalPriceAdultBrids}</Text> */}
                                         {
                                             vaccine.map((i) => {
-                                                return (
-                                                    <Text style={{ marginBottom: heightToDp("4%") }}>{i.interval} months</Text>
-                                                )
+                                                if(i.interval) {
+                                                    return (
+                                                        <Text style={{ marginBottom: heightToDp("4%") }}>{i.interval} months</Text>
+                                                    )
+                                                }                                                
                                             })
                                         }
 
@@ -318,12 +327,17 @@ export default class VaccinationScreen extends Component {
                             </View>
 
                             <View style={{ borderWidth: 1, height: heightToDp("8%"), width: widthToDp("83%"), marginLeft: widthToDp("3%"), marginTop: heightToDp("0%"), flexDirection: 'row' }}>
-                                <View style={{marginTop:heightToDp("2%"),marginLeft:widthToDp("2%"),width:widthToDp("11%")}}>
+                                <View style={{marginTop:heightToDp("2%"),marginLeft:widthToDp("2%"),width:widthToDp("40%")}}>
                                     <Text>TOTAL</Text>
                                 </View>
 
-                                <View style={{marginTop:heightToDp("2%"),marginLeft:widthToDp("30%"),width:widthToDp("20%")}}>
-                                    <Text>130</Text>
+                                <View style={{marginTop:heightToDp("2%"),width:widthToDp("20%")}}>
+                                    {
+                                        this.state.vaccineTotalCost > 0 &&
+                                        <Text>
+                                            {this.state.vaccineTotalCost}
+                                        </Text>
+                                    }
                                 </View>
 
                             </View>
