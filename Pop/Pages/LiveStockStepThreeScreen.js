@@ -215,7 +215,7 @@ export default class LiveStockStepThreeScreen extends Component {
             // })
             this.props.navigation.navigate({
                 name: 'VaccinationScreen',
-                params: { value: 0 }
+                params: { value: 0 , name : this.state.livestockName}
             })
         } else if (this.state.livestockName === 'Pig') {
             // this.props.navigation.navigate({
@@ -229,7 +229,7 @@ export default class LiveStockStepThreeScreen extends Component {
             // })
             this.props.navigation.navigate({
                 name: 'VaccinationScreen',
-                params: { value: 2 }
+                params: { value: 2, name : this.state.livestockName }
             })
         } else if (this.state.livestockName === test) {
             // this.props.navigation.navigate({
@@ -243,7 +243,7 @@ export default class LiveStockStepThreeScreen extends Component {
             // })
             this.props.navigation.navigate({
                 name: 'VaccinationScreen',
-                params: { value: 1 }
+                params: { value: 1 , name : this.state.livestockName }
             })
         }
     }

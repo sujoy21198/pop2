@@ -30,7 +30,7 @@ const months = [
 
 const tableHeading = [
     { 'name': 'Items', 'birth': '1st Birth', 'age': '16 months old', 'numbers': '1', 'unitPrice': '4000', 'totalPriceInRupees': '5000' },
-    { 'name': 'No of vaccines', 'birth': '2nd Birth', 'age': '8 months old', 'numbers': '1', 'unitPrice': '4000', 'totalPriceInRupees': '5000' },
+    {  'birth': '2nd Birth', 'age': '8 months old', 'numbers': '1', 'unitPrice': '4000', 'totalPriceInRupees': '5000' },
     { 'name': 'Cost(INR)', 'birth': '3rd Birth', 'age': 'kid', 'numbers': '1', 'unitPrice': '4000', 'totalPriceInRupees': '5000' },
     { 'name': 'Interval' },
 ]
@@ -41,11 +41,13 @@ export default class VaccinationScreen extends Component {
         this.state = {
             tableHeading: [],
             value: '',
-            vaccine: []
+            vaccine: [],
+            livestockName:''
         }
         this.state.tableHeading = tableHeading
         this.state.value = this.props.route.params.value
-        //alert(this.state.value)
+        this.state.livestockName = this.props.route.params.name
+        //alert(this.state.livestockName)
     }
     componentDidMount() {
         this.getVaccinesFromOffline()
@@ -213,7 +215,7 @@ export default class VaccinationScreen extends Component {
                 <View style={{ borderBottomColor: BaseColor.Stroke, borderBottomWidth: 1, marginTop: heightToDp('1.5%'), width: widthToDp("100%") }}></View>
                 <ScrollView>
                     <View style={{ backgroundColor: BaseColor.Red, height: heightToDp("90%"), alignSelf: 'center', width: widthToDp("90%"), borderRadius: 10, marginTop: heightToDp('1.5%') }}>
-                        <Text style={{ color: "#fff", fontSize: widthToDp("5%"), marginLeft: widthToDp("5%"), marginTop: heightToDp("1%"), fontFamily: 'Oswald-Medium' }}>Immunization cost table </Text>
+                        <Text style={{ color: "#fff", fontSize: widthToDp("4%"), marginLeft: widthToDp("5%"), marginTop: heightToDp("1%"), fontFamily: 'Oswald-Medium' }}>Immunization cost table  for 1 {this.state.livestockName} per 2 year</Text>
                         <View style={{ backgroundColor: "white", height: heightToDp("85.5%"), alignSelf: 'center', width: widthToDp("90%"), marginTop: heightToDp('2%'), borderBottomLeftRadius: 10, borderBottomRightRadius: 10 }}>
                             {/* <View style={{ flexDirection: 'row' }}>
                                 <Text style={{ fontSize: widthToDp("5%"), marginLeft: widthToDp("5%"), marginTop: heightToDp("1.5%"), fontFamily: 'Oswald-Medium' }}>Income from </Text>
@@ -287,28 +289,7 @@ export default class VaccinationScreen extends Component {
                                         <Text style={{ marginTop: heightToDp("2%") }}>8 months old</Text>
                                         <Text style={{ marginTop: heightToDp("2%") }}>kids</Text>
                                     </View> */}
-                                    <View style={{ width: widthToDp("18%"), marginLeft: widthToDp("6%"), height: heightToDp("30%") }}>
-                                        {/* <Text style={{ marginTop: heightToDp("2%") }}>{this.state.eggQuantity}</Text>
-                                        <Text style={{ marginTop: heightToDp("5%") }}>{this.state.birdQuantity}</Text> */}
-                                        {
-                                            vaccine.map((i) => {
-                                                return (
-                                                    <View style={{ height: heightToDp("6%") }}>
-                                                        {/* <Text style={{ marginBottom: heightToDp("1.5%") }}>{i.noOfTime}</Text> */}
-                                                        <Input
-                                                            style={{}}
-                                                            editable={false}
-                                                            onChangeText={(data) => this.inputValue(data)}
-                                                            defaultValue={'1'}
-                                                            keyboardType="number-pad"
-                                                        />
-                                                    </View>
-
-                                                )
-                                            })
-                                        }
-
-                                    </View>
+                                    
                                     <View style={{ width: widthToDp("14%"), marginLeft: widthToDp("1.5%") }}>
                                         {/* <Text style={{ marginTop: heightToDp("2%") }}>Rs 5.00 per piece</Text>
                                         <Text style={{ marginTop: heightToDp("2%") }}>Rs 300 per bird</Text> */}
@@ -327,7 +308,7 @@ export default class VaccinationScreen extends Component {
                                         {
                                             vaccine.map((i) => {
                                                 return (
-                                                    <Text style={{ marginBottom: heightToDp("4%") }}>{i.interval}</Text>
+                                                    <Text style={{ marginBottom: heightToDp("4%") }}>{i.interval} months</Text>
                                                 )
                                             })
                                         }
