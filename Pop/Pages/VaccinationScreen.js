@@ -303,7 +303,7 @@ export default class VaccinationScreen extends Component {
                                         {
                                             vaccine.map((i) => {
                                                 return (
-                                                    <Text style={{ marginBottom: heightToDp("4%"), marginLeft: widthToDp("5%") }}>{i.cost}</Text>
+                                                    <Text style={{ marginBottom: heightToDp("4%"), marginLeft: widthToDp("5%") }}>{i.cost>0 ? i.cost : "-"}</Text>
                                                 )
                                             })
                                         }
@@ -332,12 +332,9 @@ export default class VaccinationScreen extends Component {
                                 </View>
 
                                 <View style={{marginTop:heightToDp("2%"),width:widthToDp("20%")}}>
-                                    {
-                                        this.state.vaccineTotalCost > 0 &&
-                                        <Text>
-                                            {this.state.vaccineTotalCost}
-                                        </Text>
-                                    }
+                                    <Text>
+                                        {this.state.vaccineTotalCost > 0 ? this.state.vaccineTotalCost : "-"}
+                                    </Text>
                                 </View>
 
                             </View>
