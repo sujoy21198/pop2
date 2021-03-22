@@ -252,7 +252,7 @@ export default class SmallGroceryShopSecondTableScreen extends Component {
                                             {/* <Text style={{ marginBottom: heightToDp("1.5%") }}>{i.noOfTime}</Text> */}
                                             <Input
                                                 style={{ borderWidth: 1 }}
-                                                placeholder={this.state.category1BuyingPrice}
+                                                placeholder={"3000"}
                                                 onChangeText={(data) => this.setState({ category1BuyingPrice: data })}
                                                 keyboardType="number-pad"
                                             />
@@ -262,7 +262,7 @@ export default class SmallGroceryShopSecondTableScreen extends Component {
                                             {/* <Text style={{ marginBottom: heightToDp("1.5%") }}>{i.noOfTime}</Text> */}
                                             <Input
                                                 style={{ borderWidth: 1 }}
-                                                placeholder={this.state.categor2BuyingPrice}
+                                                placeholder={"1500"}
                                                 onChangeText={(data) => this.setState({ categor2BuyingPrice: data })}
                                                 keyboardType="number-pad"
                                             />
@@ -272,7 +272,7 @@ export default class SmallGroceryShopSecondTableScreen extends Component {
                                             {/* <Text style={{ marginBottom: heightToDp("1.5%") }}>{i.noOfTime}</Text> */}
                                             <Input
                                                 style={{ borderWidth: 1 }}
-                                                placeholder={this.state.category3BuyingPrice}
+                                                placeholder={"500"}
                                                 onChangeText={(data) => this.setState({ category3BuyingPrice: data })}
                                                 keyboardType="number-pad"
                                             />
@@ -286,7 +286,7 @@ export default class SmallGroceryShopSecondTableScreen extends Component {
                                             {/* <Text style={{ marginBottom: heightToDp("1.5%") }}>{i.noOfTime}</Text> */}
                                             <Input
                                                 style={{ borderWidth: 1 }}
-                                                placeholder={this.state.category1SellingPrice}
+                                                placeholder={"3600"}
                                                 onChangeText={(data) => this.setState({ category1SellingPrice: data })}
                                                 keyboardType="number-pad"
                                             />
@@ -296,7 +296,7 @@ export default class SmallGroceryShopSecondTableScreen extends Component {
                                             {/* <Text style={{ marginBottom: heightToDp("1.5%") }}>{i.noOfTime}</Text> */}
                                             <Input
                                                 style={{ borderWidth: 1 }}
-                                                placeholder={this.state.category2SellingPrice}
+                                                placeholder={"1800"}
                                                 onChangeText={(data) => this.setState({ category2SellingPrice: data })}
                                                 keyboardType="number-pad"
                                             />
@@ -307,7 +307,7 @@ export default class SmallGroceryShopSecondTableScreen extends Component {
                                             {/* <Text style={{ marginBottom: heightToDp("1.5%") }}>{i.noOfTime}</Text> */}
                                             <Input
                                                 style={{ borderWidth: 1 }}
-                                                placeholder={this.state.category3SellingPrice}
+                                                placeholder={"600"}
                                                 onChangeText={(data) => this.setState({ category3SellingPrice: data })}
                                                 keyboardType="number-pad"
                                             />

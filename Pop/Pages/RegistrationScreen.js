@@ -23,12 +23,15 @@ import CustomIndicator from '../Core/CustomIndicator'
 import LanguageChange from '../Core/LanguageChange'
 import Language from '../Core/Languages'
 import DialogInput from 'react-native-dialog-input';
+import { TextInput } from 'react-native';
 
 
 const radio_props = [
   { label: "OTP", value: 0 },
   { label: "BLOCK PASSWORD", value: 1 }
 ]
+
+const validationStyle = ({marginLeft: widthToDp("8%"), color: '#8B0000'});
 
 export default class RegistrationScreen extends Component {
 
@@ -123,10 +126,10 @@ export default class RegistrationScreen extends Component {
     this.setState({ isLoading: true })
     //otp
     
-    if (this.state.age < 12 && this.state.age >=60) {
+    if (this.state.age < 12 && this.state.age >=100) {
       this.setState({ isLoading: false })
       return Toast.show({
-        text: "Age must be grater than 12 and less than 60",
+        text: "Age must be grater than 12 and less than 100",
         duration: 3000,
         type: 'danger'
       })
@@ -180,6 +183,7 @@ export default class RegistrationScreen extends Component {
           type: 'success',
           duration: 3000
         })
+        this.setState({ isLoading: false, value: 1 })
       } else {
         load = false
         Toast.show({
@@ -202,28 +206,20 @@ export default class RegistrationScreen extends Component {
       //     name: 'DashBoardScreen'
       // })
       
-      // this.props.navigation.reset({
-      //   index: 0,
-      //   routes: [{
-      //     name: "SigninScreen",
-      //     params: { selectedLanguage: this.state.selectedLanguage }
-      //   }]
-      // });
+      this.props.navigation.reset({
+        index: 0,
+        routes: [{
+          name: "SigninScreen",
+          params: { selectedLanguage: this.state.selectedLanguage }
+        }]
+      });
     }else if(this.state.value === 0 && this.state.phoneNumber != ''){
       this.setState({ isDialogVisible: true })
     }
   }
 
-  ageCalculator = (date) => {
+  ageValidator= (data) => {
 
-    var currentyear = new Date().getFullYear();
-    //alert(JSON.stringify(date).length)
-    var dateFormat = JSON.stringify(date)
-    var format = dateFormat.toString().replace(/['"]+/g, '')
-    var year = format.substr(format.length - 4)
-    var age = currentyear - year
-    this.setState({ date: date })
-    this.setState({ age: age })
   }
 
   genderPicker = (value) => {
@@ -305,12 +301,17 @@ export default class RegistrationScreen extends Component {
         </View>
 
         <View style={{ marginTop: heightToDp("5%"), marginLeft: widthToDp("8%") }}>
-          <FloatingLabel
+          <Text style={[styles.labelInput, {marginLeft: widthToDp("2%")}]}>{LanguageChange.fullname}</Text>
+          <Input 
+            style={[styles.input, styles.formInput]}
+            onChangeText={(value) => this.FullName(value)}
+          />
+          {/* <FloatingLabel
             labelStyle={styles.labelInput}
             inputStyle={styles.input}
             style={styles.formInput}
             onChangeText={(value) => this.FullName(value)}
-          >{LanguageChange.fullname}</FloatingLabel>
+          >{LanguageChange.fullname}</FloatingLabel> */}
         </View>
         <View style={{ marginTop: heightToDp("5%"), marginLeft: widthToDp("8%"), flexDirection: 'row' }}>
           <TouchableOpacity style={{ flexDirection: 'row' }} onPress={() => this.RBSheet.open()}>
@@ -368,54 +369,61 @@ export default class RegistrationScreen extends Component {
         <View style={{ borderBottomColor: 'black', borderBottomWidth: 1, marginTop: heightToDp('0.1%'), width: widthToDp("80%"), marginLeft: widthToDp("8.2%") }}></View>
 
         <View style={{ marginTop: heightToDp("2.5%"), marginLeft: widthToDp("8%") }}>
-          <FloatingLabel
-            labelStyle={styles.labelInput}
-            inputStyle={styles.input}
-            style={styles.formInput}
+          <Text style={[styles.labelInput, {marginLeft: widthToDp("2%")}]}>{LanguageChange.age}</Text>
+          <Input 
+            style={[styles.input, styles.formInput]}
+            onChangeText={(text) => this.setState({ age: text })}
             keyboardType='numeric'
-            onChangeText={(text) => { this.setState({ age: text }) }}
-          // onBlur={this.onBlur}
-          >{LanguageChange.age}</FloatingLabel>
+          />
         </View>
+        {
+          this.state.age!=="" && (this.state.age < 12 || this.state.age > 100) &&
+          <Text style={validationStyle}>Age must be within 12 and 100 years</Text>
+        }
         <View style={{ marginTop: heightToDp("2.5%"), marginLeft: widthToDp("8%") }}>
-          <FloatingLabel
-            labelStyle={styles.labelInput}
-            inputStyle={styles.input}
-            style={styles.formInput}
+          <Text style={[styles.labelInput, {marginLeft: widthToDp("2%")}]}>{LanguageChange.contactNumber}</Text>
+          <Input 
+            style={[styles.input, styles.formInput]}
+            onChangeText={(text) => { this.setState({phoneNumber: text}) }}
             keyboardType='numeric'
-            onChangeText={(text) => { this.setState({ phoneNumber: text }) }}
-          // onBlur={this.onBlur}
-          >{LanguageChange.contactNumber}</FloatingLabel>
+          />
         </View>
+        {
+          (this.state.phoneNumber!=="" && this.state.phoneNumber.length !== 10) &&
+          <Text style={validationStyle}>Contact Number must be of 10 digit</Text>
+        }
         <View style={{ marginTop: heightToDp("2.5%"), marginLeft: widthToDp("8%") }}>
-          <FloatingLabel
-            labelStyle={styles.labelInput}
-            inputStyle={styles.input}
-            style={styles.formInput}
+          <Text style={[styles.labelInput, {marginLeft: widthToDp("2%")}]}>{LanguageChange.username}</Text>
+          <Input 
+            style={[styles.input, styles.formInput]}
             onChangeText={(text) => { this.setState({ username: text }) }}
-          // onBlur={this.onBlur}
-          >{LanguageChange.username}</FloatingLabel>
+          />
         </View>
         <View style={{ marginTop: heightToDp("2.5%"), marginLeft: widthToDp("8%") }}>
-          <FloatingLabel
-            labelStyle={styles.labelInput}
-            inputStyle={styles.input}
-            style={styles.formInput}
-            password={this.state.passwordVisibility}
+          <Text style={[styles.labelInput, {marginLeft: widthToDp("2%")}]}>{LanguageChange.password}</Text>
+          <Input 
+            style={[styles.input, styles.formInput]}
             onChangeText={(text) => { this.setState({ password: text }) }}
-          // onBlur={this.onBlur}
-          >{LanguageChange.password}</FloatingLabel>
+            secureTextEntry={this.state.passwordVisibility}
+          />
         </View>
+        {
+          (this.state.password!=="" && this.state.password.length < 8) &&
+          <Text style={validationStyle}>Password should contain at least 8 characters</Text>
+        }
         <View style={{ marginTop: heightToDp("2.5%"), marginLeft: widthToDp("8%") }}>
-          <FloatingLabel
-            labelStyle={styles.labelInput}
-            inputStyle={styles.input}
-            style={styles.formInput}
-            password={this.state.passwordVisibility}
+          <Text style={[styles.labelInput, {marginLeft: widthToDp("2%")}]}>{LanguageChange.confirmPassword}</Text>
+          <Input 
+            style={[styles.input, styles.formInput]}
             onChangeText={(text) => { this.setState({ confirmPassword: text }) }}
-          // onBlur={this.onBlur}
-          >{LanguageChange.confirmPassword}</FloatingLabel>
+            secureTextEntry={this.state.passwordVisibility}
+          />
         </View>
+        {
+          this.state.password !== "" && this.state.confirmPassword !== "" &&
+          this.state.password !== this.state.confirmPassword &&
+          <Text style={validationStyle}>Password & Confirm Password should match</Text>
+        }
         <View style={{ marginTop: heightToDp("5%"), marginLeft: widthToDp("8%") }}>
           <TouchableOpacity style={{ flexDirection: 'row' }} onPress={() => this.RBSheet3.open()}>
             <View style={{ width: widthToDp("30%") }}>
@@ -653,24 +661,21 @@ export default class RegistrationScreen extends Component {
         </View>
         <View style={{ borderBottomColor: 'black', borderBottomWidth: 1, marginTop: heightToDp('0.1%'), width: widthToDp("80%"), marginLeft: widthToDp("8.2%") }}></View>
         <View style={{ marginTop: heightToDp("2.5%"), marginLeft: widthToDp("8%") }}>
-          <FloatingLabel
-            labelStyle={styles.labelInput}
-            inputStyle={styles.input}
-            style={styles.formInput}
+          <Text style={[styles.labelInput, {marginLeft: widthToDp("2%")}]}>{LanguageChange.participantNumber}</Text>
+          <Input 
+            style={[styles.input, styles.formInput]}
             onChangeText={(text) => { this.setState({ participantNumber: text }) }}
-          // onBlur={this.onBlur}
-          >{LanguageChange.participantNumber}</FloatingLabel>
+            secureTextEntry={this.state.passwordVisibility}
+          />
         </View>
-        <View style={{ marginTop: heightToDp("5%"), marginLeft: widthToDp("8%") }}>
-          {/* <FloatingLabel
-              labelStyle={styles.labelInput}
-              inputStyle={styles.input}
-              style={styles.formInput}
-            // onBlur={this.onBlur}
-            >{this.state.deviceId}</FloatingLabel> */}
-          <Text style={{ fontSize: widthToDp("4.6%"), marginLeft: widthToDp("2%"), fontFamily: 'Oswald-Medium' }}>{this.state.deviceId}</Text>
-          <View style={{ borderBottomColor: 'black', borderBottomWidth: 1, marginTop: heightToDp('0.1%'), width: widthToDp("80%"), marginLeft: widthToDp("1%") }}></View>
-        </View>
+        <Input 
+          style={{
+            height: 0,
+            width: 0
+          }} 
+          disabled
+          value={this.state.deviceId}          
+        />
         <View style={{ flexDirection: 'row', marginTop: heightToDp("5%"), marginLeft: widthToDp("4%") }}>
           {/* <RadioForm
           formHorizontal={true}
