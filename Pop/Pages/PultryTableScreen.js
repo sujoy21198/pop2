@@ -35,17 +35,27 @@ const tableHeading = [
     { 'name': 'Total Cost' },
 ]
 
+const tableHeading2 = [
+    { 'name': 'Items', 'unitCost': '2500' },
+    { 'name': 'Feed', 'unitCost': '2500' },
+    { 'name': 'Deworming and vaccination', 'unitCost': '1500' }
+]
+
 export default class PultryTableScreen extends Component {
     constructor(props) {
         super(props)
         this.state = {
             numberhens: '1',
             tableHeading: [],
-            totalPriceEggs:'150',
-            totalPriceAdultBrids:'2400',
-            eggQuantity:'30',
-            birdQuantity:'8',
-            total:'2550'
+            totalPriceEggs: '150',
+            totalPriceAdultBrids: '2400',
+            eggQuantity: '30',
+            birdQuantity: '8',
+            total: '2550',
+            netProfit: '1550',
+            feed: '',
+            vaccination: '',
+            totalB: ''
         }
         this.state.tableHeading = tableHeading
     }
@@ -67,23 +77,54 @@ export default class PultryTableScreen extends Component {
     calculation = (data) => {
         //alert(data)
         this.state.numberhens = data
-        
+
         var eggQuantity = 30 * data
         var birdQuantity = 8 * data
         var totalPriceAdultBrids = birdQuantity * 300
         var totalPriceEggs = eggQuantity * 5
         var total = totalPriceAdultBrids + totalPriceEggs
+
+        var feed = 125 * data
+        var vaccination = 125 * data
+        var totalB = feed + vaccination
+        var netProfit = total - totalB
+
+
         this.setState({ totalPriceEggs: totalPriceEggs })
         this.setState({ eggQuantity: eggQuantity })
         this.setState({ birdQuantity: birdQuantity })
         this.setState({ totalPriceAdultBrids: totalPriceAdultBrids })
-        
-        
+        this.setState({ netProfit: netProfit })
+        this.setState({ feed: feed })
+        this.setState({ vaccination: vaccination })
+        this.setState({ totalB: totalB })
+
+
         this.setState({ total: total })
 
     }
 
-    next = () => {
+    next = async() => {
+
+
+
+        try {
+            var date = new Date().getDate()
+            var month = new Date().getMonth() + 1
+            var year = new Date().getFullYear()
+            const expenseObject = { 'type': 'expense', 'category': 'Poultry livestock', 'amount': this.state.totalB, 'date': date + "/" + month + "/" + year }
+            const incomeObject = { 'type': 'income', 'category': 'Poultry livestock', 'amount': this.state.total, 'date': date + "/" + month + "/" + year }
+            let username = await AsyncStorage.getItem('username')
+            let user = await AsyncStorage.getItem('user');
+            let parsed = JSON.parse(user);
+            var specificObject = parsed.find((i) => i.username === username)
+            specificObject.moneyManagerData.push(expenseObject)
+            specificObject.moneyManagerData.push(incomeObject)
+            await AsyncStorage.setItem('user', JSON.stringify(parsed))
+            console.log(specificObject.moneyManagerData)
+        } catch (error) {
+            console.log(error)
+        }
         this.props.navigation.reset({
             index: 0,
             routes: [{ name: "DashBoardScreen" }]
@@ -176,7 +217,7 @@ export default class PultryTableScreen extends Component {
                     </TouchableOpacity>
                 </View>
                 <View style={{ borderBottomColor: BaseColor.Stroke, borderBottomWidth: 1, marginTop: heightToDp('1.5%'), width: widthToDp("100%") }}></View>
-                <ScrollView>
+                <ScrollView nestedScrollEnabled={true}>
                     <View style={{ backgroundColor: BaseColor.Red, height: heightToDp("90%"), alignSelf: 'center', width: widthToDp("90%"), borderRadius: 10, marginTop: heightToDp('1.5%') }}>
                         <Text style={{ color: "#fff", fontSize: widthToDp("5%"), marginLeft: widthToDp("5%"), marginTop: heightToDp("1%"), fontFamily: 'Oswald-Medium' }}>Income from hen per year</Text>
                         <View style={{ backgroundColor: "white", height: heightToDp("85.5%"), alignSelf: 'center', width: widthToDp("90%"), marginTop: heightToDp('2%'), borderBottomLeftRadius: 10, borderBottomRightRadius: 10 }}>
@@ -193,23 +234,24 @@ export default class PultryTableScreen extends Component {
                             <View>
                                 <Text>One desi hen gives 50 eggs in a year If a farmer keeps 4 hens, then he will get 200 eggs in a year.</Text>
                             </View>
-                            <View style={{ borderWidth: 1, height: heightToDp("8%"), width: widthToDp("83%"), marginLeft: widthToDp("3%"), marginTop: heightToDp("1.5%"), flexDirection: 'row' }}>
-                                {
-                                    tableHeading.map((i) => {
-                                        return (
-                                            <View style={{ width: widthToDp("19%"), marginLeft: widthToDp("1.5%") }}>
+                            <ScrollView nestedScrollEnabled={true}>
+                                <View style={{ borderWidth: 1, height: heightToDp("8%"), width: widthToDp("83%"), marginLeft: widthToDp("3%"), marginTop: heightToDp("1.5%"), flexDirection: 'row' }}>
+                                    {
+                                        tableHeading.map((i) => {
+                                            return (
+                                                <View style={{ width: widthToDp("19%"), marginLeft: widthToDp("1.5%") }}>
 
-                                                <Text style={{ marginTop: heightToDp("2%") }}>{i.name}</Text>
+                                                    <Text style={{ marginTop: heightToDp("2%") }}>{i.name}</Text>
 
-                                            </View>
+                                                </View>
 
-                                        )
-                                    })
-                                }
-                            </View>
+                                            )
+                                        })
+                                    }
+                                </View>
 
-                            <View style={{ borderWidth: 1, height: heightToDp("18%"), width: widthToDp("83%"), marginLeft: widthToDp("3%"), marginTop: heightToDp("0%") }}>
-                                {/* {
+                                <View style={{ borderWidth: 1, height: heightToDp("18%"), width: widthToDp("83%"), marginLeft: widthToDp("3%"), marginTop: heightToDp("0%") }}>
+                                    {/* {
                                     tableHeading.map((i) => {
                                         return (
                                             <View style={{ flexDirection: 'row' }}>
@@ -234,38 +276,126 @@ export default class PultryTableScreen extends Component {
                                         )
                                     })
                                 } */}
-                                <View style={{ flexDirection: 'row' }}>
-                                    <View style={{ width: widthToDp("18%"), marginLeft: widthToDp("1.5%") }}>
-                                        <Text style={{ marginTop: heightToDp("2%") }}>Eggs</Text>
-                                        <Text style={{ marginTop: heightToDp("5%") }}>Adult Bird</Text>
-                                    </View>
+                                    <View style={{ flexDirection: 'row' }}>
+                                        <View style={{ width: widthToDp("18%"), marginLeft: widthToDp("1.5%") }}>
+                                            <Text style={{ marginTop: heightToDp("2%") }}>Eggs</Text>
+                                            <Text style={{ marginTop: heightToDp("5%") }}>Adult Bird</Text>
+                                        </View>
 
-                                    {/* <View style={{ width: widthToDp("17%"), marginLeft: widthToDp("1.5%") }}>
+                                        {/* <View style={{ width: widthToDp("17%"), marginLeft: widthToDp("1.5%") }}>
                                         <Text style={{ marginTop: heightToDp("2%") }}>16 months old</Text>
                                         <Text style={{ marginTop: heightToDp("2%") }}>8 months old</Text>
                                         <Text style={{ marginTop: heightToDp("2%") }}>kids</Text>
                                     </View> */}
-                                    <View style={{ width: widthToDp("18%"), marginLeft: widthToDp("6%") }}>
-                                        <Text style={{ marginTop: heightToDp("2%") }}>{this.state.eggQuantity}</Text>
-                                        <Text style={{ marginTop: heightToDp("5%") }}>{this.state.birdQuantity}</Text>
-                                        
-                                    </View>
-                                    <View style={{ width: widthToDp("14%"), marginLeft: widthToDp("1.5%") }}>
-                                        <Text style={{ marginTop: heightToDp("2%") }}>Rs 5.00 per piece</Text>
-                                        <Text style={{ marginTop: heightToDp("2%") }}>Rs 300 per bird</Text>
-                                        
-                                    </View>
-                                    <View style={{ width: widthToDp("14%"), marginLeft: widthToDp("1.5%") }}>
-                                        <Text style={{ marginTop: heightToDp("2%") }}>Rs {this.state.totalPriceEggs}</Text>
-                                        <Text style={{ marginTop: heightToDp("5%") }}>Rs {this.state.totalPriceAdultBrids}</Text>
-                                        
+                                        <View style={{ width: widthToDp("18%"), marginLeft: widthToDp("6%") }}>
+                                            <Text style={{ marginTop: heightToDp("2%") }}>{this.state.eggQuantity}</Text>
+                                            <Text style={{ marginTop: heightToDp("5%") }}>{this.state.birdQuantity}</Text>
+
+                                        </View>
+                                        <View style={{ width: widthToDp("14%"), marginLeft: widthToDp("1.5%") }}>
+                                            <Text style={{ marginTop: heightToDp("2%") }}>Rs 5.00 per piece</Text>
+                                            <Text style={{ marginTop: heightToDp("2%") }}>Rs 300 per bird</Text>
+
+                                        </View>
+                                        <View style={{ width: widthToDp("14%"), marginLeft: widthToDp("1.5%") }}>
+                                            <Text style={{ marginTop: heightToDp("2%") }}>Rs {this.state.totalPriceEggs}</Text>
+                                            <Text style={{ marginTop: heightToDp("5%") }}>Rs {this.state.totalPriceAdultBrids}</Text>
+
+                                        </View>
                                     </View>
                                 </View>
-                            </View>
-                            <View style={{ borderWidth: 1, height: heightToDp("8%"), width: widthToDp("83%"), marginLeft: widthToDp("3%"), marginTop: heightToDp("0%"), flexDirection: 'row' }}>
-                                <Text>Total (A)</Text>
-                                <Text style={{ marginLeft: widthToDp("40%") }}>Rs {this.state.total}</Text>
-                            </View>
+                                <View style={{ borderWidth: 1, height: heightToDp("8%"), width: widthToDp("83%"), marginLeft: widthToDp("3%"), marginTop: heightToDp("0%"), flexDirection: 'row' }}>
+                                    <Text>Total (A)</Text>
+                                    <Text style={{ marginLeft: widthToDp("40%") }}>Rs {this.state.total}</Text>
+                                </View>
+
+
+                                {/* table2 */}
+
+                                <View style={{ borderWidth: 1, height: heightToDp("8%"), width: widthToDp("83%"), marginLeft: widthToDp("3%"), marginTop: heightToDp("1.5%"), flexDirection: 'row' }}>
+                                    <View style={{ width: widthToDp("80%"), marginLeft: widthToDp("1.5%") }}>
+
+                                        <Text style={{ marginTop: heightToDp("2%") }}>Total expenditure for all poultry birds</Text>
+
+                                    </View>
+                                </View>
+
+                                <View style={{ borderWidth: 1, height: heightToDp("18%"), width: widthToDp("83%"), marginLeft: widthToDp("3%"), marginTop: heightToDp("0%") }}>
+                                    {/* {
+                                    tableHeading.map((i) => {
+                                        return (
+                                            <View style={{ flexDirection: 'row' }}>
+                                                <View style={{ width: widthToDp("14%"), marginLeft: widthToDp("1.5%") }}>
+                                                    <Text style={{ marginTop: heightToDp("2%") }}>{i.birth}</Text>
+                                                </View>
+                                                <View style={{ width: widthToDp("17%"), marginLeft: widthToDp("1.5%") }}>
+                                                    <Text style={{ marginTop: heightToDp("2%") }}>{i.age}</Text>
+                                                </View>
+                                                <View style={{ width: widthToDp("10%"), marginLeft: widthToDp("6%") }}>
+                                                    <Text style={{ marginTop: heightToDp("2%") }}>{i.numbers}</Text>
+                                                </View>
+                                                <View style={{ width: widthToDp("14%"), marginLeft: widthToDp("1.5%") }}>
+                                                    <Text style={{ marginTop: heightToDp("2%") }}>{i.unitPrice}</Text>
+                                                </View>
+                                                <View style={{ width: widthToDp("14%"), marginLeft: widthToDp("1.5%") }}>
+                                                    <Text style={{ marginTop: heightToDp("2%") }}>{i.totalPriceInRupees}</Text>
+                                                </View>
+                                            </View>
+
+
+                                        )
+                                    })
+                                } */}
+                                    <View style={{ flexDirection: 'row' }}>
+                                        <View style={{ width: widthToDp("18%"), marginLeft: widthToDp("1.5%") }}>
+                                            {
+                                                tableHeading2.map((i) => {
+                                                    return (
+                                                        <View style={{ marginTop: widthToDp("4%") }}>
+                                                            <Text>{i.name}</Text>
+                                                        </View>
+                                                    );
+                                                })
+                                            }
+                                        </View>
+
+                                        {/* <View style={{ width: widthToDp("17%"), marginLeft: widthToDp("1.5%") }}>
+                                        <Text style={{ marginTop: heightToDp("2%") }}>16 months old</Text>
+                                        <Text style={{ marginTop: heightToDp("2%") }}>8 months old</Text>
+                                        <Text style={{ marginTop: heightToDp("2%") }}>kids</Text>
+                                    </View> */}
+                                        <View style={{ width: widthToDp("18%"), marginLeft: widthToDp("6%") }}>
+                                            <Text style={{ marginTop: heightToDp("7%") }}>LS</Text>
+                                            <Text style={{ marginTop: heightToDp("3%") }}>LS</Text>
+
+
+                                        </View>
+                                        <View style={{ width: widthToDp("14%"), marginLeft: widthToDp("1.5%") }}>
+                                            <View style={{ marginTop: heightToDp("2%") }}>
+                                                <Text style={{ marginTop: heightToDp("5%") }}>{this.state.feed}</Text>
+                                                <Text style={{ marginTop: heightToDp("3%") }}>{this.state.vaccination}</Text>
+                                            </View>
+
+                                        </View>
+
+                                    </View>
+                                </View>
+                                <View style={{ borderWidth: 1, height: heightToDp("8%"), width: widthToDp("83%"), marginLeft: widthToDp("3%"), marginTop: heightToDp("0%"), flexDirection: 'row' }}>
+                                    <Text>Total (B)</Text>
+                                    <Text style={{ marginLeft: widthToDp("40%") }}>Rs {this.state.totalB}</Text>
+                                </View>
+
+                                <View style={{ marginLeft: widthToDp("3%"), marginTop: ("4%") }}>
+                                    <View style={{ flexDirection: 'row' }}>
+                                        <Text>NET PROFIT(A-B) = </Text>
+                                        <Text>{this.state.netProfit}</Text>
+                                    </View>
+
+                                </View>
+
+                                <View style={{ marginTop: heightToDp("10%") }}></View>
+                            </ScrollView>
+
                         </View>
                     </View>
                     <View style={{ marginTop: heightToDp("10%") }}></View>
