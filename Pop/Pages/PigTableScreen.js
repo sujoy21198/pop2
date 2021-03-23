@@ -31,16 +31,16 @@ const months = [
 const tableHeading = [
     { 'name': 'Items', 'birth': '1st Birth', 'age': '16 months old', 'numbers': '1', 'unitPrice': '4000', 'totalPriceInRupees': '5000' },
     { 'name': 'Nos', 'birth': '2nd Birth', 'age': '8 months old', 'numbers': '1', 'unitPrice': '4000', 'totalPriceInRupees': '5000' },
-    { 'name': 'Unit Cost (INR)', 'birth': '3rd Birth', 'age': 'kid', 'numbers': '1', 'unitPrice': '4000', 'totalPriceInRupees': '5000' },
-    { 'name': 'Total Cost (INR)' },
+    { 'name': 'Unit Cost (₹)', 'birth': '3rd Birth', 'age': 'kid', 'numbers': '1', 'unitPrice': '4000', 'totalPriceInRupees': '5000' },
+    { 'name': 'Total Cost (₹)' },
 ]
 
 
 const tableHeading2 = [
     { 'name': 'Mother Pig', 'unitCost': '2500', 'heading': 'Items' },
     { 'name': 'Male Pig', 'unitCost': '2500', 'heading': 'Nos' },
-    { 'name': 'Young Pig', 'unitCost': '1500', 'heading': 'UnitCost (INR)' },
-    { 'name': 'Piglet', 'unitCost': '500', 'heading': 'Total Value after 1 year (INR)' },
+    { 'name': 'Young Pig', 'unitCost': '1500', 'heading': 'UnitCost (₹)' },
+    { 'name': 'Piglet', 'unitCost': '500', 'heading': 'Total Value after 1 year (₹)' },
 ]
 
 
@@ -299,7 +299,7 @@ export default class PigTableScreen extends Component {
                                             <Text style={{fontSize: 14}}>{this.state.numberPigs}</Text>
                                         </View>
                                         <View style={{width: widthToDp("20%")}}>
-                                            <Text style={{fontSize: 14}}>{this.state.unitCostmotherPig}</Text>
+                                            <Text style={{fontSize: 14}}>{"₹ " + this.state.unitCostmotherPig}</Text>
                                         </View>
                                         <View style={{width: widthToDp("15%")}}>
                                             <Text style={{fontSize: 14}}>₹ {this.state.totalCostmotherpig}</Text>
@@ -313,7 +313,7 @@ export default class PigTableScreen extends Component {
                                             <Text style={{fontSize: 14}}>{this.state.numberPigs}</Text>
                                         </View>   
                                         <View style={{width: widthToDp("20%")}}>
-                                            <Text style={{fontSize: 14}}>{this.state.unitCostmalePig}</Text>
+                                            <Text style={{fontSize: 14}}>{"₹ " + this.state.unitCostmalePig}</Text>
                                         </View>
                                         <View style={{width: widthToDp("15%")}}>
                                             <Text style={{fontSize: 14}}>₹ {this.state.totalcostMalePig}</Text>
@@ -327,7 +327,7 @@ export default class PigTableScreen extends Component {
                                             <Text style={{fontSize: 14}}>{this.state.numberPigs}</Text>
                                         </View>    
                                         <View style={{width: widthToDp("20%")}}>
-                                            <Text style={{fontSize: 14}}>{this.state.unitCostshedConstruction}</Text>
+                                            <Text style={{fontSize: 14}}>{"₹ " + this.state.unitCostshedConstruction}</Text>
                                         </View>
                                         <View style={{width: widthToDp("15%")}}>
                                             <Text style={{fontSize: 14}}>₹ {this.state.totalCostShedConstruction}</Text>
@@ -445,7 +445,7 @@ export default class PigTableScreen extends Component {
                                                 tableHeading2.map((i, key) => {
                                                     return (
                                                         <View style={{ marginTop: heightToDp(`${key===0 ? 2 : (key===1 || key===2) ? 1.7 : 1.8}%`) }}>
-                                                            <Text>{i.unitCost}</Text>
+                                                            <Text>{"₹ " + i.unitCost}</Text>
                                                         </View>
                                                     )
                                                 })
@@ -453,10 +453,10 @@ export default class PigTableScreen extends Component {
 
                                         </View>
                                         <View style={{ width: widthToDp("14%"), marginLeft: widthToDp("1.5%") }}>
-                                            <Text style={{ marginTop: heightToDp("2%") }}>{this.state.totalValueAfteroneYearForMotherPig}</Text>
-                                            <Text style={{ marginTop: heightToDp("1.8%") }}>{this.state.totalValueAfteroneYearForMalePig}</Text>
-                                            <Text style={{ marginTop: heightToDp("1.6%") }}>{this.state.totalValueAfteroneYearForYoungPig}</Text>
-                                            <Text style={{ marginTop: heightToDp("1.6%") }}>{this.state.totalValueAfteroneYearForPigletPig}</Text>
+                                            <Text style={{ marginTop: heightToDp("2%") }}>{"₹ " + this.state.totalValueAfteroneYearForMotherPig}</Text>
+                                            <Text style={{ marginTop: heightToDp("1.8%") }}>{"₹ " + this.state.totalValueAfteroneYearForMalePig}</Text>
+                                            <Text style={{ marginTop: heightToDp("1.6%") }}>{"₹ " + this.state.totalValueAfteroneYearForYoungPig}</Text>
+                                            <Text style={{ marginTop: heightToDp("1.6%") }}>{"₹ " + this.state.totalValueAfteroneYearForPigletPig}</Text>
 
                                         </View>
                                     </View>
@@ -469,7 +469,7 @@ export default class PigTableScreen extends Component {
                                 <View style={{ marginLeft: widthToDp("3%"), marginTop: ("4%") }}>
                                     <View style={{ flexDirection: 'row' }}>
                                         <Text>NET PROFIT (B -A) = </Text>
-                                        <Text>{this.state.netProfit}</Text>
+                                        <Text>{"₹ " + this.state.netProfit}</Text>
                                     </View>
 
                                 </View>

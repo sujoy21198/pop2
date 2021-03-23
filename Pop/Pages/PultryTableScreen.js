@@ -31,8 +31,8 @@ const months = [
 const tableHeading = [
     { 'name': 'Items', 'birth': '1st Birth', 'age': '16 months old', 'numbers': '1', 'unitPrice': '4000', 'totalPriceInRupees': '5000' },
     { 'name': 'Quantity', 'birth': '2nd Birth', 'age': '8 months old', 'numbers': '1', 'unitPrice': '4000', 'totalPriceInRupees': '5000' },
-    { 'name': 'Unit Cost (INR)', 'birth': '3rd Birth', 'age': 'kid', 'numbers': '1', 'unitPrice': '4000', 'totalPriceInRupees': '5000' },
-    { 'name': 'Total Cost (INR)' },
+    { 'name': 'Unit Cost (₹)', 'birth': '3rd Birth', 'age': 'kid', 'numbers': '1', 'unitPrice': '4000', 'totalPriceInRupees': '5000' },
+    { 'name': 'Total Cost (₹)' },
 ]
 
 const tableHeading2 = [
@@ -389,7 +389,7 @@ export default class PultryTableScreen extends Component {
                                 <View style={{ marginLeft: widthToDp("3%"), marginTop: ("4%") }}>
                                     <View style={{ flexDirection: 'row' }}>
                                         <Text>NET PROFIT(A-B) = </Text>
-                                        <Text>{this.state.netProfit}</Text>
+                                        <Text>{"₹ " + this.state.netProfit}</Text>
                                     </View>
 
                                 </View>

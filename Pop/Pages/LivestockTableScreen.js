@@ -32,8 +32,8 @@ const tableHeading = [
     { 'name': '', 'birth': '1st Birth', 'age': '16 months old', 'numbers': '1', 'unitPrice': '4000', 'totalPriceInRupees': '5000' },
     { 'name': 'Age till 2nd year end', 'birth': '2nd Birth', 'age': '8 months old', 'numbers': '1', 'unitPrice': '4000', 'totalPriceInRupees': '5000' },
     { 'name': 'Numbers', 'birth': '3rd Birth', 'age': 'kid', 'numbers': '1', 'unitPrice': '4000', 'totalPriceInRupees': '5000' },
-    { 'name': 'Unit Price (INR)' },
-    { 'name': 'Total Price (INR)' }
+    { 'name': 'Unit Price (₹)' },
+    { 'name': 'Total Price (₹)' }
 ]
 
 export default class LivestockTableScreen extends Component {
@@ -303,9 +303,9 @@ export default class LivestockTableScreen extends Component {
                                             <Text style={{ marginTop: heightToDp("2%"), fontSize: 14 }}>{this.state.numberGoats}</Text>
                                         </View>
                                         <View style={{ width: widthToDp("15.5%"), marginLeft: widthToDp("1.5%") }}>
-                                            <Text style={{ marginTop: heightToDp("2%"), fontSize: 14 }}>{this.state.unitPrice1stBirth}</Text>
-                                            <Text style={{ marginTop: heightToDp("2%"), fontSize: 14 }}>{this.state.unitPrice2ndBirth}</Text>
-                                            <Text style={{ marginTop: heightToDp("2%"), fontSize: 14 }}>{this.state.unitPrice3rdBirth}</Text>
+                                            <Text style={{ marginTop: heightToDp("2%"), fontSize: 14 }}>{"₹ " + this.state.unitPrice1stBirth}</Text>
+                                            <Text style={{ marginTop: heightToDp("2%"), fontSize: 14 }}>{"₹ " + this.state.unitPrice2ndBirth}</Text>
+                                            <Text style={{ marginTop: heightToDp("2%"), fontSize: 14 }}>{"₹ " + this.state.unitPrice3rdBirth}</Text>
                                         </View>
                                         <View style={{ width: widthToDp("14%"), marginLeft: widthToDp("1.5%") }}>
                                             <Text style={{ marginTop: heightToDp("2%"), fontSize: 14 }}>₹ {this.state.totalPrice1stBirth}</Text>
@@ -343,27 +343,27 @@ export default class LivestockTableScreen extends Component {
                                 <View style={{ borderWidth: 1, paddingVertical: heightToDp("1%"), width: widthToDp("83%"), marginLeft: widthToDp("3%"), marginTop: heightToDp("0%")}}>
                                     <View style={{flexDirection:'row', marginLeft: widthToDp("3%")}}>
                                         <Text style={{width:widthToDp("30%"), fontWeight: 'bold'}}>No. of Goats</Text>
-                                        <Text style={{width:widthToDp("30%"), fontWeight: 'bold'}}>Cost (INR)</Text>
+                                        <Text style={{width:widthToDp("30%"), fontWeight: 'bold'}}>Cost (₹)</Text>
                                         <Text style={{fontWeight: 'bold'}}>Total</Text>
                                     </View>
 
                                     <View style={{flexDirection:'row', marginLeft: widthToDp("3%")}}>
                                         <Text style={{width:widthToDp("30%")}}>{this.state.numberGoats}</Text>
                                         <Text style={{width:widthToDp("30%")}}>Supplementary</Text>
-                                        <Text>{this.state.totalExpenseforNgoats}</Text>
+                                        <Text>{"₹ " + this.state.totalExpenseforNgoats}</Text>
                                     </View>
 
 
                                     <View style={{flexDirection:'row', marginLeft: widthToDp("3%")}}>
                                         <Text style={{width:widthToDp("30%")}}>{this.state.numberGoats}</Text>
                                         <Text style={{width:widthToDp("30%")}}>Immunisation</Text>
-                                        <Text>{this.state.expenseForSupplementary}</Text>
+                                        <Text>{"₹ " + this.state.expenseForSupplementary}</Text>
                                     </View>
 
                                     <View style={{flexDirection:'row', marginLeft: widthToDp("3%"), marginTop: heightToDp("2%")}}>
                                         <Text style={{width:widthToDp("30%")}}>Total =</Text>
                                         <Text style={{width:widthToDp("30%")}}></Text>
-                                        <Text>{this.state.b}</Text>
+                                        <Text>{"₹ " + this.state.b}</Text>
                                     </View>
                                 </View>
 

@@ -31,7 +31,7 @@ const months = [
 const tableHeading = [
     { 'name': 'Items', 'birth': '1st Birth', 'age': '16 months old', 'numbers': '1', 'unitPrice': '4000', 'totalPriceInRupees': '5000' },
     {  'birth': '2nd Birth', 'age': '8 months old', 'numbers': '1', 'unitPrice': '4000', 'totalPriceInRupees': '5000' },
-    { 'name': 'Cost(INR)', 'birth': '3rd Birth', 'age': 'kid', 'numbers': '1', 'unitPrice': '4000', 'totalPriceInRupees': '5000' },
+    { 'name': 'Cost (₹)', 'birth': '3rd Birth', 'age': 'kid', 'numbers': '1', 'unitPrice': '4000', 'totalPriceInRupees': '5000' },
     { 'name': 'Interval' },
 ]
 
@@ -303,7 +303,7 @@ export default class VaccinationScreen extends Component {
                                         {
                                             vaccine.map((i) => {
                                                 return (
-                                                    <Text style={{ marginBottom: heightToDp("4%"), marginLeft: widthToDp("5%") }}>{i.cost>0 ? i.cost : "-"}</Text>
+                                                    <Text style={{ marginBottom: heightToDp("4%"), marginLeft: widthToDp("5%") }}>{i.cost>0 ? "₹ " + String(i.cost) : "-"}</Text>
                                                 )
                                             })
                                         }
@@ -333,7 +333,7 @@ export default class VaccinationScreen extends Component {
 
                                 <View style={{marginTop:heightToDp("2%"),width:widthToDp("20%")}}>
                                     <Text>
-                                        {this.state.vaccineTotalCost > 0 ? this.state.vaccineTotalCost : "-"}
+                                        {this.state.vaccineTotalCost > 0 ? "₹ " + this.state.vaccineTotalCost : "-"}
                                     </Text>
                                 </View>
 
