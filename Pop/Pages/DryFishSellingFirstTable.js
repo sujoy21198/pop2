@@ -33,8 +33,8 @@ const months = [
 const tableHeading = [
     { 'name': 'Items', 'items': 'Weighing Machine', 'unit': '1', 'unitPrice': '300', 'totalPrice': '300'},
     { 'name': 'Unit', 'items': 'Bamboo Container', 'unit': '1', 'unitPrice': '100', 'totalPrice': '100'},
-    { 'name': 'Unit Price'},
-    { 'name': 'Total Price' },
+    { 'name': 'Unit Price (₹)'},
+    { 'name': 'Total Price (₹)' },
 ]
 
 export default class DryFishSellingFirstTable extends Component {
@@ -360,11 +360,11 @@ export default class DryFishSellingFirstTable extends Component {
                                     tableHeading.map((i, key) => {
                                         return (
                                             <View style={{ 
-                                                width: widthToDp(`${i.name==="Unit" ? '15%' : '23%'}`), 
+                                                width: widthToDp(`${key===0 ? '22%' : key===1 ? '15%' : '23%'}`), 
                                                 marginLeft: key===0 ? widthToDp("1.5%") : 0 
                                             }}>
 
-                                                <Text style={{ marginTop: heightToDp("2%") }}>{i.name}</Text>
+                                                <Text style={{ marginTop: heightToDp("2%"), fontSize: widthToDp('3.8%') }}>{i.name}</Text>
 
                                             </View>
 
@@ -404,9 +404,9 @@ export default class DryFishSellingFirstTable extends Component {
                                         {/* <Text style={{ marginTop: heightToDp("2%") }}>Eggs</Text>
                                         <Text style={{ marginTop: heightToDp("5%") }}>Adult Bird</Text> */}
                                         {
-                                            tableHeading.map((i) => {
+                                            tableHeading.map((i, key) => {
                                                 return(
-                                                    <Text style={{ marginTop: heightToDp("4%") }}>{i.items}</Text>
+                                                    <Text style={{ marginTop: heightToDp(`${key===0 ? 3.8 : 1.5}%`), fontSize: widthToDp('3.5%') }}>{i.items}</Text>
                                                 )
                                             })
                                         }
@@ -423,7 +423,7 @@ export default class DryFishSellingFirstTable extends Component {
                                         {
                                             tableHeading.map((i) => {
                                                 return(
-                                                    <Text style={{ marginTop: heightToDp("4%") }}>{i.unit}</Text>
+                                                    <Text style={{ marginTop: heightToDp("4%"), fontSize: widthToDp('3.5%') }}>{i.unit}</Text>
                                                 )
                                             })
                                         }
@@ -434,9 +434,11 @@ export default class DryFishSellingFirstTable extends Component {
                                         <Text style={{ marginTop: heightToDp("2%") }}>Rs 300 per bird</Text> */}
                                         {
                                             tableHeading.map((i) => {
-                                                return(
-                                                    <Text style={{ marginTop: heightToDp("4%") }}>{i.unitPrice}</Text>
-                                                )
+                                                if(i.unitPrice) {
+                                                    return(
+                                                        <Text style={{ marginTop: heightToDp("4%"), fontSize: widthToDp('3.5%') }}>{"₹" + i.unitPrice}</Text>
+                                                    )
+                                                }                                                
                                             })
                                         }
 
@@ -446,9 +448,11 @@ export default class DryFishSellingFirstTable extends Component {
                                         <Text style={{ marginTop: heightToDp("5%") }}>Rs {this.state.totalPriceAdultBrids}</Text> */}
                                         {
                                             tableHeading.map((i) => {
-                                                return(
-                                                    <Text style={{ marginTop: heightToDp("4%") }}>{i.totalPrice}</Text>
-                                                )
+                                                if(i.totalPrice) {
+                                                    return(
+                                                        <Text style={{ marginTop: heightToDp("4%"), fontSize: widthToDp('3.5%') }}>{"₹" + i.totalPrice}</Text>
+                                                    )
+                                                }
                                             })
                                         }
 
@@ -457,10 +461,11 @@ export default class DryFishSellingFirstTable extends Component {
                             </View>
                             <View style={{ borderWidth: 1, height: heightToDp("8%"), width: widthToDp("83%"), marginLeft: widthToDp("3%"), marginTop: heightToDp("0%"), flexDirection: 'row' }}>
                                 <Text style={{
-                                    width: widthToDp(`${83/1.9}%`),
-                                    marginLeft: widthToDp("1.4%")
+                                    width: widthToDp(`${83/2}%`),
+                                    marginLeft: widthToDp("1.4%"), 
+                                    fontSize: widthToDp('3.7%')
                                 }}>One-time Expenditure</Text>
-                                <Text style={{marginLeft:widthToDp("20%")}}>Rs 400</Text>
+                                <Text style={{marginLeft:widthToDp("20%"), fontSize: widthToDp('3.8%')}}>₹ 400</Text>
                             </View>
                         </View>
                     </View>

@@ -241,7 +241,7 @@ export default class PultryTableScreen extends Component {
                                             return (
                                                 <View style={{ width: widthToDp("19%"), marginLeft: widthToDp("1.5%") }}>
 
-                                                    <Text style={{ marginTop: heightToDp("2%") }}>{i.name}</Text>
+                                                    <Text style={{ marginTop: heightToDp("2%"), fontSize: widthToDp('3.5%') }}>{i.name}</Text>
 
                                                 </View>
 
@@ -278,8 +278,8 @@ export default class PultryTableScreen extends Component {
                                 } */}
                                     <View style={{ flexDirection: 'row' }}>
                                         <View style={{ width: widthToDp("15%"), marginLeft: widthToDp("1.5%") }}>
-                                            <Text style={{ marginTop: heightToDp("2%") }}>Eggs</Text>
-                                            <Text style={{ marginTop: heightToDp("2%") }}>Adult Bird</Text>
+                                            <Text style={{ marginTop: heightToDp("2%"), fontSize: widthToDp('3.5%') }}>Eggs</Text>
+                                            <Text style={{ marginTop: heightToDp("2%"), fontSize: widthToDp('3.5%') }}>Adult Bird</Text>
                                         </View>
 
                                         {/* <View style={{ width: widthToDp("17%"), marginLeft: widthToDp("1.5%") }}>
@@ -288,27 +288,27 @@ export default class PultryTableScreen extends Component {
                                         <Text style={{ marginTop: heightToDp("2%") }}>kids</Text>
                                     </View> */}
                                         <View style={{ width: widthToDp("18%"), marginLeft: widthToDp("6%") }}>
-                                            <Text style={{ marginTop: heightToDp("2%") }}>{this.state.eggQuantity}</Text>
-                                            <Text style={{ marginTop: heightToDp("2.3%") }}>{this.state.birdQuantity}</Text>
+                                            <Text style={{ marginTop: heightToDp("2%"), fontSize: widthToDp('3.5%') }}>{this.state.eggQuantity}</Text>
+                                            <Text style={{ marginTop: heightToDp("2.3%"), fontSize: widthToDp('3.5%') }}>{this.state.birdQuantity}</Text>
 
                                         </View>
                                         <View style={{ width: widthToDp("20%"), marginLeft: widthToDp("1.5%") }}>
-                                            <Text style={{ marginTop: heightToDp("2%"), fontSize: 12.5 }}>₹ 5.00 per piece</Text>
-                                            <Text style={{ marginTop: heightToDp("1%"), fontSize: 12.5 }}>₹ 300 per bird</Text>
+                                            <Text style={{ marginTop: heightToDp("2%"), fontSize: widthToDp('3%') }}>₹ 5.00 per piece</Text>
+                                            <Text style={{ marginTop: heightToDp("1%"), fontSize: widthToDp('3%') }}>₹ 300 per bird</Text>
 
                                         </View>
                                         <View style={{ width: widthToDp("14%"), marginLeft: widthToDp("1.5%") }}>
-                                            <Text style={{ marginTop: heightToDp("2%"), fontSize: 12.5 }}>₹ {this.state.totalPriceEggs}</Text>
-                                            <Text style={{ marginTop: heightToDp("3%"), fontSize: 12.5 }}>₹ {this.state.totalPriceAdultBrids}</Text>
+                                            <Text style={{ marginTop: heightToDp("2%"), fontSize: widthToDp('3%') }}>₹ {this.state.totalPriceEggs}</Text>
+                                            <Text style={{ marginTop: heightToDp("3%"), fontSize: widthToDp('3%') }}>₹ {this.state.totalPriceAdultBrids}</Text>
 
                                         </View>
                                     </View>
                                 </View>
                                 <View style={{ borderWidth: 1, height: heightToDp("8%"), width: widthToDp("83%"), marginLeft: widthToDp("3%"), marginTop: heightToDp("0%"), flexDirection: 'row' }}>
                                     <View style={{width: widthToDp('20%'), marginLeft: widthToDp('1%')}}>
-                                        <Text>Total (A)</Text>
+                                        <Text style={{fontSize: widthToDp('3.5%')}}>Total (A)</Text>
                                     </View>
-                                    <Text style={{ marginLeft: widthToDp("40%") }}>₹ {this.state.total}</Text>
+                                    <Text style={{ marginLeft: widthToDp("40%"), fontSize: widthToDp('3.5%') }}>₹ {this.state.total}</Text>
                                 </View>
 
 
@@ -354,7 +354,7 @@ export default class PultryTableScreen extends Component {
                                                 tableHeading2.map((i) => {
                                                     return (
                                                         <View style={{ marginTop: widthToDp("4%") }}>
-                                                            <Text style={{fontSize: 14}}>{i.name}</Text>
+                                                            <Text style={{fontSize: widthToDp('3.5%')}}>{i.name}</Text>
                                                         </View>
                                                     );
                                                 })

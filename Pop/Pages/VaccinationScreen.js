@@ -239,9 +239,9 @@ export default class VaccinationScreen extends Component {
                             </View> */}
                             <View style={{ borderWidth: 1, height: heightToDp("8%"), width: widthToDp("83%"), marginLeft: widthToDp("3%"), marginTop: heightToDp("1.5%"), flexDirection: 'row' }}>
                                 {
-                                    tableHeading.map((i) => {
+                                    tableHeading.map((i, key) => {
                                         return (
-                                            <View style={{ width: widthToDp("19%"), marginLeft: widthToDp("1.5%") }}>
+                                            <View style={{ width: widthToDp(`${key===0 ? 13 : key===1 ? 15 : 21}%`), marginLeft: widthToDp("1.5%") }}>
 
                                                 <Text style={{ marginTop: heightToDp("2%") }}>{i.name}</Text>
 
@@ -279,13 +279,13 @@ export default class VaccinationScreen extends Component {
                                     })
                                 } */}
                                 <View style={{ flexDirection: 'row', width: widthToDp("100%") }}>
-                                    <View style={{ width: widthToDp("33%"), marginLeft: widthToDp("1.5%") }}>
+                                    <View style={{ width: widthToDp("24%"), marginLeft: widthToDp("1.5%") }}>
                                         {/* <Text style={{ marginTop: heightToDp("2%") }}>Eggs</Text>
                                         <Text style={{ marginTop: heightToDp("5%") }}>Adult Bird</Text> */}
                                         {
                                             vaccine.map((i) => {
                                                 return (
-                                                    <Text style={{ marginBottom: heightToDp("3.5%") }}>{i.item}</Text>
+                                                    <Text style={{ marginBottom: heightToDp("3.5%"), fontSize: widthToDp('3.5%') }}>{i.item}</Text>
                                                 )
                                             })
                                         }
@@ -297,26 +297,26 @@ export default class VaccinationScreen extends Component {
                                         <Text style={{ marginTop: heightToDp("2%") }}>kids</Text>
                                     </View> */}
                                     
-                                    <View style={{ width: widthToDp("15%"), marginLeft: widthToDp("3.3%") }}>
+                                    <View style={{ width: widthToDp("16%"), marginLeft: widthToDp("3.3%") }}>
                                         {/* <Text style={{ marginTop: heightToDp("2%") }}>Rs 5.00 per piece</Text>
                                         <Text style={{ marginTop: heightToDp("2%") }}>Rs 300 per bird</Text> */}
                                         {
                                             vaccine.map((i) => {
                                                 return (
-                                                    <Text style={{ marginBottom: heightToDp("4%"), marginLeft: widthToDp("5%") }}>{i.cost>0 ? "₹ " + String(i.cost) : "-"}</Text>
+                                                    <Text style={{ marginBottom: heightToDp("4%"), marginLeft: widthToDp("5%"), fontSize: widthToDp('3.5%') }}>{i.cost>0 ? "₹ " + String(i.cost) : "-"}</Text>
                                                 )
                                             })
                                         }
 
                                     </View>
-                                    <View style={{ width: widthToDp("25%"), marginLeft: widthToDp("10%") }}>
+                                    <View style={{ width: widthToDp("30%"), marginLeft: widthToDp("10%") }}>
                                         {/* <Text style={{ marginTop: heightToDp("2%") }}>Rs {this.state.totalPriceEggs}</Text>
                                         <Text style={{ marginTop: heightToDp("5%") }}>Rs {this.state.totalPriceAdultBrids}</Text> */}
                                         {
                                             vaccine.map((i) => {
                                                 if(i.interval) {
                                                     return (
-                                                        <Text style={{ marginBottom: heightToDp("4%") }}>{i.interval} months</Text>
+                                                        <Text style={{ marginBottom: heightToDp("4%"), fontSize: widthToDp('3.5%') }}>{i.interval} months</Text>
                                                     )
                                                 }                                                
                                             })
@@ -327,11 +327,11 @@ export default class VaccinationScreen extends Component {
                             </View>
 
                             <View style={{ borderWidth: 1, height: heightToDp("8%"), width: widthToDp("83%"), marginLeft: widthToDp("3%"), marginTop: heightToDp("0%"), flexDirection: 'row' }}>
-                                <View style={{marginTop:heightToDp("2%"),marginLeft:widthToDp("2%"),width:widthToDp("40%")}}>
-                                    <Text>TOTAL</Text>
+                                <View style={{marginTop:heightToDp("2%"),marginLeft:widthToDp("2%"),width:widthToDp("33%")}}>
+                                    <Text style={{fontSize: widthToDp('3.5%')}}>TOTAL</Text>
                                 </View>
 
-                                <View style={{marginTop:heightToDp("2%"),width:widthToDp("20%")}}>
+                                <View style={{marginTop:heightToDp("2%"),width:widthToDp("15%")}}>
                                     <Text>
                                         {this.state.vaccineTotalCost > 0 ? "₹ " + this.state.vaccineTotalCost : "-"}
                                     </Text>

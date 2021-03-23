@@ -244,13 +244,13 @@ export default class LivestockTableScreen extends Component {
                                 <Text>One mother goat gives birth to 4 to 5 kids per 2 years in an interval of 8 months Out of that 3 kids survive.</Text>
                             </View>
                             <ScrollView nestedScrollEnabled={true}>
-                                <View style={{ borderWidth: 1, height: heightToDp("8%"), width: widthToDp("83%"), marginLeft: widthToDp("3%"), marginTop: heightToDp("1.5%"), flexDirection: 'row' }}>
+                                <View style={{ borderWidth: 1, paddingVertical: heightToDp("1%"), width: widthToDp("83%"), marginLeft: widthToDp("3%"), marginTop: heightToDp("1.5%"), flexDirection: 'row' }}>
                                     {
-                                        tableHeading.map((i) => {
+                                        tableHeading.map((i, key) => {
                                             return (
-                                                <View style={{ width: widthToDp("15%"), marginLeft: widthToDp("1.5%") }}>
+                                                <View style={{ width: widthToDp(`${key===0 ? 13 : key===2 ? 17 : 14}%`), marginLeft: widthToDp("1.5%") }}>
 
-                                                    <Text style={{fontSize: 14}}>{i.name}</Text>
+                                                    <Text style={{fontSize: widthToDp('3.5%')}}>{i.name}</Text>
 
                                                 </View>
 
@@ -286,37 +286,37 @@ export default class LivestockTableScreen extends Component {
                                     })
                                 } */}
                                     <View style={{ flexDirection: 'row' }}>
-                                        <View style={{ width: widthToDp("13%"), marginLeft: widthToDp("1.5%") }}>
-                                            <Text style={{ marginTop: heightToDp("2%") }}>1st Birth</Text>
-                                            <Text style={{ marginTop: heightToDp("3.7%") }}>2nd Birth</Text>
-                                            <Text style={{ marginTop: heightToDp("3.7%") }}>3rd Birth</Text>
+                                        <View style={{ width: widthToDp("12%"), marginLeft: widthToDp("1.5%") }}>
+                                            <Text style={{ marginTop: heightToDp("2%"), fontSize: widthToDp('3.5%') }}>1st Birth</Text>
+                                            <Text style={{ marginTop: heightToDp("3.7%"), fontSize: widthToDp('3.5%') }}>2nd Birth</Text>
+                                            <Text style={{ marginTop: heightToDp("3.7%"), fontSize: widthToDp('3.5%') }}>3rd Birth</Text>
                                         </View>
 
-                                        <View style={{ width: widthToDp("13%"), marginLeft: widthToDp("1.5%") }}>
-                                            <Text style={{ marginTop: heightToDp("2%"), fontSize: 14 }}>16 months old</Text>
-                                            <Text style={{ marginTop: heightToDp("2%"), fontSize: 14 }}>8 months old</Text>
-                                            <Text style={{ marginTop: heightToDp("2%"), fontSize: 14 }}>kids</Text>
+                                        <View style={{ width: widthToDp("14%"), marginLeft: widthToDp("1.5%") }}>
+                                            <Text style={{ marginTop: heightToDp("2%"), fontSize: widthToDp('3.5%') }}>16 months old</Text>
+                                            <Text style={{ marginTop: heightToDp("1.5%"), fontSize: widthToDp('3.5%') }}>8 months old</Text>
+                                            <Text style={{ marginTop: heightToDp("1.5%"), fontSize: widthToDp('3.5%') }}>kids</Text>
                                         </View>
                                         <View style={{ width: widthToDp("14%"), marginLeft: widthToDp("6%") }}>
-                                            <Text style={{ marginTop: heightToDp("2%"), fontSize: 14 }}>{this.state.numberGoats}</Text>
-                                            <Text style={{ marginTop: heightToDp("2%"), fontSize: 14 }}>{this.state.numberGoats}</Text>
-                                            <Text style={{ marginTop: heightToDp("2%"), fontSize: 14 }}>{this.state.numberGoats}</Text>
+                                            <Text style={{ marginTop: heightToDp("2%"), fontSize: widthToDp('3.5%') }}>{this.state.numberGoats}</Text>
+                                            <Text style={{ marginTop: heightToDp("2%"), fontSize: widthToDp('3.5%') }}>{this.state.numberGoats}</Text>
+                                            <Text style={{ marginTop: heightToDp("2%"), fontSize: widthToDp('3.5%') }}>{this.state.numberGoats}</Text>
                                         </View>
                                         <View style={{ width: widthToDp("15.5%"), marginLeft: widthToDp("1.5%") }}>
-                                            <Text style={{ marginTop: heightToDp("2%"), fontSize: 14 }}>{"₹ " + this.state.unitPrice1stBirth}</Text>
-                                            <Text style={{ marginTop: heightToDp("2%"), fontSize: 14 }}>{"₹ " + this.state.unitPrice2ndBirth}</Text>
-                                            <Text style={{ marginTop: heightToDp("2%"), fontSize: 14 }}>{"₹ " + this.state.unitPrice3rdBirth}</Text>
+                                            <Text style={{ marginTop: heightToDp("2%"), fontSize: widthToDp('3.5%') }}>{"₹ " + this.state.unitPrice1stBirth}</Text>
+                                            <Text style={{ marginTop: heightToDp("2%"), fontSize: widthToDp('3.5%') }}>{"₹ " + this.state.unitPrice2ndBirth}</Text>
+                                            <Text style={{ marginTop: heightToDp("2%"), fontSize: widthToDp('3.5%') }}>{"₹ " + this.state.unitPrice3rdBirth}</Text>
                                         </View>
                                         <View style={{ width: widthToDp("14%"), marginLeft: widthToDp("1.5%") }}>
-                                            <Text style={{ marginTop: heightToDp("2%"), fontSize: 14 }}>₹ {this.state.totalPrice1stBirth}</Text>
-                                            <Text style={{ marginTop: heightToDp("2%"), fontSize: 14 }}>₹ {this.state.totalPrice2ndBirth}</Text>
-                                            <Text style={{ marginTop: heightToDp("2%"), fontSize: 14 }}>₹ {this.state.totalPrice3rdBirth}</Text>
+                                            <Text style={{ marginTop: heightToDp("2%"), fontSize: widthToDp('3.5%') }}>₹ {this.state.totalPrice1stBirth}</Text>
+                                            <Text style={{ marginTop: heightToDp("2%"), fontSize: widthToDp('3.5%') }}>₹ {this.state.totalPrice2ndBirth}</Text>
+                                            <Text style={{ marginTop: heightToDp("2%"), fontSize: widthToDp('3.5%') }}>₹ {this.state.totalPrice3rdBirth}</Text>
                                         </View>
                                     </View>
                                 </View>
                                 <View style={{ borderWidth: 1, height: heightToDp("8%"), width: widthToDp("83%"), marginLeft: widthToDp("3%"), marginTop: heightToDp("0%"), flexDirection: 'row' }}>
-                                    <Text style={{marginLeft: widthToDp('1%')}}>Total value after 2 year</Text>
-                                    <Text style={{ marginLeft: widthToDp("20%") }}>₹ {this.state.totalValueAfter2years}</Text>
+                                    <Text style={{marginLeft: widthToDp('1%'), fontSize: widthToDp('3.5%')}}>Total value after 2 year</Text>
+                                    <Text style={{ marginLeft: widthToDp("20%"), fontSize: widthToDp('3.5%') }}>₹ {this.state.totalValueAfter2years}</Text>
                                 </View>
                                 <View style={{ marginLeft: widthToDp("3%"), marginBottom: widthToDp('1%') }}>
                                     <Text>Total value after 2 years from {this.state.numberGoats} mother goat will be ₹ {this.state.totalValueAfter2years} per 2 year</Text>
@@ -342,21 +342,21 @@ export default class LivestockTableScreen extends Component {
 
                                 <View style={{ borderWidth: 1, paddingVertical: heightToDp("1%"), width: widthToDp("83%"), marginLeft: widthToDp("3%"), marginTop: heightToDp("0%")}}>
                                     <View style={{flexDirection:'row', marginLeft: widthToDp("3%")}}>
-                                        <Text style={{width:widthToDp("30%"), fontWeight: 'bold'}}>No. of Goats</Text>
-                                        <Text style={{width:widthToDp("30%"), fontWeight: 'bold'}}>Cost (₹)</Text>
+                                        <Text style={{width:widthToDp("20%"), fontWeight: 'bold'}}>No. of Goats</Text>
+                                        <Text style={{width:widthToDp("40%"), fontWeight: 'bold'}}>Cost (₹)</Text>
                                         <Text style={{fontWeight: 'bold'}}>Total</Text>
                                     </View>
 
                                     <View style={{flexDirection:'row', marginLeft: widthToDp("3%")}}>
-                                        <Text style={{width:widthToDp("30%")}}>{this.state.numberGoats}</Text>
-                                        <Text style={{width:widthToDp("30%")}}>Supplementary</Text>
+                                        <Text style={{width:widthToDp("20%")}}>{this.state.numberGoats}</Text>
+                                        <Text style={{width:widthToDp("40%")}}>Supplementary</Text>
                                         <Text>{"₹ " + this.state.totalExpenseforNgoats}</Text>
                                     </View>
 
 
                                     <View style={{flexDirection:'row', marginLeft: widthToDp("3%")}}>
-                                        <Text style={{width:widthToDp("30%")}}>{this.state.numberGoats}</Text>
-                                        <Text style={{width:widthToDp("30%")}}>Immunisation</Text>
+                                        <Text style={{width:widthToDp("20%")}}>{this.state.numberGoats}</Text>
+                                        <Text style={{width:widthToDp("40%")}}>Immunisation</Text>
                                         <Text>{"₹ " + this.state.expenseForSupplementary}</Text>
                                     </View>
 
