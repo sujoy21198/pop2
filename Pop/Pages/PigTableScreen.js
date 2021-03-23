@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { View, Image, TouchableOpacity, ScrollView } from 'react-native'
 import BaseColor from '../Core/BaseTheme'
-import { Text, Input } from 'native-base'
+import { Text, Input, Toast } from 'native-base'
 import TopLogo from '../assets/TopLogo'
 import { widthToDp, heightToDp } from '../Responsive'
 import { FlatGrid, SectionGrid } from 'react-native-super-grid'
@@ -31,17 +31,18 @@ const months = [
 const tableHeading = [
     { 'name': 'Items', 'birth': '1st Birth', 'age': '16 months old', 'numbers': '1', 'unitPrice': '4000', 'totalPriceInRupees': '5000' },
     { 'name': 'Nos', 'birth': '2nd Birth', 'age': '8 months old', 'numbers': '1', 'unitPrice': '4000', 'totalPriceInRupees': '5000' },
-    { 'name': 'Unit Cost', 'birth': '3rd Birth', 'age': 'kid', 'numbers': '1', 'unitPrice': '4000', 'totalPriceInRupees': '5000' },
-    { 'name': 'Total Cost(INR)' },
+    { 'name': 'Unit Cost (INR)', 'birth': '3rd Birth', 'age': 'kid', 'numbers': '1', 'unitPrice': '4000', 'totalPriceInRupees': '5000' },
+    { 'name': 'Total Cost (INR)' },
 ]
 
 
 const tableHeading2 = [
     { 'name': 'Mother Pig', 'unitCost': '2500', 'heading': 'Items' },
     { 'name': 'Male Pig', 'unitCost': '2500', 'heading': 'Nos' },
-    { 'name': 'Young Pig', 'unitCost': '1500', 'heading': 'UnitCost' },
-    { 'name': 'Piglet', 'unitCost': '500', 'heading': 'Total Value after 1 year' },
+    { 'name': 'Young Pig', 'unitCost': '1500', 'heading': 'UnitCost (INR)' },
+    { 'name': 'Piglet', 'unitCost': '500', 'heading': 'Total Value after 1 year (INR)' },
 ]
+
 
 export default class PigTableScreen extends Component {
     constructor(props) {
@@ -65,7 +66,7 @@ export default class PigTableScreen extends Component {
             totalValueAfteroneYearForMalePig: '2500',
             totalValueAfteroneYearForYoungPig: '9000',
             totalValueAfteroneYearForPigletPig: '3000',
-            totalValueAfteroneYearTotal: '1700',
+            totalValueAfteroneYearTotal: '17000',
             netProfit:'8500'
         }
         this.state.tableHeading = tableHeading
@@ -241,21 +242,21 @@ export default class PigTableScreen extends Component {
                                     keyboardType='number-pad'
                                     defaultValue={this.state.numberPigs}
                                     onChangeText={(data) => this.calculation(data)}
-                                    style={{ marginLeft: widthToDp("1%"), fontFamily: 'Oswald-Medium', width: widthToDp("10%"), marginTop: heightToDp("1%"), borderWidth: 1 }}
+                                    style={{ marginLeft: widthToDp("1%"), fontFamily: 'Oswald-Medium', width: widthToDp("10%"), marginTop: heightToDp("1%"), borderBottomWidth: 1, borderColor: 'blue' }}
                                 />
-                                <Text style={{ fontSize: widthToDp("5%"), marginLeft: widthToDp("1%"), marginTop: heightToDp("1.5%"), fontFamily: 'Oswald-Medium', marginRight: widthToDp("20%") }}>mother pigs</Text>
+                                <Text style={{ fontSize: widthToDp("5%"), marginLeft: widthToDp("1%"), marginTop: heightToDp("1.5%"), fontFamily: 'Oswald-Medium', marginRight: widthToDp("20%") }}>{`mother ${Number(this.state.numberPigs) === 1 ? "pig" : "pigs"}`}</Text>
                             </View>
-                            <View>
+                            <View style={{paddingHorizontal: widthToDp('2%')}}>
                                 <Text>One mother pig gives birth to 16 to 24 kids per years in an interval of 6 months. Let’s assume 12 pig survived till the year end.</Text>
                             </View>
                             <ScrollView nestedScrollEnabled={true}>
-                                <View style={{ borderWidth: 1, height: heightToDp("8%"), width: widthToDp("83%"), marginLeft: widthToDp("3%"), marginTop: heightToDp("1.5%"), flexDirection: 'row' }}>
+                                <View style={{ borderWidth: 1, paddingVertical: heightToDp("1%"), width: widthToDp("83%"), marginLeft: widthToDp("3%"), marginTop: heightToDp("1.5%"), flexDirection: 'row' }}>
                                     {
-                                        tableHeading.map((i) => {
+                                        tableHeading.map((i, key) => {
                                             return (
-                                                <View style={{ width: widthToDp("19%"), marginLeft: widthToDp("1.5%") }}>
+                                                <View style={{ width: widthToDp(`${key===0 ? 20 : key === 1 ? 18 : 19}%`), marginLeft: widthToDp("1.5%") }}>
 
-                                                    <Text style={{ marginTop: heightToDp("2%") }}>{i.name}</Text>
+                                                    <Text>{i.name}</Text>
 
                                                 </View>
 
@@ -264,7 +265,7 @@ export default class PigTableScreen extends Component {
                                     }
                                 </View>
 
-                                <View style={{ borderWidth: 1, height: heightToDp("40%"), width: widthToDp("83%"), marginLeft: widthToDp("3%"), marginTop: heightToDp("0%") }}>
+                                <View style={{ borderWidth: 1, paddingVertical: heightToDp("1%"), width: widthToDp("83%"), marginLeft: widthToDp("3%"), marginTop: heightToDp("0%") }}>
                                     {/* {
                                     tableHeading.map((i) => {
                                         return (
@@ -290,46 +291,82 @@ export default class PigTableScreen extends Component {
                                         )
                                     })
                                 } */}
-                                    <View style={{ flexDirection: 'row' }}>
-                                        <View style={{ width: widthToDp("18%"), marginLeft: widthToDp("1.5%") }}>
-                                            <Text style={{ marginTop: heightToDp("2%") }}>Mother Pig(Gilt)</Text>
-                                            <Text style={{ marginTop: heightToDp("2%") }}>Male Pig(Boar)</Text>
-                                            <Text style={{ marginTop: heightToDp("2%") }}>Shed construction</Text>
-                                            <Text style={{ marginTop: heightToDp("2%") }}>Feeding per year</Text>
-                                            <Text style={{ marginTop: heightToDp("2%") }}>Vaccination Per year</Text>
+                                    <View style={{marginTop: widthToDp("2%"), flexDirection: 'row', width: widthToDp("100%")}}>
+                                        <View style={{width: widthToDp("21%"), marginLeft: widthToDp("1.3%")}}>
+                                            <Text style={{fontSize: 14}}>Mother Pig(Gilt)</Text>
+                                        </View>                
+                                        <View style={{width: widthToDp("21%")}}>
+                                            <Text style={{fontSize: 14}}>{this.state.numberPigs}</Text>
                                         </View>
-
-                                        {/* <View style={{ width: widthToDp("17%"), marginLeft: widthToDp("1.5%") }}>
-                                        <Text style={{ marginTop: heightToDp("2%") }}>16 months old</Text>
-                                        <Text style={{ marginTop: heightToDp("2%") }}>8 months old</Text>
-                                        <Text style={{ marginTop: heightToDp("2%") }}>kids</Text>
-                                    </View> */}
-                                        <View style={{ width: widthToDp("18%"), marginLeft: widthToDp("6%") }}>
-                                            <Text style={{ marginTop: heightToDp("2%") }}>{this.state.numberPigs}</Text>
-                                            <Text style={{ marginTop: heightToDp("5%") }}>{this.state.numberPigs}</Text>
-                                            <Text style={{ marginTop: heightToDp("5%") }}>{this.state.numberPigs}</Text>
-                                            <Text style={{ marginTop: heightToDp("3%") }}>2 (adults)and 12 piglets</Text>
-                                            <Text style={{ marginTop: heightToDp("3%") }}>2 (adults)and 12 piglets</Text>
+                                        <View style={{width: widthToDp("20%")}}>
+                                            <Text style={{fontSize: 14}}>{this.state.unitCostmotherPig}</Text>
                                         </View>
-                                        <View style={{ width: widthToDp("14%"), marginLeft: widthToDp("1.5%") }}>
-                                            <Text style={{ marginTop: heightToDp("2%") }}>{this.state.unitCostmotherPig}</Text>
-                                            <Text style={{ marginTop: heightToDp("5%") }}>{this.state.unitCostmalePig}</Text>
-                                            <Text style={{ marginTop: heightToDp("5%") }}>{this.state.unitCostshedConstruction}</Text>
-                                            <Text style={{ marginTop: heightToDp("5%") }}>LS</Text>
-                                            <Text style={{ marginTop: heightToDp("5%") }}>LS</Text>
+                                        <View style={{width: widthToDp("15%")}}>
+                                            <Text style={{fontSize: 14}}>₹ {this.state.totalCostmotherpig}</Text>
                                         </View>
-                                        <View style={{ width: widthToDp("14%"), marginLeft: widthToDp("1.5%") }}>
-                                            <Text style={{ marginTop: heightToDp("2%") }}>Rs {this.state.totalCostmotherpig}</Text>
-                                            <Text style={{ marginTop: heightToDp("5%") }}>Rs {this.state.totalcostMalePig}</Text>
-                                            <Text style={{ marginTop: heightToDp("5%") }}>Rs {this.state.totalCostShedConstruction}</Text>
-                                            <Text style={{ marginTop: heightToDp("5%") }}>Rs {this.state.totalCostfeeding}</Text>
-                                            <Text style={{ marginTop: heightToDp("5%") }}>Rs {this.state.totalcostVaccine}</Text>
+                                    </View>
+                                    <View style={{marginTop: widthToDp("2%"), flexDirection: 'row', width: widthToDp("100%")}}>
+                                        <View style={{width: widthToDp("21%"), marginLeft: widthToDp("1.3%")}}>
+                                            <Text style={{fontSize: 14}}>Male Pig(Boar)</Text>
+                                        </View>             
+                                        <View style={{width: widthToDp("21%")}}>
+                                            <Text style={{fontSize: 14}}>{this.state.numberPigs}</Text>
+                                        </View>   
+                                        <View style={{width: widthToDp("20%")}}>
+                                            <Text style={{fontSize: 14}}>{this.state.unitCostmalePig}</Text>
+                                        </View>
+                                        <View style={{width: widthToDp("15%")}}>
+                                            <Text style={{fontSize: 14}}>₹ {this.state.totalcostMalePig}</Text>
+                                        </View>
+                                    </View>
+                                    <View style={{marginTop: widthToDp("2%"), flexDirection: 'row', width: widthToDp("100%")}}>
+                                        <View style={{width: widthToDp("21%"), marginLeft: widthToDp("1.3%")}}>
+                                            <Text style={{fontSize: 14}}>Shed construction</Text>
+                                        </View>             
+                                        <View style={{width: widthToDp("21%")}}>
+                                            <Text style={{fontSize: 14}}>{this.state.numberPigs}</Text>
+                                        </View>    
+                                        <View style={{width: widthToDp("20%")}}>
+                                            <Text style={{fontSize: 14}}>{this.state.unitCostshedConstruction}</Text>
+                                        </View>
+                                        <View style={{width: widthToDp("15%")}}>
+                                            <Text style={{fontSize: 14}}>₹ {this.state.totalCostShedConstruction}</Text>
+                                        </View>
+                                    </View>
+                                    <View style={{marginTop: widthToDp("2%"), flexDirection: 'row', width: widthToDp("100%")}}>
+                                        <View style={{width: widthToDp("21%"), marginLeft: widthToDp("1.3%")}}>
+                                            <Text style={{fontSize: 14}}>Vaccination Per year</Text>
+                                        </View>             
+                                        <View style={{width: widthToDp("21%")}}>
+                                            <Text style={{fontSize: 14}}>2 (adults) and 12 piglets</Text>
+                                        </View>   
+                                        <View style={{width: widthToDp("20%")}}>
+                                            <Text style={{fontSize: 14}}>LS</Text>
+                                        </View>
+                                        <View style={{width: widthToDp("15%")}}>
+                                            <Text style={{fontSize: 14}}>₹ {this.state.totalCostfeeding}</Text>
+                                        </View>
+                                    </View>
+                                    <View style={{marginTop: widthToDp("2%"), flexDirection: 'row', width: widthToDp("100%")}}>
+                                        <View style={{width: widthToDp("21%"), marginLeft: widthToDp("1.3%")}}>
+                                            <Text style={{fontSize: 14}}>Feeding per year</Text>
+                                        </View>           
+                                        <View style={{width: widthToDp("21%")}}>
+                                            <Text style={{fontSize: 14}}>2 (adults) and 12 piglets</Text>
+                                        </View> 
+                                        <View style={{width: widthToDp("20%")}}>
+                                            <Text style={{fontSize: 14}}>LS</Text>
+                                        </View>
+                                        <View style={{width: widthToDp("15%")}}>
+                                            <Text style={{fontSize: 14}}>₹ {this.state.totalcostVaccine}</Text>
                                         </View>
                                     </View>
                                 </View>
-                                <View style={{ borderWidth: 1, height: heightToDp("8%"), width: widthToDp("83%"), marginLeft: widthToDp("3%"), marginTop: heightToDp("0%"), flexDirection: 'row' }}>
-                                    <Text>Total (A)</Text>
-                                    <Text style={{ marginLeft: widthToDp("40%") }}>Rs {this.state.total}</Text>
+                                <View style={{ borderWidth: 1, height: heightToDp("6%"), width: widthToDp("83%"), marginLeft: widthToDp("3%"), marginTop: heightToDp("0%"), flexDirection: 'row' }}>
+                                    <View style={{width: widthToDp('22%')}}>
+                                        <Text style={{marginLeft: widthToDp('1.3%')}}>Total (A)</Text>
+                                    </View>
+                                    <Text style={{ marginLeft: widthToDp(`${this.state.total.length > 5 ? 35 : 40}%`) }}>₹ {this.state.total}</Text>
                                 </View>
 
 
@@ -337,13 +374,13 @@ export default class PigTableScreen extends Component {
 
                                 {/* table2 */}
 
-                                <View style={{ borderWidth: 1, height: heightToDp("8%"), width: widthToDp("83%"), marginLeft: widthToDp("3%"), marginTop: heightToDp("1.5%"), flexDirection: 'row' }}>
+                                <View style={{ borderWidth: 1, paddingVertical: heightToDp("1%"), width: widthToDp("83%"), marginLeft: widthToDp("3%"), marginTop: heightToDp("1.5%"), flexDirection: 'row' }}>
                                     {
-                                        tableHeading2.map((i) => {
+                                        tableHeading2.map((i,key) => {
                                             return (
-                                                <View style={{ width: widthToDp("19%"), marginLeft: widthToDp("1.5%") }}>
+                                                <View style={{ width: widthToDp(`${key===0 ? 20 : key === 1 ? 15 : 19}%`), marginLeft: widthToDp("1.5%") }}>
 
-                                                    <Text style={{ marginTop: heightToDp("2%") }}>{i.heading}</Text>
+                                                    <Text>{i.heading}</Text>
 
                                                 </View>
 
@@ -352,7 +389,7 @@ export default class PigTableScreen extends Component {
                                     }
                                 </View>
 
-                                <View style={{ borderWidth: 1, height: heightToDp("18%"), width: widthToDp("83%"), marginLeft: widthToDp("3%"), marginTop: heightToDp("0%") }}>
+                                <View style={{ borderWidth: 1, paddingVertical: heightToDp("1%"), width: widthToDp("83%"), marginLeft: widthToDp("3%"), marginTop: heightToDp("0%") }}>
                                     {/* {
                                     tableHeading.map((i) => {
                                         return (
@@ -384,7 +421,7 @@ export default class PigTableScreen extends Component {
                                                 tableHeading2.map((i) => {
                                                     return (
                                                         <View style={{ marginTop: widthToDp("4%") }}>
-                                                            <Text>{i.name}</Text>
+                                                            <Text style={{fontSize: 14}}>{i.name}</Text>
                                                         </View>
                                                     );
                                                 })
@@ -396,18 +433,18 @@ export default class PigTableScreen extends Component {
                                         <Text style={{ marginTop: heightToDp("2%") }}>8 months old</Text>
                                         <Text style={{ marginTop: heightToDp("2%") }}>kids</Text>
                                     </View> */}
-                                        <View style={{ width: widthToDp("18%"), marginLeft: widthToDp("6%") }}>
-                                            <Text style={{ marginTop: heightToDp("2%") }}>{this.state.numberPigs}</Text>
-                                            <Text style={{ marginTop: heightToDp("2%") }}>{this.state.numberOfMalePig}</Text>
-                                            <Text style={{ marginTop: heightToDp("2%") }}>{this.state.numberOfYoungPig}</Text>
-                                            <Text style={{ marginTop: heightToDp("2%") }}>{this.state.numberOfPiglets}</Text>
+                                        <View style={{ width: widthToDp("13%"), marginLeft: widthToDp("6%") }}>
+                                            <Text style={{ marginTop: heightToDp("2%"), fontSize: 14 }}>{this.state.numberPigs}</Text>
+                                            <Text style={{ marginTop: heightToDp("2%"), fontSize: 14 }}>{this.state.numberOfMalePig}</Text>
+                                            <Text style={{ marginTop: heightToDp("2%"), fontSize: 14 }}>{this.state.numberOfYoungPig}</Text>
+                                            <Text style={{ marginTop: heightToDp("2%"), fontSize: 14 }}>{this.state.numberOfPiglets}</Text>
 
                                         </View>
-                                        <View style={{ width: widthToDp("14%"), marginLeft: widthToDp("1.5%") }}>
+                                        <View style={{ width: widthToDp("19%"), marginLeft: widthToDp("1.5%") }}>
                                             {
-                                                tableHeading2.map((i) => {
+                                                tableHeading2.map((i, key) => {
                                                     return (
-                                                        <View style={{ marginTop: heightToDp("2%") }}>
+                                                        <View style={{ marginTop: heightToDp(`${key===0 ? 2 : (key===1 || key===2) ? 1.7 : 1.8}%`) }}>
                                                             <Text>{i.unitCost}</Text>
                                                         </View>
                                                     )
@@ -417,24 +454,27 @@ export default class PigTableScreen extends Component {
                                         </View>
                                         <View style={{ width: widthToDp("14%"), marginLeft: widthToDp("1.5%") }}>
                                             <Text style={{ marginTop: heightToDp("2%") }}>{this.state.totalValueAfteroneYearForMotherPig}</Text>
-                                            <Text style={{ marginTop: heightToDp("2%") }}>{this.state.totalValueAfteroneYearForMalePig}</Text>
-                                            <Text style={{ marginTop: heightToDp("2%") }}>{this.state.totalValueAfteroneYearForYoungPig}</Text>
-                                            <Text style={{ marginTop: heightToDp("2%") }}>{this.state.totalValueAfteroneYearForPigletPig}</Text>
+                                            <Text style={{ marginTop: heightToDp("1.8%") }}>{this.state.totalValueAfteroneYearForMalePig}</Text>
+                                            <Text style={{ marginTop: heightToDp("1.6%") }}>{this.state.totalValueAfteroneYearForYoungPig}</Text>
+                                            <Text style={{ marginTop: heightToDp("1.6%") }}>{this.state.totalValueAfteroneYearForPigletPig}</Text>
 
                                         </View>
                                     </View>
                                 </View>
                                 <View style={{ borderWidth: 1, height: heightToDp("8%"), width: widthToDp("83%"), marginLeft: widthToDp("3%"), marginTop: heightToDp("0%"), flexDirection: 'row' }}>
-                                    <Text>Total (B)</Text>
-                                    <Text style={{ marginLeft: widthToDp("40%") }}>Rs {this.state.totalValueAfteroneYearTotal}</Text>
+                                    <Text style={{marginLeft: widthToDp('1%')}}>Total (B)</Text>
+                                    <Text style={{ marginLeft: widthToDp("40%") }}>₹ {this.state.totalValueAfteroneYearTotal}</Text>
                                 </View>
 
                                 <View style={{ marginLeft: widthToDp("3%"), marginTop: ("4%") }}>
                                     <View style={{ flexDirection: 'row' }}>
-                                        <Text>NET PROFIT(B -A) = </Text>
+                                        <Text>NET PROFIT (B -A) = </Text>
                                         <Text>{this.state.netProfit}</Text>
                                     </View>
 
+                                </View>
+                                <View style={{margin: widthToDp('3%')}}>
+                                    <Text>Note: The capital cost is not being considered in case of buying a new Pig.</Text>
                                 </View>
 
                                 <View style={{ marginTop: heightToDp("10%") }}></View>
@@ -450,14 +490,14 @@ export default class PigTableScreen extends Component {
                             <Text style={{ fontSize: widthToDp("4%"), color: "#000", marginTop: heightToDp("1.3%"), alignSelf: 'center', fontFamily: 'Oswald-Medium' }}>BACK</Text>
                         </View>
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={() => { }}>
+                    <TouchableOpacity onPress={() => Toast.show({text: "Calculated", duration: 3000, type: "success"})}>
                         <View style={{ backgroundColor: "#fff", height: heightToDp("6%"), width: widthToDp("30%"), borderRadius: 100, marginLeft: widthToDp("1%"), marginTop: heightToDp("2%") }}>
-                            <Text style={{ fontSize: widthToDp("4%"), color: "#000", marginTop: heightToDp("1.3%"), alignSelf: 'center', fontFamily: 'Oswald-Medium' }}>SAVE</Text>
+                            <Text style={{ fontSize: widthToDp("4%"), color: "#000", marginTop: heightToDp("1.3%"), alignSelf: 'center', fontFamily: 'Oswald-Medium' }}>CALCULATE</Text>
                         </View>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={() => { this.next() }}>
                         <View style={{ backgroundColor: "#fff", height: heightToDp("6%"), width: widthToDp("30%"), borderRadius: 100, marginLeft: widthToDp("1%"), marginTop: heightToDp("2%") }}>
-                            <Text style={{ fontSize: widthToDp("4%"), color: "#000", marginTop: heightToDp("1.3%"), alignSelf: 'center', fontFamily: 'Oswald-Medium' }}>NEXT</Text>
+                            <Text style={{ fontSize: widthToDp("4%"), color: "#000", marginTop: heightToDp("1.3%"), alignSelf: 'center', fontFamily: 'Oswald-Medium' }}>SAVE & EXIT</Text>
                         </View>
                     </TouchableOpacity>
                 </View>

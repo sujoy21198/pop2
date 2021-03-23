@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { View, Image, TouchableOpacity, ScrollView } from 'react-native'
 import BaseColor from '../Core/BaseTheme'
-import { Text, Input } from 'native-base'
+import { Text, Input, Toast } from 'native-base'
 import TopLogo from '../assets/TopLogo'
 import { widthToDp, heightToDp } from '../Responsive'
 import { FlatGrid, SectionGrid } from 'react-native-super-grid'
@@ -32,8 +32,8 @@ const tableHeading = [
     { 'name': '', 'birth': '1st Birth', 'age': '16 months old', 'numbers': '1', 'unitPrice': '4000', 'totalPriceInRupees': '5000' },
     { 'name': 'Age till 2nd year end', 'birth': '2nd Birth', 'age': '8 months old', 'numbers': '1', 'unitPrice': '4000', 'totalPriceInRupees': '5000' },
     { 'name': 'Numbers', 'birth': '3rd Birth', 'age': 'kid', 'numbers': '1', 'unitPrice': '4000', 'totalPriceInRupees': '5000' },
-    { 'name': 'Unit Price' },
-    { 'name': 'Total Price in rupees' }
+    { 'name': 'Unit Price (INR)' },
+    { 'name': 'Total Price (INR)' }
 ]
 
 export default class LivestockTableScreen extends Component {
@@ -109,8 +109,10 @@ export default class LivestockTableScreen extends Component {
             specificObject.moneyManagerData.push(incomeObject)
             await AsyncStorage.setItem('user', JSON.stringify(parsed))
             console.log(specificObject.moneyManagerData)
+            Toast.show({text: "Calculated", duration: 3000, type: 'success'});
         } catch (error) {
-            console.log(error)
+            console.log(error);
+            Toast.show({text: "Some error happened. Please retry.", duration: 3000, type: 'danger'});
         }
     }
 
@@ -234,11 +236,11 @@ export default class LivestockTableScreen extends Component {
                                     keyboardType='number-pad'
                                     defaultValue={this.state.numberGoats}
                                     onChangeText={(data) => this.calculation(data)}
-                                    style={{ marginLeft: widthToDp("1%"), fontFamily: 'Oswald-Medium', width: widthToDp("10%"), marginTop: heightToDp("1%"), borderWidth: 1 }}
+                                    style={{ marginLeft: widthToDp("1%"), fontFamily: 'Oswald-Medium', width: widthToDp("10%"), marginTop: heightToDp("1%"), borderBottomWidth: 1, borderColor: 'blue' }}
                                 />
-                                <Text style={{ fontSize: widthToDp("5%"), marginLeft: widthToDp("1%"), marginTop: heightToDp("1.5%"), fontFamily: 'Oswald-Medium', marginRight: widthToDp("20%") }}>mother goats</Text>
+                                <Text style={{ fontSize: widthToDp("5%"), marginLeft: widthToDp("1%"), marginTop: heightToDp("1.5%"), fontFamily: 'Oswald-Medium', marginRight: widthToDp("20%") }}>{`mother ${Number(this.state.numberGoats) === 1 ? "Goat" : "Goats"}`}</Text>
                             </View>
-                            <View>
+                            <View style={{paddingHorizontal: widthToDp('2%')}}>
                                 <Text>One mother goat gives birth to 4 to 5 kids per 2 years in an interval of 8 months Out of that 3 kids survive.</Text>
                             </View>
                             <ScrollView nestedScrollEnabled={true}>
@@ -248,7 +250,7 @@ export default class LivestockTableScreen extends Component {
                                             return (
                                                 <View style={{ width: widthToDp("15%"), marginLeft: widthToDp("1.5%") }}>
 
-                                                    <Text>{i.name}</Text>
+                                                    <Text style={{fontSize: 14}}>{i.name}</Text>
 
                                                 </View>
 
@@ -257,7 +259,7 @@ export default class LivestockTableScreen extends Component {
                                     }
                                 </View>
 
-                                <View style={{ borderWidth: 1, height: heightToDp("25%"), width: widthToDp("83%"), marginLeft: widthToDp("3%"), marginTop: heightToDp("0%") }}>
+                                <View style={{ borderWidth: 1, paddingVertical: heightToDp("2%"), width: widthToDp("83%"), marginLeft: widthToDp("3%"), marginTop: heightToDp("0%") }}>
                                     {/* {
                                     tableHeading.map((i) => {
                                         return (
@@ -286,47 +288,47 @@ export default class LivestockTableScreen extends Component {
                                     <View style={{ flexDirection: 'row' }}>
                                         <View style={{ width: widthToDp("13%"), marginLeft: widthToDp("1.5%") }}>
                                             <Text style={{ marginTop: heightToDp("2%") }}>1st Birth</Text>
-                                            <Text style={{ marginTop: heightToDp("2%") }}>2nd Birth</Text>
-                                            <Text style={{ marginTop: heightToDp("2%") }}>3rd Birth</Text>
+                                            <Text style={{ marginTop: heightToDp("3.7%") }}>2nd Birth</Text>
+                                            <Text style={{ marginTop: heightToDp("3.7%") }}>3rd Birth</Text>
                                         </View>
 
-                                        <View style={{ width: widthToDp("17%"), marginLeft: widthToDp("1.5%") }}>
-                                            <Text style={{ marginTop: heightToDp("2%") }}>16 months old</Text>
-                                            <Text style={{ marginTop: heightToDp("2%") }}>8 months old</Text>
-                                            <Text style={{ marginTop: heightToDp("2%") }}>kids</Text>
+                                        <View style={{ width: widthToDp("13%"), marginLeft: widthToDp("1.5%") }}>
+                                            <Text style={{ marginTop: heightToDp("2%"), fontSize: 14 }}>16 months old</Text>
+                                            <Text style={{ marginTop: heightToDp("2%"), fontSize: 14 }}>8 months old</Text>
+                                            <Text style={{ marginTop: heightToDp("2%"), fontSize: 14 }}>kids</Text>
                                         </View>
-                                        <View style={{ width: widthToDp("10%"), marginLeft: widthToDp("6%") }}>
-                                            <Text style={{ marginTop: heightToDp("2%") }}>{this.state.numberGoats}</Text>
-                                            <Text style={{ marginTop: heightToDp("2%") }}>{this.state.numberGoats}</Text>
-                                            <Text style={{ marginTop: heightToDp("2%") }}>{this.state.numberGoats}</Text>
+                                        <View style={{ width: widthToDp("14%"), marginLeft: widthToDp("6%") }}>
+                                            <Text style={{ marginTop: heightToDp("2%"), fontSize: 14 }}>{this.state.numberGoats}</Text>
+                                            <Text style={{ marginTop: heightToDp("2%"), fontSize: 14 }}>{this.state.numberGoats}</Text>
+                                            <Text style={{ marginTop: heightToDp("2%"), fontSize: 14 }}>{this.state.numberGoats}</Text>
+                                        </View>
+                                        <View style={{ width: widthToDp("15.5%"), marginLeft: widthToDp("1.5%") }}>
+                                            <Text style={{ marginTop: heightToDp("2%"), fontSize: 14 }}>{this.state.unitPrice1stBirth}</Text>
+                                            <Text style={{ marginTop: heightToDp("2%"), fontSize: 14 }}>{this.state.unitPrice2ndBirth}</Text>
+                                            <Text style={{ marginTop: heightToDp("2%"), fontSize: 14 }}>{this.state.unitPrice3rdBirth}</Text>
                                         </View>
                                         <View style={{ width: widthToDp("14%"), marginLeft: widthToDp("1.5%") }}>
-                                            <Text style={{ marginTop: heightToDp("2%") }}>{this.state.unitPrice1stBirth}</Text>
-                                            <Text style={{ marginTop: heightToDp("2%") }}>{this.state.unitPrice2ndBirth}</Text>
-                                            <Text style={{ marginTop: heightToDp("2%") }}>{this.state.unitPrice3rdBirth}</Text>
-                                        </View>
-                                        <View style={{ width: widthToDp("14%"), marginLeft: widthToDp("1.5%") }}>
-                                            <Text style={{ marginTop: heightToDp("2%") }}>Rs {this.state.totalPrice1stBirth}</Text>
-                                            <Text style={{ marginTop: heightToDp("2%") }}>Rs {this.state.totalPrice2ndBirth}</Text>
-                                            <Text style={{ marginTop: heightToDp("2%") }}>Rs {this.state.totalPrice3rdBirth}</Text>
+                                            <Text style={{ marginTop: heightToDp("2%"), fontSize: 14 }}>₹ {this.state.totalPrice1stBirth}</Text>
+                                            <Text style={{ marginTop: heightToDp("2%"), fontSize: 14 }}>₹ {this.state.totalPrice2ndBirth}</Text>
+                                            <Text style={{ marginTop: heightToDp("2%"), fontSize: 14 }}>₹ {this.state.totalPrice3rdBirth}</Text>
                                         </View>
                                     </View>
                                 </View>
                                 <View style={{ borderWidth: 1, height: heightToDp("8%"), width: widthToDp("83%"), marginLeft: widthToDp("3%"), marginTop: heightToDp("0%"), flexDirection: 'row' }}>
-                                    <Text>Total value after 2 year</Text>
-                                    <Text style={{ marginLeft: widthToDp("20%") }}>Rs {this.state.totalValueAfter2years}</Text>
+                                    <Text style={{marginLeft: widthToDp('1%')}}>Total value after 2 year</Text>
+                                    <Text style={{ marginLeft: widthToDp("20%") }}>₹ {this.state.totalValueAfter2years}</Text>
                                 </View>
-                                <View style={{ marginLeft: widthToDp("3%") }}>
-                                    <Text>Total value after 2 years from {this.state.numberGoats} mother goat will be Rs {this.state.totalValueAfter2years} per 2 year</Text>
-                                    <Text style={{ marginTop: heightToDp("3%") }}>Total value annually from 2 mother goat will be Rs 9500.00 (A)</Text>
+                                <View style={{ marginLeft: widthToDp("3%"), marginBottom: widthToDp('1%') }}>
+                                    <Text>Total value after 2 years from {this.state.numberGoats} mother goat will be ₹ {this.state.totalValueAfter2years} per 2 year</Text>
+                                    <Text style={{ marginTop: heightToDp("3%") }}>Total value annually from 2 mother goat will be ₹ 9500.00 (A)</Text>
                                 </View>
 
                                 {/* <View style={{ marginLeft: widthToDp("3%"),marginTop:heightToDp("2%") }}>
-                                <Text>Total expenses for {this.state.numberGoats} goats in 2 years is Rs {this.state.totalExpenseforNgoats} ({this.state.numberGoats}*130, immunization cost)</Text>
+                                <Text>Total expenses for {this.state.numberGoats} goats in 2 years is ₹ {this.state.totalExpenseforNgoats} ({this.state.numberGoats}*130, immunization cost)</Text>
                             </View>
 
                             <View style={{ marginLeft: widthToDp("3%"),marginTop:heightToDp("2%") }}>
-                                <Text>Supplementary feed for 120 days for 1 mother goat per two year @ Rs 1.00 per day = Rs 120.00</Text>
+                                <Text>Supplementary feed for 120 days for 1 mother goat per two year @ ₹ 1.00 per day = ₹ 120.00</Text>
                             </View>
 
                             <View style={{ marginLeft: widthToDp("3%"),marginTop:heightToDp("2%") }}>
@@ -335,14 +337,14 @@ export default class LivestockTableScreen extends Component {
 
 
                             <View style={{ marginLeft: widthToDp("3%"),marginTop:heightToDp("2%") }}>
-                                <Text>Total expenses for {this.state.numberGoats} goats per 2 year : {this.state.totalExpenseforNgoats} + {this.state.expenseForSupplementary} = Rs. {this.state.b} (B)</Text>
+                                <Text>Total expenses for {this.state.numberGoats} goats per 2 year : {this.state.totalExpenseforNgoats} + {this.state.expenseForSupplementary} = ₹. {this.state.b} (B)</Text>
                             </View> */}
 
-                                <View style={{ borderWidth: 1, height: heightToDp("12%"), width: widthToDp("83%"), marginLeft: widthToDp("3%"), marginTop: heightToDp("0%")}}>
+                                <View style={{ borderWidth: 1, paddingVertical: heightToDp("1%"), width: widthToDp("83%"), marginLeft: widthToDp("3%"), marginTop: heightToDp("0%")}}>
                                     <View style={{flexDirection:'row', marginLeft: widthToDp("3%")}}>
-                                        <Text style={{width:widthToDp("30%")}}>No. of goats</Text>
-                                        <Text style={{width:widthToDp("30%")}}>Cost</Text>
-                                        <Text>Total</Text>
+                                        <Text style={{width:widthToDp("30%"), fontWeight: 'bold'}}>No. of Goats</Text>
+                                        <Text style={{width:widthToDp("30%"), fontWeight: 'bold'}}>Cost (INR)</Text>
+                                        <Text style={{fontWeight: 'bold'}}>Total</Text>
                                     </View>
 
                                     <View style={{flexDirection:'row', marginLeft: widthToDp("3%")}}>
@@ -366,10 +368,12 @@ export default class LivestockTableScreen extends Component {
                                 </View>
 
 
-                                <View style={{ marginLeft: widthToDp("3%"), marginTop: heightToDp("2%") }}>
-                                    <Text>TOTAL PROFIT FROM 4 MOTHER GOAT PER 2 YEAR (A)- (B) = Rs {this.state.totalValueAfter2years} – Rs {this.state.b} = Rs {this.state.totalProfitFromNgoats} </Text>
+                                <View style={{ marginLeft: widthToDp("3%"), marginTop: heightToDp("2%"), marginBottom: widthToDp('5%') }}>
+                                    <Text>TOTAL PROFIT FROM 4 MOTHER GOAT PER 2 YEAR (A)- (B) = ₹ {this.state.totalValueAfter2years} – ₹ {this.state.b} = ₹ {this.state.totalProfitFromNgoats} </Text>
                                 </View>
-
+                                <View style={{margin: widthToDp('3%')}}>
+                                    <Text>Note: The capital cost is not being considered in case of buying a new Goat.</Text>
+                                </View>
                             </ScrollView>
 
                         </View>
@@ -384,12 +388,12 @@ export default class LivestockTableScreen extends Component {
                     </TouchableOpacity>
                     <TouchableOpacity onPress={() => { this.saveButton() }}>
                         <View style={{ backgroundColor: "#fff", height: heightToDp("6%"), width: widthToDp("30%"), borderRadius: 100, marginLeft: widthToDp("1%"), marginTop: heightToDp("2%") }}>
-                            <Text style={{ fontSize: widthToDp("4%"), color: "#000", marginTop: heightToDp("1.3%"), alignSelf: 'center', fontFamily: 'Oswald-Medium' }}>SAVE</Text>
+                            <Text style={{ fontSize: widthToDp("4%"), color: "#000", marginTop: heightToDp("1.3%"), alignSelf: 'center', fontFamily: 'Oswald-Medium' }}>CALCULATE</Text>
                         </View>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={() => { this.next() }}>
                         <View style={{ backgroundColor: "#fff", height: heightToDp("6%"), width: widthToDp("30%"), borderRadius: 100, marginLeft: widthToDp("1%"), marginTop: heightToDp("2%") }}>
-                            <Text style={{ fontSize: widthToDp("4%"), color: "#000", marginTop: heightToDp("1.3%"), alignSelf: 'center', fontFamily: 'Oswald-Medium' }}>NEXT</Text>
+                            <Text style={{ fontSize: widthToDp("4%"), color: "#000", marginTop: heightToDp("1.3%"), alignSelf: 'center', fontFamily: 'Oswald-Medium' }}>SAVE & EXIT</Text>
                         </View>
                     </TouchableOpacity>
                 </View>
