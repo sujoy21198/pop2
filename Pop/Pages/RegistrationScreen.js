@@ -64,7 +64,8 @@ export default class RegistrationScreen extends Component {
       villageApi: [],
       block: 'BLOCK',
       blockId: '',
-      isDialogVisible: false
+      isDialogVisible: false,
+      blockApi:[]
     }
 
     this.state.selectedLanguage = this.props.route.params.selectedLanguage
@@ -95,9 +96,7 @@ export default class RegistrationScreen extends Component {
     })
 
     this.setState({ statesApi: statesApi })
-    this.setState({ distApi: distApi })
-    this.setState({ gramApi: gramApi })
-    this.setState({ villageApi: villageApi })
+    
   }
 
   checkStatus = (value) => {
@@ -232,25 +231,65 @@ export default class RegistrationScreen extends Component {
     // })
   }
 
-  statePicker = (value) => {
+  statePicker = async(value) => {
     this.setState({
       state: value
     })
+    var district = []
+    await axios.get("http://161.35.122.165:3020/api/v1/districts?state="+value, {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }).then(function (response) {
+      console.log(response.data.districts)
+      district = response.data.districts
+    }).catch(function (error) {
+      console.log(error.message)
+    })
+    this.setState({distApi : district})
     this.RBSheet3.close()
   }
 
-  districtPicker = (value) => {
+  districtPicker = async(value) => {
     this.setState({
       district: value
     })
+    var block = []
+    await axios.get("http://161.35.122.165:3020/api/v1/blocks?district="+value, {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }).then(function (response) {
+      console.log(response.data.blocks,"jijijijji")
+      block = response.data.blocks
+      console.log(block,"block")
+    }).catch(function (error) {
+      console.log(error.message)
+    })
+    this.setState({blockApi : block})
+    
     this.RBSheet4.close()
   }
 
-  gramPicker = (value) => {
+  gramPicker = async(value) => {
     this.setState({
       gram: value
     })
 
+    var village = []
+    await axios.get("http://161.35.122.165:3020/api/v1/villages?panchayat="+value, {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }).then(function (response) {
+      console.log(response.data.villages,"jijijijji")
+      village = response.data.villages
+      //console.log(block,"block")
+    }).catch(function (error) {
+      console.log(error.message)
+    })
+
+    this.setState({villageApi : village})
     this.RBSheet2.close()
   }
 
@@ -261,11 +300,28 @@ export default class RegistrationScreen extends Component {
     this.RBSheet5.close()
   }
 
-  blockPicker = (value, id) => {
+  blockPicker = async(value, id) => {
+
     this.setState({
       block: value
     })
     this.state.blockId = id
+
+    var gram = []
+    await axios.get("http://161.35.122.165:3020/api/v1/gram-panchayats?block="+value, {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }).then(function (response) {
+      console.log(response.data.gramPanchayats)
+      gram = response.data.gramPanchayats
+    }).catch(function (error) {
+      console.log(error.message)
+    })
+
+    this.setState({gramApi : gram})
+    //alert(id)
+    
 
     //alert(this.state.blockId)
 
@@ -289,6 +345,8 @@ export default class RegistrationScreen extends Component {
     gramApi = this.state.gramApi
     var villageApi = []
     villageApi = this.state.villageApi
+    var blockApi = []
+    blockApi = this.state.blockApi
     return (
       <KeyboardAwareScrollView style={{ backgroundColor: BaseColor.BackgroundColor, flex: 1 }}
         keyboardShouldPersistTaps='handled'>
@@ -555,7 +613,7 @@ export default class RegistrationScreen extends Component {
           >
             <ScrollView>
               {
-                distApi.map((i) => {
+                blockApi.map((i) => {
                   return (
                     <TouchableOpacity onPress={() => this.blockPicker(i.block, i._id)}>
                       <Text style={{ fontSize: widthToDp("4.6%"), alignSelf: 'center', fontFamily: 'Oswald-Medium' }}>{i.block}</Text>
