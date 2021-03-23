@@ -40,8 +40,8 @@ export default class SigninScreen extends Component {
             nutritionGardenImages: [],
             smallBusinessImages: [],
             labels: [],
-            imageloaded: false,
-            imageLoading: false
+            imageloaded: true,
+            imageLoading: true
         }
 
         this.state.selectedLanguage = this.props.route.params.selectedLanguage
@@ -99,109 +99,181 @@ export default class SigninScreen extends Component {
             console.log(error)
         })
 
+        //console.log(cropScreenImageArray)
+
+        //1
+        var NewFile = []
         for (var i = 0; i < cropScreenImageArray.length; i++) {
-            console.log(cropScreenImageArray[i])
-            console.log('file:///storage/emulated/0/Pictures/image_' + cropScreenImageArray[i])
-            // if('file:///storage/emulated/0/Pictures/image_'+cropScreenImageArray[i] === null){
-            //     console.log("NO exsist")
-            // }else{
-            //     console.log("peye gchi bara")
-            // }
-            RNFS.exists('file:///storage/emulated/0/Pictures/image_' + cropScreenImageArray[i])
-                .then((exists) => {
-                    if (!exists) {
-                        this.setState({ cropScreenImages: cropScreenImageArray })
-                    } else {
-                        console.log("file exsists")
-                    }
-                })
+            const checkImage = await RNFS.exists('file:///storage/emulated/0/Pictures/image_' + cropScreenImageArray[i])
+
+            if (!checkImage) {
+                NewFile.push(cropScreenImageArray[i])
+                //console.log(cropScreenImageArray[i])
+                console.log(NewFile)
+
+            } else {
+                console.log("file exists")
+            }
         }
-
-
+        cropScreenImageArray = NewFile
+        console.log(cropScreenImageArray, "hasta la vista")
+        //2
+        var NewFile = []
         for (var i = 0; i < cropStepImagesArray.length; i++) {
-            console.log(cropStepImagesArray[i])
-            console.log('file:///storage/emulated/0/Pictures/image_' + cropStepImagesArray[i])
-            // if('file:///storage/emulated/0/Pictures/image_'+cropScreenImageArray[i] === null){
-            //     console.log("NO exsist")
-            // }else{
-            //     console.log("peye gchi bara")
-            // }
-            RNFS.exists('file:///storage/emulated/0/Pictures/image_' + cropStepImagesArray[i])
-                .then((exists) => {
-                    if (!exists) {
-                        this.setState({ cropStepImages: cropStepImagesArray })
-                    } else {
-                        console.log("file exsists")
-                    }
-                })
-        }
+            const checkImage = await RNFS.exists('file:///storage/emulated/0/Pictures/image_' + cropStepImagesArray[i])
 
+            if (!checkImage) {
+                NewFile.push(cropStepImagesArray[i])
+                //console.log(cropScreenImageArray[i])
+                console.log(NewFile)
+
+            } else {
+                console.log("file exists")
+            }
+        }
+        cropStepImagesArray = NewFile
+        console.log(cropStepImagesArray, "hasta la vista")
+        //3
+        var NewFile = []
         for (var i = 0; i < cropMaterialImagesArray.length; i++) {
-            console.log(cropMaterialImagesArray[i])
-            console.log('file:///storage/emulated/0/Pictures/image_' + cropMaterialImagesArray[i])
-            // if('file:///storage/emulated/0/Pictures/image_'+cropScreenImageArray[i] === null){
-            //     console.log("NO exsist")
-            // }else{
-            //     console.log("peye gchi bara")
-            // }
-            RNFS.exists('file:///storage/emulated/0/Pictures/image_' + cropMaterialImagesArray[i])
-                .then((exists) => {
-                    if (!exists) {
+            const checkImage = await RNFS.exists('file:///storage/emulated/0/Pictures/image_' + cropMaterialImagesArray[i])
 
-                        this.setState({ cropMaterialImages: cropMaterialImagesArray })
-                    } else {
-                        console.log("file exsists")
-                    }
-                })
+            if (!checkImage) {
+                NewFile.push(cropMaterialImagesArray[i])
+                //console.log(cropScreenImageArray[i])
+                console.log(NewFile)
+
+            } else {
+                console.log("file exists")
+            }
         }
-
-
+        cropMaterialImagesArray = NewFile
+        console.log(cropMaterialImagesArray, "hasta la vista")
+        //4
+        var NewFile = []
         for (var i = 0; i < livestockScreenImagesArray.length; i++) {
-            console.log(livestockScreenImagesArray[i])
-            console.log('file:///storage/emulated/0/Pictures/image_' + livestockScreenImagesArray[i])
-            // if('file:///storage/emulated/0/Pictures/image_'+cropScreenImageArray[i] === null){
-            //     console.log("NO exsist")
-            // }else{
-            //     console.log("peye gchi bara")
-            // }
-            RNFS.exists('file:///storage/emulated/0/Pictures/image_' + livestockScreenImagesArray[i])
-                .then((exists) => {
-                    if (!exists) {
-                        this.setState({ livestockScreenImages: livestockScreenImagesArray })
-                    } else {
-                        console.log("file exsists")
-                    }
-                })
+            const checkImage = await RNFS.exists('file:///storage/emulated/0/Pictures/image_' + livestockScreenImagesArray[i])
+
+            if (!checkImage) {
+                NewFile.push(livestockScreenImagesArray[i])
+                //console.log(cropScreenImageArray[i])
+                console.log(NewFile)
+
+            } else {
+                console.log("file exists")
+            }
         }
+        livestockScreenImagesArray = NewFile
+        console.log(livestockScreenImagesArray, "hasta la vista")
+        //5
+        var NewFile = []
+        for (var i = 0; i < liveStockStepImagesArray.length; i++) {
+            const checkImage = await RNFS.exists('file:///storage/emulated/0/Pictures/image_' + liveStockStepImagesArray[i])
 
-        for (var i = 0; i < livestockScreenImagesArray.length; i++) {
-            console.log(livestockScreenImagesArray[i])
-            console.log('file:///storage/emulated/0/Pictures/image_' + livestockScreenImagesArray[i])
-            // if('file:///storage/emulated/0/Pictures/image_'+cropScreenImageArray[i] === null){
-            //     console.log("NO exsist")
-            // }else{
-            //     console.log("peye gchi bara")
-            // }
-            RNFS.exists('file:///storage/emulated/0/Pictures/image_' + livestockScreenImagesArray[i])
-                .then((exists) => {
-                    if (!exists) {
-                        this.setState({ livestockScreenImages: livestockScreenImagesArray })
-                    } else {
-                        console.log("file exsists")
-                    }
-                })
+            if (!checkImage) {
+                NewFile.push(liveStockStepImagesArray[i])
+                //console.log(cropScreenImageArray[i])
+                console.log(NewFile)
+
+            } else {
+                console.log("file exists")
+            }
         }
+        liveStockStepImagesArray = NewFile
+        console.log(liveStockStepImagesArray, "hasta la vista")
+        //6
+        var NewFile = []
+        for (var i = 0; i < breedScreenImagesArray.length; i++) {
+            const checkImage = await RNFS.exists('file:///storage/emulated/0/Pictures/image_' + breedScreenImagesArray[i])
 
+            if (!checkImage) {
+                NewFile.push(breedScreenImagesArray[i])
+                //console.log(cropScreenImageArray[i])
+                console.log(NewFile)
 
+            } else {
+                console.log("file exists")
+            }
+        }
+        breedScreenImagesArray = NewFile
+        console.log(breedScreenImagesArray, "hasta la vista")
+        //7
+        var NewFile = []
+        for (var i = 0; i < importantLinksScreenArray.length; i++) {
+            const checkImage = await RNFS.exists('file:///storage/emulated/0/Pictures/image_' + importantLinksScreenArray[i])
 
-        
+            if (!checkImage) {
+                NewFile.push(importantLinksScreenArray[i])
+                //console.log(cropScreenImageArray[i])
+                console.log(NewFile)
+
+            } else {
+                console.log("file exists")
+            }
+        }
+        importantLinksScreenArray = NewFile
+        console.log(importantLinksScreenArray, "hasta la vista")
+        //8
+        var NewFile = []
+        for (var i = 0; i < nutritionGardenImagesArray.length; i++) {
+            const checkImage = await RNFS.exists('file:///storage/emulated/0/Pictures/image_' + nutritionGardenImagesArray[i])
+
+            if (!checkImage) {
+                NewFile.push(nutritionGardenImagesArray[i])
+                //console.log(cropScreenImageArray[i])
+                console.log(NewFile)
+
+            } else {
+                console.log("file exists")
+            }
+        }
+        nutritionGardenImagesArray = NewFile
+        console.log(nutritionGardenImagesArray, "hasta la vista")
+        //9
+        var NewFile = []
+        for (var i = 0; i < smallBusinessImagesArray.length; i++) {
+            const checkImage = await RNFS.exists('file:///storage/emulated/0/Pictures/image_' + smallBusinessImagesArray[i])
+
+            if (!checkImage) {
+                NewFile.push(smallBusinessImagesArray[i])
+                //console.log(cropScreenImageArray[i])
+                console.log(NewFile)
+
+            } else {
+                console.log("file exists")
+            }
+        }
+        smallBusinessImagesArray = NewFile
+        console.log(smallBusinessImagesArray, "hasta la vista")
+        //10
+        var NewFile = []
+        for (var i = 0; i < labelArray.length; i++) {
+            const checkImage = await RNFS.exists('file:///storage/emulated/0/Pictures/image_' + labelArray[i])
+
+            if (!checkImage) {
+                NewFile.push(labelArray[i])
+                //console.log(cropScreenImageArray[i])
+                console.log(NewFile)
+
+            } else {
+                console.log("file exists")
+            }
+        }
+        labelArray = NewFile
+        console.log(labelArray, "hasta la vista")
+
+        this.setState({ cropScreenImages: cropScreenImageArray })
+        this.setState({ cropStepImages: cropStepImagesArray })
+        this.setState({ cropMaterialImages: cropMaterialImagesArray })
+        this.setState({ livestockScreenImages: livestockScreenImagesArray })
         this.setState({ liveStockStepImages: liveStockStepImagesArray })
         this.setState({ breedScreenImages: breedScreenImagesArray })
         this.setState({ importantLinksScreen: importantLinksScreenArray })
         this.setState({ nutritionGardenImages: nutritionGardenImagesArray })
         this.setState({ smallBusinessImages: smallBusinessImagesArray })
         this.setState({ labels: labelArray })
-        
+        //console.log(this.state.cropScreenImages,"hi")
+        this.getCropImage()
     }
 
 
