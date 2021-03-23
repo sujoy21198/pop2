@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { View, Image, TouchableOpacity, ScrollView } from 'react-native'
 import BaseColor from '../Core/BaseTheme'
-import { Text, Input } from 'native-base'
+import { Text, Input, Toast } from 'native-base'
 import TopLogo from '../assets/TopLogo'
 import { widthToDp, heightToDp } from '../Responsive'
 import { FlatGrid, SectionGrid } from 'react-native-super-grid'
@@ -31,8 +31,8 @@ const months = [
 const tableHeading = [
     { 'name': 'Items', 'birth': '1st Birth', 'age': '16 months old', 'numbers': '1', 'unitPrice': '4000', 'totalPriceInRupees': '5000' },
     { 'name': 'Quantity', 'birth': '2nd Birth', 'age': '8 months old', 'numbers': '1', 'unitPrice': '4000', 'totalPriceInRupees': '5000' },
-    { 'name': 'Unit Cost', 'birth': '3rd Birth', 'age': 'kid', 'numbers': '1', 'unitPrice': '4000', 'totalPriceInRupees': '5000' },
-    { 'name': 'Total Cost' },
+    { 'name': 'Unit Cost (INR)', 'birth': '3rd Birth', 'age': 'kid', 'numbers': '1', 'unitPrice': '4000', 'totalPriceInRupees': '5000' },
+    { 'name': 'Total Cost (INR)' },
 ]
 
 const tableHeading2 = [
@@ -227,11 +227,11 @@ export default class PultryTableScreen extends Component {
                                     keyboardType='number-pad'
                                     defaultValue={this.state.numberhens}
                                     onChangeText={(data) => this.calculation(data)}
-                                    style={{ marginLeft: widthToDp("1%"), fontFamily: 'Oswald-Medium', width: widthToDp("10%"), marginTop: heightToDp("1%"), borderWidth: 1 }}
+                                    style={{ marginLeft: widthToDp("1%"), fontFamily: 'Oswald-Medium', width: widthToDp("10%"), marginTop: heightToDp("1%"), borderBottomWidth: 1, borderColor: 'blue' }}
                                 />
-                                <Text style={{ fontSize: widthToDp("5%"), marginLeft: widthToDp("1%"), marginTop: heightToDp("1.5%"), fontFamily: 'Oswald-Medium', marginRight: widthToDp("20%") }}>hens</Text>
+                                <Text style={{ fontSize: widthToDp("5%"), marginLeft: widthToDp("1%"), marginTop: heightToDp("1.5%"), fontFamily: 'Oswald-Medium', marginRight: widthToDp("20%") }}>{Number(this.state.numberhens) === 1 ? "hen" : "hens"}</Text>
                             </View>
-                            <View>
+                            <View style={{paddingHorizontal: widthToDp('2%')}}>
                                 <Text>One desi hen gives 50 eggs in a year If a farmer keeps 4 hens, then he will get 200 eggs in a year.</Text>
                             </View>
                             <ScrollView nestedScrollEnabled={true}>
@@ -250,7 +250,7 @@ export default class PultryTableScreen extends Component {
                                     }
                                 </View>
 
-                                <View style={{ borderWidth: 1, height: heightToDp("18%"), width: widthToDp("83%"), marginLeft: widthToDp("3%"), marginTop: heightToDp("0%") }}>
+                                <View style={{ borderWidth: 1, paddingVertical: heightToDp("1%"), width: widthToDp("83%"), marginLeft: widthToDp("3%"), marginTop: heightToDp("0%") }}>
                                     {/* {
                                     tableHeading.map((i) => {
                                         return (
@@ -277,9 +277,9 @@ export default class PultryTableScreen extends Component {
                                     })
                                 } */}
                                     <View style={{ flexDirection: 'row' }}>
-                                        <View style={{ width: widthToDp("18%"), marginLeft: widthToDp("1.5%") }}>
+                                        <View style={{ width: widthToDp("15%"), marginLeft: widthToDp("1.5%") }}>
                                             <Text style={{ marginTop: heightToDp("2%") }}>Eggs</Text>
-                                            <Text style={{ marginTop: heightToDp("5%") }}>Adult Bird</Text>
+                                            <Text style={{ marginTop: heightToDp("2%") }}>Adult Bird</Text>
                                         </View>
 
                                         {/* <View style={{ width: widthToDp("17%"), marginLeft: widthToDp("1.5%") }}>
@@ -289,24 +289,26 @@ export default class PultryTableScreen extends Component {
                                     </View> */}
                                         <View style={{ width: widthToDp("18%"), marginLeft: widthToDp("6%") }}>
                                             <Text style={{ marginTop: heightToDp("2%") }}>{this.state.eggQuantity}</Text>
-                                            <Text style={{ marginTop: heightToDp("5%") }}>{this.state.birdQuantity}</Text>
+                                            <Text style={{ marginTop: heightToDp("2.3%") }}>{this.state.birdQuantity}</Text>
+
+                                        </View>
+                                        <View style={{ width: widthToDp("20%"), marginLeft: widthToDp("1.5%") }}>
+                                            <Text style={{ marginTop: heightToDp("2%"), fontSize: 12.5 }}>₹ 5.00 per piece</Text>
+                                            <Text style={{ marginTop: heightToDp("1%"), fontSize: 12.5 }}>₹ 300 per bird</Text>
 
                                         </View>
                                         <View style={{ width: widthToDp("14%"), marginLeft: widthToDp("1.5%") }}>
-                                            <Text style={{ marginTop: heightToDp("2%") }}>Rs 5.00 per piece</Text>
-                                            <Text style={{ marginTop: heightToDp("2%") }}>Rs 300 per bird</Text>
-
-                                        </View>
-                                        <View style={{ width: widthToDp("14%"), marginLeft: widthToDp("1.5%") }}>
-                                            <Text style={{ marginTop: heightToDp("2%") }}>Rs {this.state.totalPriceEggs}</Text>
-                                            <Text style={{ marginTop: heightToDp("5%") }}>Rs {this.state.totalPriceAdultBrids}</Text>
+                                            <Text style={{ marginTop: heightToDp("2%"), fontSize: 12.5 }}>₹ {this.state.totalPriceEggs}</Text>
+                                            <Text style={{ marginTop: heightToDp("3%"), fontSize: 12.5 }}>₹ {this.state.totalPriceAdultBrids}</Text>
 
                                         </View>
                                     </View>
                                 </View>
                                 <View style={{ borderWidth: 1, height: heightToDp("8%"), width: widthToDp("83%"), marginLeft: widthToDp("3%"), marginTop: heightToDp("0%"), flexDirection: 'row' }}>
-                                    <Text>Total (A)</Text>
-                                    <Text style={{ marginLeft: widthToDp("40%") }}>Rs {this.state.total}</Text>
+                                    <View style={{width: widthToDp('20%'), marginLeft: widthToDp('1%')}}>
+                                        <Text>Total (A)</Text>
+                                    </View>
+                                    <Text style={{ marginLeft: widthToDp("40%") }}>₹ {this.state.total}</Text>
                                 </View>
 
 
@@ -320,7 +322,7 @@ export default class PultryTableScreen extends Component {
                                     </View>
                                 </View>
 
-                                <View style={{ borderWidth: 1, height: heightToDp("18%"), width: widthToDp("83%"), marginLeft: widthToDp("3%"), marginTop: heightToDp("0%") }}>
+                                <View style={{ borderWidth: 1, paddingVertical: heightToDp("1%"), width: widthToDp("83%"), marginLeft: widthToDp("3%"), marginTop: heightToDp("0%") }}>
                                     {/* {
                                     tableHeading.map((i) => {
                                         return (
@@ -352,7 +354,7 @@ export default class PultryTableScreen extends Component {
                                                 tableHeading2.map((i) => {
                                                     return (
                                                         <View style={{ marginTop: widthToDp("4%") }}>
-                                                            <Text>{i.name}</Text>
+                                                            <Text style={{fontSize: 14}}>{i.name}</Text>
                                                         </View>
                                                     );
                                                 })
@@ -365,10 +367,9 @@ export default class PultryTableScreen extends Component {
                                         <Text style={{ marginTop: heightToDp("2%") }}>kids</Text>
                                     </View> */}
                                         <View style={{ width: widthToDp("18%"), marginLeft: widthToDp("6%") }}>
-                                            <Text style={{ marginTop: heightToDp("7%") }}>LS</Text>
-                                            <Text style={{ marginTop: heightToDp("3%") }}>LS</Text>
-
-
+                                            <Text style={{ marginTop: heightToDp("2%") }}>LS</Text>
+                                            <Text style={{ marginTop: heightToDp("1.3%") }}>LS</Text>
+                                            <Text style={{ marginTop: heightToDp("1.8%") }}>LS</Text>
                                         </View>
                                         <View style={{ width: widthToDp("14%"), marginLeft: widthToDp("1.5%") }}>
                                             <View style={{ marginTop: heightToDp("2%") }}>
@@ -382,7 +383,7 @@ export default class PultryTableScreen extends Component {
                                 </View>
                                 <View style={{ borderWidth: 1, height: heightToDp("8%"), width: widthToDp("83%"), marginLeft: widthToDp("3%"), marginTop: heightToDp("0%"), flexDirection: 'row' }}>
                                     <Text>Total (B)</Text>
-                                    <Text style={{ marginLeft: widthToDp("40%") }}>Rs {this.state.totalB}</Text>
+                                    <Text style={{ marginLeft: widthToDp("40%") }}>₹ {this.state.totalB}</Text>
                                 </View>
 
                                 <View style={{ marginLeft: widthToDp("3%"), marginTop: ("4%") }}>
@@ -391,6 +392,10 @@ export default class PultryTableScreen extends Component {
                                         <Text>{this.state.netProfit}</Text>
                                     </View>
 
+                                </View>
+                                
+                                <View style={{margin: widthToDp('3%')}}>
+                                    <Text>Note: The capital cost is not being considered in case of buying a new Hen.</Text>
                                 </View>
 
                                 <View style={{ marginTop: heightToDp("10%") }}></View>
@@ -406,14 +411,14 @@ export default class PultryTableScreen extends Component {
                             <Text style={{ fontSize: widthToDp("4%"), color: "#000", marginTop: heightToDp("1.3%"), alignSelf: 'center', fontFamily: 'Oswald-Medium' }}>BACK</Text>
                         </View>
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={() => { }}>
+                    <TouchableOpacity onPress={() => Toast.show({text: "Calculated", duration: 3000, type: 'success'})}>
                         <View style={{ backgroundColor: "#fff", height: heightToDp("6%"), width: widthToDp("30%"), borderRadius: 100, marginLeft: widthToDp("1%"), marginTop: heightToDp("2%") }}>
-                            <Text style={{ fontSize: widthToDp("4%"), color: "#000", marginTop: heightToDp("1.3%"), alignSelf: 'center', fontFamily: 'Oswald-Medium' }}>SAVE</Text>
+                            <Text style={{ fontSize: widthToDp("4%"), color: "#000", marginTop: heightToDp("1.3%"), alignSelf: 'center', fontFamily: 'Oswald-Medium' }}>CALCULATE</Text>
                         </View>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={() => { this.next() }}>
                         <View style={{ backgroundColor: "#fff", height: heightToDp("6%"), width: widthToDp("30%"), borderRadius: 100, marginLeft: widthToDp("1%"), marginTop: heightToDp("2%") }}>
-                            <Text style={{ fontSize: widthToDp("4%"), color: "#000", marginTop: heightToDp("1.3%"), alignSelf: 'center', fontFamily: 'Oswald-Medium' }}>NEXT</Text>
+                            <Text style={{ fontSize: widthToDp("4%"), color: "#000", marginTop: heightToDp("1.3%"), alignSelf: 'center', fontFamily: 'Oswald-Medium' }}>SAVE & EXIT</Text>
                         </View>
                     </TouchableOpacity>
                 </View>

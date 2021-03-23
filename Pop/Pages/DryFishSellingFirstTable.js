@@ -44,7 +44,7 @@ export default class DryFishSellingFirstTable extends Component {
             tableHeading: [],
             value: '',
             vaccine: [],
-            languages: []
+            languages: [],
         }
         this.state.tableHeading = tableHeading
         this.state.languages = Languages
@@ -357,9 +357,12 @@ export default class DryFishSellingFirstTable extends Component {
                             </View> */}
                             <View style={{ borderWidth: 1, height: heightToDp("8%"), width: widthToDp("83%"), marginLeft: widthToDp("3%"), marginTop: heightToDp("1.5%"), flexDirection: 'row' }}>
                                 {
-                                    tableHeading.map((i) => {
+                                    tableHeading.map((i, key) => {
                                         return (
-                                            <View style={{ width: widthToDp("19%"), marginLeft: widthToDp("1.5%") }}>
+                                            <View style={{ 
+                                                width: widthToDp(`${i.name==="Unit" ? '15%' : '23%'}`), 
+                                                marginLeft: key===0 ? widthToDp("1.5%") : 0 
+                                            }}>
 
                                                 <Text style={{ marginTop: heightToDp("2%") }}>{i.name}</Text>
 
@@ -396,8 +399,8 @@ export default class DryFishSellingFirstTable extends Component {
                                         )
                                     })
                                 } */}
-                                <View style={{ flexDirection: 'row' }}>
-                                    <View style={{ width: widthToDp("15%"), marginLeft: widthToDp("1.5%") }}>
+                                <View style={{ flexDirection: 'row', width: widthToDp("100%") }}>
+                                    <View style={{ width: widthToDp("18%"), marginLeft: widthToDp("1.5%") }}>
                                         {/* <Text style={{ marginTop: heightToDp("2%") }}>Eggs</Text>
                                         <Text style={{ marginTop: heightToDp("5%") }}>Adult Bird</Text> */}
                                         {
@@ -414,7 +417,7 @@ export default class DryFishSellingFirstTable extends Component {
                                         <Text style={{ marginTop: heightToDp("2%") }}>8 months old</Text>
                                         <Text style={{ marginTop: heightToDp("2%") }}>kids</Text>
                                     </View> */}
-                                    <View style={{ width: widthToDp("18%"), marginLeft: widthToDp("6%"), height: heightToDp("30%") }}>
+                                    <View style={{ width: widthToDp("12%"), marginLeft: widthToDp("6%"), height: heightToDp("30%") }}>
                                         {/* <Text style={{ marginTop: heightToDp("2%") }}>{this.state.eggQuantity}</Text>
                                         <Text style={{ marginTop: heightToDp("5%") }}>{this.state.birdQuantity}</Text> */}
                                         {
@@ -453,7 +456,10 @@ export default class DryFishSellingFirstTable extends Component {
                                 </View>
                             </View>
                             <View style={{ borderWidth: 1, height: heightToDp("8%"), width: widthToDp("83%"), marginLeft: widthToDp("3%"), marginTop: heightToDp("0%"), flexDirection: 'row' }}>
-                                <Text>One-time Expenditure</Text>
+                                <Text style={{
+                                    width: widthToDp(`${83/1.9}%`),
+                                    marginLeft: widthToDp("1.4%")
+                                }}>One-time Expenditure</Text>
                                 <Text style={{marginLeft:widthToDp("20%")}}>Rs 400</Text>
                             </View>
                         </View>
