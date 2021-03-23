@@ -766,7 +766,7 @@ export default class SigninScreen extends Component {
         this.setState({ imageloaded: false })
         if (this.state.imageloaded === false) {
             Toast.show({
-                text: "images downloaded successfully",
+                text: "Images Downloaded Successfully",
                 duration: 6000,
                 type: 'success'
             })

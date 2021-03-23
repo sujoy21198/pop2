@@ -31,7 +31,7 @@ const radio_props = [
   { label: "BLOCK PASSWORD", value: 1 }
 ]
 
-const validationStyle = ({marginLeft: widthToDp("8%"), color: '#8B0000'});
+const validationStyle = ({ marginLeft: widthToDp("8%"), color: '#8B0000' });
 
 export default class RegistrationScreen extends Component {
 
@@ -65,7 +65,7 @@ export default class RegistrationScreen extends Component {
       block: 'BLOCK',
       blockId: '',
       isDialogVisible: false,
-      blockApi:[]
+      blockApi: []
     }
 
     this.state.selectedLanguage = this.props.route.params.selectedLanguage
@@ -96,7 +96,7 @@ export default class RegistrationScreen extends Component {
     })
 
     this.setState({ statesApi: statesApi })
-    
+
   }
 
   checkStatus = (value) => {
@@ -120,33 +120,60 @@ export default class RegistrationScreen extends Component {
   signup = async () => {
 
     var name = this.state.fullname
-    var redirect = false;
+    var status
     var load = true
     this.setState({ isLoading: true })
-    //otp
-    
-    if (this.state.age < 12 && this.state.age >=100) {
+
+    if(this.state.age < 12 || this.state.age >= 100){
       this.setState({ isLoading: false })
-      return Toast.show({
+        return Toast.show({
         text: "Age must be grater than 12 and less than 100",
         duration: 3000,
         type: 'danger'
       })
-    } else if (this.state.password != this.state.confirmPassword) {
+    }
+
+    if(this.state.password != this.state.confirmPassword){
       this.setState({ isLoading: false })
-      return Toast.show({
-        text: "Password doesn't match",
-        duration: 3000,
-        type: 'danger'
-      })
-    } else if (this.state.phoneNumber.length != 10) {
-      this.setState({ isLoading: false })
-      return Toast.show({
-        text: "Phone number shoud consist of 10 digits",
+        return Toast.show({
+        text: "Passwords Doesnt match",
         duration: 3000,
         type: 'danger'
       })
     }
+
+    if(this.state.phoneNumber.length != 10){
+      this.setState({ isLoading: false })
+        return Toast.show({
+        text: "Phone Number must be of 10 digits",
+        duration: 3000,
+        type: 'danger'
+      })
+    }
+    //otp
+    // alert(this.state.age)
+    // if (this.state.age < 12 && this.state.age >= 100) {
+    //   this.setState({ isLoading: false })
+    //   return Toast.show({
+    //     text: "Age must be grater than 12 and less than 100",
+    //     duration: 3000,
+    //     type: 'danger'
+    //   })
+    // } else if (this.state.password != this.state.confirmPassword) {
+    //   this.setState({ isLoading: false })
+    //   return Toast.show({
+    //     text: "Password doesn't match",
+    //     duration: 3000,
+    //     type: 'danger'
+    //   })
+    // } else if (this.state.phoneNumber.length != 10) {
+    //   this.setState({ isLoading: false })
+    //   return Toast.show({
+    //     text: "Phone number shoud consist of 10 digits",
+    //     duration: 3000,
+    //     type: 'danger'
+    //   })
+    // }
     // await axios.get('http://127.0.0.1:3000/api/v1/token').then(function (response) {
     //   console.log(response)
     // }).catch(function (error){
@@ -173,9 +200,11 @@ export default class RegistrationScreen extends Component {
       }
     }).then(function (response) {
       console.log(response.data.data)
+      status = response.data.status
       // alert(response.data.msg)
       if (response.data.status === 1) {
         console.log("yes")
+
         // redirect = true
         Toast.show({
           text: name + ' ' + response.data.msg,
@@ -200,11 +229,7 @@ export default class RegistrationScreen extends Component {
       this.setState({ isLoading: false })
     }
 
-    if (this.state.value === 1) {
-      // this.props.navigation.navigate({
-      //     name: 'DashBoardScreen'
-      // })
-      
+    if (status === 1) {
       this.props.navigation.reset({
         index: 0,
         routes: [{
@@ -212,12 +237,26 @@ export default class RegistrationScreen extends Component {
           params: { selectedLanguage: this.state.selectedLanguage }
         }]
       });
-    }else if(this.state.value === 0 && this.state.phoneNumber != ''){
-      this.setState({ isDialogVisible: true })
     }
+
+    // if (this.state.value === 1) {
+    //   // this.props.navigation.navigate({
+    //   //     name: 'DashBoardScreen'
+    //   // })
+
+    //   this.props.navigation.reset({
+    //     index: 0,
+    //     routes: [{
+    //       name: "SigninScreen",
+    //       params: { selectedLanguage: this.state.selectedLanguage }
+    //     }]
+    //   });
+    // }else if(this.state.value === 0 && this.state.phoneNumber != ''){
+    //   this.setState({ isDialogVisible: true })
+    // }
   }
 
-  ageValidator= (data) => {
+  ageValidator = (data) => {
 
   }
 
@@ -231,12 +270,12 @@ export default class RegistrationScreen extends Component {
     // })
   }
 
-  statePicker = async(value) => {
+  statePicker = async (value) => {
     this.setState({
       state: value
     })
     var district = []
-    await axios.get("http://161.35.122.165:3020/api/v1/districts?state="+value, {
+    await axios.get("http://161.35.122.165:3020/api/v1/districts?state=" + value, {
       headers: {
         'Content-Type': 'application/json'
       }
@@ -246,50 +285,50 @@ export default class RegistrationScreen extends Component {
     }).catch(function (error) {
       console.log(error.message)
     })
-    this.setState({distApi : district})
+    this.setState({ distApi: district })
     this.RBSheet3.close()
   }
 
-  districtPicker = async(value) => {
+  districtPicker = async (value) => {
     this.setState({
       district: value
     })
     var block = []
-    await axios.get("http://161.35.122.165:3020/api/v1/blocks?district="+value, {
+    await axios.get("http://161.35.122.165:3020/api/v1/blocks?district=" + value, {
       headers: {
         'Content-Type': 'application/json'
       }
     }).then(function (response) {
-      console.log(response.data.blocks,"jijijijji")
+      console.log(response.data.blocks, "jijijijji")
       block = response.data.blocks
-      console.log(block,"block")
+      console.log(block, "block")
     }).catch(function (error) {
       console.log(error.message)
     })
-    this.setState({blockApi : block})
-    
+    this.setState({ blockApi: block })
+
     this.RBSheet4.close()
   }
 
-  gramPicker = async(value) => {
+  gramPicker = async (value) => {
     this.setState({
       gram: value
     })
 
     var village = []
-    await axios.get("http://161.35.122.165:3020/api/v1/villages?panchayat="+value, {
+    await axios.get("http://161.35.122.165:3020/api/v1/villages?panchayat=" + value, {
       headers: {
         'Content-Type': 'application/json'
       }
     }).then(function (response) {
-      console.log(response.data.villages,"jijijijji")
+      console.log(response.data.villages, "jijijijji")
       village = response.data.villages
       //console.log(block,"block")
     }).catch(function (error) {
       console.log(error.message)
     })
 
-    this.setState({villageApi : village})
+    this.setState({ villageApi: village })
     this.RBSheet2.close()
   }
 
@@ -300,7 +339,7 @@ export default class RegistrationScreen extends Component {
     this.RBSheet5.close()
   }
 
-  blockPicker = async(value, id) => {
+  blockPicker = async (value, id) => {
 
     this.setState({
       block: value
@@ -308,7 +347,7 @@ export default class RegistrationScreen extends Component {
     this.state.blockId = id
 
     var gram = []
-    await axios.get("http://161.35.122.165:3020/api/v1/gram-panchayats?block="+value, {
+    await axios.get("http://161.35.122.165:3020/api/v1/gram-panchayats?block=" + value, {
       headers: {
         'Content-Type': 'application/json'
       }
@@ -319,9 +358,9 @@ export default class RegistrationScreen extends Component {
       console.log(error.message)
     })
 
-    this.setState({gramApi : gram})
+    this.setState({ gramApi: gram })
     //alert(id)
-    
+
 
     //alert(this.state.blockId)
 
@@ -359,8 +398,8 @@ export default class RegistrationScreen extends Component {
         </View>
 
         <View style={{ marginTop: heightToDp("5%"), marginLeft: widthToDp("8%") }}>
-          <Text style={[styles.labelInput, {marginLeft: widthToDp("2%")}]}>{LanguageChange.fullname}</Text>
-          <Input 
+          <Text style={[styles.labelInput, { marginLeft: widthToDp("2%") }]}>{LanguageChange.fullname}</Text>
+          <Input
             style={[styles.input, styles.formInput]}
             onChangeText={(value) => this.FullName(value)}
           />
@@ -427,51 +466,51 @@ export default class RegistrationScreen extends Component {
         <View style={{ borderBottomColor: 'black', borderBottomWidth: 1, marginTop: heightToDp('0.1%'), width: widthToDp("80%"), marginLeft: widthToDp("8.2%") }}></View>
 
         <View style={{ marginTop: heightToDp("2.5%"), marginLeft: widthToDp("8%") }}>
-          <Text style={[styles.labelInput, {marginLeft: widthToDp("2%")}]}>{LanguageChange.age}</Text>
-          <Input 
+          <Text style={[styles.labelInput, { marginLeft: widthToDp("2%") }]}>{LanguageChange.age}</Text>
+          <Input
             style={[styles.input, styles.formInput]}
             onChangeText={(text) => this.setState({ age: text })}
             keyboardType='numeric'
           />
         </View>
         {
-          this.state.age!=="" && (this.state.age < 12 || this.state.age > 100) &&
+          this.state.age !== "" && (this.state.age < 12 || this.state.age > 100) &&
           <Text style={validationStyle}>Age must be within 12 and 100 years</Text>
         }
         <View style={{ marginTop: heightToDp("2.5%"), marginLeft: widthToDp("8%") }}>
-          <Text style={[styles.labelInput, {marginLeft: widthToDp("2%")}]}>{LanguageChange.contactNumber}</Text>
-          <Input 
+          <Text style={[styles.labelInput, { marginLeft: widthToDp("2%") }]}>{LanguageChange.contactNumber}</Text>
+          <Input
             style={[styles.input, styles.formInput]}
-            onChangeText={(text) => { this.setState({phoneNumber: text}) }}
+            onChangeText={(text) => { this.setState({ phoneNumber: text }) }}
             keyboardType='numeric'
           />
         </View>
         {
-          (this.state.phoneNumber!=="" && this.state.phoneNumber.length !== 10) &&
+          (this.state.phoneNumber !== "" && this.state.phoneNumber.length !== 10) &&
           <Text style={validationStyle}>Contact Number must be of 10 digit</Text>
         }
         <View style={{ marginTop: heightToDp("2.5%"), marginLeft: widthToDp("8%") }}>
-          <Text style={[styles.labelInput, {marginLeft: widthToDp("2%")}]}>{LanguageChange.username}</Text>
-          <Input 
+          <Text style={[styles.labelInput, { marginLeft: widthToDp("2%") }]}>{LanguageChange.username}</Text>
+          <Input
             style={[styles.input, styles.formInput]}
             onChangeText={(text) => { this.setState({ username: text }) }}
           />
         </View>
         <View style={{ marginTop: heightToDp("2.5%"), marginLeft: widthToDp("8%") }}>
-          <Text style={[styles.labelInput, {marginLeft: widthToDp("2%")}]}>{LanguageChange.password}</Text>
-          <Input 
+          <Text style={[styles.labelInput, { marginLeft: widthToDp("2%") }]}>{LanguageChange.password}</Text>
+          <Input
             style={[styles.input, styles.formInput]}
             onChangeText={(text) => { this.setState({ password: text }) }}
             secureTextEntry={this.state.passwordVisibility}
           />
         </View>
         {
-          (this.state.password!=="" && this.state.password.length < 8) &&
+          (this.state.password !== "" && this.state.password.length < 8) &&
           <Text style={validationStyle}>Password should contain at least 8 characters</Text>
         }
         <View style={{ marginTop: heightToDp("2.5%"), marginLeft: widthToDp("8%") }}>
-          <Text style={[styles.labelInput, {marginLeft: widthToDp("2%")}]}>{LanguageChange.confirmPassword}</Text>
-          <Input 
+          <Text style={[styles.labelInput, { marginLeft: widthToDp("2%") }]}>{LanguageChange.confirmPassword}</Text>
+          <Input
             style={[styles.input, styles.formInput]}
             onChangeText={(text) => { this.setState({ confirmPassword: text }) }}
             secureTextEntry={this.state.passwordVisibility}
@@ -719,20 +758,20 @@ export default class RegistrationScreen extends Component {
         </View>
         <View style={{ borderBottomColor: 'black', borderBottomWidth: 1, marginTop: heightToDp('0.1%'), width: widthToDp("80%"), marginLeft: widthToDp("8.2%") }}></View>
         <View style={{ marginTop: heightToDp("2.5%"), marginLeft: widthToDp("8%") }}>
-          <Text style={[styles.labelInput, {marginLeft: widthToDp("2%")}]}>{LanguageChange.participantNumber}</Text>
-          <Input 
+          <Text style={[styles.labelInput, { marginLeft: widthToDp("2%") }]}>{LanguageChange.participantNumber}</Text>
+          <Input
             style={[styles.input, styles.formInput]}
             onChangeText={(text) => { this.setState({ participantNumber: text }) }}
             secureTextEntry={this.state.passwordVisibility}
           />
         </View>
-        <Input 
+        <Input
           style={{
             height: 0,
             width: 0
-          }} 
+          }}
           disabled
-          value={this.state.deviceId}          
+          value={this.state.deviceId}
         />
         <View style={{ flexDirection: 'row', marginTop: heightToDp("5%"), marginLeft: widthToDp("4%") }}>
           {/* <RadioForm
@@ -803,7 +842,7 @@ export default class RegistrationScreen extends Component {
           closeDialog={() => { this.setState({ isDialogVisible: false }) }}
           submitText={"Verify"}
           keyboardType='numeric'
-          >
+        >
         </DialogInput>
 
         <TouchableOpacity onPress={() => this.signup()}>
