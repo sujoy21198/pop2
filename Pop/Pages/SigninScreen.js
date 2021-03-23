@@ -17,6 +17,7 @@ import DeviceInfo from 'react-native-device-info'
 import NetInfo from '@react-native-community/netinfo'
 import base64 from 'react-native-base64'
 import RNFetchBlob from 'rn-fetch-blob'
+import RNFS, { exists } from 'react-native-fs'
 
 
 export default class SigninScreen extends Component {
@@ -39,8 +40,8 @@ export default class SigninScreen extends Component {
             nutritionGardenImages: [],
             smallBusinessImages: [],
             labels: [],
-            imageloaded: true,
-            imageLoading: true
+            imageloaded: false,
+            imageLoading: false
         }
 
         this.state.selectedLanguage = this.props.route.params.selectedLanguage
@@ -97,18 +98,110 @@ export default class SigninScreen extends Component {
         }).catch(function (error) {
             console.log(error)
         })
-        this.setState({ cropScreenImages: cropScreenImageArray })
-        this.setState({ cropStepImages: cropStepImagesArray })
-        this.setState({ cropMaterialImages: cropMaterialImagesArray })
-        this.setState({ livestockScreenImages: livestockScreenImagesArray })
+
+        for (var i = 0; i < cropScreenImageArray.length; i++) {
+            console.log(cropScreenImageArray[i])
+            console.log('file:///storage/emulated/0/Pictures/image_' + cropScreenImageArray[i])
+            // if('file:///storage/emulated/0/Pictures/image_'+cropScreenImageArray[i] === null){
+            //     console.log("NO exsist")
+            // }else{
+            //     console.log("peye gchi bara")
+            // }
+            RNFS.exists('file:///storage/emulated/0/Pictures/image_' + cropScreenImageArray[i])
+                .then((exists) => {
+                    if (!exists) {
+                        this.setState({ cropScreenImages: cropScreenImageArray })
+                    } else {
+                        console.log("file exsists")
+                    }
+                })
+        }
+
+
+        for (var i = 0; i < cropStepImagesArray.length; i++) {
+            console.log(cropStepImagesArray[i])
+            console.log('file:///storage/emulated/0/Pictures/image_' + cropStepImagesArray[i])
+            // if('file:///storage/emulated/0/Pictures/image_'+cropScreenImageArray[i] === null){
+            //     console.log("NO exsist")
+            // }else{
+            //     console.log("peye gchi bara")
+            // }
+            RNFS.exists('file:///storage/emulated/0/Pictures/image_' + cropStepImagesArray[i])
+                .then((exists) => {
+                    if (!exists) {
+                        this.setState({ cropStepImages: cropStepImagesArray })
+                    } else {
+                        console.log("file exsists")
+                    }
+                })
+        }
+
+        for (var i = 0; i < cropMaterialImagesArray.length; i++) {
+            console.log(cropMaterialImagesArray[i])
+            console.log('file:///storage/emulated/0/Pictures/image_' + cropMaterialImagesArray[i])
+            // if('file:///storage/emulated/0/Pictures/image_'+cropScreenImageArray[i] === null){
+            //     console.log("NO exsist")
+            // }else{
+            //     console.log("peye gchi bara")
+            // }
+            RNFS.exists('file:///storage/emulated/0/Pictures/image_' + cropMaterialImagesArray[i])
+                .then((exists) => {
+                    if (!exists) {
+
+                        this.setState({ cropMaterialImages: cropMaterialImagesArray })
+                    } else {
+                        console.log("file exsists")
+                    }
+                })
+        }
+
+
+        for (var i = 0; i < livestockScreenImagesArray.length; i++) {
+            console.log(livestockScreenImagesArray[i])
+            console.log('file:///storage/emulated/0/Pictures/image_' + livestockScreenImagesArray[i])
+            // if('file:///storage/emulated/0/Pictures/image_'+cropScreenImageArray[i] === null){
+            //     console.log("NO exsist")
+            // }else{
+            //     console.log("peye gchi bara")
+            // }
+            RNFS.exists('file:///storage/emulated/0/Pictures/image_' + livestockScreenImagesArray[i])
+                .then((exists) => {
+                    if (!exists) {
+                        this.setState({ livestockScreenImages: livestockScreenImagesArray })
+                    } else {
+                        console.log("file exsists")
+                    }
+                })
+        }
+
+        for (var i = 0; i < livestockScreenImagesArray.length; i++) {
+            console.log(livestockScreenImagesArray[i])
+            console.log('file:///storage/emulated/0/Pictures/image_' + livestockScreenImagesArray[i])
+            // if('file:///storage/emulated/0/Pictures/image_'+cropScreenImageArray[i] === null){
+            //     console.log("NO exsist")
+            // }else{
+            //     console.log("peye gchi bara")
+            // }
+            RNFS.exists('file:///storage/emulated/0/Pictures/image_' + livestockScreenImagesArray[i])
+                .then((exists) => {
+                    if (!exists) {
+                        this.setState({ livestockScreenImages: livestockScreenImagesArray })
+                    } else {
+                        console.log("file exsists")
+                    }
+                })
+        }
+
+
+
+        
         this.setState({ liveStockStepImages: liveStockStepImagesArray })
         this.setState({ breedScreenImages: breedScreenImagesArray })
         this.setState({ importantLinksScreen: importantLinksScreenArray })
         this.setState({ nutritionGardenImages: nutritionGardenImagesArray })
         this.setState({ smallBusinessImages: smallBusinessImagesArray })
         this.setState({ labels: labelArray })
-        //console.log(this.state.cropScreenImages,"hi")
-        this.getCropImage()
+        
     }
 
 
@@ -599,14 +692,14 @@ export default class SigninScreen extends Component {
         }
         // alert("images downloaded successfully")
         this.setState({ imageloaded: false })
-        if(this.state.imageloaded === false){
+        if (this.state.imageloaded === false) {
             Toast.show({
-            text: "images downloaded successfully",
-            duration: 6000,
-            type: 'success'
-        })
+                text: "images downloaded successfully",
+                duration: 6000,
+                type: 'success'
+            })
         }
-        
+
         console.log(fileNames)
         console.log(imageUrls)
     }
@@ -1015,8 +1108,8 @@ export default class SigninScreen extends Component {
                         this.state.imageloaded ? <View>
                             <View style={{ marginTop: heightToDp("5%") }}>
                                 <CustomIndicator IsLoading={this.state.imageLoading} />
-                                <View style={{ marginTop: heightToDp("5%") , alignSelf:'center' }}>
-                                    <Text style={{fontSize:widthToDp("6%"),fontFamily: 'Oswald-Medium'}}>Please wait while image is downloading</Text>
+                                <View style={{ marginTop: heightToDp("5%"), alignSelf: 'center' }}>
+                                    <Text style={{ fontSize: widthToDp("6%"), fontFamily: 'Oswald-Medium' }}>Please wait while image is downloading</Text>
                                 </View>
                             </View>
 

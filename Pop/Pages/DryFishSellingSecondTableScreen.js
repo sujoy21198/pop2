@@ -11,6 +11,7 @@ import base64 from 'react-native-base64'
 import axios from 'axios'
 import DataAccess from '../Core/DataAccess'
 import CustomIndicator from '../Core/CustomIndicator'
+import Languages from '../Core/Languages'
 
 
 const tableHeading = [
@@ -22,7 +23,7 @@ const tableHeading = [
 
 const tableHeading2 = [
     { 'name': 'Items', 'items': 'Dry Fish(without salt)', 'unit': '2', 'unitPrice': 'Rs 500 perKG', 'totalPrice': '1000' },
-    { 'name': 'Unit', 'items': 'Dry fish(salted)', 'unit': '2', 'unitPrice': 'Rs 500 perKG', 'totalPrice': '1000' },
+    { 'name': 'Unit(Kgs)', 'items': 'Dry fish(salted)', 'unit': '2', 'unitPrice': 'Rs 500 perKG', 'totalPrice': '1000' },
     { 'name': 'Selling Price' },
     { 'name': 'Total Selling price (keeping 20% margin)' },
 ]
@@ -34,24 +35,169 @@ export default class DryFishSellingSecondTableScreen extends Component {
             tableHeading: [],
             value: '',
             vaccine: [],
-            unitDryfishsalt:'2',
-            unitDryfish:'2',
-            sellingpricedryfishsalt:'600',
-            sellingpricedryfish:'600',
-            totalsellingpricedryfishsalt:'1200',
-            totalsellingpricedryfish:'1200',
-            perdaysellingvaluetotal:'2400',
-            profitperday : '350',
-            try:'2'
+            unitDryfishsalt: '2',
+            unitDryfish: '2',
+            sellingpricedryfishsalt: '600',
+            sellingpricedryfish: '600',
+            totalsellingpricedryfishsalt: '1200',
+            totalsellingpricedryfish: '1200',
+            perdaysellingvaluetotal: '2400',
+            profitperday: '350',
+            try: '2',
+            expDryFish: '2',
+            expDryFishSalt: '2',
+            expDryFishTotal: '1000',
+            expDryFishSaltTotal: '1000',
+            expPerDayPerLot: '2050',
+            profit15:'5250',
+            languages: []
         }
         this.state.tableHeading = tableHeading
+        this.state.languages = Languages
         //this.state.value = this.props.route.params.value
         //alert(this.state.value)
     }
     componentDidMount() {
         this.getVaccinesFromOffline()
+        this.setLanguageOnMount()
+        this.loadlabelsFromStorage()
 
     }
+
+    setLanguageOnMount = async () => {
+        let defaultLanguage = await AsyncStorage.getItem('language')
+        if (defaultLanguage === 'en') {
+            this.setState({ textLanguageChange: '0' })
+            this.loadlabelsFromStorage()
+        } else if (defaultLanguage === 'hi') {
+            this.setState({ textLanguageChange: '1' })
+            this.loadlabelsFromStorage()
+        } else if (defaultLanguage === 'ho') {
+            this.setState({ textLanguageChange: '2' })
+            this.loadlabelsFromStorage()
+        } else if (defaultLanguage === 'od') {
+            this.setState({ textLanguageChange: '3' })
+            this.loadlabelsFromStorage()
+        } else if (defaultLanguage === 'san') {
+            this.setState({ textLanguageChange: '4' })
+            this.loadlabelsFromStorage()
+        }
+    }
+
+    languageChangeFunction = async (data) => {
+
+        if (data === 'en') {
+            AsyncStorage.setItem('language', 'en')
+            this.setState({ textLanguageChange: '0' })
+            this.loadlabelsFromStorage()
+            this.props.navigation.reset({
+                index: 0,
+                routes: [{ name: "DashBoardScreen" }]
+            });
+        } else if (data === 'hi') {
+            this.setState({ textLanguageChange: '1' })
+            this.loadlabelsFromStorage()
+            AsyncStorage.setItem('language', 'hi')
+            this.props.navigation.reset({
+                index: 0,
+                routes: [{ name: "DashBoardScreen" }]
+            });
+        } else if (data === 'ho') {
+            this.setState({ textLanguageChange: '2' })
+            this.loadlabelsFromStorage()
+            AsyncStorage.setItem('language', 'ho')
+            this.props.navigation.reset({
+                index: 0,
+                routes: [{ name: "DashBoardScreen" }]
+            });
+        } else if (data === 'od') {
+            this.setState({ textLanguageChange: '3' })
+            this.loadlabelsFromStorage()
+            AsyncStorage.setItem('language', 'od')
+            this.props.navigation.reset({
+                index: 0,
+                routes: [{ name: "DashBoardScreen" }]
+            });
+        } else if (data === 'san') {
+            AsyncStorage.setItem('language', 'san')
+            this.setState({ textLanguageChange: '4' })
+            this.loadlabelsFromStorage()
+            this.props.navigation.reset({
+                index: 0,
+                routes: [{ name: "DashBoardScreen" }]
+            });
+        }
+    }
+
+
+    loadlabelsFromStorage = async () => {
+        try {
+            let username = await AsyncStorage.getItem('username')
+            let user = await AsyncStorage.getItem('offlineData');
+            let parsed = JSON.parse(user);
+            var specificObject = parsed.find((i) => i.username === username)
+
+            var smallBusinessLabel = specificObject.labels.find((i) => i.type === 62)
+
+            //var nutrationGraden = specificObject.labels.find((i) => i.type === 31)
+            // var message = specificObject.labels.find((i) => i.type === 26)
+            // var generalSettings = specificObject.labels.find((i) => i.type === 27)
+            // var pension = specificObject.labels.find((i) => i.type === 51)
+            // var others = specificObject.labels.find((i) => i.type === 52)
+            // High Land: 53
+            // Medium Land: 54
+            // Low Land: 55
+            // Land Type : 56
+            if (this.state.textLanguageChange === '0') {
+
+                this.setState({ smallBusinessLabel: smallBusinessLabel.nameEnglish })
+                //this.setState({ landTypeLabel: landTypeLabel.nameEnglish })
+                // this.state.data[4].name = message.nameEnglish
+                // this.state.data[5].name = generalSettings.nameEnglish
+                // this.state.data[6].name = pension.nameEnglish
+                // this.state.data[7].name = others.nameEnglish
+                // this.setState({ moneyManagerLabel: moneyManagerLabel.nameEnglish })
+                // this.setState({ expenseLabel: expenseLabel.nameEnglish })
+                // this.setState({ incomeLabel: incomeLabel.nameEnglish })
+                // this.setState({ allTransactionLabel: allTransactionLabel.nameEnglish })
+            } else if (this.state.textLanguageChange === '1') {
+
+                this.setState({ smallBusinessLabel: smallBusinessLabel.nameHindi })
+                // this.state.data[4].name = message.nameHindi
+                // this.state.data[5].name = generalSettings.nameHindi
+                // this.state.data[6].name = pension.nameHindi
+                // this.state.data[7].name = others.nameHindi
+            } else if (this.state.textLanguageChange === '2') {
+
+                this.setState({ smallBusinessLabel: smallBusinessLabel.nameHo })
+                // this.state.data[4].name = message.nameHo
+                // this.state.data[5].name = generalSettings.nameHo
+                // this.state.data[6].name = pension.nameHo
+                // this.state.data[7].name = others.nameHo
+            } else if (this.state.textLanguageChange === '3') {
+
+                this.setState({ smallBusinessLabel: smallBusinessLabel.nameOdia })
+                //this.setState({ landTypeLabel: landTypeLabel.nameOdia })
+                // this.state.data[4].name = message.nameOdia
+                // this.state.data[5].name = generalSettings.nameOdia
+                // this.state.data[6].name = pension.nameOdia
+                // this.state.data[7].name = others.nameOdia
+            } else if (this.state.textLanguageChange === '4') {
+
+                this.setState({ smallBusinessLabel: smallBusinessLabel.nameSanthali })
+                // this.setState({ landTypeLabel: landTypeLabel.nameSanthali })
+                // this.state.data[4].name = message.nameSanthali
+                // this.state.data[5].name = generalSettings.nameSanthali
+                // this.state.data[6].name = pension.nameSanthali
+                // this.state.data[7].name = others.nameSanthali
+            }
+
+        } catch (error) {
+            alert(error)
+        }
+        this.setState({ crops: specificObject.crops })
+    }
+
     getVaccinesFromOffline = async () => {
         try {
             var vaccine = []
@@ -70,14 +216,26 @@ export default class DryFishSellingSecondTableScreen extends Component {
 
     calculation = () => {
         var result = this.state.unitDryfishsalt * this.state.sellingpricedryfishsalt
-        this.setState({totalsellingpricedryfishsalt : result})
+        this.setState({ totalsellingpricedryfishsalt: result })
         var result1 = this.state.unitDryfish * this.state.sellingpricedryfish
-        this.setState({totalsellingpricedryfish : result1})
+        this.setState({ totalsellingpricedryfish: result1 })
         var result3 = result + result1
-        this.setState({perdaysellingvaluetotal : result3})
+        this.setState({ perdaysellingvaluetotal: result3 })
         var result4 = result3 - 2050
-        this.setState({profitperday : result4})
+        this.setState({ profitperday: result4 })
         console.log(this.state.totalsellingpricedryfishsalt)
+
+
+
+        var expDryFishTotal = this.state.expDryFish * 500
+        var expDryFishSaltTotal = this.state.expDryFishSalt * 500
+        var expPerDayPerLot = expDryFishTotal + expDryFishSaltTotal
+        var profit15 = this.state.profitperday * 15
+
+        this.setState({ expDryFishTotal: expDryFishTotal })
+        this.setState({ expDryFishSaltTotal: expDryFishSaltTotal })
+        this.setState({ expPerDayPerLot: expPerDayPerLot })
+        this.setState({profit15 : profit15})
     }
 
     inputValue = (data) => {
@@ -86,12 +244,29 @@ export default class DryFishSellingSecondTableScreen extends Component {
         console.log(numberofVaccines)
     }
 
-    next = () => {
+    next = async() => {
+        try {
+            var date = new Date().getDate()
+            var month = new Date().getMonth()+1
+            var year = new Date().getFullYear()
+            const expenseObject = { 'type': 'expense', 'category': 'DryFish Selling', 'amount': this.state.expPerDayPerLot , 'date': date + "/" + month + "/" + year }
+            const incomeObject = { 'type': 'income', 'category': 'DryFish Selling', 'amount': this.state.profit15 , 'date': date + "/" + month + "/" + year}
+            let username = await AsyncStorage.getItem('username')
+            let user = await AsyncStorage.getItem('user');
+            let parsed = JSON.parse(user);
+            var specificObject = parsed.find((i) => i.username === username)
+            specificObject.moneyManagerData.push(expenseObject)
+            specificObject.moneyManagerData.push(incomeObject)
+            await AsyncStorage.setItem('user', JSON.stringify(parsed))
+            console.log(specificObject.moneyManagerData)
+        } catch (error) {
+            console.log(error)
+        }
         this.props.navigation.reset({
             index: 0,
             routes: [{ name: "DashBoardScreen" }]
         })
-        
+
     }
     render() {
         var tableHeading = []
@@ -114,66 +289,39 @@ export default class DryFishSellingSecondTableScreen extends Component {
                 </View>
 
                 <View style={{ flexDirection: 'row', marginTop: heightToDp("1%"), marginLeft: widthToDp("1%") }}>
-                    <TouchableOpacity onPress={() => this.props.navigation.navigate('SigninScreen')}>
+                    <TouchableOpacity onPress={() => this.languageChangeFunction(this.state.languages[0].id)}>
                         <View style={{ backgroundColor: BaseColor.English, width: widthToDp("30%"), height: heightToDp("6%"), marginLeft: widthToDp("2%"), borderRadius: 100, flexDirection: 'row' }}>
-                            <Text style={{ color: '#fff', marginTop: heightToDp("1.5%"), fontFamily: 'Oswald-Medium', marginLeft: widthToDp("5%") }}>ENGLISH</Text>
-                            <Icon
-                                name="microphone"
-                                color="white"
-                                size={20}
-                                style={{ marginTop: heightToDp("1.8%"), marginLeft: widthToDp("6%") }}
-                            />
+                            <Text style={{ color: '#fff', marginTop: heightToDp("1.5%"), fontFamily: 'Oswald-Medium', marginLeft: widthToDp("5%") }}>{this.state.languages[0].value}</Text>
+
                         </View>
                     </TouchableOpacity>
 
-                    <TouchableOpacity >
+                    <TouchableOpacity onPress={() => this.languageChangeFunction(this.state.languages[1].id)}>
                         <View style={{ backgroundColor: BaseColor.Hindi, width: widthToDp("30%"), height: heightToDp("6%"), marginLeft: widthToDp("2%"), borderRadius: 100, flexDirection: 'row' }}>
-                            <Text style={{ color: '#fff', marginTop: heightToDp("1.7%"), marginLeft: widthToDp("5%"), fontWeight: 'bold', fontSize: widthToDp("4.3%") }}>हिन्दी</Text>
-                            <Icon
-                                name="microphone"
-                                color="white"
-                                size={20}
-                                style={{ marginTop: heightToDp("1.8%"), marginLeft: widthToDp("9%") }}
-                            />
+                            <Text style={{ color: '#fff', marginTop: heightToDp("1.7%"), marginLeft: widthToDp("5%"), fontWeight: 'bold', fontSize: widthToDp("4.3%") }}>{this.state.languages[1].value}</Text>
+
                         </View>
                     </TouchableOpacity>
 
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={() => this.languageChangeFunction(this.state.languages[2].id)}>
                         <View style={{ backgroundColor: BaseColor.Ho, width: widthToDp("30%"), height: heightToDp("6%"), marginLeft: widthToDp("2%"), borderRadius: 100, flexDirection: 'row' }}>
-                            <Text style={{ color: '#fff', marginTop: heightToDp("1.5%"), marginLeft: widthToDp("5%"), fontWeight: 'bold', fontSize: widthToDp("4.3%") }}>ʤʌgʌr</Text>
-                            <Icon
-                                name="microphone"
-                                color="white"
-                                size={20}
-                                style={{ marginTop: heightToDp("1.8%"), marginLeft: widthToDp("6.3%") }}
-                            />
+                            <Text style={{ color: '#fff', marginTop: heightToDp("1.5%"), marginLeft: widthToDp("5%"), fontWeight: 'bold', fontSize: widthToDp("4.3%") }}>{this.state.languages[2].value}</Text>
+
                         </View>
                     </TouchableOpacity>
                 </View>
-
-
                 <View style={{ flexDirection: 'row', marginTop: heightToDp("1%"), marginLeft: widthToDp("1%"), alignSelf: 'center' }}>
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={() => this.languageChangeFunction(this.state.languages[3].id)}>
                         <View style={{ backgroundColor: BaseColor.Uridia, width: widthToDp("30%"), height: heightToDp("6%"), borderRadius: 100, flexDirection: 'row' }}>
-                            <Text style={{ color: '#fff', marginTop: heightToDp("1.7%"), marginLeft: widthToDp("4.7%"), fontWeight: 'bold', fontSize: widthToDp("4.3%") }}>ଓଡ଼ିଆ</Text>
-                            <Icon
-                                name="microphone"
-                                color="white"
-                                size={20}
-                                style={{ marginTop: heightToDp("1.8%"), marginLeft: widthToDp("6.9%") }}
-                            />
+                            <Text style={{ color: '#fff', marginTop: heightToDp("1.7%"), marginLeft: widthToDp("4.7%"), fontWeight: 'bold', fontSize: widthToDp("4.3%") }}>{this.state.languages[3].value}</Text>
+
                         </View>
                     </TouchableOpacity>
 
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={() => this.languageChangeFunction(this.state.languages[4].id)}>
                         <View style={{ backgroundColor: BaseColor.Santhali, width: widthToDp("30%"), height: heightToDp("6%"), borderRadius: 100, marginLeft: widthToDp("2%"), flexDirection: 'row' }}>
-                            <Text style={{ color: '#fff', marginTop: heightToDp("1.7%"), marginLeft: widthToDp("3.4%"), fontWeight: 'bold', fontSize: widthToDp("4.3%") }}>ᱥᱟᱱᱛᱟᱲᱤ</Text>
-                            <Icon
-                                name="microphone"
-                                color="white"
-                                size={20}
-                                style={{ marginTop: heightToDp("1.8%"), marginLeft: widthToDp("3%") }}
-                            />
+                            <Text style={{ color: '#fff', marginTop: heightToDp("1.7%"), marginLeft: widthToDp("3.4%"), fontWeight: 'bold', fontSize: widthToDp("4.3%") }}>{this.state.languages[4].value}</Text>
+
                         </View>
                     </TouchableOpacity>
                 </View>
@@ -243,7 +391,7 @@ export default class DryFishSellingSecondTableScreen extends Component {
                                         {
                                             tableHeading.map((i) => {
                                                 return (
-                                                    <Text style={{ marginTop: heightToDp("1%") }}>{i.items}</Text>
+                                                    <Text style={{ marginTop: heightToDp("3%") }}>{i.items}</Text>
                                                 )
                                             })
                                         }
@@ -255,15 +403,27 @@ export default class DryFishSellingSecondTableScreen extends Component {
                                         <Text style={{ marginTop: heightToDp("2%") }}>kids</Text>
                                     </View> */}
                                     <View style={{ width: widthToDp("18%"), marginLeft: widthToDp("6%"), height: heightToDp("30%") }}>
-                                        {/* <Text style={{ marginTop: heightToDp("2%") }}>{this.state.eggQuantity}</Text>
-                                        <Text style={{ marginTop: heightToDp("5%") }}>{this.state.birdQuantity}</Text> */}
-                                        {
-                                            tableHeading.map((i) => {
-                                                return (
-                                                    <Text style={{ marginTop: heightToDp("4%") }}>{i.unit}</Text>
-                                                )
-                                            })
-                                        }
+                                        <View style={{ width: widthToDp("10%"), height: heightToDp("5%"), marginTop: heightToDp("5%"), flexDirection: 'row' }}>
+                                            <Input
+                                                style={{ borderWidth: 1 }}
+                                                placeholder="2"
+                                                onChangeText={(data) => this.setState({ expDryFish: data })}
+                                                keyboardType="number-pad"
+                                            />
+                                        </View>
+
+                                        <View style={{ width: widthToDp("10%"), height: heightToDp("5%"), marginTop: heightToDp("5%"), flexDirection: 'row' }}>
+                                            <Input
+                                                style={{ borderWidth: 1 }}
+                                                placeholder="2"
+                                                onChangeText={(data) => this.setState({ expDryFishSalt: data })}
+                                                keyboardType="number-pad"
+                                            />
+                                        </View>
+
+                                        <View style={{ width: widthToDp("10%"), height: heightToDp("5%"), marginTop: heightToDp("3%"), flexDirection: 'row' }}>
+                                            <Text>LS</Text>
+                                        </View>
 
                                     </View>
                                     <View style={{ width: widthToDp("14%"), marginLeft: widthToDp("1.5%") }}>
@@ -279,25 +439,24 @@ export default class DryFishSellingSecondTableScreen extends Component {
 
                                     </View>
                                     <View style={{ width: widthToDp("14%"), marginLeft: widthToDp("10%") }}>
-                                        {/* <Text style={{ marginTop: heightToDp("2%") }}>Rs {this.state.totalPriceEggs}</Text>
-                                        <Text style={{ marginTop: heightToDp("5%") }}>Rs {this.state.totalPriceAdultBrids}</Text> */}
-                                        {
-                                            tableHeading.map((i) => {
-                                                return (
-                                                    <Text style={{ marginTop: heightToDp("4%") }}>{i.totalPrice}</Text>
-                                                )
-                                            })
-                                        }
+                                        <View style={{marginTop:heightToDp("4%")}}>
+                                            <Text>{this.state.expDryFishTotal}</Text>
+                                        </View>
+
+                                        <View style={{marginTop:heightToDp("4%")}}>
+                                            <Text>{this.state.expDryFishSaltTotal}</Text>
+                                        </View>
+
 
                                     </View>
                                 </View>
                             </View>
                             <View style={{ borderWidth: 1, height: heightToDp("8%"), width: widthToDp("83%"), marginLeft: widthToDp("3%"), marginTop: heightToDp("0%"), flexDirection: 'row' }}>
                                 <Text>Expenditure per day/lot (A)</Text>
-                                <View style={{width:widthToDp("20%")}}>
-                                <Text style={{ marginLeft: widthToDp("0%"), marginLeft: widthToDp("3%") }}>Rs 2050</Text>
+                                <View style={{ width: widthToDp("20%") }}>
+                                    <Text style={{ marginLeft: widthToDp("0%"), marginLeft: widthToDp("3%") }}>Rs {this.state.expPerDayPerLot}</Text>
                                 </View>
-                                
+
                             </View>
 
                             <View style={{ borderWidth: 1, height: heightToDp("24%"), width: widthToDp("83%"), marginLeft: widthToDp("3%"), marginTop: heightToDp("1.5%"), flexDirection: 'row' }}>
@@ -341,7 +500,7 @@ export default class DryFishSellingSecondTableScreen extends Component {
                                             {/* <Text style={{ marginBottom: heightToDp("1.5%") }}>{i.noOfTime}</Text> */}
                                             <Input
                                                 style={{ borderWidth: 1 }}
-                                                onChangeText={(data) => this.setState({unitDryfishsalt : data})}
+                                                onChangeText={(data) => this.setState({ unitDryfishsalt: data })}
                                                 keyboardType="number-pad"
                                                 defaultValue={this.state.unitDryfishsalt}
                                             />
@@ -351,7 +510,7 @@ export default class DryFishSellingSecondTableScreen extends Component {
                                             {/* <Text style={{ marginBottom: heightToDp("1.5%") }}>{i.noOfTime}</Text> */}
                                             <Input
                                                 style={{ borderWidth: 1 }}
-                                                onChangeText={(data) => this.setState({unitDryfish : data})}
+                                                onChangeText={(data) => this.setState({ unitDryfish: data })}
                                                 keyboardType="number-pad"
                                                 defaultValue={this.state.unitDryfish}
                                             />
@@ -365,7 +524,7 @@ export default class DryFishSellingSecondTableScreen extends Component {
                                             {/* <Text style={{ marginBottom: heightToDp("1.5%") }}>{i.noOfTime}</Text> */}
                                             <Input
                                                 style={{ borderWidth: 1 }}
-                                                onChangeText={(data) => this.setState({sellingpricedryfishsalt : data})}
+                                                onChangeText={(data) => this.setState({ sellingpricedryfishsalt: data })}
                                                 keyboardType="number-pad"
                                                 defaultValue={this.state.sellingpricedryfishsalt}
                                             />
@@ -375,7 +534,7 @@ export default class DryFishSellingSecondTableScreen extends Component {
                                             {/* <Text style={{ marginBottom: heightToDp("1.5%") }}>{i.noOfTime}</Text> */}
                                             <Input
                                                 style={{ borderWidth: 1 }}
-                                                onChangeText={(data) => this.setState({sellingpricedryfish : data})}
+                                                onChangeText={(data) => this.setState({ sellingpricedryfish: data })}
                                                 keyboardType="number-pad"
                                                 defaultValue={this.state.sellingpricedryfish}
                                             />
@@ -406,9 +565,9 @@ export default class DryFishSellingSecondTableScreen extends Component {
                                 <Text style={{ marginLeft: widthToDp("20%") }}>Rs {this.state.profitperday}</Text>
                             </View>
                             <View style={{ borderWidth: 1, height: heightToDp("10%"), width: widthToDp("83%"), marginLeft: widthToDp("3%"), marginTop: heightToDp("0%"), flexDirection: 'row' }}>
-                                <Text>Assuming there is 15 lot selling per month, then monthly profit = Rs 350 *15    Rs 5250</Text>
+                                <Text>Assuming there is 15 lot selling per month, then monthly profit = Rs {this.state.profitperday} *15    Rs {this.state.profit15}</Text>
                             </View>
-                            
+
                         </View>
                     </View>
                     <View style={{ marginTop: heightToDp("10%") }}></View>
@@ -419,14 +578,14 @@ export default class DryFishSellingSecondTableScreen extends Component {
                             <Text style={{ fontSize: widthToDp("4%"), color: "#000", marginTop: heightToDp("1.3%"), alignSelf: 'center', fontFamily: 'Oswald-Medium' }}>BACK</Text>
                         </View>
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={() => {this.calculation()}}>
+                    <TouchableOpacity onPress={() => { this.calculation() }}>
                         <View style={{ backgroundColor: "#fff", height: heightToDp("6%"), width: widthToDp("30%"), borderRadius: 100, marginLeft: widthToDp("1%"), marginTop: heightToDp("2%") }}>
-                            <Text style={{ fontSize: widthToDp("4%"), color: "#000", marginTop: heightToDp("1.3%"), alignSelf: 'center', fontFamily: 'Oswald-Medium' }}>SAVE</Text>
+                            <Text style={{ fontSize: widthToDp("4%"), color: "#000", marginTop: heightToDp("1.3%"), alignSelf: 'center', fontFamily: 'Oswald-Medium' }}>CALCULATE</Text>
                         </View>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={() => { this.next() }}>
                         <View style={{ backgroundColor: "#fff", height: heightToDp("6%"), width: widthToDp("30%"), borderRadius: 100, marginLeft: widthToDp("1%"), marginTop: heightToDp("2%") }}>
-                            <Text style={{ fontSize: widthToDp("4%"), color: "#000", marginTop: heightToDp("1.3%"), alignSelf: 'center', fontFamily: 'Oswald-Medium' }}>NEXT</Text>
+                            <Text style={{ fontSize: widthToDp("4%"), color: "#000", marginTop: heightToDp("1.3%"), alignSelf: 'center', fontFamily: 'Oswald-Medium' }}>SAVE/NEXT</Text>
                         </View>
                     </TouchableOpacity>
                 </View>

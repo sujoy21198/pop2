@@ -49,10 +49,10 @@ export default class LivestockTableScreen extends Component {
             totalPrice2ndBirth: '4000',
             totalPrice3rdBirth: '500',
             totalValueAfter2years: '9500',
-            totalExpenseforNgoats:'130',
-            expenseForSupplementary:'120',
-            b:'250',
-            totalProfitFromNgoats:''
+            totalExpenseforNgoats: '130',
+            expenseForSupplementary: '120',
+            b: '250',
+            totalProfitFromNgoats: ''
         }
         this.state.tableHeading = tableHeading
     }
@@ -92,10 +92,10 @@ export default class LivestockTableScreen extends Component {
         this.setState({ totalPrice2ndBirth: totalPrice2ndBirth })
         this.setState({ totalPrice3rdBirth: totalPrice3rdBirth })
         this.setState({ totalValueAfter2years: totalValueAfter2years })
-        this.setState({ totalExpenseforNgoats : totalExpenseforNgoats})
-        this.setState({expenseForSupplementary : expenseForSupplementary})
-        this.setState({b : b})
-        this.setState({totalProfitFromNgoats : totalProfitFromNgoats})
+        this.setState({ totalExpenseforNgoats: totalExpenseforNgoats })
+        this.setState({ expenseForSupplementary: expenseForSupplementary })
+        this.setState({ b: b })
+        this.setState({ totalProfitFromNgoats: totalProfitFromNgoats })
 
     }
 
@@ -114,7 +114,24 @@ export default class LivestockTableScreen extends Component {
         }
     }
 
-    next = () => {
+    next = async() => {
+        try {
+            var date = new Date().getDate()
+            var month = new Date().getMonth() + 1
+            var year = new Date().getFullYear()
+            const expenseObject = { 'type': 'expense', 'category': 'Goat livestock', 'amount': this.state.b, 'date': date + "/" + month + "/" + year }
+            const incomeObject = { 'type': 'income', 'category': 'Goat livestock', 'amount': this.state.totalValueAfter2years, 'date': date + "/" + month + "/" + year }
+            let username = await AsyncStorage.getItem('username')
+            let user = await AsyncStorage.getItem('user');
+            let parsed = JSON.parse(user);
+            var specificObject = parsed.find((i) => i.username === username)
+            specificObject.moneyManagerData.push(expenseObject)
+            specificObject.moneyManagerData.push(incomeObject)
+            await AsyncStorage.setItem('user', JSON.stringify(parsed))
+            console.log(specificObject.moneyManagerData)
+        } catch (error) {
+            console.log(error)
+        }
         this.props.navigation.reset({
             index: 0,
             routes: [{ name: "DashBoardScreen" }]
@@ -226,22 +243,22 @@ export default class LivestockTableScreen extends Component {
                             </View>
                             <ScrollView nestedScrollEnabled={true}>
                                 <View style={{ borderWidth: 1, height: heightToDp("8%"), width: widthToDp("83%"), marginLeft: widthToDp("3%"), marginTop: heightToDp("1.5%"), flexDirection: 'row' }}>
-                                {
-                                    tableHeading.map((i) => {
-                                        return (
-                                            <View style={{ width: widthToDp("15%"), marginLeft: widthToDp("1.5%") }}>
+                                    {
+                                        tableHeading.map((i) => {
+                                            return (
+                                                <View style={{ width: widthToDp("15%"), marginLeft: widthToDp("1.5%") }}>
 
-                                                <Text>{i.name}</Text>
+                                                    <Text>{i.name}</Text>
 
-                                            </View>
+                                                </View>
 
-                                        )
-                                    })
-                                }
-                            </View>
+                                            )
+                                        })
+                                    }
+                                </View>
 
-                            <View style={{ borderWidth: 1, height: heightToDp("25%"), width: widthToDp("83%"), marginLeft: widthToDp("3%"), marginTop: heightToDp("0%") }}>
-                                {/* {
+                                <View style={{ borderWidth: 1, height: heightToDp("25%"), width: widthToDp("83%"), marginLeft: widthToDp("3%"), marginTop: heightToDp("0%") }}>
+                                    {/* {
                                     tableHeading.map((i) => {
                                         return (
                                             <View style={{ flexDirection: 'row' }}>
@@ -266,45 +283,45 @@ export default class LivestockTableScreen extends Component {
                                         )
                                     })
                                 } */}
-                                <View style={{ flexDirection: 'row' }}>
-                                    <View style={{ width: widthToDp("13%"), marginLeft: widthToDp("1.5%") }}>
-                                        <Text style={{ marginTop: heightToDp("2%") }}>1st Birth</Text>
-                                        <Text style={{ marginTop: heightToDp("2%") }}>2nd Birth</Text>
-                                        <Text style={{ marginTop: heightToDp("2%") }}>3rd Birth</Text>
-                                    </View>
+                                    <View style={{ flexDirection: 'row' }}>
+                                        <View style={{ width: widthToDp("13%"), marginLeft: widthToDp("1.5%") }}>
+                                            <Text style={{ marginTop: heightToDp("2%") }}>1st Birth</Text>
+                                            <Text style={{ marginTop: heightToDp("2%") }}>2nd Birth</Text>
+                                            <Text style={{ marginTop: heightToDp("2%") }}>3rd Birth</Text>
+                                        </View>
 
-                                    <View style={{ width: widthToDp("17%"), marginLeft: widthToDp("1.5%") }}>
-                                        <Text style={{ marginTop: heightToDp("2%") }}>16 months old</Text>
-                                        <Text style={{ marginTop: heightToDp("2%") }}>8 months old</Text>
-                                        <Text style={{ marginTop: heightToDp("2%") }}>kids</Text>
-                                    </View>
-                                    <View style={{ width: widthToDp("10%"), marginLeft: widthToDp("6%") }}>
-                                        <Text style={{ marginTop: heightToDp("2%") }}>{this.state.numberGoats}</Text>
-                                        <Text style={{ marginTop: heightToDp("2%") }}>{this.state.numberGoats}</Text>
-                                        <Text style={{ marginTop: heightToDp("2%") }}>{this.state.numberGoats}</Text>
-                                    </View>
-                                    <View style={{ width: widthToDp("14%"), marginLeft: widthToDp("1.5%") }}>
-                                        <Text style={{ marginTop: heightToDp("2%") }}>{this.state.unitPrice1stBirth}</Text>
-                                        <Text style={{ marginTop: heightToDp("2%") }}>{this.state.unitPrice2ndBirth}</Text>
-                                        <Text style={{ marginTop: heightToDp("2%") }}>{this.state.unitPrice3rdBirth}</Text>
-                                    </View>
-                                    <View style={{ width: widthToDp("14%"), marginLeft: widthToDp("1.5%") }}>
-                                        <Text style={{ marginTop: heightToDp("2%") }}>Rs {this.state.totalPrice1stBirth}</Text>
-                                        <Text style={{ marginTop: heightToDp("2%") }}>Rs {this.state.totalPrice2ndBirth}</Text>
-                                        <Text style={{ marginTop: heightToDp("2%") }}>Rs {this.state.totalPrice3rdBirth}</Text>
+                                        <View style={{ width: widthToDp("17%"), marginLeft: widthToDp("1.5%") }}>
+                                            <Text style={{ marginTop: heightToDp("2%") }}>16 months old</Text>
+                                            <Text style={{ marginTop: heightToDp("2%") }}>8 months old</Text>
+                                            <Text style={{ marginTop: heightToDp("2%") }}>kids</Text>
+                                        </View>
+                                        <View style={{ width: widthToDp("10%"), marginLeft: widthToDp("6%") }}>
+                                            <Text style={{ marginTop: heightToDp("2%") }}>{this.state.numberGoats}</Text>
+                                            <Text style={{ marginTop: heightToDp("2%") }}>{this.state.numberGoats}</Text>
+                                            <Text style={{ marginTop: heightToDp("2%") }}>{this.state.numberGoats}</Text>
+                                        </View>
+                                        <View style={{ width: widthToDp("14%"), marginLeft: widthToDp("1.5%") }}>
+                                            <Text style={{ marginTop: heightToDp("2%") }}>{this.state.unitPrice1stBirth}</Text>
+                                            <Text style={{ marginTop: heightToDp("2%") }}>{this.state.unitPrice2ndBirth}</Text>
+                                            <Text style={{ marginTop: heightToDp("2%") }}>{this.state.unitPrice3rdBirth}</Text>
+                                        </View>
+                                        <View style={{ width: widthToDp("14%"), marginLeft: widthToDp("1.5%") }}>
+                                            <Text style={{ marginTop: heightToDp("2%") }}>Rs {this.state.totalPrice1stBirth}</Text>
+                                            <Text style={{ marginTop: heightToDp("2%") }}>Rs {this.state.totalPrice2ndBirth}</Text>
+                                            <Text style={{ marginTop: heightToDp("2%") }}>Rs {this.state.totalPrice3rdBirth}</Text>
+                                        </View>
                                     </View>
                                 </View>
-                            </View>
-                            <View style={{ borderWidth: 1, height: heightToDp("8%"), width: widthToDp("83%"), marginLeft: widthToDp("3%"), marginTop: heightToDp("0%"), flexDirection: 'row' }}>
-                                <Text>Total value after 2 year</Text>
-                                <Text style={{ marginLeft: widthToDp("20%") }}>Rs {this.state.totalValueAfter2years}</Text>
-                            </View>
-                            <View style={{ marginLeft: widthToDp("3%") }}>
-                                <Text>Total value after 2 years from {this.state.numberGoats} mother goat will be Rs {this.state.totalValueAfter2years} per 2 year</Text>
-                                <Text style={{ marginTop: heightToDp("3%") }}>Total value annually from 2 mother goat will be Rs 9500.00 (A)</Text>
-                            </View>
+                                <View style={{ borderWidth: 1, height: heightToDp("8%"), width: widthToDp("83%"), marginLeft: widthToDp("3%"), marginTop: heightToDp("0%"), flexDirection: 'row' }}>
+                                    <Text>Total value after 2 year</Text>
+                                    <Text style={{ marginLeft: widthToDp("20%") }}>Rs {this.state.totalValueAfter2years}</Text>
+                                </View>
+                                <View style={{ marginLeft: widthToDp("3%") }}>
+                                    <Text>Total value after 2 years from {this.state.numberGoats} mother goat will be Rs {this.state.totalValueAfter2years} per 2 year</Text>
+                                    <Text style={{ marginTop: heightToDp("3%") }}>Total value annually from 2 mother goat will be Rs 9500.00 (A)</Text>
+                                </View>
 
-                            <View style={{ marginLeft: widthToDp("3%"),marginTop:heightToDp("2%") }}>
+                                {/* <View style={{ marginLeft: widthToDp("3%"),marginTop:heightToDp("2%") }}>
                                 <Text>Total expenses for {this.state.numberGoats} goats in 2 years is Rs {this.state.totalExpenseforNgoats} ({this.state.numberGoats}*130, immunization cost)</Text>
                             </View>
 
@@ -319,15 +336,42 @@ export default class LivestockTableScreen extends Component {
 
                             <View style={{ marginLeft: widthToDp("3%"),marginTop:heightToDp("2%") }}>
                                 <Text>Total expenses for {this.state.numberGoats} goats per 2 year : {this.state.totalExpenseforNgoats} + {this.state.expenseForSupplementary} = Rs. {this.state.b} (B)</Text>
-                            </View>
+                            </View> */}
+
+                                <View style={{ borderWidth: 1, height: heightToDp("12%"), width: widthToDp("83%"), marginLeft: widthToDp("3%"), marginTop: heightToDp("0%")}}>
+                                    <View style={{flexDirection:'row', marginLeft: widthToDp("3%")}}>
+                                        <Text style={{width:widthToDp("30%")}}>No. of goats</Text>
+                                        <Text style={{width:widthToDp("30%")}}>Cost</Text>
+                                        <Text>Total</Text>
+                                    </View>
+
+                                    <View style={{flexDirection:'row', marginLeft: widthToDp("3%")}}>
+                                        <Text style={{width:widthToDp("30%")}}>{this.state.numberGoats}</Text>
+                                        <Text style={{width:widthToDp("30%")}}>Supplementary</Text>
+                                        <Text>{this.state.totalExpenseforNgoats}</Text>
+                                    </View>
 
 
-                            <View style={{ marginLeft: widthToDp("3%"),marginTop:heightToDp("2%") }}>
-                                <Text>TOTAL PROFIT FROM 4 MOTHER GOAT PER 2 YEAR (A)- (B) = Rs {this.state.totalValueAfter2years} – Rs {this.state.b} = Rs {this.state.totalProfitFromNgoats} </Text>
-                            </View>
+                                    <View style={{flexDirection:'row', marginLeft: widthToDp("3%")}}>
+                                        <Text style={{width:widthToDp("30%")}}>{this.state.numberGoats}</Text>
+                                        <Text style={{width:widthToDp("30%")}}>Immunisation</Text>
+                                        <Text>{this.state.expenseForSupplementary}</Text>
+                                    </View>
+
+                                    <View style={{flexDirection:'row', marginLeft: widthToDp("3%"), marginTop: heightToDp("2%")}}>
+                                        <Text style={{width:widthToDp("30%")}}>Total =</Text>
+                                        <Text style={{width:widthToDp("30%")}}></Text>
+                                        <Text>{this.state.b}</Text>
+                                    </View>
+                                </View>
+
+
+                                <View style={{ marginLeft: widthToDp("3%"), marginTop: heightToDp("2%") }}>
+                                    <Text>TOTAL PROFIT FROM 4 MOTHER GOAT PER 2 YEAR (A)- (B) = Rs {this.state.totalValueAfter2years} – Rs {this.state.b} = Rs {this.state.totalProfitFromNgoats} </Text>
+                                </View>
 
                             </ScrollView>
-                            
+
                         </View>
                     </View>
                     <View style={{ marginTop: heightToDp("10%") }}></View>

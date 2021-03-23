@@ -11,6 +11,7 @@ import base64 from 'react-native-base64'
 import axios from 'axios'
 import DataAccess from '../Core/DataAccess'
 import CustomIndicator from '../Core/CustomIndicator'
+import Languages from '../Core/Languages'
 
 
 const tableHeading = [
@@ -44,22 +45,165 @@ export default class SmallGroceryShopSecondTableScreen extends Component {
             category1Profit: '600',
             category2Profit: '300',
             category3Profit: '100',
-            totalOfTotalBuyingPrice: '5000',
-            totalOfTotalSellingPrice: '6000',
-            totalOfProfit: '1000',
+            totalOfTotalBuyingPrice: '',
+            totalOfTotalSellingPrice: '',
+            totalOfProfit: '',
             lossPercentage:'40',
             netProfitPerMonth:'1960',
             monthlyBuyingPrice:'10000',
             monthlySellingPrice:'12000',
-            monthlyProfit:'2000'
+            monthlyProfit:'2000',
+            catcat2cat3BuyingPrice:'',
+            cat1cat2cat3SellingPrice:'',
+            cat1cat2cat3Profit:'',
+            textLanguageChange: '',
+            smallBusinessLabel:'',
+            languages: []
         }
         this.state.tableHeading = tableHeading
+        this.state.languages = Languages
         //this.state.value = this.props.route.params.value
         //alert(this.state.value)
     }
     componentDidMount() {
         this.getVaccinesFromOffline()
+        this.setLanguageOnMount()
+        this.loadlabelsFromStorage()
 
+    }
+
+    setLanguageOnMount = async () => {
+        let defaultLanguage = await AsyncStorage.getItem('language')
+        if (defaultLanguage === 'en') {
+            this.setState({ textLanguageChange: '0' })
+            this.loadlabelsFromStorage()
+        } else if (defaultLanguage === 'hi') {
+            this.setState({ textLanguageChange: '1' })
+            this.loadlabelsFromStorage()
+        } else if (defaultLanguage === 'ho') {
+            this.setState({ textLanguageChange: '2' })
+            this.loadlabelsFromStorage()
+        } else if (defaultLanguage === 'od') {
+            this.setState({ textLanguageChange: '3' })
+            this.loadlabelsFromStorage()
+        } else if (defaultLanguage === 'san') {
+            this.setState({ textLanguageChange: '4' })
+            this.loadlabelsFromStorage()
+        }
+    }
+
+    languageChangeFunction = async (data) => {
+
+        if (data === 'en') {
+            AsyncStorage.setItem('language', 'en')
+            this.setState({ textLanguageChange: '0' })
+            this.loadlabelsFromStorage()
+            this.props.navigation.reset({
+                index: 0,
+                routes: [{ name: "DashBoardScreen" }]
+            });
+        } else if (data === 'hi') {
+            this.setState({ textLanguageChange: '1' })
+            this.loadlabelsFromStorage()
+            AsyncStorage.setItem('language', 'hi')
+            this.props.navigation.reset({
+                index: 0,
+                routes: [{ name: "DashBoardScreen" }]
+            });
+        } else if (data === 'ho') {
+            this.setState({ textLanguageChange: '2' })
+            this.loadlabelsFromStorage()
+            AsyncStorage.setItem('language', 'ho')
+            this.props.navigation.reset({
+                index: 0,
+                routes: [{ name: "DashBoardScreen" }]
+            });
+        } else if (data === 'od') {
+            this.setState({ textLanguageChange: '3' })
+            this.loadlabelsFromStorage()
+            AsyncStorage.setItem('language', 'od')
+            this.props.navigation.reset({
+                index: 0,
+                routes: [{ name: "DashBoardScreen" }]
+            });
+        } else if (data === 'san') {
+            AsyncStorage.setItem('language', 'san')
+            this.setState({ textLanguageChange: '4' })
+            this.loadlabelsFromStorage()
+            this.props.navigation.reset({
+                index: 0,
+                routes: [{ name: "DashBoardScreen" }]
+            });
+        }
+    }
+
+
+    loadlabelsFromStorage = async () => {
+        try {
+            let username = await AsyncStorage.getItem('username')
+            let user = await AsyncStorage.getItem('offlineData');
+            let parsed = JSON.parse(user);
+            var specificObject = parsed.find((i) => i.username === username)
+          
+            var smallBusinessLabel = specificObject.labels.find((i) => i.type === 62)
+            
+            //var nutrationGraden = specificObject.labels.find((i) => i.type === 31)
+            // var message = specificObject.labels.find((i) => i.type === 26)
+            // var generalSettings = specificObject.labels.find((i) => i.type === 27)
+            // var pension = specificObject.labels.find((i) => i.type === 51)
+            // var others = specificObject.labels.find((i) => i.type === 52)
+            // High Land: 53
+            // Medium Land: 54
+            // Low Land: 55
+            // Land Type : 56
+            if (this.state.textLanguageChange === '0') {
+                
+                this.setState({smallBusinessLabel : smallBusinessLabel.nameEnglish})
+                //this.setState({ landTypeLabel: landTypeLabel.nameEnglish })
+                // this.state.data[4].name = message.nameEnglish
+                // this.state.data[5].name = generalSettings.nameEnglish
+                // this.state.data[6].name = pension.nameEnglish
+                // this.state.data[7].name = others.nameEnglish
+                // this.setState({ moneyManagerLabel: moneyManagerLabel.nameEnglish })
+                // this.setState({ expenseLabel: expenseLabel.nameEnglish })
+                // this.setState({ incomeLabel: incomeLabel.nameEnglish })
+                // this.setState({ allTransactionLabel: allTransactionLabel.nameEnglish })
+            } else if (this.state.textLanguageChange === '1') {
+                
+                this.setState({smallBusinessLabel : smallBusinessLabel.nameHindi})
+                // this.state.data[4].name = message.nameHindi
+                // this.state.data[5].name = generalSettings.nameHindi
+                // this.state.data[6].name = pension.nameHindi
+                // this.state.data[7].name = others.nameHindi
+            } else if (this.state.textLanguageChange === '2') {
+               
+                this.setState({smallBusinessLabel : smallBusinessLabel.nameHo})
+                // this.state.data[4].name = message.nameHo
+                // this.state.data[5].name = generalSettings.nameHo
+                // this.state.data[6].name = pension.nameHo
+                // this.state.data[7].name = others.nameHo
+            } else if (this.state.textLanguageChange === '3') {
+               
+                this.setState({smallBusinessLabel : smallBusinessLabel.nameOdia})
+                //this.setState({ landTypeLabel: landTypeLabel.nameOdia })
+                // this.state.data[4].name = message.nameOdia
+                // this.state.data[5].name = generalSettings.nameOdia
+                // this.state.data[6].name = pension.nameOdia
+                // this.state.data[7].name = others.nameOdia
+            } else if (this.state.textLanguageChange === '4') {
+                
+                this.setState({smallBusinessLabel : smallBusinessLabel.nameSanthali})
+               // this.setState({ landTypeLabel: landTypeLabel.nameSanthali })
+                // this.state.data[4].name = message.nameSanthali
+                // this.state.data[5].name = generalSettings.nameSanthali
+                // this.state.data[6].name = pension.nameSanthali
+                // this.state.data[7].name = others.nameSanthali
+            }
+
+        } catch (error) {
+            alert(error)
+        }
+        this.setState({ crops: specificObject.crops })
     }
     getVaccinesFromOffline = async () => {
         try {
@@ -78,15 +222,15 @@ export default class SmallGroceryShopSecondTableScreen extends Component {
     }
 
     calculation = () => {
-        var result = this.state.category1BuyingPrice - this.state.category1SellingPrice
+        var result =  this.state.category1SellingPrice  - this.state.category1BuyingPrice
         this.setState({ category1Profit: result })
-        var result1 = this.state.categor2BuyingPrice - this.state.category2SellingPrice
+        var result1 = this.state.category2SellingPrice - this.state.categor2BuyingPrice
         this.setState({ category2Profit: result1 })
-        var result2 = this.state.category3BuyingPrice - this.state.category3SellingPrice
+        var result2 = this.state.category3SellingPrice - this.state.category3BuyingPrice
         this.setState({ category3Profit: result2 })
-        var result3 = this.state.category1BuyingPrice + this.state.categor2BuyingPrice + this.state.category3BuyingPrice
+        var result3 = parseInt(this.state.category1BuyingPrice) + parseInt(this.state.categor2BuyingPrice) + parseInt(this.state.category3BuyingPrice)
         this.setState({ totalOfTotalBuyingPrice: result3 })
-        var result4 = this.state.category1SellingPrice + this.state.category2SellingPrice + this.state.category3SellingPrice
+        var result4 = parseInt(this.state.category1SellingPrice) + parseInt(this.state.category2SellingPrice) + parseInt(this.state.category3SellingPrice)
         this.setState({ totalOfTotalSellingPrice: result4 })
         var result5 = result + result1 + result2
         this.setState({ totalOfProfit: result5 })
@@ -106,7 +250,24 @@ export default class SmallGroceryShopSecondTableScreen extends Component {
         console.log(numberofVaccines)
     }
 
-    next = () => {
+    next = async() => {
+        try {
+            var date = new Date().getDate()
+            var month = new Date().getMonth()+1
+            var year = new Date().getFullYear()
+            const expenseObject = { 'type': 'expense', 'category': 'Small Grocery Shop', 'amount': this.state.monthlyBuyingPrice , 'date': date + "/" + month + "/" + year }
+            const incomeObject = { 'type': 'income', 'category': 'Small Grocery Shop', 'amount': this.state.monthlySellingPrice , 'date': date + "/" + month + "/" + year}
+            let username = await AsyncStorage.getItem('username')
+            let user = await AsyncStorage.getItem('user');
+            let parsed = JSON.parse(user);
+            var specificObject = parsed.find((i) => i.username === username)
+            specificObject.moneyManagerData.push(expenseObject)
+            specificObject.moneyManagerData.push(incomeObject)
+            await AsyncStorage.setItem('user', JSON.stringify(parsed))
+            console.log(specificObject.moneyManagerData)
+        } catch (error) {
+            console.log(error)
+        }
         this.props.navigation.reset({
             index: 0,
             routes: [{ name: "DashBoardScreen" }]
@@ -134,66 +295,39 @@ export default class SmallGroceryShopSecondTableScreen extends Component {
                 </View>
 
                 <View style={{ flexDirection: 'row', marginTop: heightToDp("1%"), marginLeft: widthToDp("1%") }}>
-                    <TouchableOpacity onPress={() => this.props.navigation.navigate('SigninScreen')}>
+                    <TouchableOpacity onPress={() => this.languageChangeFunction(this.state.languages[0].id)}>
                         <View style={{ backgroundColor: BaseColor.English, width: widthToDp("30%"), height: heightToDp("6%"), marginLeft: widthToDp("2%"), borderRadius: 100, flexDirection: 'row' }}>
-                            <Text style={{ color: '#fff', marginTop: heightToDp("1.5%"), fontFamily: 'Oswald-Medium', marginLeft: widthToDp("5%") }}>ENGLISH</Text>
-                            <Icon
-                                name="microphone"
-                                color="white"
-                                size={20}
-                                style={{ marginTop: heightToDp("1.8%"), marginLeft: widthToDp("6%") }}
-                            />
+                            <Text style={{ color: '#fff', marginTop: heightToDp("1.5%"), fontFamily: 'Oswald-Medium', marginLeft: widthToDp("5%") }}>{this.state.languages[0].value}</Text>
+
                         </View>
                     </TouchableOpacity>
 
-                    <TouchableOpacity >
+                    <TouchableOpacity onPress={() => this.languageChangeFunction(this.state.languages[1].id)}>
                         <View style={{ backgroundColor: BaseColor.Hindi, width: widthToDp("30%"), height: heightToDp("6%"), marginLeft: widthToDp("2%"), borderRadius: 100, flexDirection: 'row' }}>
-                            <Text style={{ color: '#fff', marginTop: heightToDp("1.7%"), marginLeft: widthToDp("5%"), fontWeight: 'bold', fontSize: widthToDp("4.3%") }}>हिन्दी</Text>
-                            <Icon
-                                name="microphone"
-                                color="white"
-                                size={20}
-                                style={{ marginTop: heightToDp("1.8%"), marginLeft: widthToDp("9%") }}
-                            />
+                            <Text style={{ color: '#fff', marginTop: heightToDp("1.7%"), marginLeft: widthToDp("5%"), fontWeight: 'bold', fontSize: widthToDp("4.3%") }}>{this.state.languages[1].value}</Text>
+
                         </View>
                     </TouchableOpacity>
 
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={() => this.languageChangeFunction(this.state.languages[2].id)}>
                         <View style={{ backgroundColor: BaseColor.Ho, width: widthToDp("30%"), height: heightToDp("6%"), marginLeft: widthToDp("2%"), borderRadius: 100, flexDirection: 'row' }}>
-                            <Text style={{ color: '#fff', marginTop: heightToDp("1.5%"), marginLeft: widthToDp("5%"), fontWeight: 'bold', fontSize: widthToDp("4.3%") }}>ʤʌgʌr</Text>
-                            <Icon
-                                name="microphone"
-                                color="white"
-                                size={20}
-                                style={{ marginTop: heightToDp("1.8%"), marginLeft: widthToDp("6.3%") }}
-                            />
+                            <Text style={{ color: '#fff', marginTop: heightToDp("1.5%"), marginLeft: widthToDp("5%"), fontWeight: 'bold', fontSize: widthToDp("4.3%") }}>{this.state.languages[2].value}</Text>
+
                         </View>
                     </TouchableOpacity>
                 </View>
-
-
                 <View style={{ flexDirection: 'row', marginTop: heightToDp("1%"), marginLeft: widthToDp("1%"), alignSelf: 'center' }}>
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={() => this.languageChangeFunction(this.state.languages[3].id)}>
                         <View style={{ backgroundColor: BaseColor.Uridia, width: widthToDp("30%"), height: heightToDp("6%"), borderRadius: 100, flexDirection: 'row' }}>
-                            <Text style={{ color: '#fff', marginTop: heightToDp("1.7%"), marginLeft: widthToDp("4.7%"), fontWeight: 'bold', fontSize: widthToDp("4.3%") }}>ଓଡ଼ିଆ</Text>
-                            <Icon
-                                name="microphone"
-                                color="white"
-                                size={20}
-                                style={{ marginTop: heightToDp("1.8%"), marginLeft: widthToDp("6.9%") }}
-                            />
+                            <Text style={{ color: '#fff', marginTop: heightToDp("1.7%"), marginLeft: widthToDp("4.7%"), fontWeight: 'bold', fontSize: widthToDp("4.3%") }}>{this.state.languages[3].value}</Text>
+
                         </View>
                     </TouchableOpacity>
 
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={() => this.languageChangeFunction(this.state.languages[4].id)}>
                         <View style={{ backgroundColor: BaseColor.Santhali, width: widthToDp("30%"), height: heightToDp("6%"), borderRadius: 100, marginLeft: widthToDp("2%"), flexDirection: 'row' }}>
-                            <Text style={{ color: '#fff', marginTop: heightToDp("1.7%"), marginLeft: widthToDp("3.4%"), fontWeight: 'bold', fontSize: widthToDp("4.3%") }}>ᱥᱟᱱᱛᱟᱲᱤ</Text>
-                            <Icon
-                                name="microphone"
-                                color="white"
-                                size={20}
-                                style={{ marginTop: heightToDp("1.8%"), marginLeft: widthToDp("3%") }}
-                            />
+                            <Text style={{ color: '#fff', marginTop: heightToDp("1.7%"), marginLeft: widthToDp("3.4%"), fontWeight: 'bold', fontSize: widthToDp("4.3%") }}>{this.state.languages[4].value}</Text>
+
                         </View>
                     </TouchableOpacity>
                 </View>
@@ -249,6 +383,7 @@ export default class SmallGroceryShopSecondTableScreen extends Component {
                                             {/* <Text style={{ marginBottom: heightToDp("1.5%") }}>{i.noOfTime}</Text> */}
                                             <Input
                                                 style={{ borderWidth: 1 }}
+                                                placeholder={"3000"}
                                                 onChangeText={(data) => this.setState({ category1BuyingPrice: data })}
                                                 keyboardType="number-pad"
                                             />
@@ -258,6 +393,7 @@ export default class SmallGroceryShopSecondTableScreen extends Component {
                                             {/* <Text style={{ marginBottom: heightToDp("1.5%") }}>{i.noOfTime}</Text> */}
                                             <Input
                                                 style={{ borderWidth: 1 }}
+                                                placeholder={"1500"}
                                                 onChangeText={(data) => this.setState({ categor2BuyingPrice: data })}
                                                 keyboardType="number-pad"
                                             />
@@ -267,6 +403,7 @@ export default class SmallGroceryShopSecondTableScreen extends Component {
                                             {/* <Text style={{ marginBottom: heightToDp("1.5%") }}>{i.noOfTime}</Text> */}
                                             <Input
                                                 style={{ borderWidth: 1 }}
+                                                placeholder={"500"}
                                                 onChangeText={(data) => this.setState({ category3BuyingPrice: data })}
                                                 keyboardType="number-pad"
                                             />
@@ -280,6 +417,7 @@ export default class SmallGroceryShopSecondTableScreen extends Component {
                                             {/* <Text style={{ marginBottom: heightToDp("1.5%") }}>{i.noOfTime}</Text> */}
                                             <Input
                                                 style={{ borderWidth: 1 }}
+                                                placeholder={"3600"}
                                                 onChangeText={(data) => this.setState({ category1SellingPrice: data })}
                                                 keyboardType="number-pad"
                                             />
@@ -289,6 +427,7 @@ export default class SmallGroceryShopSecondTableScreen extends Component {
                                             {/* <Text style={{ marginBottom: heightToDp("1.5%") }}>{i.noOfTime}</Text> */}
                                             <Input
                                                 style={{ borderWidth: 1 }}
+                                                placeholder={"1800"}
                                                 onChangeText={(data) => this.setState({ category2SellingPrice: data })}
                                                 keyboardType="number-pad"
                                             />
@@ -299,6 +438,7 @@ export default class SmallGroceryShopSecondTableScreen extends Component {
                                             {/* <Text style={{ marginBottom: heightToDp("1.5%") }}>{i.noOfTime}</Text> */}
                                             <Input
                                                 style={{ borderWidth: 1 }}
+                                                placeholder={"600"}
                                                 onChangeText={(data) => this.setState({ category3SellingPrice: data })}
                                                 keyboardType="number-pad"
                                             />
@@ -326,17 +466,16 @@ export default class SmallGroceryShopSecondTableScreen extends Component {
                                     <Text>Per cycle (15 days) expenditure and profit</Text>
                                 </View>
                                 <View style={{ width: widthToDp("17%") }}>
-                                    <Text style={{ marginLeft: widthToDp("3%") }}>Rs 9</Text>
+                                    <Text style={{ marginLeft: widthToDp("3%") }}>Rs {this.state.totalOfTotalBuyingPrice}</Text>
                                 </View>
 
                                 <View style={{ width: widthToDp("17%") }}>
-                                    <Text style={{ marginLeft: widthToDp("3%") }}>Rs {this.state.perdaysellingvaluetotal}</Text>
+                                    <Text style={{ marginLeft: widthToDp("3%") }}>Rs {this.state.totalOfTotalSellingPrice}</Text>
                                 </View>
 
                                 <View style={{ width: widthToDp("17%") }}>
-                                    <Text style={{ marginLeft: widthToDp("3%") }}>Rs {this.state.perdaysellingvaluetotal}</Text>
+                                    <Text style={{ marginLeft: widthToDp("3%") }}>Rs {this.state.totalOfProfit}</Text>
                                 </View>
-
                             </View>
 
 
@@ -365,6 +504,7 @@ export default class SmallGroceryShopSecondTableScreen extends Component {
                                     <Input
                                         style={{ borderWidth: 1 }}
                                         onChangeText={(data) => this.setState({ lossPercentage: data })}
+                                        defaultValue={"40"}
                                         keyboardType="number-pad"
                                     />
                                 </View>
@@ -390,12 +530,12 @@ export default class SmallGroceryShopSecondTableScreen extends Component {
                     </TouchableOpacity>
                     <TouchableOpacity onPress={() => { this.calculation() }}>
                         <View style={{ backgroundColor: "#fff", height: heightToDp("6%"), width: widthToDp("30%"), borderRadius: 100, marginLeft: widthToDp("1%"), marginTop: heightToDp("2%") }}>
-                            <Text style={{ fontSize: widthToDp("4%"), color: "#000", marginTop: heightToDp("1.3%"), alignSelf: 'center', fontFamily: 'Oswald-Medium' }}>SAVE</Text>
+                            <Text style={{ fontSize: widthToDp("4%"), color: "#000", marginTop: heightToDp("1.3%"), alignSelf: 'center', fontFamily: 'Oswald-Medium' }}>CALCULATE</Text>
                         </View>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={() => { this.next() }}>
                         <View style={{ backgroundColor: "#fff", height: heightToDp("6%"), width: widthToDp("30%"), borderRadius: 100, marginLeft: widthToDp("1%"), marginTop: heightToDp("2%") }}>
-                            <Text style={{ fontSize: widthToDp("4%"), color: "#000", marginTop: heightToDp("1.3%"), alignSelf: 'center', fontFamily: 'Oswald-Medium' }}>NEXT</Text>
+                            <Text style={{ fontSize: widthToDp("4%"), color: "#000", marginTop: heightToDp("1.3%"), alignSelf: 'center', fontFamily: 'Oswald-Medium' }}>SAVE/NEXT</Text>
                         </View>
                     </TouchableOpacity>
                 </View>
