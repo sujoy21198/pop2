@@ -111,7 +111,7 @@ export default class AllTransactionScreen extends Component {
             let user = await AsyncStorage.getItem('user');
             let parsed = JSON.parse(user);
             var specificObject = parsed.find((i) => i.username === username)
-            moneyManagerData = specificObject.moneyManagerData
+            moneyManagerData = specificObject.moneyManagerData;
             console.log(specificObject.moneyManagerData)
         } catch (error) {
             console.log(error)
@@ -250,11 +250,22 @@ export default class AllTransactionScreen extends Component {
                 {
                     moneyManagerData.map((i) => {
                         return (
-                            <View style={{ backgroundColor: 'white', height: heightToDp("20%"), alignSelf: 'center', width: widthToDp("85%"), borderRadius: 20, marginTop: heightToDp("3%") }}>
-                                <Text style={{ marginLeft: widthToDp("3%"), marginTop: heightToDp("2%"), fontSize: widthToDp("5%"), fontFamily: 'Oswald-Light' }}>{i.type}</Text>
-                                <Text style={{ marginLeft: widthToDp("3%"), marginTop: heightToDp("0%"), fontSize: widthToDp("5%"), fontFamily: 'Oswald-Light' }}>{i.date}</Text>
-                                <Text style={{ marginLeft: widthToDp("3%"), marginTop: heightToDp("0%"), fontSize: widthToDp("7%"), fontFamily: 'Oswald-Medium' }}>{i.category}</Text>
-                                <Text style={{ marginLeft: widthToDp("3%"), marginTop: heightToDp("0%"), fontSize: widthToDp("7%"), fontFamily: 'Oswald-Medium' }}>Rs {i.amount}</Text>
+                            <View style={{ backgroundColor: 'white', paddingVertical: widthToDp('5%'), alignSelf: 'center', width: widthToDp("85%"), borderRadius: 20, marginTop: heightToDp("3%"), paddingRight: widthToDp('2%'), justifyContent: 'center' }}>
+                                <View style={{
+                                    flexDirection: 'row',
+                                    justifyContent: 'space-between',
+                                    marginBottom: widthToDp('5%')
+                                }}>
+                                    <Text style={{ marginLeft: widthToDp("3%"), fontSize: widthToDp("4%"), fontFamily: 'Oswald-Light' }}>{"Date : " + i.date}</Text>
+                                    <Text style={{ marginLeft: widthToDp("3%"), fontSize: widthToDp("4%"), fontFamily: 'Oswald-Light' }}>{i.type}</Text>
+                                </View>
+                                <View style={{
+                                    flexDirection: 'row',
+                                    justifyContent: 'space-between',
+                                }}>
+                                    <Text style={{ marginLeft: widthToDp("3%"), fontSize: widthToDp("5%"), fontFamily: 'Oswald-Medium' }}>{i.category}</Text>
+                                    <Text style={{ marginLeft: widthToDp("3%"), fontSize: widthToDp("5%"), fontFamily: 'Oswald-Medium' }}>{i.amount ? "₹ " + i.amount : ""}</Text>
+                                </View>
                             </View>
                         )
                     })
