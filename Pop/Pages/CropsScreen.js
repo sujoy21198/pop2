@@ -246,7 +246,7 @@ export default class CropsScreen extends Component {
     }
 
     speak = () => {
-        this.sound.play()
+        //this.sound.play()
     }
 
     onRefresh = () => {
