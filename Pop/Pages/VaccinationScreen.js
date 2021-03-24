@@ -31,7 +31,7 @@ const months = [
 const tableHeading = [
     { 'name': 'Items', 'birth': '1st Birth', 'age': '16 months old', 'numbers': '1', 'unitPrice': '4000', 'totalPriceInRupees': '5000' },
     {  'birth': '2nd Birth', 'age': '8 months old', 'numbers': '1', 'unitPrice': '4000', 'totalPriceInRupees': '5000' },
-    { 'name': 'Cost(INR)', 'birth': '3rd Birth', 'age': 'kid', 'numbers': '1', 'unitPrice': '4000', 'totalPriceInRupees': '5000' },
+    { 'name': 'Cost (₹)', 'birth': '3rd Birth', 'age': 'kid', 'numbers': '1', 'unitPrice': '4000', 'totalPriceInRupees': '5000' },
     { 'name': 'Interval' },
 ]
 
@@ -60,6 +60,7 @@ export default class VaccinationScreen extends Component {
             let user = await AsyncStorage.getItem('offlineData');
             let parsed = JSON.parse(user);
             var specificObject = parsed.find((i) => i.username === username)
+            console.warn(specificObject)
             var livestockwisevaccine = specificObject.vaccination.filter((i) => i.type === this.state.value)
             vaccine = livestockwisevaccine
             let vaccineTotalCost = 0;
@@ -237,13 +238,23 @@ export default class VaccinationScreen extends Component {
                             <View>
                                 <Text>One desi hen gives 50 eggs in a year If a farmer keeps 4 hens, then he will get 200 eggs in a year.</Text>
                             </View> */}
-                            <View style={{ borderWidth: 1, height: heightToDp("8%"), width: widthToDp("83%"), marginLeft: widthToDp("3%"), marginTop: heightToDp("1.5%"), flexDirection: 'row' }}>
+                            <View style={{ 
+                                borderTopWidth: 1, 
+                                borderLeftWidth: 1, 
+                                borderRightWidth: 1, 
+                                borderBottomWidth: 1.3, 
+                                paddingVertical: heightToDp("1%"), 
+                                width: widthToDp("83%"), 
+                                marginLeft: widthToDp("3%"), 
+                                marginTop: heightToDp("1.5%"), 
+                                flexDirection: 'row' 
+                            }}>
                                 {
-                                    tableHeading.map((i) => {
+                                    tableHeading.map((i, key) => {
                                         return (
-                                            <View style={{ width: widthToDp("19%"), marginLeft: widthToDp("1.5%") }}>
+                                            <View style={{ width: widthToDp(`${key===0 ? 13 : key===1 ? 15 : 21}%`), marginLeft: widthToDp("1.5%") }}>
 
-                                                <Text style={{ marginTop: heightToDp("2%") }}>{i.name}</Text>
+                                                <Text style={{ marginTop: heightToDp("2%"), fontSize: widthToDp('3.3%') }}>{i.name}</Text>
 
                                             </View>
 
@@ -252,7 +263,16 @@ export default class VaccinationScreen extends Component {
                                 }
                             </View>
 
-                            <View style={{ borderWidth: 1, height: heightToDp("30%"), width: widthToDp("83%"), marginLeft: widthToDp("3%"), marginTop: heightToDp("0%") }}>
+                            <View style={{ 
+                                borderTopWidth: 1, 
+                                borderLeftWidth: 1, 
+                                borderRightWidth: 1, 
+                                borderBottomWidth: 1.3,
+                                paddingVertical: heightToDp("1%"), 
+                                width: widthToDp("83%"), 
+                                marginLeft: widthToDp("3%"), 
+                                marginTop: heightToDp("0%") 
+                            }}>
                                 {/* {
                                     tableHeading.map((i) => {
                                         return (
@@ -279,13 +299,13 @@ export default class VaccinationScreen extends Component {
                                     })
                                 } */}
                                 <View style={{ flexDirection: 'row', width: widthToDp("100%") }}>
-                                    <View style={{ width: widthToDp("33%"), marginLeft: widthToDp("1.5%") }}>
+                                    <View style={{ width: widthToDp("24%"), marginLeft: widthToDp("1.5%") }}>
                                         {/* <Text style={{ marginTop: heightToDp("2%") }}>Eggs</Text>
                                         <Text style={{ marginTop: heightToDp("5%") }}>Adult Bird</Text> */}
                                         {
                                             vaccine.map((i) => {
                                                 return (
-                                                    <Text style={{ marginBottom: heightToDp("3.5%") }}>{i.item}</Text>
+                                                    <Text style={{ marginBottom: heightToDp("3.5%"), fontSize: widthToDp('3.3%') }}>{i.itemEnglish}</Text>
                                                 )
                                             })
                                         }
@@ -297,26 +317,34 @@ export default class VaccinationScreen extends Component {
                                         <Text style={{ marginTop: heightToDp("2%") }}>kids</Text>
                                     </View> */}
                                     
-                                    <View style={{ width: widthToDp("15%"), marginLeft: widthToDp("3.3%") }}>
+                                    <View style={{ width: widthToDp("15%"), marginLeft: widthToDp("7.3%") }}>
                                         {/* <Text style={{ marginTop: heightToDp("2%") }}>Rs 5.00 per piece</Text>
                                         <Text style={{ marginTop: heightToDp("2%") }}>Rs 300 per bird</Text> */}
                                         {
-                                            vaccine.map((i) => {
-                                                return (
-                                                    <Text style={{ marginBottom: heightToDp("4%"), marginLeft: widthToDp("5%") }}>{i.cost>0 ? i.cost : "-"}</Text>
+                                            vaccine.map((i, key) => {
+                                                return (                                                    
+                                                    <View style={{width: widthToDp('12%'), marginTop: heightToDp(`${key!==0 ? 3.5 : 0.5}%`), flexDirection: 'row', justifyContent: 'space-between'}}>
+                                                        {i.cost > 0 && <Text style={{ fontSize: widthToDp('3.3%') }}>₹ </Text> }
+                                                        <Text style={{ fontSize: widthToDp('3.3%') }}>{i.cost > 0 ? i.cost : '-'}</Text>
+                                                    </View>
                                                 )
                                             })
                                         }
 
                                     </View>
-                                    <View style={{ width: widthToDp("25%"), marginLeft: widthToDp("10%") }}>
+                                    <View style={{ width: widthToDp("30%"), marginLeft: widthToDp("7%") }}>
                                         {/* <Text style={{ marginTop: heightToDp("2%") }}>Rs {this.state.totalPriceEggs}</Text>
                                         <Text style={{ marginTop: heightToDp("5%") }}>Rs {this.state.totalPriceAdultBrids}</Text> */}
                                         {
-                                            vaccine.map((i) => {
+                                            vaccine.map((i, key) => {
                                                 if(i.interval) {
                                                     return (
-                                                        <Text style={{ marginBottom: heightToDp("4%") }}>{i.interval} months</Text>
+                                                        <Text style={{ 
+                                                            marginTop: heightToDp(`${key===0 ? 0.5 : 3.5}%`), 
+                                                            fontSize: widthToDp('3.5%') 
+                                                        }}>
+                                                            {i.interval} months
+                                                        </Text>
                                                     )
                                                 }                                                
                                             })
@@ -327,14 +355,20 @@ export default class VaccinationScreen extends Component {
                             </View>
 
                             <View style={{ borderWidth: 1, height: heightToDp("8%"), width: widthToDp("83%"), marginLeft: widthToDp("3%"), marginTop: heightToDp("0%"), flexDirection: 'row' }}>
-                                <View style={{marginTop:heightToDp("2%"),marginLeft:widthToDp("2%"),width:widthToDp("40%")}}>
-                                    <Text>TOTAL</Text>
+                                <View style={{marginTop:heightToDp("2%"),marginLeft:widthToDp("2%"),width:widthToDp("25%")}}>
+                                    <Text style={{fontSize: widthToDp('3.3%')}}>TOTAL</Text>
                                 </View>
 
-                                <View style={{marginTop:heightToDp("2%"),width:widthToDp("20%")}}>
-                                    <Text>
-                                        {this.state.vaccineTotalCost > 0 ? this.state.vaccineTotalCost : "-"}
-                                    </Text>
+                                <View style={{marginTop:heightToDp("2%"),width:widthToDp("12%"), marginLeft: '7%'}}>
+                                    {
+                                        this.state.vaccineTotalCost > 0 ? 
+                                        <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+                                            <Text style={{ fontSize: widthToDp('3.3%') }}>₹ </Text> 
+                                            <Text style={{ fontSize: widthToDp('3.3%') }}>{this.state.vaccineTotalCost}</Text>
+                                        </View> :
+                                        <Text>-</Text>
+                                    }                                    
+                                    
                                 </View>
 
                             </View>

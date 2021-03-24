@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { View, Image, TouchableOpacity, ScrollView } from 'react-native'
 import BaseColor from '../Core/BaseTheme'
-import { Text, Input } from 'native-base'
+import { Text, Input, Toast } from 'native-base'
 import TopLogo from '../assets/TopLogo'
 import { widthToDp, heightToDp } from '../Responsive'
 import { FlatGrid, SectionGrid } from 'react-native-super-grid'
@@ -15,18 +15,18 @@ import Languages from '../Core/Languages'
 
 
 const tableHeading = [
-    { 'name': 'Items', 'items': 'Dry Fish(without salt)', 'unit': '2', 'unitPrice': 'Rs 500 perKG', 'totalPrice': '1000' },
-    { 'name': 'Unit', 'items': 'Dry fish(salted)', 'unit': '2', 'unitPrice': 'Rs 500 perKG', 'totalPrice': '1000' },
-    { 'name': 'Unit Price', 'items': 'DryFishSellingSecondTableScreen' },
-    { 'name': 'Total Price' },
+    { 'name': 'Items', 'items': 'Dry Fish(without salt)', 'unit': '2', 'unitPrice': '₹ 500 perKG', 'totalPrice': '1000' },
+    { 'name': 'Unit', 'items': 'Dry fish(salted)', 'unit': '2', 'unitPrice': '₹ 500 perKG', 'totalPrice': '1000' },
+    { 'name': 'Unit Price (₹)', 'items': 'DryFishSellingSecondTableScreen' },
+    { 'name': 'Total Price (₹)' },
 ]
 
 const tableHeading2 = [
-    { 'name': 'Items', 'items': 'Category 1(Cereals, pulses,edible oil, Sugar,salt, Spices,Eggs)', 'unit': '2', 'unitPrice': 'Lumpsum', 'totalPrice': '1000' },
-    { 'name': 'Unit', 'items': 'Category 2 Soap, detergent,Shampoo, Toothbrush/ paste,broom', 'unit': '2', 'unitPrice': 'Lumpsum', 'totalPrice': '1000' },
-    { 'name': 'Total Buying Price', 'items': 'Category 3(Optional)Snacks items(Biscuits, Candy,Chips)', 'unitPrice': 'Lumpsum' },
-    { 'name': 'Total Selling price (keeping 20% margin)' },
-    { 'name': 'Profit' }
+    { 'name': 'Items', 'items': 'Category 1 (Cereals, pulses, edible oil, Sugar, salt, Spices, Eggs)', 'unit': '2', 'unitPrice': 'Lumpsum', 'totalPrice': '1000' },
+    { 'name': 'Unit', 'items': 'Category 2 (Soap, detergent, Shampoo, Toothbrush / paste, broom)', 'unit': '2', 'unitPrice': 'Lumpsum', 'totalPrice': '1000' },
+    { 'name': 'Total Buying Price (₹)', 'items': 'Category 3 (Optional) Snacks items (Biscuits, Candy, Chips)', 'unitPrice': 'Lumpsum' },
+    { 'name': 'Total Selling price (₹, keeping 20% margin)' },
+    { 'name': 'Profit (₹)' }
 ]
 
 export default class SmallGroceryShopSecondTableScreen extends Component {
@@ -242,6 +242,11 @@ export default class SmallGroceryShopSecondTableScreen extends Component {
         this.setState({monthlyProfit : result8})
         var result9 = result8 - this.state.lossPercentage
         this.setState({netProfitPerMonth : result9})
+        Toast.show({
+            text: "Calculated",
+            duration: 3000, 
+            type: 'success'
+        })
     }
 
     inputValue = (data) => {
@@ -268,6 +273,11 @@ export default class SmallGroceryShopSecondTableScreen extends Component {
         } catch (error) {
             console.log(error)
         }
+        Toast.show({
+            text: "Your data has been saved in MONEY MANAGER under ALL TRANSACTIONS",
+            duration: 3000,
+            type: 'success'
+        });
         this.props.navigation.reset({
             index: 0,
             routes: [{ name: "DashBoardScreen" }]
@@ -336,13 +346,23 @@ export default class SmallGroceryShopSecondTableScreen extends Component {
                     <View style={{ backgroundColor: BaseColor.Red, height: heightToDp("210%"), alignSelf: 'center', width: widthToDp("90%"), borderRadius: 10, marginTop: heightToDp('1.5%') }}>
                         <Text style={{ color: "#fff", fontSize: widthToDp("5%"), marginLeft: widthToDp("5%"), marginTop: heightToDp("1%"), fontFamily: 'Oswald-Medium' }}>Expenditure & Profit </Text>
                         <View style={{ backgroundColor: "white", height: heightToDp("210%"), alignSelf: 'center', width: widthToDp("90%"), marginTop: heightToDp('2%'), borderBottomLeftRadius: 10, borderBottomRightRadius: 10 }}>
-                            <View style={{ borderWidth: 1, height: heightToDp("22%"), width: widthToDp("83%"), marginLeft: widthToDp("3%"), marginTop: heightToDp("1.5%"), flexDirection: 'row' }}>
+                            <View style={{ 
+                                borderTopWidth: 1,
+                                borderLeftWidth: 1,
+                                borderRightWidth: 1,
+                                borderBottomWidth: 1.3, 
+                                paddingVertical: heightToDp("2%"), 
+                                width: widthToDp("83%"), 
+                                marginLeft: widthToDp("3%"),
+                                marginTop: heightToDp("1.5%"), 
+                                flexDirection: 'row' 
+                            }}>
                                 {
                                     tableHeading2.map((i) => {
                                         return (
-                                            <View style={{ width: widthToDp("16%"), marginLeft: widthToDp("1%") }}>
+                                            <View style={{ width: widthToDp("15%"), marginLeft: widthToDp("1%") }}>
 
-                                                <Text style={{ marginTop: heightToDp("2%") }}>{i.name}</Text>
+                                                <Text style={{ marginTop: heightToDp("1%"), fontSize: widthToDp("3.3%") }}>{i.name}</Text>
 
                                             </View>
 
@@ -351,7 +371,7 @@ export default class SmallGroceryShopSecondTableScreen extends Component {
                                 }
                             </View>
 
-                            <View style={{ borderWidth: 1, height: heightToDp("100%"), width: widthToDp("83%"), marginLeft: widthToDp("3%"), marginTop: heightToDp("0%") }}>
+                            <View style={{ borderWidth: 1, height: heightToDp("50%"), width: widthToDp("83%"), marginLeft: widthToDp("3%"), marginTop: heightToDp("0%") }}>
                                 <View style={{ flexDirection: 'row' }}>
                                     <View style={{ width: widthToDp("15%"), marginLeft: widthToDp("1.5%") }}>
                                         {/* <Text style={{ marginTop: heightToDp("2%") }}>Eggs</Text>
@@ -359,7 +379,7 @@ export default class SmallGroceryShopSecondTableScreen extends Component {
                                         {
                                             tableHeading2.map((i) => {
                                                 return (
-                                                    <Text style={{ marginTop: heightToDp("1%") }}>{i.items}</Text>
+                                                    <Text style={{ marginTop: heightToDp("1%"), fontSize: widthToDp('2.7%') }}>{i.items}</Text>
                                                 )
                                             })
                                         }
@@ -369,40 +389,40 @@ export default class SmallGroceryShopSecondTableScreen extends Component {
                                         {/* <Text style={{ marginTop: heightToDp("2%") }}>Eggs</Text>
                                         <Text style={{ marginTop: heightToDp("5%") }}>Adult Bird</Text> */}
                                         {
-                                            tableHeading2.map((i) => {
+                                            tableHeading2.map((i, key) => {
                                                 return (
-                                                    <Text style={{ marginTop: heightToDp("10%") }}>{i.unitPrice}</Text>
+                                                    <Text style={{ marginTop: heightToDp(`${(key + 1) * 4.5}%`), fontSize: widthToDp('2.3%') }}>{i.unitPrice}</Text>
                                                 )
                                             })
                                         }
                                     </View>
-                                    <View style={{ width: widthToDp("18%"), marginLeft: widthToDp("4%"), height: heightToDp("30%") }}>
+                                    <View style={{ width: widthToDp("15%"), marginLeft: widthToDp("4%"), height: heightToDp("30%") }}>
                                         {/* <Text style={{ marginTop: heightToDp("2%") }}>{this.state.eggQuantity}</Text>
                                         <Text style={{ marginTop: heightToDp("5%") }}>{this.state.birdQuantity}</Text> */}
-                                        <View style={{ height: heightToDp("6%"), marginTop: heightToDp("3%") }}>
+                                        <View style={{ height: heightToDp("6%"), marginTop: heightToDp("1%") }}>
                                             {/* <Text style={{ marginBottom: heightToDp("1.5%") }}>{i.noOfTime}</Text> */}
                                             <Input
-                                                style={{ borderWidth: 1 }}
+                                                style={{ borderBottomWidth: 1, borderColor: 'blue', fontSize: widthToDp('3%') }}
                                                 placeholder={"3000"}
                                                 onChangeText={(data) => this.setState({ category1BuyingPrice: data })}
                                                 keyboardType="number-pad"
                                             />
                                         </View>
 
-                                        <View style={{ height: heightToDp("6%"), marginTop: heightToDp("13%") }}>
+                                        <View style={{ height: heightToDp("6%"), marginTop: heightToDp("5.5%") }}>
                                             {/* <Text style={{ marginBottom: heightToDp("1.5%") }}>{i.noOfTime}</Text> */}
                                             <Input
-                                                style={{ borderWidth: 1 }}
+                                                style={{ borderBottomWidth: 1, borderColor: 'blue', fontSize: widthToDp('3%') }}
                                                 placeholder={"1500"}
                                                 onChangeText={(data) => this.setState({ categor2BuyingPrice: data })}
                                                 keyboardType="number-pad"
                                             />
                                         </View>
 
-                                        <View style={{ height: heightToDp("6%"), marginTop: heightToDp("13%") }}>
+                                        <View style={{ height: heightToDp("6%"), marginTop: heightToDp("9%") }}>
                                             {/* <Text style={{ marginBottom: heightToDp("1.5%") }}>{i.noOfTime}</Text> */}
                                             <Input
-                                                style={{ borderWidth: 1 }}
+                                                style={{ borderBottomWidth: 1, borderColor: 'blue', fontSize: widthToDp('3%') }}
                                                 placeholder={"500"}
                                                 onChangeText={(data) => this.setState({ category3BuyingPrice: data })}
                                                 keyboardType="number-pad"
@@ -411,22 +431,22 @@ export default class SmallGroceryShopSecondTableScreen extends Component {
 
                                     </View>
                                     <View style={{ width: widthToDp("14%"), marginLeft: widthToDp("1.5%") }}>
-                                        {/* <Text style={{ marginTop: heightToDp("2%") }}>Rs 5.00 per piece</Text>
-                                        <Text style={{ marginTop: heightToDp("2%") }}>Rs 300 per bird</Text> */}
-                                        <View style={{ height: heightToDp("6%"), marginTop: heightToDp("3%") }}>
+                                        {/* <Text style={{ marginTop: heightToDp("2%") }}>₹ 5.00 per piece</Text>
+                                        <Text style={{ marginTop: heightToDp("2%") }}>₹ 300 per bird</Text> */}
+                                        <View style={{ height: heightToDp("6%"), marginTop: heightToDp("1%") }}>
                                             {/* <Text style={{ marginBottom: heightToDp("1.5%") }}>{i.noOfTime}</Text> */}
                                             <Input
-                                                style={{ borderWidth: 1 }}
+                                                style={{ borderBottomWidth: 1, borderColor: 'blue', fontSize: widthToDp('3%') }}
                                                 placeholder={"3600"}
                                                 onChangeText={(data) => this.setState({ category1SellingPrice: data })}
                                                 keyboardType="number-pad"
                                             />
                                         </View>
 
-                                        <View style={{ height: heightToDp("6%"), marginTop: heightToDp("13%") }}>
+                                        <View style={{ height: heightToDp("6%"), marginTop: heightToDp("5.5%") }}>
                                             {/* <Text style={{ marginBottom: heightToDp("1.5%") }}>{i.noOfTime}</Text> */}
                                             <Input
-                                                style={{ borderWidth: 1 }}
+                                                style={{ borderBottomWidth: 1, borderColor: 'blue', fontSize: widthToDp('3%') }}
                                                 placeholder={"1800"}
                                                 onChangeText={(data) => this.setState({ category2SellingPrice: data })}
                                                 keyboardType="number-pad"
@@ -434,10 +454,10 @@ export default class SmallGroceryShopSecondTableScreen extends Component {
                                         </View>
 
 
-                                        <View style={{ height: heightToDp("6%"), marginTop: heightToDp("13%") }}>
+                                        <View style={{ height: heightToDp("6%"), marginTop: heightToDp("9%") }}>
                                             {/* <Text style={{ marginBottom: heightToDp("1.5%") }}>{i.noOfTime}</Text> */}
                                             <Input
-                                                style={{ borderWidth: 1 }}
+                                                style={{ borderBottomWidth: 1, borderColor: 'blue', fontSize: widthToDp('3%') }}
                                                 placeholder={"600"}
                                                 onChangeText={(data) => this.setState({ category3SellingPrice: data })}
                                                 keyboardType="number-pad"
@@ -446,9 +466,18 @@ export default class SmallGroceryShopSecondTableScreen extends Component {
 
                                     </View>
                                     <View style={{ width: widthToDp("14%"), marginLeft: widthToDp("5%") }}>
-                                        <Text style={{ marginTop: heightToDp("3%") }}>{this.state.category1Profit}</Text>
-                                        <Text style={{ marginTop: heightToDp("13%") }}>{this.state.category2Profit}</Text>
-                                        <Text style={{ marginTop: heightToDp("13%") }}>{this.state.category3Profit}</Text>
+                                        <View style={{marginLeft: widthToDp('-2%'), width: widthToDp("10%"), marginTop: widthToDp('5.5%'), flexDirection: 'row', justifyContent: 'space-between'}}>
+                                            <Text style={{ fontSize: widthToDp('3%') }}>₹ </Text>
+                                            <Text style={{ fontSize: widthToDp('3%') }}>{this.state.category1Profit}</Text>
+                                        </View>
+                                        <View style={{marginLeft: widthToDp('-2%'), width: widthToDp("10%"), marginTop: widthToDp('20%'), flexDirection: 'row', justifyContent: 'space-between'}}>
+                                            <Text style={{ fontSize: widthToDp('3%') }}>₹ </Text>
+                                            <Text style={{ fontSize: widthToDp('3%') }}>{this.state.category2Profit}</Text>
+                                        </View>
+                                        <View style={{marginLeft: widthToDp('-2%'), width: widthToDp("10%"), marginTop: widthToDp('26%'), flexDirection: 'row', justifyContent: 'space-between'}}>
+                                            <Text style={{ fontSize: widthToDp('3%') }}>₹ </Text>
+                                            <Text style={{ fontSize: widthToDp('3%') }}>{this.state.category3Profit}</Text>
+                                        </View>
                                         {/* {
                                             tableHeading.map((i) => {
                                                 return (
@@ -462,47 +491,47 @@ export default class SmallGroceryShopSecondTableScreen extends Component {
                                 </View>
                             </View>
                             <View style={{ borderWidth: 1, height: heightToDp("18%"), width: widthToDp("83%"), marginLeft: widthToDp("3%"), marginTop: heightToDp("0%"), flexDirection: 'row' }}>
-                                <View style={{ width: widthToDp("30%") }}>
-                                    <Text>Per cycle (15 days) expenditure and profit</Text>
+                                <View style={{ width: widthToDp("30%"), marginLeft: widthToDp('1%') }}>
+                                    <Text style={{fontSize: widthToDp('3.3%')}}>Per cycle (15 days) expenditure and profit</Text>
                                 </View>
-                                <View style={{ width: widthToDp("17%") }}>
-                                    <Text style={{ marginLeft: widthToDp("3%") }}>Rs {this.state.totalOfTotalBuyingPrice}</Text>
-                                </View>
-
-                                <View style={{ width: widthToDp("17%") }}>
-                                    <Text style={{ marginLeft: widthToDp("3%") }}>Rs {this.state.totalOfTotalSellingPrice}</Text>
+                                <View style={{ width: widthToDp("17%"), marginLeft: widthToDp('1%') }}>
+                                    <Text style={{ marginLeft: widthToDp("3%"), fontSize: widthToDp('3.3%') }}>₹ {this.state.totalOfTotalBuyingPrice}</Text>
                                 </View>
 
-                                <View style={{ width: widthToDp("17%") }}>
-                                    <Text style={{ marginLeft: widthToDp("3%") }}>Rs {this.state.totalOfProfit}</Text>
+                                <View style={{ width: widthToDp("17%"), marginLeft: widthToDp('1%') }}>
+                                    <Text style={{ marginLeft: widthToDp("3%"), fontSize: widthToDp('3.3%') }}>₹ {this.state.totalOfTotalSellingPrice}</Text>
+                                </View>
+
+                                <View style={{ width: widthToDp("17%"), marginLeft: widthToDp('1%') }}>
+                                    <Text style={{ marginLeft: widthToDp("3%"), fontSize: widthToDp('3.3%') }}>₹ {this.state.totalOfProfit}</Text>
                                 </View>
                             </View>
 
 
                             <View style={{ borderWidth: 1, height: heightToDp("10%"), width: widthToDp("83%"), marginLeft: widthToDp("3%"), marginTop: heightToDp("0%"), flexDirection: 'row' }}>
-                                <View style={{ width: widthToDp("30%") }}>
-                                    <Text>Per moth expenditure and profit</Text>
+                                <View style={{ width: widthToDp("30%"), marginLeft: widthToDp('1%') }}>
+                                    <Text style={{fontSize: widthToDp('3.3%')}}>Per month expenditure and profit</Text>
                                 </View>
-                                <View style={{ width: widthToDp("17%") }}>
-                                    <Text style={{ marginLeft: widthToDp("3%") }}>Rs {this.state.monthlyBuyingPrice}</Text>
-                                </View>
-
-                                <View style={{ width: widthToDp("17%") }}>
-                                    <Text style={{ marginLeft: widthToDp("3%") }}>Rs {this.state.monthlySellingPrice}</Text>
+                                <View style={{ width: widthToDp("17%"), marginLeft: widthToDp('1%') }}>
+                                    <Text style={{ marginLeft: widthToDp("3%"), fontSize: widthToDp('3.3%') }}>₹ {this.state.monthlyBuyingPrice}</Text>
                                 </View>
 
-                                <View style={{ width: widthToDp("17%") }}>
-                                    <Text style={{ marginLeft: widthToDp("3%") }}>Rs {this.state.monthlyProfit}</Text>
+                                <View style={{ width: widthToDp("17%"), marginLeft: widthToDp('1%') }}>
+                                    <Text style={{ marginLeft: widthToDp("3%"), fontSize: widthToDp('3.3%') }}>₹ {this.state.monthlySellingPrice}</Text>
+                                </View>
+
+                                <View style={{ width: widthToDp("17%"), marginLeft: widthToDp('1%') }}>
+                                    <Text style={{ marginLeft: widthToDp("3%"), fontSize: widthToDp('3.3%') }}>₹ {this.state.monthlyProfit}</Text>
                                 </View>
 
                             </View>
                             <View style={{ borderWidth: 1, height: heightToDp("14%"), width: widthToDp("83%"), marginLeft: widthToDp("3%"), marginTop: heightToDp("0%"), flexDirection: 'row' }}>
-                                <View style={{ width: widthToDp("60%") }}>
-                                    <Text>Loss (Assuming 2% of profit) due to rodent, insects, termites, and damping of food items</Text>
+                                <View style={{ width: widthToDp("60%"), marginLeft: widthToDp('1%') }}>
+                                    <Text style={{fontSize: widthToDp('3.3%')}}>Loss (Assuming 2% of profit) due to rodent, insects, termites, and damping of food items</Text>
                                 </View>
-                                <View style={{ width: widthToDp("17%"),height:heightToDp("5%"),marginTop:heightToDp("2%") }}>
+                                <View style={{ width: widthToDp("17%"),height:heightToDp("5%"),marginTop:heightToDp("0%") }}>
                                     <Input
-                                        style={{ borderWidth: 1 }}
+                                        style={{ borderBottomWidth: 1, borderColor: 'blue', fontSize: widthToDp('3.3%') }}
                                         onChangeText={(data) => this.setState({ lossPercentage: data })}
                                         defaultValue={"40"}
                                         keyboardType="number-pad"
@@ -511,11 +540,13 @@ export default class SmallGroceryShopSecondTableScreen extends Component {
                             </View>
 
                             <View style={{ borderWidth: 1, height: heightToDp("10%"), width: widthToDp("83%"), marginLeft: widthToDp("3%"), marginTop: heightToDp("0%"), flexDirection: 'row' }}>
-                                <View style={{ width: widthToDp("60%") }}>
-                                    <Text>Net profit per month</Text>
+                                <View style={{ width: widthToDp("60%"), marginLeft: widthToDp('1%') }}>
+                                    <Text style={{fontSize: widthToDp('3.3%')}}>Net profit per month</Text>
                                 </View>
-                                <View style={{ width: widthToDp("17%"),height:heightToDp("5%"),marginTop:heightToDp("2%") }}>
-                                    <Text>Rs {this.state.netProfitPerMonth}</Text>
+                                
+                                <View style={{width: widthToDp("14%"), height:heightToDp("5%"), flexDirection: 'row', justifyContent: 'space-between'}}>
+                                    <Text style={{ fontSize: widthToDp('3%') }}>₹ </Text>
+                                    <Text style={{ fontSize: widthToDp('3%') }}>{this.state.netProfitPerMonth}</Text>
                                 </View>
                             </View>
                         </View>
@@ -535,7 +566,7 @@ export default class SmallGroceryShopSecondTableScreen extends Component {
                     </TouchableOpacity>
                     <TouchableOpacity onPress={() => { this.next() }}>
                         <View style={{ backgroundColor: "#fff", height: heightToDp("6%"), width: widthToDp("30%"), borderRadius: 100, marginLeft: widthToDp("1%"), marginTop: heightToDp("2%") }}>
-                            <Text style={{ fontSize: widthToDp("4%"), color: "#000", marginTop: heightToDp("1.3%"), alignSelf: 'center', fontFamily: 'Oswald-Medium' }}>SAVE/NEXT</Text>
+                            <Text style={{ fontSize: widthToDp("4%"), color: "#000", marginTop: heightToDp("1.3%"), alignSelf: 'center', fontFamily: 'Oswald-Medium' }}>SAVE/EXIT</Text>
                         </View>
                     </TouchableOpacity>
                 </View>
