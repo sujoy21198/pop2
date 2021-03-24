@@ -236,11 +236,6 @@ export default class DryFishSellingFirstTable extends Component {
         //     index: 0,
         //     routes: [{ name: "DashBoardScreen" }]
         // })
-        Toast.show({
-            text: "Your data has been saved in MONEY MANAGER under ALL TRANSACTIONS",
-            duration: 3000,
-            type: 'success'
-        });
         this.props.navigation.navigate({
             name: 'DryFishSellingSecondTableScreen',
             params: {
@@ -491,15 +486,7 @@ export default class DryFishSellingFirstTable extends Component {
                             <Text style={{ fontSize: widthToDp("4%"), color: "#000", marginTop: heightToDp("1.3%"), alignSelf: 'center', fontFamily: 'Oswald-Medium' }}>BACK</Text>
                         </View>
                     </TouchableOpacity>
-                    <TouchableOpacity 
-                        onPress={() => {
-                            Toast.show({
-                                text: "Calculated",
-                                duration: 3000,
-                                type: 'success'
-                            });
-                        }}
-                    >
+                    <TouchableOpacity onPress={() => { }}>
                         <View style={{ backgroundColor: "#fff", height: heightToDp("6%"), width: widthToDp("30%"), borderRadius: 100, marginLeft: widthToDp("1%"), marginTop: heightToDp("2%") }}>
                             <Text style={{ fontSize: widthToDp("4%"), color: "#000", marginTop: heightToDp("1.3%"), alignSelf: 'center', fontFamily: 'Oswald-Medium' }}>SAVE</Text>
                         </View>

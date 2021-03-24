@@ -234,11 +234,6 @@ export default class SmallGroceryShopFirstTableScreen extends Component {
         //     index: 0,
         //     routes: [{ name: "DashBoardScreen" }]
         // })
-        Toast.show({
-            text: "Your data has been saved in MONEY MANAGER under ALL TRANSACTIONS",
-            duration: 3000,
-            type: 'success'
-        });
         this.props.navigation.navigate({
             name: 'SmallGroceryShopSecondTableScreen',
             params: {
@@ -459,7 +454,7 @@ export default class SmallGroceryShopFirstTableScreen extends Component {
                                 </View>
                             </View>
                             <View style={{ borderWidth: 1, height: heightToDp("8%"), width: widthToDp("83%"), marginLeft: widthToDp("3%"), marginTop: heightToDp("0%"), flexDirection: 'row' }}>
-                                <Text style={{fontSize: widthToDp('3.3%')}}>One-time Expenditure</Text>
+                                <Text style={{fontSize: widthToDp('3.3%'), marginLeft: widthToDp('1%')}}>One-time Expenditure</Text>
                                 <View style={{marginLeft: widthToDp('31%'), width: widthToDp("15%"), flexDirection: 'row', justifyContent: 'space-between'}}>
                                     <Text style={{ fontSize: widthToDp('3.3%') }}>₹ </Text>
                                     <Text style={{ fontSize: widthToDp('3.3%') }}>2500</Text>
@@ -475,16 +470,7 @@ export default class SmallGroceryShopFirstTableScreen extends Component {
                             <Text style={{ fontSize: widthToDp("4%"), color: "#000", marginTop: heightToDp("1.3%"), alignSelf: 'center', fontFamily: 'Oswald-Medium' }}>BACK</Text>
                         </View>
                     </TouchableOpacity>
-                    <TouchableOpacity 
-                        onPress={
-                            () => 
-                            Toast.show({
-                                text: "Calculated",
-                                duration: 3000, 
-                                type: 'success'
-                            })
-                        }
-                    >    
+                    <TouchableOpacity onPress={() => {}}>    
                         <View style={{ backgroundColor: "#fff", height: heightToDp("6%"), width: widthToDp("30%"), borderRadius: 100, marginLeft: widthToDp("1%"), marginTop: heightToDp("2%") }}>
                             <Text style={{ fontSize: widthToDp("4%"), color: "#000", marginTop: heightToDp("1.3%"), alignSelf: 'center', fontFamily: 'Oswald-Medium' }}>SAVE</Text>
                         </View>
