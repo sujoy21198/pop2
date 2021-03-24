@@ -13,13 +13,13 @@ import DataAccess from '../Core/DataAccess'
 import CustomIndicator from '../Core/CustomIndicator'
 import Languages from '../Core/Languages'
 import LanguageChange from '../Core/LanguageChange'
+import SoundPlayer from 'react-native-sound-player'
 
-const Sound = require('react-native-sound')
 
 
 export default class CropsScreen extends Component {
 
-    sound = new Sound('/storage/emulated/0/Pictures/image_audioc345fcafd5815b65d045f9d1ca0b38a8COVID-19.mp3')
+
 
     constructor(props) {
         super(props)
@@ -244,8 +244,18 @@ export default class CropsScreen extends Component {
         }
     }
 
+
+
     speak = () => {
-        //this.sound.play()
+        try {
+            //SoundPlayer.loadUrl('/storage/emulated/0/Pictures/image_audioc345fcafd5815b65d045f9d1ca0b38a8COVID-19.mp3')
+            // play the file tone.mp3
+            //SoundPlayer.playSoundFile('tone', 'mp3')
+            // or play from url
+            SoundPlayer.playUrl('/storage/emulated/0/Pictures/image_audioc345fcafd5815b65d045f9d1ca0b38a8COVID-19.mp3')
+        } catch (e) {
+            console.log(`cannot play the sound file`, e)
+        }
     }
 
     onRefresh = () => {
@@ -320,29 +330,29 @@ export default class CropsScreen extends Component {
                                 onRefresh={() => this.onRefresh()}
                                 refreshing={this.state.isFetching}
                                 renderItem={({ item }) => (
-                                    
-                                        <View style={{ backgroundColor: BaseColor.Red, width: widthToDp("47%"), height: heightToDp("30%"), elevation: 10, borderRadius: 10 }}>
-                                            <View style={{ flexDirection: 'row' }}>
-                                                {
-                                                    this.state.textLanguageChange === '0' ? <Text style={{ color: "#fff", fontSize: widthToDp("5%"), marginLeft: widthToDp("5%"), marginTop: heightToDp("0.4%"), fontFamily: 'Oswald-Medium', height: heightToDp("4%") }}>{item.nameEnglish}</Text> : ((this.state.textLanguageChange === '1') ? <Text style={{ color: "#fff", fontSize: widthToDp("5%"), marginLeft: widthToDp("5%"), marginTop: heightToDp("0.4%"), fontFamily: 'Oswald-Medium', height: heightToDp("4%") }}>{item.nameHindi}</Text> : ((this.state.textLanguageChange === '2') ? <Text style={{ color: "#fff", fontSize: widthToDp("5%"), marginLeft: widthToDp("5%"), marginTop: heightToDp("0.4%"), fontFamily: 'Oswald-Medium', height: heightToDp("4%") }}>{item.nameHo}</Text> : ((this.state.textLanguageChange === '3') ? <Text style={{ color: "#fff", fontSize: widthToDp("5%"), marginLeft: widthToDp("5%"), marginTop: heightToDp("0.4%"), fontFamily: 'Oswald-Medium', height: heightToDp("4%") }}>{item.nameOdia}</Text> : ((this.state.textLanguageChange === '4') ? <Text style={{ color: "#fff", fontSize: widthToDp("5%"), marginLeft: widthToDp("5%"), marginTop: heightToDp("0.4%"), fontFamily: 'Oswald-Medium', height: heightToDp("4%") }}>{item.nameSanthali}</Text> : null))))
-                                                }
-                                                <TouchableOpacity onPress={() => this.speak()}>
+
+                                    <View style={{ backgroundColor: BaseColor.Red, width: widthToDp("47%"), height: heightToDp("30%"), elevation: 10, borderRadius: 10 }}>
+                                        <View style={{ flexDirection: 'row' }}>
+                                            {
+                                                this.state.textLanguageChange === '0' ? <Text style={{ color: "#fff", fontSize: widthToDp("5%"), marginLeft: widthToDp("5%"), marginTop: heightToDp("0.4%"), fontFamily: 'Oswald-Medium', height: heightToDp("4%") }}>{item.nameEnglish}</Text> : ((this.state.textLanguageChange === '1') ? <Text style={{ color: "#fff", fontSize: widthToDp("5%"), marginLeft: widthToDp("5%"), marginTop: heightToDp("0.4%"), fontFamily: 'Oswald-Medium', height: heightToDp("4%") }}>{item.nameHindi}</Text> : ((this.state.textLanguageChange === '2') ? <Text style={{ color: "#fff", fontSize: widthToDp("5%"), marginLeft: widthToDp("5%"), marginTop: heightToDp("0.4%"), fontFamily: 'Oswald-Medium', height: heightToDp("4%") }}>{item.nameHo}</Text> : ((this.state.textLanguageChange === '3') ? <Text style={{ color: "#fff", fontSize: widthToDp("5%"), marginLeft: widthToDp("5%"), marginTop: heightToDp("0.4%"), fontFamily: 'Oswald-Medium', height: heightToDp("4%") }}>{item.nameOdia}</Text> : ((this.state.textLanguageChange === '4') ? <Text style={{ color: "#fff", fontSize: widthToDp("5%"), marginLeft: widthToDp("5%"), marginTop: heightToDp("0.4%"), fontFamily: 'Oswald-Medium', height: heightToDp("4%") }}>{item.nameSanthali}</Text> : null))))
+                                            }
+                                            <TouchableOpacity onPress={() => this.speak()}>
                                                 <Icon
                                                     name="microphone"
                                                     color="white"
                                                     size={20}
                                                     style={{ marginTop: heightToDp("1.8%"), marginLeft: widthToDp("10%") }}
                                                 />
-                                                </TouchableOpacity>
-                                            </View>
-                                            <TouchableOpacity onPress={() => this.navigateToLandScreen(item._id, item.nameEnglish, item.imageFile)}>
+                                            </TouchableOpacity>
+                                        </View>
+                                        <TouchableOpacity onPress={() => this.navigateToLandScreen(item._id, item.nameEnglish, item.imageFile)}>
                                             <Image
                                                 style={{ width: widthToDp("47%"), height: heightToDp("25%"), borderBottomLeftRadius: 10, borderBottomRightRadius: 10, marginTop: heightToDp("1%") }}
                                                 source={{ uri: 'file:///storage/emulated/0/Pictures/image_' + item.imageFile }}
                                             />
-                                            </TouchableOpacity>
-                                        </View>
-                                    
+                                        </TouchableOpacity>
+                                    </View>
+
                                 )}
                             />
                         </View>

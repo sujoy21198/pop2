@@ -273,23 +273,38 @@ export default class LiveStockStepThreeScreen extends Component {
         if (data === 'en') {
             AsyncStorage.setItem('language', 'en')
             this.setState({ textLanguageChange: '0' })
-            this.loadBreedFromStorage()
+            this.props.navigation.reset({
+                index: 0,
+                routes: [{ name: "DashBoardScreen" }]
+            });
         } else if (data === 'hi') {
             this.setState({ textLanguageChange: '1' })
             AsyncStorage.setItem('language', 'hi')
-            this.loadBreedFromStorage()
+            this.props.navigation.reset({
+                index: 0,
+                routes: [{ name: "DashBoardScreen" }]
+            });
         } else if (data === 'ho') {
             this.setState({ textLanguageChange: '2' })
             AsyncStorage.setItem('language', 'ho')
-            this.loadBreedFromStorage()
+            this.props.navigation.reset({
+                index: 0,
+                routes: [{ name: "DashBoardScreen" }]
+            });
         } else if (data === 'od') {
             this.setState({ textLanguageChange: '3' })
             AsyncStorage.setItem('language', 'od')
-            this.loadBreedFromStorage()
+            this.props.navigation.reset({
+                index: 0,
+                routes: [{ name: "DashBoardScreen" }]
+            });
         } else if (data === 'san') {
             AsyncStorage.setItem('language', 'san')
             this.setState({ textLanguageChange: '4' })
-            this.loadBreedFromStorage()
+            this.props.navigation.reset({
+                index: 0,
+                routes: [{ name: "DashBoardScreen" }]
+            });
         }
     }
     render() {
