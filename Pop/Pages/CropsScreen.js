@@ -17,7 +17,6 @@ import LanguageChange from '../Core/LanguageChange'
 const Sound = require('react-native-sound')
 
 
-
 export default class CropsScreen extends Component {
 
     sound = new Sound('/storage/emulated/0/Pictures/image_audioc345fcafd5815b65d045f9d1ca0b38a8COVID-19.mp3')
