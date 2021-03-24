@@ -27,7 +27,7 @@ export default class StepOneScreen extends Component {
             decimalPrice: '',
             isLoading: false,
             imageFile: '',
-            materialPrice: '',
+            materialPrice: [],
             numberOfSteps: '',
             pageNumber: '01',
             patchName: '',
@@ -75,19 +75,44 @@ export default class StepOneScreen extends Component {
         this.state.productionInKg = this.props.route.params.productionInKg
         this.state.cost = this.props.route.params.cost
         this.state.netProfit = this.props.route.params.netProfit
-        //alert(this.state.patchName)
-        //alert(this.state.patchName)
+
     }
 
     componentDidMount() {
-        //this.getStepData()
-        this.autoFetchPreviouslyEnteredValue()
         this.setLanguageOnMount()
         this.loadlabelsFromStorage()
-        this.getOnlSteps()
-        //this.setStepDataIntoPatch()
-        //this.displayData()
+        this.getOfflineData()
     }
+
+    getOfflineData = async () => {
+        try {
+
+            let username = await AsyncStorage.getItem('username')
+            let user = await AsyncStorage.getItem('cropData');
+            let parsed = JSON.parse(user);
+            var specificObject = parsed.find((i) => i.username === username)
+            var cropSpecificSteps = specificObject.cropSteps.filter((i) => i.cropId === this.state._id)
+            this.setState({ cropNameLanguageChangeArray: cropSpecificSteps[0].cropData })
+            var stepId = cropSpecificSteps[0]._id
+            var cropSpecificMaterial = specificObject.cropsMaterials.filter((i) => i.stepId === stepId)
+            this.setState({ multipleMaterials: cropSpecificMaterial })
+            //console.log(cropSpecificMaterial)
+            this.setState({ englishDescription: cropSpecificSteps[0].english })
+            this.setState({ hindiDescription: cropSpecificSteps[0].hindi })
+            this.setState({ odiaDescription: cropSpecificSteps[0].odia })
+            this.setState({ hoDescription: cropSpecificSteps[0].ho })
+            this.setState({ santhaliDescription: cropSpecificSteps[0].santhali })
+            this.setState({ englishTitleDescription: cropSpecificSteps[0].nameEnglish })
+            this.setState({ hindiTitleDescription: cropSpecificSteps[0].nameHindi })
+            this.setState({ odiaTitleDescription: cropSpecificSteps[0].nameOdia })
+            this.setState({ hoTitleDescription: cropSpecificSteps[0].nameHo })
+            this.setState({ santhaliTitleDescription: cropSpecificSteps[0].nameSanthali })
+            this.setState({ stepImage: cropSpecificSteps[0].imageFile })
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
 
     loadlabelsFromStorage = async () => {
         try {
@@ -178,250 +203,25 @@ export default class StepOneScreen extends Component {
                 // this.state.data[6].name = pension.nameSanthali
                 // this.state.data[7].name = others.nameSanthali
             }
-            console.log(this.state.highLand)
-            console.log(this.state.mediumLand)
-            console.log(this.state.lowLand)
         } catch (error) {
             alert(error)
         }
-        this.setState({ crops: specificObject.crops })
-        this.showData()
+        //this.setState({ crops: specificObject.crops })
+        //this.showData()
     }
 
 
 
 
-    autoFetchPreviouslyEnteredValue = async () => {
-        let value = await AsyncStorage.getItem('stepOne')
-        this.state.decimalPrice = value
-        console.log(value)
-    }
-
-    displayData = async () => {
-
-        try {
-            //var count = 8
-            let user = await AsyncStorage.getItem('offlineData');
-            let parsed = JSON.parse(user);
-            console.log(JSON.stringify(parsed), "aslllll data")
-            // var valueArr = parsed.map(function(item){ return item.userId });
-            // alert(valueArr)
-            // var specificObject = parsed.find((i) => i.userId === count)
-            // console.log(specificObject.userId)
-
-            //console.log(specificObject.userId = count+1)
-            // console.log(specificObject.userId = 6)
-            //await AsyncStorage.setItem('products',JSON.stringify(parsed))
-
-
-            //alert(parsed[0].item = "bitch")
-            // await AsyncStorage.setItem('products',JSON.stringify(parsed))
-            // console.log(JSON.stringify(parsed))
-            //alert(JSON.stringify(parsed));
-            // console.log(JSON.stringify(parsed))
-        }
-        catch (error) {
-            alert(error)
-        }
-    }
-
-
-    setStepDataIntoPatch = async () => {
-        try {
-            //const patchObject = { 'cropId': this.state._id , 'patchName': this.state.patchName , 'landType': this.state.landType , 'step1' : '' , 'step2':'' , 'step3':'' , 'step4':'' , 'step5':'' , 'step6' : '' , 'step7':'' , 'step8': ''}
-            let username = await AsyncStorage.getItem('username')
-            let stepOnePrice = await AsyncStorage.getItem('stepOne')
-            let user = await AsyncStorage.getItem('user')
-            let parsed = JSON.parse(user)
-            var sepcific = parsed.find((i) => i.username === username)
-            var patchFind = sepcific.patch.find((i) => i.patchName === this.state.patchName)
-            patchFind.step1 = stepOnePrice
-            await AsyncStorage.setItem('user', JSON.stringify(parsed))
-            console.log(patchFind)
-        } catch (error) {
-            console.log(error)
-        }
-
-        if (this.state.materialPrice === '') {
-            alert("Please enter the amount in the material section")
-        } else {
-            this.props.navigation.navigate({
-                name: 'StepTwoScreen',
-                params: {
-                    cropName: this.state.cropName,
-                    _id: this.state._id,
-                    imageFile: this.state.imageFile,
-                    patchName: this.state.patchName,
-                    landType: this.state.landType,
-                    farmingAreaInDecimal: this.state.farmingAreaInDecimal,
-                    costOfCultivatinPerTenDecimal: this.state.costOfCultivatinPerTenDecimal,
-                    costPerKg: this.state.costPerKg,
-                    productionInKg: this.state.productionInKg,
-                    cost: this.state.cost,
-                    netProfit: this.state.netProfit
-                }
-            })
-        }
-    }
-
-    getOnlSteps = async () => {
-        try {
-            var cropNameLanguageChangeArray = []
-            let username = await AsyncStorage.getItem('username')
-            let user = await AsyncStorage.getItem('offlineData');
-            let parsed = JSON.parse(user);
-            var specific = parsed.find((i) => i.username === username)
-            var cropFilter = specific.cropSteps.filter((i) => i.cropId === this.state._id)
-            cropNameLanguageChangeArray = cropFilter[0].cropData
-            this.setState({ englishDescription: cropFilter[0].english })
-            this.setState({ hindiDescription: cropFilter[0].hindi })
-            this.setState({ hoDescription: cropFilter[0].ho })
-            this.setState({ odiaDescription: cropFilter[0].odia })
-            this.setState({ santhaliDescription: cropFilter[0].santhali })
-            this.setState({ englishTitleDescription: cropFilter[0].nameEnglish })
-            this.setState({ hindiTitleDescription: cropFilter[0].nameHindi })
-            this.setState({ hoTitleDescription: cropFilter[0].nameHo })
-            this.setState({ odiaTitleDescription: cropFilter[0].nameOdia })
-            this.setState({ santhaliTitleDescription: cropFilter[0].nameSanthali })
-            this.setState({ stepImage: cropFilter[0].imageFile })
-            this.setState({ cropNameLanguageChangeArray: cropNameLanguageChangeArray })
-            this.getStepDataFromLocal(cropFilter[0]._id)
-            // console.log(cropFilter[3].ho,"BICHI")
-        } catch (error) {
-            console.log(error)
-        }
-    }
-
-
-    getStepDataFromLocal = async (id) => {
-        try {
-            var multipleMaterials = []
-            let username = await AsyncStorage.getItem('username')
-            let user = await AsyncStorage.getItem('offlineData');
-            let parsed = JSON.parse(user);
-            var specific = parsed.find((i) => i.username === username)
-            var cropFilter = specific.cropsMaterials.filter((i) => i.cropId === this.state._id)
-            var stepwiseMaterials = cropFilter.filter((i) => i.stepId === id)
-            console.log(stepwiseMaterials, "SUJOY SAHA")
-            multipleMaterials = stepwiseMaterials
-            this.setState({ multipleMaterials: stepwiseMaterials })
-            // // console.log("HI HELLO TATA", specific.cropSteps)
-            // stepData = cropFilter[0].stepData
-            // decimalPrice = cropFilter[0].decimalPrice
-            // //materialName = cropFilter[0].materialNameEnglish
-            // materialQuantity = cropFilter[0].qty
-            // if (this.state.textLanguageChange === '0') {
-            //     this.setState({ materialName: cropFilter[0].materialNameEnglish })
-
-            // } else if (this.state.textLanguageChange === '1') {
-            //     this.setState({ materialName: cropFilter[0].materialNameHindi })
-
-            // } else if (this.state.textLanguageChange === '2') {
-            //     this.setState({ materialName: cropFilter[0].materialNameHo })
-
-            // } else if (this.state.textLanguageChange === '3') {
-            //     this.setState({ materialName: cropFilter[0].materialNameOdia })
-
-            // } else if (this.state.textLanguageChange === '4') {
-            //     this.setState({ materialName: cropFilter[0].materialNameSanthali })
-
-            // }
-            // //console.log(cropFilter, "hihihihihihihihihihihih")
-            // this.setState({ stepData: stepData })
-            // //this.setState({ materialName: materialName })
-            // this.setState({ decimalPrice: decimalPrice })
-            // this.setState({ numberOfSteps: cropFilter.length })
-            // this.setState({ materialQuantity: materialQuantity })
-
-        } catch (error) {
-            //alert("No More Steps Available")
-            this.props.navigation.navigate({
-                name: 'ActualCultivationCostScreen',
-                params: {
-                    cropName: this.state.cropName,
-                    _id: this.state._id,
-                    imageFile: this.state.imageFile,
-                    patchName: this.state.patchName,
-                    landType: this.state.landType,
-                    farmingAreaInDecimal: this.state.farmingAreaInDecimal,
-                    costOfCultivatinPerTenDecimal: this.state.costOfCultivatinPerTenDecimal,
-                    costPerKg: this.state.costPerKg,
-                    productionInKg: this.state.productionInKg,
-                    cost: this.state.cost,
-                    netProfit: this.state.netProfit
-                }
-            })
-        }
-    }
-
-    getStepData = async () => {
-        this.setState({ isLoading: true })
-        var load = true
-        var username = await AsyncStorage.getItem('username')
-        var token = await AsyncStorage.getItem('token')
-        var encodedUsername = base64.encode(username)
-        var stepData = []
-        var decimalPrice, materialName
-
-        await axios.get(DataAccess.BaseUrl + DataAccess.AccessUrl + 'crop/steps/materials/' + this.state._id + '/' + '0', {
-            headers: {
-                'Content-type': "accept",
-                'X-Information': encodedUsername,
-                'Authorization': "POP " + token
-            }
-        }).then(function (response) {
-            //console.log(response.data.data.stepData)
-            stepData = response.data.data.stepData
-            materialName = response.data.data.materialName
-            decimalPrice = response.data.data.decimalPrice
-            if (response.data.status === 1) {
-                load = false
-            }
-            //console.log("coming from array"+ JSON.stringify(stepData))
-        }).catch(function (error) {
-            console.log(error)
-        })
-
-        this.setState({ stepData: stepData })
-        this.setState({ materialName: materialName })
-        this.setState({ decimalPrice: decimalPrice })
-
-        if (load === false) {
-            this.setState({ isLoading: false })
-        }
-        //console.log("Coming from state" + JSON.stringify(this.state.stepData))
-    }
-
-    // stepTwoScreen = () => {
-    //     if (this.state.materialPrice === '') {
-    //         alert("please enter a value")
-    //     } else {
-    //         this.props.navigation.navigate({
-    //             name: 'StepTwoScreen',
-    //             params: {
-    //                 cropName: this.state.cropName,
-    //                 _id: this.state._id,
-    //                 imageFile: this.state.imageFile,
-    //                 patchName : this.state.patchName,
-    //                 landType: this.state.landType,
-    //                 farmingAreaInDecimal : this.state.farmingAreaInDecimal,
-    //                 costOfCultivatinPerTenDecimal : this.state.costOfCultivatinPerTenDecimal,
-    //                 costPerKg : this.state.costPerKg,
-    //                 productionInKg : this.state.productionInKg,
-    //                 cost : this.state.cost,
-    //                 netProfit : this.state.netProfit
-    //             }
-    //         })
-    //     }
-
-    // }
-
-    setMaterialPrice = async (data) => {
-        AsyncStorage.setItem("stepOne", data)
-
-        let stepOnePrice = await AsyncStorage.getItem('stepOne')
-        //console.log(stepOnePrice)
-        this.setState({ materialPrice: stepOnePrice })
+    
+    setMaterialPrice = (data , materialName) => {
+        var lastValue = ''
+        this.state.materialPrice.push({'data': data , 'materialName' : materialName})
+        var test = this.state.materialPrice.filter((i) => i.materialName === materialName)
+        lastValue = test[test.length-1]
+        console.log(lastValue)
+        console.log(this.state.materialPrice.filter((i) => i.materialName === materialName))
+        //console.log(materialName)
     }
 
     saveButton = async () => {
@@ -433,84 +233,25 @@ export default class StepOneScreen extends Component {
         }
 
     }
-    // getSteps = async() => {
-    //     var username = await AsyncStorage.getItem('username')
-    //     var token = await AsyncStorage.getItem('token')
-    //     var encodedUsername = base64.encode(username)
-    //     var steps = []
-    //     var name;
-    //     var image;
-    //     var materialName,qty;
-    //     var check = false
-    //     await axios.get(DataAccess.BaseUrl + DataAccess.AccessUrl +'crop/steps/materials/'+this.state._id+'/'+this.state.count, {
-    //         headers: {
-    //             'Content-type': "accept",
-    //             'X-Information': encodedUsername,
-    //             'Authorization': "POP " + token
-    //         }
-    //     }).then(function (response) {
-    //         if(!response.data.data){
-    //             return check=true
-    //         }
-    //         //console.log(response.data.data.qty)
-    //         steps = response.data.data.stepData
-    //         name = steps.map((i) => i.name)
-    //         image = steps.map((i) => i.imageFile)
-    //         materialName = response.data.data.materialName
-    //         qty = response.data.data.qty
 
-    //         //console.log("steps "+ steps.map((i) => i.name))
-    //         // if(response.data.status === 1){
-    //         //     load = false
-    //         // }
-    //         // console.log(cropsArray)
-    //         // var id = cropsArray
-    //         // console.log(id)
-
-    //     }).catch(function (error) {
-    //         console.log(error.message)
-    //     })
-
-    //     if(check === true){
-    //         alert('No more steps available the next features are Coming soon')
-    //         this.props.navigation.navigate({
-    //             name: 'DashBoardScreen'
-    //         })
-    //     }
-    //     this.setState({name:name})
-    //     this.setState({image : image})
-    //     this.setState({materialName : materialName})
-    //     this.setState({qty : qty})
-
-    // }
-
-
-    // increaseCount = () => {
-    //     var stepCounter = this.state.stepCounter
-    //     this.setState({stepCounter : stepCounter+1})
-    //     this.state.count = this.state.count+1
-    //     this.getSteps()
-
-
-    // }
 
     setLanguageOnMount = async () => {
         let defaultLanguage = await AsyncStorage.getItem('language')
         if (defaultLanguage === 'en') {
             this.setState({ textLanguageChange: '0' })
-            this.getStepDataFromLocal()
+            this.loadlabelsFromStorage()
         } else if (defaultLanguage === 'hi') {
             this.setState({ textLanguageChange: '1' })
-            this.getStepDataFromLocal()
+            this.loadlabelsFromStorage()
         } else if (defaultLanguage === 'ho') {
             this.setState({ textLanguageChange: '2' })
-            this.getStepDataFromLocal()
+            this.loadlabelsFromStorage()
         } else if (defaultLanguage === 'od') {
             this.setState({ textLanguageChange: '3' })
-            this.getStepDataFromLocal()
+            this.loadlabelsFromStorage()
         } else if (defaultLanguage === 'san') {
             this.setState({ textLanguageChange: '4' })
-            this.getStepDataFromLocal()
+            this.loadlabelsFromStorage()
         }
     }
 
@@ -520,7 +261,7 @@ export default class StepOneScreen extends Component {
         if (data === 'en') {
             AsyncStorage.setItem('language', 'en')
             this.setState({ textLanguageChange: '0' })
-            this.getStepDataFromLocal()
+            this.loadlabelsFromStorage()
             this.props.navigation.reset({
                 index: 0,
                 routes: [{ name: "DashBoardScreen" }]
@@ -528,7 +269,7 @@ export default class StepOneScreen extends Component {
         } else if (data === 'hi') {
             this.setState({ textLanguageChange: '1' })
             AsyncStorage.setItem('language', 'hi')
-            this.getStepDataFromLocal()
+            this.loadlabelsFromStorage()
             this.props.navigation.reset({
                 index: 0,
                 routes: [{ name: "DashBoardScreen" }]
@@ -536,7 +277,7 @@ export default class StepOneScreen extends Component {
         } else if (data === 'ho') {
             this.setState({ textLanguageChange: '2' })
             AsyncStorage.setItem('language', 'ho')
-            this.getStepDataFromLocal()
+            this.loadlabelsFromStorage()
             this.props.navigation.reset({
                 index: 0,
                 routes: [{ name: "DashBoardScreen" }]
@@ -552,7 +293,7 @@ export default class StepOneScreen extends Component {
         } else if (data === 'san') {
             AsyncStorage.setItem('language', 'san')
             this.setState({ textLanguageChange: '4' })
-            this.getStepDataFromLocal()
+            this.loadlabelsFromStorage()
             this.props.navigation.reset({
                 index: 0,
                 routes: [{ name: "DashBoardScreen" }]
@@ -560,9 +301,55 @@ export default class StepOneScreen extends Component {
         }
     }
 
+    setStepDataIntoPatch = async() => {
+        try{
+            let username = await AsyncStorage.getItem('username')
+            let user = await AsyncStorage.getItem('cropData');
+            let parsed = JSON.parse(user);
+            var specificObject = parsed.find((i) => i.username === username)
+            var cropSpecificSteps = specificObject.cropSteps.filter((i) => i.cropId === this.state._id)
+            if(cropSpecificSteps[1] === undefined){
+                this.props.navigation.navigate({
+                    name: 'ActualCultivationCostScreen',
+                    params: {
+                        cropName: this.state.cropName,
+                        _id: this.state._id,
+                        imageFile: this.state.imageFile,
+                        patchName: this.state.patchName,
+                        landType: this.state.landType,
+                        farmingAreaInDecimal: this.state.farmingAreaInDecimal,
+                        costOfCultivatinPerTenDecimal: this.state.costOfCultivatinPerTenDecimal,
+                        costPerKg: this.state.costPerKg,
+                        productionInKg: this.state.productionInKg,
+                        cost: this.state.cost,
+                        netProfit: this.state.netProfit
+                    }
+                })
+            }else{
+                this.props.navigation.navigate({
+                    name: 'StepTwoScreen',
+                    params: {
+                        cropName: this.state.cropName,
+                        _id: this.state._id,
+                        imageFile: this.state.imageFile,
+                        patchName: this.state.patchName,
+                        landType: this.state.landType,
+                        farmingAreaInDecimal: this.state.farmingAreaInDecimal,
+                        costOfCultivatinPerTenDecimal: this.state.costOfCultivatinPerTenDecimal,
+                        costPerKg: this.state.costPerKg,
+                        productionInKg: this.state.productionInKg,
+                        cost: this.state.cost,
+                        netProfit: this.state.netProfit
+                    }
+                })
+            }
+        }catch(error){
+            console.log(error)
+        }
+        
+    }
+
     render() {
-        var stepData = []
-        stepData = this.state.stepData
         var cropNameLanguageChangeArray = []
         cropNameLanguageChangeArray = this.state.cropNameLanguageChangeArray
         var multipleMaterials = []
@@ -698,34 +485,38 @@ export default class StepOneScreen extends Component {
 
                             </View>
 
-                                {
-                                    multipleMaterials.map((i) => {
-                                        return (
-                                            <View style={{ flexDirection: 'row', marginLeft: widthToDp("3%"), marginTop: heightToDp("2%") }}>
-                                                <View style={{ width: widthToDp("20%") }}>
-                                                    <Text style={{ fontFamily: 'Oswald-Medium' }}>{i.materialNameEnglish}</Text>
-                                                </View>
-                                                <View style={{ width: widthToDp("30%"), marginLeft: widthToDp("9%") }}>
-                                                    <Text style={{ fontFamily: 'Oswald-Medium' }}>{this.state.materialQuantity}</Text>
-                                                </View>
-                                                <View style={{ width: widthToDp("30%"), marginLeft: widthToDp("0%") }}>
-                                                    <Input
-                                                        placeholder={this.state.decimalPrice}
-                                                        keyboardType='number-pad'
-                                                        defaultValue={this.state.decimalPrice}
-                                                        onChangeText={(data) => this.setMaterialPrice(data)}
-                                                        style={{ marginLeft: widthToDp("0%"), fontFamily: 'Oswald-Medium', width: widthToDp("20%"), marginTop: heightToDp("-2%"), borderWidth: 1, marginRight: widthToDp("5%") }}
-                                                    />
-                                                </View>
+                            {
+                                multipleMaterials.map((i) => {
+                                    return (
+                                        <View style={{ flexDirection: 'row', marginLeft: widthToDp("3%"), marginTop: heightToDp("2%") }}>
+                                            <View style={{ width: widthToDp("20%") }}>
+                                                {
+                                                    this.state.textLanguageChange === '0' ? <Text style={{ fontFamily: 'Oswald-Medium' }}>{i.materialNameEnglish}</Text> : ((this.state.textLanguageChange === '1') ? <Text style={{ fontFamily: 'Oswald-Medium' }}>{i.materialNameHindi}</Text> : ((this.state.textLanguageChange === '2') ? <Text style={{ fontFamily: 'Oswald-Medium' }}>{i.materialNameHo}</Text> : ((this.state.textLanguageChange === '3') ? <Text style={{ fontFamily: 'Oswald-Medium' }}>{i.materialNameOdia}</Text> : ((this.state.textLanguageChange === '4') ? <Text style={{ fontFamily: 'Oswald-Medium' }}>{i.materialNameSanthali}</Text> : null))))
+                                                }
+                                               
                                             </View>
+                                            <View style={{ width: widthToDp("30%"), marginLeft: widthToDp("9%") }}>
+                                                <Text style={{ fontFamily: 'Oswald-Medium' }}>{i.qty}</Text>
+                                            </View>
+                                            <View style={{ width: widthToDp("30%"), marginLeft: widthToDp("0%") }}>
+                                                <Input
+                                                    placeholder={this.state.decimalPrice}
+                                                    keyboardType='number-pad'
+                                                    defaultValue={this.state.decimalPrice}
+                                                    //onChange={(data) => this.setMaterialPrice(data)}
+                                                    onChangeText={(data) => this.setMaterialPrice(data , i.materialNameEnglish)}
+                                                    style={{ marginLeft: widthToDp("0%"), fontFamily: 'Oswald-Medium', width: widthToDp("20%"), marginTop: heightToDp("-2%"), borderWidth: 1, marginRight: widthToDp("5%") }}
+                                                />
+                                            </View>
+                                        </View>
 
-                                        )
-                                    })
-                                }
+                                    )
+                                })
+                            }
 
 
 
-                                {/* <Text style={{ marginLeft: widthToDp("35%"), fontFamily: 'Oswald-Medium' }}>₹ {this.state.decimalPrice}</Text> */}
+                            {/* <Text style={{ marginLeft: widthToDp("35%"), fontFamily: 'Oswald-Medium' }}>₹ {this.state.decimalPrice}</Text> */}
 
 
 

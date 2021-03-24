@@ -51,10 +51,10 @@ export default class DashBoardScreen extends Component {
     getOfflineData = async () => {
         try {
             let username = await AsyncStorage.getItem('username')
-            let user = await AsyncStorage.getItem('offlineData');
+            let user = await AsyncStorage.getItem('cropData');
             let parsed = JSON.parse(user);
             var specificObject = parsed.find((i) => i.username === username)
-            console.log(specificObject.nutrationGraden)
+            console.log(specificObject.cropsMaterials)
         } catch (error) {
             console.log(error)
         }

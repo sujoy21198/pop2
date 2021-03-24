@@ -303,7 +303,7 @@ export default class SigninScreen extends Component {
                 fileCache: true,
                 addAndroidDownloads: {
                     useDownloadManager: true,
-                    notification: true,
+                    notification: false,
                     path:
                         PictureDir +
                         '/image_' +
@@ -351,7 +351,7 @@ export default class SigninScreen extends Component {
                 fileCache: true,
                 addAndroidDownloads: {
                     useDownloadManager: true,
-                    notification: true,
+                    notification: false,
                     path:
                         PictureDir +
                         '/image_' +
@@ -400,7 +400,7 @@ export default class SigninScreen extends Component {
                 fileCache: true,
                 addAndroidDownloads: {
                     useDownloadManager: true,
-                    notification: true,
+                    notification: false,
                     path:
                         PictureDir +
                         '/image_' +
@@ -449,7 +449,7 @@ export default class SigninScreen extends Component {
                 fileCache: true,
                 addAndroidDownloads: {
                     useDownloadManager: true,
-                    notification: true,
+                    notification: false,
                     path:
                         PictureDir +
                         '/image_' +
@@ -498,7 +498,7 @@ export default class SigninScreen extends Component {
                 fileCache: true,
                 addAndroidDownloads: {
                     useDownloadManager: true,
-                    notification: true,
+                    notification: false,
                     path:
                         PictureDir +
                         '/image_' +
@@ -547,7 +547,7 @@ export default class SigninScreen extends Component {
                 fileCache: true,
                 addAndroidDownloads: {
                     useDownloadManager: true,
-                    notification: true,
+                    notification: false,
                     path:
                         PictureDir +
                         '/image_' +
@@ -596,7 +596,7 @@ export default class SigninScreen extends Component {
                 fileCache: true,
                 addAndroidDownloads: {
                     useDownloadManager: true,
-                    notification: true,
+                    notification: false,
                     path:
                         PictureDir +
                         '/image_' +
@@ -646,7 +646,7 @@ export default class SigninScreen extends Component {
                 fileCache: true,
                 addAndroidDownloads: {
                     useDownloadManager: true,
-                    notification: true,
+                    notification: false,
                     path:
                         PictureDir +
                         '/image_' +
@@ -695,7 +695,7 @@ export default class SigninScreen extends Component {
                 fileCache: true,
                 addAndroidDownloads: {
                     useDownloadManager: true,
-                    notification: true,
+                    notification: false,
                     path:
                         PictureDir +
                         '/image_' +
@@ -745,7 +745,7 @@ export default class SigninScreen extends Component {
                 fileCache: true,
                 addAndroidDownloads: {
                     useDownloadManager: true,
-                    notification: true,
+                    notification: false,
                     path:
                         PictureDir +
                         '/image_' +
@@ -868,8 +868,10 @@ export default class SigninScreen extends Component {
             console.log(error)
         })
 
-        const offlineDataToBeSaved = { 'username': this.state.username, 'crops': cropObjectsToBeSaved, 'cropSteps': cropStepsObjectsToBeSaved, 'cropsMaterials': cropsMaterialsObjectsToBeSaved, 'livestock': livestockObjectsToBeSaved, 'livestockStep': livestockStepObjectsToBeSaved, 'liveStockStepMaterials': liveStockStepMaterialsObjectsToBeSaved, 'liveStockBreeds': liveStockBreedsObjectsToBeSaved, 'breedCategories': breedCategoriesObjectsToBeSaved, 'importantLinks': importantLinksObjectsToBeSaved, 'nutrationGraden': nutrationGradenObjectsToBeSaved, 'vaccination': vaccinationToBeSaved, 'contactList': contactListToBeSaved, 'dryFish': dryFishObjectsToBeSaved, 'vegetableVending': vegetableVendingObjectsToBeSaved, 'smallGroceryShop': smallGroceryShopToBeSaved, 'labels': labelsObjectsToBeSaved }
-        // offlineDataToBeSaved.crops.push(cropObjectsToBeSaved)
+        const offlineDataToBeSaved = { 'username': this.state.username, 'crops': cropObjectsToBeSaved, 'livestock': livestockObjectsToBeSaved, 'livestockStep': livestockStepObjectsToBeSaved, 'liveStockStepMaterials': liveStockStepMaterialsObjectsToBeSaved, 'liveStockBreeds': liveStockBreedsObjectsToBeSaved, 'breedCategories': breedCategoriesObjectsToBeSaved, 'importantLinks': importantLinksObjectsToBeSaved, 'nutrationGraden': nutrationGradenObjectsToBeSaved, 'vaccination': vaccinationToBeSaved, 'contactList': contactListToBeSaved, 'dryFish': dryFishObjectsToBeSaved, 'vegetableVending': vegetableVendingObjectsToBeSaved, 'smallGroceryShop': smallGroceryShopToBeSaved, 'labels': labelsObjectsToBeSaved }
+        const cropDataToBeSaved = { 'username': this.state.username,'cropSteps': cropStepsObjectsToBeSaved, 'cropsMaterials': cropsMaterialsObjectsToBeSaved }
+
+        // offlineDataToBeSaved.crops.push(cropObjectsToBeSaved) 'cropSteps': cropStepsObjectsToBeSaved, 'cropsMaterials': cropsMaterialsObjectsToBeSaved, 
         // offlineDataToBeSaved.cropsMaterials.push(cropsMaterialsObjectsToBeSaved)
         // offlineDataToBeSaved.livestock.push(livestockObjectsToBeSaved)
         // offlineDataToBeSaved.liveStockStepMaterials.push(liveStockStepMaterialsObjectsToBeSaved)
@@ -902,6 +904,41 @@ export default class SigninScreen extends Component {
                 //alert('‘Offline Data saved successfully’')
                 Toast.show({
                     text: "Offline Data saved successfully",
+                    duration: 3000,
+                    type: 'success'
+                })
+            })
+            .catch(() => {
+                console.log('‘There was an error saving the product’')
+            })
+
+
+
+        const exsistingCropData = await AsyncStorage.getItem('cropData')
+        let newCropData = JSON.parse(exsistingCropData)
+        if (!newCropData) {
+            newCropData = []
+        }
+
+        var offlineArr = newCropData.map(function (item) { return item.username })
+        if (offlineArr.includes(this.state.username)) {
+            console.log("NO more crops assigned to this user")
+        } else {
+            newCropData.push(cropDataToBeSaved)
+        }
+
+
+        await AsyncStorage.setItem("cropData", JSON.stringify(newCropData))
+            .then(() => {
+                this.props.navigation.reset({
+                    index: 0,
+                    routes: [
+                        { name: "DashBoardScreen" }
+                    ]
+                });
+                //alert('‘Offline Data saved successfully’')
+                Toast.show({
+                    text: "crop Data saved successfully",
                     duration: 3000,
                     type: 'success'
                 })
@@ -1130,7 +1167,7 @@ export default class SigninScreen extends Component {
     displayData = async () => {
         try {
             //var count = 8
-            let user = await AsyncStorage.getItem('offlineData');
+            let user = await AsyncStorage.getItem('cropData');
             let parsed = JSON.parse(user);
             console.log(JSON.stringify(parsed))
             // var valueArr = parsed.map(function(item){ return item.userId });
