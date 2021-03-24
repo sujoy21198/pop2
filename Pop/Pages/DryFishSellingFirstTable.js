@@ -236,6 +236,11 @@ export default class DryFishSellingFirstTable extends Component {
         //     index: 0,
         //     routes: [{ name: "DashBoardScreen" }]
         // })
+        Toast.show({
+            text: "Your data has been saved in MONEY MANAGER under ALL TRANSACTIONS",
+            duration: 3000,
+            type: 'success'
+        });
         this.props.navigation.navigate({
             name: 'DryFishSellingSecondTableScreen',
             params: {
@@ -360,11 +365,11 @@ export default class DryFishSellingFirstTable extends Component {
                                     tableHeading.map((i, key) => {
                                         return (
                                             <View style={{ 
-                                                width: widthToDp(`${key===0 ? '22%' : key===1 ? '15%' : '23%'}`), 
-                                                marginLeft: key===0 ? widthToDp("1.5%") : 0 
+                                                width: widthToDp(`${key===0 ? '22%' : key===1 ? '12%' : '15%'}`), 
+                                                marginLeft: key===0 ? widthToDp("1.5%") : key===3 ? widthToDp('10%') : key===2 ? widthToDp('0.5%') :  0
                                             }}>
 
-                                                <Text style={{ marginTop: heightToDp("2%"), fontSize: widthToDp('3.8%') }}>{i.name}</Text>
+                                                <Text style={{ marginTop: heightToDp("2%"), fontSize: widthToDp('3.3%') }}>{i.name}</Text>
 
                                             </View>
 
@@ -417,7 +422,7 @@ export default class DryFishSellingFirstTable extends Component {
                                         <Text style={{ marginTop: heightToDp("2%") }}>8 months old</Text>
                                         <Text style={{ marginTop: heightToDp("2%") }}>kids</Text>
                                     </View> */}
-                                    <View style={{ width: widthToDp("12%"), marginLeft: widthToDp("6%"), height: heightToDp("30%") }}>
+                                    <View style={{ width: widthToDp("10%"), marginLeft: widthToDp("6%"), height: heightToDp("30%") }}>
                                         {/* <Text style={{ marginTop: heightToDp("2%") }}>{this.state.eggQuantity}</Text>
                                         <Text style={{ marginTop: heightToDp("5%") }}>{this.state.birdQuantity}</Text> */}
                                         {
@@ -436,7 +441,10 @@ export default class DryFishSellingFirstTable extends Component {
                                             tableHeading.map((i) => {
                                                 if(i.unitPrice) {
                                                     return(
-                                                        <Text style={{ marginTop: heightToDp("4%"), fontSize: widthToDp('3.5%') }}>{"₹" + i.unitPrice}</Text>
+                                                        <View style={{width: widthToDp('12%'), marginTop: heightToDp("4%"), flexDirection: 'row', justifyContent: 'space-between'}}>
+                                                            <Text style={{ fontSize: widthToDp('3.3%') }}>₹ </Text> 
+                                                            <Text style={{ fontSize: widthToDp('3.3%') }}>{i.unitPrice}</Text>
+                                                        </View>
                                                     )
                                                 }                                                
                                             })
@@ -450,7 +458,10 @@ export default class DryFishSellingFirstTable extends Component {
                                             tableHeading.map((i) => {
                                                 if(i.totalPrice) {
                                                     return(
-                                                        <Text style={{ marginTop: heightToDp("4%"), fontSize: widthToDp('3.5%') }}>{"₹" + i.totalPrice}</Text>
+                                                        <View style={{width: widthToDp('12%'), marginTop: heightToDp("4%"), flexDirection: 'row', justifyContent: 'space-between'}}>
+                                                            <Text style={{ fontSize: widthToDp('3.3%') }}>₹ </Text> 
+                                                            <Text style={{ fontSize: widthToDp('3.3%') }}>{i.unitPrice}</Text>
+                                                        </View>
                                                     )
                                                 }
                                             })
@@ -465,7 +476,10 @@ export default class DryFishSellingFirstTable extends Component {
                                     marginLeft: widthToDp("1.4%"), 
                                     fontSize: widthToDp('3.7%')
                                 }}>One-time Expenditure</Text>
-                                <Text style={{marginLeft:widthToDp("20%"), fontSize: widthToDp('3.8%')}}>₹ 400</Text>
+                                <View style={{width: widthToDp('12%'), marginLeft: widthToDp('20%'), flexDirection: 'row', justifyContent: 'space-between'}}>
+                                    <Text style={{ fontSize: widthToDp('3.3%') }}>₹ </Text> 
+                                    <Text style={{ fontSize: widthToDp('3.3%') }}>400</Text>
+                                </View>
                             </View>
                         </View>
                     </View>
@@ -477,7 +491,15 @@ export default class DryFishSellingFirstTable extends Component {
                             <Text style={{ fontSize: widthToDp("4%"), color: "#000", marginTop: heightToDp("1.3%"), alignSelf: 'center', fontFamily: 'Oswald-Medium' }}>BACK</Text>
                         </View>
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={() => { }}>
+                    <TouchableOpacity 
+                        onPress={() => {
+                            Toast.show({
+                                text: "Calculated",
+                                duration: 3000,
+                                type: 'success'
+                            });
+                        }}
+                    >
                         <View style={{ backgroundColor: "#fff", height: heightToDp("6%"), width: widthToDp("30%"), borderRadius: 100, marginLeft: widthToDp("1%"), marginTop: heightToDp("2%") }}>
                             <Text style={{ fontSize: widthToDp("4%"), color: "#000", marginTop: heightToDp("1.3%"), alignSelf: 'center', fontFamily: 'Oswald-Medium' }}>SAVE</Text>
                         </View>

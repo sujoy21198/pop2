@@ -12,18 +12,19 @@ import axios from 'axios'
 import DataAccess from '../Core/DataAccess'
 import CustomIndicator from '../Core/CustomIndicator'
 import Languages from '../Core/Languages'
+import { Alert } from 'react-native'
 
 
 const tableHeading = [
-    { 'name': 'Items', 'items': 'Dry Fish (without salt)', 'unit': '2', 'unitPrice': '₹ 500 per KG', 'totalPrice': '1000' },
-    { 'name': 'Unit', 'items': 'Dry fish (salted)', 'unit': '2', 'unitPrice': '₹ 500 per KG', 'totalPrice': '1000' },
-    { 'name': 'Unit Price (₹)', 'items': 'DryFishSellingSecondTableScreen' },
+    { 'name': 'Items', 'items': 'Dry Fish (without salt)', 'unit': '2', 'unitPrice': '₹ 500 / Kg', 'totalPrice': '1000' },
+    { 'name': 'Unit', 'items': 'Dry fish (salted)', 'unit': '2', 'unitPrice': '₹ 500 / Kg', 'totalPrice': '1000' },
+    { 'name': 'Unit Price (₹)', 'items': 'Dry Fish Selling' },
     { 'name': 'Total Price (₹)' },
 ]
 
 const tableHeading2 = [
-    { 'name': 'Items', 'items': 'Dry Fish (without salt)', 'unit': '2', 'unitPrice': '₹ 500 per KG', 'totalPrice': '1000' },
-    { 'name': 'Unit (Kgs)', 'items': 'Dry fish (salted)', 'unit': '2', 'unitPrice': '₹ 500 per KG', 'totalPrice': '1000' },
+    { 'name': 'Items', 'items': 'Dry Fish (without salt)', 'unit': '2', 'unitPrice': '₹ 500 / Kg', 'totalPrice': '1000' },
+    { 'name': 'Unit (Kgs)', 'items': 'Dry fish (salted)', 'unit': '2', 'unitPrice': '₹ 500 / Kg', 'totalPrice': '1000' },
     { 'name': 'Selling Price' },
     { 'name': 'Total Selling price (keeping 20% margin)' },
 ]
@@ -223,7 +224,6 @@ export default class DryFishSellingSecondTableScreen extends Component {
         this.setState({ perdaysellingvaluetotal: result3 })
         var result4 = result3 - 2050
         this.setState({ profitperday: result4 })
-        console.log(this.state.totalsellingpricedryfishsalt)
 
 
 
@@ -263,11 +263,15 @@ export default class DryFishSellingSecondTableScreen extends Component {
         } catch (error) {
             console.log(error)
         }
+        Toast.show({
+            text: "Your data has been saved in MONEY MANAGER under ALL TRANSACTIONS",
+            duration: 3000,
+            type: 'success'
+        });
         this.props.navigation.reset({
             index: 0,
             routes: [{ name: "DashBoardScreen" }]
         })
-
     }
     render() {
         var tableHeading = []
@@ -350,7 +354,7 @@ export default class DryFishSellingSecondTableScreen extends Component {
                                         return (
                                             <View style={{ width: widthToDp(`${key===0 ? 25 : key===1 ? 15 : 18}%`), marginLeft: widthToDp("1.5%") }}>
 
-                                                <Text style={{ marginTop: heightToDp("2%"), fontSize: widthToDp('3.5%') }}>{i.name}</Text>
+                                                <Text style={{ marginTop: heightToDp("2%"), fontSize: widthToDp('3.3%') }}>{i.name}</Text>
 
                                             </View>
 
@@ -423,11 +427,11 @@ export default class DryFishSellingSecondTableScreen extends Component {
                                         </View>
 
                                         <View style={{ width: widthToDp("10%"), height: heightToDp("5%"), marginTop: heightToDp("3%"), flexDirection: 'row' }}>
-                                            <Text style={{fontSize: widthToDp('3.5%')}}>LS</Text>
+                                            <Text style={{fontSize: widthToDp('3.3%')}}>LS</Text>
                                         </View>
 
                                     </View>
-                                    <View style={{ width: widthToDp("14%"), marginLeft: widthToDp("1.5%") }}>
+                                    <View style={{ width: widthToDp("14%"), marginLeft: widthToDp("0%") }}>
                                         {/* <Text style={{ marginTop: heightToDp("2%") }}>Rs 5.00 per piece</Text>
                                         <Text style={{ marginTop: heightToDp("2%") }}>Rs 300 per bird</Text> */}
                                         {
@@ -439,16 +443,15 @@ export default class DryFishSellingSecondTableScreen extends Component {
                                         }
 
                                     </View>
-                                    <View style={{ width: widthToDp("14%"), marginLeft: widthToDp("7%") }}>
-                                        <View style={{marginTop:heightToDp("4%")}}>
-                                            <Text style={{fontSize: widthToDp('3.5%')}}>{"₹" + this.state.expDryFishTotal}</Text>
+                                    <View style={{ width: widthToDp("14%"), marginLeft: widthToDp("5%") }}>
+                                        <View style={{marginTop:heightToDp("3.5%"), width: widthToDp('12%'), flexDirection: 'row', justifyContent: 'space-between'}}>
+                                            <Text style={{ fontSize: widthToDp('3.3%') }}>₹ </Text> 
+                                            <Text style={{ fontSize: widthToDp('3.3%') }}>{this.state.expDryFishTotal}</Text>
                                         </View>
-
-                                        <View style={{marginTop:heightToDp("4%")}}>
-                                            <Text style={{fontSize: widthToDp('3.5%')}}>{"₹" + this.state.expDryFishSaltTotal}</Text>
+                                        <View style={{marginTop:heightToDp("4.5%"), width: widthToDp('12%'), flexDirection: 'row', justifyContent: 'space-between'}}>
+                                            <Text style={{ fontSize: widthToDp('3.3%') }}>₹ </Text> 
+                                            <Text style={{ fontSize: widthToDp('3.3%') }}>{this.state.expDryFishSaltTotal}</Text>
                                         </View>
-
-
                                     </View>
                                 </View>
                             </View>
@@ -456,10 +459,11 @@ export default class DryFishSellingSecondTableScreen extends Component {
                                 <View style={{width: widthToDp("58%"), marginLeft: widthToDp('2%')}}>
                                     <Text style={{fontSize: widthToDp('3.5%')}}>Expenditure per day/lot (A)</Text>
                                 </View>
-                                <View style={{ width: widthToDp("20%") }}>
-                                    <Text style={{ marginLeft: widthToDp("0%"), marginLeft: widthToDp("3%"), fontSize: widthToDp('3.5%') }}>₹ {this.state.expPerDayPerLot}</Text>
+                                
+                                <View style={{width: widthToDp('13%'), marginLeft: widthToDp('6%'), flexDirection: 'row', justifyContent: 'space-between'}}>
+                                    <Text style={{ fontSize: widthToDp('3.3%') }}>₹ </Text> 
+                                    <Text style={{ fontSize: widthToDp('3.3%') }}>{this.state.expPerDayPerLot}</Text>
                                 </View>
-
                             </View>
 
                             <View style={{ borderWidth: 1, height: heightToDp("18%"), width: widthToDp("83%"), marginLeft: widthToDp("3%"), marginTop: heightToDp("1.5%"), flexDirection: 'row' }}>
@@ -468,7 +472,7 @@ export default class DryFishSellingSecondTableScreen extends Component {
                                         return (
                                             <View style={{ width: widthToDp(`${key===0 ? 25 : key===1 ? 15 : 18}%`), marginLeft: widthToDp("1%") }}>
 
-                                                <Text style={{ marginTop: heightToDp("2%"), fontSize: widthToDp('3.6%') }}>{i.name}</Text>
+                                                <Text style={{ marginTop: heightToDp("2%"), fontSize: widthToDp('3.3%') }}>{i.name}</Text>
 
                                             </View>
 
@@ -546,8 +550,15 @@ export default class DryFishSellingSecondTableScreen extends Component {
 
                                     </View>
                                     <View style={{ width: widthToDp("14%"), marginLeft: widthToDp("5%") }}>
-                                        <Text style={{ marginTop: heightToDp("3%"), fontSize: widthToDp('3.5%') }}>₹ {this.state.totalsellingpricedryfishsalt}</Text>
-                                        <Text style={{ marginTop: heightToDp("6%"), fontSize: widthToDp('3.5%') }}>₹ {this.state.totalsellingpricedryfish}</Text>
+                                        
+                                        <View style={{width: widthToDp('12%'), marginTop: widthToDp('5%'), flexDirection: 'row', justifyContent: 'space-between'}}>
+                                            <Text style={{ fontSize: widthToDp('3.3%') }}>₹ </Text> 
+                                            <Text style={{ fontSize: widthToDp('3.3%') }}>{this.state.totalsellingpricedryfishsalt}</Text>
+                                        </View>
+                                        <View style={{width: widthToDp('12%'), marginTop: widthToDp('13%'), flexDirection: 'row', justifyContent: 'space-between'}}>
+                                            <Text style={{ fontSize: widthToDp('3.3%') }}>₹ </Text> 
+                                            <Text style={{ fontSize: widthToDp('3.3%') }}>{this.state.totalsellingpricedryfish}</Text>
+                                        </View>
                                         {/* {
                                             tableHeading.map((i) => {
                                                 return (
@@ -564,15 +575,21 @@ export default class DryFishSellingSecondTableScreen extends Component {
                                 <Text style={{
                                     marginLeft: widthToDp('1%'),
                                     fontSize: widthToDp('3.5%')
-                                }}>Per day selling value (B)</Text>
-                                <Text style={{ marginLeft: widthToDp("25%"),fontSize: widthToDp('3.5%') }}>₹ {this.state.perdaysellingvaluetotal}</Text>
+                                }}>Per day selling value (B)</Text>                                
+                                <View style={{width: widthToDp('12%'), marginLeft: widthToDp('26%'), flexDirection: 'row', justifyContent: 'space-between'}}>
+                                    <Text style={{ fontSize: widthToDp('3.3%') }}>₹ </Text> 
+                                    <Text style={{ fontSize: widthToDp('3.3%') }}>{this.state.perdaysellingvaluetotal}</Text>
+                                </View>
                             </View>
                             <View style={{ borderWidth: 1, height: heightToDp("8%"), width: widthToDp("83%"), marginLeft: widthToDp("3%"), marginTop: heightToDp("0%"), flexDirection: 'row' }}>
                                 <Text style={{
                                     marginLeft: widthToDp('1%'),
                                     fontSize: widthToDp('3.5%')
-                                }}>profit per day/lot</Text>
-                                <Text style={{ marginLeft: widthToDp("35%"),fontSize: widthToDp('3.5%') }}>₹ {this.state.profitperday}</Text>
+                                }}>Profit per day/lot</Text>
+                                <View style={{width: widthToDp('12%'), marginLeft: widthToDp('37%'), flexDirection: 'row', justifyContent: 'space-between'}}>
+                                    <Text style={{ fontSize: widthToDp('3.3%') }}>₹ </Text> 
+                                    <Text style={{ fontSize: widthToDp('3.3%') }}>{this.state.profitperday}</Text>
+                                </View>
                             </View>
                             <View style={{ borderWidth: 1, height: heightToDp("10%"), width: widthToDp("83%"), marginLeft: widthToDp("3%"), marginTop: heightToDp("0%"), flexDirection: 'row' }}>
                                 <Text style={{
@@ -598,7 +615,7 @@ export default class DryFishSellingSecondTableScreen extends Component {
                     </TouchableOpacity>
                     <TouchableOpacity onPress={() => { this.next() }}>
                         <View style={{ backgroundColor: "#fff", height: heightToDp("6%"), width: widthToDp("30%"), borderRadius: 100, marginLeft: widthToDp("1%"), marginTop: heightToDp("2%") }}>
-                            <Text style={{ fontSize: widthToDp("4%"), color: "#000", marginTop: heightToDp("1.3%"), alignSelf: 'center', fontFamily: 'Oswald-Medium' }}>SAVE/NEXT</Text>
+                            <Text style={{ fontSize: widthToDp("4%"), color: "#000", marginTop: heightToDp("1.3%"), alignSelf: 'center', fontFamily: 'Oswald-Medium' }}>SAVE/EXIT</Text>
                         </View>
                     </TouchableOpacity>
                 </View>

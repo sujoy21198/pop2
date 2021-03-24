@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { View, Image, TouchableOpacity, ScrollView } from 'react-native'
 import BaseColor from '../Core/BaseTheme'
-import { Text, Input } from 'native-base'
+import { Text, Input, Toast } from 'native-base'
 import TopLogo from '../assets/TopLogo'
 import { widthToDp, heightToDp } from '../Responsive'
 import { FlatGrid, SectionGrid } from 'react-native-super-grid'
@@ -32,8 +32,8 @@ const months = [
 const tableHeading = [
     { 'name': 'Items', 'items': 'Weighing Machine', 'unit': '1', 'unitPrice': '500', 'totalPrice': '500'},
     { 'name': 'Unit', 'items': 'Bamboo Container', 'unit': '1', 'unitPrice': '100', 'totalPrice': '100'},
-    { 'name': 'Unit Price','items': 'Polythene sheet', 'unit': '1', 'unitPrice': '100', 'totalPrice': '100'},
-    { 'name': 'Total Price' },
+    { 'name': 'Unit Price (₹)','items': 'Polythene sheet', 'unit': '1', 'unitPrice': '100', 'totalPrice': '100'},
+    { 'name': 'Total Price (₹)' },
 ]
 
 export default class DryFishSellingFirstTable extends Component {
@@ -234,6 +234,11 @@ export default class DryFishSellingFirstTable extends Component {
         //     index: 0,
         //     routes: [{ name: "DashBoardScreen" }]
         // })
+        Toast.show({
+            text: "Your data has been saved in MONEY MANAGER under ALL TRANSACTIONS",
+            duration: 3000,
+            type: 'success'
+        });
         this.props.navigation.navigate({
             name: 'VegetableVendingSecondTableScreen',
             params: {
@@ -352,11 +357,11 @@ export default class DryFishSellingFirstTable extends Component {
                             </View> */}
                             <View style={{ borderWidth: 1, height: heightToDp("8%"), width: widthToDp("83%"), marginLeft: widthToDp("3%"), marginTop: heightToDp("1.5%"), flexDirection: 'row' }}>
                                 {
-                                    tableHeading.map((i) => {
+                                    tableHeading.map((i, key) => {
                                         return (
-                                            <View style={{ width: widthToDp("19%"), marginLeft: widthToDp("1.5%") }}>
+                                            <View style={{ width: widthToDp(`${key===0 ? 25 : key===1 ? 13 : 19}%`), marginLeft: widthToDp("1.5%") }}>
 
-                                                <Text style={{ marginTop: heightToDp("2%") }}>{i.name}</Text>
+                                                <Text style={{ marginTop: heightToDp("2%"), fontSize: widthToDp('3.3%') }}>{i.name}</Text>
 
                                             </View>
 
@@ -392,13 +397,13 @@ export default class DryFishSellingFirstTable extends Component {
                                     })
                                 } */}
                                 <View style={{ flexDirection: 'row' }}>
-                                    <View style={{ width: widthToDp("15%"), marginLeft: widthToDp("1.5%") }}>
+                                    <View style={{ width: widthToDp("20%"), marginLeft: widthToDp("1.5%") }}>
                                         {/* <Text style={{ marginTop: heightToDp("2%") }}>Eggs</Text>
                                         <Text style={{ marginTop: heightToDp("5%") }}>Adult Bird</Text> */}
                                         {
                                             tableHeading.map((i) => {
                                                 return(
-                                                    <Text style={{ marginTop: heightToDp("2%") }}>{i.items}</Text>
+                                                    <Text style={{ marginTop: heightToDp("2%"), fontSize: widthToDp("3.3%") }}>{i.items}</Text>
                                                 )
                                             })
                                         }
@@ -409,38 +414,48 @@ export default class DryFishSellingFirstTable extends Component {
                                         <Text style={{ marginTop: heightToDp("2%") }}>8 months old</Text>
                                         <Text style={{ marginTop: heightToDp("2%") }}>kids</Text>
                                     </View> */}
-                                    <View style={{ width: widthToDp("18%"), marginLeft: widthToDp("6%"), height: heightToDp("30%") }}>
+                                    <View style={{ width: widthToDp("15%"), marginLeft: widthToDp("6%"), height: heightToDp("30%") }}>
                                         {/* <Text style={{ marginTop: heightToDp("2%") }}>{this.state.eggQuantity}</Text>
                                         <Text style={{ marginTop: heightToDp("5%") }}>{this.state.birdQuantity}</Text> */}
                                         {
                                             tableHeading.map((i) => {
                                                 return(
-                                                    <Text style={{ marginTop: heightToDp("4%") }}>{i.unit}</Text>
+                                                    <Text style={{ marginTop: heightToDp("3.5%"), fontSize: widthToDp('3.3%') }}>{i.unit}</Text>
                                                 )
                                             })
                                         }
 
                                     </View>
-                                    <View style={{ width: widthToDp("14%"), marginLeft: widthToDp("1.5%") }}>
+                                    <View style={{ width: widthToDp("14%"), marginLeft: widthToDp("0%") }}>
                                         {/* <Text style={{ marginTop: heightToDp("2%") }}>Rs 5.00 per piece</Text>
                                         <Text style={{ marginTop: heightToDp("2%") }}>Rs 300 per bird</Text> */}
                                         {
                                             tableHeading.map((i) => {
-                                                return(
-                                                    <Text style={{ marginTop: heightToDp("4%") }}>{i.unitPrice}</Text>
-                                                )
+                                                if(i.unitPrice) {
+                                                    return(
+                                                        <View style={{marginTop: widthToDp('7%'), marginLeft: widthToDp('0%'), width: widthToDp("15%"), flexDirection: 'row', justifyContent: 'space-between'}}>
+                                                            {i.items && <Text style={{ fontSize: widthToDp('3.3%') }}>₹ </Text>}
+                                                            <Text style={{ fontSize: widthToDp('3.3%') }}>{i.items ? i.unitPrice : "-"}</Text>
+                                                        </View>
+                                                    )
+                                                }                                                
                                             })
                                         }
 
                                     </View>
-                                    <View style={{ width: widthToDp("14%"), marginLeft: widthToDp("10%") }}>
+                                    <View style={{ width: widthToDp("13%"), marginLeft: widthToDp("10%") }}>
                                         {/* <Text style={{ marginTop: heightToDp("2%") }}>Rs {this.state.totalPriceEggs}</Text>
                                         <Text style={{ marginTop: heightToDp("5%") }}>Rs {this.state.totalPriceAdultBrids}</Text> */}
                                         {
                                             tableHeading.map((i) => {
-                                                return(
-                                                    <Text style={{ marginTop: heightToDp("4%") }}>{i.totalPrice}</Text>
-                                                )
+                                                if(i.totalPrice) {
+                                                    return(
+                                                        <View style={{marginTop: widthToDp('7%'), marginLeft: widthToDp('0%'), width: widthToDp("12%"), flexDirection: 'row', justifyContent: 'space-between'}}>
+                                                            {i.items && <Text style={{ fontSize: widthToDp('3.3%') }}>₹ </Text>}
+                                                            <Text style={{ fontSize: widthToDp('3.3%') }}>{i.items ? i.totalPrice : "-"}</Text>
+                                                        </View>
+                                                    )
+                                                }  
                                             })
                                         }
 
@@ -448,8 +463,11 @@ export default class DryFishSellingFirstTable extends Component {
                                 </View>
                             </View>
                             <View style={{ borderWidth: 1, height: heightToDp("8%"), width: widthToDp("83%"), marginLeft: widthToDp("3%"), marginTop: heightToDp("0%"), flexDirection: 'row' }}>
-                                <Text>One-time Expenditure</Text>
-                                <Text style={{marginLeft:widthToDp("20%")}}>Rs 700</Text>
+                                <Text style={{fontSize: widthToDp('3.3%'), marginLeft: widthToDp('1%')}}>One-time Expenditure</Text>
+                                <View style={{marginLeft: widthToDp('34%'), width: widthToDp("12%"), flexDirection: 'row', justifyContent: 'space-between'}}>
+                                    <Text style={{ fontSize: widthToDp('3.3%') }}>₹ </Text>
+                                    <Text style={{ fontSize: widthToDp('3.3%') }}>700</Text>
+                                </View>
                             </View>
                         </View>
                     </View>
@@ -461,7 +479,7 @@ export default class DryFishSellingFirstTable extends Component {
                             <Text style={{ fontSize: widthToDp("4%"), color: "#000", marginTop: heightToDp("1.3%"), alignSelf: 'center', fontFamily: 'Oswald-Medium' }}>BACK</Text>
                         </View>
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={() => { }}>
+                    <TouchableOpacity onPress={() => Toast.show({text: "Caculated", duration: 3000, type: 'success'})}>
                         <View style={{ backgroundColor: "#fff", height: heightToDp("6%"), width: widthToDp("30%"), borderRadius: 100, marginLeft: widthToDp("1%"), marginTop: heightToDp("2%") }}>
                             <Text style={{ fontSize: widthToDp("4%"), color: "#000", marginTop: heightToDp("1.3%"), alignSelf: 'center', fontFamily: 'Oswald-Medium' }}>SAVE</Text>
                         </View>
