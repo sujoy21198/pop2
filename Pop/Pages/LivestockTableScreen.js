@@ -53,7 +53,7 @@ export default class LivestockTableScreen extends Component {
             totalExpenseforNgoats: '130',
             expenseForSupplementary: '120',
             b: '250',
-            totalProfitFromNgoats: '',
+            totalProfitFromNgoats: '9250',
             languages:[]
         }
         this.state.tableHeading = tableHeading
@@ -67,19 +67,19 @@ export default class LivestockTableScreen extends Component {
         let defaultLanguage = await AsyncStorage.getItem('language')
         if (defaultLanguage === 'en') {
             this.setState({ textLanguageChange: '0' })
-            this.loadBreedFromStorage()
+            
         } else if (defaultLanguage === 'hi') {
             this.setState({ textLanguageChange: '1' })
-            this.loadBreedFromStorage()
+            
         } else if (defaultLanguage === 'ho') {
             this.setState({ textLanguageChange: '2' })
-            this.loadBreedFromStorage()
+            
         } else if (defaultLanguage === 'od') {
             this.setState({ textLanguageChange: '3' })
-            this.loadBreedFromStorage()
+            
         } else if (defaultLanguage === 'san') {
             this.setState({ textLanguageChange: '4' })
-            this.loadBreedFromStorage()
+            
         }
     }
 

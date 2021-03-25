@@ -34,7 +34,7 @@ export default class SmallGroceryShopScreen extends Component {
             pageCounter: 0,
             lengthOfData: '',
             textLanguageChange: '',
-            smallBusinessLabel:''
+            smallBusinessLabel: ''
         }
         this.state.languages = Languages
         //alert(this.state.value)
@@ -119,9 +119,9 @@ export default class SmallGroceryShopScreen extends Component {
             let user = await AsyncStorage.getItem('offlineData');
             let parsed = JSON.parse(user);
             var specificObject = parsed.find((i) => i.username === username)
-          
+
             var smallBusinessLabel = specificObject.labels.find((i) => i.type === 62)
-            
+
             //var nutrationGraden = specificObject.labels.find((i) => i.type === 31)
             // var message = specificObject.labels.find((i) => i.type === 26)
             // var generalSettings = specificObject.labels.find((i) => i.type === 27)
@@ -132,8 +132,8 @@ export default class SmallGroceryShopScreen extends Component {
             // Low Land: 55
             // Land Type : 56
             if (this.state.textLanguageChange === '0') {
-                
-                this.setState({smallBusinessLabel : smallBusinessLabel.nameEnglish})
+
+                this.setState({ smallBusinessLabel: smallBusinessLabel.nameEnglish })
                 //this.setState({ landTypeLabel: landTypeLabel.nameEnglish })
                 // this.state.data[4].name = message.nameEnglish
                 // this.state.data[5].name = generalSettings.nameEnglish
@@ -144,31 +144,31 @@ export default class SmallGroceryShopScreen extends Component {
                 // this.setState({ incomeLabel: incomeLabel.nameEnglish })
                 // this.setState({ allTransactionLabel: allTransactionLabel.nameEnglish })
             } else if (this.state.textLanguageChange === '1') {
-                
-                this.setState({smallBusinessLabel : smallBusinessLabel.nameHindi})
+
+                this.setState({ smallBusinessLabel: smallBusinessLabel.nameHindi })
                 // this.state.data[4].name = message.nameHindi
                 // this.state.data[5].name = generalSettings.nameHindi
                 // this.state.data[6].name = pension.nameHindi
                 // this.state.data[7].name = others.nameHindi
             } else if (this.state.textLanguageChange === '2') {
-               
-                this.setState({smallBusinessLabel : smallBusinessLabel.nameHo})
+
+                this.setState({ smallBusinessLabel: smallBusinessLabel.nameHo })
                 // this.state.data[4].name = message.nameHo
                 // this.state.data[5].name = generalSettings.nameHo
                 // this.state.data[6].name = pension.nameHo
                 // this.state.data[7].name = others.nameHo
             } else if (this.state.textLanguageChange === '3') {
-               
-                this.setState({smallBusinessLabel : smallBusinessLabel.nameOdia})
+
+                this.setState({ smallBusinessLabel: smallBusinessLabel.nameOdia })
                 //this.setState({ landTypeLabel: landTypeLabel.nameOdia })
                 // this.state.data[4].name = message.nameOdia
                 // this.state.data[5].name = generalSettings.nameOdia
                 // this.state.data[6].name = pension.nameOdia
                 // this.state.data[7].name = others.nameOdia
             } else if (this.state.textLanguageChange === '4') {
-                
-                this.setState({smallBusinessLabel : smallBusinessLabel.nameSanthali})
-               // this.setState({ landTypeLabel: landTypeLabel.nameSanthali })
+
+                this.setState({ smallBusinessLabel: smallBusinessLabel.nameSanthali })
+                // this.setState({ landTypeLabel: landTypeLabel.nameSanthali })
                 // this.state.data[4].name = message.nameSanthali
                 // this.state.data[5].name = generalSettings.nameSanthali
                 // this.state.data[6].name = pension.nameSanthali
@@ -373,8 +373,11 @@ export default class SmallGroceryShopScreen extends Component {
                         </View> */}
 
                         <ScrollView>
-                            <Text style={{ fontFamily: 'Oswald-Medium', fontSize: widthToDp("4%"), marginLeft: widthToDp("2%") }}>{this.state.screensData.descEnglish}</Text>
-                            <HTML source={{ html: this.state.screensData.descriptionEnglish || '<p></p>' }} containerStyle={{ elevation: 10, marginTop: heightToDp("2%"), marginLeft: widthToDp("2%") }} />
+                            {
+                                this.state.textLanguageChange === '0' ? <HTML source={{ html: this.state.screensData.descriptionEnglish || '<p></p>' }} containerStyle={{ elevation: 10, marginTop: heightToDp("2%"), marginLeft: widthToDp("2%") }} /> : ((this.state.textLanguageChange === '1') ? <HTML source={{ html: this.state.screensData.descriptionHindi || '<p></p>' }} containerStyle={{ elevation: 10, marginTop: heightToDp("2%"), marginLeft: widthToDp("2%") }} /> : ((this.state.textLanguageChange === '2') ? <HTML source={{ html: this.state.screensData.descriptionHo || '<p></p>' }} containerStyle={{ elevation: 10, marginTop: heightToDp("2%"), marginLeft: widthToDp("2%") }} /> : ((this.state.textLanguageChange === '3') ? <HTML source={{ html: this.state.screensData.descriptionOdia || '<p></p>' }} containerStyle={{ elevation: 10, marginTop: heightToDp("2%"), marginLeft: widthToDp("2%") }} /> : ((this.state.textLanguageChange === '4') ? <HTML source={{ html: this.state.screensData.descriptionSanthali || '<p></p>' }} containerStyle={{ elevation: 10, marginTop: heightToDp("2%"), marginLeft: widthToDp("2%") }} /> : null))))
+                            }
+                            {/* <Text style={{ fontFamily: 'Oswald-Medium', fontSize: widthToDp("4%"), marginLeft: widthToDp("2%") }}>{this.state.screensData.descEnglish}</Text>
+                            <HTML source={{ html: this.state.screensData.descriptionEnglish || '<p></p>' }} containerStyle={{ elevation: 10, marginTop: heightToDp("2%"), marginLeft: widthToDp("2%") }} /> */}
                             <View style={{ marginTop: heightToDp("2%") }}></View>
                         </ScrollView>
                     </View>

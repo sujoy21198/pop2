@@ -11,6 +11,7 @@ import base64 from 'react-native-base64'
 import axios from 'axios'
 import DataAccess from '../Core/DataAccess'
 import CustomIndicator from '../Core/CustomIndicator'
+import Languages from '../Core/Languages'
 
 
 const months = [
@@ -43,11 +44,13 @@ export default class VaccinationScreen extends Component {
             value: '',
             vaccine: [],
             livestockName:'',
-            vaccineTotalCost: 0
+            vaccineTotalCost: 0,
+            languages:[]
         }
         this.state.tableHeading = tableHeading
         this.state.value = this.props.route.params.value
         this.state.livestockName = this.props.route.params.name
+        this.state.languages = Languages
         //alert(this.state.livestockName)
     }
     componentDidMount() {

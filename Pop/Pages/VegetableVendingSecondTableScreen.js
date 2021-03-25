@@ -50,7 +50,11 @@ export default class DryFishSellingSecondTableScreen extends Component {
             profit15:'2280',
             textLanguageChange: '',
             smallBusinessLabel:'',
-            languages: []
+            languages: [],
+            backButtontext: '',
+            saveButtonText: '',
+            nextButtonText: '',
+            oneTimeExpenditureLabel:''
         }
         this.state.tableHeading = tableHeading
         this.state.languages = Languages
@@ -136,22 +140,19 @@ export default class DryFishSellingSecondTableScreen extends Component {
             let user = await AsyncStorage.getItem('offlineData');
             let parsed = JSON.parse(user);
             var specificObject = parsed.find((i) => i.username === username)
-          
-            var smallBusinessLabel = specificObject.labels.find((i) => i.type === 62)
-            
-            //var nutrationGraden = specificObject.labels.find((i) => i.type === 31)
+            var backButtontext = specificObject.labels.find((i) => i.type === 64)
+            var saveButtonText = specificObject.labels.find((i) => i.type === 186)
+            var nextButtonText = specificObject.labels.find((i) => i.type === 62)
+            var oneTimeExpenditureLabel = specificObject.labels.find((i) => i.type === 101)
             // var message = specificObject.labels.find((i) => i.type === 26)
             // var generalSettings = specificObject.labels.find((i) => i.type === 27)
             // var pension = specificObject.labels.find((i) => i.type === 51)
             // var others = specificObject.labels.find((i) => i.type === 52)
-            // High Land: 53
-            // Medium Land: 54
-            // Low Land: 55
-            // Land Type : 56
             if (this.state.textLanguageChange === '0') {
-                
-                this.setState({smallBusinessLabel : smallBusinessLabel.nameEnglish})
-                //this.setState({ landTypeLabel: landTypeLabel.nameEnglish })
+                this.setState({ backButtontext: backButtontext.nameEnglish })
+                this.setState({ saveButtonText: saveButtonText.nameEnglish })
+                this.setState({ nextButtonText: nextButtonText.nameEnglish })
+                this.setState({oneTimeExpenditureLabel : oneTimeExpenditureLabel.nameEnglish})
                 // this.state.data[4].name = message.nameEnglish
                 // this.state.data[5].name = generalSettings.nameEnglish
                 // this.state.data[6].name = pension.nameEnglish
@@ -161,31 +162,38 @@ export default class DryFishSellingSecondTableScreen extends Component {
                 // this.setState({ incomeLabel: incomeLabel.nameEnglish })
                 // this.setState({ allTransactionLabel: allTransactionLabel.nameEnglish })
             } else if (this.state.textLanguageChange === '1') {
-                
-                this.setState({smallBusinessLabel : smallBusinessLabel.nameHindi})
+                this.setState({ backButtontext: backButtontext.nameHindi })
+                this.setState({ saveButtonText: saveButtonText.nameHindi })
+                this.setState({ nextButtonText: nextButtonText.nameHindi })
+                this.setState({oneTimeExpenditureLabel : oneTimeExpenditureLabel.nameHindi})
                 // this.state.data[4].name = message.nameHindi
                 // this.state.data[5].name = generalSettings.nameHindi
                 // this.state.data[6].name = pension.nameHindi
                 // this.state.data[7].name = others.nameHindi
             } else if (this.state.textLanguageChange === '2') {
-               
-                this.setState({smallBusinessLabel : smallBusinessLabel.nameHo})
+                this.setState({ backButtontext: backButtontext.nameHo })
+                this.setState({ saveButtonText: saveButtonText.nameHo })
+                this.setState({ nextButtonText: nextButtonText.nameHo })
+                this.setState({oneTimeExpenditureLabel : oneTimeExpenditureLabel.nameHo})
+                // this.state.data[4].name = message.nameHindi
                 // this.state.data[4].name = message.nameHo
                 // this.state.data[5].name = generalSettings.nameHo
                 // this.state.data[6].name = pension.nameHo
                 // this.state.data[7].name = others.nameHo
             } else if (this.state.textLanguageChange === '3') {
-               
-                this.setState({smallBusinessLabel : smallBusinessLabel.nameOdia})
-                //this.setState({ landTypeLabel: landTypeLabel.nameOdia })
+                this.setState({ backButtontext: backButtontext.nameOdia })
+                this.setState({ saveButtonText: saveButtonText.nameOdia })
+                this.setState({ nextButtonText: nextButtonText.nameOdia })
+                this.setState({oneTimeExpenditureLabel : oneTimeExpenditureLabel.nameOdia})
                 // this.state.data[4].name = message.nameOdia
                 // this.state.data[5].name = generalSettings.nameOdia
                 // this.state.data[6].name = pension.nameOdia
                 // this.state.data[7].name = others.nameOdia
             } else if (this.state.textLanguageChange === '4') {
-                
-                this.setState({smallBusinessLabel : smallBusinessLabel.nameSanthali})
-               // this.setState({ landTypeLabel: landTypeLabel.nameSanthali })
+                this.setState({ backButtontext: backButtontext.nameSanthali })
+                this.setState({ saveButtonText: saveButtonText.nameSanthali })
+                this.setState({ nextButtonText: nextButtonText.nameSanthali })
+                this.setState({oneTimeExpenditureLabel : oneTimeExpenditureLabel.nameSanthali})
                 // this.state.data[4].name = message.nameSanthali
                 // this.state.data[5].name = generalSettings.nameSanthali
                 // this.state.data[6].name = pension.nameSanthali
@@ -195,7 +203,8 @@ export default class DryFishSellingSecondTableScreen extends Component {
         } catch (error) {
             alert(error)
         }
-        this.setState({ crops: specificObject.crops })
+        //this.setState({ crops: specificObject.crops })
+        //this.showData()
     }
     
     getVaccinesFromOffline = async () => {

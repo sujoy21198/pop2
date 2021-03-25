@@ -14,7 +14,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 
 const data = [
     { name: 'VEGETABLE VENDING', code: 'https://timesofindia.indiatimes.com/thumb/msid-77495442,width-400,resizemode-4/77495442.jpg?imglength=513243' },
-    { name: 'SMALL GROCERY SHOP', code: 'https://i.pinimg.com/236x/be/c5/b4/bec5b458e58186bc132ec3e9851e2e14--india-travel-incredible-india.jpg' },
+    { name: 'SMALL GROCERY', code: 'https://i.pinimg.com/236x/be/c5/b4/bec5b458e58186bc132ec3e9851e2e14--india-travel-incredible-india.jpg' },
     { name: 'DRY FISH SELLING', code: 'https://thumbs.dreamstime.com/b/image-%C3%A9ditoriale-documentaire-femmes-non-identifi%C3%A9es-vendant-les-poissons-secs-au-march%C3%A9-ext%C3%A9rieur-102693058.jpg' }
 ]
 
@@ -307,7 +307,7 @@ export default class SmallBusinessScreen extends Component {
                         renderItem={({ item, index }) => (
                             <TouchableOpacity onPress={() => this.selectCategory(item.name)}>
                                 <View style={{ backgroundColor: BaseColor.Red, width: widthToDp("47%"), height: heightToDp("30%"), elevation: 10, borderRadius: 10 }}>
-                                    <Text style={{ color: "#fff", fontSize: widthToDp("5%"), marginLeft: widthToDp("5%"), marginTop: heightToDp("0.4%"), fontFamily: 'Oswald-Medium' }}>{index===1 ? "SMALL GROCERY" : item.name}</Text>
+                                    <Text style={{ color: "#fff", fontSize: widthToDp("5%"), marginLeft: widthToDp("5%"), marginTop: heightToDp("0.4%"), fontFamily: 'Oswald-Medium' }}>{item.name}</Text>
                                     <Image
                                         style={{ width: widthToDp("47%"), height: heightToDp("25%"), borderBottomLeftRadius: 10, borderBottomRightRadius: 10, marginTop: heightToDp("1%") }}
                                         source={{ uri: item.code }}
