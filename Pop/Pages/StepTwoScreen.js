@@ -211,14 +211,17 @@ export default class StepTwoScreen extends Component {
         //this.showData()
     }
 
-    setMaterialPrice = (data , index) => {
-        // var lastValue = ''
-        // alert(index)
-        // this.state.materialPrice.push({'data': data , 'materialName' : materialName})
-        // var test = this.state.materialPrice.filter((i) => i.materialName === materialName)
-        // lastValue = test[test.length-1]
-        // console.log(lastValue)
-        // console.log(this.state.materialPrice.filter((i) => i.materialName === materialName))
+
+
+
+
+    setMaterialPrice = (data, materialName) => {
+        var lastValue = ''
+        this.state.materialPrice.push({ 'data': data, 'materialName': materialName })
+        var test = this.state.materialPrice.filter((i) => i.materialName === materialName)
+        lastValue = test[test.length - 1]
+        console.log(lastValue)
+        console.log(this.state.materialPrice.filter((i) => i.materialName === materialName))
         //console.log(materialName)
         const test = [...this.state.materialPrice]
         test[index] = data
@@ -309,14 +312,14 @@ export default class StepTwoScreen extends Component {
         }
     }
 
-    setStepDataIntoPatch = async() => {
-        try{
+    setStepDataIntoPatch = async () => {
+        try {
             let username = await AsyncStorage.getItem('username')
             let user = await AsyncStorage.getItem('cropData');
             let parsed = JSON.parse(user);
             var specificObject = parsed.find((i) => i.username === username)
             var cropSpecificSteps = specificObject.cropSteps.filter((i) => i.cropId === this.state._id)
-            if(cropSpecificSteps[2] === undefined){
+            if (cropSpecificSteps[2] === undefined) {
                 this.props.navigation.navigate({
                     name: 'ActualCultivationCostScreen',
                     params: {
@@ -333,7 +336,7 @@ export default class StepTwoScreen extends Component {
                         netProfit: this.state.netProfit
                     }
                 })
-            }else{
+            } else {
                 this.props.navigation.navigate({
                     name: 'StepThreeScreen',
                     params: {
@@ -351,10 +354,10 @@ export default class StepTwoScreen extends Component {
                     }
                 })
             }
-        }catch(error){
+        } catch (error) {
             console.log(error)
         }
-        
+
     }
 
     render() {
@@ -377,37 +380,37 @@ export default class StepTwoScreen extends Component {
                 </View>
                 <View style={{ flexDirection: 'row', marginTop: heightToDp("1%"), marginLeft: widthToDp("1%") }}>
                     <TouchableOpacity onPress={() => this.languageChangeFunction(this.state.languages[0].id)}>
-                        <View style={{ backgroundColor: BaseColor.English, width: widthToDp("30%"), height: heightToDp("6%"), marginLeft: widthToDp("2%"), borderRadius: 100, flexDirection: 'row' }}>
-                            <Text style={{ color: '#fff', marginTop: heightToDp("1.5%"), fontFamily: 'Oswald-Medium', marginLeft: widthToDp("5%") }}>{this.state.languages[0].value}</Text>
+                        <View style={{ backgroundColor: BaseColor.English, width: widthToDp("30%"), height: heightToDp("6%"), marginLeft: widthToDp("2%"), borderRadius: 100, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
+                            <Text style={{ color: '#fff', fontFamily: 'Oswald-Medium' }}>{this.state.languages[0].value}</Text>
 
                         </View>
                     </TouchableOpacity>
 
                     <TouchableOpacity onPress={() => this.languageChangeFunction(this.state.languages[1].id)}>
-                        <View style={{ backgroundColor: BaseColor.Hindi, width: widthToDp("30%"), height: heightToDp("6%"), marginLeft: widthToDp("2%"), borderRadius: 100, flexDirection: 'row' }}>
-                            <Text style={{ color: '#fff', marginTop: heightToDp("1.7%"), marginLeft: widthToDp("5%"), fontWeight: 'bold', fontSize: widthToDp("4.3%") }}>{this.state.languages[1].value}</Text>
+                        <View style={{ backgroundColor: BaseColor.Hindi, width: widthToDp("30%"), height: heightToDp("6%"), marginLeft: widthToDp("2%"), borderRadius: 100, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
+                            <Text style={{ color: '#fff', fontWeight: 'bold', fontSize: widthToDp("4.3%") }}>{this.state.languages[1].value}</Text>
 
                         </View>
                     </TouchableOpacity>
 
                     <TouchableOpacity onPress={() => this.languageChangeFunction(this.state.languages[2].id)}>
-                        <View style={{ backgroundColor: BaseColor.Ho, width: widthToDp("30%"), height: heightToDp("6%"), marginLeft: widthToDp("2%"), borderRadius: 100, flexDirection: 'row' }}>
-                            <Text style={{ color: '#fff', marginTop: heightToDp("1.5%"), marginLeft: widthToDp("5%"), fontWeight: 'bold', fontSize: widthToDp("4.3%") }}>{this.state.languages[2].value}</Text>
+                        <View style={{ backgroundColor: BaseColor.Ho, width: widthToDp("30%"), height: heightToDp("6%"), marginLeft: widthToDp("2%"), borderRadius: 100, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
+                            <Text style={{ color: '#fff', fontWeight: 'bold', fontSize: widthToDp("4.3%") }}>{this.state.languages[2].value}</Text>
 
                         </View>
                     </TouchableOpacity>
                 </View>
-                <View style={{ flexDirection: 'row', marginTop: heightToDp("1%"), marginLeft: widthToDp("1%"), alignSelf: 'center' }}>
+                <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', marginTop: heightToDp("1%"), marginLeft: widthToDp("1%"), alignSelf: 'center' }}>
                     <TouchableOpacity onPress={() => this.languageChangeFunction(this.state.languages[3].id)}>
-                        <View style={{ backgroundColor: BaseColor.Uridia, width: widthToDp("30%"), height: heightToDp("6%"), borderRadius: 100, flexDirection: 'row' }}>
-                            <Text style={{ color: '#fff', marginTop: heightToDp("1.7%"), marginLeft: widthToDp("4.7%"), fontWeight: 'bold', fontSize: widthToDp("4.3%") }}>{this.state.languages[3].value}</Text>
+                        <View style={{ backgroundColor: BaseColor.Uridia, width: widthToDp("30%"), height: heightToDp("6%"), borderRadius: 100, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
+                            <Text style={{ color: '#fff', fontWeight: 'bold', fontSize: widthToDp("4.3%") }}>{this.state.languages[3].value}</Text>
 
                         </View>
                     </TouchableOpacity>
 
                     <TouchableOpacity onPress={() => this.languageChangeFunction(this.state.languages[4].id)}>
-                        <View style={{ backgroundColor: BaseColor.Santhali, width: widthToDp("30%"), height: heightToDp("6%"), borderRadius: 100, marginLeft: widthToDp("2%"), flexDirection: 'row' }}>
-                            <Text style={{ color: '#fff', marginTop: heightToDp("1.7%"), marginLeft: widthToDp("3.4%"), fontWeight: 'bold', fontSize: widthToDp("4.3%") }}>{this.state.languages[4].value}</Text>
+                        <View style={{ backgroundColor: BaseColor.Santhali, width: widthToDp("30%"), height: heightToDp("6%"), borderRadius: 100, marginLeft: widthToDp("2%"), flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
+                            <Text style={{ color: '#fff', fontWeight: 'bold', fontSize: widthToDp("4.3%") }}>{this.state.languages[4].value}</Text>
 
                         </View>
                     </TouchableOpacity>
@@ -492,35 +495,47 @@ export default class StepTwoScreen extends Component {
 
 
                             </View>
+                            <ScrollView nestedScrollEnabled={true}>
+                                {
+                                    multipleMaterials.map((i, key) => {
+                                        return (
+                                            <>
+                                                <View style={{height: heightToDp(`${key===0 ? 1 : 0}%`)}}/>
+                                                <View style={{ flexDirection: 'row', marginLeft: widthToDp("3%"), marginTop: heightToDp("2%") }}>
+                                                    <View style={{ width: widthToDp("20%") }}>
+                                                        {
+                                                            this.state.textLanguageChange === '0' ? <Text style={{ fontFamily: 'Oswald-Medium', fontSize: widthToDp('3.3%') }}>{i.materialNameEnglish}</Text> : ((this.state.textLanguageChange === '1') ? <Text style={{ fontFamily: 'Oswald-Medium', fontSize: widthToDp('3.3%') }}>{i.materialNameHindi}</Text> : ((this.state.textLanguageChange === '2') ? <Text style={{ fontFamily: 'Oswald-Medium', fontSize: widthToDp('3.3%') }}>{i.materialNameHo}</Text> : ((this.state.textLanguageChange === '3') ? <Text style={{ fontFamily: 'Oswald-Medium', fontSize: widthToDp('3.3%') }}>{i.materialNameOdia}</Text> : ((this.state.textLanguageChange === '4') ? <Text style={{ fontFamily: 'Oswald-Medium', fontSize: widthToDp('3.3%') }}>{i.materialNameSanthali}</Text> : null))))
+                                                        }
 
-                            {
-                                multipleMaterials.map((i,index) => {
-                                    return (
-                                        <View style={{ flexDirection: 'row', marginLeft: widthToDp("3%"), marginTop: heightToDp("2%") }}>
-                                            <View style={{ width: widthToDp("20%") }}>
-                                                {
-                                                    this.state.textLanguageChange === '0' ? <Text style={{ fontFamily: 'Oswald-Medium' }}>{i.materialNameEnglish}</Text> : ((this.state.textLanguageChange === '1') ? <Text style={{ fontFamily: 'Oswald-Medium' }}>{i.materialNameHindi}</Text> : ((this.state.textLanguageChange === '2') ? <Text style={{ fontFamily: 'Oswald-Medium' }}>{i.materialNameHo}</Text> : ((this.state.textLanguageChange === '3') ? <Text style={{ fontFamily: 'Oswald-Medium' }}>{i.materialNameOdia}</Text> : ((this.state.textLanguageChange === '4') ? <Text style={{ fontFamily: 'Oswald-Medium' }}>{i.materialNameSanthali}</Text> : null))))
-                                                }
-                                               
-                                            </View>
-                                            <View style={{ width: widthToDp("30%"), marginLeft: widthToDp("9%") }}>
-                                                <Text style={{ fontFamily: 'Oswald-Medium' }}>{i.qty}</Text>
-                                            </View>
-                                            <View style={{ width: widthToDp("30%"), marginLeft: widthToDp("0%") }}>
-                                                <Input
-                                                    placeholder={i.decimalPrice}
-                                                    keyboardType='number-pad'
-                                                    onChangeText={(data) => this.setMaterialPrice(data , index)}
-                                                    style={{ marginLeft: widthToDp("0%"), fontFamily: 'Oswald-Medium', width: widthToDp("20%"), marginTop: heightToDp("-2%"), borderWidth: 1, marginRight: widthToDp("5%") }}
-                                                />
-                                            </View>
-                                        </View>
+                                                    </View>
+                                                    <View style={{ width: widthToDp("25%"), marginLeft: widthToDp("9%") }}>
+                                                        <Input
+                                                            style={{
+                                                                borderBottomWidth: 1,
+                                                                borderColor: 'blue',
+                                                                fontFamily: 'Oswald-Medium',
+                                                            }}
+                                                            defaultValue={i.qty}
+                                                        />
+                                                    </View>
+                                                    <View style={{ width: widthToDp("30%"), marginLeft: widthToDp("5%") }}>
+                                                        <Input
+                                                            placeholder={this.state.decimalPrice}
+                                                            keyboardType='number-pad'
+                                                            defaultValue={this.state.decimalPrice}
+                                                            //onChange={(data) => this.setMaterialPrice(data)}
+                                                            onChangeText={(data) => this.setMaterialPrice(data, i.materialNameEnglish)}
+                                                            style={{ marginLeft: widthToDp("0%"), fontFamily: 'Oswald-Medium', width: widthToDp("20%"), marginTop: heightToDp("-2%"), borderBottomWidth: 1, borderColor: 'blue', marginRight: widthToDp("5%") }}
+                                                        />
+                                                    </View>
+                                                </View>
+                                                <View style={{height: heightToDp(`${key===multipleMaterials.length-1 ? 1 : 0}%`)}}/>
+                                            </>
+                                        )
+                                    })
+                                }
 
-                                    )
-                                })
-                            }
-
-
+                            </ScrollView>
 
                             {/* <Text style={{ marginLeft: widthToDp("35%"), fontFamily: 'Oswald-Medium' }}>₹ {this.state.decimalPrice}</Text> */}
 
