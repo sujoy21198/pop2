@@ -118,7 +118,7 @@ export default class ActualCultivationCost extends Component {
                     </TouchableOpacity>
                 </View>
                 <View style={{ borderBottomColor: BaseColor.Stroke, borderBottomWidth: 1, marginTop: heightToDp('1.5%'), width: widthToDp("100%") }}></View>
-                <Text style={{ fontSize: widthToDp("6%"), marginLeft: widthToDp("3%"), marginTop: heightToDp("1%"), fontFamily: 'Oswald-Medium' }}>ACTUAL CULTIVATION COST</Text>
+                <Text style={{ fontSize: widthToDp("6%"), marginLeft: widthToDp("3%"), marginTop: heightToDp("1%"), fontFamily: 'Oswald-Medium' }}>COST-SELLING PRICE INPUT</Text>
                 
                 <View style={{ backgroundColor: 'white',height:heightToDp("50%"),width:widthToDp("95%"),alignSelf:'center',marginTop:heightToDp("3%"),borderRadius:10 }}>
                     <Text style={{ fontFamily: 'Oswald-Light',marginLeft:widthToDp("2%"),marginTop:heightToDp("1%") }}>PRODUCTION IN KGs</Text>
@@ -133,7 +133,7 @@ export default class ActualCultivationCost extends Component {
                     >KG</FloatingLabel>
                     </View>
                     
-                    <Text style={{ fontFamily: 'Oswald-Light' ,marginLeft:widthToDp("2%"),marginTop:heightToDp("1%")}}>COST PER KG</Text>
+                    <Text style={{ fontFamily: 'Oswald-Light' ,marginLeft:widthToDp("2%"),marginTop:heightToDp("1%")}}>SELLING PRICE PER KG</Text>
                     <View style={{ marginTop: heightToDp("2.5%"), marginLeft: widthToDp("1%") }}>
                     <FloatingLabel
                         labelStyle={styles.labelInput}
