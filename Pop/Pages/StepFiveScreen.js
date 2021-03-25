@@ -498,10 +498,17 @@ export default class StepFiveScreen extends Component {
                                                         }
                                                     
                                                     </View>
-                                                    <View style={{ width: widthToDp("30%"), marginLeft: widthToDp("9%") }}>
-                                                        <Text style={{ fontFamily: 'Oswald-Medium' }}>{i.qty}</Text>
+                                                    <View style={{ width: widthToDp("25%"), marginLeft: widthToDp("9%") }}>
+                                                        <Input
+                                                            style={{
+                                                                borderBottomWidth: 1,
+                                                                borderColor: 'blue',
+                                                                fontFamily: 'Oswald-Medium',
+                                                            }}
+                                                            defaultValue={i.qty}
+                                                        />
                                                     </View>
-                                                    <View style={{ width: widthToDp("30%"), marginLeft: widthToDp("0%") }}>
+                                                    <View style={{ width: widthToDp("30%"), marginLeft: widthToDp("5%") }}>
                                                         <Input
                                                             placeholder={this.state.decimalPrice}
                                                             keyboardType='number-pad'
