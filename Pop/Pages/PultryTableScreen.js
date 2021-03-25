@@ -365,7 +365,6 @@ export default class PultryTableScreen extends Component {
                                         <View style={{ width: widthToDp("18%"), marginLeft: widthToDp("1.5%") }}>
                                             {
                                                 tableHeading2.map((i) => {
-                                                    console.warn(i)
                                                     return (
                                                         <View style={{ marginTop: widthToDp("4%") }}>
                                                             <Text style={{fontSize: widthToDp('3.3%')}}>{i.name}</Text>

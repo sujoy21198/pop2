@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { View, Image, TouchableOpacity, FlatList, ScrollView } from 'react-native'
 import BaseColor from '../Core/BaseTheme'
-import { Card, Text } from 'native-base'
+import { Card, Text, Toast } from 'native-base'
 import TopLogo from '../assets/TopLogo'
 import { widthToDp, heightToDp } from '../Responsive'
 import { FlatGrid, SectionGrid } from 'react-native-super-grid'
@@ -93,7 +93,11 @@ export default class CostBenifitAnalysisScreen extends Component {
         } catch (error) {
             console.log(error)
         }
-
+        Toast.show({
+            text: "Your data has been saved in MONEY MANAGER under ALL TRANSACTIONS",
+            duration: 3000,
+            type: 'success'
+        });
         this.props.navigation.reset({
             index: 0,
             routes: [{ name: "DashBoardScreen" }]
@@ -313,7 +317,7 @@ export default class CostBenifitAnalysisScreen extends Component {
                         </TouchableOpacity>
                         <TouchableOpacity onPress={() => this.goToHomeScreen()}>
                             <View style={{ backgroundColor: "#fff", height: heightToDp("6%"), width: widthToDp("30%"), borderRadius: 100, marginLeft: widthToDp("2%"), marginTop: heightToDp("2%") }}>
-                                <Text style={{ fontSize: widthToDp("4%"), color: "#000", marginTop: heightToDp("1.4%"), alignSelf: 'center', fontFamily: 'Oswald-Medium' }}>DONE</Text>
+                                <Text style={{ fontSize: widthToDp("4%"), color: "#000", marginTop: heightToDp("1.4%"), alignSelf: 'center', fontFamily: 'Oswald-Medium' }}>EXIT</Text>
                             </View>
                         </TouchableOpacity>
                     </View>

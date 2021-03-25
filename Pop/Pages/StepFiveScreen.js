@@ -508,7 +508,7 @@ export default class StepFiveScreen extends Component {
                                                             defaultValue={this.state.decimalPrice}
                                                             //onChange={(data) => this.setMaterialPrice(data)}
                                                             onChangeText={(data) => this.setMaterialPrice(data , i.materialNameEnglish)}
-                                                            style={{ marginLeft: widthToDp("0%"), fontFamily: 'Oswald-Medium', width: widthToDp("20%"), marginTop: heightToDp("-2%"), borderBottomWidth: 1, borderLeftWidth: 1, borderRightWidth: 1, borderTopWidth: key===0 ? 1 : 0, marginRight: widthToDp("5%") }}
+                                                            style={{ marginLeft: widthToDp("0%"), fontFamily: 'Oswald-Medium', width: widthToDp("20%"), marginTop: heightToDp("-2%"), borderBottomWidth: 1, borderColor: 'blue', marginRight: widthToDp("5%") }}
                                                         />
                                                     </View>
                                                 </View>

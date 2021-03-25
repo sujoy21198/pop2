@@ -60,7 +60,6 @@ export default class VaccinationScreen extends Component {
             let user = await AsyncStorage.getItem('offlineData');
             let parsed = JSON.parse(user);
             var specificObject = parsed.find((i) => i.username === username)
-            console.warn(specificObject)
             var livestockwisevaccine = specificObject.vaccination.filter((i) => i.type === this.state.value)
             vaccine = livestockwisevaccine
             let vaccineTotalCost = 0;
