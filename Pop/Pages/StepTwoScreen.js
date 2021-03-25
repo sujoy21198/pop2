@@ -61,7 +61,8 @@ export default class StepTwoScreen extends Component {
             santhaliTitleDescription: '',
             odiaTitleDescription: '',
             stepImage: '',
-            multipleMaterials: []
+            multipleMaterials: [],
+            sumOfMaterials:''
         }
         this.state.languages = Languages
         this.state._id = this.props.route.params._id
@@ -210,30 +211,37 @@ export default class StepTwoScreen extends Component {
         //this.showData()
     }
 
-
-
-
-    
-    setMaterialPrice = (data , materialName) => {
-        var lastValue = ''
-        this.state.materialPrice.push({'data': data , 'materialName' : materialName})
-        var test = this.state.materialPrice.filter((i) => i.materialName === materialName)
-        lastValue = test[test.length-1]
-        console.log(lastValue)
-        console.log(this.state.materialPrice.filter((i) => i.materialName === materialName))
+    setMaterialPrice = (data , index) => {
+        // var lastValue = ''
+        // alert(index)
+        // this.state.materialPrice.push({'data': data , 'materialName' : materialName})
+        // var test = this.state.materialPrice.filter((i) => i.materialName === materialName)
+        // lastValue = test[test.length-1]
+        // console.log(lastValue)
+        // console.log(this.state.materialPrice.filter((i) => i.materialName === materialName))
         //console.log(materialName)
+        const test = [...this.state.materialPrice]
+        test[index] = data
+        this.state.materialPrice = test
+        var sum  = this.state.materialPrice.reduce((a,b) => parseInt(a)+parseInt(b),0)
+        this.state.sumOfMaterials = sum
+        console.log(this.state.sumOfMaterials)
     }
 
-    saveButton = async () => {
-        //let stepOnePrice = await AsyncStorage.getItem('stepOne')
-        if (this.state.materialPrice === '') {
-            alert("Please enter the amount in the material section")
-        } else {
-            alert("Saved")
+    setValueToPatch = async() => {
+        try{
+            let username = await AsyncStorage.getItem('username')
+            let user = await AsyncStorage.getItem('user')
+            let parsed = JSON.parse(user)
+            var specific = parsed.find((i) => i.username === username)
+            var specificPatch = specific.patch.find((i) => i.patchName === this.state.patchName)
+            specificPatch.step2 = this.state.sumOfMaterials
+            await AsyncStorage.setItem('user', JSON.stringify(parsed))
+            console.log(specificPatch,"step2")
+        }catch(error){
+            console.log(error,"setValueToPatch")
         }
-
     }
-
 
     setLanguageOnMount = async () => {
         let defaultLanguage = await AsyncStorage.getItem('language')
@@ -486,7 +494,7 @@ export default class StepTwoScreen extends Component {
                             </View>
 
                             {
-                                multipleMaterials.map((i) => {
+                                multipleMaterials.map((i,index) => {
                                     return (
                                         <View style={{ flexDirection: 'row', marginLeft: widthToDp("3%"), marginTop: heightToDp("2%") }}>
                                             <View style={{ width: widthToDp("20%") }}>
@@ -500,11 +508,9 @@ export default class StepTwoScreen extends Component {
                                             </View>
                                             <View style={{ width: widthToDp("30%"), marginLeft: widthToDp("0%") }}>
                                                 <Input
-                                                    placeholder={this.state.decimalPrice}
+                                                    placeholder={i.decimalPrice}
                                                     keyboardType='number-pad'
-                                                    defaultValue={this.state.decimalPrice}
-                                                    //onChange={(data) => this.setMaterialPrice(data)}
-                                                    onChangeText={(data) => this.setMaterialPrice(data , i.materialNameEnglish)}
+                                                    onChangeText={(data) => this.setMaterialPrice(data , index)}
                                                     style={{ marginLeft: widthToDp("0%"), fontFamily: 'Oswald-Medium', width: widthToDp("20%"), marginTop: heightToDp("-2%"), borderWidth: 1, marginRight: widthToDp("5%") }}
                                                 />
                                             </View>
@@ -532,7 +538,7 @@ export default class StepTwoScreen extends Component {
                             <Text style={{ fontSize: widthToDp("4%"), color: "#000", marginTop: heightToDp("1.3%"), alignSelf: 'center', fontFamily: 'Oswald-Medium' }}>{this.state.backButtonText}</Text>
                         </View>
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={() => { this.saveButton() }}>
+                    <TouchableOpacity onPress={() => { this.setValueToPatch() }}>
                         <View style={{ backgroundColor: "#fff", height: heightToDp("6%"), width: widthToDp("30%"), borderRadius: 100, marginLeft: widthToDp("1%"), marginTop: heightToDp("2%") }}>
                             <Text style={{ fontSize: widthToDp("4%"), color: "#000", marginTop: heightToDp("1.3%"), alignSelf: 'center', fontFamily: 'Oswald-Medium' }}>{this.state.saveButtonText}</Text>
                         </View>

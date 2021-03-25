@@ -7,6 +7,7 @@ import { widthToDp, heightToDp } from '../Responsive'
 import FloatingLabel from 'react-native-floating-labels'
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view'
 import Icon from 'react-native-vector-icons/FontAwesome'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 
 export default class ActualCultivationCost extends Component {
@@ -34,7 +35,8 @@ export default class ActualCultivationCost extends Component {
             netProfit:'',
             actualCulCostScreenProductionInKg : '',
             actualCulCostScreenCostPerKg:'',
-            actualCulCostScreenTotalExpense:''
+            actualCulCostScreenTotalExpense:'',
+            stepsSum:''
         }
         this.state._id = this.props.route.params._id
         this.state.cropName = this.props.route.params.cropName
@@ -47,6 +49,41 @@ export default class ActualCultivationCost extends Component {
         this.state.productionInKg = this.props.route.params.productionInKg
         this.state.cost = this.props.route.params.cost
         this.state.netProfit = this.props.route.params.netProfit
+    }
+
+    componentDidMount(){
+        this.getSumOfSteps()
+    }
+
+    getSumOfSteps = async() => {
+        try{
+            var sum = 0
+            let username = await AsyncStorage.getItem('username')
+            let user = await AsyncStorage.getItem('user')
+            let parsed = JSON.parse(user)
+            var specific = parsed.find((i) => i.username === username)
+            var specificPatch = specific.patch.find((i) => i.patchName === this.state.patchName)
+            var step1 = Number.isNaN(parseInt(specificPatch.step1)) ? 0 : specificPatch.step1
+            var step2 = Number.isNaN(parseInt(specificPatch.step2)) ? 0 : specificPatch.step2
+            var step3 = Number.isNaN(parseInt(specificPatch.step3)) ? 0 : specificPatch.step3
+            var step4 = Number.isNaN(parseInt(specificPatch.step4)) ? 0 : specificPatch.step4
+            var step5 = Number.isNaN(parseInt(specificPatch.step5)) ? 0 : specificPatch.step5
+            var step6 = Number.isNaN(parseInt(specificPatch.step6)) ? 0 : specificPatch.step6
+            var step7 = Number.isNaN(parseInt(specificPatch.step7)) ? 0 : specificPatch.step7
+            var step8 = Number.isNaN(parseInt(specificPatch.step8)) ? 0 : specificPatch.step8
+            sum  = parseInt(step1) + parseInt(step2) + parseInt(step3) + parseInt(step4) + parseInt(step5) + parseInt(step6) + parseInt(step7) + parseInt(step8)
+            this.setState({stepsSum : sum})
+            console.log(this.state.stepsSum)
+            console.log(specificPatch)
+        }catch(error){
+            console.log(error,"ActualCultCostScreen")
+        }
+    }
+
+    calculation = (data) => {
+        var total = parseInt(data) + Number.parseInt(this.state.stepsSum)
+        this.state.actualCulCostScreenTotalExpense = total
+        console.log(this.state.actualCulCostScreenTotalExpense)
     }
 
     nextScreen = () => {
@@ -182,9 +219,9 @@ export default class ActualCultivationCost extends Component {
                         inputStyle={styles.input}
                         style={styles.formInput}
                         keyboardType='numeric'
-                        onChangeText={(text) => { this.setState({ actualCulCostScreenTotalExpense : text }) }}
+                        onChangeText={(text) => { this.calculation(text) }}
                     // onBlur={this.onBlur}
-                    >₹</FloatingLabel>
+                    >₹ {this.state.stepsSum}</FloatingLabel>
                     </View>
                     
                 </View>
