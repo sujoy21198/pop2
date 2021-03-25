@@ -279,6 +279,36 @@ export default class PultryTableScreen extends Component {
                                 size={20}
                                 style={{ marginTop: heightToDp("1.8%"), marginLeft: widthToDp("3%") }}
                             />
+                    <TouchableOpacity onPress={() => this.props.navigation.navigate('SigninScreen')}>
+                        <View style={{ backgroundColor: BaseColor.English, width: widthToDp("30%"), height: heightToDp("6%"), marginLeft: widthToDp("2%"), borderRadius: 100, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
+                            <Text style={{ color: '#fff', fontFamily: 'Oswald-Medium' }}>ENGLISH</Text>
+                        </View>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity >
+                        <View style={{ backgroundColor: BaseColor.Hindi, width: widthToDp("30%"), height: heightToDp("6%"), marginLeft: widthToDp("2%"), borderRadius: 100, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
+                            <Text style={{ color: '#fff', fontWeight: 'bold', fontSize: widthToDp("4.3%") }}>हिन्दी</Text>
+                        </View>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity>
+                        <View style={{ backgroundColor: BaseColor.Ho, width: widthToDp("30%"), height: heightToDp("6%"), marginLeft: widthToDp("2%"), borderRadius: 100, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
+                            <Text style={{ color: '#fff', fontWeight: 'bold', fontSize: widthToDp("4.3%") }}>ʤʌgʌr</Text>
+                        </View>
+                    </TouchableOpacity>
+                </View>
+
+
+                <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', marginTop: heightToDp("1%"), marginLeft: widthToDp("1%"), alignSelf: 'center' }}>
+                    <TouchableOpacity>
+                        <View style={{ backgroundColor: BaseColor.Uridia, width: widthToDp("30%"), height: heightToDp("6%"), borderRadius: 100, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
+                            <Text style={{ color: '#fff', fontWeight: 'bold', fontSize: widthToDp("4.3%") }}>ଓଡ଼ିଆ</Text>
+                        </View>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity>
+                        <View style={{ backgroundColor: BaseColor.Santhali, width: widthToDp("30%"), height: heightToDp("6%"), borderRadius: 100, marginLeft: widthToDp("2%"), flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
+                            <Text style={{ color: '#fff', fontWeight: 'bold', fontSize: widthToDp("4.3%") }}>ᱥᱟᱱᱛᱟᱲᱤ</Text>
                         </View>
                     </TouchableOpacity>
                 </View>
@@ -426,7 +456,6 @@ export default class PultryTableScreen extends Component {
                                         <View style={{ width: widthToDp("18%"), marginLeft: widthToDp("1.5%") }}>
                                             {
                                                 tableHeading2.map((i) => {
-                                                    console.warn(i)
                                                     return (
                                                         <View style={{ marginTop: widthToDp("4%") }}>
                                                             <Text style={{fontSize: widthToDp('3.3%')}}>{i.name}</Text>
