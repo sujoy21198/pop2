@@ -9,6 +9,7 @@ import { FlatGrid, SectionGrid } from 'react-native-super-grid'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import Icon2 from 'react-native-vector-icons/AntDesign'
 import Icon3 from 'react-native-vector-icons/EvilIcons'
+import Languages from '../Core/Languages'
 
 
 export default class SelectFarmingAreaScreen extends Component {
@@ -22,13 +23,15 @@ export default class SelectFarmingAreaScreen extends Component {
             verticalCounter: 0,
             cropName:'',
             imageFile:'',
-            patchName:''
+            patchName:'',
+            languages:[]
         }
         this.state.landType = this.props.route.params.landType
         this.state._id = this.props.route.params._id
         this.state.cropName = this.props.route.params.cropName
         this.state.imageFile = this.props.route.params.imageFile
         this.state.patchName = this.props.route.params.patchName
+        this.state.languages = Languages
         //alert(this.state.cropName)
     }
     componentDidMount(){

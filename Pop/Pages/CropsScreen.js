@@ -248,11 +248,13 @@ export default class CropsScreen extends Component {
 
     speak = () => {
         try {
+            var sound = new SoundPlayer('/storage/emulated/0/Pictures/image_audioc345fcafd5815b65d045f9d1ca0b38a8COVID-19.mp3')
+            sound.play()
             //SoundPlayer.loadUrl('/storage/emulated/0/Pictures/image_audioc345fcafd5815b65d045f9d1ca0b38a8COVID-19.mp3')
             // play the file tone.mp3
             //SoundPlayer.playSoundFile('tone', 'mp3')
             // or play from url
-            SoundPlayer.playUrl('/storage/emulated/0/Pictures/image_audioc345fcafd5815b65d045f9d1ca0b38a8COVID-19.mp3')
+            //SoundPlayer.playUrl('/storage/emulated/0/Pictures/image_audioc345fcafd5815b65d045f9d1ca0b38a8COVID-19.mp3')
         } catch (e) {
             console.log(`cannot play the sound file`, e)
         }
