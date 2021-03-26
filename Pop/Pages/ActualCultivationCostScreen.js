@@ -8,6 +8,7 @@ import FloatingLabel from 'react-native-floating-labels'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import Languages from '../Core/Languages'
 
 
 export default class ActualCultivationCost extends Component {
@@ -36,7 +37,13 @@ export default class ActualCultivationCost extends Component {
             actualCulCostScreenProductionInKg: '',
             actualCulCostScreenCostPerKg: '',
             actualCulCostScreenTotalExpense: '',
-            stepsSum: ''
+            stepsSum: '',
+            actualCultivationCostLabel: '',
+            languages: '',
+            productionInKgLabel: '',
+            sellingPriceLabel: '',
+            expenseLabel: '',
+            submitLabel: ''
         }
         this.state._id = this.props.route.params._id
         this.state.cropName = this.props.route.params.cropName
@@ -49,10 +56,136 @@ export default class ActualCultivationCost extends Component {
         this.state.productionInKg = this.props.route.params.productionInKg
         this.state.cost = this.props.route.params.cost
         this.state.netProfit = this.props.route.params.netProfit
+        this.state.languages = Languages
     }
 
     componentDidMount() {
         this.getSumOfSteps()
+        this.setLanguageOnMount()
+    }
+
+    setLanguageOnMount = async () => {
+        let defaultLanguage = await AsyncStorage.getItem('language')
+        if (defaultLanguage === 'en') {
+            this.setState({ textLanguageChange: '0' })
+            this.loadlabelsFromStorage()
+        } else if (defaultLanguage === 'hi') {
+            this.setState({ textLanguageChange: '1' })
+            this.loadlabelsFromStorage()
+        } else if (defaultLanguage === 'ho') {
+            this.setState({ textLanguageChange: '2' })
+            this.loadlabelsFromStorage()
+        } else if (defaultLanguage === 'od') {
+            this.setState({ textLanguageChange: '3' })
+            this.loadlabelsFromStorage()
+        } else if (defaultLanguage === 'san') {
+            this.setState({ textLanguageChange: '4' })
+            this.loadlabelsFromStorage()
+        }
+    }
+
+    languageChangeFunction = async (data) => {
+
+        if (data === 'en') {
+            AsyncStorage.setItem('language', 'en')
+            this.setState({ textLanguageChange: '0' })
+            this.loadlabelsFromStorage()
+            this.props.navigation.reset({
+                index: 0,
+                routes: [{ name: "DashBoardScreen" }]
+            });
+        } else if (data === 'hi') {
+            this.setState({ textLanguageChange: '1' })
+            AsyncStorage.setItem('language', 'hi')
+            this.loadlabelsFromStorage()
+            this.props.navigation.reset({
+                index: 0,
+                routes: [{ name: "DashBoardScreen" }]
+            });
+        } else if (data === 'ho') {
+            this.setState({ textLanguageChange: '2' })
+            AsyncStorage.setItem('language', 'ho')
+            this.loadlabelsFromStorage()
+            this.props.navigation.reset({
+                index: 0,
+                routes: [{ name: "DashBoardScreen" }]
+            });
+        } else if (data === 'od') {
+            this.setState({ textLanguageChange: '3' })
+            AsyncStorage.setItem('language', 'od')
+            this.loadlabelsFromStorage()
+            this.props.navigation.reset({
+                index: 0,
+                routes: [{ name: "DashBoardScreen" }]
+            });
+        } else if (data === 'san') {
+            AsyncStorage.setItem('language', 'san')
+            this.setState({ textLanguageChange: '4' })
+            this.loadlabelsFromStorage()
+            this.props.navigation.reset({
+                index: 0,
+                routes: [{ name: "DashBoardScreen" }]
+            });
+        }
+    }
+
+    loadlabelsFromStorage = async () => {
+        try {
+            let username = await AsyncStorage.getItem('username')
+            let user = await AsyncStorage.getItem('offlineData');
+            let parsed = JSON.parse(user);
+            var specificObject = parsed.find((i) => i.username === username)
+            var submitLabel = specificObject.labels.find((i) => i.type === 61)
+            var actualCultivationCostLabel = specificObject.labels.find((i) => i.type === 80)
+            var productionInKgLabel = specificObject.labels.find((i) => i.type === 81)
+            var sellingPriceLabel = specificObject.labels.find((i) => i.type === 82)
+            var expenseLabel = specificObject.labels.find((i) => i.type === 83)
+            if (this.state.textLanguageChange === '0') {
+                this.setState({ 
+                    actualCultivationCostLabel: actualCultivationCostLabel.nameEnglish,
+                    productionInKgLabel: productionInKgLabel.nameEnglish,
+                    sellingPriceLabel: sellingPriceLabel.nameEnglish,
+                    expenseLabel: expenseLabel.nameEnglish,
+                    submitLabel: submitLabel.nameEnglish,
+                })
+            } else if (this.state.textLanguageChange === '1') {
+                this.setState({ 
+                    actualCultivationCostLabel: actualCultivationCostLabel.nameHindi,
+                    productionInKgLabel: productionInKgLabel.nameHindi,
+                    sellingPriceLabel: sellingPriceLabel.nameHindi,
+                    expenseLabel: expenseLabel.nameHindi,
+                    submitLabel: submitLabel.nameHindi,
+                })
+            } else if (this.state.textLanguageChange === '2') {
+                this.setState({ 
+                    actualCultivationCostLabel: actualCultivationCostLabel.nameHo,
+                    productionInKgLabel: productionInKgLabel.nameHo,
+                    sellingPriceLabel: sellingPriceLabel.nameHo,
+                    expenseLabel: expenseLabel.nameHo,
+                    submitLabel: submitLabel.nameHo,
+                })
+            } else if (this.state.textLanguageChange === '3') {
+                this.setState({ 
+                    actualCultivationCostLabel: actualCultivationCostLabel.nameOdia,
+                    productionInKgLabel: productionInKgLabel.nameOdia,
+                    sellingPriceLabel: sellingPriceLabel.nameOdia,
+                    expenseLabel: expenseLabel.nameOdia,
+                    submitLabel: submitLabel.nameOdia,
+                })
+            } else if (this.state.textLanguageChange === '4') {
+                this.setState({ 
+                    actualCultivationCostLabel: actualCultivationCostLabel.nameSanthali,
+                    productionInKgLabel: productionInKgLabel.nameSanthali,
+                    sellingPriceLabel: sellingPriceLabel.nameSanthali,
+                    expenseLabel: expenseLabel.nameSanthali,
+                    submitLabel: submitLabel.nameSanthali,
+                })
+            }
+
+        } catch (error) {
+            alert(error)
+        }
+        this.setState({ crops: specificObject.crops })
     }
 
     getSumOfSteps = async () => {
@@ -130,42 +263,42 @@ export default class ActualCultivationCost extends Component {
                         />
                     </View>
                     <View style={{ flexDirection: 'row', marginTop: heightToDp("1%"), marginLeft: widthToDp("1%") }}>
-                        <TouchableOpacity onPress={() => this.props.navigation.navigate('SigninScreen')}>
+                        <TouchableOpacity onPress={() => this.languageChangeFunction(this.state.languages[0].id)}>
                             <View style={{ backgroundColor: BaseColor.English, width: widthToDp("30%"), height: heightToDp("6%"), marginLeft: widthToDp("2%"), borderRadius: 100, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
-                                <Text style={{ color: '#fff', fontFamily: 'Oswald-Medium' }}>ENGLISH</Text>
+                                <Text style={{ color: '#fff', fontFamily: 'Oswald-Medium' }}>{this.state.languages[0].value}</Text>
                             </View>
                         </TouchableOpacity>
 
-                        <TouchableOpacity >
+                        <TouchableOpacity onPress={() => this.languageChangeFunction(this.state.languages[1].id)}>
                             <View style={{ backgroundColor: BaseColor.Hindi, width: widthToDp("30%"), height: heightToDp("6%"), marginLeft: widthToDp("2%"), borderRadius: 100, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
-                                <Text style={{ color: '#fff', fontWeight: 'bold', fontSize: widthToDp("4.3%") }}>हिन्दी</Text>
+                                <Text style={{ color: '#fff', fontWeight: 'bold', fontSize: widthToDp("4.3%") }}>{this.state.languages[1].value}</Text>
                             </View>
                         </TouchableOpacity>
 
-                        <TouchableOpacity>
+                        <TouchableOpacity onPress={() => this.languageChangeFunction(this.state.languages[2].id)}>
                             <View style={{ backgroundColor: BaseColor.Ho, width: widthToDp("30%"), height: heightToDp("6%"), marginLeft: widthToDp("2%"), borderRadius: 100, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
-                                <Text style={{ color: '#fff', fontWeight: 'bold', fontSize: widthToDp("4.3%") }}>ʤʌgʌr</Text>
+                                <Text style={{ color: '#fff', fontWeight: 'bold', fontSize: widthToDp("4.3%") }}>{this.state.languages[2].value}</Text>
                             </View>
                         </TouchableOpacity>
                     </View>
                     <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', marginTop: heightToDp("1%"), marginLeft: widthToDp("1%"), alignSelf: 'center' }}>
-                        <TouchableOpacity>
+                        <TouchableOpacity onPress={() => this.languageChangeFunction(this.state.languages[3].id)}>
                             <View style={{ backgroundColor: BaseColor.Uridia, width: widthToDp("30%"), height: heightToDp("6%"), borderRadius: 100, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
-                                <Text style={{ color: '#fff', fontWeight: 'bold', fontSize: widthToDp("4.3%") }}>ଓଡ଼ିଆ</Text>
+                                <Text style={{ color: '#fff', fontWeight: 'bold', fontSize: widthToDp("4.3%") }}>{this.state.languages[3].value}</Text>
                             </View>
                         </TouchableOpacity>
 
-                        <TouchableOpacity>
+                        <TouchableOpacity onPress={() => this.languageChangeFunction(this.state.languages[4].id)}>
                             <View style={{ backgroundColor: BaseColor.Santhali, width: widthToDp("30%"), height: heightToDp("6%"), borderRadius: 100, marginLeft: widthToDp("2%"), flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
-                                <Text style={{ color: '#fff', fontWeight: 'bold', fontSize: widthToDp("4.3%") }}>ᱥᱟᱱᱛᱟᱲᱤ</Text>
+                                <Text style={{ color: '#fff', fontWeight: 'bold', fontSize: widthToDp("4.3%") }}>{this.state.languages[4].value}</Text>
                             </View>
                         </TouchableOpacity>
                     </View>
                     <View style={{ borderBottomColor: BaseColor.Stroke, borderBottomWidth: 1, marginTop: heightToDp('1.5%'), width: widthToDp("100%") }}></View>
-                    <Text style={{ fontSize: widthToDp("6%"), marginLeft: widthToDp("3%"), marginTop: heightToDp("1%"), fontFamily: 'Oswald-Medium' }}>COST-SELLING PRICE INPUT</Text>
+                    <Text style={{ fontSize: widthToDp("6%"), marginLeft: widthToDp("3%"), marginTop: heightToDp("1%"), fontFamily: 'Oswald-Medium' }}>{this.state.actualCultivationCostLabel}</Text>
 
                     <View style={{ backgroundColor: 'white', height: heightToDp("50%"), width: widthToDp("95%"), alignSelf: 'center', marginTop: heightToDp("3%"), borderRadius: 10 }}>
-                        <Text style={{ fontFamily: 'Oswald-Light', marginLeft: widthToDp("2%"), marginTop: heightToDp("1%") }}>PRODUCTION IN KGs</Text>
+                        <Text style={{ fontFamily: 'Oswald-Light', marginLeft: widthToDp("2%"), marginTop: heightToDp("1%") }}>{this.state.productionInKgLabel}</Text>
                         <View style={{ marginTop: heightToDp("2.5%"), marginLeft: widthToDp("1%") }}>
                             <FloatingLabel
                                 labelStyle={styles.labelInput}
@@ -177,7 +310,7 @@ export default class ActualCultivationCost extends Component {
                             >KG</FloatingLabel>
                         </View>
 
-                        <Text style={{ fontFamily: 'Oswald-Light', marginLeft: widthToDp("2%"), marginTop: heightToDp("1%") }}>SELLING PRICE PER KG</Text>
+                        <Text style={{ fontFamily: 'Oswald-Light', marginLeft: widthToDp("2%"), marginTop: heightToDp("1%") }}>{this.state.sellingPriceLabel}</Text>
                         <View style={{ marginTop: heightToDp("2.5%"), marginLeft: widthToDp("1%") }}>
                             <FloatingLabel
                                 labelStyle={styles.labelInput}
@@ -189,7 +322,7 @@ export default class ActualCultivationCost extends Component {
                             >₹</FloatingLabel>
                         </View>
 
-                        <Text style={{ fontFamily: 'Oswald-Light', marginLeft: widthToDp("2%"), marginTop: heightToDp("1%") }}>TOTAL EXPENSE</Text>
+                        <Text style={{ fontFamily: 'Oswald-Light', marginLeft: widthToDp("2%"), marginTop: heightToDp("1%") }}>{this.state.expenseLabel}</Text>
                         <View style={{ marginTop: heightToDp("2%"), marginLeft: widthToDp("1%") }}>
                             {/* <FloatingLabel
                                 labelStyle={styles.labelInput}
@@ -213,7 +346,7 @@ export default class ActualCultivationCost extends Component {
                     <View style={{ height: heightToDp("10%") }}>
                         <TouchableOpacity onPress={() => { this.nextScreen() }}>
                             <View style={{ backgroundColor: "#fff", height: heightToDp("6%"), width: widthToDp("30%"), borderRadius: 100, alignSelf: 'center', marginTop: heightToDp("2%") }}>
-                                <Text style={{ fontSize: widthToDp("4%"), color: "#000", marginTop: heightToDp("1.4%"), alignSelf: 'center', fontFamily: 'Oswald-Medium' }}>SUBMIT</Text>
+                                <Text style={{ fontSize: widthToDp("4%"), color: "#000", marginTop: heightToDp("1.4%"), alignSelf: 'center', fontFamily: 'Oswald-Medium' }}>{this.state.submitLabel}</Text>
                             </View>
                         </TouchableOpacity>
                     </View>

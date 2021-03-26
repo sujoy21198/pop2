@@ -63,7 +63,9 @@ export default class StepSixScreen extends Component {
             stepImage: '',
             multipleMaterials: [],
             sumOfMaterials:'',
-            saveButtonClicked:false
+            saveButtonClicked:false,
+            stepLabel: '',
+            ploughingTypeLabel: ''
         }
         this.state.languages = Languages
         this.state._id = this.props.route.params._id
@@ -131,6 +133,8 @@ export default class StepSixScreen extends Component {
             var material = specificObject.labels.find((i) => i.type === 77)
             var quantityLabel = specificObject.labels.find((i) => i.type === 79)
             var amountLabel = specificObject.labels.find((i) => i.type === 69)
+            var stepLabel = specificObject.labels.find((i) => i.type === 75)
+            var ploughingTypeLabel = specificObject.labels.find((i) => i.type === 189)
             // var message = specificObject.labels.find((i) => i.type === 26)
             // var generalSettings = specificObject.labels.find((i) => i.type === 27)
             // var pension = specificObject.labels.find((i) => i.type === 51)
@@ -144,6 +148,8 @@ export default class StepSixScreen extends Component {
                 this.setState({ material: material.nameEnglish })
                 this.setState({ quantityLabel: quantityLabel.nameEnglish })
                 this.setState({ amountLabel: amountLabel.nameEnglish })
+                this.setState({ stepLabel: stepLabel.nameEnglish })
+                this.setState({ ploughingTypeLabel: ploughingTypeLabel.nameEnglish })
                 // this.state.data[4].name = message.nameEnglish
                 // this.state.data[5].name = generalSettings.nameEnglish
                 // this.state.data[6].name = pension.nameEnglish
@@ -161,6 +167,8 @@ export default class StepSixScreen extends Component {
                 this.setState({ material: material.nameHindi })
                 this.setState({ quantityLabel: quantityLabel.nameHindi })
                 this.setState({ amountLabel: amountLabel.nameHindi })
+                this.setState({ stepLabel: stepLabel.nameHindi })
+                this.setState({ ploughingTypeLabel: ploughingTypeLabel.nameHindi })
                 // this.state.data[4].name = message.nameHindi
                 // this.state.data[5].name = generalSettings.nameHindi
                 // this.state.data[6].name = pension.nameHindi
@@ -174,6 +182,8 @@ export default class StepSixScreen extends Component {
                 this.setState({ material: material.nameHo })
                 this.setState({ quantityLabel: quantityLabel.nameHo })
                 this.setState({ amountLabel: amountLabel.nameHo })
+                this.setState({ stepLabel: stepLabel.nameHo })
+                this.setState({ ploughingTypeLabel: ploughingTypeLabel.nameHo })
                 // this.state.data[4].name = message.nameHindi
                 // this.state.data[4].name = message.nameHo
                 // this.state.data[5].name = generalSettings.nameHo
@@ -188,6 +198,8 @@ export default class StepSixScreen extends Component {
                 this.setState({ material: material.nameOdia })
                 this.setState({ quantityLabel: quantityLabel.nameOdia })
                 this.setState({ amountLabel: amountLabel.nameOdia })
+                this.setState({ stepLabel: stepLabel.nameOdia })
+                this.setState({ ploughingTypeLabel: ploughingTypeLabel.nameOdia })
                 // this.state.data[4].name = message.nameOdia
                 // this.state.data[5].name = generalSettings.nameOdia
                 // this.state.data[6].name = pension.nameOdia
@@ -201,6 +213,8 @@ export default class StepSixScreen extends Component {
                 this.setState({ material: material.nameSanthali })
                 this.setState({ quantityLabel: quantityLabel.nameSanthali })
                 this.setState({ amountLabel: amountLabel.nameSanthali })
+                this.setState({ stepLabel: stepLabel.nameSanthali })
+                this.setState({ ploughingTypeLabel: ploughingTypeLabel.nameSanthali })
                 // this.state.data[4].name = message.nameSanthali
                 // this.state.data[5].name = generalSettings.nameSanthali
                 // this.state.data[6].name = pension.nameSanthali
@@ -427,7 +441,7 @@ export default class StepSixScreen extends Component {
                     </TouchableOpacity>
                 </View>
                 <View style={{ borderBottomColor: BaseColor.Stroke, borderBottomWidth: 1, marginTop: heightToDp('1.5%'), width: widthToDp("100%") }}></View>
-                <Text style={{ fontSize: widthToDp("6%"), marginLeft: widthToDp("3%"), marginTop: heightToDp("1%"), fontFamily: 'Oswald-Medium' }}>STEP - {this.state.pageNumber}/0{this.state.numberOfSteps}</Text>
+                <Text style={{ fontSize: widthToDp("6%"), marginLeft: widthToDp("3%"), marginTop: heightToDp("1%"), fontFamily: 'Oswald-Medium' }}>{this.state.stepLabel} - {this.state.pageNumber}/0{this.state.numberOfSteps}</Text>
                 {
                     this.state.isLoading ? <View style={{ justifyContent: 'center', marginTop: heightToDp("20%"), backgroundColor: BaseColor.BackgroundColor, marginBottom: heightToDp("30%") }}><CustomIndicator IsLoading={this.state.isLoading} /></View> : null
                 }
@@ -467,7 +481,7 @@ export default class StepSixScreen extends Component {
                         <View style={{ backgroundColor: 'white', width: widthToDp("90%"), height: heightToDp("23.5%"), borderBottomLeftRadius: 10, borderBottomRightRadius: 10, marginTop: heightToDp("2%") }}>
                             <View style={{ flexDirection: 'row' }}>
                                 <View style={{ marginTop: heightToDp("1%"), marginLeft: widthToDp("2%") }}>
-                                    <Text style={{ fontSize: widthToDp("4%"), fontFamily: 'Oswald-Medium' }}>Ploughing Type</Text>
+                                    <Text style={{ fontSize: widthToDp("4%"), fontFamily: 'Oswald-Medium' }}>{this.state.ploughingTypeLabel}</Text>
                                     {
                                         cropNameLanguageChangeArray.map((i) => {
                                             return (

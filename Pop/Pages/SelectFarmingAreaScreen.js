@@ -10,6 +10,7 @@ import Icon from 'react-native-vector-icons/FontAwesome'
 import Icon2 from 'react-native-vector-icons/AntDesign'
 import Icon3 from 'react-native-vector-icons/EvilIcons'
 import Languages from '../Core/Languages'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 
 export default class SelectFarmingAreaScreen extends Component {
@@ -24,7 +25,9 @@ export default class SelectFarmingAreaScreen extends Component {
             cropName:'',
             imageFile:'',
             patchName:'',
-            languages:[]
+            languages:[],
+            farmingAreaLabel: '',
+            submitText: ''
         }
         this.state.landType = this.props.route.params.landType
         this.state._id = this.props.route.params._id
@@ -42,20 +45,57 @@ export default class SelectFarmingAreaScreen extends Component {
         let defaultLanguage = await AsyncStorage.getItem('language')
         if (defaultLanguage === 'en') {
             this.setState({ textLanguageChange: '0' })
-            this.loadBreedFromStorage()
+            this.loadlabelsFromStorage()
         } else if (defaultLanguage === 'hi') {
             this.setState({ textLanguageChange: '1' })
-            this.loadBreedFromStorage()
+            this.loadlabelsFromStorage()
         } else if (defaultLanguage === 'ho') {
             this.setState({ textLanguageChange: '2' })
-            this.loadBreedFromStorage()
+            this.loadlabelsFromStorage()
         } else if (defaultLanguage === 'od') {
             this.setState({ textLanguageChange: '3' })
-            this.loadBreedFromStorage()
+            this.loadlabelsFromStorage()
         } else if (defaultLanguage === 'san') {
             this.setState({ textLanguageChange: '4' })
-            this.loadBreedFromStorage()
+            this.loadlabelsFromStorage()
         }
+    }
+
+
+    loadlabelsFromStorage = async () => {
+        try {
+            let username = await AsyncStorage.getItem('username')
+            let user = await AsyncStorage.getItem('offlineData');
+            let parsed = JSON.parse(user);
+            var specificObject = parsed.find((i) => i.username === username)
+            var farmingAreaLabel = specificObject.labels.find((i) => i.type === 59)
+            var submitText = specificObject.labels.find((i) => i.type === 61)
+            console.warn(submitText)
+            // var message = specificObject.labels.find((i) => i.type === 26)
+            // var generalSettings = specificObject.labels.find((i) => i.type === 27)
+            // var pension = specificObject.labels.find((i) => i.type === 51)
+            // var others = specificObject.labels.find((i) => i.type === 52)
+            if (this.state.textLanguageChange === '0') {
+                this.setState({ farmingAreaLabel: farmingAreaLabel.nameEnglish })
+                this.setState({ submitText: submitText.nameEnglish })
+            } else if (this.state.textLanguageChange === '1') {
+                this.setState({ farmingAreaLabel: farmingAreaLabel.nameHindi })
+                this.setState({ submitText: submitText.nameHindi })
+            } else if (this.state.textLanguageChange === '2') {
+                this.setState({ farmingAreaLabel: farmingAreaLabel.nameHo })
+                this.setState({ submitText: submitText.nameHo })
+            } else if (this.state.textLanguageChange === '3') {
+                this.setState({ farmingAreaLabel: farmingAreaLabel.nameOdia })
+                this.setState({ submitText: submitText.nameOdia })
+            } else if (this.state.textLanguageChange === '4') {
+                this.setState({ farmingAreaLabel: farmingAreaLabel.nameSanthali })
+                this.setState({ submitText: submitText.nameSanthali })
+            }
+        } catch (error) {
+            alert(error)
+        }
+        //this.setState({ crops: specificObject.crops })
+        //this.showData()
     }
 
     languageChangeFunction = async (data) => {
@@ -372,7 +412,7 @@ export default class SelectFarmingAreaScreen extends Component {
                     </TouchableOpacity>
                 </View>
                 <View style={{ borderBottomColor: BaseColor.Stroke, borderBottomWidth: 1, marginTop: heightToDp('1.5%'), width: widthToDp("100%") }}></View>
-                <Text style={{ marginLeft: widthToDp("3%"), marginTop: heightToDp("2%"), fontSize: widthToDp("7%"), fontFamily: 'Oswald-Medium' }}>SELECTING FARMING AREA</Text>
+                <Text style={{ marginLeft: widthToDp("3%"), marginTop: heightToDp("2%"), fontSize: widthToDp("7%"), fontFamily: 'Oswald-Medium' }}>{this.state.farmingAreaLabel}</Text>
                 <View style={{ backgroundColor: BaseColor.Red, borderRadius: 20, height: heightToDp("40%"), width: widthToDp("80%"), alignSelf: 'center', marginTop: heightToDp('1.5%') }}>
                     {/* <ImageBackground 
                     source={{uri:'https://shramajeewiki.com/images/English/00214136.jpg'}}
@@ -447,7 +487,7 @@ export default class SelectFarmingAreaScreen extends Component {
                 </View>
                 <TouchableOpacity onPress={() => this.submitDimensions()}>
                     <View style={{ backgroundColor: BaseColor.SecondaryColor, marginTop: heightToDp("3%"), width: widthToDp("37%"), alignSelf: 'center', height: heightToDp("5%"), borderRadius: 100 }}>
-                        <Text style={{ alignSelf: 'center', marginTop: heightToDp("0.4%"), fontWeight: '500', fontSize: widthToDp("5%"), fontFamily: 'Oswald-Medium' }}>SUBMIT</Text>
+                        <Text style={{ alignSelf: 'center', fontWeight: '500', fontSize: widthToDp("5%"), fontFamily: 'Oswald-Medium' }}>{this.state.submitText}</Text>
                     </View>
                 </TouchableOpacity>
             </View>
