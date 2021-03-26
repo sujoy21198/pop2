@@ -215,7 +215,7 @@ export default class VaccinationScreen extends Component {
             let vaccineTotalCost = 0;
             vaccine.map(i => {
                 if(i.cost) {
-                    vaccineTotalCost += i.cost;
+                    vaccineTotalCost += Number.parseFloat(i.cost);
                 }
             })
             this.setState({ vaccine: vaccine, vaccineTotalCost }, () => vaccineTotalCost = 0);
