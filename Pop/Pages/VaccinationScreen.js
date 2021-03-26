@@ -45,7 +45,16 @@ export default class VaccinationScreen extends Component {
             vaccine: [],
             livestockName:'',
             vaccineTotalCost: 0,
-            languages:[]
+            languages:[],
+            immunizationCostLabel: '',
+            itemLabel: '',
+            costLabel: '',
+            intervalLabel: '',
+            totalLabel: '',
+            months: '',
+            backButtonText: '',
+            saveButtonText: '',
+            nextButtonText: ''
         }
         this.state.tableHeading = tableHeading
         this.state.value = this.props.route.params.value
@@ -61,20 +70,98 @@ export default class VaccinationScreen extends Component {
         let defaultLanguage = await AsyncStorage.getItem('language')
         if (defaultLanguage === 'en') {
             this.setState({ textLanguageChange: '0' })
-            this.loadBreedFromStorage()
+            this.loadlabelsFromStorage()
         } else if (defaultLanguage === 'hi') {
             this.setState({ textLanguageChange: '1' })
-            this.loadBreedFromStorage()
+            this.loadlabelsFromStorage()
         } else if (defaultLanguage === 'ho') {
             this.setState({ textLanguageChange: '2' })
-            this.loadBreedFromStorage()
+            this.loadlabelsFromStorage()
         } else if (defaultLanguage === 'od') {
             this.setState({ textLanguageChange: '3' })
-            this.loadBreedFromStorage()
+            this.loadlabelsFromStorage()
         } else if (defaultLanguage === 'san') {
             this.setState({ textLanguageChange: '4' })
-            this.loadBreedFromStorage()
+            this.loadlabelsFromStorage()
         }
+    }
+
+
+    loadlabelsFromStorage = async () => {
+        try {
+            let username = await AsyncStorage.getItem('username')
+            let user = await AsyncStorage.getItem('offlineData');
+            let parsed = JSON.parse(user);
+            var specificObject = parsed.find((i) => i.username === username)
+            var immunizationCostLabel = specificObject.labels.find((i) => i.type === (this.props.route.params.name==='Backyard Poultry' ? 107 : this.props.route.params.name==="Goat" ? 124 : 190))
+            var itemLabel = specificObject.labels.find((i) => i.type === 88)
+            var costLabel = specificObject.labels.find((i) => i.type === 90)
+            var intervalLabel = specificObject.labels.find((i) => i.type === 91)
+            var totalLabel = specificObject.labels.find((i) => i.type === 112)
+            var months = specificObject.labels.find((i) => i.type === 111)
+            var back = specificObject.labels.find((i) => i.type === 64)
+            var save = specificObject.labels.find((i) => i.type === 63)
+            var next = specificObject.labels.find((i) => i.type === 62)
+            // var message = specificObject.labels.find((i) => i.type === 26)
+            // var generalSettings = specificObject.labels.find((i) => i.type === 27)
+            // var pension = specificObject.labels.find((i) => i.type === 51)
+            // var others = specificObject.labels.find((i) => i.type === 52)
+            if (this.state.textLanguageChange === '0') {
+                this.setState({ immunizationCostLabel: immunizationCostLabel.nameEnglish })
+                this.setState({ costLabel: costLabel.nameEnglish })
+                this.setState({ itemLabel: itemLabel.nameEnglish })
+                this.setState({ intervalLabel: intervalLabel.nameEnglish })
+                this.setState({ totalLabel: totalLabel.nameEnglish })
+                this.setState({ months: months.nameEnglish })
+                this.setState({ backButtonText: back.nameEnglish })
+                this.setState({ saveButtonText: save.nameEnglish })
+                this.setState({ nextButtonText: next.nameEnglish })
+            } else if (this.state.textLanguageChange === '1') {
+                this.setState({ immunizationCostLabel: immunizationCostLabel.nameHindi })
+                this.setState({ costLabel: costLabel.nameHindi })
+                this.setState({ itemLabel: itemLabel.nameHindi })
+                this.setState({ intervalLabel: intervalLabel.nameHindi })
+                this.setState({ totalLabel: totalLabel.nameHindi })
+                this.setState({ months: months.nameHindi })
+                this.setState({ backButtonText: back.nameHindi })
+                this.setState({ saveButtonText: save.nameHindi })
+                this.setState({ nextButtonText: next.nameHindi })
+            } else if (this.state.textLanguageChange === '2') {
+                this.setState({ immunizationCostLabel: immunizationCostLabel.nameHo })
+                this.setState({ costLabel: costLabel.nameHo })
+                this.setState({ itemLabel: itemLabel.nameHo })
+                this.setState({ intervalLabel: intervalLabel.nameHo })
+                this.setState({ totalLabel: totalLabel.nameHo })
+                this.setState({ months: months.nameHo })
+                this.setState({ backButtonText: back.nameHo })
+                this.setState({ saveButtonText: save.nameHo })
+                this.setState({ nextButtonText: next.nameHo })
+            } else if (this.state.textLanguageChange === '3') {
+                this.setState({ immunizationCostLabel: immunizationCostLabel.nameOdia })
+                this.setState({ costLabel: costLabel.nameOdia })
+                this.setState({ itemLabel: itemLabel.nameOdia })
+                this.setState({ intervalLabel: intervalLabel.nameOdia })
+                this.setState({ totalLabel: totalLabel.nameOdia })
+                this.setState({ months: months.nameOdia })
+                this.setState({ backButtonText: back.nameOdia })
+                this.setState({ saveButtonText: save.nameOdia })
+                this.setState({ nextButtonText: next.nameOdia })
+            } else if (this.state.textLanguageChange === '4') {
+                this.setState({ immunizationCostLabel: immunizationCostLabel.nameSanthali })
+                this.setState({ costLabel: costLabel.nameSanthali })
+                this.setState({ itemLabel: itemLabel.nameSanthali })
+                this.setState({ intervalLabel: intervalLabel.nameSanthali })
+                this.setState({ totalLabel: totalLabel.nameSanthali })
+                this.setState({ months: months.nameSanthali })
+                this.setState({ backButtonText: back.nameSanthali })
+                this.setState({ saveButtonText: save.nameSanthali })
+                this.setState({ nextButtonText: next.nameSanthali })
+            }
+        } catch (error) {
+            alert(error)
+        }
+        //this.setState({ crops: specificObject.crops })
+        //this.showData()
     }
 
     languageChangeFunction = async (data) => {
@@ -255,7 +342,9 @@ export default class VaccinationScreen extends Component {
                 <View style={{ borderBottomColor: BaseColor.Stroke, borderBottomWidth: 1, marginTop: heightToDp('1.5%'), width: widthToDp("100%") }}></View>
                 <ScrollView>
                     <View style={{ backgroundColor: BaseColor.Red, height: heightToDp("90%"), alignSelf: 'center', width: widthToDp("90%"), borderRadius: 10, marginTop: heightToDp('1.5%') }}>
-                        <Text style={{ color: "#fff", fontSize: widthToDp("4%"), marginLeft: widthToDp("5%"), marginTop: heightToDp("1%"), fontFamily: 'Oswald-Medium' }}>Immunization cost table  for 1 {this.state.livestockName} per 2 year</Text>
+                        <Text style={{ color: "#fff", fontSize: widthToDp("4%"), marginLeft: widthToDp("3%"), marginTop: heightToDp("1%"), fontFamily: 'Oswald-Medium' }}>
+                            {this.state.immunizationCostLabel}
+                        </Text>
                         <View style={{ backgroundColor: "white", height: heightToDp("85.5%"), alignSelf: 'center', width: widthToDp("90%"), marginTop: heightToDp('2%'), borderBottomLeftRadius: 10, borderBottomRightRadius: 10 }}>
                             {/* <View style={{ flexDirection: 'row' }}>
                                 <Text style={{ fontSize: widthToDp("5%"), marginLeft: widthToDp("5%"), marginTop: heightToDp("1.5%"), fontFamily: 'Oswald-Medium' }}>Income from </Text>
@@ -286,7 +375,11 @@ export default class VaccinationScreen extends Component {
                                         return (
                                             <View style={{ width: widthToDp(`${key===0 ? 13 : key===1 ? 15 : 21}%`), marginLeft: widthToDp("1.5%") }}>
 
-                                                <Text style={{ marginTop: heightToDp("2%"), fontSize: widthToDp('3.3%') }}>{i.name}</Text>
+                                                <Text style={{ marginTop: heightToDp("2%"), fontSize: widthToDp('3.3%') }}>
+                                                    {
+                                                        key === 0 ? this.state.itemLabel : key===2 ? this.state.costLabel : key===3 ? this.state.intervalLabel : ""
+                                                    }
+                                                </Text>
 
                                             </View>
 
@@ -337,7 +430,7 @@ export default class VaccinationScreen extends Component {
                                         {
                                             vaccine.map((i) => {
                                                 return (
-                                                    <Text style={{ marginBottom: heightToDp("3.5%"), fontSize: widthToDp('3.3%') }}>{i.itemEnglish}</Text>
+                                                    <Text style={{ marginBottom: heightToDp("3.5%"), fontSize: widthToDp('3.3%') }}>{this.state.textLanguageChange==="0" ? i.itemEnglish : this.state.textLanguageChange==="1" ? i.itemHindi : this.state.textLanguageChange==="2" ? i.itemHo : this.state.textLanguageChange==="3" ? i.itemOdia : i.itemSanthala}</Text>
                                                 )
                                             })
                                         }
@@ -375,7 +468,7 @@ export default class VaccinationScreen extends Component {
                                                             marginTop: heightToDp(`${key===0 ? 0.5 : 3.5}%`), 
                                                             fontSize: widthToDp('3.5%') 
                                                         }}>
-                                                            {i.interval} months
+                                                            {i.interval} {this.state.months}
                                                         </Text>
                                                     )
                                                 }                                                
@@ -388,7 +481,7 @@ export default class VaccinationScreen extends Component {
 
                             <View style={{ borderWidth: 1, height: heightToDp("8%"), width: widthToDp("83%"), marginLeft: widthToDp("3%"), marginTop: heightToDp("0%"), flexDirection: 'row' }}>
                                 <View style={{marginTop:heightToDp("2%"),marginLeft:widthToDp("2%"),width:widthToDp("25%")}}>
-                                    <Text style={{fontSize: widthToDp('3.3%')}}>TOTAL</Text>
+                                    <Text style={{fontSize: widthToDp('3.3%')}}>{this.state.totalLabel}</Text>
                                 </View>
 
                                 <View style={{marginTop:heightToDp("2%"),width:widthToDp("12%"), marginLeft: '7%'}}>
@@ -412,17 +505,17 @@ export default class VaccinationScreen extends Component {
                 <View style={{ flexDirection: 'row', height: heightToDp("10%"), alignSelf: 'center' }}>
                     <TouchableOpacity onPress={() => this.props.navigation.goBack()}>
                         <View style={{ backgroundColor: "#fff", height: heightToDp("6%"), width: widthToDp("30%"), borderRadius: 100, alignSelf: 'center', marginTop: heightToDp("2%") }}>
-                            <Text style={{ fontSize: widthToDp("4%"), color: "#000", marginTop: heightToDp("1.3%"), alignSelf: 'center', fontFamily: 'Oswald-Medium' }}>BACK</Text>
+                            <Text style={{ fontSize: widthToDp("4%"), color: "#000", marginTop: heightToDp("1.3%"), alignSelf: 'center', fontFamily: 'Oswald-Medium' }}>{this.state.backButtonText}</Text>
                         </View>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={() => { }}>
                         <View style={{ backgroundColor: "#fff", height: heightToDp("6%"), width: widthToDp("30%"), borderRadius: 100, marginLeft: widthToDp("1%"), marginTop: heightToDp("2%") }}>
-                            <Text style={{ fontSize: widthToDp("4%"), color: "#000", marginTop: heightToDp("1.3%"), alignSelf: 'center', fontFamily: 'Oswald-Medium' }}>SAVE</Text>
+                            <Text style={{ fontSize: widthToDp("4%"), color: "#000", marginTop: heightToDp("1.3%"), alignSelf: 'center', fontFamily: 'Oswald-Medium' }}>{this.state.saveButtonText}</Text>
                         </View>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={() => { this.next() }}>
                         <View style={{ backgroundColor: "#fff", height: heightToDp("6%"), width: widthToDp("30%"), borderRadius: 100, marginLeft: widthToDp("1%"), marginTop: heightToDp("2%") }}>
-                            <Text style={{ fontSize: widthToDp("4%"), color: "#000", marginTop: heightToDp("1.3%"), alignSelf: 'center', fontFamily: 'Oswald-Medium' }}>NEXT</Text>
+                            <Text style={{ fontSize: widthToDp("4%"), color: "#000", marginTop: heightToDp("1.3%"), alignSelf: 'center', fontFamily: 'Oswald-Medium' }}>{this.state.nextButtonText}</Text>
                         </View>
                     </TouchableOpacity>
                 </View>
