@@ -20,7 +20,7 @@ import { Platform } from 'react-native'
 const videoOverLayIconTouchableStyle = {
     position: 'absolute',
     top: widthToDp('90%'),
-    left: widthToDp('45%'), 
+    left: widthToDp('45%'),
     justifyContent: 'center',
     alignItems: 'center'
 };
@@ -78,7 +78,7 @@ export default class StepOneScreen extends Component {
             stepImage: '',
             stepVideo: '',
             multipleMaterials: [],
-            saveButtonClicked:false
+            saveButtonClicked: false
         }
         this.state.languages = Languages
         this.state._id = this.props.route.params._id
@@ -100,7 +100,7 @@ export default class StepOneScreen extends Component {
         this.getOfflineData()
     }
 
-    
+
 
     getOfflineData = async () => {
         try {
@@ -111,8 +111,8 @@ export default class StepOneScreen extends Component {
             var specificObject = parsed[0]
             var cropSpecificSteps = specificObject.cropSteps.filter((i) => i.cropId === this.state._id)
             this.setState({ cropNameLanguageChangeArray: cropSpecificSteps[0].cropData })
-            this.setState({numberOfSteps : cropSpecificSteps.length})
-            
+            this.setState({ numberOfSteps: cropSpecificSteps.length })
+
             var stepId = cropSpecificSteps[0]._id
             var cropSpecificMaterial = specificObject.cropsMaterials.filter((i) => i.stepId === stepId)
             this.setState({ multipleMaterials: cropSpecificMaterial })
@@ -234,8 +234,8 @@ export default class StepOneScreen extends Component {
 
 
 
-    
-    setMaterialPrice = (data , index) => {
+
+    setMaterialPrice = (data, index) => {
         // var lastValue = ''
         // alert(index)
         // this.state.materialPrice.push({'data': data , 'materialName' : materialName})
@@ -247,13 +247,13 @@ export default class StepOneScreen extends Component {
         const test = [...this.state.materialPrice]
         test[index] = data
         this.state.materialPrice = test
-        var sum  = this.state.materialPrice.reduce((a,b) => parseInt(a)+parseInt(b),0)
+        var sum = this.state.materialPrice.reduce((a, b) => parseInt(a) + parseInt(b), 0)
         this.state.sumOfMaterials = sum
         console.log(this.state.sumOfMaterials)
     }
 
-    setValueToPatch = async() => {
-        try{
+    setValueToPatch = async () => {
+        try {
             this.state.saveButtonClicked = true
             let username = await AsyncStorage.getItem('username')
             let user = await AsyncStorage.getItem('user')
@@ -262,13 +262,13 @@ export default class StepOneScreen extends Component {
             var specificPatch = specific.patch.find((i) => i.patchName === this.state.patchName)
             specificPatch.step1 = this.state.sumOfMaterials
             await AsyncStorage.setItem('user', JSON.stringify(parsed))
-            console.log(specificPatch,"step1")
-        }catch(error){
-            console.log(error,"setValueToPatch")
+            console.log(specificPatch, "step1")
+        } catch (error) {
+            console.log(error, "setValueToPatch")
         }
     }
 
-    
+
 
 
     setLanguageOnMount = async () => {
@@ -337,17 +337,17 @@ export default class StepOneScreen extends Component {
         }
     }
 
-    setStepDataIntoPatch = async() => {
-        try{
+    setStepDataIntoPatch = async () => {
+        try {
             let username = await AsyncStorage.getItem('username')
             let user = await AsyncStorage.getItem('cropData');
             let parsed = JSON.parse(user);
             var specificObject = parsed[0]
             var cropSpecificSteps = specificObject.cropSteps.filter((i) => i.cropId === this.state._id)
-            if(this.state.saveButtonClicked === false){
+            if (this.state.saveButtonClicked === false) {
                 return alert("please save before procceding")
-            }else{
-                if(cropSpecificSteps[1] === undefined){
+            } else {
+                if (cropSpecificSteps[1] === undefined) {
                     this.props.navigation.navigate({
                         name: 'ActualCultivationCostScreen',
                         params: {
@@ -364,7 +364,7 @@ export default class StepOneScreen extends Component {
                             netProfit: this.state.netProfit
                         }
                     })
-                }else{
+                } else {
                     this.props.navigation.navigate({
                         name: 'StepTwoScreen',
                         params: {
@@ -383,11 +383,11 @@ export default class StepOneScreen extends Component {
                     })
                 }
             }
-            AsyncStorage.setItem("jump","StepOneScreen")
-        }catch(error){
+            AsyncStorage.setItem("jump", "StepOneScreen")
+        } catch (error) {
             console.log(error)
         }
-        
+
     }
 
     render() {
@@ -402,9 +402,15 @@ export default class StepOneScreen extends Component {
                         <TopLogo />
                     </View>
                     <Icon
+                        name="home"
+                        size={30}
+                        style={{ marginTop: heightToDp("4.6%"), marginLeft: widthToDp("45%") }}
+                        onPress={() => this.props.navigation.navigate('DashBoardScreen')}
+                    />
+                    <Icon
                         name="bell"
                         size={30}
-                        style={{ marginTop: heightToDp("4.6%"), marginLeft: widthToDp("52%") }}
+                        style={{ marginTop: heightToDp("4.6%"), marginLeft: widthToDp("5%") }}
                         onPress={() => this.props.navigation.navigate('NotificationsScreen')}
                     />
                 </View>
@@ -475,32 +481,32 @@ export default class StepOneScreen extends Component {
                                 }
 
                                 <Video
-                                    source={{uri: 'file:///storage/emulated/0/Pictures/image_' + this.state.stepVideo}}
-                                    style={{ 
+                                    source={{ uri: 'file:///storage/emulated/0/Pictures/image_' + this.state.stepVideo }}
+                                    style={{
                                         backgroundColor: '#fff',
                                         height: heightToDp('21%'),
-                                        width: widthToDp('90%'), 
+                                        width: widthToDp('90%'),
                                     }}
                                     resizeMode="stretch"
                                     controls={false}
                                     paused={this.state.isPlaying}
-                                />                                               
-                            </View> 
-                            <TouchableOpacity 
+                                />
+                            </View>
+                            <TouchableOpacity
                                 style={videoOverLayIconTouchableStyle}
-                                onPress={() => this.setState({isPlaying: !this.state.isPlaying})}
+                                onPress={() => this.setState({ isPlaying: !this.state.isPlaying })}
                             >
                                 <Ionicon
                                     name={
-                                        Platform.OS==='android' ? 
-                                        `md-${this.state.isPlaying ? "play": "pause"}` : 
-                                        `ios-${this.state.isPlaying ? "play": "pause"}`
+                                        Platform.OS === 'android' ?
+                                            `md-${this.state.isPlaying ? "play" : "pause"}` :
+                                            `ios-${this.state.isPlaying ? "play" : "pause"}`
                                     }
                                     color={'#1b1b1b'}
                                     style={videoOverLayIconStyle}
                                     size={25}
                                 />
-                            </TouchableOpacity>      
+                            </TouchableOpacity>
                         </>
                     }
 
@@ -563,43 +569,46 @@ export default class StepOneScreen extends Component {
 
                             </View>
 
-                            <ScrollView nestedScrollEnabled ={true}>
+                            <ScrollView nestedScrollEnabled={true}>
                                 {
                                     multipleMaterials.map((i, index) => {
                                         return (
-                                            <>
-                                                <View style={{height: heightToDp(`${index===0 ? 1 : 0}%`)}}/>
-                                                <View style={{ flexDirection: 'row', marginLeft: widthToDp("3%"), marginTop: heightToDp("2%") }}>
-                                                    <View style={{ width: widthToDp("20%") }}>
-                                                        {
-                                                            this.state.textLanguageChange === '0' ? <Text style={{ fontFamily: 'Oswald-Medium', fontSize: widthToDp('3.3%') }}>{i.materialNameEnglish}</Text> : ((this.state.textLanguageChange === '1') ? <Text style={{ fontFamily: 'Oswald-Medium', fontSize: widthToDp('3.3%') }}>{i.materialNameHindi}</Text> : ((this.state.textLanguageChange === '2') ? <Text style={{ fontFamily: 'Oswald-Medium', fontSize: widthToDp('3.3%') }}>{i.materialNameHo}</Text> : ((this.state.textLanguageChange === '3') ? <Text style={{ fontFamily: 'Oswald-Medium', fontSize: widthToDp('3.3%') }}>{i.materialNameOdia}</Text> : ((this.state.textLanguageChange === '4') ? <Text style={{ fontFamily: 'Oswald-Medium', fontSize: widthToDp('3.3%') }}>{i.materialNameSanthali}</Text> : null))))
-                                                        }
-                                                    
+                                            [
+                                                <>
+                                                    <View style={{ height: heightToDp(`${index === 0 ? 1 : 0}%`) }} />
+                                                    <View style={{ flexDirection: 'row', marginLeft: widthToDp("3%"), marginTop: heightToDp("2%") }}>
+                                                        <View style={{ width: widthToDp("20%") }}>
+                                                            {
+                                                                this.state.textLanguageChange === '0' ? <Text style={{ fontFamily: 'Oswald-Medium', fontSize: widthToDp('3.3%') }}>{i.materialNameEnglish}</Text> : ((this.state.textLanguageChange === '1') ? <Text style={{ fontFamily: 'Oswald-Medium', fontSize: widthToDp('3.3%') }}>{i.materialNameHindi}</Text> : ((this.state.textLanguageChange === '2') ? <Text style={{ fontFamily: 'Oswald-Medium', fontSize: widthToDp('3.3%') }}>{i.materialNameHo}</Text> : ((this.state.textLanguageChange === '3') ? <Text style={{ fontFamily: 'Oswald-Medium', fontSize: widthToDp('3.3%') }}>{i.materialNameOdia}</Text> : ((this.state.textLanguageChange === '4') ? <Text style={{ fontFamily: 'Oswald-Medium', fontSize: widthToDp('3.3%') }}>{i.materialNameSanthali}</Text> : null))))
+                                                            }
+
+                                                        </View>
+                                                        <View style={{ width: widthToDp("25%"), marginLeft: widthToDp("9%") }}>
+                                                            <Input
+                                                                style={{
+                                                                    borderBottomWidth: 1,
+                                                                    borderColor: 'blue',
+                                                                    fontFamily: 'Oswald-Medium',
+                                                                }}
+                                                                defaultValue={i.qty}
+                                                            />
+                                                        </View>
+                                                        <View style={{ width: widthToDp("30%"), marginLeft: widthToDp("5%") }}>
+                                                            <Input
+                                                                defaultValue={i.decimalPrice}
+                                                                keyboardType='number-pad'
+                                                                onChangeText={(data) => this.setMaterialPrice(data, index)}
+                                                                style={{ marginLeft: widthToDp("0%"), fontFamily: 'Oswald-Medium', width: widthToDp("20%"), marginTop: heightToDp("-2%"), borderBottomWidth: 1, borderColor: 'blue', marginRight: widthToDp("5%") }}
+                                                            />
+                                                        </View>
                                                     </View>
-                                                    <View style={{ width: widthToDp("25%"), marginLeft: widthToDp("9%") }}>
-                                                        <Input
-                                                            style={{
-                                                                borderBottomWidth: 1,
-                                                                borderColor: 'blue',
-                                                                fontFamily: 'Oswald-Medium',
-                                                            }}
-                                                            defaultValue={i.qty}
-                                                        />
-                                                    </View>
-                                                    <View style={{ width: widthToDp("30%"), marginLeft: widthToDp("5%") }}>
-                                                        <Input
-                                                            placeholder={i.decimalPrice}
-                                                            keyboardType='number-pad'
-                                                           
-                                                            onChangeText={(data) => this.setMaterialPrice(data ,index)}
-                                                            style={{ marginLeft: widthToDp("0%"), fontFamily: 'Oswald-Medium', width: widthToDp("20%"), marginTop: heightToDp("-2%"), borderBottomWidth: 1, borderColor: 'blue', marginRight: widthToDp("5%") }}
-                                                        />
-                                                    </View>
-                                                </View>
-                                                <View style={{height: heightToDp(`${index===multipleMaterials.length-1 ? 1 : 0}%`)}}/>
-                                            </>
+                                                    <View style={{ height: heightToDp(`${index === multipleMaterials.length - 1 ? 1 : 0}%`) }} />
+                                                </>,
+                                                this.setMaterialPrice(i.decimalPrice, index)
+                                            ]
                                         )
                                     })
+
                                 }
                             </ScrollView>
 

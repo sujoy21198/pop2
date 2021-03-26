@@ -375,9 +375,15 @@ export default class StepOneScreen extends Component {
                         <TopLogo />
                     </View>
                     <Icon
+                        name="home"
+                        size={30}
+                        style={{ marginTop: heightToDp("4.6%"), marginLeft: widthToDp("45%") }}
+                        onPress={() => this.props.navigation.navigate('DashBoardScreen')}
+                    />
+                    <Icon
                         name="bell"
                         size={30}
-                        style={{ marginTop: heightToDp("4.6%"), marginLeft: widthToDp("52%") }}
+                        style={{ marginTop: heightToDp("4.6%"), marginLeft: widthToDp("5%") }}
                         onPress={() => this.props.navigation.navigate('NotificationsScreen')}
                     />
                 </View>
@@ -503,37 +509,39 @@ export default class StepOneScreen extends Component {
                                 {
                                     multipleMaterials.map((i, index) => {
                                         return (
-                                            <>
-                                                <View style={{height: heightToDp(`${index===0 ? 1 : 0}%`)}}/>
-                                                <View style={{ flexDirection: 'row', marginLeft: widthToDp("3%"), marginTop: heightToDp("2%") }}>
-                                                    <View style={{ width: widthToDp("20%") }}>
-                                                        {
-                                                            this.state.textLanguageChange === '0' ? <Text style={{ fontFamily: 'Oswald-Medium', fontSize: widthToDp('3.3%') }}>{i.materialNameEnglish}</Text> : ((this.state.textLanguageChange === '1') ? <Text style={{ fontFamily: 'Oswald-Medium', fontSize: widthToDp('3.3%') }}>{i.materialNameHindi}</Text> : ((this.state.textLanguageChange === '2') ? <Text style={{ fontFamily: 'Oswald-Medium', fontSize: widthToDp('3.3%') }}>{i.materialNameHo}</Text> : ((this.state.textLanguageChange === '3') ? <Text style={{ fontFamily: 'Oswald-Medium', fontSize: widthToDp('3.3%') }}>{i.materialNameOdia}</Text> : ((this.state.textLanguageChange === '4') ? <Text style={{ fontFamily: 'Oswald-Medium', fontSize: widthToDp('3.3%') }}>{i.materialNameSanthali}</Text> : null))))
-                                                        }
-                                                    
+                                            [
+                                                <>
+                                                    <View style={{ height: heightToDp(`${index === 0 ? 1 : 0}%`) }} />
+                                                    <View style={{ flexDirection: 'row', marginLeft: widthToDp("3%"), marginTop: heightToDp("2%") }}>
+                                                        <View style={{ width: widthToDp("20%") }}>
+                                                            {
+                                                                this.state.textLanguageChange === '0' ? <Text style={{ fontFamily: 'Oswald-Medium', fontSize: widthToDp('3.3%') }}>{i.materialNameEnglish}</Text> : ((this.state.textLanguageChange === '1') ? <Text style={{ fontFamily: 'Oswald-Medium', fontSize: widthToDp('3.3%') }}>{i.materialNameHindi}</Text> : ((this.state.textLanguageChange === '2') ? <Text style={{ fontFamily: 'Oswald-Medium', fontSize: widthToDp('3.3%') }}>{i.materialNameHo}</Text> : ((this.state.textLanguageChange === '3') ? <Text style={{ fontFamily: 'Oswald-Medium', fontSize: widthToDp('3.3%') }}>{i.materialNameOdia}</Text> : ((this.state.textLanguageChange === '4') ? <Text style={{ fontFamily: 'Oswald-Medium', fontSize: widthToDp('3.3%') }}>{i.materialNameSanthali}</Text> : null))))
+                                                            }
+
+                                                        </View>
+                                                        <View style={{ width: widthToDp("25%"), marginLeft: widthToDp("9%") }}>
+                                                            <Input
+                                                                style={{
+                                                                    borderBottomWidth: 1,
+                                                                    borderColor: 'blue',
+                                                                    fontFamily: 'Oswald-Medium',
+                                                                }}
+                                                                defaultValue={i.qty}
+                                                            />
+                                                        </View>
+                                                        <View style={{ width: widthToDp("30%"), marginLeft: widthToDp("5%") }}>
+                                                            <Input
+                                                                defaultValue={i.decimalPrice}
+                                                                keyboardType='number-pad'
+                                                                onChangeText={(data) => this.setMaterialPrice(data, index)}
+                                                                style={{ marginLeft: widthToDp("0%"), fontFamily: 'Oswald-Medium', width: widthToDp("20%"), marginTop: heightToDp("-2%"), borderBottomWidth: 1, borderColor: 'blue', marginRight: widthToDp("5%") }}
+                                                            />
+                                                        </View>
                                                     </View>
-                                                    <View style={{ width: widthToDp("25%"), marginLeft: widthToDp("9%") }}>
-                                                        <Input
-                                                            style={{
-                                                                borderBottomWidth: 1,
-                                                                borderColor: 'blue',
-                                                                fontFamily: 'Oswald-Medium',
-                                                            }}
-                                                            defaultValue={i.qty}
-                                                        />
-                                                    </View>
-                                                    <View style={{ width: widthToDp("30%"), marginLeft: widthToDp("5%") }}>
-                                                        <Input
-                                                            placeholder={i.decimalPrice}
-                                                            keyboardType='number-pad'
-                                                            
-                                                            onChangeText={(data) => this.setMaterialPrice(data , index)}
-                                                            style={{ marginLeft: widthToDp("0%"), fontFamily: 'Oswald-Medium', width: widthToDp("20%"), marginTop: heightToDp("-2%"), borderBottomWidth: 1, borderColor: 'blue', marginRight: widthToDp("5%") }}
-                                                        />
-                                                    </View>
-                                                </View>
-                                                <View style={{height: heightToDp(`${index===multipleMaterials.length-1 ? 1 : 0}%`)}}/>
-                                            </>
+                                                    <View style={{ height: heightToDp(`${index === multipleMaterials.length - 1 ? 1 : 0}%`) }} />
+                                                </>,
+                                                this.setMaterialPrice(i.decimalPrice, index)
+                                            ]
                                         )
                                     })
                                 }

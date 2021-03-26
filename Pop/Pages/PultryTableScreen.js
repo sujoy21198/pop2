@@ -54,9 +54,9 @@ export default class PultryTableScreen extends Component {
             birdQuantity: '8',
             total: '2550',
             netProfit: '1550',
-            feed: '',
-            vaccination: '',
-            totalB: '',
+            feed: '125',
+            vaccination: '125',
+            totalB: '250',
             languages:[]
         }
         this.state.tableHeading = tableHeading
@@ -213,9 +213,15 @@ export default class PultryTableScreen extends Component {
                         <TopLogo />
                     </View>
                     <Icon
+                        name="home"
+                        size={30}
+                        style={{ marginTop: heightToDp("4.6%"), marginLeft: widthToDp("45%") }}
+                        onPress={() => this.props.navigation.navigate('DashBoardScreen')}
+                    />
+                    <Icon
                         name="bell"
                         size={30}
-                        style={{ marginTop: heightToDp("4.6%"), marginLeft: widthToDp("52%") }}
+                        style={{ marginTop: heightToDp("4.6%"), marginLeft: widthToDp("5%") }}
                         onPress={() => this.props.navigation.navigate('NotificationsScreen')}
                     />
                 </View>

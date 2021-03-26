@@ -249,9 +249,15 @@ export default class SmallBusinessScreen extends Component {
                         <TopLogo />
                     </View>
                     <Icon
+                        name="home"
+                        size={30}
+                        style={{ marginTop: heightToDp("4.6%"), marginLeft: widthToDp("45%") }}
+                        onPress={() => this.props.navigation.navigate('DashBoardScreen')}
+                    />
+                    <Icon
                         name="bell"
                         size={30}
-                        style={{ marginTop: heightToDp("4.6%"), marginLeft: widthToDp("52%") }}
+                        style={{ marginTop: heightToDp("4.6%"), marginLeft: widthToDp("5%") }}
                         onPress={() => this.props.navigation.navigate('NotificationsScreen')}
                     />
                 </View>
