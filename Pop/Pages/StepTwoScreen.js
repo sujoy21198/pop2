@@ -62,7 +62,8 @@ export default class StepTwoScreen extends Component {
             odiaTitleDescription: '',
             stepImage: '',
             multipleMaterials: [],
-            sumOfMaterials:''
+            sumOfMaterials: '',
+            saveButtonClicked: false
         }
         this.state.languages = Languages
         this.state._id = this.props.route.params._id
@@ -226,13 +227,14 @@ export default class StepTwoScreen extends Component {
         const test = [...this.state.materialPrice]
         test[index] = data
         this.state.materialPrice = test
-        var sum  = this.state.materialPrice.reduce((a,b) => parseInt(a)+parseInt(b),0)
+        var sum = this.state.materialPrice.reduce((a, b) => parseInt(a) + parseInt(b), 0)
         this.state.sumOfMaterials = sum
         console.log(this.state.sumOfMaterials)
     }
 
-    setValueToPatch = async() => {
-        try{
+    setValueToPatch = async () => {
+        try {
+            this.state.saveButtonClicked = true
             let username = await AsyncStorage.getItem('username')
             let user = await AsyncStorage.getItem('user')
             let parsed = JSON.parse(user)
@@ -240,9 +242,9 @@ export default class StepTwoScreen extends Component {
             var specificPatch = specific.patch.find((i) => i.patchName === this.state.patchName)
             specificPatch.step2 = this.state.sumOfMaterials
             await AsyncStorage.setItem('user', JSON.stringify(parsed))
-            console.log(specificPatch,"step2")
-        }catch(error){
-            console.log(error,"setValueToPatch")
+            console.log(specificPatch, "step2")
+        } catch (error) {
+            console.log(error, "setValueToPatch")
         }
     }
 
@@ -319,41 +321,46 @@ export default class StepTwoScreen extends Component {
             let parsed = JSON.parse(user);
             var specificObject = parsed.find((i) => i.username === username)
             var cropSpecificSteps = specificObject.cropSteps.filter((i) => i.cropId === this.state._id)
-            if (cropSpecificSteps[2] === undefined) {
-                this.props.navigation.navigate({
-                    name: 'ActualCultivationCostScreen',
-                    params: {
-                        cropName: this.state.cropName,
-                        _id: this.state._id,
-                        imageFile: this.state.imageFile,
-                        patchName: this.state.patchName,
-                        landType: this.state.landType,
-                        farmingAreaInDecimal: this.state.farmingAreaInDecimal,
-                        costOfCultivatinPerTenDecimal: this.state.costOfCultivatinPerTenDecimal,
-                        costPerKg: this.state.costPerKg,
-                        productionInKg: this.state.productionInKg,
-                        cost: this.state.cost,
-                        netProfit: this.state.netProfit
-                    }
-                })
+            if (this.state.saveButtonClicked === false) {
+                alert("please click save button before procceding")
             } else {
-                this.props.navigation.navigate({
-                    name: 'StepThreeScreen',
-                    params: {
-                        cropName: this.state.cropName,
-                        _id: this.state._id,
-                        imageFile: this.state.imageFile,
-                        patchName: this.state.patchName,
-                        landType: this.state.landType,
-                        farmingAreaInDecimal: this.state.farmingAreaInDecimal,
-                        costOfCultivatinPerTenDecimal: this.state.costOfCultivatinPerTenDecimal,
-                        costPerKg: this.state.costPerKg,
-                        productionInKg: this.state.productionInKg,
-                        cost: this.state.cost,
-                        netProfit: this.state.netProfit
-                    }
-                })
+                if (cropSpecificSteps[2] === undefined) {
+                    this.props.navigation.navigate({
+                        name: 'ActualCultivationCostScreen',
+                        params: {
+                            cropName: this.state.cropName,
+                            _id: this.state._id,
+                            imageFile: this.state.imageFile,
+                            patchName: this.state.patchName,
+                            landType: this.state.landType,
+                            farmingAreaInDecimal: this.state.farmingAreaInDecimal,
+                            costOfCultivatinPerTenDecimal: this.state.costOfCultivatinPerTenDecimal,
+                            costPerKg: this.state.costPerKg,
+                            productionInKg: this.state.productionInKg,
+                            cost: this.state.cost,
+                            netProfit: this.state.netProfit
+                        }
+                    })
+                } else {
+                    this.props.navigation.navigate({
+                        name: 'StepThreeScreen',
+                        params: {
+                            cropName: this.state.cropName,
+                            _id: this.state._id,
+                            imageFile: this.state.imageFile,
+                            patchName: this.state.patchName,
+                            landType: this.state.landType,
+                            farmingAreaInDecimal: this.state.farmingAreaInDecimal,
+                            costOfCultivatinPerTenDecimal: this.state.costOfCultivatinPerTenDecimal,
+                            costPerKg: this.state.costPerKg,
+                            productionInKg: this.state.productionInKg,
+                            cost: this.state.cost,
+                            netProfit: this.state.netProfit
+                        }
+                    })
+                }
             }
+
         } catch (error) {
             console.log(error)
         }
@@ -500,7 +507,7 @@ export default class StepTwoScreen extends Component {
                                     multipleMaterials.map((i, index) => {
                                         return (
                                             <>
-                                                <View style={{height: heightToDp(`${index===0 ? 1 : 0}%`)}}/>
+                                                <View style={{ height: heightToDp(`${index === 0 ? 1 : 0}%`) }} />
                                                 <View style={{ flexDirection: 'row', marginLeft: widthToDp("3%"), marginTop: heightToDp("2%") }}>
                                                     <View style={{ width: widthToDp("20%") }}>
                                                         {
@@ -522,13 +529,13 @@ export default class StepTwoScreen extends Component {
                                                         <Input
                                                             placeholder={i.decimalPrice}
                                                             keyboardType='number-pad'
-                                                         
+
                                                             onChangeText={(data) => this.setMaterialPrice(data, index)}
                                                             style={{ marginLeft: widthToDp("0%"), fontFamily: 'Oswald-Medium', width: widthToDp("20%"), marginTop: heightToDp("-2%"), borderBottomWidth: 1, borderColor: 'blue', marginRight: widthToDp("5%") }}
                                                         />
                                                     </View>
                                                 </View>
-                                                <View style={{height: heightToDp(`${index===multipleMaterials.length-1 ? 1 : 0}%`)}}/>
+                                                <View style={{ height: heightToDp(`${index === multipleMaterials.length - 1 ? 1 : 0}%`) }} />
                                             </>
                                         )
                                     })

@@ -92,6 +92,7 @@ export default class ActualCultivationCost extends Component {
     }
 
     nextScreen = () => {
+        this.state.actualCulCostScreenTotalExpense = this.state.stepsSum
         //alert(Number.parseInt(this.state.actualCulCostScreenCostPerKg))
         this.props.navigation.navigate({
             name: 'CostBenifitAnalysisScreen',
@@ -190,14 +191,21 @@ export default class ActualCultivationCost extends Component {
 
                         <Text style={{ fontFamily: 'Oswald-Light', marginLeft: widthToDp("2%"), marginTop: heightToDp("1%") }}>TOTAL EXPENSE</Text>
                         <View style={{ marginTop: heightToDp("2%"), marginLeft: widthToDp("1%") }}>
-                            <FloatingLabel
+                            {/* <FloatingLabel
                                 labelStyle={styles.labelInput}
                                 inputStyle={styles.input}
                                 style={styles.formInput}
                                 keyboardType='numeric'
                                 onChangeText={(text) => { this.calculation(text) }}
                             // onBlur={this.onBlur}
-                            >₹ {this.state.stepsSum}</FloatingLabel>
+                            >₹ {this.state.stepsSum}</FloatingLabel> */}
+                            <Text style={{
+                                color: '#000',
+                                fontSize: widthToDp("4.6%"),
+                                fontFamily: 'Oswald-Medium',
+                                marginLeft: widthToDp("3%")
+                            }}>₹ {this.state.stepsSum}</Text>
+                            <View style={{ borderBottomColor: 'black', borderBottomWidth: 1, marginTop: heightToDp('1.5%'), width: widthToDp("92%") }}></View>
                         </View>
 
                     </View>

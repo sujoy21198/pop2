@@ -62,7 +62,8 @@ export default class StepThreeScreen extends Component {
             odiaTitleDescription: '',
             stepImage: '',
             multipleMaterials: [],
-            sumOfMaterials:''
+            sumOfMaterials:'',
+            saveButtonClicked:false
         }
         this.state.languages = Languages
         this.state._id = this.props.route.params._id
@@ -230,6 +231,7 @@ export default class StepThreeScreen extends Component {
 
     setValueToPatch = async() => {
         try{
+            this.state.saveButtonClicked = true
             let username = await AsyncStorage.getItem('username')
             let user = await AsyncStorage.getItem('user')
             let parsed = JSON.parse(user)
@@ -316,40 +318,44 @@ export default class StepThreeScreen extends Component {
             let parsed = JSON.parse(user);
             var specificObject = parsed.find((i) => i.username === username)
             var cropSpecificSteps = specificObject.cropSteps.filter((i) => i.cropId === this.state._id)
-            if(cropSpecificSteps[3] === undefined){
-                this.props.navigation.navigate({
-                    name: 'ActualCultivationCostScreen',
-                    params: {
-                        cropName: this.state.cropName,
-                        _id: this.state._id,
-                        imageFile: this.state.imageFile,
-                        patchName: this.state.patchName,
-                        landType: this.state.landType,
-                        farmingAreaInDecimal: this.state.farmingAreaInDecimal,
-                        costOfCultivatinPerTenDecimal: this.state.costOfCultivatinPerTenDecimal,
-                        costPerKg: this.state.costPerKg,
-                        productionInKg: this.state.productionInKg,
-                        cost: this.state.cost,
-                        netProfit: this.state.netProfit
-                    }
-                })
-            }else{
-                this.props.navigation.navigate({
-                    name: 'StepFourScreen',
-                    params: {
-                        cropName: this.state.cropName,
-                        _id: this.state._id,
-                        imageFile: this.state.imageFile,
-                        patchName: this.state.patchName,
-                        landType: this.state.landType,
-                        farmingAreaInDecimal: this.state.farmingAreaInDecimal,
-                        costOfCultivatinPerTenDecimal: this.state.costOfCultivatinPerTenDecimal,
-                        costPerKg: this.state.costPerKg,
-                        productionInKg: this.state.productionInKg,
-                        cost: this.state.cost,
-                        netProfit: this.state.netProfit
-                    }
-                })
+            if (this.state.saveButtonClicked === false) {
+                alert("please click save button before procceding")
+            } else {
+                if (cropSpecificSteps[3] === undefined) {
+                    this.props.navigation.navigate({
+                        name: 'ActualCultivationCostScreen',
+                        params: {
+                            cropName: this.state.cropName,
+                            _id: this.state._id,
+                            imageFile: this.state.imageFile,
+                            patchName: this.state.patchName,
+                            landType: this.state.landType,
+                            farmingAreaInDecimal: this.state.farmingAreaInDecimal,
+                            costOfCultivatinPerTenDecimal: this.state.costOfCultivatinPerTenDecimal,
+                            costPerKg: this.state.costPerKg,
+                            productionInKg: this.state.productionInKg,
+                            cost: this.state.cost,
+                            netProfit: this.state.netProfit
+                        }
+                    })
+                } else {
+                    this.props.navigation.navigate({
+                        name: 'StepFourScreen',
+                        params: {
+                            cropName: this.state.cropName,
+                            _id: this.state._id,
+                            imageFile: this.state.imageFile,
+                            patchName: this.state.patchName,
+                            landType: this.state.landType,
+                            farmingAreaInDecimal: this.state.farmingAreaInDecimal,
+                            costOfCultivatinPerTenDecimal: this.state.costOfCultivatinPerTenDecimal,
+                            costPerKg: this.state.costPerKg,
+                            productionInKg: this.state.productionInKg,
+                            cost: this.state.cost,
+                            netProfit: this.state.netProfit
+                        }
+                    })
+                }
             }
         }catch(error){
             console.log(error)

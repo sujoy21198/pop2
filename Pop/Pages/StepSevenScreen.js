@@ -62,7 +62,8 @@ export default class StepSevenScreen extends Component {
             odiaTitleDescription: '',
             stepImage: '',
             multipleMaterials: [],
-            sumOfMaterials:''
+            sumOfMaterials:'',
+            saveButtonClicked:false
         }
         this.state.languages = Languages
         this.state._id = this.props.route.params._id
@@ -236,6 +237,7 @@ export default class StepSevenScreen extends Component {
 
     setValueToPatch = async() => {
         try{
+            this.state.saveButtonClicked = true
             let username = await AsyncStorage.getItem('username')
             let user = await AsyncStorage.getItem('user')
             let parsed = JSON.parse(user)
@@ -323,40 +325,44 @@ export default class StepSevenScreen extends Component {
             let parsed = JSON.parse(user);
             var specificObject = parsed.find((i) => i.username === username)
             var cropSpecificSteps = specificObject.cropSteps.filter((i) => i.cropId === this.state._id)
-            if(cropSpecificSteps[7] === undefined){
-                this.props.navigation.navigate({
-                    name: 'ActualCultivationCostScreen',
-                    params: {
-                        cropName: this.state.cropName,
-                        _id: this.state._id,
-                        imageFile: this.state.imageFile,
-                        patchName: this.state.patchName,
-                        landType: this.state.landType,
-                        farmingAreaInDecimal: this.state.farmingAreaInDecimal,
-                        costOfCultivatinPerTenDecimal: this.state.costOfCultivatinPerTenDecimal,
-                        costPerKg: this.state.costPerKg,
-                        productionInKg: this.state.productionInKg,
-                        cost: this.state.cost,
-                        netProfit: this.state.netProfit
-                    }
-                })
-            }else{
-                this.props.navigation.navigate({
-                    name: 'StepEightScreen',
-                    params: {
-                        cropName: this.state.cropName,
-                        _id: this.state._id,
-                        imageFile: this.state.imageFile,
-                        patchName: this.state.patchName,
-                        landType: this.state.landType,
-                        farmingAreaInDecimal: this.state.farmingAreaInDecimal,
-                        costOfCultivatinPerTenDecimal: this.state.costOfCultivatinPerTenDecimal,
-                        costPerKg: this.state.costPerKg,
-                        productionInKg: this.state.productionInKg,
-                        cost: this.state.cost,
-                        netProfit: this.state.netProfit
-                    }
-                })
+            if (this.state.saveButtonClicked === false) {
+                alert("please click save button before procceding")
+            } else {
+                if (cropSpecificSteps[7] === undefined) {
+                    this.props.navigation.navigate({
+                        name: 'ActualCultivationCostScreen',
+                        params: {
+                            cropName: this.state.cropName,
+                            _id: this.state._id,
+                            imageFile: this.state.imageFile,
+                            patchName: this.state.patchName,
+                            landType: this.state.landType,
+                            farmingAreaInDecimal: this.state.farmingAreaInDecimal,
+                            costOfCultivatinPerTenDecimal: this.state.costOfCultivatinPerTenDecimal,
+                            costPerKg: this.state.costPerKg,
+                            productionInKg: this.state.productionInKg,
+                            cost: this.state.cost,
+                            netProfit: this.state.netProfit
+                        }
+                    })
+                } else {
+                    this.props.navigation.navigate({
+                        name: 'StepEightScreen',
+                        params: {
+                            cropName: this.state.cropName,
+                            _id: this.state._id,
+                            imageFile: this.state.imageFile,
+                            patchName: this.state.patchName,
+                            landType: this.state.landType,
+                            farmingAreaInDecimal: this.state.farmingAreaInDecimal,
+                            costOfCultivatinPerTenDecimal: this.state.costOfCultivatinPerTenDecimal,
+                            costPerKg: this.state.costPerKg,
+                            productionInKg: this.state.productionInKg,
+                            cost: this.state.cost,
+                            netProfit: this.state.netProfit
+                        }
+                    })
+                }
             }
         }catch(error){
             console.log(error)
@@ -505,7 +511,7 @@ export default class StepSevenScreen extends Component {
                                     multipleMaterials.map((i, index) => {
                                         return (
                                             <>
-                                                <View style={{height: heightToDp(`${key===0 ? 1 : 0}%`)}}/>
+                                                <View style={{height: heightToDp(`${index===0 ? 1 : 0}%`)}}/>
                                                 <View style={{ flexDirection: 'row', marginLeft: widthToDp("3%"), marginTop: heightToDp("2%") }}>
                                                     <View style={{ width: widthToDp("20%") }}>
                                                         {
