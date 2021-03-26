@@ -64,7 +64,6 @@ export default class CostBenifitAnalysisScreen extends Component {
         var value1 = this.state.actualCulCostScreenProductionInKg
         var value2 = this.state.actualCulCostScreenCostPerKg
         this.state.totalincomefromcrop = value1 * value2
-        alert(this.state.actualCulCostScreenCostPerKg)
 
         var income = this.state.totalincomefromcrop
         var expense = this.state.actualCulCostScreenTotalExpense
@@ -154,7 +153,7 @@ export default class CostBenifitAnalysisScreen extends Component {
 
                 <ScrollView>
                     <View style={{ backgroundColor: BaseColor.Red, width: widthToDp("90%"), height: heightToDp("30%"), alignSelf: 'center', marginTop: heightToDp("2%"), borderRadius: 10 }}>
-                        <Text style={{ color: 'white', marginLeft: widthToDp("4%"), marginTop: heightToDp('1.5%'), fontSize: widthToDp("5%"), fontFamily: 'Oswald-Medium', height: heightToDp("3%") }}>COST BENEFIT ANALYSIS</Text>
+                        <Text style={{ color: 'white', marginLeft: widthToDp("4%"), marginTop: heightToDp('1.5%'), fontSize: widthToDp("5%"), fontFamily: 'Oswald-Medium', height: heightToDp("3.5%") }}>COST BENEFIT ANALYSIS</Text>
                         <View style={{ backgroundColor: 'white', width: widthToDp("90%"), height: heightToDp("23.5%"), borderBottomLeftRadius: 10, borderBottomRightRadius: 10, marginTop: heightToDp("2%") }}>
                             <View style={{ flexDirection: 'row' }}>
                                 <View style={{ marginTop: heightToDp("4%"), marginLeft: widthToDp("2%") }}>
@@ -177,10 +176,10 @@ export default class CostBenifitAnalysisScreen extends Component {
                         <Text style={{ color: 'white', marginLeft: widthToDp("4%"), marginTop: heightToDp('1.5%'), fontSize: widthToDp("5%"), fontFamily: 'Oswald-Medium', height: heightToDp("3.5%") }}>EXPECTED ANALYSIS</Text>
                         <View style={{ backgroundColor: 'white', width: widthToDp("90%"), height: heightToDp("43%"), borderBottomLeftRadius: 10, borderBottomRightRadius: 10, marginTop: heightToDp("2%") }}>
                             <View style={{ flexDirection: 'row', marginLeft: widthToDp("4%"), marginTop: heightToDp('1%') }}>
-                                <View style={{ width: widthToDp("20%") }}>
+                                <View style={{ width: widthToDp("60%") }}>
                                     <Text style={{ fontFamily: 'Oswald-Medium' }}>Description</Text>
                                 </View>
-                                <View style={{ width: widthToDp("11%"), marginLeft: widthToDp("41%") }}>
+                                <View style={{ width: widthToDp("30%") }}>
                                     <Text style={{ fontFamily: 'Oswald-Medium' }}>Amount</Text>
                                 </View>
 
@@ -188,37 +187,47 @@ export default class CostBenifitAnalysisScreen extends Component {
                             </View>
                             <View style={{ borderBottomColor: 'black', borderBottomWidth: 1, marginTop: heightToDp('1.5%'), width: widthToDp("90%") }}></View>
                             <View style={{ flexDirection: 'row', marginLeft: widthToDp("4%"), marginTop: heightToDp('2%') }}>
-                                <View style={{ width: widthToDp("35%") }}>
+                                <View style={{ width: widthToDp("60%") }}>
                                     <Text style={{ fontFamily: 'Oswald-Medium' }}>Total cost of cultivation</Text>
                                 </View>
-                                <View style={{ width: widthToDp("11%"), marginLeft: widthToDp("25%") }}>
+                                <View style={{ width: widthToDp("30%") }}>
                                     <Text style={{ marginLeft: widthToDp("0%"), fontFamily: 'Oswald-Medium' }}>₹ {this.state.costOfCultivatinPerTenDecimal}</Text>
                                 </View>
                             </View>
                             <View style={{ flexDirection: 'row', marginLeft: widthToDp("4%"), marginTop: heightToDp('2%') }}>
-                                <View style={{ width: widthToDp("70%") }}>
+                                <View style={{ width: widthToDp("60%") }}>
                                     <Text style={{ fontFamily: 'Oswald-Medium' }}>Total income from crop</Text>
                                 </View>
-                                <View>
-                                    <Text style={{ marginLeft: widthToDp("0%"), fontFamily: 'Oswald-Medium' }}>₹ {this.state.costPerKg}</Text>
+                                <View style={{width: widthToDp('30%')}}>
+                                    <Text style={{ fontFamily: 'Oswald-Medium' }}>₹ {this.state.costPerKg}</Text>
                                 </View>
 
                             </View>
                             <View style={{ flexDirection: 'row', marginLeft: widthToDp("4%"), marginTop: heightToDp('2%') }}>
-                                <View style={{ width: widthToDp("70%") }}>
+                                <View style={{ width: widthToDp("60%") }}>
                                     <Text style={{ fontFamily: 'Oswald-Medium' }}>Production</Text>
                                 </View>
-
-                                <Text style={{ marginLeft: widthToDp("0%"), fontFamily: 'Oswald-Medium' }}>{this.state.productionInKg} KG</Text>
+                                <View  style={{width: widthToDp('30%')}}>
+                                    <Text style={{ fontFamily: 'Oswald-Medium' }}>{this.state.productionInKg} KG</Text>
+                                </View>                                
                             </View>
                             <View style={{ flexDirection: 'row', marginLeft: widthToDp("4%"), marginTop: heightToDp('2%') }}>
-                                <Text style={{ fontFamily: 'Oswald-Medium' }}>Cost Per kg</Text>
-                                <Text style={{ marginLeft: widthToDp("51%"), fontFamily: 'Oswald-Medium' }}>₹ {this.state.cost}</Text>
+                                <View style={{width: widthToDp('60%')}}>
+                                    <Text style={{ fontFamily: 'Oswald-Medium' }}>Cost Per kg</Text>
+                                </View>
+                                <View style={{width: widthToDp('30%')}}>
+                                    <Text style={{ fontFamily: 'Oswald-Medium' }}>₹ {this.state.cost}</Text>
+                                </View>
+                                
                             </View>
                             <View style={{ borderBottomColor: 'black', borderBottomWidth: 1, marginTop: heightToDp('1.5%'), width: widthToDp("90%") }}></View>
-                            <View style={{ flexDirection: 'row', marginTop: heightToDp('1%'), alignSelf: 'center' }}>
-                                <Text style={{ fontSize: widthToDp("6%"), fontFamily: 'Oswald-Bold' }}>Net Profit</Text>
-                                <Text style={{ marginLeft: widthToDp("40%"), fontWeight: 'bold', fontSize: widthToDp("6%"), fontFamily: 'Oswald-Bold' }}>₹ {this.state.netProfit}</Text>
+                            <View style={{ flexDirection: 'row', marginTop: heightToDp('1%'), alignSelf: 'center', marginLeft: widthToDp("6%"), }}>
+                                <View style={{width: widthToDp('60%')}}>
+                                    <Text style={{ fontSize: widthToDp("5%"), fontFamily: 'Oswald-Bold' }}>Net Profit</Text>
+                                </View>
+                                <View style={{width: widthToDp('30%')}}>
+                                <Text style={{ fontWeight: 'bold', fontSize: widthToDp("5%"), fontFamily: 'Oswald-Bold' }}>₹ {this.state.netProfit}</Text>
+                                </View>
                             </View>
                         </View>
                     </View>
@@ -226,52 +235,56 @@ export default class CostBenifitAnalysisScreen extends Component {
                         <Text style={{ color: 'white', marginLeft: widthToDp("4%"), marginTop: heightToDp('1.5%'), fontSize: widthToDp("5%"), fontFamily: 'Oswald-Medium' }}>ACTUAL ANALYSIS</Text>
                         <View style={{ backgroundColor: 'white', width: widthToDp("90%"), height: heightToDp("54%"), borderBottomLeftRadius: 10, borderBottomRightRadius: 10, marginTop: heightToDp("2%") }}>
                             <View style={{ flexDirection: 'row', marginLeft: widthToDp("4%"), marginTop: heightToDp('1%') }}>
-                                <Text style={{ fontFamily: 'Oswald-Medium' }}>Description</Text>
-                                <Text style={{ marginLeft: widthToDp("52%"), fontFamily: 'Oswald-Medium' }}>Amount</Text>
+                                <View style={{width: widthToDp('60%')}}>
+                                    <Text style={{ fontFamily: 'Oswald-Medium' }}>Description</Text>    
+                                </View>
+                                <View style={{width: widthToDp('30%')}}>
+                                    <Text style={{ fontFamily: 'Oswald-Medium' }}>Amount</Text>    
+                                </View>
                             </View>
                             <View style={{ borderBottomColor: 'black', borderBottomWidth: 1, marginTop: heightToDp('1.5%'), width: widthToDp("90%") }}></View>
                             <View style={{ flexDirection: 'row', marginLeft: widthToDp("4%"), marginTop: heightToDp('2%') }}>
-                                <View style={{ width: widthToDp("70%") }}>
+                                <View style={{ width: widthToDp("60%") }}>
                                     <Text style={{ fontFamily: 'Oswald-Medium' }}>Total cost of cultivation</Text>
                                 </View>
-
-                                <Text style={{ marginLeft: widthToDp("0%"), fontFamily: 'Oswald-Medium' }}>₹ {this.state.actualCulCostScreenTotalExpense}</Text>
+                                
+                                <View style={{ width: widthToDp("30%") }}>
+                                    <Text style={{ fontFamily: 'Oswald-Medium' }}>{this.state.actualCulCostScreenTotalExpense ? "₹ " + this.state.actualCulCostScreenTotalExpense : ""}</Text>
+                                </View>
                             </View>
                             <View style={{ flexDirection: 'row', marginLeft: widthToDp("4%"), marginTop: heightToDp('2%') }}>
-                                <View style={{ width: widthToDp("70%") }}>
+                                <View style={{ width: widthToDp("60%") }}>
                                     <Text style={{ fontFamily: 'Oswald-Medium' }}>Total income from crop</Text>
                                 </View>
-                                <View style={{ width: widthToDp("10%") }}>
-                                    <Text style={{ marginLeft: widthToDp("0%"), fontFamily: 'Oswald-Medium' }}>₹ {this.state.totalincomefromcrop}</Text>
+                                <View style={{ width: widthToDp("30%") }}>
+                                    <Text style={{ fontFamily: 'Oswald-Medium' }}>₹ {this.state.totalincomefromcrop}</Text>
                                 </View>
 
                             </View>
                             <View style={{ flexDirection: 'row', marginLeft: widthToDp("4%"), marginTop: heightToDp('2%') }}>
-                                <View style={{ width: widthToDp("70%") }}>
+                                <View style={{ width: widthToDp("60%") }}>
                                     <Text style={{ fontFamily: 'Oswald-Medium' }}>Production</Text>
                                 </View>
-                                <View style={{ width: widthToDp("10%") }}>
-                                    <Text style={{ marginLeft: widthToDp("0%"), fontFamily: 'Oswald-Medium' }}>{this.state.actualCulCostScreenProductionInKg} KG</Text>
+                                <View style={{ width: widthToDp("30%") }}>
+                                    <Text style={{ fontFamily: 'Oswald-Medium' }}>{this.state.actualCulCostScreenProductionInKg} KG</Text>
                                 </View>
 
                             </View>
                             <View style={{ flexDirection: 'row', marginLeft: widthToDp("4%"), marginTop: heightToDp('2%') }}>
-                                <View style={{ width: widthToDp("70%") }}>
+                                <View style={{ width: widthToDp("60%") }}>
                                     <Text style={{ fontFamily: 'Oswald-Medium' }}>Cost Per kg</Text>
                                 </View>
-                                <View style={{ width: widthToDp("10%") }}>
-                                    <Text style={{ marginLeft: widthToDp("5%"), fontFamily: 'Oswald-Medium' }}>{this.state.actualCulCostScreenCostPerKg} KG</Text>
+                                <View style={{ width: widthToDp("30%") }}>
+                                    <Text style={{ fontFamily: 'Oswald-Medium' }}>{this.state.actualCulCostScreenCostPerKg} KG</Text>
                                 </View>
-
-
                             </View>
                             <View style={{ borderBottomColor: 'black', borderBottomWidth: 1, marginTop: heightToDp('1.5%'), width: widthToDp("90%") }}></View>
-                            <View style={{ flexDirection: 'row', alignSelf: 'center', marginTop: heightToDp('1%') }}>
-                                <View style={{ width: widthToDp("70%") }}>
-                                    <Text style={{ fontSize: widthToDp("6%"), fontFamily: 'Oswald-Bold' }}>Net Profit</Text>
+                            <View style={{ flexDirection: 'row', alignSelf: 'center', marginTop: heightToDp('1%'), marginLeft: widthToDp('6%') }}>
+                                <View style={{ width: widthToDp("60%") }}>
+                                    <Text style={{ fontSize: widthToDp("5%"), fontFamily: 'Oswald-Bold' }}>Net Profit</Text>
                                 </View>
-                                <View style={{ width: widthToDp("10%") }}>
-                                    <Text style={{ marginLeft: widthToDp("0%"), fontWeight: 'bold', fontSize: widthToDp("6%"), fontFamily: 'Oswald-Bold' }}>₹ {this.state.profit}</Text>
+                                <View style={{ width: widthToDp("30%") }}>
+                                    <Text style={{ fontWeight: 'bold', fontSize: widthToDp("5%"), fontFamily: 'Oswald-Bold' }}>₹ {this.state.profit}</Text>
                                 </View>
                             </View>
                         </View>
@@ -280,7 +293,7 @@ export default class CostBenifitAnalysisScreen extends Component {
                 </ScrollView>
                 <View style={{ height: heightToDp("10%") }}>
                     <View style={{ flexDirection: 'row' }}>
-                        <TouchableOpacity>
+                        <TouchableOpacity onPress={() => this.props.navigation.goBack()}>
                             <View style={{ backgroundColor: "#fff", height: heightToDp("6%"), width: widthToDp("30%"), borderRadius: 100, marginLeft: widthToDp("20%"), marginTop: heightToDp("2%") }}>
                                 <Text style={{ fontSize: widthToDp("4%"), color: "#000", marginTop: heightToDp("1.4%"), alignSelf: 'center', fontFamily: 'Oswald-Medium' }}>CANCEL</Text>
                             </View>
