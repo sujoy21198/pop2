@@ -70,7 +70,6 @@ export default class SelectFarmingAreaScreen extends Component {
             var specificObject = parsed.find((i) => i.username === username)
             var farmingAreaLabel = specificObject.labels.find((i) => i.type === 59)
             var submitText = specificObject.labels.find((i) => i.type === 61)
-            console.warn(submitText)
             // var message = specificObject.labels.find((i) => i.type === 26)
             // var generalSettings = specificObject.labels.find((i) => i.type === 27)
             // var pension = specificObject.labels.find((i) => i.type === 51)
