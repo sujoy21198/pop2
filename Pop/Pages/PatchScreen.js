@@ -34,7 +34,7 @@ export default class PatchScreen extends Component {
         this.state.cropName = this.props.route.params.cropName
         this.state.imageFile = this.props.route.params.imageFile
         this.state.landType = this.props.route.params.landType
-        //alert(this.state.landType)
+        //alert(this.state.cropName)
     }
     componentDidMount() {
         //this.setPatch()
@@ -185,8 +185,8 @@ export default class PatchScreen extends Component {
             let user = await AsyncStorage.getItem('user')
 
 
-            if (this.state.landType === this.state.highLand) {
-                const patchObject = { 'name': data }
+            if (this.state.landType === this.state.highLand ) {
+                const patchObject = { 'name': data , 'cropName': this.state.cropName}
                 let parsed = JSON.parse(user)
                 var sepcific = parsed.find((i) => i.username === username)
                 sepcific.highLand.push(patchObject)
@@ -194,7 +194,7 @@ export default class PatchScreen extends Component {
                 this.setState({ data: sepcific.highLand })
                 this.setState({ isDialogVisible: false })
             } else if (this.state.landType === this.state.lowLand) {
-                const patchObject = { 'name': data }
+                const patchObject = { 'name': data, 'cropName': this.state.cropName }
                 let parsed = JSON.parse(user)
                 var sepcific = parsed.find((i) => i.username === username)
                 sepcific.lowLand.push(patchObject)
@@ -202,7 +202,7 @@ export default class PatchScreen extends Component {
                 this.setState({ data: sepcific.lowLand })
                 this.setState({ isDialogVisible: false })
             } else if (this.state.landType === this.state.mediumLand) {
-                const patchObject = { 'name': data }
+                const patchObject = { 'name': data , 'cropName': this.state.cropName}
                 let parsed = JSON.parse(user)
                 var sepcific = parsed.find((i) => i.username === username)
                 sepcific.mediumLand.push(patchObject)
@@ -231,18 +231,21 @@ export default class PatchScreen extends Component {
             let user = await AsyncStorage.getItem('user')
             let parsed = JSON.parse(user)
             var sepcific = parsed.find((i) => i.username === username)
-            console.log(sepcific)
-            if (this.state.landType === this.state.highLand) {
+            var cropSpecific = sepcific.highLand.find((i) => i.cropName === this.state.cropName)
+            var cropSpecificlowLand = sepcific.lowLand.find((i) => i.cropName === this.state.cropName)
+            var cropSpecificMediumLand = sepcific.mediumLand.find((i) => i.cropName === this.state.cropName)
+            console.log(cropSpecificMediumLand.cropName)
+            if (this.state.landType === this.state.highLand && this.state.cropName === cropSpecific.cropName) {
                 this.setState({ data: sepcific.highLand })
-            } else if (this.state.landType === this.state.lowLand) {
+            } else if (this.state.landType === this.state.lowLand && this.state.cropName === cropSpecificlowLand.cropName) {
                 this.setState({ data: sepcific.lowLand })
-            } else if (this.state.landType === this.state.mediumLand) {
+            } else if (this.state.landType === this.state.mediumLand && this.state.cropName === cropSpecificMediumLand.cropName) {
                 this.setState({ data: sepcific.mediumLand })
             }
 
             //console.log(JSON.stringify(sepcific.highLand))
         } catch (error) {
-            alert(error)
+            console.log(error)
         }
     }
 
