@@ -54,7 +54,33 @@ export default class LivestockTableScreen extends Component {
             expenseForSupplementary: '120',
             b: '250',
             totalProfitFromNgoats: '9250',
-            languages:[]
+            languages:[],
+            backButtonText: '',
+            calculateButtonText: '',
+            exitButtonText: '',
+            incomeHeaderLabel: '',
+            incomeGoatDesc: '',
+            ageLabel: '',
+            quantityLabel: '',
+            unitCostLabel: '',
+            totalCostLabel: '',
+            totalValueAfter2Years: '',
+            totalValueAfter2YearsFrom1MotherGoat: '',
+            totalValueAfter2YearsFrom2MotherGoats: '',
+            totalProfitFrom4MotherGoatsPer2Years: '',
+            noteLabel: '',
+            incomeFrom: '',
+            goats: '',
+            cost: '',
+            total: '', 
+            supplimentary: '',
+            immunisation: '',
+            birth1: '',
+            birth2: '',
+            birth3: '',
+            monthOld: '',
+            immunisation: '',
+            kids: ''
         }
         this.state.tableHeading = tableHeading
         this.state.languages = Languages
@@ -67,20 +93,210 @@ export default class LivestockTableScreen extends Component {
         let defaultLanguage = await AsyncStorage.getItem('language')
         if (defaultLanguage === 'en') {
             this.setState({ textLanguageChange: '0' })
-            
+            this.loadlabelsFromStorage()
         } else if (defaultLanguage === 'hi') {
             this.setState({ textLanguageChange: '1' })
-            
+            this.loadlabelsFromStorage()
         } else if (defaultLanguage === 'ho') {
             this.setState({ textLanguageChange: '2' })
-            
+            this.loadlabelsFromStorage()
         } else if (defaultLanguage === 'od') {
             this.setState({ textLanguageChange: '3' })
-            
+            this.loadlabelsFromStorage()
         } else if (defaultLanguage === 'san') {
             this.setState({ textLanguageChange: '4' })
-            
+            this.loadlabelsFromStorage()
         }
+    }
+
+
+    loadlabelsFromStorage = async () => {
+        try {
+            let username = await AsyncStorage.getItem('username')
+            let user = await AsyncStorage.getItem('offlineData');
+            let parsed = JSON.parse(user);
+            var specificObject = parsed.find((i) => i.username === username)
+            var incomeHeaderLabel = specificObject.labels.find((i) => i.type === 129)
+            var incomeGoatDesc = specificObject.labels.find((i) => i.type === 131)
+            var quantityLabel = specificObject.labels.find((i) => i.type === 79)
+            var ageLabel = specificObject.labels.find((i) => i.type === 132)
+            var unitCostLabel = specificObject.labels.find((i) => i.type === 165)
+            var totalCostLabel = specificObject.labels.find((i) => i.type === 166)
+            var totalValueAfter2Years = specificObject.labels.find((i) => i.type === 140)
+            var totalValueAfter2YearsFrom1MotherGoat = specificObject.labels.find((i) => i.type === 141)
+            var totalValueAfter2YearsFrom2MotherGoats = specificObject.labels.find((i) => i.type === 142)
+            var backButtonText = specificObject.labels.find((i) => i.type === 64)
+            var calculateButtonText = specificObject.labels.find((i) => i.type === 192)
+            var exitButtonText = specificObject.labels.find((i) => i.type === 63)
+            var totalProfitFrom4MotherGoatsPer2Years = specificObject.labels.find((i) => i.type === 146)
+            var noteLabel = specificObject.labels.find((i) => i.type === 147)
+            var incomeFrom = specificObject.labels.find((i) => i.type === 95)
+            var goats = specificObject.labels.find((i) => i.type === 130)
+            var motherGoats = specificObject.labels.find((i) => i.type === 143)
+            var cost = specificObject.labels.find((i) => i.type === 90)
+            var supplimentary = specificObject.labels.find((i) => i.type === 144)
+            var immunisation = specificObject.labels.find((i) => i.type === 145)
+            var birth1 = specificObject.labels.find((i) => i.type === 135)
+            var birth2 = specificObject.labels.find((i) => i.type === 136)
+            var birth3 = specificObject.labels.find((i) => i.type === 137)
+            var monthOld = specificObject.labels.find((i) => i.type === 138)
+            var kids = specificObject.labels.find((i) => i.type === 139)
+            var birth3 = specificObject.labels.find((i) => i.type === 137)
+            var total = specificObject.labels.find((i) => i.type === 112)
+            if (this.state.textLanguageChange === '0') {
+                this.setState({ incomeHeaderLabel: incomeHeaderLabel.nameEnglish })
+                this.setState({ quantityLabel: quantityLabel.nameEnglish })
+                this.setState({ ageLabel: ageLabel.nameEnglish })
+                this.setState({ incomeGoatDesc: incomeGoatDesc.nameEnglish })
+                this.setState({ totalValueAfter2Years: totalValueAfter2Years.nameEnglish })
+                this.setState({ unitCostLabel: unitCostLabel.nameEnglish })
+                this.setState({ totalCostLabel: totalCostLabel.nameEnglish })
+                this.setState({ backButtonText: backButtonText.nameEnglish })
+                this.setState({ calculateButtonText: calculateButtonText.nameEnglish })
+                this.setState({ exitButtonText: exitButtonText.nameEnglish })
+                this.setState({ totalProfitFrom4MotherGoatsPer2Years: totalProfitFrom4MotherGoatsPer2Years.nameEnglish })
+                this.setState({ noteLabel: noteLabel.nameEnglish })
+                this.setState({ incomeFrom: incomeFrom.nameEnglish })
+                this.setState({ totalValueAfter2YearsFrom1MotherGoat: totalValueAfter2YearsFrom1MotherGoat.nameEnglish })
+                this.setState({ motherGoats: motherGoats.nameEnglish })
+                this.setState({ totalProfitFrom4MotherGoatsPer2Years: totalProfitFrom4MotherGoatsPer2Years.nameEnglish })
+                this.setState({ immunisation: immunisation.nameEnglish })
+                this.setState({ totalValueAfter2YearsFrom2MotherGoats: totalValueAfter2YearsFrom2MotherGoats.nameEnglish })
+                this.setState({ cost: cost.nameEnglish })
+                this.setState({ totalProfitFrom4MotherGoatsPer2Years: totalProfitFrom4MotherGoatsPer2Years.nameEnglish })
+                this.setState({ supplimentary: supplimentary.nameEnglish })
+                this.setState({ birth1: birth1.nameEnglish })
+                this.setState({ goats: goats.nameEnglish })
+                this.setState({ birth2: birth2.nameEnglish })
+                this.setState({ birth3: birth3.nameEnglish })
+                this.setState({ monthOld: monthOld.nameEnglish })
+                this.setState({ kids: kids.nameEnglish })
+                this.setState({ total: total.nameEnglish })
+            } else if (this.state.textLanguageChange === '1') {                
+                this.setState({ incomeHeaderLabel: incomeHeaderLabel.nameHindi })
+                this.setState({ quantityLabel: quantityLabel.nameHindi })
+                this.setState({ ageLabel: ageLabel.nameHindi })
+                this.setState({ incomeGoatDesc: incomeGoatDesc.nameHindi })
+                this.setState({ totalValueAfter2Years: totalValueAfter2Years.nameHindi })
+                this.setState({ unitCostLabel: unitCostLabel.nameHindi })
+                this.setState({ totalCostLabel: totalCostLabel.nameHindi })
+                this.setState({ backButtonText: backButtonText.nameHindi })
+                this.setState({ calculateButtonText: calculateButtonText.nameHindi })
+                this.setState({ exitButtonText: exitButtonText.nameHindi })
+                this.setState({ totalProfitFrom4MotherGoatsPer2Years: totalProfitFrom4MotherGoatsPer2Years.nameHindi })
+                this.setState({ noteLabel: noteLabel.nameHindi })
+                this.setState({ incomeFrom: incomeFrom.nameHindi })
+                this.setState({ totalValueAfter2YearsFrom1MotherGoat: totalValueAfter2YearsFrom1MotherGoat.nameHindi })
+                this.setState({ motherGoats: motherGoats.nameHindi })
+                this.setState({ totalProfitFrom4MotherGoatsPer2Years: totalProfitFrom4MotherGoatsPer2Years.nameHindi })
+                this.setState({ immunisation: immunisation.nameHindi })
+                this.setState({ totalValueAfter2YearsFrom2MotherGoats: totalValueAfter2YearsFrom2MotherGoats.nameHindi })
+                this.setState({ cost: cost.nameHindi })
+                this.setState({ totalProfitFrom4MotherGoatsPer2Years: totalProfitFrom4MotherGoatsPer2Years.nameHindi })
+                this.setState({ supplimentary: supplimentary.nameHindi })
+                this.setState({ birth1: birth1.nameHindi })
+                this.setState({ goats: goats.nameHindi })
+                this.setState({ birth2: birth2.nameHindi })
+                this.setState({ birth3: birth3.nameHindi })
+                this.setState({ monthOld: monthOld.nameHindi })
+                this.setState({ kids: kids.nameHindi })
+                this.setState({ total: total.nameHindi })
+            } else if (this.state.textLanguageChange === '2') {
+                
+                this.setState({ incomeHeaderLabel: incomeHeaderLabel.nameHo })
+                this.setState({ quantityLabel: quantityLabel.nameHo })
+                this.setState({ ageLabel: ageLabel.nameHo })
+                this.setState({ incomeGoatDesc: incomeGoatDesc.nameHo })
+                this.setState({ totalValueAfter2Years: totalValueAfter2Years.nameHo })
+                this.setState({ unitCostLabel: unitCostLabel.nameHo })
+                this.setState({ totalCostLabel: totalCostLabel.nameHo })
+                this.setState({ backButtonText: backButtonText.nameHo })
+                this.setState({ calculateButtonText: calculateButtonText.nameHo })
+                this.setState({ exitButtonText: exitButtonText.nameHo })
+                this.setState({ totalProfitFrom4MotherGoatsPer2Years: totalProfitFrom4MotherGoatsPer2Years.nameHo })
+                this.setState({ noteLabel: noteLabel.nameHo })
+                this.setState({ incomeFrom: incomeFrom.nameHo })
+                this.setState({ totalValueAfter2YearsFrom1MotherGoat: totalValueAfter2YearsFrom1MotherGoat.nameHo })
+                this.setState({ motherGoats: motherGoats.nameHo })
+                this.setState({ totalProfitFrom4MotherGoatsPer2Years: totalProfitFrom4MotherGoatsPer2Years.nameHo })
+                this.setState({ immunisation: immunisation.nameHo })
+                this.setState({ totalValueAfter2YearsFrom2MotherGoats: totalValueAfter2YearsFrom2MotherGoats.nameHo })
+                this.setState({ cost: cost.nameHo })
+                this.setState({ totalProfitFrom4MotherGoatsPer2Years: totalProfitFrom4MotherGoatsPer2Years.nameHo })
+                this.setState({ supplimentary: supplimentary.nameHo })
+                this.setState({ birth1: birth1.nameHo })
+                this.setState({ goats: goats.nameHo })
+                this.setState({ birth2: birth2.nameHo })
+                this.setState({ birth3: birth3.nameHo })
+                this.setState({ monthOld: monthOld.nameHo })
+                this.setState({ kids: kids.nameHo })
+                this.setState({ total: total.nameHindi })
+            } else if (this.state.textLanguageChange === '3') {
+                
+                this.setState({ incomeHeaderLabel: incomeHeaderLabel.nameOdia })
+                this.setState({ quantityLabel: quantityLabel.nameOdia })
+                this.setState({ ageLabel: ageLabel.nameOdia })
+                this.setState({ incomeGoatDesc: incomeGoatDesc.nameOdia })
+                this.setState({ totalValueAfter2Years: totalValueAfter2Years.nameOdia })
+                this.setState({ unitCostLabel: unitCostLabel.nameOdia })
+                this.setState({ totalCostLabel: totalCostLabel.nameOdia })
+                this.setState({ backButtonText: backButtonText.nameOdia })
+                this.setState({ calculateButtonText: calculateButtonText.nameOdia })
+                this.setState({ exitButtonText: exitButtonText.nameOdia })
+                this.setState({ totalProfitFrom4MotherGoatsPer2Years: totalProfitFrom4MotherGoatsPer2Years.nameOdia })
+                this.setState({ noteLabel: noteLabel.nameOdia })
+                this.setState({ incomeFrom: incomeFrom.nameOdia })
+                this.setState({ totalValueAfter2YearsFrom1MotherGoat: totalValueAfter2YearsFrom1MotherGoat.nameOdia })
+                this.setState({ motherGoats: motherGoats.nameOdia })
+                this.setState({ totalProfitFrom4MotherGoatsPer2Years: totalProfitFrom4MotherGoatsPer2Years.nameOdia })
+                this.setState({ immunisation: immunisation.nameOdia })
+                this.setState({ totalValueAfter2YearsFrom2MotherGoats: totalValueAfter2YearsFrom2MotherGoats.nameOdia })
+                this.setState({ cost: cost.nameOdia })
+                this.setState({ totalProfitFrom4MotherGoatsPer2Years: totalProfitFrom4MotherGoatsPer2Years.nameOdia })
+                this.setState({ supplimentary: supplimentary.nameOdia })
+                this.setState({ birth1: birth1.nameOdia })
+                this.setState({ goats: goats.nameOdia })
+                this.setState({ birth2: birth2.nameOdia })
+                this.setState({ birth3: birth3.nameOdia })
+                this.setState({ monthOld: monthOld.nameOdia })
+                this.setState({ kids: kids.nameOdia })
+                this.setState({ total: total.nameHindi })
+            } else if (this.state.textLanguageChange === '4') {
+                
+                this.setState({ incomeHeaderLabel: incomeHeaderLabel.nameSanthali })
+                this.setState({ quantityLabel: quantityLabel.nameSanthali })
+                this.setState({ ageLabel: ageLabel.nameSanthali })
+                this.setState({ incomeGoatDesc: incomeGoatDesc.nameSanthali })
+                this.setState({ totalValueAfter2Years: totalValueAfter2Years.nameSanthali })
+                this.setState({ unitCostLabel: unitCostLabel.nameSanthali })
+                this.setState({ totalCostLabel: totalCostLabel.nameSanthali })
+                this.setState({ backButtonText: backButtonText.nameSanthali })
+                this.setState({ calculateButtonText: calculateButtonText.nameSanthali })
+                this.setState({ exitButtonText: exitButtonText.nameSanthali })
+                this.setState({ totalProfitFrom4MotherGoatsPer2Years: totalProfitFrom4MotherGoatsPer2Years.nameSanthali })
+                this.setState({ noteLabel: noteLabel.nameSanthali })
+                this.setState({ incomeFrom: incomeFrom.nameSanthali })
+                this.setState({ totalValueAfter2YearsFrom1MotherGoat: totalValueAfter2YearsFrom1MotherGoat.nameSanthali })
+                this.setState({ motherGoats: motherGoats.nameSanthali })
+                this.setState({ totalProfitFrom4MotherGoatsPer2Years: totalProfitFrom4MotherGoatsPer2Years.nameSanthali })
+                this.setState({ immunisation: immunisation.nameSanthali })
+                this.setState({ totalValueAfter2YearsFrom2MotherGoats: totalValueAfter2YearsFrom2MotherGoats.nameSanthali })
+                this.setState({ cost: cost.nameSanthali })
+                this.setState({ totalProfitFrom4MotherGoatsPer2Years: totalProfitFrom4MotherGoatsPer2Years.nameSanthali })
+                this.setState({ supplimentary: supplimentary.nameSanthali })
+                this.setState({ birth1: birth1.nameSanthali })
+                this.setState({ goats: goats.nameSanthali })
+                this.setState({ birth2: birth2.nameSanthali })
+                this.setState({ birth3: birth3.nameSanthali })
+                this.setState({ monthOld: monthOld.nameSanthali })
+                this.setState({ kids: kids.nameSanthali })
+                this.setState({ total: total.nameHindi })
+            }
+        } catch (error) {
+            alert(error)
+        }
+        //this.setState({ crops: specificObject.crops })
+        //this.showData()
     }
 
     languageChangeFunction = async (data) => {
@@ -272,20 +488,20 @@ export default class LivestockTableScreen extends Component {
                 <View style={{ borderBottomColor: BaseColor.Stroke, borderBottomWidth: 1, marginTop: heightToDp('1.5%'), width: widthToDp("100%") }}></View>
                 <ScrollView nestedScrollEnabled={true}>
                     <View style={{ backgroundColor: BaseColor.Red, height: heightToDp("90%"), alignSelf: 'center', width: widthToDp("90%"), borderRadius: 10, marginTop: heightToDp('1.5%') }}>
-                        <Text style={{ color: "#fff", fontSize: widthToDp("5%"), marginLeft: widthToDp("5%"), marginTop: heightToDp("1%"), fontFamily: 'Oswald-Medium' }}>Income from mother goats per year</Text>
+                        <Text style={{ color: "#fff", fontSize: widthToDp("5%"), marginLeft: widthToDp("5%"), marginTop: heightToDp("1%"), fontFamily: 'Oswald-Medium' }}>{this.state.incomeHeaderLabel}</Text>
                         <View style={{ backgroundColor: "white", height: heightToDp("85.5%"), alignSelf: 'center', width: widthToDp("90%"), marginTop: heightToDp('2%'), borderBottomLeftRadius: 10, borderBottomRightRadius: 10 }}>
                             <View style={{ flexDirection: 'row' }}>
-                                <Text style={{ fontSize: widthToDp("5%"), marginLeft: widthToDp("5%"), marginTop: heightToDp("1.5%"), fontFamily: 'Oswald-Medium' }}>Income from </Text>
+                                <Text style={{ fontSize: widthToDp("5%"), marginLeft: widthToDp("5%"), marginTop: heightToDp("1.5%"), fontFamily: 'Oswald-Medium' }}>{this.state.incomeFrom}</Text>
                                 <Input
                                     keyboardType='number-pad'
                                     defaultValue={this.state.numberGoats}
                                     onChangeText={(data) => this.calculation(data)}
                                     style={{ marginLeft: widthToDp("1%"), fontFamily: 'Oswald-Medium', width: widthToDp("10%"), marginTop: heightToDp("1%"), borderBottomWidth: 1, borderColor: 'blue' }}
                                 />
-                                <Text style={{ fontSize: widthToDp("5%"), marginLeft: widthToDp("1%"), marginTop: heightToDp("1.5%"), fontFamily: 'Oswald-Medium', marginRight: widthToDp("20%") }}>{`mother ${Number(this.state.numberGoats) === 1 ? "Goat" : "Goats"}`}</Text>
+                                <Text style={{ fontSize: widthToDp("5%"), marginLeft: widthToDp("1%"), marginTop: heightToDp("1.5%"), fontFamily: 'Oswald-Medium', marginRight: widthToDp("20%") }}>{`${(Number(this.state.numberGoats) === 1 && this.state.textLanguageChange==="0") ? "mother Goat" : this.state.goats}`}</Text>
                             </View>
                             <View style={{paddingHorizontal: widthToDp('2%')}}>
-                                <Text>One mother goat gives birth to 4 to 5 kids per 2 years in an interval of 8 months Out of that 3 kids survive.</Text>
+                                <Text>{this.state.incomeGoatDesc}</Text>
                             </View>
                             <ScrollView nestedScrollEnabled={true}>
                                 <View style={{ borderWidth: 1, paddingVertical: heightToDp("2%"), width: widthToDp("83%"), marginLeft: widthToDp("3%"), marginTop: heightToDp("1.5%"), flexDirection: 'row' }}>
@@ -294,7 +510,7 @@ export default class LivestockTableScreen extends Component {
                                             return (
                                                 <View style={{ width: widthToDp(`${key===0 ? 11 : key===1 ? 20 : key===2 ? 10 : 15}%`), marginLeft: widthToDp("1.5%") }}>
 
-                                                    <Text style={{fontSize: widthToDp('3.5%')}}>{i.name}</Text>
+                                                    <Text style={{fontSize: widthToDp('3.5%')}}>{key===1 ? this.state.ageLabel : key===2 ? this.state.quantityLabel : key==3 ? this.state.unitCostLabel : key===4 ? this.state.totalCostLabel : ""}</Text>
 
                                                 </View>
 
@@ -331,15 +547,15 @@ export default class LivestockTableScreen extends Component {
                                 } */}
                                     <View style={{ flexDirection: 'row' }}>
                                         <View style={{ width: widthToDp("10%"), marginLeft: widthToDp("1.5%") }}>
-                                            <Text style={{ marginTop: heightToDp("2%"), fontSize: widthToDp('3.5%') }}>1st Birth</Text>
-                                            <Text style={{ marginTop: heightToDp("3.7%"), fontSize: widthToDp('3.5%') }}>2nd Birth</Text>
-                                            <Text style={{ marginTop: heightToDp("1.5%"), fontSize: widthToDp('3.5%') }}>3rd Birth</Text>
+                                            <Text style={{ marginTop: heightToDp("2%"), fontSize: widthToDp('3.5%') }}>{this.state.birth1}</Text>
+                                            <Text style={{ marginTop: heightToDp("3.7%"), fontSize: widthToDp('3.5%') }}>{this.state.birth2}</Text>
+                                            <Text style={{ marginTop: heightToDp("1.5%"), fontSize: widthToDp('3.5%') }}>{this.state.birth3}</Text>
                                         </View>
 
                                         <View style={{ width: widthToDp("16%"), marginLeft: widthToDp("1.5%") }}>
-                                            <Text style={{ marginTop: heightToDp("2%"), fontSize: widthToDp('3.5%') }}>16 months old</Text>
-                                            <Text style={{ marginTop: heightToDp("1.5%"), fontSize: widthToDp('3.5%') }}>8 months old</Text>
-                                            <Text style={{ marginTop: heightToDp("1.5%"), fontSize: widthToDp('3.5%') }}>kids</Text>
+                                            <Text style={{ marginTop: heightToDp("2%"), fontSize: widthToDp('3.5%') }}>16 {this.state.monthOld}</Text>
+                                            <Text style={{ marginTop: heightToDp("3.7%"), fontSize: widthToDp('3.5%') }}>8 {this.state.monthOld}</Text>
+                                            <Text style={{ marginTop: heightToDp("1.5%"), fontSize: widthToDp('3.5%') }}>{this.state.kids}</Text>
                                         </View>
                                         <View style={{ width: widthToDp("10%"), marginLeft: widthToDp("6%") }}>
                                             <Text style={{ marginTop: heightToDp("2%"), fontSize: widthToDp('3.5%') }}>{this.state.numberGoats}</Text>
@@ -378,7 +594,7 @@ export default class LivestockTableScreen extends Component {
                                 </View>
                                 <View style={{ borderWidth: 1, height: heightToDp("8%"), width: widthToDp("83%"), marginLeft: widthToDp("3%"), marginTop: heightToDp("0%"), flexDirection: 'row' }}>
                                     <View style={{marginLeft: widthToDp('1%'), width: widthToDp('30%')}}>
-                                        <Text style={{fontSize: widthToDp('3.3%')}}>Total value after 2 year</Text>
+                                        <Text style={{fontSize: widthToDp('3.3%')}}>{this.state.totalValueAfter2Years}</Text>
                                     </View>
                                     <View style={{marginLeft: heightToDp("16%"), width: widthToDp('14%'), flexDirection: 'row', justifyContent: 'space-between'}}>
                                         <Text style={{ fontSize: widthToDp('3.3%') }}>₹ </Text> 
@@ -386,8 +602,8 @@ export default class LivestockTableScreen extends Component {
                                     </View>
                                 </View>
                                 <View style={{ marginLeft: widthToDp("3%"), marginBottom: widthToDp('1%') }}>
-                                    <Text>Total value after 2 years from {this.state.numberGoats} mother goat will be ₹ {this.state.totalValueAfter2years} per 2 year</Text>
-                                    <Text style={{ marginTop: heightToDp("3%") }}>Total value annually from 2 mother goat will be ₹ 9500.00 (A)</Text>
+                                    <Text>{this.state.totalValueAfter2YearsFrom1MotherGoat}</Text>
+                                    <Text style={{ marginTop: heightToDp("3%") }}>{this.state.totalValueAfter2YearsFrom2MotherGoats}</Text>
                                 </View>
 
                                 {/* <View style={{ marginLeft: widthToDp("3%"),marginTop:heightToDp("2%") }}>
@@ -409,14 +625,14 @@ export default class LivestockTableScreen extends Component {
 
                                 <View style={{ borderWidth: 1, paddingVertical: heightToDp("1%"), width: widthToDp("83%"), marginLeft: widthToDp("3%"), marginTop: heightToDp("0%")}}>
                                     <View style={{flexDirection:'row', marginLeft: widthToDp("3%")}}>
-                                        <Text style={{width:widthToDp("20%"), fontWeight: 'bold'}}>No. of Goats</Text>
-                                        <Text style={{width:widthToDp("40%"), fontWeight: 'bold'}}>Cost (₹)</Text>
-                                        <Text style={{fontWeight: 'bold'}}>Total</Text>
+                                        <Text style={{width:widthToDp("20%"), fontWeight: 'bold'}}>{this.state.motherGoats}</Text>
+                                        <Text style={{width:widthToDp("40%"), fontWeight: 'bold'}}>{this.state.cost}</Text>
+                                        <Text style={{fontWeight: 'bold'}}>{this.state.total}</Text>
                                     </View>
 
                                     <View style={{flexDirection:'row', marginLeft: widthToDp("3%")}}>
                                         <Text style={{width:widthToDp("20%")}}>{this.state.numberGoats}</Text>
-                                        <Text style={{width:widthToDp("40%")}}>Supplementary</Text>                                        
+                                        <Text style={{width:widthToDp("40%")}}>{this.state.supplimentary}</Text>                                        
                                         <View style={{width: widthToDp('13%'), flexDirection: 'row', justifyContent: 'space-between'}}>
                                             <Text>₹ </Text> 
                                             <Text>{this.state.totalExpenseforNgoats}</Text>
@@ -426,7 +642,7 @@ export default class LivestockTableScreen extends Component {
 
                                     <View style={{flexDirection:'row', marginLeft: widthToDp("3%")}}>
                                         <Text style={{width:widthToDp("20%")}}>{this.state.numberGoats}</Text>
-                                        <Text style={{width:widthToDp("40%")}}>Immunisation</Text>
+                                        <Text style={{width:widthToDp("40%")}}>{this.state.immunisation}</Text>
                                         <View style={{width: widthToDp('13%'), flexDirection: 'row', justifyContent: 'space-between'}}>
                                             <Text>₹ </Text> 
                                             <Text>{this.state.expenseForSupplementary}</Text>
@@ -434,7 +650,7 @@ export default class LivestockTableScreen extends Component {
                                     </View>
 
                                     <View style={{flexDirection:'row', marginLeft: widthToDp("3%"), marginTop: heightToDp("2%")}}>
-                                        <Text style={{width:widthToDp("30%")}}>Total =</Text>
+                                        <Text style={{width:widthToDp("30%")}}>{this.state.total} =</Text>
                                         <Text style={{width:widthToDp("30%")}}></Text>
                                         <View style={{width: widthToDp('13%'), flexDirection: 'row', justifyContent: 'space-between'}}>
                                             <Text>₹ </Text> 
@@ -445,10 +661,10 @@ export default class LivestockTableScreen extends Component {
 
 
                                 <View style={{ marginLeft: widthToDp("3%"), marginTop: heightToDp("2%"), marginBottom: widthToDp('5%') }}>
-                                    <Text>TOTAL PROFIT FROM 4 MOTHER GOAT PER 2 YEAR (A)- (B) = ₹ {this.state.totalValueAfter2years} – ₹ {this.state.b} = ₹ {this.state.totalProfitFromNgoats} </Text>
+                                    <Text>{this.state.totalProfitFrom4MotherGoatsPer2Years}</Text>
                                 </View>
                                 <View style={{margin: widthToDp('3%')}}>
-                                    <Text>Note: The capital cost is not being considered in case of buying a new Goat.</Text>
+                                    <Text>{this.state.noteLabel}</Text>
                                 </View>
                             </ScrollView>
 
@@ -459,17 +675,17 @@ export default class LivestockTableScreen extends Component {
                 <View style={{ flexDirection: 'row', height: heightToDp("10%"), alignSelf: 'center' }}>
                     <TouchableOpacity onPress={() => this.props.navigation.goBack()}>
                         <View style={{ backgroundColor: "#fff", height: heightToDp("6%"), width: widthToDp("30%"), borderRadius: 100, alignSelf: 'center', marginTop: heightToDp("2%") }}>
-                            <Text style={{ fontSize: widthToDp("4%"), color: "#000", marginTop: heightToDp("1.3%"), alignSelf: 'center', fontFamily: 'Oswald-Medium' }}>BACK</Text>
+                            <Text style={{ fontSize: widthToDp("4%"), color: "#000", marginTop: heightToDp("1.3%"), alignSelf: 'center', fontFamily: 'Oswald-Medium' }}>{this.state.backButtonText}</Text>
                         </View>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={() => { this.saveButton() }}>
                         <View style={{ backgroundColor: "#fff", height: heightToDp("6%"), width: widthToDp("30%"), borderRadius: 100, marginLeft: widthToDp("1%"), marginTop: heightToDp("2%") }}>
-                            <Text style={{ fontSize: widthToDp("4%"), color: "#000", marginTop: heightToDp("1.3%"), alignSelf: 'center', fontFamily: 'Oswald-Medium' }}>CALCULATE</Text>
+                            <Text style={{ fontSize: widthToDp("4%"), color: "#000", marginTop: heightToDp("1.3%"), alignSelf: 'center', fontFamily: 'Oswald-Medium' }}>{this.state.calculateButtonText}</Text>
                         </View>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={() => { this.next() }}>
                         <View style={{ backgroundColor: "#fff", height: heightToDp("6%"), width: widthToDp("30%"), borderRadius: 100, marginLeft: widthToDp("1%"), marginTop: heightToDp("2%") }}>
-                            <Text style={{ fontSize: widthToDp("4%"), color: "#000", marginTop: heightToDp("1.3%"), alignSelf: 'center', fontFamily: 'Oswald-Medium' }}>SAVE & EXIT</Text>
+                            <Text style={{ fontSize: widthToDp("4%"), color: "#000", marginTop: heightToDp("1.3%"), alignSelf: 'center', fontFamily: 'Oswald-Medium' }}>{this.state.exitButtonText}</Text>
                         </View>
                     </TouchableOpacity>
                 </View>
