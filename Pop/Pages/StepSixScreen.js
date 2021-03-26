@@ -92,9 +92,10 @@ export default class StepSixScreen extends Component {
             let username = await AsyncStorage.getItem('username')
             let user = await AsyncStorage.getItem('cropData');
             let parsed = JSON.parse(user);
-            var specificObject = parsed.find((i) => i.username === username)
+            var specificObject = parsed[0]
             var cropSpecificSteps = specificObject.cropSteps.filter((i) => i.cropId === this.state._id)
             this.setState({ cropNameLanguageChangeArray: cropSpecificSteps[5].cropData })
+            this.setState({numberOfSteps : cropSpecificSteps.length})
             var stepId = cropSpecificSteps[5]._id
             var cropSpecificMaterial = specificObject.cropsMaterials.filter((i) => i.stepId === stepId)
             this.setState({ multipleMaterials: cropSpecificMaterial })
@@ -121,7 +122,7 @@ export default class StepSixScreen extends Component {
             let username = await AsyncStorage.getItem('username')
             let user = await AsyncStorage.getItem('offlineData');
             let parsed = JSON.parse(user);
-            var specificObject = parsed.find((i) => i.username === username)
+            var specificObject = parsed[0]
             var descriptionLabel = specificObject.labels.find((i) => i.type === 68)
             var backButtonText = specificObject.labels.find((i) => i.type === 64)
             var saveButtonText = specificObject.labels.find((i) => i.type === 63)
@@ -316,7 +317,7 @@ export default class StepSixScreen extends Component {
             let username = await AsyncStorage.getItem('username')
             let user = await AsyncStorage.getItem('cropData');
             let parsed = JSON.parse(user);
-            var specificObject = parsed.find((i) => i.username === username)
+            var specificObject = parsed[0]
             var cropSpecificSteps = specificObject.cropSteps.filter((i) => i.cropId === this.state._id)
             if (this.state.saveButtonClicked === false) {
                 alert("please click save button before procceding")
@@ -420,7 +421,7 @@ export default class StepSixScreen extends Component {
                     </TouchableOpacity>
                 </View>
                 <View style={{ borderBottomColor: BaseColor.Stroke, borderBottomWidth: 1, marginTop: heightToDp('1.5%'), width: widthToDp("100%") }}></View>
-                <Text style={{ fontSize: widthToDp("6%"), marginLeft: widthToDp("3%"), marginTop: heightToDp("1%"), fontFamily: 'Oswald-Medium' }}>STEP - {this.state.pageNumber}/08</Text>
+                <Text style={{ fontSize: widthToDp("6%"), marginLeft: widthToDp("3%"), marginTop: heightToDp("1%"), fontFamily: 'Oswald-Medium' }}>STEP - {this.state.pageNumber}/0{this.state.numberOfSteps}</Text>
                 {
                     this.state.isLoading ? <View style={{ justifyContent: 'center', marginTop: heightToDp("20%"), backgroundColor: BaseColor.BackgroundColor, marginBottom: heightToDp("30%") }}><CustomIndicator IsLoading={this.state.isLoading} /></View> : null
                 }

@@ -188,7 +188,7 @@ export default class BreedScreen extends Component {
             let username = await AsyncStorage.getItem('username')
             let user = await AsyncStorage.getItem('offlineData');
             let parsed = JSON.parse(user);
-            var specificObject = parsed.find((i) => i.username === username)
+            var specificObject = parsed[0]
             var breedLabel = specificObject.labels.find((i) => i.type === 41)
             if (this.state.textLanguageChange === '0') {
               

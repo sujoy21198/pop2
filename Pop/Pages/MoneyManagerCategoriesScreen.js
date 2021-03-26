@@ -50,7 +50,7 @@ export default class MoneyManagerCategoriesScreen extends Component {
             let username = await AsyncStorage.getItem('username')
             let user = await AsyncStorage.getItem('offlineData');
             let parsed = JSON.parse(user);
-            var specificObject = parsed.find((i) => i.username === username)
+            var specificObject = parsed[0]
             var agriculture = specificObject.labels.find((i) => i.type === 47)
             var livestock = specificObject.labels.find((i) => i.type === 29)
             var smallBusiness = specificObject.labels.find((i) => i.type === 30)

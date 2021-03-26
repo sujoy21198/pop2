@@ -139,7 +139,7 @@ export default class DryFishSellingSecondTableScreen extends Component {
             let username = await AsyncStorage.getItem('username')
             let user = await AsyncStorage.getItem('offlineData');
             let parsed = JSON.parse(user);
-            var specificObject = parsed.find((i) => i.username === username)
+            var specificObject = parsed[0]
             var backButtontext = specificObject.labels.find((i) => i.type === 64)
             var saveButtonText = specificObject.labels.find((i) => i.type === 186)
             var nextButtonText = specificObject.labels.find((i) => i.type === 62)
@@ -213,7 +213,7 @@ export default class DryFishSellingSecondTableScreen extends Component {
             let username = await AsyncStorage.getItem('username')
             let user = await AsyncStorage.getItem('offlineData');
             let parsed = JSON.parse(user);
-            var specificObject = parsed.find((i) => i.username === username)
+            var specificObject = parsed[0]
             var livestockwisevaccine = specificObject.vaccination.filter((i) => i.type === this.state.value)
             vaccine = livestockwisevaccine
             this.setState({ vaccine: vaccine })
@@ -263,7 +263,7 @@ export default class DryFishSellingSecondTableScreen extends Component {
             let username = await AsyncStorage.getItem('username')
             let user = await AsyncStorage.getItem('user');
             let parsed = JSON.parse(user);
-            var specificObject = parsed.find((i) => i.username === username)
+            var specificObject = parsed[0]
             specificObject.moneyManagerData.push(expenseObject)
             specificObject.moneyManagerData.push(incomeObject)
             await AsyncStorage.setItem('user', JSON.stringify(parsed))

@@ -1148,6 +1148,8 @@ export default class SigninScreen extends Component {
         // }
 
         if (saveOffline === true) {
+            await AsyncStorage.removeItem('offlineData')
+            await AsyncStorage.removeItem('cropData')
             Toast.show({
                 text: "Please wait while we save your data",
                 type: 'success',
@@ -1170,21 +1172,7 @@ export default class SigninScreen extends Component {
             let user = await AsyncStorage.getItem('cropData');
             let parsed = JSON.parse(user);
             console.log(JSON.stringify(parsed))
-            // var valueArr = parsed.map(function(item){ return item.userId });
-            // alert(valueArr)
-            // var specificObject = parsed.find((i) => i.userId === count)
-            // console.log(specificObject.userId)
-
-            //console.log(specificObject.userId = count+1)
-            // console.log(specificObject.userId = 6)
-            //await AsyncStorage.setItem('products',JSON.stringify(parsed))
-
-
-            //alert(parsed[0].item = "bitch")
-            // await AsyncStorage.setItem('products',JSON.stringify(parsed))
-            // console.log(JSON.stringify(parsed))
-            //alert(JSON.stringify(parsed));
-            // console.log(JSON.stringify(parsed))
+            
         }
         catch (error) {
             alert(error)

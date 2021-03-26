@@ -52,12 +52,14 @@ export default class LanguageScreen extends Component {
     }
 
     componentDidMount() {
-        this.checkSession()
+        //this.checkSession()
         //this.requestStoragePermission()
         
         this.acceptPermissionDialogBox()
         
     }
+
+    
 
     testPermision = () => {
         check(PERMISSIONS.ANDROID.READ_EXTERNAL_STORAGE).then((result) => {
@@ -96,22 +98,22 @@ export default class LanguageScreen extends Component {
 
 
 
-    checkSession = async () => {
-        let value = await AsyncStorage.getItem('_id')
-        let username = await AsyncStorage.getItem('username')
-        let name = await AsyncStorage.getItem('name')
-        let token = await AsyncStorage.getItem('token')
-        let type = await AsyncStorage.getItem('type')
-        let language = await AsyncStorage.getItem('language')
-        LanguageChange.setLanguage(language)
-        console.log(token + " this is token ")
-        if (value) {
-            this.props.navigation.reset({
-                index: 0,
-                routes: [{ name: "DashBoardScreen" }]
-            });
-        }
-    }
+    // checkSession = async () => {
+    //     let value = await AsyncStorage.getItem('_id')
+    //     let username = await AsyncStorage.getItem('username')
+    //     let name = await AsyncStorage.getItem('name')
+    //     let token = await AsyncStorage.getItem('token')
+    //     let type = await AsyncStorage.getItem('type')
+    //     let language = await AsyncStorage.getItem('language')
+    //     LanguageChange.setLanguage(language)
+    //     console.log(token + " this is token ")
+    //     if (value) {
+    //         this.props.navigation.reset({
+    //             index: 0,
+    //             routes: [{ name: "DashBoardScreen" }]
+    //         });
+    //     }
+    // }
 
 
 

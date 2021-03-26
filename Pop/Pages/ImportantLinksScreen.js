@@ -82,7 +82,7 @@ export default class ImportantLinksScreen extends Component {
             let username = await AsyncStorage.getItem('username')
             let user = await AsyncStorage.getItem('offlineData');
             let parsed = JSON.parse(user);
-            var specificObject = parsed.find((i) => i.username === username)
+            var specificObject = parsed[0]
             var wash = specificObject.labels.find((i) => i.type === 32)
             var health = specificObject.labels.find((i) => i.type === 33)
             var covid = specificObject.labels.find((i) => i.type === 34)

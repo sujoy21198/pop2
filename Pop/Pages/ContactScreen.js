@@ -54,7 +54,7 @@ export default class ContactScreen extends Component {
             let username = await AsyncStorage.getItem('username')
             let user = await AsyncStorage.getItem('offlineData');
             let parsed = JSON.parse(user);
-            var specificObject = parsed.find((i) => i.username === username)
+            var specificObject = parsed[0]
             blockList = specificObject.contactList
             var specificOfiicer = blockList.find((i) => i.block === value)
             //this.setState({ blockList: blockList })
@@ -73,7 +73,7 @@ export default class ContactScreen extends Component {
             let username = await AsyncStorage.getItem('username')
             let user = await AsyncStorage.getItem('offlineData');
             let parsed = JSON.parse(user);
-            var specificObject = parsed.find((i) => i.username === username)
+            var specificObject = parsed[0]
             blockList = specificObject.contactList
             this.setState({ blockList: blockList })
             console.log(specificObject.contactList)
@@ -152,7 +152,7 @@ export default class ContactScreen extends Component {
             let username = await AsyncStorage.getItem('username')
             let user = await AsyncStorage.getItem('offlineData');
             let parsed = JSON.parse(user);
-            var specificObject = parsed.find((i) => i.username === username)
+            var specificObject = parsed[0]
             var contactLabel = specificObject.labels.find((i) => i.type === 46)
             if (this.state.textLanguageChange === '0') {
                 this.setState({ contactLabel: contactLabel.nameEnglish })

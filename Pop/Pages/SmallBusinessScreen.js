@@ -100,7 +100,7 @@ export default class SmallBusinessScreen extends Component {
             let username = await AsyncStorage.getItem('username')
             let user = await AsyncStorage.getItem('offlineData');
             let parsed = JSON.parse(user);
-            var specificObject = parsed.find((i) => i.username === username)
+            var specificObject = parsed[0]
             var vegetableVending = specificObject.labels.find((i) => i.type === 98)
             var smallGroceryShop = specificObject.labels.find((i) => i.type === 99)
             var dryFishSelling = specificObject.labels.find((i) => i.type === 100)

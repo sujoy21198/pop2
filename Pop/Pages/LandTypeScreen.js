@@ -49,7 +49,7 @@ export default class LandTypeScreen extends Component {
             let username = await AsyncStorage.getItem('username')
             let user = await AsyncStorage.getItem('offlineData');
             let parsed = JSON.parse(user);
-            var specificObject = parsed.find((i) => i.username === username)
+            var specificObject = parsed[0]
             var landTypeLabel = specificObject.labels.find((i) => i.type === 56)
             var highLand = specificObject.labels.find((i) => i.type === 53)
             var lowLand = specificObject.labels.find((i) => i.type === 55)

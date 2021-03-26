@@ -132,7 +132,7 @@ export default class LiveStockScreen extends Component {
             let username = await AsyncStorage.getItem('username')
             let user = await AsyncStorage.getItem('offlineData');
             let parsed = JSON.parse(user);
-            var specificObject = parsed.find((i) => i.username === username)
+            var specificObject = parsed[0]
             var livestockLabel = specificObject.labels.find((i) => i.type === 29)
             if (this.state.textLanguageChange === '0') {
               

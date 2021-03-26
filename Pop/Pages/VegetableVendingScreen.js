@@ -119,7 +119,7 @@ export default class VegetableVendingScreen extends Component {
             let username = await AsyncStorage.getItem('username')
             let user = await AsyncStorage.getItem('offlineData');
             let parsed = JSON.parse(user);
-            var specificObject = parsed.find((i) => i.username === username)
+            var specificObject = parsed[0]
           
             var smallBusinessLabel = specificObject.labels.find((i) => i.type === 62)
             
@@ -189,7 +189,7 @@ export default class VegetableVendingScreen extends Component {
             let username = await AsyncStorage.getItem('username')
             let user = await AsyncStorage.getItem('offlineData');
             let parsed = JSON.parse(user);
-            var specificObject = parsed.find((i) => i.username === username)
+            var specificObject = parsed[0]
             //alert(specificObject.nutrationGraden.length)
             this.setState({ lengthOfData: specificObject.vegetableVending.length })
 

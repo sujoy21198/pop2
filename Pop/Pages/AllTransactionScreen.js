@@ -40,7 +40,7 @@ export default class AllTransactionScreen extends Component {
             let username = await AsyncStorage.getItem('username')
             let user = await AsyncStorage.getItem('offlineData');
             let parsed = JSON.parse(user);
-            var specificObject = parsed.find((i) => i.username === username)
+            var specificObject = parsed[0]
             var allTransactions = specificObject.labels.find((i) => i.type === 44)
             if (this.state.textLanguageChange === '0') {
                 //this.state.allTransactionsLabel = allTransactions.nameEnglish
@@ -110,7 +110,7 @@ export default class AllTransactionScreen extends Component {
             let username = await AsyncStorage.getItem('username')
             let user = await AsyncStorage.getItem('user');
             let parsed = JSON.parse(user);
-            var specificObject = parsed.find((i) => i.username === username)
+            var specificObject = parsed[0]
             moneyManagerData = specificObject.moneyManagerData;
             console.log(specificObject.moneyManagerData)
         } catch (error) {

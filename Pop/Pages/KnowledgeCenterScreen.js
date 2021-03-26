@@ -82,7 +82,7 @@ export default class KnowledgeCenterScreen extends Component {
             let username = await AsyncStorage.getItem('username')
             let user = await AsyncStorage.getItem('offlineData');
             let parsed = JSON.parse(user);
-            var specificObject = parsed.find((i) => i.username === username)
+            var specificObject = parsed[0]
             var knowledgeCenter = specificObject.labels.find((i) => i.type === 22)
             var crops = specificObject.labels.find((i) => i.type === 28)
             var livestock = specificObject.labels.find((i) => i.type === 29)

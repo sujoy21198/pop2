@@ -54,7 +54,7 @@ export default class BreedDescriptionScreen extends Component {
             let username = await AsyncStorage.getItem('username')
             let user = await AsyncStorage.getItem('offlineData');
             let parsed = JSON.parse(user);
-            var specificObject = parsed.find((i) => i.username === username)
+            var specificObject = parsed[0]
             var descriptionLabel = specificObject.labels.find((i) => i.type === 68)
             var cancelButtonText = specificObject.labels.find((i) => i.type === 65)
             var nextButtonText = specificObject.labels.find((i) => i.type === 62)

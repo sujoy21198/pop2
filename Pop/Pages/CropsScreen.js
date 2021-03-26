@@ -45,7 +45,7 @@ export default class CropsScreen extends Component {
             let username = await AsyncStorage.getItem('username')
             let user = await AsyncStorage.getItem('offlineData');
             let parsed = JSON.parse(user);
-            var specificObject = parsed.find((i) => i.username === username)
+            var specificObject = parsed[0]
             var cropLabel = specificObject.labels.find((i) => i.type === 28)
             if (this.state.textLanguageChange === '0') {
                 //this.state.allTransactionsLabel = allTransactions.nameEnglish
@@ -114,7 +114,8 @@ export default class CropsScreen extends Component {
             let username = await AsyncStorage.getItem('username')
             let user = await AsyncStorage.getItem('offlineData');
             let parsed = JSON.parse(user);
-            var specificObject = parsed.find((i) => i.username === username)
+            //var specificObject = parsed[0]
+            var specificObject = parsed[0]
             console.log(specificObject.crops)
         } catch (error) {
             alert(error)
