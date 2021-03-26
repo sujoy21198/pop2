@@ -142,7 +142,7 @@ export default class LiveStockStepThreeScreen extends Component {
                 this.setState({ stepDescription: breedData[2].ho })
             }else if(this.state.textLanguageChange === '3'){
                 this.setState({ stepName: breedData[2].nameOdia })
-                this.setState({ stepDescription: breedData[2].od })
+                this.setState({ stepDescription: breedData[2].odia })
             }else if(this.state.textLanguageChange === '4'){
                 this.setState({ stepName: breedData[2].nameSanthali })
                 this.setState({ stepDescription: breedData[2].santhali })

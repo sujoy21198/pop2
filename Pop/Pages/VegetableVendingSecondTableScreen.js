@@ -55,8 +55,8 @@ export default class DryFishSellingSecondTableScreen extends Component {
             saveButtonText: '',
             nextButtonText: '',
             oneTimeExpenditureLabel: '',
-            expVegUnitPrice: '',
-            expSpiceUnitPrice: ''
+            expVegUnitPrice: '30',
+            expSpiceUnitPrice: '80'
         }
         this.state.tableHeading = tableHeading
         this.state.languages = Languages
@@ -260,8 +260,8 @@ export default class DryFishSellingSecondTableScreen extends Component {
             var date = new Date().getDate()
             var month = new Date().getMonth() + 1
             var year = new Date().getFullYear()
-            const expenseObject = { 'type': 'expense', 'category': 'Vegetable vending', 'amount': this.state.perDaySellingValue, 'date': date + "/" + month + "/" + year }
-            const incomeObject = { 'type': 'income', 'category': 'Vegetable Vending', 'amount': this.state.profit15, 'date': date + "/" + month + "/" + year }
+            const expenseObject = { 'type': 'expense', 'category': 'Vegetable vending', 'amount': this.state.expenditurePerDayA, 'date': date + "/" + month + "/" + year }
+            const incomeObject = { 'type': 'income', 'category': 'Vegetable Vending', 'amount': this.state.perDaySellingValue, 'date': date + "/" + month + "/" + year }
             let username = await AsyncStorage.getItem('username')
             let user = await AsyncStorage.getItem('user');
             let parsed = JSON.parse(user);

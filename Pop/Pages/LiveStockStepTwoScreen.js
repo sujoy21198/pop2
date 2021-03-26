@@ -143,7 +143,7 @@ export default class LiveStockStepTwoScreen extends Component {
                 this.setState({ stepDescription: breedData[1].ho })
             }else if(this.state.textLanguageChange === '3'){
                 this.setState({ stepName: breedData[1].nameOdia })
-                this.setState({ stepDescription: breedData[1].od })
+                this.setState({ stepDescription: breedData[1].odia })
             }else if(this.state.textLanguageChange === '4'){
                 this.setState({ stepName: breedData[1].nameSanthali })
                 this.setState({ stepDescription: breedData[1].santhali })

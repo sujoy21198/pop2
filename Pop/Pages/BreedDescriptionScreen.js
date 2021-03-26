@@ -138,7 +138,7 @@ export default class BreedDescriptionScreen extends Component {
                 this.setState({ stepDescription: breedData[0].ho })
             }else if(this.state.textLanguageChange === '3'){
                 this.setState({ stepName: breedData[0].nameOdia })
-                this.setState({ stepDescription: breedData[0].od })
+                this.setState({ stepDescription: breedData[0].odia })
             }else if(this.state.textLanguageChange === '4'){
                 this.setState({ stepName: breedData[0].nameSanthali })
                 this.setState({ stepDescription: breedData[0].santhali })

@@ -19,11 +19,37 @@ export default class IncomeScreen extends Component {
             category:'',
             amount:'0',
             languages: [],
+            clearButtonText:'',
+            nextButtontext:''
         }
         this.state.languages = Languages
         this.state.type = this.props.route.params.type
         this.state.category = this.props.route.params.category
         //alert(this.state.type)
+    }
+
+    componentDidMount() {
+        this.loadlabelsFromStorage()
+        this.setLanguageOnMount()
+    }
+    setLanguageOnMount = async () => {
+        let defaultLanguage = await AsyncStorage.getItem('language')
+        if (defaultLanguage === 'en') {
+            this.setState({ textLanguageChange: '0' })
+            this.loadlabelsFromStorage()
+        } else if (defaultLanguage === 'hi') {
+            this.setState({ textLanguageChange: '1' })
+            this.loadlabelsFromStorage()
+        } else if (defaultLanguage === 'ho') {
+            this.setState({ textLanguageChange: '2' })
+            this.loadlabelsFromStorage()
+        } else if (defaultLanguage === 'od') {
+            this.setState({ textLanguageChange: '3' })
+            this.loadlabelsFromStorage()
+        } else if (defaultLanguage === 'san') {
+            this.setState({ textLanguageChange: '4' })
+            this.loadlabelsFromStorage()
+        }
     }
 
     clear = () => {
@@ -59,7 +85,7 @@ export default class IncomeScreen extends Component {
     }
 
     languageChangeFunction = async (data) => {
-        alert(data)
+        //alert(data)
         if (data === 'en') {
             AsyncStorage.setItem('language', 'en')
             
@@ -97,6 +123,39 @@ export default class IncomeScreen extends Component {
                 routes: [{ name: "DashBoardScreen" }]
             });
         }
+    }
+
+    loadlabelsFromStorage = async () => {
+        try {
+            let username = await AsyncStorage.getItem('username')
+            let user = await AsyncStorage.getItem('offlineData');
+            let parsed = JSON.parse(user);
+            var specificObject = parsed[0]
+            var clearButtonText = specificObject.labels.find((i) => i.type === 38)
+            var nextButtonText = specificObject.labels.find((i) => i.type === 62)
+            console.log(nextButtonText.nameHindi)
+            if (this.state.textLanguageChange === '0') {
+                this.setState({ clearButtonText: clearButtonText.nameEnglish })
+                this.state.nextButtontext = nextButtonText.nameEnglish
+               
+            } else if (this.state.textLanguageChange === '1') {
+                this.setState({ clearButtonText: clearButtonText.nameHindi })
+                this.state.nextButtontext = nextButtonText.nameHindi
+            } else if (this.state.textLanguageChange === '2') {
+                this.setState({ clearButtonText: clearButtonText.nameHo })
+                this.state.nextButtontext = nextButtonText.nameHo
+            } else if (this.state.textLanguageChange === '3') {
+                this.setState({ clearButtonText: clearButtonText.nameOdia })
+                this.state.nextButtontext = nextButtonText.nameOdia
+            } else if (this.state.textLanguageChange === '4') {
+                this.setState({ clearButtonText: clearButtonText.nameSanthali })
+                this.state.nextButtontext = nextButtonText.nameSanthali
+            }
+            //console.log(moneyManagerLabel.nameEnglish)
+        } catch (error) {
+            alert(error)
+        }
+        //this.setState({ crops: specificObject.crops })
     }
     render() {
         return (
@@ -173,7 +232,7 @@ export default class IncomeScreen extends Component {
 
                     <TouchableOpacity onPress={() => this.clear()}>
                         <View style={{ backgroundColor: "#fff", height: heightToDp("6%"), width: widthToDp("25%"), borderRadius: 100, marginTop: heightToDp("3.5%"), marginLeft: widthToDp("24%") }}>
-                            <Text style={{ fontSize: widthToDp("4%"), color: "#000", marginTop: heightToDp("1.5%"), alignSelf: 'center', fontFamily: 'Oswald-Medium' }}>CLEAR</Text>
+                            <Text style={{ fontSize: widthToDp("4%"), color: "#000", marginTop: heightToDp("1.5%"), alignSelf: 'center', fontFamily: 'Oswald-Medium' }}>{this.state.clearButtonText}</Text>
                         </View>
                     </TouchableOpacity>
                 </View>
@@ -249,7 +308,7 @@ export default class IncomeScreen extends Component {
 
                     <TouchableOpacity onPress={() => this.doneButton()}>
                         <View style={{ backgroundColor: "#fff", height: heightToDp("6%"), width: widthToDp("30%"), borderRadius: 100, alignSelf: 'center', marginTop: heightToDp("2%") }}>
-                            <Text style={{ fontSize: widthToDp("4%"), color: "#000", marginTop: heightToDp("1.7%"), alignSelf: 'center', fontFamily: 'Oswald-Medium' }}>NEXT</Text>
+                            <Text style={{ fontSize: widthToDp("4%"), color: "#000", marginTop: heightToDp("1.7%"), alignSelf: 'center', fontFamily: 'Oswald-Medium' }}>{this.state.nextButtontext}</Text>
                         </View>
                     </TouchableOpacity>
                     <View style={{marginBottom:heightToDp("3%")}}></View>

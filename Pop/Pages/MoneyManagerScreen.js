@@ -38,14 +38,14 @@ export default class MoneyManagerScreen extends Component {
     expense = () => {
         this.props.navigation.navigate({
             name: 'MoneyManagerCategoriesScreen',
-            params: { type: 'expense' }
+            params: { type: this.state.expenseLabel }
         })
     }
 
     income = () => {
         this.props.navigation.navigate({
             name: 'MoneyManagerCategoriesScreen',
-            params: { type: 'income' }
+            params: { type: this.state.incomeLabel }
         })
     }
 
@@ -154,7 +154,7 @@ export default class MoneyManagerScreen extends Component {
         } catch (error) {
             alert(error)
         }
-        this.setState({ crops: specificObject.crops })
+        //this.setState({ crops: specificObject.crops })
     }
 
     render() {

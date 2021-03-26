@@ -231,6 +231,7 @@ export default class PatchScreen extends Component {
             let user = await AsyncStorage.getItem('user')
             let parsed = JSON.parse(user)
             var sepcific = parsed.find((i) => i.username === username)
+            console.log(sepcific)
             if (this.state.landType === this.state.highLand) {
                 this.setState({ data: sepcific.highLand })
             } else if (this.state.landType === this.state.lowLand) {
