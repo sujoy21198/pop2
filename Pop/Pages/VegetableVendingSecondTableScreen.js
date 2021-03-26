@@ -34,27 +34,29 @@ export default class DryFishSellingSecondTableScreen extends Component {
         this.state = {
             tableHeading: [],
             value: '',
-            sessionalVegInput:'40',
-            spicesInput:'2',
-            sessionalVegTotal:'1200',
-            spicesTotal:'160',
-            expenditurePerDayA:'1460',
-            sessionalVegProfitUnit:'40',
-            sessionalVegProfitUnitPrice:'36',
-            spicesProfitUnit:'2',
-            spicesProfitUnitPrice:'86',
-            perDaySellingValue:'1612',
-            sessionalVegSellingPrice:'1440',
-            spicesVegSellingPrice:'172',
-            profit:'152',
-            profit15:'2280',
+            sessionalVegInput: '40',
+            spicesInput: '2',
+            sessionalVegTotal: '1200',
+            spicesTotal: '160',
+            expenditurePerDayA: '1460',
+            sessionalVegProfitUnit: '40',
+            sessionalVegProfitUnitPrice: '36',
+            spicesProfitUnit: '2',
+            spicesProfitUnitPrice: '86',
+            perDaySellingValue: '1612',
+            sessionalVegSellingPrice: '1440',
+            spicesVegSellingPrice: '172',
+            profit: '152',
+            profit15: '2280',
             textLanguageChange: '',
-            smallBusinessLabel:'',
+            smallBusinessLabel: '',
             languages: [],
             backButtontext: '',
             saveButtonText: '',
             nextButtonText: '',
-            oneTimeExpenditureLabel:''
+            oneTimeExpenditureLabel: '',
+            expVegUnitPrice: '',
+            expSpiceUnitPrice: ''
         }
         this.state.tableHeading = tableHeading
         this.state.languages = Languages
@@ -152,7 +154,7 @@ export default class DryFishSellingSecondTableScreen extends Component {
                 this.setState({ backButtontext: backButtontext.nameEnglish })
                 this.setState({ saveButtonText: saveButtonText.nameEnglish })
                 this.setState({ nextButtonText: nextButtonText.nameEnglish })
-                this.setState({oneTimeExpenditureLabel : oneTimeExpenditureLabel.nameEnglish})
+                this.setState({ oneTimeExpenditureLabel: oneTimeExpenditureLabel.nameEnglish })
                 // this.state.data[4].name = message.nameEnglish
                 // this.state.data[5].name = generalSettings.nameEnglish
                 // this.state.data[6].name = pension.nameEnglish
@@ -165,7 +167,7 @@ export default class DryFishSellingSecondTableScreen extends Component {
                 this.setState({ backButtontext: backButtontext.nameHindi })
                 this.setState({ saveButtonText: saveButtonText.nameHindi })
                 this.setState({ nextButtonText: nextButtonText.nameHindi })
-                this.setState({oneTimeExpenditureLabel : oneTimeExpenditureLabel.nameHindi})
+                this.setState({ oneTimeExpenditureLabel: oneTimeExpenditureLabel.nameHindi })
                 // this.state.data[4].name = message.nameHindi
                 // this.state.data[5].name = generalSettings.nameHindi
                 // this.state.data[6].name = pension.nameHindi
@@ -174,7 +176,7 @@ export default class DryFishSellingSecondTableScreen extends Component {
                 this.setState({ backButtontext: backButtontext.nameHo })
                 this.setState({ saveButtonText: saveButtonText.nameHo })
                 this.setState({ nextButtonText: nextButtonText.nameHo })
-                this.setState({oneTimeExpenditureLabel : oneTimeExpenditureLabel.nameHo})
+                this.setState({ oneTimeExpenditureLabel: oneTimeExpenditureLabel.nameHo })
                 // this.state.data[4].name = message.nameHindi
                 // this.state.data[4].name = message.nameHo
                 // this.state.data[5].name = generalSettings.nameHo
@@ -184,7 +186,7 @@ export default class DryFishSellingSecondTableScreen extends Component {
                 this.setState({ backButtontext: backButtontext.nameOdia })
                 this.setState({ saveButtonText: saveButtonText.nameOdia })
                 this.setState({ nextButtonText: nextButtonText.nameOdia })
-                this.setState({oneTimeExpenditureLabel : oneTimeExpenditureLabel.nameOdia})
+                this.setState({ oneTimeExpenditureLabel: oneTimeExpenditureLabel.nameOdia })
                 // this.state.data[4].name = message.nameOdia
                 // this.state.data[5].name = generalSettings.nameOdia
                 // this.state.data[6].name = pension.nameOdia
@@ -193,7 +195,7 @@ export default class DryFishSellingSecondTableScreen extends Component {
                 this.setState({ backButtontext: backButtontext.nameSanthali })
                 this.setState({ saveButtonText: saveButtonText.nameSanthali })
                 this.setState({ nextButtonText: nextButtonText.nameSanthali })
-                this.setState({oneTimeExpenditureLabel : oneTimeExpenditureLabel.nameSanthali})
+                this.setState({ oneTimeExpenditureLabel: oneTimeExpenditureLabel.nameSanthali })
                 // this.state.data[4].name = message.nameSanthali
                 // this.state.data[5].name = generalSettings.nameSanthali
                 // this.state.data[6].name = pension.nameSanthali
@@ -206,7 +208,7 @@ export default class DryFishSellingSecondTableScreen extends Component {
         //this.setState({ crops: specificObject.crops })
         //this.showData()
     }
-    
+
     getVaccinesFromOffline = async () => {
         try {
             var vaccine = []
@@ -225,26 +227,26 @@ export default class DryFishSellingSecondTableScreen extends Component {
 
     calculation = () => {
         //alert(this.state.sessionalVegInput)
-        var sessionalVegTotal = this.state.sessionalVegInput * 30
-        var spicesTotal = this.state.spicesInput * 80
-        var expenditurePerDayA = sessionalVegTotal+spicesTotal+100
+        var sessionalVegTotal = this.state.sessionalVegInput * this.state.expVegUnitPrice
+        var spicesTotal = this.state.spicesInput * this.state.expSpiceUnitPrice
+        var expenditurePerDayA = sessionalVegTotal + spicesTotal + 100
         var sessionalVegSellingPrice = this.state.sessionalVegProfitUnit * this.state.sessionalVegProfitUnitPrice
         var spicesVegSellingPrice = this.state.spicesProfitUnit * this.state.spicesProfitUnitPrice
 
         var perdaysellingvaluetotal = sessionalVegSellingPrice + spicesVegSellingPrice
         var profit = perdaysellingvaluetotal - expenditurePerDayA
-        var profit15 = profit *15
+        var profit15 = profit * 15
 
-        this.setState({sessionalVegTotal : sessionalVegTotal})
-        this.setState({spicesTotal : spicesTotal})
-        this.setState({expenditurePerDayA : expenditurePerDayA})
-        this.setState({sessionalVegSellingPrice : sessionalVegSellingPrice})
-        this.setState({spicesVegSellingPrice : spicesVegSellingPrice})
-        this.setState({perDaySellingValue : perdaysellingvaluetotal})
-        this.setState({profit : profit})
-        this.setState({profit15 : profit15})
-        Toast.show({text: "Calculated", duration: 3000, type: 'success'});
-        
+        this.setState({ sessionalVegTotal: sessionalVegTotal })
+        this.setState({ spicesTotal: spicesTotal })
+        this.setState({ expenditurePerDayA: expenditurePerDayA })
+        this.setState({ sessionalVegSellingPrice: sessionalVegSellingPrice })
+        this.setState({ spicesVegSellingPrice: spicesVegSellingPrice })
+        this.setState({ perDaySellingValue: perdaysellingvaluetotal })
+        this.setState({ profit: profit })
+        this.setState({ profit15: profit15 })
+        Toast.show({ text: "Calculated", duration: 3000, type: 'success' });
+
     }
 
     inputValue = (data) => {
@@ -253,13 +255,13 @@ export default class DryFishSellingSecondTableScreen extends Component {
         console.log(numberofVaccines)
     }
 
-    next = async() => {
+    next = async () => {
         try {
             var date = new Date().getDate()
-            var month = new Date().getMonth()+1
+            var month = new Date().getMonth() + 1
             var year = new Date().getFullYear()
-            const expenseObject = { 'type': 'expense', 'category': 'Vegetable vending', 'amount': this.state.expenditurePerDayA , 'date': date + "/" + month + "/" + year }
-            const incomeObject = { 'type': 'income', 'category': 'Vegetable Vending', 'amount': this.state.profit15 , 'date': date + "/" + month + "/" + year}
+            const expenseObject = { 'type': 'expense', 'category': 'Vegetable vending', 'amount': this.state.perDaySellingValue, 'date': date + "/" + month + "/" + year }
+            const incomeObject = { 'type': 'income', 'category': 'Vegetable Vending', 'amount': this.state.profit15, 'date': date + "/" + month + "/" + year }
             let username = await AsyncStorage.getItem('username')
             let user = await AsyncStorage.getItem('user');
             let parsed = JSON.parse(user);
@@ -361,7 +363,7 @@ export default class DryFishSellingSecondTableScreen extends Component {
                                 {
                                     tableHeading.map((i, key) => {
                                         return (
-                                            <View style={{ width: widthToDp(`${key===0 ? 24 : key===1 ? 14 : 19}%`), marginLeft: widthToDp("1.5%") }}>
+                                            <View style={{ width: widthToDp(`${key === 0 ? 24 : key === 1 ? 14 : 19}%`), marginLeft: widthToDp("1.5%") }}>
 
                                                 <Text style={{ marginTop: heightToDp("2%"), fontSize: widthToDp('3.3%') }}>{i.name}</Text>
 
@@ -417,7 +419,7 @@ export default class DryFishSellingSecondTableScreen extends Component {
                                         <Text style={{ marginTop: heightToDp("2%") }}>kids</Text>
                                     </View> */}
                                     <View style={{ width: widthToDp("14%"), marginLeft: widthToDp("6%"), height: heightToDp("30%") }}>
-                                        <View style={{width:widthToDp("10%"),height:heightToDp("5%"),marginTop: heightToDp("3.5%"),flexDirection:'row'}}>
+                                        <View style={{ width: widthToDp("10%"), height: heightToDp("5%"), marginTop: heightToDp("3.5%"), flexDirection: 'row' }}>
                                             <Input
                                                 style={{ borderBottomWidth: 1, borderColor: 'blue', fontSize: widthToDp('3.3%') }}
                                                 placeholder="40"
@@ -426,7 +428,7 @@ export default class DryFishSellingSecondTableScreen extends Component {
                                             />
                                         </View>
 
-                                        <View style={{width:widthToDp("10%"),height:heightToDp("5%"),marginTop: heightToDp("3.5%"),flexDirection:'row'}}>
+                                        <View style={{ width: widthToDp("10%"), height: heightToDp("5%"), marginTop: heightToDp("3.5%"), flexDirection: 'row' }}>
                                             <Input
                                                 style={{ borderBottomWidth: 1, borderColor: 'blue', fontSize: widthToDp('3.3%') }}
                                                 placeholder="2"
@@ -435,37 +437,54 @@ export default class DryFishSellingSecondTableScreen extends Component {
                                             />
                                         </View>
 
-                                        <View style={{width:widthToDp("10%"),height:heightToDp("5%"),marginTop: heightToDp("3.5%"),flexDirection:'row'}}>
-                                            <Text style={{fontSize: widthToDp('3.3%')}}>LS</Text>
+                                        <View style={{ width: widthToDp("10%"), height: heightToDp("5%"), marginTop: heightToDp("3.5%"), flexDirection: 'row' }}>
+                                            <Text style={{ fontSize: widthToDp('3.3%') }}>LS</Text>
                                         </View>
                                     </View>
                                     <View style={{ width: widthToDp("14%"), marginLeft: widthToDp("0%") }}>
                                         {/* <Text style={{ marginTop: heightToDp("2%") }}>₹ 5.00 per piece</Text>
                                         <Text style={{ marginTop: heightToDp("2%") }}>₹ 300 per bird</Text> */}
-                                        {
+                                        {/* {
                                             tableHeading.map((i, key) => {
                                                 if(i.unitPrice) {
                                                     return (
                                                         <View style={{marginTop: heightToDp(`${key===0 ? 5.2 : 6.3}%`), width: widthToDp("12%"), flexDirection: 'row', justifyContent: 'space-between'}}>
                                                             {i.unitPrice && <Text style={{ fontSize: widthToDp('3.3%') }}>₹ </Text>}
-                                                            <Text style={{ fontSize: widthToDp('3.3%') }}>{i.items ? i.unitPrice : "-"}</Text>
+                                                            <Text style={{ fontSize: widthToDp('3.3%') }}>{i.items ? i.unitPrice : "-"}ko</Text>
                                                         </View>
                                                     )
                                                 }                                                
                                             })
-                                        }
+                                        } */}
+                                        <View style={{ width: widthToDp("10%"), height: heightToDp("5%"), marginTop: heightToDp("3.5%"), flexDirection: 'row' }}>
+                                            <Input
+                                                style={{ borderBottomWidth: 1, borderColor: 'blue', fontSize: widthToDp('3.3%') }}
+                                                placeholder="30"
+                                                onChangeText={(data) => this.setState({ expVegUnitPrice: data })}
+                                                keyboardType="number-pad"
+                                            />
+                                        </View>
+
+                                        <View style={{ width: widthToDp("10%"), height: heightToDp("5%"), marginTop: heightToDp("3.5%"), flexDirection: 'row' }}>
+                                            <Input
+                                                style={{ borderBottomWidth: 1, borderColor: 'blue', fontSize: widthToDp('3.3%') }}
+                                                placeholder="80"
+                                                onChangeText={(data) => this.setState({ expSpiceUnitPrice: data })}
+                                                keyboardType="number-pad"
+                                            />
+                                        </View>
 
                                     </View>
                                     <View style={{ width: widthToDp("14%"), marginLeft: widthToDp("5%") }}>
-                                        <View style={{marginTop: heightToDp('5.2%'), width: widthToDp("12%"), flexDirection: 'row', justifyContent: 'space-between'}}>
+                                        <View style={{ marginTop: heightToDp('5.2%'), width: widthToDp("12%"), flexDirection: 'row', justifyContent: 'space-between' }}>
                                             <Text style={{ fontSize: widthToDp('3.3%') }}>₹ </Text>
                                             <Text style={{ fontSize: widthToDp('3.3%') }}>{this.state.sessionalVegTotal}</Text>
                                         </View>
-                                        <View style={{marginTop: heightToDp('6.2%'), width: widthToDp("12%"), flexDirection: 'row', justifyContent: 'space-between'}}>
+                                        <View style={{ marginTop: heightToDp('6.2%'), width: widthToDp("12%"), flexDirection: 'row', justifyContent: 'space-between' }}>
                                             <Text style={{ fontSize: widthToDp('3.3%') }}>₹ </Text>
                                             <Text style={{ fontSize: widthToDp('3.3%') }}>{this.state.spicesTotal}</Text>
                                         </View>
-                                        <View style={{marginTop: heightToDp('4%'), width: widthToDp("12%"), flexDirection: 'row', justifyContent: 'space-between'}}>
+                                        <View style={{ marginTop: heightToDp('4%'), width: widthToDp("12%"), flexDirection: 'row', justifyContent: 'space-between' }}>
                                             <Text style={{ fontSize: widthToDp('3.3%') }}>₹ </Text>
                                             <Text style={{ fontSize: widthToDp('3.3%') }}>100</Text>
                                         </View>
@@ -473,7 +492,7 @@ export default class DryFishSellingSecondTableScreen extends Component {
                                 </View>
                             </View>
                             <View style={{ borderWidth: 1, height: heightToDp("8%"), width: widthToDp("83%"), marginLeft: widthToDp("3%"), marginTop: heightToDp("0%"), flexDirection: 'row' }}>
-                                <View style={{marginLeft: widthToDp('1%')}}>
+                                <View style={{ marginLeft: widthToDp('1%') }}>
                                     <Text style={{ fontSize: widthToDp('3.3%') }}>Expenditure per day/lot (A)</Text>
                                 </View>
                                 <View style={{ width: widthToDp("13%"), marginLeft: widthToDp('22%'), flexDirection: 'row', justifyContent: 'space-between' }}>
@@ -483,16 +502,16 @@ export default class DryFishSellingSecondTableScreen extends Component {
 
                             </View>
 
-                            <View style={{ 
+                            <View style={{
                                 borderTopWidth: 1,
                                 borderLeftWidth: 1,
                                 borderRightWidth: 1,
-                                borderBottomWidth: 1.3, 
-                                paddingVertical: heightToDp("2%"), 
-                                width: widthToDp("83%"), 
-                                marginLeft: widthToDp("3%"), 
-                                marginTop: heightToDp("1.5%"), 
-                                flexDirection: 'row' 
+                                borderBottomWidth: 1.3,
+                                paddingVertical: heightToDp("2%"),
+                                width: widthToDp("83%"),
+                                marginLeft: widthToDp("3%"),
+                                marginTop: heightToDp("1.5%"),
+                                flexDirection: 'row'
                             }}>
                                 {
                                     tableHeading2.map((i) => {
@@ -516,7 +535,7 @@ export default class DryFishSellingSecondTableScreen extends Component {
                                         {
                                             tableHeading2.map((i, key) => {
                                                 return (
-                                                    <Text style={{ marginTop: heightToDp(`${key===0 ? 1 : 5}%`), fontSize: widthToDp('3.3%') }}>{i.items}</Text>
+                                                    <Text style={{ marginTop: heightToDp(`${key === 0 ? 1 : 5}%`), fontSize: widthToDp('3.3%') }}>{i.items}</Text>
                                                 )
                                             })
                                         }
@@ -576,11 +595,11 @@ export default class DryFishSellingSecondTableScreen extends Component {
 
                                     </View>
                                     <View style={{ width: widthToDp("14%"), marginLeft: widthToDp("5%") }}>
-                                        <View style={{marginTop: heightToDp("3%"), width: widthToDp("12%"), flexDirection: 'row', justifyContent: 'space-between'}}>
+                                        <View style={{ marginTop: heightToDp("3%"), width: widthToDp("12%"), flexDirection: 'row', justifyContent: 'space-between' }}>
                                             <Text style={{ fontSize: widthToDp('3.3%') }}>₹ </Text>
                                             <Text style={{ fontSize: widthToDp('3.3%') }}>{this.state.sessionalVegSellingPrice}</Text>
                                         </View>
-                                        <View style={{marginTop: heightToDp("6.5%"), width: widthToDp("12%"), flexDirection: 'row', justifyContent: 'space-between'}}>
+                                        <View style={{ marginTop: heightToDp("6.5%"), width: widthToDp("12%"), flexDirection: 'row', justifyContent: 'space-between' }}>
                                             <Text style={{ fontSize: widthToDp('3.3%') }}>₹ </Text>
                                             <Text style={{ fontSize: widthToDp('3.3%') }}>{this.state.spicesVegSellingPrice}</Text>
                                         </View>
@@ -601,7 +620,7 @@ export default class DryFishSellingSecondTableScreen extends Component {
                                     marginLeft: widthToDp('1%'),
                                     fontSize: widthToDp('3.3%')
                                 }}>Per day selling value (B)</Text>
-                                <View style={{marginLeft: heightToDp("13%"), width: widthToDp("12%"), flexDirection: 'row', justifyContent: 'space-between'}}>
+                                <View style={{ marginLeft: heightToDp("13%"), width: widthToDp("12%"), flexDirection: 'row', justifyContent: 'space-between' }}>
                                     <Text style={{ fontSize: widthToDp('3.3%') }}>₹ </Text>
                                     <Text style={{ fontSize: widthToDp('3.3%') }}>{this.state.perDaySellingValue}</Text>
                                 </View>
@@ -611,7 +630,7 @@ export default class DryFishSellingSecondTableScreen extends Component {
                                     marginLeft: widthToDp('1%'),
                                     fontSize: widthToDp('3.3%')
                                 }}>Profit per day/lot</Text>
-                                <View style={{marginLeft: heightToDp("18%"), width: widthToDp("12%"), flexDirection: 'row', justifyContent: 'space-between'}}>
+                                <View style={{ marginLeft: heightToDp("18%"), width: widthToDp("12%"), flexDirection: 'row', justifyContent: 'space-between' }}>
                                     <Text style={{ fontSize: widthToDp('3.3%') }}>₹ </Text>
                                     <Text style={{ fontSize: widthToDp('3.3%') }}>{this.state.profit}</Text>
                                 </View>
