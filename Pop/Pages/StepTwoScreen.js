@@ -360,7 +360,7 @@ export default class StepTwoScreen extends Component {
                     })
                 }
             }
-
+            AsyncStorage.setItem("jump","StepTwoScreen")
         } catch (error) {
             console.log(error)
         }

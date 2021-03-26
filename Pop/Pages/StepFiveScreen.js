@@ -84,6 +84,40 @@ export default class StepFiveScreen extends Component {
         this.setLanguageOnMount()
         this.loadlabelsFromStorage()
         this.getOfflineData()
+        this.checkIfStepExsists()
+    }
+
+    checkIfStepExsists = async() => {
+        try{
+            let username = await AsyncStorage.getItem('username')
+            let user = await AsyncStorage.getItem('cropData');
+            let parsed = JSON.parse(user);
+            var specificObject = parsed.find((i) => i.username === username)
+            var cropSpecificSteps = specificObject.cropSteps.filter((i) => i.cropId === this.state._id)
+            
+                if (cropSpecificSteps[5] === undefined) {
+                    this.props.navigation.navigate({
+                        name: 'ActualCultivationCostScreen',
+                        params: {
+                            cropName: this.state.cropName,
+                            _id: this.state._id,
+                            imageFile: this.state.imageFile,
+                            patchName: this.state.patchName,
+                            landType: this.state.landType,
+                            farmingAreaInDecimal: this.state.farmingAreaInDecimal,
+                            costOfCultivatinPerTenDecimal: this.state.costOfCultivatinPerTenDecimal,
+                            costPerKg: this.state.costPerKg,
+                            productionInKg: this.state.productionInKg,
+                            cost: this.state.cost,
+                            netProfit: this.state.netProfit
+                        }
+                    })
+                }
+            
+            AsyncStorage.setItem("jump","StepFiveScreen")
+        }catch(error){
+            console.log(error)
+        }
     }
 
     getOfflineData = async () => {
@@ -356,6 +390,7 @@ export default class StepFiveScreen extends Component {
                     })
                 }
             }
+            AsyncStorage.setItem("jump","StepFiveScreen")
         }catch(error){
             console.log(error)
         }

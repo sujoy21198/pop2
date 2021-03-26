@@ -355,6 +355,7 @@ export default class StepOneScreen extends Component {
                     })
                 }
             }
+            AsyncStorage.setItem("jump","StepEightScreen")
         }catch(error){
             console.log(error)
         }

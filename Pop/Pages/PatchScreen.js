@@ -279,7 +279,7 @@ export default class PatchScreen extends Component {
             var jump = sepcific.patch.find((i) => i.patchName === patchName)
             var jumpNavigation = sepcific.costBenifitAnalysis.find((i) => i.patchName === patchName)
             console.log(sepcific.costBenifitAnalysis.find((i) => i.patchName === patchName),"hi")
-            if(jump.step1 === '' && jump.step2 === '' && jump.step3 === '' && jump.step4 === '' && jump.step5 === ''){
+            if(jump.step1 === '' && jump.step2 === '' && jump.step3 === '' && jump.step4 === '' && jump.step5 === '' && jump.step6 === '' && jump.step7 === '' && jump.step8 === ''){
                 this.props.navigation.navigate({
                     name: 'SelectFarmingAreaScreen',
                     params: {
@@ -292,7 +292,7 @@ export default class PatchScreen extends Component {
                 })
             }else if(jump.step2 === ''){
                 this.props.navigation.navigate({
-                    name: 'StepTwoScreen',
+                    name: 'StepOneScreen',
                     params: {
                         cropName: jumpNavigation.cropName,
                         _id: jumpNavigation._id,
@@ -326,7 +326,7 @@ export default class PatchScreen extends Component {
                 })
             }else if(jump.step4 === ''){
                 this.props.navigation.navigate({
-                    name: 'StepFourScreen',
+                    name: 'StepThreeScreen',
                     params: {
                         cropName: jumpNavigation.cropName,
                         _id: jumpNavigation._id,
@@ -343,7 +343,58 @@ export default class PatchScreen extends Component {
                 })
             }else if(jump.step5 === ''){
                 this.props.navigation.navigate({
+                    name: 'StepFourScreen',
+                    params: {
+                        cropName: jumpNavigation.cropName,
+                        _id: jumpNavigation._id,
+                        imageFile: jumpNavigation.imageFile,
+                        patchName : jumpNavigation.patchName,
+                        landType: jumpNavigation.landType,
+                        farmingAreaInDecimal : jumpNavigation.farmingAreaInDecimal,
+                        costOfCultivatinPerTenDecimal : jumpNavigation.costOfCultivatinPerTenDecimal,
+                        costPerKg : jumpNavigation.costPerKg,
+                        productionInKg : jumpNavigation.productionInKg,
+                        cost : jumpNavigation.cost,
+                        netProfit : jumpNavigation.netProfit
+                    }
+                })
+            }else if(jump.step6 === ''){
+                this.props.navigation.navigate({
                     name: 'StepFiveScreen',
+                    params: {
+                        cropName: jumpNavigation.cropName,
+                        _id: jumpNavigation._id,
+                        imageFile: jumpNavigation.imageFile,
+                        patchName : jumpNavigation.patchName,
+                        landType: jumpNavigation.landType,
+                        farmingAreaInDecimal : jumpNavigation.farmingAreaInDecimal,
+                        costOfCultivatinPerTenDecimal : jumpNavigation.costOfCultivatinPerTenDecimal,
+                        costPerKg : jumpNavigation.costPerKg,
+                        productionInKg : jumpNavigation.productionInKg,
+                        cost : jumpNavigation.cost,
+                        netProfit : jumpNavigation.netProfit
+                    }
+                })
+            }else if(jump.step7 === ''){
+                this.props.navigation.navigate({
+                    name: 'StepSixScreen',
+                    params: {
+                        cropName: jumpNavigation.cropName,
+                        _id: jumpNavigation._id,
+                        imageFile: jumpNavigation.imageFile,
+                        patchName : jumpNavigation.patchName,
+                        landType: jumpNavigation.landType,
+                        farmingAreaInDecimal : jumpNavigation.farmingAreaInDecimal,
+                        costOfCultivatinPerTenDecimal : jumpNavigation.costOfCultivatinPerTenDecimal,
+                        costPerKg : jumpNavigation.costPerKg,
+                        productionInKg : jumpNavigation.productionInKg,
+                        cost : jumpNavigation.cost,
+                        netProfit : jumpNavigation.netProfit
+                    }
+                })
+            }else if(jump.step8 === ''){
+                this.props.navigation.navigate({
+                    name: 'StepSevenScreen',
                     params: {
                         cropName: jumpNavigation.cropName,
                         _id: jumpNavigation._id,
