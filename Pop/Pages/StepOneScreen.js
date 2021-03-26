@@ -556,10 +556,10 @@ export default class StepOneScreen extends Component {
 
                             <ScrollView nestedScrollEnabled ={true}>
                                 {
-                                    multipleMaterials.map((i, key) => {
+                                    multipleMaterials.map((i, index) => {
                                         return (
                                             <>
-                                                <View style={{height: heightToDp(`${key===0 ? 1 : 0}%`)}}/>
+                                                <View style={{height: heightToDp(`${index===0 ? 1 : 0}%`)}}/>
                                                 <View style={{ flexDirection: 'row', marginLeft: widthToDp("3%"), marginTop: heightToDp("2%") }}>
                                                     <View style={{ width: widthToDp("20%") }}>
                                                         {
@@ -579,16 +579,15 @@ export default class StepOneScreen extends Component {
                                                     </View>
                                                     <View style={{ width: widthToDp("30%"), marginLeft: widthToDp("5%") }}>
                                                         <Input
-                                                            placeholder={this.state.decimalPrice}
+                                                            placeholder={i.decimalPrice}
                                                             keyboardType='number-pad'
-                                                            defaultValue={this.state.decimalPrice}
-                                                            //onChange={(data) => this.setMaterialPrice(data)}
-                                                            onChangeText={(data) => this.setMaterialPrice(data , i.materialNameEnglish)}
+                                                           
+                                                            onChangeText={(data) => this.setMaterialPrice(data ,index)}
                                                             style={{ marginLeft: widthToDp("0%"), fontFamily: 'Oswald-Medium', width: widthToDp("20%"), marginTop: heightToDp("-2%"), borderBottomWidth: 1, borderColor: 'blue', marginRight: widthToDp("5%") }}
                                                         />
                                                     </View>
                                                 </View>
-                                                <View style={{height: heightToDp(`${key===multipleMaterials.length-1 ? 1 : 0}%`)}}/>
+                                                <View style={{height: heightToDp(`${index===multipleMaterials.length-1 ? 1 : 0}%`)}}/>
                                             </>
                                         )
                                     })

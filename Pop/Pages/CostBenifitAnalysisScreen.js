@@ -64,7 +64,7 @@ export default class CostBenifitAnalysisScreen extends Component {
         var value1 = this.state.actualCulCostScreenProductionInKg
         var value2 = this.state.actualCulCostScreenCostPerKg
         this.state.totalincomefromcrop = value1 * value2
-        //alert(this.state.totalincomefromcrop)
+        alert(this.state.actualCulCostScreenCostPerKg)
 
         var income = this.state.totalincomefromcrop
         var expense = this.state.actualCulCostScreenTotalExpense
@@ -260,7 +260,7 @@ export default class CostBenifitAnalysisScreen extends Component {
                                     <Text style={{ fontFamily: 'Oswald-Medium' }}>Cost Per kg</Text>
                                 </View>
                                 <View style={{ width: widthToDp("10%") }}>
-                                    <Text style={{ marginLeft: widthToDp("51%"), fontFamily: 'Oswald-Medium' }}>{this.state.actualCulCostScreenCostPerKg} KG</Text>
+                                    <Text style={{ marginLeft: widthToDp("5%"), fontFamily: 'Oswald-Medium' }}>{this.state.actualCulCostScreenCostPerKg} KG</Text>
                                 </View>
 
 
