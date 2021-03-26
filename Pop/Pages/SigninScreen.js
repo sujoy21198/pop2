@@ -930,12 +930,7 @@ export default class SigninScreen extends Component {
 
         await AsyncStorage.setItem("cropData", JSON.stringify(newCropData))
             .then(() => {
-                this.props.navigation.reset({
-                    index: 0,
-                    routes: [
-                        { name: "DashBoardScreen" }
-                    ]
-                });
+                
                 //alert('‘Offline Data saved successfully’')
                 Toast.show({
                     text: "crop Data saved successfully",

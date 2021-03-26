@@ -126,7 +126,11 @@ export default class DashBoardScreen extends Component {
             }
             
         } catch (error) {
-            alert(error)
+            alert("Network Error! Data not saved. Please login again. ")
+            this.props.navigation.reset({
+                index: 0,
+                routes: [{ name: "LanguageScreen" }]
+            });
         }
         this.setState({ crops: specificObject.crops })
     }
