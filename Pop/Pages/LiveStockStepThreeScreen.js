@@ -129,23 +129,28 @@ export default class LiveStockStepThreeScreen extends Component {
             //console.log(breedData[1].name)
             // this.setState({ stepName: breedData[2].name })
             // this.setState({ stepDescription: breedData[2].english })
-            this.setState({ contentArea: breedData[2].contentAreaEnglish })
+            
             // console.log(breedData[2].contentAreaEnglish)
             if (this.state.textLanguageChange === '0') {
                 this.setState({ stepName: breedData[2].nameEnglish })
                 this.setState({ stepDescription: breedData[2].english })
+                this.setState({ contentArea: breedData[2].contentAreaEnglish })
             }else if(this.state.textLanguageChange === '1'){
                 this.setState({ stepName: breedData[2].nameHindi })
                 this.setState({ stepDescription: breedData[2].hindi })
+                this.setState({ contentArea: breedData[2].contentAreaHindi })
             }else if(this.state.textLanguageChange === '2'){
                 this.setState({ stepName: breedData[2].nameHo })
                 this.setState({ stepDescription: breedData[2].ho })
+                this.setState({ contentArea: breedData[2].contentAreaHo })
             }else if(this.state.textLanguageChange === '3'){
                 this.setState({ stepName: breedData[2].nameOdia })
                 this.setState({ stepDescription: breedData[2].odia })
+                this.setState({ contentArea: breedData[2].contentAreaOdia })
             }else if(this.state.textLanguageChange === '4'){
                 this.setState({ stepName: breedData[2].nameSanthali })
                 this.setState({ stepDescription: breedData[2].santhali })
+                this.setState({ contentArea: breedData[2].contentAreaSanthali })
             }
 
         } catch (error) {
