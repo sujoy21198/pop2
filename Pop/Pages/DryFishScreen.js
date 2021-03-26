@@ -290,6 +290,7 @@ export default class DryFishScreen extends Component {
         this.state.pageCounter = this.state.pageCounter + 1
 
         if (this.state.pageCounter === length) {
+            this.state.pageCounter = this.state.pageCounter-1
             // this.props.navigation.reset({
             //     index: 0,
             //     routes: [{ name: "DashBoardScreen" }]

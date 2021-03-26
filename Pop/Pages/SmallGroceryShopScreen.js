@@ -290,6 +290,7 @@ export default class SmallGroceryShopScreen extends Component {
         this.state.pageCounter = this.state.pageCounter + 1
 
         if (this.state.pageCounter === length) {
+            this.state.pageCounter = this.state.pageCounter-1
             this.props.navigation.navigate({
                 name: 'SmallGroceryShopFirstTableScreen'
             })

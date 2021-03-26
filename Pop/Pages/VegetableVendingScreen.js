@@ -269,7 +269,10 @@ export default class VegetableVendingScreen extends Component {
 
         this.state.pageCounter = this.state.pageCounter + 1
 
+        console.log(this.state.pageCounter,"page counter")
+        console.log(length,"length")
         if (this.state.pageCounter === length) {
+            this.state.pageCounter = this.state.pageCounter-1
             // this.props.navigation.reset({
             //     index: 0,
             //     routes: [{ name: "DashBoardScreen" }]
@@ -277,6 +280,7 @@ export default class VegetableVendingScreen extends Component {
             this.props.navigation.navigate({
                 name: 'VegetableVendingFirstTableScreen'
             })
+            
         } else {
             this.getDetailsFromOffline()
         }
