@@ -188,42 +188,42 @@ export default class MoneyManagerCategoriesScreen extends Component {
         if (data === this.state.data[0].name) {
             this.props.navigation.navigate({
                 name: 'IncomeScreen',
-                params: { category: this.state.data[0].name , type : this.state.type, nameEnglish }
+                params: { category: this.state.data[0].name , type : this.state.type, nameEnglish, profitType: this.props.route.params.profitType }
             })
         } else if (data === this.state.data[1].name) {
             this.props.navigation.navigate({
                 name: 'IncomeScreen',
-                params: { category: this.state.data[1].name , type : this.state.type, nameEnglish}
+                params: { category: this.state.data[1].name , type : this.state.type, nameEnglish, profitType: this.props.route.params.profitType}
             })
         } else if (data === this.state.data[2].name) {
             this.props.navigation.navigate({
                 name: 'IncomeScreen',
-                params: { category: this.state.data[2].name, type : this.state.type, nameEnglish }
+                params: { category: this.state.data[2].name, type : this.state.type, nameEnglish, profitType: this.props.route.params.profitType }
             })
         } else if (data === this.state.data[3].name) {
             this.props.navigation.navigate({
                 name: 'IncomeScreen',
-                params: { category: this.state.data[3].name , type : this.state.type, nameEnglish}
+                params: { category: this.state.data[3].name , type : this.state.type, nameEnglish, profitType: this.props.route.params.profitType}
             })
         }else if (data === this.state.data[4].name) {
             this.props.navigation.navigate({
                 name: 'IncomeScreen',
-                params: { category: this.state.data[4].name , type : this.state.type, nameEnglish}
+                params: { category: this.state.data[4].name , type : this.state.type, nameEnglish, profitType: this.props.route.params.profitType}
             })
         }else if (data === this.state.data[5].name) {
             this.props.navigation.navigate({
                 name: 'IncomeScreen',
-                params: { category: this.state.data[5].name , type : this.state.type, nameEnglish}
+                params: { category: this.state.data[5].name , type : this.state.type, nameEnglish, profitType: this.props.route.params.profitType}
             })
         }else if (data === this.state.data[6].name) {
             this.props.navigation.navigate({
                 name: 'IncomeScreen',
-                params: { category:this.state.data[6].name, type : this.state.type, nameEnglish }
+                params: { category:this.state.data[6].name, type : this.state.type, nameEnglish, profitType: this.props.route.params.profitType }
             })
         }else if (data === this.state.data[7].name) {
             this.props.navigation.navigate({
                 name: 'IncomeScreen',
-                params: { category: this.state.data[7].name, type : this.state.type, nameEnglish }
+                params: { category: this.state.data[7].name, type : this.state.type, nameEnglish, profitType: this.props.route.params.profitType }
             })
         }
     }
