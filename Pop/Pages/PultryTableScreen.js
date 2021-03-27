@@ -53,7 +53,7 @@ export default class PultryTableScreen extends Component {
             eggQuantity: '30',
             birdQuantity: '8',
             total: '2550',
-            netProfit: '1550',
+            netProfit: '2300',
             feed: '125',
             vaccination: '125',
             totalB: '250',
@@ -628,7 +628,7 @@ export default class PultryTableScreen extends Component {
                                 <View style={{ marginLeft: widthToDp("3%"), marginTop: ("4%") }}>
                                     <View style={{ flexDirection: 'row' }}>
                                         <Text>{this.state.netProfitLabel} = </Text>
-                                        <Text>{"₹ " + this.state.netProfit}</Text>
+                                        <Text>{"₹ " + this.state.total + "- ₹" + this.state.totalB + " = ₹  " + this.state.netProfit}</Text>
                                     </View>
 
                                 </View>

@@ -70,7 +70,11 @@ export default class DryFishSellingSecondTableScreen extends Component {
             perDaySellingValueB: '',
             profitPerDay: '',
             sellingPerMonth: '',
-            headerLabel: ''
+            headerLabel: '',
+            lossLabel: '',
+            netProfitPerMonthLabel: '',
+            lossPercentage: 103,
+            netProfitPerMonth: '2177'
         }
         this.state.tableHeading = tableHeading
         this.state.languages = Languages
@@ -174,6 +178,8 @@ export default class DryFishSellingSecondTableScreen extends Component {
             var perDaySellingValueB = specificObject.labels.find((i) => i.type === 105)
             var sellingPerMonth = specificObject.labels.find((i) => i.type === 106)
             var headerLabel = specificObject.labels.find((i) => i.type === 163)
+            var lossLabel = specificObject.labels.find((i) => i.type === 211)
+            var netProfitPerMonthLabel = specificObject.labels.find((i) => i.type === 185)
             // var message = specificObject.labels.find((i) => i.type === 26)
             // var generalSettings = specificObject.labels.find((i) => i.type === 27)
             // var pension = specificObject.labels.find((i) => i.type === 51)
@@ -197,6 +203,8 @@ export default class DryFishSellingSecondTableScreen extends Component {
                 this.setState({perDaySellingValueB : perDaySellingValueB.nameEnglish})
                 this.setState({sellingPerMonth : sellingPerMonth.nameEnglish})
                 this.setState({headerLabel : headerLabel.nameEnglish})
+                this.setState({lossLabel : lossLabel.nameEnglish})
+                this.setState({netProfitPerMonthLabel : netProfitPerMonthLabel.nameEnglish})
                 // this.state.data[4].name = message.nameEnglish
                 // this.state.data[5].name = generalSettings.nameEnglish
                 // this.state.data[6].name = pension.nameEnglish
@@ -224,6 +232,8 @@ export default class DryFishSellingSecondTableScreen extends Component {
                 this.setState({perDaySellingValueB : perDaySellingValueB.nameHindi})
                 this.setState({sellingPerMonth : sellingPerMonth.nameHindi})
                 this.setState({headerLabel : headerLabel.nameHindi})
+                this.setState({lossLabel : lossLabel.nameHindi})
+                this.setState({netProfitPerMonthLabel : netProfitPerMonthLabel.nameHindi})
                 // this.state.data[4].name = message.nameHindi
                 // this.state.data[5].name = generalSettings.nameHindi
                 // this.state.data[6].name = pension.nameHindi
@@ -247,6 +257,8 @@ export default class DryFishSellingSecondTableScreen extends Component {
                 this.setState({perDaySellingValueB : perDaySellingValueB.nameHo})
                 this.setState({sellingPerMonth : sellingPerMonth.nameHo})
                 this.setState({headerLabel : headerLabel.nameHo})
+                this.setState({lossLabel : lossLabel.nameHo})
+                this.setState({netProfitPerMonthLabel : netProfitPerMonthLabel.nameHo})
                 // this.state.data[4].name = message.nameHindi
                 // this.state.data[4].name = message.nameHo
                 // this.state.data[5].name = generalSettings.nameHo
@@ -271,6 +283,8 @@ export default class DryFishSellingSecondTableScreen extends Component {
                 this.setState({perDaySellingValueB : perDaySellingValueB.nameOdia})
                 this.setState({sellingPerMonth : sellingPerMonth.nameOdia})
                 this.setState({headerLabel : headerLabel.nameOdia})
+                this.setState({netProfitPerMonthLabel : netProfitPerMonthLabel.nameOdia})
+                this.setState({lossLabel : lossLabel.nameOdia})
                 // this.state.data[4].name = message.nameOdia
                 // this.state.data[5].name = generalSettings.nameOdia
                 // this.state.data[6].name = pension.nameOdia
@@ -294,6 +308,8 @@ export default class DryFishSellingSecondTableScreen extends Component {
                 this.setState({perDaySellingValueB : perDaySellingValueB.nameSanthali})
                 this.setState({sellingPerMonth : sellingPerMonth.nameSanthali})
                 this.setState({headerLabel : headerLabel.nameSanthali})
+                this.setState({netProfitPerMonthLabel : netProfitPerMonthLabel.nameSanthali})
+                this.setState({lossLabel : lossLabel.nameSanthali})
                 // this.state.data[4].name = message.nameSanthali
                 // this.state.data[5].name = generalSettings.nameSanthali
                 // this.state.data[6].name = pension.nameSanthali
@@ -334,6 +350,7 @@ export default class DryFishSellingSecondTableScreen extends Component {
         var perdaysellingvaluetotal = sessionalVegSellingPrice + spicesVegSellingPrice
         var profit = perdaysellingvaluetotal - expenditurePerDayA
         var profit15 = profit * 15
+        var netProfit = profit15 - this.state.lossPercentage;
 
         this.setState({ sessionalVegTotal: sessionalVegTotal })
         this.setState({ spicesTotal: spicesTotal })
@@ -343,6 +360,7 @@ export default class DryFishSellingSecondTableScreen extends Component {
         this.setState({ perDaySellingValue: perdaysellingvaluetotal })
         this.setState({ profit: profit })
         this.setState({ profit15: profit15 })
+        this.setState({ netProfitPerMonth: netProfit })
         Toast.show({ text: "Calculated", duration: 3000, type: 'success' });
 
     }
@@ -739,16 +757,41 @@ export default class DryFishSellingSecondTableScreen extends Component {
                                     <Text style={{ fontSize: widthToDp('3.3%') }}>{this.state.profit}</Text>
                                 </View>
                             </View>
-                            <View style={{ borderWidth: 1, height: heightToDp("8%"), width: widthToDp("83%"), marginLeft: widthToDp("3%"), marginTop: heightToDp("0%"), flexDirection: 'row' }}>
+                            <View style={{ borderWidth: 1, height: heightToDp("6%"), width: widthToDp("83%"), marginLeft: widthToDp("3%"), marginTop: heightToDp("0%"), flexDirection: 'row' }}>
                                 <Text style={{
                                     marginLeft: widthToDp('1%'),
                                     fontSize: widthToDp('3.3%')
                                 }}>{this.state.sellingPerMonth} = ₹ {this.state.profit}*15=  ₹ {this.state.profit15}</Text>
                             </View>
+                            
+                            
+                            <View style={{ borderWidth: 1, height: heightToDp("8%"), width: widthToDp("83%"), marginLeft: widthToDp("3%"), marginTop: heightToDp("0%"), flexDirection: 'row' }}>
+                                <View style={{ width: widthToDp("60%"), marginLeft: widthToDp('1%') }}>
+                                    <Text style={{fontSize: widthToDp('3%')}}>{this.state.lossLabel}</Text>
+                                </View>
+                                <View style={{ width: widthToDp("17%"),height:heightToDp("5%"),marginTop:heightToDp("0%") }}>
+                                    <Input
+                                        style={{ borderBottomWidth: 1, borderColor: 'blue', fontSize: widthToDp('3.3%') }}
+                                        onChangeText={(data) => this.setState({ lossPercentage: data })}
+                                        defaultValue={"103"}
+                                        keyboardType="number-pad"
+                                    />
+                                </View>
+                            </View>
 
+                            <View style={{ borderWidth: 1, height: heightToDp("5%"), width: widthToDp("83%"), marginLeft: widthToDp("3%"), marginTop: heightToDp("0%"), flexDirection: 'row' }}>
+                                <View style={{ width: widthToDp("60%"), marginLeft: widthToDp('1%') }}>
+                                    <Text style={{fontSize: widthToDp('3%')}}>{this.state.netProfitPerMonthLabel}</Text>
+                                </View>
+                                
+                                <View style={{width: widthToDp("14%"), height:heightToDp("5%"), flexDirection: 'row', justifyContent: 'space-between'}}>
+                                    <Text style={{ fontSize: widthToDp('3%') }}>₹ </Text>
+                                    <Text style={{ fontSize: widthToDp('3%') }}>{this.state.netProfitPerMonth}</Text>
+                                </View>
+                            </View>
                         </View>
                     </View>
-                    <View style={{ marginTop: heightToDp("10%") }}></View>
+                    <View style={{ marginTop: heightToDp("15%") }}></View>
                 </ScrollView>
                 <View style={{ flexDirection: 'row', height: heightToDp("10%"), alignSelf: 'center' }}>
                     <TouchableOpacity onPress={() => this.props.navigation.goBack()}>

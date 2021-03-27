@@ -27,7 +27,8 @@ export default class SelectFarmingAreaScreen extends Component {
             patchName:'',
             languages:[],
             farmingAreaLabel: '',
-            submitText: ''
+            submitText: '',
+            measureLabel: ''
         }
         this.state.landType = this.props.route.params.landType
         this.state._id = this.props.route.params._id
@@ -70,6 +71,7 @@ export default class SelectFarmingAreaScreen extends Component {
             var specificObject = parsed.find((i) => i.username === username)
             var farmingAreaLabel = specificObject.labels.find((i) => i.type === 59)
             var submitText = specificObject.labels.find((i) => i.type === 61)
+            var measureLabel = specificObject.labels.find((i) => i.type === 60)
             // var message = specificObject.labels.find((i) => i.type === 26)
             // var generalSettings = specificObject.labels.find((i) => i.type === 27)
             // var pension = specificObject.labels.find((i) => i.type === 51)
@@ -77,18 +79,23 @@ export default class SelectFarmingAreaScreen extends Component {
             if (this.state.textLanguageChange === '0') {
                 this.setState({ farmingAreaLabel: farmingAreaLabel.nameEnglish })
                 this.setState({ submitText: submitText.nameEnglish })
+                this.setState({ measureLabel: measureLabel.nameEnglish })
             } else if (this.state.textLanguageChange === '1') {
                 this.setState({ farmingAreaLabel: farmingAreaLabel.nameHindi })
                 this.setState({ submitText: submitText.nameHindi })
+                this.setState({ measureLabel: measureLabel.nameHindi })
             } else if (this.state.textLanguageChange === '2') {
                 this.setState({ farmingAreaLabel: farmingAreaLabel.nameHo })
                 this.setState({ submitText: submitText.nameHo })
+                this.setState({ measureLabel: measureLabel.nameHo })
             } else if (this.state.textLanguageChange === '3') {
                 this.setState({ farmingAreaLabel: farmingAreaLabel.nameOdia })
                 this.setState({ submitText: submitText.nameOdia })
+                this.setState({ measureLabel: measureLabel.nameOdia })
             } else if (this.state.textLanguageChange === '4') {
                 this.setState({ farmingAreaLabel: farmingAreaLabel.nameSanthali })
                 this.setState({ submitText: submitText.nameSanthali })
+                this.setState({ measureLabel: measureLabel.nameSanthali })
             }
         } catch (error) {
             alert(error)
@@ -419,7 +426,7 @@ export default class SelectFarmingAreaScreen extends Component {
                     style={{width:widthToDp("80%"),height:heightToDp("40%")}}>
                         
                     </ImageBackground> */}
-                    <Text style={{ color: 'white', marginLeft: widthToDp("6%"), marginTop: heightToDp("1%"), fontSize: widthToDp("4.5%"), fontFamily: 'Oswald-Light',height:heightToDp("5%") }}>MEASURE USING 5 FEET LONG STICK</Text>
+                    <Text style={{ color: 'white', marginLeft: widthToDp("6%"), marginTop: heightToDp("1%"), fontSize: widthToDp("4.5%"), fontFamily: 'Oswald-Light',height:heightToDp("5%") }}>{this.state.measureLabel}</Text>
                     <View style={{ backgroundColor: 'white', height: heightToDp("28%"), width: widthToDp("70%"), alignSelf: 'center', marginTop: heightToDp("4%"), borderRadius: 20 }}>
                         <View style={{ flexDirection: 'row', marginTop: heightToDp("2%"), marginLeft: widthToDp("4%") }}>
                             <Image

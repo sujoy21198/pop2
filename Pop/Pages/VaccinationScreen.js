@@ -481,7 +481,7 @@ export default class VaccinationScreen extends Component {
                                                             marginTop: heightToDp(`${key===0 ? 0.5 : 3.5}%`), 
                                                             fontSize: widthToDp('3.5%') 
                                                         }}>
-                                                            {i.interval.split("   ").length > 1 ? this.state.repeatText : ""} {this.state.months}
+                                                            {i.interval.split("   ").length > 1 ? this.state.repeatText : i.interval} {this.state.months}
                                                         </Text>
                                                     )
                                                 }                                                

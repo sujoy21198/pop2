@@ -541,7 +541,7 @@ export default class CostBenifitAnalysisScreen extends Component {
                                     <Text style={{ fontFamily: 'Oswald-Medium' }}>{this.state.costPerKgLabel}</Text>
                                 </View>
                                 <View style={{ width: widthToDp("30%") }}>
-                                    <Text style={{ fontFamily: 'Oswald-Medium' }}>{this.state.actualCulCostScreenCostPerKg} KG</Text>
+                                    <Text style={{ fontFamily: 'Oswald-Medium' }}>₹ {this.state.actualCulCostScreenCostPerKg}</Text>
                                 </View>
                             </View>
                             <View style={{ borderBottomColor: 'black', borderBottomWidth: 1, marginTop: heightToDp('1.5%'), width: widthToDp("90%") }}></View>
