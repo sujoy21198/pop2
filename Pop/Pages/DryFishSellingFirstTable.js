@@ -48,7 +48,14 @@ export default class DryFishSellingFirstTable extends Component {
             backButtontext: '',
             saveButtonText: '',
             nextButtonText: '',
-            oneTimeExpenditureLabel:''
+            oneTimeExpenditureLabel:'',
+            itemLabel: '',
+            quantityLabel: '',
+            unitPrice: '',
+            totalPrice: '',
+            weighingMachine: '',
+            bambooContainer: '',
+            expenditure: ''
         }
         this.state.tableHeading = tableHeading
         this.state.languages = Languages
@@ -138,6 +145,13 @@ export default class DryFishSellingFirstTable extends Component {
             var saveButtonText = specificObject.labels.find((i) => i.type === 65)
             var nextButtonText = specificObject.labels.find((i) => i.type === 62)
             var oneTimeExpenditureLabel = specificObject.labels.find((i) => i.type === 101)
+            var quantityLabel = specificObject.labels.find((i) => i.type === 79)
+            var itemLabel = specificObject.labels.find((i) => i.type === 88)
+            var unitCostLabel = specificObject.labels.find((i) => i.type === 92)
+            var totalCostLabel = specificObject.labels.find((i) => i.type === 93)
+            var weighingMachine = specificObject.labels.find((i) => i.type === 195)
+            var bambooContainer = specificObject.labels.find((i) => i.type === 196)
+            var expenditure = specificObject.labels.find((i) => i.type === 101)
             // var message = specificObject.labels.find((i) => i.type === 26)
             // var generalSettings = specificObject.labels.find((i) => i.type === 27)
             // var pension = specificObject.labels.find((i) => i.type === 51)
@@ -147,6 +161,13 @@ export default class DryFishSellingFirstTable extends Component {
                 this.setState({ saveButtonText: saveButtonText.nameEnglish })
                 this.setState({ nextButtonText: nextButtonText.nameEnglish })
                 this.setState({oneTimeExpenditureLabel : oneTimeExpenditureLabel.nameEnglish})
+                this.setState({quantityLabel : quantityLabel.nameEnglish})
+                this.setState({itemLabel : itemLabel.nameEnglish})
+                this.setState({unitCostLabel : unitCostLabel.nameEnglish})
+                this.setState({totalCostLabel : totalCostLabel.nameEnglish})
+                this.setState({weighingMachine : weighingMachine.nameEnglish})
+                this.setState({bambooContainer : bambooContainer.nameEnglish})
+                this.setState({expenditure : expenditure.nameEnglish})
                 // this.state.data[4].name = message.nameEnglish
                 // this.state.data[5].name = generalSettings.nameEnglish
                 // this.state.data[6].name = pension.nameEnglish
@@ -160,6 +181,13 @@ export default class DryFishSellingFirstTable extends Component {
                 this.setState({ saveButtonText: saveButtonText.nameHindi })
                 this.setState({ nextButtonText: nextButtonText.nameHindi })
                 this.setState({oneTimeExpenditureLabel : oneTimeExpenditureLabel.nameHindi})
+                this.setState({quantityLabel : quantityLabel.nameHindi})
+                this.setState({itemLabel : itemLabel.nameHindi})
+                this.setState({unitCostLabel : unitCostLabel.nameHindi})
+                this.setState({totalCostLabel : totalCostLabel.nameHindi})
+                this.setState({weighingMachine : weighingMachine.nameHindi})
+                this.setState({bambooContainer : bambooContainer.nameHindi})
+                this.setState({expenditure : expenditure.nameHindi})
                 // this.state.data[4].name = message.nameHindi
                 // this.state.data[5].name = generalSettings.nameHindi
                 // this.state.data[6].name = pension.nameHindi
@@ -169,6 +197,13 @@ export default class DryFishSellingFirstTable extends Component {
                 this.setState({ saveButtonText: saveButtonText.nameHo })
                 this.setState({ nextButtonText: nextButtonText.nameHo })
                 this.setState({oneTimeExpenditureLabel : oneTimeExpenditureLabel.nameHo})
+                this.setState({quantityLabel : quantityLabel.nameHo})
+                this.setState({itemLabel : itemLabel.nameHo})
+                this.setState({unitCostLabel : unitCostLabel.nameHo})
+                this.setState({totalCostLabel : totalCostLabel.nameHo})
+                this.setState({weighingMachine : weighingMachine.nameHo})
+                this.setState({bambooContainer : bambooContainer.nameHo})
+                this.setState({expenditure : expenditure.nameHo})
                 // this.state.data[4].name = message.nameHindi
                 // this.state.data[4].name = message.nameHo
                 // this.state.data[5].name = generalSettings.nameHo
@@ -179,6 +214,13 @@ export default class DryFishSellingFirstTable extends Component {
                 this.setState({ saveButtonText: saveButtonText.nameOdia })
                 this.setState({ nextButtonText: nextButtonText.nameOdia })
                 this.setState({oneTimeExpenditureLabel : oneTimeExpenditureLabel.nameOdia})
+                this.setState({quantityLabel : quantityLabel.nameOdia})
+                this.setState({itemLabel : itemLabel.nameOdia})
+                this.setState({unitCostLabel : unitCostLabel.nameOdia})
+                this.setState({totalCostLabel : totalCostLabel.nameOdia})
+                this.setState({weighingMachine : weighingMachine.nameOdia})
+                this.setState({bambooContainer : bambooContainer.nameOdia})
+                this.setState({expenditure : expenditure.nameOdia})
                 // this.state.data[4].name = message.nameOdia
                 // this.state.data[5].name = generalSettings.nameOdia
                 // this.state.data[6].name = pension.nameOdia
@@ -188,6 +230,13 @@ export default class DryFishSellingFirstTable extends Component {
                 this.setState({ saveButtonText: saveButtonText.nameSanthali })
                 this.setState({ nextButtonText: nextButtonText.nameSanthali })
                 this.setState({oneTimeExpenditureLabel : oneTimeExpenditureLabel.nameSanthali})
+                this.setState({quantityLabel : quantityLabel.nameSanthali})
+                this.setState({itemLabel : itemLabel.nameSanthali})
+                this.setState({unitCostLabel : unitCostLabel.nameSanthali})
+                this.setState({totalCostLabel : totalCostLabel.nameSanthali})
+                this.setState({weighingMachine : weighingMachine.nameSanthali})
+                this.setState({bambooContainer : bambooContainer.nameSanthali})
+                this.setState({expenditure : expenditure.nameSanthali})
                 // this.state.data[4].name = message.nameSanthali
                 // this.state.data[5].name = generalSettings.nameSanthali
                 // this.state.data[6].name = pension.nameSanthali
@@ -379,7 +428,7 @@ export default class DryFishSellingFirstTable extends Component {
                                                 marginLeft: key===0 ? widthToDp("1.5%") : key===3 ? widthToDp('10%') : key===2 ? widthToDp('0.5%') :  0
                                             }}>
 
-                                                <Text style={{ marginTop: heightToDp("2%"), fontSize: widthToDp('3.3%') }}>{i.name}</Text>
+                                                <Text style={{ marginTop: heightToDp("2%"), fontSize: widthToDp('3.3%') }}>{key===0 ? this.state.itemLabel : key===1 ? this.state.quantityLabel : key===2 ? this.state.unitCostLabel : this.state.totalCostLabel}</Text>
 
                                             </View>
 
@@ -421,7 +470,7 @@ export default class DryFishSellingFirstTable extends Component {
                                         {
                                             tableHeading.map((i, key) => {
                                                 return(
-                                                    <Text style={{ marginTop: heightToDp(`${key===0 ? 3.8 : 1.5}%`), fontSize: widthToDp('3.5%') }}>{i.items}</Text>
+                                                    <Text style={{ marginTop: heightToDp(`${key===0 ? 3.8 : 1.5}%`), fontSize: widthToDp('3.5%') }}>{i.items ? key===0 ? this.state.weighingMachine : key===1 ? this.state.bambooContainer : "" : ""}</Text>
                                                 )
                                             })
                                         }
@@ -485,7 +534,7 @@ export default class DryFishSellingFirstTable extends Component {
                                     width: widthToDp(`${83/2}%`),
                                     marginLeft: widthToDp("1.4%"), 
                                     fontSize: widthToDp('3.7%')
-                                }}>One-time Expenditure</Text>
+                                }}>{this.state.expenditure}</Text>
                                 <View style={{width: widthToDp('12%'), marginLeft: widthToDp('20%'), flexDirection: 'row', justifyContent: 'space-between'}}>
                                     <Text style={{ fontSize: widthToDp('3.3%') }}>₹ </Text> 
                                     <Text style={{ fontSize: widthToDp('3.3%') }}>400</Text>

@@ -54,7 +54,8 @@ export default class VaccinationScreen extends Component {
             months: '',
             backButtonText: '',
             saveButtonText: '',
-            nextButtonText: ''
+            nextButtonText: '',
+            repeatText: ''
         }
         this.state.tableHeading = tableHeading
         this.state.value = this.props.route.params.value
@@ -102,6 +103,7 @@ export default class VaccinationScreen extends Component {
             var back = specificObject.labels.find((i) => i.type === 64)
             var save = specificObject.labels.find((i) => i.type === 63)
             var next = specificObject.labels.find((i) => i.type === 62)
+            var repeatText = specificObject.labels.find((i) => i.type === 206)
             // var message = specificObject.labels.find((i) => i.type === 26)
             // var generalSettings = specificObject.labels.find((i) => i.type === 27)
             // var pension = specificObject.labels.find((i) => i.type === 51)
@@ -116,6 +118,7 @@ export default class VaccinationScreen extends Component {
                 this.setState({ backButtonText: back.nameEnglish })
                 this.setState({ saveButtonText: save.nameEnglish })
                 this.setState({ nextButtonText: next.nameEnglish })
+                this.setState({ repeatText: repeatText.nameEnglish })
             } else if (this.state.textLanguageChange === '1') {
                 this.setState({ immunizationCostLabel: immunizationCostLabel.nameHindi })
                 this.setState({ costLabel: costLabel.nameHindi })
@@ -126,6 +129,7 @@ export default class VaccinationScreen extends Component {
                 this.setState({ backButtonText: back.nameHindi })
                 this.setState({ saveButtonText: save.nameHindi })
                 this.setState({ nextButtonText: next.nameHindi })
+                this.setState({ repeatText: repeatText.nameHindi })
             } else if (this.state.textLanguageChange === '2') {
                 this.setState({ immunizationCostLabel: immunizationCostLabel.nameHo })
                 this.setState({ costLabel: costLabel.nameHo })
@@ -136,6 +140,7 @@ export default class VaccinationScreen extends Component {
                 this.setState({ backButtonText: back.nameHo })
                 this.setState({ saveButtonText: save.nameHo })
                 this.setState({ nextButtonText: next.nameHo })
+                this.setState({ repeatText: repeatText.nameHo })
             } else if (this.state.textLanguageChange === '3') {
                 this.setState({ immunizationCostLabel: immunizationCostLabel.nameOdia })
                 this.setState({ costLabel: costLabel.nameOdia })
@@ -146,6 +151,7 @@ export default class VaccinationScreen extends Component {
                 this.setState({ backButtonText: back.nameOdia })
                 this.setState({ saveButtonText: save.nameOdia })
                 this.setState({ nextButtonText: next.nameOdia })
+                this.setState({ repeatText: repeatText.nameOdia })
             } else if (this.state.textLanguageChange === '4') {
                 this.setState({ immunizationCostLabel: immunizationCostLabel.nameSanthali })
                 this.setState({ costLabel: costLabel.nameSanthali })
@@ -156,6 +162,7 @@ export default class VaccinationScreen extends Component {
                 this.setState({ backButtonText: back.nameSanthali })
                 this.setState({ saveButtonText: save.nameSanthali })
                 this.setState({ nextButtonText: next.nameSanthali })
+                this.setState({ repeatText: repeatText.nameSanthali })
             }
         } catch (error) {
             alert(error)
@@ -474,7 +481,7 @@ export default class VaccinationScreen extends Component {
                                                             marginTop: heightToDp(`${key===0 ? 0.5 : 3.5}%`), 
                                                             fontSize: widthToDp('3.5%') 
                                                         }}>
-                                                            {i.interval} {this.state.months}
+                                                            {i.interval.split("   ").length > 1 ? this.state.repeatText : ""} {this.state.months}
                                                         </Text>
                                                     )
                                                 }                                                

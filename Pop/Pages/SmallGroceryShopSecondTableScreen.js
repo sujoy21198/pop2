@@ -49,6 +49,7 @@ export default class SmallGroceryShopSecondTableScreen extends Component {
             totalOfTotalSellingPrice: '',
             totalOfProfit: '',
             lossPercentage:'40',
+            headerLabel: '',
             netProfitPerMonth:'1960',
             monthlyBuyingPrice:'10000',
             monthlySellingPrice:'12000',
@@ -58,7 +59,20 @@ export default class SmallGroceryShopSecondTableScreen extends Component {
             cat1cat2cat3Profit:'',
             textLanguageChange: '',
             smallBusinessLabel:'',
-            languages: []
+            languages: [],
+            itemLabel: '',
+            quantityLabel: '',
+            buyingPrice: '',
+            sellingPrice: '',
+            profit: '',
+            category1: '',
+            category2: '',
+            category3: '',
+            lumpsumText: '',
+            expenditureProfitPerCycle: '',
+            expenditureProfitPerMonth: '',
+            lossLabel: '',
+            netProfitPerMonthLabel: ''
         }
         this.state.tableHeading = tableHeading
         this.state.languages = Languages
@@ -146,6 +160,23 @@ export default class SmallGroceryShopSecondTableScreen extends Component {
             var specificObject = parsed[0]
           
             var smallBusinessLabel = specificObject.labels.find((i) => i.type === 62)
+            var quantityLabel = specificObject.labels.find((i) => i.type === 79)
+            var itemLabel = specificObject.labels.find((i) => i.type === 88)
+            var buyingPrice = specificObject.labels.find((i) => i.type === 178)
+            var sellingPrice = specificObject.labels.find((i) => i.type === 103)
+            var profit = specificObject.labels.find((i) => i.type === 177)
+            var category1 = specificObject.labels.find((i) => i.type === 179)
+            var category2 = specificObject.labels.find((i) => i.type === 180)
+            var category3 = specificObject.labels.find((i) => i.type === 181)
+            var lumpsumText = specificObject.labels.find((i) => i.type === 205)
+            var expenditureProfitPerCycle = specificObject.labels.find((i) => i.type === 182)
+            var expenditureProfitPerMonth = specificObject.labels.find((i) => i.type === 183)
+            var lossLabel = specificObject.labels.find((i) => i.type === 184)
+            var netProfitPerMonthLabel = specificObject.labels.find((i) => i.type === 185)
+            var backButtontext = specificObject.labels.find((i) => i.type === 64)
+            var saveButtonText = specificObject.labels.find((i) => i.type === 192)
+            var exitButtonText = specificObject.labels.find((i) => i.type === 63)
+            var headerLabel = specificObject.labels.find((i) => i.type === 163)
             
             //var nutrationGraden = specificObject.labels.find((i) => i.type === 31)
             // var message = specificObject.labels.find((i) => i.type === 26)
@@ -159,6 +190,23 @@ export default class SmallGroceryShopSecondTableScreen extends Component {
             if (this.state.textLanguageChange === '0') {
                 
                 this.setState({smallBusinessLabel : smallBusinessLabel.nameEnglish})
+                this.setState({ backButtontext: backButtontext.nameEnglish })
+                this.setState({ saveButtonText: saveButtonText.nameEnglish })
+                this.setState({ exitButtonText: exitButtonText.nameEnglish })
+                this.setState({quantityLabel : quantityLabel.nameEnglish})
+                this.setState({profit : profit.nameEnglish})
+                this.setState({lumpsumText : lumpsumText.nameEnglish})
+                this.setState({itemLabel : itemLabel.nameEnglish})
+                this.setState({buyingPrice : buyingPrice.nameEnglish})
+                this.setState({sellingPrice : sellingPrice.nameEnglish})
+                this.setState({category1 : category1.nameEnglish})
+                this.setState({category2 : category2.nameEnglish})
+                this.setState({category3 : category3.nameEnglish})
+                this.setState({expenditureProfitPerMonth : expenditureProfitPerMonth.nameEnglish})
+                this.setState({expenditureProfitPerCycle : expenditureProfitPerCycle.nameEnglish})
+                this.setState({netProfitPerMonthLabel : netProfitPerMonthLabel.nameEnglish})
+                this.setState({lossLabel : lossLabel.nameEnglish})
+                this.setState({ headerLabel: headerLabel.nameEnglish })
                 //this.setState({ landTypeLabel: landTypeLabel.nameEnglish })
                 // this.state.data[4].name = message.nameEnglish
                 // this.state.data[5].name = generalSettings.nameEnglish
@@ -171,6 +219,23 @@ export default class SmallGroceryShopSecondTableScreen extends Component {
             } else if (this.state.textLanguageChange === '1') {
                 
                 this.setState({smallBusinessLabel : smallBusinessLabel.nameHindi})
+                this.setState({ backButtontext: backButtontext.nameHindi })
+                this.setState({ saveButtonText: saveButtonText.nameHindi })
+                this.setState({ exitButtonText: exitButtonText.nameHindi })
+                this.setState({quantityLabel : quantityLabel.nameHindi})
+                this.setState({profit : profit.nameHindi})
+                this.setState({lumpsumText : lumpsumText.nameHindi})
+                this.setState({itemLabel : itemLabel.nameHindi})
+                this.setState({buyingPrice : buyingPrice.nameHindi})
+                this.setState({sellingPrice : sellingPrice.nameHindi})
+                this.setState({category1 : category1.nameHindi})
+                this.setState({category2 : category2.nameHindi})
+                this.setState({category3 : category3.nameHindi})
+                this.setState({expenditureProfitPerMonth : expenditureProfitPerMonth.nameHindi})
+                this.setState({expenditureProfitPerCycle : expenditureProfitPerCycle.nameHindi})
+                this.setState({netProfitPerMonthLabel : netProfitPerMonthLabel.nameHindi})
+                this.setState({lossLabel : lossLabel.nameHindi})
+                this.setState({ headerLabel: headerLabel.nameHindi })
                 // this.state.data[4].name = message.nameHindi
                 // this.state.data[5].name = generalSettings.nameHindi
                 // this.state.data[6].name = pension.nameHindi
@@ -178,6 +243,23 @@ export default class SmallGroceryShopSecondTableScreen extends Component {
             } else if (this.state.textLanguageChange === '2') {
                
                 this.setState({smallBusinessLabel : smallBusinessLabel.nameHo})
+                this.setState({ backButtontext: backButtontext.nameHo })
+                this.setState({ saveButtonText: saveButtonText.nameHo })
+                this.setState({ exitButtonText: exitButtonText.nameHo })
+                this.setState({quantityLabel : quantityLabel.nameHo})
+                this.setState({profit : profit.nameHo})
+                this.setState({lumpsumText : lumpsumText.nameHo})
+                this.setState({itemLabel : itemLabel.nameHo})
+                this.setState({buyingPrice : buyingPrice.nameHo})
+                this.setState({sellingPrice : sellingPrice.nameHo})
+                this.setState({category1 : category1.nameHo})
+                this.setState({category2 : category2.nameHo})
+                this.setState({category3 : category3.nameHo})
+                this.setState({ headerLabel: headerLabel.nameHo })
+                this.setState({expenditureProfitPerMonth : expenditureProfitPerMonth.nameHo})
+                this.setState({expenditureProfitPerCycle : expenditureProfitPerCycle.nameHo})
+                this.setState({netProfitPerMonthLabel : netProfitPerMonthLabel.nameHo})
+                this.setState({lossLabel : lossLabel.nameHo})
                 // this.state.data[4].name = message.nameHo
                 // this.state.data[5].name = generalSettings.nameHo
                 // this.state.data[6].name = pension.nameHo
@@ -185,6 +267,23 @@ export default class SmallGroceryShopSecondTableScreen extends Component {
             } else if (this.state.textLanguageChange === '3') {
                
                 this.setState({smallBusinessLabel : smallBusinessLabel.nameOdia})
+                this.setState({ backButtontext: backButtontext.nameOdia })
+                this.setState({ saveButtonText: saveButtonText.nameOdia })
+                this.setState({ exitButtonText: exitButtonText.nameOdia })
+                this.setState({quantityLabel : quantityLabel.nameOdia})
+                this.setState({profit : profit.nameOdia})
+                this.setState({lumpsumText : lumpsumText.nameOdia})
+                this.setState({itemLabel : itemLabel.nameOdia})
+                this.setState({buyingPrice : buyingPrice.nameOdia})
+                this.setState({sellingPrice : sellingPrice.nameOdia})
+                this.setState({category1 : category1.nameOdia})
+                this.setState({category2 : category2.nameOdia})
+                this.setState({category3 : category3.nameOdia})
+                this.setState({expenditureProfitPerMonth : expenditureProfitPerMonth.nameOdia})
+                this.setState({expenditureProfitPerCycle : expenditureProfitPerCycle.nameOdia})
+                this.setState({netProfitPerMonthLabel : netProfitPerMonthLabel.nameOdia})
+                this.setState({lossLabel : lossLabel.nameOdia})
+                this.setState({ headerLabel: headerLabel.nameOdia })
                 //this.setState({ landTypeLabel: landTypeLabel.nameOdia })
                 // this.state.data[4].name = message.nameOdia
                 // this.state.data[5].name = generalSettings.nameOdia
@@ -193,6 +292,23 @@ export default class SmallGroceryShopSecondTableScreen extends Component {
             } else if (this.state.textLanguageChange === '4') {
                 
                 this.setState({smallBusinessLabel : smallBusinessLabel.nameSanthali})
+                this.setState({ backButtontext: backButtontext.nameSanthali })
+                this.setState({ saveButtonText: saveButtonText.nameSanthali })
+                this.setState({ exitButtonText: exitButtonText.nameSanthali })
+                this.setState({quantityLabel : quantityLabel.nameSanthali})
+                this.setState({profit : profit.nameSanthali})
+                this.setState({lumpsumText : lumpsumText.nameSanthali})
+                this.setState({itemLabel : itemLabel.nameSanthali})
+                this.setState({buyingPrice : buyingPrice.nameSanthali})
+                this.setState({sellingPrice : sellingPrice.nameSanthali})
+                this.setState({category1 : category1.nameSanthali})
+                this.setState({category2 : category2.nameSanthali})
+                this.setState({category3 : category3.nameSanthali})
+                this.setState({expenditureProfitPerMonth : expenditureProfitPerMonth.nameSanthali})
+                this.setState({expenditureProfitPerCycle : expenditureProfitPerCycle.nameSanthali})
+                this.setState({netProfitPerMonthLabel : netProfitPerMonthLabel.nameSanthali})
+                this.setState({lossLabel : lossLabel.nameSanthali})
+                this.setState({ headerLabel: headerLabel.nameSanthali })
                // this.setState({ landTypeLabel: landTypeLabel.nameSanthali })
                 // this.state.data[4].name = message.nameSanthali
                 // this.state.data[5].name = generalSettings.nameSanthali
@@ -350,7 +466,7 @@ export default class SmallGroceryShopSecondTableScreen extends Component {
                 <View style={{ borderBottomColor: BaseColor.Stroke, borderBottomWidth: 1, marginTop: heightToDp('1.5%'), width: widthToDp("100%") }}></View>
                 <ScrollView>
                     <View style={{ backgroundColor: BaseColor.Red, height: heightToDp("210%"), alignSelf: 'center', width: widthToDp("90%"), borderRadius: 10, marginTop: heightToDp('1.5%') }}>
-                        <Text style={{ color: "#fff", fontSize: widthToDp("5%"), marginLeft: widthToDp("5%"), marginTop: heightToDp("1%"), fontFamily: 'Oswald-Medium' }}>Expenditure & Profit </Text>
+                        <Text style={{ color: "#fff", fontSize: widthToDp("5%"), marginLeft: widthToDp("5%"), marginTop: heightToDp("1%"), fontFamily: 'Oswald-Medium' }}>{this.state.headerLabel} </Text>
                         <View style={{ backgroundColor: "white", height: heightToDp("210%"), alignSelf: 'center', width: widthToDp("90%"), marginTop: heightToDp('2%'), borderBottomLeftRadius: 10, borderBottomRightRadius: 10 }}>
                             <View style={{ 
                                 borderTopWidth: 1,
@@ -364,11 +480,11 @@ export default class SmallGroceryShopSecondTableScreen extends Component {
                                 flexDirection: 'row' 
                             }}>
                                 {
-                                    tableHeading2.map((i) => {
+                                    tableHeading2.map((i, key) => {
                                         return (
                                             <View style={{ width: widthToDp("15%"), marginLeft: widthToDp("1%") }}>
 
-                                                <Text style={{ marginTop: heightToDp("1%"), fontSize: widthToDp("3.3%") }}>{i.name}</Text>
+                                                <Text style={{ marginTop: heightToDp("1%"), fontSize: widthToDp("3.3%") }}>{key===0 ? this.state.itemLabel : key===1 ? this.state.quantityLabel : key===2 ? this.state.buyingPrice : key===3 ? this.state.sellingPrice : this.state.profit}</Text>
 
                                             </View>
 
@@ -383,9 +499,9 @@ export default class SmallGroceryShopSecondTableScreen extends Component {
                                         {/* <Text style={{ marginTop: heightToDp("2%") }}>Eggs</Text>
                                         <Text style={{ marginTop: heightToDp("5%") }}>Adult Bird</Text> */}
                                         {
-                                            tableHeading2.map((i) => {
+                                            tableHeading2.map((i, key) => {
                                                 return (
-                                                    <Text style={{ marginTop: heightToDp("1%"), fontSize: widthToDp('2.7%') }}>{i.items}</Text>
+                                                    <Text style={{ marginTop: heightToDp("1%"), fontSize: widthToDp(`${this.state.textLanguageChange==='0' ? 2.7 : 3.1}%`) }}>{i.items ? (key===0 ? this.state.category1 : key===1 ? this.state.category2 : key===2 ? this.state.category3 : "") : ""}</Text>
                                                 )
                                             })
                                         }
@@ -397,7 +513,7 @@ export default class SmallGroceryShopSecondTableScreen extends Component {
                                         {
                                             tableHeading2.map((i, key) => {
                                                 return (
-                                                    <Text style={{ marginTop: heightToDp(`${(key + 1) * 4.5}%`), fontSize: widthToDp('2.3%') }}>{i.unitPrice}</Text>
+                                                    <Text style={{ marginTop: heightToDp(`${(key + 1) * 4.5}%`), fontSize: widthToDp('2.3%') }}>{key<3 ? this.state.lumpsumText : ""}</Text>
                                                 )
                                             })
                                         }
@@ -498,7 +614,7 @@ export default class SmallGroceryShopSecondTableScreen extends Component {
                             </View>
                             <View style={{ borderWidth: 1, height: heightToDp("18%"), width: widthToDp("83%"), marginLeft: widthToDp("3%"), marginTop: heightToDp("0%"), flexDirection: 'row' }}>
                                 <View style={{ width: widthToDp("30%"), marginLeft: widthToDp('1%') }}>
-                                    <Text style={{fontSize: widthToDp('3.3%')}}>Per cycle (15 days) expenditure and profit</Text>
+                                    <Text style={{fontSize: widthToDp('3.3%')}}>{this.state.expenditureProfitPerCycle}</Text>
                                 </View>
                                 <View style={{ width: widthToDp("17%"), marginLeft: widthToDp('1%') }}>
                                     <Text style={{ marginLeft: widthToDp("3%"), fontSize: widthToDp('3.3%') }}>₹ {this.state.totalOfTotalBuyingPrice}</Text>
@@ -516,7 +632,7 @@ export default class SmallGroceryShopSecondTableScreen extends Component {
 
                             <View style={{ borderWidth: 1, height: heightToDp("10%"), width: widthToDp("83%"), marginLeft: widthToDp("3%"), marginTop: heightToDp("0%"), flexDirection: 'row' }}>
                                 <View style={{ width: widthToDp("30%"), marginLeft: widthToDp('1%') }}>
-                                    <Text style={{fontSize: widthToDp('3.3%')}}>Per month expenditure and profit</Text>
+                                    <Text style={{fontSize: widthToDp('3.3%')}}>{this.state.expenditureProfitPerMonth}</Text>
                                 </View>
                                 <View style={{ width: widthToDp("17%"), marginLeft: widthToDp('1%') }}>
                                     <Text style={{ marginLeft: widthToDp("3%"), fontSize: widthToDp('3.3%') }}>₹ {this.state.monthlyBuyingPrice}</Text>
@@ -533,7 +649,7 @@ export default class SmallGroceryShopSecondTableScreen extends Component {
                             </View>
                             <View style={{ borderWidth: 1, height: heightToDp("14%"), width: widthToDp("83%"), marginLeft: widthToDp("3%"), marginTop: heightToDp("0%"), flexDirection: 'row' }}>
                                 <View style={{ width: widthToDp("60%"), marginLeft: widthToDp('1%') }}>
-                                    <Text style={{fontSize: widthToDp('3.3%')}}>Loss (Assuming 2% of profit) due to rodent, insects, termites, and damping of food items</Text>
+                                    <Text style={{fontSize: widthToDp('3.3%')}}>{this.state.lossLabel}</Text>
                                 </View>
                                 <View style={{ width: widthToDp("17%"),height:heightToDp("5%"),marginTop:heightToDp("0%") }}>
                                     <Input
@@ -547,7 +663,7 @@ export default class SmallGroceryShopSecondTableScreen extends Component {
 
                             <View style={{ borderWidth: 1, height: heightToDp("10%"), width: widthToDp("83%"), marginLeft: widthToDp("3%"), marginTop: heightToDp("0%"), flexDirection: 'row' }}>
                                 <View style={{ width: widthToDp("60%"), marginLeft: widthToDp('1%') }}>
-                                    <Text style={{fontSize: widthToDp('3.3%')}}>Net profit per month</Text>
+                                    <Text style={{fontSize: widthToDp('3.3%')}}>{this.state.netProfitPerMonthLabel}</Text>
                                 </View>
                                 
                                 <View style={{width: widthToDp("14%"), height:heightToDp("5%"), flexDirection: 'row', justifyContent: 'space-between'}}>
@@ -562,17 +678,17 @@ export default class SmallGroceryShopSecondTableScreen extends Component {
                 <View style={{ flexDirection: 'row', height: heightToDp("10%"), alignSelf: 'center' }}>
                     <TouchableOpacity onPress={() => this.props.navigation.goBack()}>
                         <View style={{ backgroundColor: "#fff", height: heightToDp("6%"), width: widthToDp("30%"), borderRadius: 100, alignSelf: 'center', marginTop: heightToDp("2%") }}>
-                            <Text style={{ fontSize: widthToDp("4%"), color: "#000", marginTop: heightToDp("1.3%"), alignSelf: 'center', fontFamily: 'Oswald-Medium' }}>BACK</Text>
+                            <Text style={{ fontSize: widthToDp("4%"), color: "#000", marginTop: heightToDp("1.3%"), alignSelf: 'center', fontFamily: 'Oswald-Medium' }}>{this.state.backButtontext}</Text>
                         </View>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={() => { this.calculation() }}>
                         <View style={{ backgroundColor: "#fff", height: heightToDp("6%"), width: widthToDp("30%"), borderRadius: 100, marginLeft: widthToDp("1%"), marginTop: heightToDp("2%") }}>
-                            <Text style={{ fontSize: widthToDp("4%"), color: "#000", marginTop: heightToDp("1.3%"), alignSelf: 'center', fontFamily: 'Oswald-Medium' }}>CALCULATE</Text>
+                            <Text style={{ fontSize: widthToDp("4%"), color: "#000", marginTop: heightToDp("1.3%"), alignSelf: 'center', fontFamily: 'Oswald-Medium' }}>{this.state.saveButtonText}</Text>
                         </View>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={() => { this.next() }}>
                         <View style={{ backgroundColor: "#fff", height: heightToDp("6%"), width: widthToDp("30%"), borderRadius: 100, marginLeft: widthToDp("1%"), marginTop: heightToDp("2%") }}>
-                            <Text style={{ fontSize: widthToDp("4%"), color: "#000", marginTop: heightToDp("1.3%"), alignSelf: 'center', fontFamily: 'Oswald-Medium' }}>SAVE/EXIT</Text>
+                            <Text style={{ fontSize: widthToDp("4%"), color: "#000", marginTop: heightToDp("1.3%"), alignSelf: 'center', fontFamily: 'Oswald-Medium' }}>{this.state.exitButtonText}</Text>
                         </View>
                     </TouchableOpacity>
                 </View>

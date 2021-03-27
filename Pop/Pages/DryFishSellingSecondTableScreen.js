@@ -53,7 +53,27 @@ export default class DryFishSellingSecondTableScreen extends Component {
             profit15: '5250',
             languages: [],
             expDryFishUnitPrice: '',
-            expDryFishSaltUnitPrice: ''
+            expDryFishSaltUnitPrice: '',
+            headerLabel: '',
+            itemLabel: '',
+            quantityLabel: '',
+            unitPrice: '',
+            totalPrice: '',
+            dryFishSalted: '',
+            dryFishWithoutSalted: '',
+            expenditure: '',
+            dryFishSelling: '',
+            expenditurePerDay: '',
+            items: '',
+            units: '',
+            sellingPrice: '',
+            totalSellingPrice: '',
+            perDaySellingValue: '',
+            profitPerDay: '',
+            saveButtonText: '',
+            backButtontext: '',
+            exitButtonText: '',
+            noteLabel: ''
         }
         this.state.tableHeading = tableHeading
         this.state.languages = Languages
@@ -139,6 +159,23 @@ export default class DryFishSellingSecondTableScreen extends Component {
             let user = await AsyncStorage.getItem('offlineData');
             let parsed = JSON.parse(user);
             var specificObject = parsed[0]
+            var backButtontext = specificObject.labels.find((i) => i.type === 64)
+            var saveButtonText = specificObject.labels.find((i) => i.type === 192)
+            var exitButtonText = specificObject.labels.find((i) => i.type === 63)
+            var expenditurePerDay = specificObject.labels.find((i) => i.type === 104)
+            var quantityLabel = specificObject.labels.find((i) => i.type === 164)
+            var itemLabel = specificObject.labels.find((i) => i.type === 88)
+            var unitCostLabel = specificObject.labels.find((i) => i.type === 92)
+            var totalCostLabel = specificObject.labels.find((i) => i.type === 93)
+            var dryFishSalted = specificObject.labels.find((i) => i.type === 198)
+            var dryFishWithoutSalted = specificObject.labels.find((i) => i.type === 197)
+            var dryFishSelling = specificObject.labels.find((i) => i.type === 100)
+            var headerLabel = specificObject.labels.find((i) => i.type === 163)
+            var sellingPrice = specificObject.labels.find((i) => i.type === 102)
+            var totalSellingPrice = specificObject.labels.find((i) => i.type === 103)
+            var perDaySellingValue = specificObject.labels.find((i) => i.type === 105)
+            var profitPerDay = specificObject.labels.find((i) => i.type === 175)
+            var noteLabel = specificObject.labels.find((i) => i.type === 200)
 
             var smallBusinessLabel = specificObject.labels.find((i) => i.type === 62)
 
@@ -154,6 +191,23 @@ export default class DryFishSellingSecondTableScreen extends Component {
             if (this.state.textLanguageChange === '0') {
 
                 this.setState({ smallBusinessLabel: smallBusinessLabel.nameEnglish })
+                this.setState({ backButtontext: backButtontext.nameEnglish })
+                this.setState({ saveButtonText: saveButtonText.nameEnglish })
+                this.setState({ exitButtonText: exitButtonText.nameEnglish })
+                this.setState({ expenditurePerDay: expenditurePerDay.nameEnglish })
+                this.setState({ itemLabel: itemLabel.nameEnglish })
+                this.setState({ quantityLabel: quantityLabel.nameEnglish })
+                this.setState({ dryFishWithoutSalted: dryFishWithoutSalted.nameEnglish })
+                this.setState({ dryFishSalted: dryFishSalted.nameEnglish })
+                this.setState({ dryFishSelling: dryFishSelling.nameEnglish })
+                this.setState({ unitCostLabel: unitCostLabel.nameEnglish })
+                this.setState({ totalCostLabel: totalCostLabel.nameEnglish })
+                this.setState({ headerLabel: headerLabel.nameEnglish })
+                this.setState({ sellingPrice: sellingPrice.nameEnglish })
+                this.setState({ totalSellingPrice: totalSellingPrice.nameEnglish })
+                this.setState({ perDaySellingValue: perDaySellingValue.nameEnglish })
+                this.setState({ profitPerDay: profitPerDay.nameEnglish })
+                this.setState({ noteLabel: noteLabel.nameEnglish })
                 //this.setState({ landTypeLabel: landTypeLabel.nameEnglish })
                 // this.state.data[4].name = message.nameEnglish
                 // this.state.data[5].name = generalSettings.nameEnglish
@@ -166,6 +220,23 @@ export default class DryFishSellingSecondTableScreen extends Component {
             } else if (this.state.textLanguageChange === '1') {
 
                 this.setState({ smallBusinessLabel: smallBusinessLabel.nameHindi })
+                this.setState({ backButtontext: backButtontext.nameHindi })
+                this.setState({ saveButtonText: saveButtonText.nameHindi })
+                this.setState({ exitButtonText: exitButtonText.nameHindi })
+                this.setState({ expenditurePerDay: expenditurePerDay.nameHindi })
+                this.setState({ itemLabel: itemLabel.nameHindi })
+                this.setState({ quantityLabel: quantityLabel.nameHindi })
+                this.setState({ dryFishWithoutSalted: dryFishWithoutSalted.nameHindi })
+                this.setState({ dryFishSalted: dryFishSalted.nameHindi })
+                this.setState({ dryFishSelling: dryFishSelling.nameHindi })
+                this.setState({ unitCostLabel: unitCostLabel.nameHindi })
+                this.setState({ totalCostLabel: totalCostLabel.nameHindi })
+                this.setState({ headerLabel: headerLabel.nameHindi })
+                this.setState({ sellingPrice: sellingPrice.nameHindi })
+                this.setState({ totalSellingPrice: totalSellingPrice.nameHindi })
+                this.setState({ perDaySellingValue: perDaySellingValue.nameHindi })
+                this.setState({ profitPerDay: profitPerDay.nameHindi })
+                this.setState({ noteLabel: noteLabel.nameHindi })
                 // this.state.data[4].name = message.nameHindi
                 // this.state.data[5].name = generalSettings.nameHindi
                 // this.state.data[6].name = pension.nameHindi
@@ -173,6 +244,23 @@ export default class DryFishSellingSecondTableScreen extends Component {
             } else if (this.state.textLanguageChange === '2') {
 
                 this.setState({ smallBusinessLabel: smallBusinessLabel.nameHo })
+                this.setState({ backButtontext: backButtontext.nameHo })
+                this.setState({ saveButtonText: saveButtonText.nameHo })
+                this.setState({ exitButtonText: exitButtonText.nameHo })
+                this.setState({ expenditurePerDay: expenditurePerDay.nameHo })
+                this.setState({ itemLabel: itemLabel.nameHo })
+                this.setState({ quantityLabel: quantityLabel.nameHo })
+                this.setState({ dryFishWithoutSalted: dryFishWithoutSalted.nameHo })
+                this.setState({ dryFishSalted: dryFishSalted.nameHo })
+                this.setState({ dryFishSelling: dryFishSelling.nameHo })
+                this.setState({ unitCostLabel: unitCostLabel.nameHo })
+                this.setState({ totalCostLabel: totalCostLabel.nameHo })
+                this.setState({ headerLabel: headerLabel.nameHo })
+                this.setState({ sellingPrice: sellingPrice.nameHo })
+                this.setState({ totalSellingPrice: totalSellingPrice.nameHo })
+                this.setState({ perDaySellingValue: perDaySellingValue.nameHo })
+                this.setState({ profitPerDay: profitPerDay.nameHo })
+                this.setState({ noteLabel: noteLabel.nameHo })
                 // this.state.data[4].name = message.nameHo
                 // this.state.data[5].name = generalSettings.nameHo
                 // this.state.data[6].name = pension.nameHo
@@ -180,6 +268,23 @@ export default class DryFishSellingSecondTableScreen extends Component {
             } else if (this.state.textLanguageChange === '3') {
 
                 this.setState({ smallBusinessLabel: smallBusinessLabel.nameOdia })
+                this.setState({ backButtontext: backButtontext.nameOdia })
+                this.setState({ saveButtonText: saveButtonText.nameOdia })
+                this.setState({ exitButtonText: exitButtonText.nameOdia })
+                this.setState({ expenditurePerDay: expenditurePerDay.nameOdia })
+                this.setState({ itemLabel: itemLabel.nameOdia })
+                this.setState({ quantityLabel: quantityLabel.nameOdia })
+                this.setState({ dryFishWithoutSalted: dryFishWithoutSalted.nameOdia })
+                this.setState({ dryFishSalted: dryFishSalted.nameOdia })
+                this.setState({ dryFishSelling: dryFishSelling.nameOdia })
+                this.setState({ unitCostLabel: unitCostLabel.nameOdia })
+                this.setState({ totalCostLabel: totalCostLabel.nameOdia })
+                this.setState({ headerLabel: headerLabel.nameOdia })
+                this.setState({ sellingPrice: sellingPrice.nameOdia })
+                this.setState({ totalSellingPrice: totalSellingPrice.nameOdia })
+                this.setState({ perDaySellingValue: perDaySellingValue.nameOdia })
+                this.setState({ profitPerDay: profitPerDay.nameOdia })
+                this.setState({ noteLabel: noteLabel.nameOdia })
                 //this.setState({ landTypeLabel: landTypeLabel.nameOdia })
                 // this.state.data[4].name = message.nameOdia
                 // this.state.data[5].name = generalSettings.nameOdia
@@ -188,6 +293,23 @@ export default class DryFishSellingSecondTableScreen extends Component {
             } else if (this.state.textLanguageChange === '4') {
 
                 this.setState({ smallBusinessLabel: smallBusinessLabel.nameSanthali })
+                this.setState({ backButtontext: backButtontext.nameSanthali })
+                this.setState({ saveButtonText: saveButtonText.nameSanthali })
+                this.setState({ exitButtonText: exitButtonText.nameSanthali })
+                this.setState({ expenditurePerDay: expenditurePerDay.nameSanthali })
+                this.setState({ itemLabel: itemLabel.nameSanthali })
+                this.setState({ quantityLabel: quantityLabel.nameSanthali })
+                this.setState({ dryFishWithoutSalted: dryFishWithoutSalted.nameSanthali })
+                this.setState({ dryFishSalted: dryFishSalted.nameSanthali })
+                this.setState({ dryFishSelling: dryFishSelling.nameSanthali })
+                this.setState({ unitCostLabel: unitCostLabel.nameSanthali })
+                this.setState({ totalCostLabel: totalCostLabel.nameSanthali })
+                this.setState({ headerLabel: headerLabel.nameSanthali })
+                this.setState({ sellingPrice: sellingPrice.nameSanthali })
+                this.setState({ totalSellingPrice: totalSellingPrice.nameSanthali })
+                this.setState({ perDaySellingValue: perDaySellingValue.nameSanthali })
+                this.setState({ profitPerDay: profitPerDay.nameSanthali })
+                this.setState({ noteLabel: noteLabel.nameSanthali })
                 // this.setState({ landTypeLabel: landTypeLabel.nameSanthali })
                 // this.state.data[4].name = message.nameSanthali
                 // this.state.data[5].name = generalSettings.nameSanthali
@@ -341,7 +463,7 @@ export default class DryFishSellingSecondTableScreen extends Component {
                 <View style={{ borderBottomColor: BaseColor.Stroke, borderBottomWidth: 1, marginTop: heightToDp('1.5%'), width: widthToDp("100%") }}></View>
                 <ScrollView>
                     <View style={{ backgroundColor: BaseColor.Red, height: heightToDp("120%"), alignSelf: 'center', width: widthToDp("90%"), borderRadius: 10, marginTop: heightToDp('1.5%') }}>
-                        <Text style={{ color: "#fff", fontSize: widthToDp("5%"), marginLeft: widthToDp("5%"), marginTop: heightToDp("1%"), fontFamily: 'Oswald-Medium' }}>Expenditure & Profit </Text>
+                        <Text style={{ color: "#fff", fontSize: widthToDp("5%"), marginLeft: widthToDp("5%"), marginTop: heightToDp("1%"), fontFamily: 'Oswald-Medium' }}>{this.state.headerLabel} </Text>
                         <View style={{ backgroundColor: "white", height: heightToDp("120%"), alignSelf: 'center', width: widthToDp("90%"), marginTop: heightToDp('2%'), borderBottomLeftRadius: 10, borderBottomRightRadius: 10 }}>
                             {/* <View style={{ flexDirection: 'row' }}>
                                 <Text style={{ fontSize: widthToDp("5%"), marginLeft: widthToDp("5%"), marginTop: heightToDp("1.5%"), fontFamily: 'Oswald-Medium' }}>Income from </Text>
@@ -362,7 +484,7 @@ export default class DryFishSellingSecondTableScreen extends Component {
                                         return (
                                             <View style={{ width: widthToDp(`${key === 0 ? 25 : key === 1 ? 15 : 18}%`), marginLeft: widthToDp("1.5%") }}>
 
-                                                <Text style={{ marginTop: heightToDp("2%"), fontSize: widthToDp('3.3%') }}>{i.name}</Text>
+                                                <Text style={{ marginTop: heightToDp("2%"), fontSize: widthToDp('3.3%') }}>{key===0 ? this.state.itemLabel : key===1 ? this.state.quantityLabel : key===2 ? this.state.unitCostLabel : this.state.totalCostLabel}</Text>
 
                                             </View>
 
@@ -402,9 +524,9 @@ export default class DryFishSellingSecondTableScreen extends Component {
                                         {/* <Text style={{ marginTop: heightToDp("2%") }}>Eggs</Text>
                                         <Text style={{ marginTop: heightToDp("5%") }}>Adult Bird</Text> */}
                                         {
-                                            tableHeading.map((i) => {
+                                            tableHeading.map((i, key) => {
                                                 return (
-                                                    <Text style={{ marginTop: heightToDp("3%"), fontSize: widthToDp('3%') }}>{i.items}</Text>
+                                                    <Text style={{ marginTop: heightToDp("3%"), fontSize: widthToDp('3%') }}>{i.items ? (key===0 ? this.state.dryFishWithoutSalted : key===1 ? this.state.dryFishSalted : key===2 ? this.state.dryFishSelling : "") : ""}</Text>
                                                 )
                                             })
                                         }
@@ -481,7 +603,7 @@ export default class DryFishSellingSecondTableScreen extends Component {
                             </View>
                             <View style={{ borderWidth: 1, height: heightToDp("8%"), width: widthToDp("83%"), marginLeft: widthToDp("3%"), marginTop: heightToDp("0%"), flexDirection: 'row' }}>
                                 <View style={{ width: widthToDp("58%"), marginLeft: widthToDp('2%') }}>
-                                    <Text style={{ fontSize: widthToDp('3.5%') }}>Expenditure per day/lot (A)</Text>
+                                    <Text style={{ fontSize: widthToDp('3.5%') }}>{this.state.expenditurePerDay}</Text>
                                 </View>
 
                                 <View style={{ width: widthToDp('13%'), marginLeft: widthToDp('6%'), flexDirection: 'row', justifyContent: 'space-between' }}>
@@ -496,7 +618,7 @@ export default class DryFishSellingSecondTableScreen extends Component {
                                         return (
                                             <View style={{ width: widthToDp(`${key === 0 ? 25 : key === 1 ? 15 : 18}%`), marginLeft: widthToDp("1%") }}>
 
-                                                <Text style={{ marginTop: heightToDp("2%"), fontSize: widthToDp('3.3%') }}>{i.name}</Text>
+                                                <Text style={{ marginTop: heightToDp("2%"), fontSize: widthToDp('3.3%') }}>{key===0 ? this.state.itemLabel : key===1 ? this.state.quantityLabel : key===2 ? this.state.sellingPrice : this.state.totalSellingPrice}</Text>
 
                                             </View>
 
@@ -514,7 +636,7 @@ export default class DryFishSellingSecondTableScreen extends Component {
                                         {
                                             tableHeading2.map((i, key) => {
                                                 return (
-                                                    <Text style={{ marginTop: heightToDp(`${key === 0 ? 2 : 4}%`), fontSize: widthToDp('3%') }}>{i.items}</Text>
+                                                    <Text style={{ marginTop: heightToDp(`${key === 0 ? 2 : 5}%`), fontSize: widthToDp('3%') }}>{i.items ? (key===0 ? this.state.dryFishWithoutSalted : key===1 ? this.state.dryFishSalted : "") : ""}</Text>
                                                 )
                                             })
                                         }
@@ -599,8 +721,8 @@ export default class DryFishSellingSecondTableScreen extends Component {
                                 <Text style={{
                                     marginLeft: widthToDp('1%'),
                                     fontSize: widthToDp('3.5%')
-                                }}>Per day selling value (B)</Text>
-                                <View style={{ width: widthToDp('12%'), marginLeft: widthToDp('26%'), flexDirection: 'row', justifyContent: 'space-between' }}>
+                                }}>{this.state.perDaySellingValue}</Text>
+                                <View style={{ width: widthToDp('12%'), marginLeft: widthToDp('33%'), flexDirection: 'row', justifyContent: 'space-between' }}>
                                     <Text style={{ fontSize: widthToDp('3.3%') }}>₹ </Text>
                                     <Text style={{ fontSize: widthToDp('3.3%') }}>{this.state.perdaysellingvaluetotal}</Text>
                                 </View>
@@ -609,7 +731,7 @@ export default class DryFishSellingSecondTableScreen extends Component {
                                 <Text style={{
                                     marginLeft: widthToDp('1%'),
                                     fontSize: widthToDp('3.5%')
-                                }}>Profit per day/lot</Text>
+                                }}>{this.state.profitPerDay}</Text>
                                 <View style={{ width: widthToDp('12%'), marginLeft: widthToDp('37%'), flexDirection: 'row', justifyContent: 'space-between' }}>
                                     <Text style={{ fontSize: widthToDp('3.3%') }}>₹ </Text>
                                     <Text style={{ fontSize: widthToDp('3.3%') }}>{this.state.profitperday}</Text>
@@ -619,7 +741,7 @@ export default class DryFishSellingSecondTableScreen extends Component {
                                 <Text style={{
                                     marginLeft: widthToDp('1%'),
                                     fontSize: widthToDp('3.5%')
-                                }}>Assuming there is 15 lot selling per month, then monthly profit = ₹ {this.state.profitperday} *15 = ₹ {this.state.profit15}</Text>
+                                }}>{this.state.noteLabel} ₹ {this.state.profitperday} *15 = ₹ {this.state.profit15}</Text>
                             </View>
 
                         </View>
@@ -629,17 +751,17 @@ export default class DryFishSellingSecondTableScreen extends Component {
                 <View style={{ flexDirection: 'row', height: heightToDp("10%"), alignSelf: 'center' }}>
                     <TouchableOpacity onPress={() => this.props.navigation.goBack()}>
                         <View style={{ backgroundColor: "#fff", height: heightToDp("6%"), width: widthToDp("30%"), borderRadius: 100, alignSelf: 'center', marginTop: heightToDp("2%") }}>
-                            <Text style={{ fontSize: widthToDp("4%"), color: "#000", marginTop: heightToDp("1.3%"), alignSelf: 'center', fontFamily: 'Oswald-Medium' }}>BACK</Text>
+                            <Text style={{ fontSize: widthToDp("4%"), color: "#000", marginTop: heightToDp("1.3%"), alignSelf: 'center', fontFamily: 'Oswald-Medium' }}>{this.state.backButtontext}</Text>
                         </View>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={() => { this.calculation() }}>
                         <View style={{ backgroundColor: "#fff", height: heightToDp("6%"), width: widthToDp("30%"), borderRadius: 100, marginLeft: widthToDp("1%"), marginTop: heightToDp("2%") }}>
-                            <Text style={{ fontSize: widthToDp("4%"), color: "#000", marginTop: heightToDp("1.3%"), alignSelf: 'center', fontFamily: 'Oswald-Medium' }}>CALCULATE</Text>
+                            <Text style={{ fontSize: widthToDp("4%"), color: "#000", marginTop: heightToDp("1.3%"), alignSelf: 'center', fontFamily: 'Oswald-Medium' }}>{this.state.saveButtonText}</Text>
                         </View>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={() => { this.next() }}>
                         <View style={{ backgroundColor: "#fff", height: heightToDp("6%"), width: widthToDp("30%"), borderRadius: 100, marginLeft: widthToDp("1%"), marginTop: heightToDp("2%") }}>
-                            <Text style={{ fontSize: widthToDp("4%"), color: "#000", marginTop: heightToDp("1.3%"), alignSelf: 'center', fontFamily: 'Oswald-Medium' }}>SAVE/EXIT</Text>
+                            <Text style={{ fontSize: widthToDp("4%"), color: "#000", marginTop: heightToDp("1.3%"), alignSelf: 'center', fontFamily: 'Oswald-Medium' }}>{this.state.exitButtonText}</Text>
                         </View>
                     </TouchableOpacity>
                 </View>
