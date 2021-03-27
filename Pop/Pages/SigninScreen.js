@@ -984,7 +984,7 @@ export default class SigninScreen extends Component {
                     ]
                 });
             } else {
-                alert("please enter a valid password")
+                alert("please enter a valid password")  
             }
             // var valueArr = parsed.map(function(item){ return item.userId });
             // alert(valueArr)
@@ -1003,7 +1003,11 @@ export default class SigninScreen extends Component {
             // console.log(JSON.stringify(parsed))
         }
         catch (error) {
-            alert(error)
+            Toast.show({
+                type: 'danger',
+                text: "Invalid username/password",
+                duration: 6000
+            })
         }
 
     }
@@ -1065,7 +1069,7 @@ export default class SigninScreen extends Component {
                 'Content-type': 'application/json'
             }
         }).then(function (response) {
-            console.log(response.data.data._id)
+            // console.log(response.data.data._id)
             // console.log(response.data.data.name)
             // console.log(response.data.data.token)
             // console.log(response.data.data.type)
@@ -1117,6 +1121,11 @@ export default class SigninScreen extends Component {
         var valueArr = newUser.map(function (item) { return item._id })
         if (valueArr.includes(_id)) {
             console.log("NO")
+            Toast.show({
+                text: "Invalid username/password",
+                type: 'danger',
+                duration: 6000
+            })
         } else {
             newUser.push(userToBeSaved)
         }
@@ -1152,9 +1161,9 @@ export default class SigninScreen extends Component {
             this.getAllData()
         } else {
             Toast.show({
-                text: "Please Login To Save Offline Data",
-                duration: 3000,
-                type: 'danger'
+                text: "Invalid username/password",
+                type: 'danger',
+                duration: 6000
             })
         }
 

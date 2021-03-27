@@ -370,12 +370,12 @@ export default class LandTypeScreen extends Component {
                         <Text style={{ color: 'white', marginLeft: widthToDp("4%"), marginTop: heightToDp('1.5%'), fontSize: widthToDp("5%"), fontFamily: 'Oswald-Medium', height: heightToDp("4%") }}>{this.state.costBenefitAnalysisLabel}</Text>
                         <View style={{ backgroundColor: 'white', width: widthToDp("90%"), height: heightToDp("23.5%"), borderBottomLeftRadius: 10, borderBottomRightRadius: 10, marginTop: heightToDp("2%") }}>
                             <View style={{ flexDirection: 'row' }}>
-                                <View style={{ marginTop: heightToDp("4%"), marginLeft: widthToDp("2%"), width: widthToDp("30%") }}>
-                                    <Text style={{ fontFamily: 'Oswald-Medium' }}>{this.state.landTypeLabel}</Text>
-                                    <Text style={{ fontFamily: 'Oswald-Light' }}>{this.state.landType}</Text>
+                                <View style={{ marginTop: heightToDp("2.5%"), marginLeft: widthToDp("2%"), width: widthToDp("30%") }}>
+                                    <Text style={{ fontFamily: 'Oswald-Medium', fontSize: widthToDp('3.2%') }}>{this.state.landTypeLabel}</Text>
+                                    <Text style={{ fontFamily: 'Oswald-Light', fontSize: widthToDp('3.2%') }}>{this.state.landType}</Text>
 
-                                    <Text style={{ marginTop: heightToDp("3%"), fontFamily: 'Oswald-Medium' }}>{this.state.areaLabel}</Text>
-                                    <Text style={{ fontFamily: 'Oswald-Light' }}>{this.state.areaLabel} {this.state.farmingAreaInDecimal} {this.state.decimalLabel}</Text>
+                                    <Text style={{ marginTop: heightToDp("2%"), fontFamily: 'Oswald-Medium', fontSize: widthToDp('3.2%') }}>{this.state.areaLabel}</Text>
+                                    <Text style={{ fontFamily: 'Oswald-Light', fontSize: widthToDp('3.2%') }}>{this.state.areaLabel} {this.state.farmingAreaInDecimal} {this.state.decimalLabel}</Text>
                                 </View>
                                 <Image
                                     style={{ height: heightToDp("20%"), width: widthToDp("50%"), marginTop: heightToDp("2%"), marginLeft: widthToDp("7%"), borderRadius: 10 }}

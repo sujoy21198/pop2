@@ -24,7 +24,27 @@ export default class AllTransactionScreen extends Component {
             languages: [],
             moneyManagerData: [],
             textLanguageChange:'',
-            allTransactionsLabel:''
+            allTransactionsLabel:'',
+            dateLabel: '',
+            incomeLabel: '',
+            expenseLabel: '',
+            smallGroceryLabel: '',
+            goatLivestockLabel: '',
+            pigLivestockLabel: '',
+            poultryLivestockLabel: '',
+            cropLabel: '',
+            dryFishSellingLabel: '',
+            vegVendingLabel: '',
+            netProfitValue: 0,
+            netProfitText: '',
+            livestockText: '',
+            healthText: '',
+            agricultureText: '',
+            smallBusinessText: '',
+            educationText: '',
+            savingText: '',
+            pensionText: '',
+            otherText: ''
         }
         this.state.languages = Languages
         //alert(this.state.value)
@@ -33,6 +53,7 @@ export default class AllTransactionScreen extends Component {
     componentDidMount() {
         this.getUserData()
         this.setLanguageOnMount()
+        this.loadlabelsFromStorage()
     }
 
     loadlabelsFromStorage = async () => {
@@ -42,9 +63,47 @@ export default class AllTransactionScreen extends Component {
             let parsed = JSON.parse(user);
             var specificObject = parsed[0]
             var allTransactions = specificObject.labels.find((i) => i.type === 44)
+            var dateLabel = specificObject.labels.find((i) => i.type === 201)
+            var incomeLabel = specificObject.labels.find((i) => i.type === 37)
+            var expenseLabel = specificObject.labels.find((i) => i.type === 40)
+            var smallGroceryLabel = specificObject.labels.find((i) => i.type === 99)
+            var goatLivestockLabel = specificObject.labels.find((i) => i.type === 208)
+            var pigLivestockLabel = specificObject.labels.find((i) => i.type === 209)
+            var poultryLivestockLabel = specificObject.labels.find((i) => i.type === 210)
+            var cropLabel = specificObject.labels.find((i) => i.type === 28)
+            var dryFishSellingLabel = specificObject.labels.find((i) => i.type === 100)
+            var vegVendingLabel = specificObject.labels.find((i) => i.type === 98)
+            var netProfitText = specificObject.labels.find((i) => i.type === 74)
+            var livestockText = specificObject.labels.find((i) => i.type === 29)
+            var healthText = specificObject.labels.find((i) => i.type === 33)
+            var agricultureText = specificObject.labels.find((i) => i.type === 47)
+            var smallBusinessText = specificObject.labels.find((i) => i.type === 30)
+            var educationText = specificObject.labels.find((i) => i.type === 49)
+            var savingText = specificObject.labels.find((i) => i.type === 50)
+            var pensionText = specificObject.labels.find((i) => i.type === 51)
+            var otherText = specificObject.labels.find((i) => i.type === 52)
             if (this.state.textLanguageChange === '0') {
                 //this.state.allTransactionsLabel = allTransactions.nameEnglish
                 this.setState({allTransactionsLabel: allTransactions.nameEnglish})
+                this.setState({dateLabel: dateLabel.nameEnglish})
+                this.setState({incomeLabel: incomeLabel.nameEnglish})
+                this.setState({expenseLabel: expenseLabel.nameEnglish})
+                this.setState({smallGroceryLabel: smallGroceryLabel.nameEnglish})
+                this.setState({goatLivestockLabel: goatLivestockLabel.nameEnglish})
+                this.setState({pigLivestockLabel: pigLivestockLabel.nameEnglish})
+                this.setState({poultryLivestockLabel: poultryLivestockLabel.nameEnglish})
+                this.setState({cropLabel: cropLabel.nameEnglish})
+                this.setState({dryFishSellingLabel: dryFishSellingLabel.nameEnglish})
+                this.setState({vegVendingLabel: vegVendingLabel.nameEnglish})
+                this.setState({netProfitText: netProfitText.nameEnglish})
+                this.setState({livestockText: livestockText.nameEnglish})
+                this.setState({healthText: healthText.nameEnglish})
+                this.setState({agricultureText: agricultureText.nameEnglish})
+                this.setState({smallBusinessText: smallBusinessText.nameEnglish})
+                this.setState({educationText: educationText.nameEnglish})
+                this.setState({savingText: savingText.nameEnglish})
+                this.setState({pensionText: pensionText.nameEnglish})
+                this.setState({otherText: otherText.nameEnglish})
                 // this.state.data[1].name = livestock.nameEnglish
                 // this.state.data[2].name = smallBusiness.nameEnglish
                 // this.state.data[3].name = health.nameEnglish
@@ -59,6 +118,25 @@ export default class AllTransactionScreen extends Component {
             } else if (this.state.textLanguageChange === '1') {
                 //this.state.allTransactionsLabel = allTransactions.nameHindi
                 this.setState({allTransactionsLabel: allTransactions.nameHindi})
+                this.setState({dateLabel: dateLabel.nameHindi})
+                this.setState({incomeLabel: incomeLabel.nameHindi})
+                this.setState({expenseLabel: expenseLabel.nameHindi})
+                this.setState({smallGroceryLabel: smallGroceryLabel.nameHindi})
+                this.setState({goatLivestockLabel: goatLivestockLabel.nameHindi})
+                this.setState({pigLivestockLabel: pigLivestockLabel.nameHindi})
+                this.setState({poultryLivestockLabel: poultryLivestockLabel.nameHindi})
+                this.setState({cropLabel: cropLabel.nameHindi})
+                this.setState({dryFishSellingLabel: dryFishSellingLabel.nameHindi})
+                this.setState({vegVendingLabel: vegVendingLabel.nameHindi})
+                this.setState({netProfitText: netProfitText.nameHindi})
+                this.setState({livestockText: livestockText.nameHindi})
+                this.setState({healthText: healthText.nameHindi})
+                this.setState({agricultureText: agricultureText.nameHindi})
+                this.setState({smallBusinessText: smallBusinessText.nameHindi})
+                this.setState({educationText: educationText.nameHindi})
+                this.setState({savingText: savingText.nameHindi})
+                this.setState({pensionText: pensionText.nameHindi})
+                this.setState({otherText: otherText.nameHindi})
                 // this.state.data[1].name = livestock.nameHindi
                 // this.state.data[2].name = smallBusiness.nameHindi
                 // this.state.data[3].name = health.nameHindi
@@ -69,6 +147,25 @@ export default class AllTransactionScreen extends Component {
             } else if (this.state.textLanguageChange === '2') {
                 //this.state.data[0].name = allTransactions.nameHo
                 this.setState({allTransactionsLabel: allTransactions.nameHo})
+                this.setState({dateLabel: dateLabel.nameHo})
+                this.setState({incomeLabel: incomeLabel.nameHo})
+                this.setState({expenseLabel: expenseLabel.nameHo})
+                this.setState({smallGroceryLabel: smallGroceryLabel.nameHo})
+                this.setState({goatLivestockLabel: goatLivestockLabel.nameHo})
+                this.setState({pigLivestockLabel: pigLivestockLabel.nameHo})
+                this.setState({poultryLivestockLabel: poultryLivestockLabel.nameHo})
+                this.setState({cropLabel: cropLabel.nameHo})
+                this.setState({dryFishSellingLabel: dryFishSellingLabel.nameHo})
+                this.setState({vegVendingLabel: vegVendingLabel.nameHo})
+                this.setState({netProfitText: netProfitText.nameHo})
+                this.setState({livestockText: livestockText.nameHo})
+                this.setState({healthText: healthText.nameHo})
+                this.setState({agricultureText: agricultureText.nameHo})
+                this.setState({smallBusinessText: smallBusinessText.nameHo})
+                this.setState({educationText: educationText.nameHo})
+                this.setState({savingText: savingText.nameHo})
+                this.setState({pensionText: pensionText.nameHo})
+                this.setState({otherText: otherText.nameHo})
                 // this.state.data[1].name = livestock.nameHo
                 // this.state.data[2].name = smallBusiness.nameHo
                 // this.state.data[3].name = health.nameHo
@@ -79,6 +176,25 @@ export default class AllTransactionScreen extends Component {
             } else if (this.state.textLanguageChange === '3') {
                 //this.state.data[0].name = allTransactions.nameOdia
                 this.setState({allTransactionsLabel: allTransactions.nameOdia})
+                this.setState({dateLabel: dateLabel.nameOdia})
+                this.setState({incomeLabel: incomeLabel.nameOdia})
+                this.setState({expenseLabel: expenseLabel.nameOdia})
+                this.setState({smallGroceryLabel: smallGroceryLabel.nameOdia})
+                this.setState({goatLivestockLabel: goatLivestockLabel.nameOdia})
+                this.setState({pigLivestockLabel: pigLivestockLabel.nameOdia})
+                this.setState({poultryLivestockLabel: poultryLivestockLabel.nameOdia})
+                this.setState({cropLabel: cropLabel.nameOdia})
+                this.setState({dryFishSellingLabel: dryFishSellingLabel.nameOdia})
+                this.setState({vegVendingLabel: vegVendingLabel.nameOdia})
+                this.setState({netProfitText: netProfitText.nameOdia})
+                this.setState({livestockText: livestockText.nameOdia})
+                this.setState({healthText: healthText.nameOdia})
+                this.setState({agricultureText: agricultureText.nameOdia})
+                this.setState({smallBusinessText: smallBusinessText.nameOdia})
+                this.setState({educationText: educationText.nameOdia})
+                this.setState({savingText: savingText.nameOdia})
+                this.setState({pensionText: pensionText.nameOdia})
+                this.setState({otherText: otherText.nameOdia})
                 // this.state.data[1].name = livestock.nameOdia
                 // this.state.data[2].name = smallBusiness.nameOdia
                 // this.state.data[3].name = health.nameOdia
@@ -89,6 +205,25 @@ export default class AllTransactionScreen extends Component {
             } else if (this.state.textLanguageChange === '4') {
                 //this.state.data[0].name = allTransactions.nameSanthali
                 this.setState({allTransactionsLabel: allTransactions.nameSanthali})
+                this.setState({dateLabel: dateLabel.nameSanthali})
+                this.setState({incomeLabel: incomeLabel.nameSanthali})
+                this.setState({expenseLabel: expenseLabel.nameSanthali})
+                this.setState({smallGroceryLabel: smallGroceryLabel.nameSanthali})
+                this.setState({goatLivestockLabel: goatLivestockLabel.nameSanthali})
+                this.setState({pigLivestockLabel: pigLivestockLabel.nameSanthali})
+                this.setState({poultryLivestockLabel: poultryLivestockLabel.nameSanthali})
+                this.setState({cropLabel: cropLabel.nameSanthali})
+                this.setState({dryFishSellingLabel: dryFishSellingLabel.nameSanthali})
+                this.setState({vegVendingLabel: vegVendingLabel.nameSanthali})
+                this.setState({netProfitText: netProfitText.nameSanthali})
+                this.setState({livestockText: livestockText.nameSanthali})
+                this.setState({healthText: healthText.nameSanthali})
+                this.setState({agricultureText: agricultureText.nameSanthali})
+                this.setState({smallBusinessText: smallBusinessText.nameSanthali})
+                this.setState({educationText: educationText.nameSanthali})
+                this.setState({savingText: savingText.nameSanthali})
+                this.setState({pensionText: pensionText.nameSanthali})
+                this.setState({otherText: otherText.nameSanthali})
                 // this.state.data[1].name = livestock.nameSanthali
                 // this.state.data[2].name = smallBusiness.nameSanthali
                 // this.state.data[3].name = health.nameSanthali
@@ -105,6 +240,7 @@ export default class AllTransactionScreen extends Component {
     }
 
     getUserData = async () => {
+        let totalIncome = 0, totalExpense = 0;
         try {
             var moneyManagerData = []
             let username = await AsyncStorage.getItem('username')
@@ -113,9 +249,19 @@ export default class AllTransactionScreen extends Component {
             var specificObject = parsed[0]
             moneyManagerData = specificObject.moneyManagerData;
             console.log(specificObject.moneyManagerData)
+            if(specificObject.moneyManagerData.length > 0) {
+                specificObject.moneyManagerData.map(data => {
+                    if(data.type==='Income' || data.type==='income') {
+                        totalIncome += Number(data.amount);
+                    } if(data.type==='Expense' || data.type==='expense') {
+                        totalExpense += Number(data.amount);
+                    } 
+                })
+            } 
         } catch (error) {
             console.log(error)
         }
+        this.setState({netProfitValue: totalIncome - totalExpense})
         this.setState({ moneyManagerData: moneyManagerData })
     }
 
@@ -232,20 +378,32 @@ export default class AllTransactionScreen extends Component {
                                     justifyContent: 'space-between',
                                     marginBottom: widthToDp('5%')
                                 }}>
-                                    <Text style={{ marginLeft: widthToDp("3%"), fontSize: widthToDp("4%"), fontFamily: 'Oswald-Light' }}>{"Date : " + i.date}</Text>
-                                    <Text style={{ marginLeft: widthToDp("3%"), fontSize: widthToDp("4%"), fontFamily: 'Oswald-Light' }}>{i.type}</Text>
+                                    <Text style={{ marginLeft: widthToDp("3%"), fontSize: widthToDp("4%"), fontFamily: 'Oswald-Light' }}>{this.state.dateLabel + ": " + i.date}</Text>
+                                    <Text style={{ marginLeft: widthToDp("3%"), fontSize: widthToDp("4%"), fontFamily: 'Oswald-Light' }}>{(i.type==="Income" || i.type==="income") ? this.state.incomeLabel : (i.type==="Expense" || i.type==="expense") ? this.state.expenseLabel : i.type}</Text>
                                 </View>
                                 <View style={{
                                     flexDirection: 'row',
                                     justifyContent: 'space-between',
                                 }}>
-                                    <Text style={{ marginLeft: widthToDp("3%"), fontSize: widthToDp("5%"), fontFamily: 'Oswald-Medium' }}>{i.category}</Text>
+                                    <Text style={{ marginLeft: widthToDp("3%"), fontSize: widthToDp("5%"), fontFamily: 'Oswald-Medium' }}>{i.category==="Small Grocery Shop" ? this.state.smallGroceryLabel : i.category==="Goat livestock" ? this.state.goatLivestockLabel : i.category==="Poultry livestock" ? this.state.poultryLivestockLabel : i.category==="Pig livestock" ? this.state.pigLivestockLabel : i.category==="Crops" ? this.state.cropLabel : i.category==="DryFish Selling" ? this.state.dryFishSellingLabel : (i.category==="Vegetable vending" || i.category==="Vegetable Vending") ? this.state.vegVendingLabel : i.category==="Health" ? this.state.healthText : i.category==="Live Stock" ? this.state.livestockText : i.category==="Agriculture" ? this.state.agricultureText : i.category==="Small Business" ? this.state.smallBusinessText : i.category==="Education" ? this.state.educationText : i.category==="Loan savings" ? this.state.savingText : i.category==="Pension" ? this.state.pensionText : i.category==="Others" ? this.state.otherText : i.category}</Text>
                                     <Text style={{ marginLeft: widthToDp("3%"), fontSize: widthToDp("5%"), fontFamily: 'Oswald-Medium' }}>{i.amount ? "₹ " + i.amount : ""}</Text>
                                 </View>
                             </View>
                         )
                     })
                 }
+                <Text style={{ 
+                    textAlign: 'center', 
+                    marginTop: widthToDp('5%'), 
+                    fontSize: widthToDp("5%"), 
+                    fontFamily: 'Oswald-Medium' 
+                }}>
+                    {this.state.netProfitText}= 
+                    <Text style={{
+                        fontFamily: 'Oswald-Light',
+                        fontSize: widthToDp("4.5%"), 
+                    }}>  ₹ {this.state.netProfitValue}</Text>
+                </Text>
                 <View style={{margin:20}}></View>
                 </ScrollView>
                 
