@@ -67,7 +67,7 @@ export default class LivestockTableScreen extends Component {
             totalValueAfter2Years: '',
             totalValueAfter2YearsFrom1MotherGoat: '',
             totalValueAfter2YearsFrom2MotherGoats: '',
-            totalProfitFrom4MotherGoatsPer2Years: '',
+            totalProfitFrom4MotherGoatsPer2Years: '9250',
             noteLabel: '',
             incomeFrom: '',
             goats: '',
@@ -661,7 +661,7 @@ export default class LivestockTableScreen extends Component {
 
 
                                 <View style={{ marginLeft: widthToDp("3%"), marginTop: heightToDp("2%"), marginBottom: widthToDp('5%') }}>
-                                    <Text>{this.state.totalProfitFrom4MotherGoatsPer2Years}</Text>
+                                    <Text>{this.state.totalProfitFrom4MotherGoatsPer2Years}9250</Text>
                                 </View>
                                 <View style={{margin: widthToDp('3%')}}>
                                     <Text>{this.state.noteLabel}</Text>

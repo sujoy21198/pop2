@@ -53,7 +53,7 @@ export default class PultryTableScreen extends Component {
             eggQuantity: '30',
             birdQuantity: '8',
             total: '2550',
-            netProfit: '1550',
+            netProfit: '2250',
             feed: '125',
             vaccination: '125',
             totalB: '250',

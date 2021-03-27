@@ -49,11 +49,27 @@ export default class SigninScreen extends Component {
     }
 
     componentDidMount() {
-        this.getCustodianMobileNumber()
+        this.checkConnectionForCustodian()
         //this.setCustodianNumber()
-        this.setCustodian()
+        
         //this.getAllData()
         this.downloadImagesForOffline()
+    }
+
+
+    checkConnectionForCustodian = async() => {
+        let custodianNumber = await AsyncStorage.getItem('cus')
+        NetInfo.fetch().then(state => {
+            var isConnected = state.isConnected
+            console.log(isConnected)
+            if (isConnected === true) {
+                return this.getCustodianMobileNumber()
+            } else {
+                var test = custodianNumber.replace(/\"/g, "")
+                this.setState({phoneNumber : test})
+                //alert(custodianNumber)
+            }
+        })
     }
 
     downloadImagesForOffline = async () => {
@@ -785,23 +801,6 @@ export default class SigninScreen extends Component {
         // this.setState({username : 'anonymous@abc.com'})
         // this.setState({password : 'Test@12345'})
     }
-
-    setCustodian = async () => {
-        let cus = await AsyncStorage.getItem("cus")
-        this.setState({ loadPhoneNumber: false })
-
-        NetInfo.fetch().then(state => {
-            var isConnected = state.isConnected
-            console.log(isConnected)
-            if (isConnected === true) {
-                console.log("connected")
-            } else {
-                this.setState({ phoneNumber: cus })
-            }
-        })
-
-    }
-
 
     getAllData = async () => {
         var allusername = await AsyncStorage.getItem('username')

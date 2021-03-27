@@ -762,7 +762,7 @@ export default class RegistrationScreen extends Component {
           <Input
             style={[styles.input, styles.formInput]}
             onChangeText={(text) => { this.setState({ participantNumber: text }) }}
-            secureTextEntry={this.state.passwordVisibility}
+            
           />
         </View>
         <Input

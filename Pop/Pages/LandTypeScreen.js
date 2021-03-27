@@ -30,7 +30,10 @@ export default class LandTypeScreen extends Component {
             cropName: '',
             imageFile: '',
             landTypeLabel:'',
-            data:[]
+            data:[],
+            highLandEnglish:'',
+            mediumLandEnglish:'',
+            lowLandEnglish:''
         }
         this.state.languages = Languages
         this.state.data = data
@@ -54,7 +57,9 @@ export default class LandTypeScreen extends Component {
             var highLand = specificObject.labels.find((i) => i.type === 53)
             var lowLand = specificObject.labels.find((i) => i.type === 55)
             var mediumLand = specificObject.labels.find((i) => i.type === 54)
-            
+            this.setState({ highLandEnglish: highLand.nameEnglish })
+            this.setState({ lowLandEnglish: lowLand.nameEnglish })
+            this.setState({ mediumLandEnglish: mediumLand.nameEnglish })
             //var nutrationGraden = specificObject.labels.find((i) => i.type === 31)
             // var message = specificObject.labels.find((i) => i.type === 26)
             // var generalSettings = specificObject.labels.find((i) => i.type === 27)
@@ -124,20 +129,21 @@ export default class LandTypeScreen extends Component {
 
 
     selectLandType = (data) => {
+        
         if (data === this.state.data[0].name) {
             this.props.navigation.navigate({
                 name: 'PatchScreen',
-                params: { landType: data, _id: this.state._id, cropName: this.state.cropName, imageFile: this.state.imageFile }
+                params: { landType: data, _id: this.state._id, cropName: this.state.cropName, imageFile: this.state.imageFile  , highEnglish : this.state.highLandEnglish }
             })
         } else if (data === this.state.data[1].name) {
             this.props.navigation.navigate({
                 name: 'PatchScreen',
-                params: { landType: data, _id: this.state._id, cropName: this.state.cropName, imageFile: this.state.imageFile }
+                params: { landType: data, _id: this.state._id, cropName: this.state.cropName, imageFile: this.state.imageFile , highEnglish : this.state.mediumLandEnglish}
             })
         } else if (data === this.state.data[2].name) {
             this.props.navigation.navigate({
                 name: 'PatchScreen',
-                params: { landType: data, _id: this.state._id, cropName: this.state.cropName, imageFile: this.state.imageFile }
+                params: { landType: data, _id: this.state._id, cropName: this.state.cropName, imageFile: this.state.imageFile , highEnglish : this.state.lowLandEnglish }
             })
         }
     }

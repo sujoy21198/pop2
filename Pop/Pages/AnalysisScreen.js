@@ -379,7 +379,7 @@ export default class LandTypeScreen extends Component {
                                 </View>
                                 <Image
                                     style={{ height: heightToDp("20%"), width: widthToDp("50%"), marginTop: heightToDp("2%"), marginLeft: widthToDp("7%"), borderRadius: 10 }}
-                                    source={{ uri: DataAccess.BaseUrl + DataAccess.CropImage + this.state.imageFile }}
+                                    source={{ uri: 'file:///storage/emulated/0/Pictures/image_' +  this.state.imageFile }}
                                 />
                             </View>
                         </View>

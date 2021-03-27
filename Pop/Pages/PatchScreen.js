@@ -27,37 +27,29 @@ export default class PatchScreen extends Component {
             highLand: '',
             lowLand: '',
             mediumLand: '',
-            patchButtonText: ''
+            patchButtonText: '',
+            landtypeEnglish:'',
+            landTypeForPatch:''
         }
         this.state.languages = Languages
         this.state._id = this.props.route.params._id
         this.state.cropName = this.props.route.params.cropName
         this.state.imageFile = this.props.route.params.imageFile
         this.state.landType = this.props.route.params.landType
-        //alert(this.state.cropName)
+        this.state.landtypeEnglish = this.props.route.params.highEnglish
+
+        this.state.landTypeForPatch = this.state.landtypeEnglish
+
+        // alert(this.state._id)
+        
     }
     componentDidMount() {
-        //this.setPatch()
+        
 
         this.showData()
         this.setLanguageOnMount()
         this.loadlabelsFromStorage()
-        this.displayPatches()
-        //this.test()
-    }
-
-    displayPatches = async () => {
-        try {
-            let username = await AsyncStorage.getItem('username')
-            let user = await AsyncStorage.getItem('user')
-            let parsed = JSON.parse(user)
-            var sepcific = parsed.find((i) => i.username === username)
-            console.log(sepcific.patch,"showing patches")
-
-            //console.log(JSON.stringify(sepcific.highLand))
-        } catch (error) {
-            console.log(error)
-        }
+        
     }
 
     loadlabelsFromStorage = async () => {
@@ -194,7 +186,7 @@ export default class PatchScreen extends Component {
 
     setPatch = async (data) => {
         try {
-            const patchData = {'patchName': data , 'cropName': this.state.cropName , 'landType' : this.state.landType}
+            const patchData = {'patchName': data , 'cropName': this.state.cropName , 'landType' : this.state.landTypeForPatch}
             let username = await AsyncStorage.getItem('username')
             let user = await AsyncStorage.getItem('user')
             let parsed = JSON.parse(user)
@@ -252,9 +244,9 @@ export default class PatchScreen extends Component {
             let user = await AsyncStorage.getItem('user')
             let parsed = JSON.parse(user)
             var sepcific = parsed.find((i) => i.username === username)
-            var cropSpecific = sepcific.patchData.filter((i) => i.cropName === this.state.cropName && i.landType === this.state.landType)
+            var cropSpecific = sepcific.patchData.filter((i) => i.cropName === this.state.cropName && i.landType === this.state.landtypeEnglish)
             this.setState({data : cropSpecific})
-            console.log(cropSpecific,"lolo")
+            // console.log(cropSpecific,"lolo")
             // var cropSpecific = sepcific.patchData.find((i) => i.cropName === this.state.cropName)
             // var cropSpecificlowLand = sepcific.lowLand.find((i) => i.cropName === this.state.cropName)
             // var cropSpecificMediumLand = sepcific.mediumLand.find((i) => i.cropName === this.state.cropName)
@@ -290,19 +282,22 @@ export default class PatchScreen extends Component {
 
     navigateToPatch = async (patchName) => {
         try {
+            //alert(patchName)
             const patchArrayObject = { 'cropId': this.state._id, 'patchName': patchName, 'landType': this.state.landType, 'step1': '', 'step2': '', 'step3': '', 'step4': '', 'step5': '', 'step6': '', 'step7': '', 'step8': '' }
             let username = await AsyncStorage.getItem('username')
             let user = await AsyncStorage.getItem('user')
             let parsed = JSON.parse(user)
             var sepcific = parsed.find((i) => i.username === username)
+            console.log(patchArrayObject,"jumpasasdasdadadsadas")
             var valueArr = sepcific.patch.map(function (item) { return item.patchName })
+            console.log(valueArr.includes(patchName))
             if (valueArr.includes(patchName)) {
                 console.log("Already created")
             } else {
                 sepcific.patch.push(patchArrayObject)
                 await AsyncStorage.setItem('user', JSON.stringify(parsed))
+                console.log("pushed")
             }
-
             var jump = sepcific.patch.find((i) => i.patchName === patchName)
             var jumpNavigation = sepcific.costBenifitAnalysis.find((i) => i.patchName === patchName)
             console.log(sepcific.costBenifitAnalysis.find((i) => i.patchName === patchName), "hi")
@@ -440,7 +435,7 @@ export default class PatchScreen extends Component {
             // sepcific.patch.push(patchArrayObject)
 
             // await AsyncStorage.setItem('user', JSON.stringify(parsed))
-            console.log(sepcific.patch)
+            //console.log(sepcific.patch)
 
         } catch (error) {
             console.log(error)
@@ -529,7 +524,7 @@ export default class PatchScreen extends Component {
                         style={{ marginBottom: heightToDp("80%") }}
                         renderItem={({ item }) =>
 
-                            <TouchableOpacity onPress={() => { this.navigateToPatch(item.name) }}>
+                            <TouchableOpacity onPress={() => { this.navigateToPatch(item.patchName) }}>
                                 <View style={{ width: widthToDp("90%"), backgroundColor: 'white', margin: widthToDp("3%"), borderRadius: 20, height: heightToDp("5%") }}>
                                     <Text style={{ alignSelf: 'center', justifyContent: 'center', marginTop: heightToDp("0.5%"), fontSize: widthToDp("5%"), color: "#000", fontFamily: 'Oswald-Medium' }}>{item.patchName}</Text>
                                 </View>
