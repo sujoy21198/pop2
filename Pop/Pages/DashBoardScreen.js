@@ -12,12 +12,12 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 
 
 const data = [
-    { name: 'Knowledge Center', code: 'https://image.freepik.com/free-photo/fresh-green-vegetables-produce-greenhouse-garden-nursery-farm_33829-312.jpg' },
-    { name: 'Important Links', code: 'https://www.jing.fm/clipimg/detail/172-1723685_links-useful-links-icon-png.png' },
-    { name: 'Money Manager', code: 'https://cdn.dnaindia.com/sites/default/files/styles/third/public/2019/05/21/826028-rupee-thinkstock.jpg' },
-    { name: 'Contact', code: 'http://static.agrostar.in/static/KV%2020%20April%202020kv.jpg' },
-    { name: 'Message', code: 'https://boostlikes-bc85.kxcdn.com/blog/wp-content/uploads/2017/06/Automatically-Message-Facebook-Fans.jpg' },
-    { name: 'General Settings', code: 'https://www.kisaanhelpline.com/news_image/20012020020200fertilisers-bccl.jpg' }
+    { name: 'Knowledge Center', code: 'fresh-green-vegetables-produce-greenhouse-garden-nursery-farm_33829-312.jpg' },
+    { name: 'Important Links', code: '172-1723685_links-useful-links-icon-png.png' },
+    { name: 'Money Manager', code: '826028-rupee-thinkstock.jpg' },
+    { name: 'Contact', code: 'KV%2020%20April%202020kv.jpg' },
+    { name: 'Message', code: 'Automatically-Message-Facebook-Fans.jpg' },
+    { name: 'General Settings', code: '20012020020200fertilisers-bccl.jpg' }
 ]
 
 
@@ -312,7 +312,7 @@ export default class DashBoardScreen extends Component {
                                     <Text style={{ color: "#fff", fontSize: widthToDp("5%"), marginLeft: widthToDp("5%"), marginTop: heightToDp("0.4%"), fontFamily: 'Oswald-Medium' }}>{item.name}</Text>
                                     <Image
                                         style={{ width: widthToDp("47%"), height: heightToDp("25%"), borderBottomLeftRadius: 10, borderBottomRightRadius: 10, marginTop: heightToDp("1%") }}
-                                        source={{ uri: item.code }}
+                                        source={{ uri: 'file:///storage/emulated/0/Pictures/image_' + item.code }}
                                     />
                                 </View>
 

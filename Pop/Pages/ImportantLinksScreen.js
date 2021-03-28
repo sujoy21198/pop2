@@ -13,10 +13,10 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 
 
 const data = [
-    { name: 'WASH', code: 'https://www.cdc.gov/handwashing/images/GettyImages-514363103-medium.jpg' },
-    { name: 'HEALTH', code: 'https://drmehtablog.com/wp-content/uploads/2016/01/Cardiology-1.jpg' },
-    { name: 'COVID', code: 'https://www.universiteitleiden.nl/binaries/content/gallery/ul2/main-images/campus-the-hague/bsk/covid---19-afbeelding.jpg' },
-    { name: 'GOVT SCHEMES', code: 'https://empiawards.files.wordpress.com/2014/05/indian-health-care.jpg' }
+    { name: 'WASH', code: 'GettyImages-514363103-medium.jpg' },
+    { name: 'HEALTH', code: 'Cardiology-1.jpg' },
+    { name: 'COVID', code: 'covid---19-afbeelding.jpg' },
+    { name: 'GOVT SCHEMES', code: 'indian-health-care.jpg' }
 ]
 
 export default class ImportantLinksScreen extends Component {
@@ -265,7 +265,7 @@ export default class ImportantLinksScreen extends Component {
                                     <Text style={{ color: "#fff", fontSize: widthToDp("5%"), marginLeft: widthToDp("5%"), marginTop: heightToDp("0.4%"), fontFamily: 'Oswald-Medium', height:heightToDp("4%") }}>{item.name}</Text>
                                     <Image
                                         style={{ width: widthToDp("47%"), height: heightToDp("25%"), borderBottomLeftRadius: 10, borderBottomRightRadius: 10, marginTop: heightToDp("1%") }}
-                                        source={{ uri: item.code }}
+                                        source={{ uri: 'file:///storage/emulated/0/Pictures/image_' + item.code }}
                                     />
                                 </View>
 

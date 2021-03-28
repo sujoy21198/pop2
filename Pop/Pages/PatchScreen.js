@@ -182,10 +182,38 @@ export default class PatchScreen extends Component {
         }
     }
 
+    checkPatchName = async(name) => {
+        try{
+            //console.log(name)
+            let username = await AsyncStorage.getItem('username')
+            let user = await AsyncStorage.getItem('user')
+            let parsed = JSON.parse(user)
+            let specific = parsed.find((i) => i.username === username)
+            var patchSpecific = specific.patchData.filter((i) => i.patchName === name) 
+            if(patchSpecific.length > 0 || name === " "){
+                return alert("patch Name alread exsist")
+            }else{
+                this.setPatch(name)
+            }
+            //console.log(patchSpecific)
+            //var patchNameSpecific = specific.patchData.filter((i) => i.patchName === name)
+            // console.log(specific.patchData.map((i) => i.patchName === name))
+            //console.log(specific.patchData.map(function (item) { return item.patchName }))
+            // if(patchNameSpecific.length === 0){
+            //     //this.setPatch(name)
+            // }
+            //console.log(patchNameSpecific)
+            //console.log(specific.patch)
+        }catch(error){
+            console.log(error)
+        }
+    }
+
 
 
     setPatch = async (data) => {
         try {
+
             const patchData = {'patchName': data , 'cropName': this.state.cropName , 'landType' : this.state.landTypeForPatch}
             let username = await AsyncStorage.getItem('username')
             let user = await AsyncStorage.getItem('user')
@@ -245,7 +273,9 @@ export default class PatchScreen extends Component {
             let parsed = JSON.parse(user)
             var sepcific = parsed.find((i) => i.username === username)
             var cropSpecific = sepcific.patchData.filter((i) => i.cropName === this.state.cropName && i.landType === this.state.landtypeEnglish)
+            //console.log(sepcific.patchData)
             this.setState({data : cropSpecific})
+
             // console.log(cropSpecific,"lolo")
             // var cropSpecific = sepcific.patchData.find((i) => i.cropName === this.state.cropName)
             // var cropSpecificlowLand = sepcific.lowLand.find((i) => i.cropName === this.state.cropName)
@@ -514,7 +544,7 @@ export default class PatchScreen extends Component {
                     title={"ADD PATCH"}
                     // message={"Message for DialogInput #1"}
                     hintInput={"Please enter the name of your patch"}
-                    submitInput={(inputText) => { this.setPatch(inputText) }}
+                    submitInput={(inputText) => { this.checkPatchName(inputText) }}
                     closeDialog={() => { this.setState({ isDialogVisible: false }) }}>
                 </DialogInput>
                 <View>

@@ -13,14 +13,14 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 
 
 const data = [
-    { name: 'AGRICULTURE', nameEnglish: 'Agriculture', code: 'https://spontaneousorder.in/wp-content/uploads/2020/02/Swatantra.jpg' },
-    { name: 'LIVESTOCK', nameEnglish: 'Live Stock', code: 'https://d3hnfqimznafg0.cloudfront.net/images/Article_Images/ImageForArticle_838(1).jpg' },
-    { name: 'SMALL BUSINESS', nameEnglish: 'Small Business', code: 'https://www.sba.gov/build/71bd57d80e04f91d53641835ce6d7acc.png' },
-    { name: 'HEALTH', nameEnglish: 'Health', code: 'https://images.hu-production.be/static/img/home/homepageicons-03.png' },
-    { name: 'EDUCATION', nameEnglish: 'Education', code: 'https://prod-discovery.edx-cdn.org/media/course/image/ee4f4f12-e6ec-45ac-94df-b90b4b022903-aaf6257f767b.jpeg' },
-    { name: 'LOAN SAVINGS', nameEnglish: 'Loan Savings', code: 'https://cdn.corporatefinanceinstitute.com/assets/Loans-1.jpeg' },
-    { name: 'PENSION', nameEnglish: 'Pension', code: 'https://img.theweek.in/content/dam/week/news/biz-tech/images/2019/2/1/pension-plan.jpg' },
-    { name: 'OTHERS', nameEnglish: 'Others', code: 'https://logos.flamingtext.com/Word-Logos/others-design-sketch-name.png' },
+    { name: 'AGRICULTURE', nameEnglish: 'Agriculture', code: 'Swatantra.jpg' },
+    { name: 'LIVESTOCK', nameEnglish: 'Live Stock', code: 'Dairy-Entrepreneurship-Development-Scheme.jpg' },
+    { name: 'SMALL BUSINESS', nameEnglish: 'Small Business', code: '71bd57d80e04f91d53641835ce6d7acc.png' },
+    { name: 'HEALTH', nameEnglish: 'Health', code: 'homepageicons-03.png' },
+    { name: 'EDUCATION', nameEnglish: 'Education', code: 'ee4f4f12-e6ec-45ac-94df-b90b4b022903-aaf6257f767b.jpeg' },
+    { name: 'LOAN SAVINGS', nameEnglish: 'Loan Savings', code: 'Loans-1.webp' },
+    { name: 'PENSION', nameEnglish: 'Pension', code: 'pension-plan.jpg' },
+    { name: 'OTHERS', nameEnglish: 'Others', code: 'others-design-sketch-name.png' },
 ]
 
 export default class MoneyManagerCategoriesScreen extends Component {
@@ -296,7 +296,7 @@ export default class MoneyManagerCategoriesScreen extends Component {
                                     <Text style={{ color: "#fff", fontSize: widthToDp("5%"), marginLeft: widthToDp("5%"), marginTop: heightToDp("0.4%"), fontFamily: 'Oswald-Medium' }}>{item.name}</Text>
                                     <Image
                                         style={{ width: widthToDp("47%"), height: heightToDp("25%"), borderBottomLeftRadius: 10, borderBottomRightRadius: 10, marginTop: heightToDp("1%") }}
-                                        source={{ uri: item.code }}
+                                        source={{ uri: 'file:///storage/emulated/0/Pictures/image_' +item.code }}
                                     />
                                 </View>
 

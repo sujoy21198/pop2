@@ -12,10 +12,10 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 
 
 const data = [
-    { name: 'CROPS', code: 'https://pbs.twimg.com/media/Evsaf-4UcAMrsvC.jpg' },
-    { name: 'LIVESTOCK', code: 'https://sarkariyojanas.com/wp-content/uploads/2019/11/Dairy-Entrepreneurship-Development-Scheme.jpg' },
-    { name: 'SMALL BUSINESS', code: 'https://cdn.shortpixel.ai/client/to_webp,q_glossy,ret_img,w_720,h_396/https://surejob.in/wp-content/uploads/2017/12/handicrafts_small_business.jpg' },
-    { name: 'NUTRITION GARDEN', code: 'http://ttol.vietnamnetjsc.vn//2017/05/15/06/58/bien-toi-thanh-dau-9-loi-ich-vo-cung-bat-ngo-ban-nen-biet_5.jpg' }
+    { name: 'CROPS', code: 'Evsaf-4UcAMrsvC.jpg' },
+    { name: 'LIVESTOCK', code: 'Dairy-Entrepreneurship-Development-Scheme.jpg' },
+    { name: 'SMALL BUSINESS', code: 'handicrafts_small_business.jpg' },
+    { name: 'NUTRITION GARDEN', code: 'bien-toi-thanh-dau-9-loi-ich-vo-cung-bat-ngo-ban-nen-biet_5.jpg' }
 ]
 
 export default class KnowledgeCenterScreen extends Component {
@@ -301,7 +301,7 @@ export default class KnowledgeCenterScreen extends Component {
                                     <Text style={{color: "#fff", fontSize: widthToDp("5%"),marginLeft:widthToDp("5%"), marginTop: heightToDp("0.4%"),fontFamily:'Oswald-Medium'}}>{item.name}</Text>
                                     <Image
                                 style={{ width: widthToDp("47%"), height: heightToDp("25%") ,borderBottomLeftRadius:10,borderBottomRightRadius:10, marginTop: heightToDp("1%")}}
-                                source={{ uri: item.code }}
+                                source={{ uri: 'file:///storage/emulated/0/Pictures/image_' + item.code }}
                                 />
                                 </View>
                             </TouchableOpacity>

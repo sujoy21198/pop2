@@ -41,7 +41,8 @@ export default class SigninScreen extends Component {
             smallBusinessImages: [],
             labels: [],
             imageloaded: true,
-            imageLoading: true
+            imageLoading: true,
+            staticImages:[]
         }
 
         this.state.selectedLanguage = this.props.route.params.selectedLanguage
@@ -83,6 +84,7 @@ export default class SigninScreen extends Component {
         var nutritionGardenImagesArray = []
         var smallBusinessImagesArray = []
         var labelArray = []
+        var staticImagesArray=[]
 
 
         await axios.get(DataAccess.BaseUrl + DataAccess.AccessUrl + 'files', {
@@ -98,6 +100,7 @@ export default class SigninScreen extends Component {
             var nutritionGarden = response.data.data.find((i) => i.name === 'nutritionGarden')
             var smallBusiness = response.data.data.find((i) => i.name === 'smallBusiness')
             var label = response.data.data.find((i) => i.name === 'label')
+            var staticImages = response.data.data.find((i) => i.name === 'staticImages')
             cropScreenImageArray = crop.fileNames
             cropStepImagesArray = cropStep.fileNames
             cropMaterialImagesArray = cropMaterial.fileNames
@@ -108,6 +111,7 @@ export default class SigninScreen extends Component {
             nutritionGardenImagesArray = nutritionGarden.fileNames
             smallBusinessImagesArray = smallBusiness.fileNames
             labelArray = label.fileNames
+            staticImagesArray = staticImages.fileNames
 
             //totalImages = cropScreenImageArray.concat(cropStepImagesArray, cropMaterialImagesArray, livestockScreenImagesArray,liveStockStepImagesArray,breedScreenImagesArray,importantLinksScreenArray,nutritionGardenImagesArray,smallBusinessImagesArray)
             //console.log(cropScreenImageArray)
@@ -278,6 +282,24 @@ export default class SigninScreen extends Component {
         labelArray = NewFile
         console.log(labelArray, "hasta la vista")
 
+
+        //11
+        var NewFile = []
+        for(var i=0 ; i < staticImagesArray.length ; i++){
+            const checkImage = await RNFS.exists('file:///storage/emulated/0/Pictures/image_' + staticImagesArray[i])
+
+            if (!checkImage) {
+                NewFile.push(staticImagesArray[i])
+                //console.log(cropScreenImageArray[i])
+                console.log(NewFile)
+
+            } else {
+                console.log("file exists")
+            }
+        }
+        staticImagesArray = NewFile
+        console.log(labelArray, "hasta la vista static")
+
         this.setState({ cropScreenImages: cropScreenImageArray })
         this.setState({ cropStepImages: cropStepImagesArray })
         this.setState({ cropMaterialImages: cropMaterialImagesArray })
@@ -288,6 +310,7 @@ export default class SigninScreen extends Component {
         this.setState({ nutritionGardenImages: nutritionGardenImagesArray })
         this.setState({ smallBusinessImages: smallBusinessImagesArray })
         this.setState({ labels: labelArray })
+        this.setState({staticImages : staticImagesArray})
         //console.log(this.state.cropScreenImages,"hi")
         this.getCropImage()
     }
@@ -750,7 +773,65 @@ export default class SigninScreen extends Component {
             console.log(editedNames)
             fileNames.push(editedNames)
             ext.push(extNames)
-            imageUrls.push("http://161.35.122.165:3020/app-property/uploads/label/" + cropImages[i])
+            imageUrls.push("http://161.35.122.165:3020/app-property/uploads/static/" + cropImages[i])
+        }
+
+        for (var i = 0; i < imageUrls.length; i++) {
+            const { config, fs } = RNFetchBlob;
+            let PictureDir = fs.dirs.PictureDir;
+            console.log(PictureDir)
+            let options = {
+                fileCache: true,
+                addAndroidDownloads: {
+                    useDownloadManager: true,
+                    notification: false,
+                    path:
+                        PictureDir +
+                        '/image_' +
+                        fileNames[i] + '.' +
+                        ext[i],
+                    description: 'Image',
+                }
+            };
+            config(options)
+                .fetch('GET', imageUrls[i])
+                .then(res => {
+                    // Showing alert after successful downloading
+                    console.log('res -> ', JSON.stringify(res));
+                    //alert('Image Downloaded Successfully.');
+                });
+        }
+        // alert("images downloaded successfully")
+        this.setState({ imageloaded: false })
+        if (this.state.imageloaded === false) {
+            Toast.show({
+                text: "Images Downloaded Successfully",
+                duration: 6000,
+                type: 'success'
+            })
+        }
+
+        console.log(fileNames)
+        console.log(imageUrls)
+        this.getStaticImages()
+    }
+
+    getStaticImages = () => {
+        var cropImages = []
+        var fileNames = []
+        var imageUrls = []
+        var ext = []
+        cropImages = this.state.staticImages
+        //alert(cropImages.length)
+        for (var i = 0; i < cropImages.length; i++) {
+            var names = cropImages[i]
+            var editedNames = names.substr(0, names.indexOf('.'))
+            var extNames = names.substr(names.indexOf('.') + 1)
+            console.log(ext)
+            console.log(editedNames)
+            fileNames.push(editedNames)
+            ext.push(extNames)
+            imageUrls.push("http://161.35.122.165:3020/app-property/uploads/static/" + cropImages[i])
         }
 
         for (var i = 0; i < imageUrls.length; i++) {
