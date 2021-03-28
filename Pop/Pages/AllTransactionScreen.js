@@ -246,7 +246,7 @@ export default class AllTransactionScreen extends Component {
             let username = await AsyncStorage.getItem('username')
             let user = await AsyncStorage.getItem('user');
             let parsed = JSON.parse(user);
-            var specificObject = parsed[0]
+            var specificObject = parsed.find((i) => i.username === username)
             moneyManagerData = specificObject.moneyManagerData;
             console.log(specificObject.moneyManagerData)
             if(specificObject.moneyManagerData.length > 0) {
