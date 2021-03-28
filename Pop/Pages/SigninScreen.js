@@ -1065,7 +1065,11 @@ export default class SigninScreen extends Component {
                     ]
                 });
             } else {
-                alert("please enter a valid password")  
+                Toast.show({
+                    type: 'danger',
+                    text: 'please enter a valid password',
+                    duration: 6000
+                })  
             }
             // var valueArr = parsed.map(function(item){ return item.userId });
             // alert(valueArr)
@@ -1259,7 +1263,11 @@ export default class SigninScreen extends Component {
             
         }
         catch (error) {
-            alert(error)
+            Toast.show({
+                type: 'danger',
+                text: error,
+                duration: 6000
+            })
         }
     }
 

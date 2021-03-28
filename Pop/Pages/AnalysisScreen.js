@@ -395,11 +395,12 @@ export default class LandTypeScreen extends Component {
                                         : widthToDp("23%")
                                 }}>
                                     <Text style={{
-                                        fontFamily: 'Oswald-Medium'
+                                        fontFamily: 'Oswald-Medium',
+                                        fontSize: widthToDp('3.1%')
                                     }}>{this.state.descriptionLabel}</Text>
                                 </View>
 
-                                <Text style={{ marginLeft: widthToDp("30%"), fontFamily: 'Oswald-Medium' }}>{this.state.amountLabel}</Text>
+                                <Text style={{ marginLeft: widthToDp("30%"), fontFamily: 'Oswald-Medium',fontSize: widthToDp('3.1%') }}>{this.state.amountLabel}</Text>
                             </View>
                             <View style={{ borderBottomColor: 'black', borderBottomWidth: 1, marginTop: heightToDp('1.5%'), width: widthToDp("90%") }}></View>
                             <View style={{ flexDirection: 'row', marginLeft: widthToDp("4%"), marginTop: heightToDp('2%') }}>
@@ -407,45 +408,45 @@ export default class LandTypeScreen extends Component {
                                     width
                                         : widthToDp("25%")
                                 }}>
-                                    <Text style={{ fontFamily: 'Oswald-Medium' }}>{this.state.totalCostOfCultivationLabel}</Text>
+                                    <Text style={{ fontFamily: 'Oswald-Medium',fontSize: widthToDp('3.1%') }}>{this.state.totalCostOfCultivationLabel}</Text>
                                 </View>
 
-                                <Text style={{ marginLeft: widthToDp("28%"), fontFamily: 'Oswald-Medium' }}>₹ {this.state.costOfCultivatinPerTenDecimal}</Text>
+                                <Text style={{ marginLeft: widthToDp("28%"), fontFamily: 'Oswald-Medium',fontSize: widthToDp('3.1%') }}>₹ {this.state.costOfCultivatinPerTenDecimal}</Text>
                             </View>
                             <View style={{ flexDirection: 'row', marginLeft: widthToDp("4%"), marginTop: heightToDp('2%') }}>
                                 <View style={{
                                     width
                                         : widthToDp("26%")
                                 }}>
-                                    <Text style={{ fontFamily: 'Oswald-Medium' }}>{this.state.totalIncomeFromCropLabel}</Text>
+                                    <Text style={{ fontFamily: 'Oswald-Medium',fontSize: widthToDp('3.1%') }}>{this.state.totalIncomeFromCropLabel}</Text>
                                 </View>
 
-                                <Text style={{ marginLeft: widthToDp("27%"), fontFamily: 'Oswald-Medium' }}>₹ {this.state.costPerKg}</Text>
+                                <Text style={{ marginLeft: widthToDp("27%"), fontFamily: 'Oswald-Medium',fontSize: widthToDp('3.1%') }}>₹ {this.state.costPerKg}</Text>
                             </View>
                             <View style={{ flexDirection: 'row', marginLeft: widthToDp("4%"), marginTop: heightToDp('2%') }}>
                                 <View style={{
                                     width
                                         : widthToDp("25%")
                                 }}>
-                                    <Text style={{ fontFamily: 'Oswald-Medium'}}>{this.state.productionLabel}</Text>
+                                    <Text style={{ fontFamily: 'Oswald-Medium',fontSize: widthToDp('3.1%')}}>{this.state.productionLabel}</Text>
                                 </View>
 
-                                <Text style={{ marginLeft: widthToDp("28%"), fontFamily: 'Oswald-Medium' }}>{this.state.productionInKg} Kgs</Text>
+                                <Text style={{ marginLeft: widthToDp("28%"), fontFamily: 'Oswald-Medium',fontSize: widthToDp('3.1%') }}>{this.state.productionInKg} Kgs</Text>
                             </View>
                             <View style={{ flexDirection: 'row', marginLeft: widthToDp("4%"), marginTop: heightToDp('2%') }}>
                                 <View style={{width: widthToDp("25%")}}>
-                                <Text style={{ fontFamily: 'Oswald-Medium' }}>{this.state.costPerKgLabel}</Text>
+                                <Text style={{ fontFamily: 'Oswald-Medium',fontSize: widthToDp('3.1%') }}>{this.state.costPerKgLabel}</Text>
                                 </View>
                                 
-                                <Text style={{ marginLeft: widthToDp("28%"), fontFamily: 'Oswald-Medium' }}>₹ {this.state.cost}</Text>
+                                <Text style={{ marginLeft: widthToDp("28%"), fontFamily: 'Oswald-Medium',fontSize: widthToDp('3.1%') }}>₹ {this.state.cost}</Text>
                             </View>
                             <View style={{ borderBottomColor: 'black', borderBottomWidth: 1, marginTop: heightToDp('1.5%'), width: widthToDp("90%") }}></View>
                             <View style={{ flexDirection: 'row', marginLeft: widthToDp("4%"), marginTop: heightToDp('1%') }}>
                                 <View style={{ width: widthToDp("25%")}}>
-                                <Text style={{ fontSize: widthToDp("5%"), fontFamily: 'Oswald-Bold' }}>{this.state.netProfitLabel}</Text>
+                                <Text style={{ fontSize: widthToDp("5%"), fontFamily: 'Oswald-Bold', fontSize: widthToDp('3.3%') }}>{this.state.netProfitLabel}</Text>
                                 </View>
                                 
-                                <Text style={{ marginLeft: widthToDp("25%"), fontWeight: 'bold', fontSize: widthToDp("6%"), fontFamily: 'Oswald-Bold' }}>₹ {this.state.netProfit}</Text>
+                                <Text style={{ marginLeft: widthToDp("25%"), fontWeight: 'bold', fontSize: widthToDp("3.3%"), fontFamily: 'Oswald-Bold' }}>₹ {this.state.netProfit}</Text>
                             </View>
                         </View>
                     </View>

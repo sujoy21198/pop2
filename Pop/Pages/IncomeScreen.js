@@ -20,7 +20,9 @@ export default class IncomeScreen extends Component {
             amount:'0',
             languages: [],
             clearButtonText:'',
-            nextButtontext:''
+            nextButtontext:'',
+            incomeLabel: '',
+            expenseLabel: ''
         }
         this.state.languages = Languages
         this.state.type = this.props.route.params.type
@@ -66,7 +68,7 @@ export default class IncomeScreen extends Component {
             var date = new Date().getDate()
             var month = new Date().getMonth()+1
             var year = new Date().getFullYear()
-            const moneyObject={'type':this.state.type,'category':this.props.route.params.nameEnglish,'amount':this.state.amount, 'date': date + "/" + month + "/" + year}
+            const moneyObject={'type':this.props.route.params.profitType,'category':this.props.route.params.nameEnglish,'amount':this.state.amount, 'date': date + "/" + month + "/" + year}
             //const incomeObject ={'type':'income','category':'Crops','amount':this.state.totalincomefromcrop}
             let username = await AsyncStorage.getItem('username')
             let user = await AsyncStorage.getItem('user');
@@ -133,22 +135,34 @@ export default class IncomeScreen extends Component {
             var specificObject = parsed[0]
             var clearButtonText = specificObject.labels.find((i) => i.type === 38)
             var nextButtonText = specificObject.labels.find((i) => i.type === 62)
+            var incomeLabel = specificObject.labels.find((i) => i.type === 37)
+            var expenseLabel = specificObject.labels.find((i) => i.type === 40)
             console.log(nextButtonText.nameHindi)
             if (this.state.textLanguageChange === '0') {
                 this.setState({ clearButtonText: clearButtonText.nameEnglish })
+                this.setState({ incomeLabel: incomeLabel.nameEnglish })
+                this.setState({ expenseLabel: expenseLabel.nameEnglish })
                 this.state.nextButtontext = nextButtonText.nameEnglish
                
             } else if (this.state.textLanguageChange === '1') {
                 this.setState({ clearButtonText: clearButtonText.nameHindi })
+                this.setState({ incomeLabel: incomeLabel.nameHindi })
+                this.setState({ expenseLabel: expenseLabel.nameHindi })
                 this.state.nextButtontext = nextButtonText.nameHindi
             } else if (this.state.textLanguageChange === '2') {
                 this.setState({ clearButtonText: clearButtonText.nameHo })
+                this.setState({ incomeLabel: incomeLabel.nameHo })
+                this.setState({ expenseLabel: expenseLabel.nameHo })
                 this.state.nextButtontext = nextButtonText.nameHo
             } else if (this.state.textLanguageChange === '3') {
                 this.setState({ clearButtonText: clearButtonText.nameOdia })
+                this.setState({ incomeLabel: incomeLabel.nameOdia })
+                this.setState({ expenseLabel: expenseLabel.nameOdia })
                 this.state.nextButtontext = nextButtonText.nameOdia
             } else if (this.state.textLanguageChange === '4') {
                 this.setState({ clearButtonText: clearButtonText.nameSanthali })
+                this.setState({ incomeLabel: incomeLabel.nameSanthali })
+                this.setState({ expenseLabel: expenseLabel.nameSanthali })
                 this.state.nextButtontext = nextButtonText.nameSanthali
             }
             //console.log(moneyManagerLabel.nameEnglish)
@@ -215,7 +229,7 @@ export default class IncomeScreen extends Component {
                     <View style={{ marginLeft: widthToDp("3%"), marginTop: heightToDp("0.7%"), flexDirection: 'row' }}>
                         <View style={{ flexDirection: 'row', width: widthToDp("20%") }}>
                             <Income />
-                            <Text style={{ marginLeft: widthToDp("3%"), fontSize: widthToDp("5%"), fontFamily: 'Oswald-Medium', color: 'white' }}>{this.state.type}</Text>
+                            <Text style={{ marginLeft: widthToDp("3%"), fontSize: widthToDp("5%"), fontFamily: 'Oswald-Medium', color: 'white' }}>{this.props.route.params.profitType==="income" ? this.state.incomeLabel : this.state.expenseLabel}</Text>
                         </View>
                         <Text style={{ marginLeft: widthToDp("45%"), fontSize: widthToDp("5%"), fontFamily: 'Oswald-Medium', color: 'white' }}>₹</Text>
                         <Text style={{ marginLeft: widthToDp("3%"), fontSize: widthToDp("5%"), fontFamily: 'Oswald-Medium', color: 'white' }}>{this.state.amount}</Text>
