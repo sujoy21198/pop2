@@ -24,11 +24,12 @@ import LanguageChange from '../Core/LanguageChange'
 import Language from '../Core/Languages'
 import DialogInput from 'react-native-dialog-input';
 import { TextInput } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 const radio_props = [
-  { label: "OTP", value: 0 },
-  { label: "BLOCK PASSWORD", value: 1 }
+  { label: LanguageChange.otp, value: 0 },
+  { label: LanguageChange.blockPassword, value: 1 }
 ]
 
 const validationStyle = ({ marginLeft: widthToDp("8%"), color: '#8B0000' });
@@ -62,10 +63,10 @@ export default class RegistrationScreen extends Component {
       distApi: [],
       gramApi: [],
       villageApi: [],
-      block: 'BLOCK',
+      block: LanguageChange.block,
       blockId: '',
       isDialogVisible: false,
-      blockApi: []
+      blockApi: [],
     }
 
     this.state.selectedLanguage = this.props.route.params.selectedLanguage
