@@ -21,7 +21,6 @@ const LanguageChange = new LocalizedStrings({
     district : 'जिला',
     gramPanchayat : 'पंचायत',
     village: 'गाँव',
-    otp:'ओटीपी',
     fieldOfficerPassword:'जमीनी स्तर के अधिकारी',
     knowledgeCenter: 'ज्ञान केंद्र',
     importantLinks : 'महत्वपूर्ण लिंक',
@@ -36,7 +35,10 @@ const LanguageChange = new LocalizedStrings({
     wash:'वाश',
     health : 'स्वास्थ्य',
     covid: 'कोविड',
-    govtSchemes: 'सरकारी योजनाएँ'
+    govtSchemes: 'सरकारी योजनाएँ',
+    otp: 'ओ टी पी',
+    blockPassword: ' पासवर्ड ब्लॉक करें',
+    block: 'खंड मैथा'
   },
   en: {
     signIn: 'SIGN IN',
@@ -58,7 +60,6 @@ const LanguageChange = new LocalizedStrings({
     district : 'DISTRICT',
     gramPanchayat : 'GRAMPANCHAYAT',
     village: 'VILLAGE',
-    otp:'OTP',
     fieldOfficerPassword:'BLOCK PASSWORD',
     knowledgeCenter: 'KNOWLEDGE CENTER',
     importantLinks : 'IMPORTANT LINKS',
@@ -73,7 +74,10 @@ const LanguageChange = new LocalizedStrings({
     wash:'WASH',
     health : 'HEALTH',
     covid: 'COVID',
-    govtSchemes: 'GOVT SCHEMES'
+    govtSchemes: 'GOVT SCHEMES',
+    otp: 'OTP',
+    blockPassword: 'BLOCK PASSWORD',
+    block: 'BLOCK'
   },
   od: {
     signIn: 'ଚୁକ୍ତି କରିବା',
@@ -95,7 +99,6 @@ const LanguageChange = new LocalizedStrings({
     district : 'ଜିଲ୍ଲା',
     gramPanchayat : 'ଗ୍ରାମପଞ୍ଚାୟତ',
     village: 'ଗ୍ରାମ',
-    otp:'OTP',
     fieldOfficerPassword:'ଫିଲ୍ଡ ଅଫିସ୍ ପାସୱାର୍ଡ',
     knowledgeCenter: 'ଜ୍ଞାନ କେନ୍ଦ୍ର',
     importantLinks : 'ଗୁରୁତ୍ୱପୂର୍ଣ୍ଣ ଲିଙ୍କ୍',
@@ -110,7 +113,10 @@ const LanguageChange = new LocalizedStrings({
     wash:'ଧୋଇ ଦିଅ',
     health : 'ସ୍ୱାସ୍ଥ୍ୟ',
     covid: 'covid',
-    govtSchemes: 'ଶାସନ ଯୋଜନା'
+    govtSchemes: 'ଶାସନ ଯୋଜନା',
+    otp: 'ଓ ଟି ପି',
+    blockPassword: 'ପାସୱାର୍ଡ ଅବରୋଧ କରନ୍ତୁ |',
+    block: 'ବ୍ଲକ'
   }
 })
 

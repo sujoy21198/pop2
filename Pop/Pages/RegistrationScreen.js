@@ -28,8 +28,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 const radio_props = [
-  { label: "OTP", value: 0 },
-  { label: "BLOCK PASSWORD", value: 1 }
+  { label: LanguageChange.otp, value: 0 },
+  { label: LanguageChange.blockPassword, value: 1 }
 ]
 
 const validationStyle = ({ marginLeft: widthToDp("8%"), color: '#8B0000' });
@@ -63,14 +63,10 @@ export default class RegistrationScreen extends Component {
       distApi: [],
       gramApi: [],
       villageApi: [],
-      block: 'BLOCK',
+      block: LanguageChange.block,
       blockId: '',
       isDialogVisible: false,
       blockApi: [],
-      otpLabel: '',
-      blockPasswordLabel: '',
-      textLanguageChange: '0',
-      radioProps: []
     }
 
     this.state.selectedLanguage = this.props.route.params.selectedLanguage
@@ -79,75 +75,6 @@ export default class RegistrationScreen extends Component {
   componentDidMount() {
     this.getDeviceId()
     this.getStateAndDist()
-    this.setLanguageOnMount()
-  }
-
-  setLanguageOnMount = async () => {
-      let defaultLanguage = await AsyncStorage.getItem('language')
-      if (defaultLanguage === 'en') {
-          this.setState({ textLanguageChange: '0' })
-          this.loadlabelsFromStorage()
-      } else if (defaultLanguage === 'hi') {
-          this.setState({ textLanguageChange: '1' })
-          this.loadlabelsFromStorage()
-      } else if (defaultLanguage === 'ho') {
-          this.setState({ textLanguageChange: '2' })
-          this.loadlabelsFromStorage()
-      } else if (defaultLanguage === 'od') {
-          this.setState({ textLanguageChange: '3' })
-          this.loadlabelsFromStorage()
-      } else if (defaultLanguage === 'san') {
-          this.setState({ textLanguageChange: '4' })
-          this.loadlabelsFromStorage()
-      }
-  }
-
-  loadlabelsFromStorage = async () => {
-      try {
-          let username = await AsyncStorage.getItem('username')
-          let user = await AsyncStorage.getItem('offlineData');
-          let parsed = JSON.parse(user);
-          var specificObject = parsed[0]
-          var otpLabel = specificObject.labels.find((i) => i.type === 20)
-          var blockPasswordLabel = specificObject.labels.find((i) => i.type === 187)
-          if (this.state.textLanguageChange === '0') {
-              this.setState({ otpLabel: otpLabel.nameEnglish })
-              this.setState({ blockPasswordLabel: blockPasswordLabel.nameEnglish })
-             
-          } else if (this.state.textLanguageChange === '1') {
-              this.setState({ otpLabel: otpLabel.nameHindi })
-              this.setState({ blockPasswordLabel: blockPasswordLabel.nameHindi })
-          } else if (this.state.textLanguageChange === '2') {
-              this.setState({ otpLabel: otpLabel.nameHo })
-              this.setState({ blockPasswordLabel: blockPasswordLabel.nameHo })
-          } else if (this.state.textLanguageChange === '3') {
-              this.setState({ otpLabel: otpLabel.nameOdia })
-              this.setState({ blockPasswordLabel: blockPasswordLabel.nameOdia })
-          } else if (this.state.textLanguageChange === '4') {
-              this.setState({ otpLabel: otpLabel.nameSanthali })
-              this.setState({ blockPasswordLabel: blockPasswordLabel.nameSanthali })
-          }
-          //console.log(moneyManagerLabel.nameEnglish)          
-
-          let radioProps = [];
-          radio_props.map(item => {
-            if(item.label === "OTP") {
-              radioProps.push({
-                label: this.state.otpLabel,
-                value: 0
-              })
-            } else if(item.label === "BLOCK PASSWORD") {
-              radioProps.push({
-                label: this.state.blockPasswordLabel,
-                value: 1
-              })
-            }
-          })
-          this.setState({radioProps})
-      } catch (error) {
-          alert(error)
-      }
-      //this.setState({ crops: specificObject.crops })
   }
 
   getStateAndDist = async () => {
@@ -862,7 +789,7 @@ export default class RegistrationScreen extends Component {
 
           >
             {
-              (this.state.radioProps.length>0 ? this.state.radioProps : radio_props).map((obj, i) => (
+              radio_props.map((obj, i) => (
                 <RadioButton
                   labelHorizontal={true} key={i}
 
