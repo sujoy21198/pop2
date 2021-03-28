@@ -386,6 +386,26 @@ export default class StepSevenScreen extends Component {
         
     }
 
+
+    goToPreviousStep = () =>{
+        this.props.navigation.navigate({
+            name: 'StepSixScreen',
+            params: {
+                cropName: this.state.cropName,
+                _id: this.state._id,
+                imageFile: this.state.imageFile,
+                patchName: this.state.patchName,
+                landType: this.state.landType,
+                farmingAreaInDecimal: this.state.farmingAreaInDecimal,
+                costOfCultivatinPerTenDecimal: this.state.costOfCultivatinPerTenDecimal,
+                costPerKg: this.state.costPerKg,
+                productionInKg: this.state.productionInKg,
+                cost: this.state.cost,
+                netProfit: this.state.netProfit
+            }
+        })
+    }
+
     render() {
         var cropNameLanguageChangeArray = []
         cropNameLanguageChangeArray = this.state.cropNameLanguageChangeArray
@@ -583,7 +603,7 @@ export default class StepSevenScreen extends Component {
                     <View style={{ marginBottom: heightToDp("10%") }}></View>
                 </ScrollView>
                 <View style={{ flexDirection: 'row', height: heightToDp("10%"), alignSelf: 'center' }}>
-                    <TouchableOpacity onPress={() => this.props.navigation.goBack()}>
+                    <TouchableOpacity onPress={() => this.goToPreviousStep()}>
                         <View style={{ backgroundColor: "#fff", height: heightToDp("6%"), width: widthToDp("30%"), borderRadius: 100, alignSelf: 'center', marginTop: heightToDp("2%") }}>
                             <Text style={{ fontSize: widthToDp("4%"), color: "#000", marginTop: heightToDp("1.3%"), alignSelf: 'center', fontFamily: 'Oswald-Medium' }}>{this.state.backButtonText}</Text>
                         </View>

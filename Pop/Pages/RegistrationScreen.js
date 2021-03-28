@@ -617,7 +617,7 @@ export default class RegistrationScreen extends Component {
 
             {/* <TouchableOpacity onPress={() => this.districtPicker("BOKARO")}>
               <Text style={{ fontSize: widthToDp("4.6%"), marginLeft: widthToDp("2%"), fontFamily: 'Oswald-Medium' }}>BOKARO</Text>
-            </TouchableOpacity> */}
+            </TouchableOpacity> */}]
             <View style={{ borderBottomColor: 'black', borderBottomWidth: 1, marginTop: heightToDp('0.1%'), width: widthToDp("80%"), marginLeft: widthToDp("8.2%") }}></View>
           </RBSheet4>
         </View>
