@@ -248,7 +248,7 @@ export default class AllTransactionScreen extends Component {
             let parsed = JSON.parse(user);
             var specificObject = parsed.find((i) => i.username === username)
             moneyManagerData = specificObject.moneyManagerData;
-            console.log(specificObject.moneyManagerData)
+            console.log(specificObject.moneyManagerData,"money Manager data")
             if(specificObject.moneyManagerData.length > 0) {
                 specificObject.moneyManagerData.map(data => {
                     if(data.type==='Income' || data.type==='income') {

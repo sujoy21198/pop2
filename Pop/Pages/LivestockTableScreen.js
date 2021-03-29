@@ -50,8 +50,8 @@ export default class LivestockTableScreen extends Component {
             totalPrice2ndBirth: '4000',
             totalPrice3rdBirth: '500',
             totalValueAfter2years: '9500',
-            totalExpenseforNgoats: '130',
-            expenseForSupplementary: '120',
+            totalExpenseforNgoats: '120',
+            expenseForSupplementary: '130',
             b: '250',
             totalProfitFromNgoats: '9250',
             languages:[],
@@ -359,8 +359,8 @@ export default class LivestockTableScreen extends Component {
         var totalPrice2ndBirth = this.state.numberGoats * 4000
         var totalPrice3rdBirth = this.state.numberGoats * 500
         var totalValueAfter2years = totalPrice1stBirth + totalPrice2ndBirth + totalPrice3rdBirth
-        var totalExpenseforNgoats = this.state.numberGoats * 130
-        var expenseForSupplementary = this.state.numberGoats * 120
+        var totalExpenseforNgoats = this.state.numberGoats * 120
+        var expenseForSupplementary = this.state.numberGoats * 130
         var b = totalExpenseforNgoats + expenseForSupplementary
         var totalProfitFromNgoats = totalValueAfter2years - b
 
@@ -405,7 +405,7 @@ export default class LivestockTableScreen extends Component {
             let username = await AsyncStorage.getItem('username')
             let user = await AsyncStorage.getItem('user');
             let parsed = JSON.parse(user);
-            var specificObject = parsed[0]
+            var specificObject = parsed.find((i) => i.username === username)
             specificObject.moneyManagerData.push(expenseObject)
             specificObject.moneyManagerData.push(incomeObject)
             await AsyncStorage.setItem('user', JSON.stringify(parsed))
@@ -603,7 +603,7 @@ export default class LivestockTableScreen extends Component {
                                 </View>
                                 <View style={{ marginLeft: widthToDp("3%"), marginBottom: widthToDp('1%') }}>
                                     <Text>{this.state.totalValueAfter2YearsFrom1MotherGoat}</Text>
-                                    <Text style={{ marginTop: heightToDp("3%") }}>{this.state.totalValueAfter2YearsFrom2MotherGoats}</Text>
+                                    {/* <Text style={{ marginTop: heightToDp("3%") }}>{this.state.totalValueAfter2YearsFrom2MotherGoats}fff</Text> */}
                                 </View>
 
                                 {/* <View style={{ marginLeft: widthToDp("3%"),marginTop:heightToDp("2%") }}>

@@ -73,7 +73,7 @@ export default class IncomeScreen extends Component {
             let username = await AsyncStorage.getItem('username')
             let user = await AsyncStorage.getItem('user');
             let parsed = JSON.parse(user);
-            var specificObject = parsed[0]
+            var specificObject = parsed.find((i) => i.username === username)
             specificObject.moneyManagerData.push(moneyObject)
             await AsyncStorage.setItem('user', JSON.stringify(parsed))
             console.log(specificObject.moneyManagerData)

@@ -298,7 +298,7 @@ export default class CostBenifitAnalysisScreen extends Component {
             let username = await AsyncStorage.getItem('username')
             let user = await AsyncStorage.getItem('user');
             let parsed = JSON.parse(user);
-            var specificObject = parsed[0]
+            var specificObject = parsed.find((i) => i.username === username)
             specificObject.moneyManagerData.push(expenseObject)
             specificObject.moneyManagerData.push(incomeObject)
             await AsyncStorage.setItem('user', JSON.stringify(parsed))

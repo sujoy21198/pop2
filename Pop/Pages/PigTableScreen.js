@@ -358,9 +358,9 @@ export default class PigTableScreen extends Component {
 
     calculation = (data) => {
         this.state.numberPigs = data
-        var unitCostmotherPig = this.state.numberPigs * 2500
-        var unitCostmalePig = this.state.numberPigs * 2500
-        var unitCostshedConstruction = this.state.numberPigs * 1000
+        // var unitCostmotherPig = this.state.numberPigs * 2500
+        // var unitCostmalePig = this.state.numberPigs * 2500
+        // var unitCostshedConstruction = this.state.numberPigs * 1000
         var totalCostmotherpig = this.state.numberPigs * 2500
         var totalcostMalePig = this.state.numberPigs * 2500
         var totalCostShedConstruction = this.state.numberPigs * 1000
@@ -375,9 +375,9 @@ export default class PigTableScreen extends Component {
         var netProfit = totalValueAfteroneYearTotal - total
 
 
-        this.setState({ unitCostmotherPig: unitCostmotherPig })
-        this.setState({ unitCostmalePig: unitCostmalePig })
-        this.setState({ unitCostshedConstruction: unitCostshedConstruction })
+        // this.setState({ unitCostmotherPig: unitCostmotherPig })
+        // this.setState({ unitCostmalePig: unitCostmalePig })
+        // this.setState({ unitCostshedConstruction: unitCostshedConstruction })
         this.setState({ totalCostmotherpig: totalCostmotherpig })
         this.setState({ totalcostMalePig: totalcostMalePig })
         this.setState({ totalCostShedConstruction: totalCostShedConstruction })
@@ -402,7 +402,7 @@ export default class PigTableScreen extends Component {
             let username = await AsyncStorage.getItem('username')
             let user = await AsyncStorage.getItem('user');
             let parsed = JSON.parse(user);
-            var specificObject = parsed[0]
+            var specificObject = parsed.find((i) => i.username === username)
             specificObject.moneyManagerData.push(expenseObject)
             specificObject.moneyManagerData.push(incomeObject)
             await AsyncStorage.setItem('user', JSON.stringify(parsed))
