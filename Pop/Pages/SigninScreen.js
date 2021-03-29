@@ -1205,7 +1205,7 @@ export default class SigninScreen extends Component {
             <KeyboardAwareScrollView style={{ backgroundColor: BaseColor.BackgroundColor, flex: 1 }}
                 keyboardShouldPersistTaps='handled'
             >
-                <View >
+                <View>
                     <View style={{ marginTop: heightToDp("3%"), alignSelf: "center" }}>
                         <Logo />
                     </View>
@@ -1217,7 +1217,7 @@ export default class SigninScreen extends Component {
                             <View style={{ marginTop: heightToDp("5%") }}>
                                 <CustomIndicator IsLoading={this.state.imageLoading} />
                                 <View style={{ marginTop: heightToDp("5%"), alignSelf: 'center' }}>
-                                    <Text style={{ fontSize: widthToDp("6%"), fontFamily: 'Oswald-Medium' }}>Please wait while image is downloading</Text>
+                                    <Text style={{ fontSize: widthToDp(`${this.state.selectedLanguage==="en" ? 6 : 5}%`), fontFamily: 'Oswald-Medium' }}>{LanguageChange.imageDownloadText}</Text>
                                 </View>
                             </View>
 
@@ -1282,7 +1282,7 @@ export default class SigninScreen extends Component {
 
                                     <TouchableOpacity onPress={() => this.guestSignIn()}>
                                         <View style={{ backgroundColor: BaseColor.SecondaryColor, marginTop: heightToDp("3%"), width: widthToDp("37%"), alignSelf: 'center', height: heightToDp("5%"), borderRadius: 100 }}>
-                                            <Text style={{ alignSelf: 'center', marginTop: heightToDp("0.4%"), fontWeight: '500', fontSize: widthToDp("5%"), fontFamily: 'Oswald-Medium' }}>{LanguageChange.guestSignIn}</Text>
+                                            <Text style={{ alignSelf: 'center', marginTop: heightToDp("0.4%"), fontWeight: '500', fontSize: widthToDp(`${this.state.selectedLanguage==="en" ? 5 : 4}%`), fontFamily: 'Oswald-Medium' }}>{LanguageChange.guestSignIn}</Text>
                                         </View>
                                     </TouchableOpacity>
                                     <View style={{ marginTop: 20 }}></View>

@@ -37,8 +37,9 @@ const LanguageChange = new LocalizedStrings({
     covid: 'कोविड',
     govtSchemes: 'सरकारी योजनाएँ',
     otp: 'ओ टी पी',
-    blockPassword: ' पासवर्ड ब्लॉक करें',
-    block: 'खंड मैथा'
+    blockPassword: 'ब्लॉक पासवर्ड',
+    block: 'खंड मैथा',
+    imageDownloadText: 'कृपया प्रतीक्षा करें जबकि छवि डाउनलोड हो रही ह'
   },
   en: {
     signIn: 'SIGN IN',
@@ -77,7 +78,8 @@ const LanguageChange = new LocalizedStrings({
     govtSchemes: 'GOVT SCHEMES',
     otp: 'OTP',
     blockPassword: 'BLOCK PASSWORD',
-    block: 'BLOCK'
+    block: 'BLOCK',
+    imageDownloadText: "Please wait while image is downloading"
   },
   od: {
     signIn: 'ଚୁକ୍ତି କରିବା',
@@ -116,7 +118,8 @@ const LanguageChange = new LocalizedStrings({
     govtSchemes: 'ଶାସନ ଯୋଜନା',
     otp: 'ଓ ଟି ପି',
     blockPassword: 'ପାସୱାର୍ଡ ଅବରୋଧ କରନ୍ତୁ |',
-    block: 'ବ୍ଲକ'
+    block: 'ବ୍ଲକ',
+    imageDownloadText: 'ପ୍ରତିଛବି ଡାଉନଲୋଡ୍ କରୁଥିବାବେଳେ ଦୟାକରି ଅପେକ୍ଷା କରନ୍ତୁ |'
   }
 })
 

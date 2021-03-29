@@ -24,10 +24,9 @@ import LanguageChange from '../Core/LanguageChange'
 import Language from '../Core/Languages'
 import DialogInput from 'react-native-dialog-input';
 import { TextInput } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
-const radio_props = [
+let radio_props = [
   { label: LanguageChange.otp, value: 0 },
   { label: LanguageChange.blockPassword, value: 1 }
 ]
@@ -67,12 +66,16 @@ export default class RegistrationScreen extends Component {
       blockId: '',
       isDialogVisible: false,
       blockApi: [],
+      otpLabel: '',
+      blockPasswordLabel: ''
     }
 
     this.state.selectedLanguage = this.props.route.params.selectedLanguage
   }
 
-  componentDidMount() {
+  async componentDidMount() {
+    radio_props[0].label = LanguageChange.otp;
+    radio_props[1].label = LanguageChange.blockPassword
     this.getDeviceId()
     this.getStateAndDist()
   }
