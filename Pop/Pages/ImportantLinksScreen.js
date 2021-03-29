@@ -26,7 +26,8 @@ export default class ImportantLinksScreen extends Component {
         super(props)
         this.state = {
             data: [],
-            languages: []
+            languages: [],
+            importantLinksLabel: ''
         }
 
         this.state.languages = Languages
@@ -86,6 +87,7 @@ export default class ImportantLinksScreen extends Component {
             var wash = specificObject.labels.find((i) => i.type === 32)
             var health = specificObject.labels.find((i) => i.type === 33)
             var covid = specificObject.labels.find((i) => i.type === 34)
+            var importantLinksLabel = specificObject.labels.find((i) => i.type === 23)
             var governmentSchemes = specificObject.labels.find((i) => i.type === 35)
         
             if (this.state.textLanguageChange === '0') {
@@ -93,6 +95,7 @@ export default class ImportantLinksScreen extends Component {
                 this.state.data[1].name = health.nameEnglish
                 this.state.data[2].name = covid.nameEnglish
                 this.state.data[3].name = governmentSchemes.nameEnglish
+                this.setState({importantLinksLabel: importantLinksLabel.nameEnglish})
                 
                 // this.setState({ moneyManagerLabel: moneyManagerLabel.nameEnglish })
                 // this.setState({ expenseLabel: expenseLabel.nameEnglish })
@@ -103,24 +106,28 @@ export default class ImportantLinksScreen extends Component {
                 this.state.data[1].name = health.nameHindi
                 this.state.data[2].name = covid.nameHindi
                 this.state.data[3].name = governmentSchemes.nameHindi
+                this.setState({importantLinksLabel: importantLinksLabel.nameHindi})
                 
             } else if (this.state.textLanguageChange === '2') {
                 this.state.data[0].name = wash.nameHo
                 this.state.data[1].name = health.nameHo
                 this.state.data[2].name = covid.nameHo
                 this.state.data[3].name = governmentSchemes.nameHo
+                this.setState({importantLinksLabel: importantLinksLabel.nameHo})
                 
             } else if (this.state.textLanguageChange === '3') {
                 this.state.data[0].name = wash.nameOdia
                 this.state.data[1].name = health.nameOdia
                 this.state.data[2].name = covid.nameOdia
                 this.state.data[3].name = governmentSchemes.nameOdia
+                this.setState({importantLinksLabel: importantLinksLabel.nameOdia})
                 
             } else if (this.state.textLanguageChange === '4') {
                 this.state.data[0].name = wash.nameSanthali
                 this.state.data[1].name = health.nameSanthali
                 this.state.data[2].name = covid.nameSanthali
                 this.state.data[3].name = governmentSchemes.nameSanthali
+                this.setState({importantLinksLabel: importantLinksLabel.nameSanthali})
                
             }
             
@@ -249,7 +256,7 @@ export default class ImportantLinksScreen extends Component {
                     </TouchableOpacity>
                 </View>
                 <View style={{ borderBottomColor: BaseColor.Stroke, borderBottomWidth: 1, marginTop: heightToDp('1.5%'), width: widthToDp("100%") }}></View>
-                <Text style={{ marginLeft: widthToDp("3%"), marginTop: heightToDp("2%"), fontSize: widthToDp("7%"), fontFamily: 'Oswald-Medium' }}>{LanguageChange.importantLinks}</Text>
+                <Text style={{ marginLeft: widthToDp("3%"), marginTop: heightToDp("2%"), fontSize: widthToDp("7%"), fontFamily: 'Oswald-Medium' }}>{this.state.importantLinksLabel}</Text>
 
                 <View>
 
