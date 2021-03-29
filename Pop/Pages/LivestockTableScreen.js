@@ -80,7 +80,8 @@ export default class LivestockTableScreen extends Component {
             birth3: '',
             monthOld: '',
             immunisation: '',
-            kids: ''
+            kids: '',
+            aminusb : ''
         }
         this.state.tableHeading = tableHeading
         this.state.languages = Languages
@@ -661,7 +662,7 @@ export default class LivestockTableScreen extends Component {
 
 
                                 <View style={{ marginLeft: widthToDp("3%"), marginTop: heightToDp("2%"), marginBottom: widthToDp('5%') }}>
-                                    <Text>{this.state.totalProfitFrom4MotherGoatsPer2Years}9250</Text>
+                                    <Text>A - B = ₹ {this.state.totalProfitFromNgoats}</Text>
                                 </View>
                                 <View style={{margin: widthToDp('3%')}}>
                                     <Text>{this.state.noteLabel}</Text>
