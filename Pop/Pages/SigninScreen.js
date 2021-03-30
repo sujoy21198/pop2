@@ -1123,6 +1123,7 @@ export default class SigninScreen extends Component {
     }
 
     signIn = async () => {
+        let deviceId = await DeviceInfo.getAndroidId()
         var load = true
         this.setState({ isLoading: true })
         var name = this.state.username
@@ -1147,7 +1148,8 @@ export default class SigninScreen extends Component {
         await axios.post(DataAccess.BaseUrl + DataAccess.AccessUrl + DataAccess.SignIn, {
             phone: this.state.phoneNumber,
             username: this.state.username,
-            password: this.state.password
+            password: this.state.password,
+            deviceId : deviceId
         }, {
             headers: {
 
