@@ -43,8 +43,8 @@ export default class LivestockTableScreen extends Component {
         this.state = {
             numberGoats: '1',
             tableHeading: [],
-            unitPrice1stBirth: '4000',
-            unitPrice2ndBirth: '3000',
+            unitPrice1stBirth: '5000',
+            unitPrice2ndBirth: '4000',
             unitPrice3rdBirth: '500',
             totalPrice1stBirth: '5000',
             totalPrice2ndBirth: '4000',
@@ -81,7 +81,8 @@ export default class LivestockTableScreen extends Component {
             monthOld: '',
             immunisation: '',
             kids: '',
-            aminusb : ''
+            aminusb : '',
+            netProfitLabel: '',
         }
         this.state.tableHeading = tableHeading
         this.state.languages = Languages
@@ -144,6 +145,7 @@ export default class LivestockTableScreen extends Component {
             var kids = specificObject.labels.find((i) => i.type === 139)
             var birth3 = specificObject.labels.find((i) => i.type === 137)
             var total = specificObject.labels.find((i) => i.type === 112)
+            var netProfitLabel = specificObject.labels.find((i) => i.type === 122)
             if (this.state.textLanguageChange === '0') {
                 this.setState({ incomeHeaderLabel: incomeHeaderLabel.nameEnglish })
                 this.setState({ quantityLabel: quantityLabel.nameEnglish })
@@ -173,6 +175,7 @@ export default class LivestockTableScreen extends Component {
                 this.setState({ monthOld: monthOld.nameEnglish })
                 this.setState({ kids: kids.nameEnglish })
                 this.setState({ total: total.nameEnglish })
+                this.setState({ netProfitLabel: netProfitLabel.nameEnglish })
             } else if (this.state.textLanguageChange === '1') {                
                 this.setState({ incomeHeaderLabel: incomeHeaderLabel.nameHindi })
                 this.setState({ quantityLabel: quantityLabel.nameHindi })
@@ -202,6 +205,7 @@ export default class LivestockTableScreen extends Component {
                 this.setState({ monthOld: monthOld.nameHindi })
                 this.setState({ kids: kids.nameHindi })
                 this.setState({ total: total.nameHindi })
+                this.setState({ netProfitLabel: netProfitLabel.nameHindi })
             } else if (this.state.textLanguageChange === '2') {
                 
                 this.setState({ incomeHeaderLabel: incomeHeaderLabel.nameHo })
@@ -231,7 +235,8 @@ export default class LivestockTableScreen extends Component {
                 this.setState({ birth3: birth3.nameHo })
                 this.setState({ monthOld: monthOld.nameHo })
                 this.setState({ kids: kids.nameHo })
-                this.setState({ total: total.nameHindi })
+                this.setState({ total: total.nameHo })
+                this.setState({ netProfitLabel: netProfitLabel.nameHo })
             } else if (this.state.textLanguageChange === '3') {
                 
                 this.setState({ incomeHeaderLabel: incomeHeaderLabel.nameOdia })
@@ -261,7 +266,8 @@ export default class LivestockTableScreen extends Component {
                 this.setState({ birth3: birth3.nameOdia })
                 this.setState({ monthOld: monthOld.nameOdia })
                 this.setState({ kids: kids.nameOdia })
-                this.setState({ total: total.nameHindi })
+                this.setState({ total: total.nameOdia })
+                this.setState({ netProfitLabel: netProfitLabel.nameOdia })
             } else if (this.state.textLanguageChange === '4') {
                 
                 this.setState({ incomeHeaderLabel: incomeHeaderLabel.nameSanthali })
@@ -291,10 +297,11 @@ export default class LivestockTableScreen extends Component {
                 this.setState({ birth3: birth3.nameSanthali })
                 this.setState({ monthOld: monthOld.nameSanthali })
                 this.setState({ kids: kids.nameSanthali })
-                this.setState({ total: total.nameHindi })
+                this.setState({ total: total.nameSanthali })
+                this.setState({ netProfitLabel: netProfitLabel.nameSanthali })
             }
         } catch (error) {
-            alert(error)
+            console.log(error)
         }
         //this.setState({ crops: specificObject.crops })
         //this.showData()
@@ -662,7 +669,7 @@ export default class LivestockTableScreen extends Component {
 
 
                                 <View style={{ marginLeft: widthToDp("3%"), marginTop: heightToDp("2%"), marginBottom: widthToDp('5%') }}>
-                                    <Text>A - B = ₹ {this.state.totalProfitFromNgoats}</Text>
+                                    <Text>{this.state.netProfitLabel} = ₹ {this.state.totalProfitFromNgoats}</Text>
                                 </View>
                                 <View style={{margin: widthToDp('3%')}}>
                                     <Text>{this.state.noteLabel}</Text>

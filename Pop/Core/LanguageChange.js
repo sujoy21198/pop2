@@ -10,7 +10,7 @@ const LanguageChange = new LocalizedStrings({
     signIn: 'साइन इन करें',
     noAccount: 'आपका कोई खाता नहीं है?',
     pleaseSignUp: 'कृपया साइन अप करो',
-    guestSignIn: 'दोस्तों में साइन इन करें',
+    guestSignIn: 'अतिथि साइन इन',
     registration: 'पंजीकरण',
     fullname: 'पूरा नाम',
     gender: 'लिंग',

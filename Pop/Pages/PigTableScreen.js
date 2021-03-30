@@ -364,20 +364,28 @@ export default class PigTableScreen extends Component {
         var totalCostmotherpig = this.state.numberPigs * 2500
         var totalcostMalePig = this.state.numberPigs * 2500
         var totalCostShedConstruction = this.state.numberPigs * 1000
-        var total = totalCostmotherpig + totalcostMalePig + totalCostShedConstruction + 2000 + 500
+        var numberOfMalePig = data
         var youngPig = 6 * data
         var piglet = 6 * this.state.numberPigs
         var totalValueAfteroneYearForMotherPig = 2500 * this.state.numberPigs
         var totalValueAfteroneYearForYoungPig = 1500 * youngPig
         var totalValueAfteroneYearForPigletPig = 500 * piglet
-        var totalValueAfteroneYearTotal = totalValueAfteroneYearForMotherPig + totalValueAfteroneYearForPigletPig + totalValueAfteroneYearForYoungPig + 2500
+        var totalValueAfteroneYearTotal = totalValueAfteroneYearForMotherPig + totalValueAfteroneYearForPigletPig + totalValueAfteroneYearForYoungPig + totalcostMalePig 
+        
+        
 
-        var netProfit = totalValueAfteroneYearTotal - total
 
+        var totalCostfeeding = 2000 * data
+        var totalcostVaccine = 500 * data
 
+        var total = totalCostmotherpig + totalcostMalePig + totalCostShedConstruction + totalCostfeeding + totalcostVaccine
         // this.setState({ unitCostmotherPig: unitCostmotherPig })
+        var totalValueAfteroneYearForMalePig = 2500 * data
+        var netProfit = Number.parseInt(totalValueAfteroneYearTotal) - total
         // this.setState({ unitCostmalePig: unitCostmalePig })
         // this.setState({ unitCostshedConstruction: unitCostshedConstruction })
+        this.setState({totalCostfeeding : totalCostfeeding})
+        this.setState({totalcostVaccine : totalcostVaccine})
         this.setState({ totalCostmotherpig: totalCostmotherpig })
         this.setState({ totalcostMalePig: totalcostMalePig })
         this.setState({ totalCostShedConstruction: totalCostShedConstruction })
@@ -389,6 +397,8 @@ export default class PigTableScreen extends Component {
         this.setState({ totalValueAfteroneYearForPigletPig: totalValueAfteroneYearForPigletPig })
         this.setState({ totalValueAfteroneYearTotal: totalValueAfteroneYearTotal })
         this.setState({netProfit : netProfit})
+        this.setState({numberOfMalePig : numberOfMalePig})
+        this.setState({totalValueAfteroneYearForMalePig  :totalValueAfteroneYearForMalePig})
 
 
     }
