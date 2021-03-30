@@ -95,7 +95,9 @@ export default class PigTableScreen extends Component {
             netProfitLabel: '',
             noteLabel: '',
             count: '',
-            vaccinationFeedingUnit: ''
+            adultLabel: '',
+            pigletLabel: '',
+            andLabel: ''
         }
         this.state.tableHeading = tableHeading
         this.state.languages = Languages
@@ -126,8 +128,9 @@ export default class PigTableScreen extends Component {
             var malePigGilt = specificObject.labels.find((i) => i.type === 152)
             var shedConstruction = specificObject.labels.find((i) => i.type === 153)
             var vaccination = specificObject.labels.find((i) => i.type === 154)
-            var vaccinationFeedingUnit = specificObject.labels.find((i) => i.type === 156)
-            var feeding = specificObject.labels.find((i) => i.type === 155)
+            var adultLabel = specificObject.labels.find((i) => i.type === 199)
+            var pigletLabel = specificObject.labels.find((i) => i.type === 161)
+            var feeding = specificObject.labels.find((i) => i.type === 156)
             var totalA = specificObject.labels.find((i) => i.type === 118)
             var totalValueAfter1Year = specificObject.labels.find((i) => i.type === 157)
             var motherPig = specificObject.labels.find((i) => i.type === 149)
@@ -138,6 +141,7 @@ export default class PigTableScreen extends Component {
             var netProfitLabel = specificObject.labels.find((i) => i.type === 194)
             var noteLabel = specificObject.labels.find((i) => i.type === 162)
             var count = specificObject.labels.find((i) => i.type === 155)
+            var andLabel = specificObject.labels.find((i) => i.type === 213)
             if (this.state.textLanguageChange === '0') {
                 this.setState({ incomeHeaderLabel: incomeHeaderLabel.nameEnglish })
                 this.setState({ quantityLabel: quantityLabel.nameEnglish })
@@ -153,7 +157,8 @@ export default class PigTableScreen extends Component {
                 this.setState({ shedConstruction: shedConstruction.nameEnglish })
                 this.setState({ vaccination: vaccination.nameEnglish })
                 this.setState({ shedConstruction: shedConstruction.nameEnglish })
-                this.setState({ vaccinationFeedingUnit: vaccinationFeedingUnit.nameEnglish })
+                this.setState({ adultLabel: adultLabel.nameEnglish })
+                this.setState({ pigletLabel: pigletLabel.nameEnglish })
                 this.setState({ feeding: feeding.nameEnglish })
                 this.setState({ totalA: totalA.nameEnglish })
                 this.setState({ totalValueAfter1Year: totalValueAfter1Year.nameEnglish })
@@ -166,6 +171,7 @@ export default class PigTableScreen extends Component {
                 this.setState({ noteLabel: noteLabel.nameEnglish })
                 this.setState({ incomeFrom: incomeFrom.nameEnglish })
                 this.setState({ count: count.nameEnglish })
+                this.setState({ andLabel: andLabel.nameEnglish })
             } else if (this.state.textLanguageChange === '1') {
                 this.setState({ incomeHeaderLabel: incomeHeaderLabel.nameHindi })
                 this.setState({ quantityLabel: quantityLabel.nameHindi })
@@ -181,7 +187,8 @@ export default class PigTableScreen extends Component {
                 this.setState({ shedConstruction: shedConstruction.nameHindi })
                 this.setState({ vaccination: vaccination.nameHindi })
                 this.setState({ shedConstruction: shedConstruction.nameHindi })
-                this.setState({ vaccinationFeedingUnit: vaccinationFeedingUnit.nameHindi })
+                this.setState({ adultLabel: adultLabel.nameHindi })
+                this.setState({ pigletLabel: pigletLabel.nameHindi })
                 this.setState({ feeding: feeding.nameHindi })
                 this.setState({ totalA: totalA.nameHindi })
                 this.setState({ totalValueAfter1Year: totalValueAfter1Year.nameHindi })
@@ -194,6 +201,7 @@ export default class PigTableScreen extends Component {
                 this.setState({ noteLabel: noteLabel.nameHindi })
                 this.setState({ incomeFrom: incomeFrom.nameHindi })
                 this.setState({ count: count.nameHindi })
+                this.setState({ andLabel: andLabel.nameHindi })
             } else if (this.state.textLanguageChange === '2') {
                 this.setState({ incomeHeaderLabel: incomeHeaderLabel.nameHo })
                 this.setState({ quantityLabel: quantityLabel.nameHo })
@@ -209,7 +217,8 @@ export default class PigTableScreen extends Component {
                 this.setState({ shedConstruction: shedConstruction.nameHo })
                 this.setState({ vaccination: vaccination.nameHo })
                 this.setState({ shedConstruction: shedConstruction.nameHo })
-                this.setState({ vaccinationFeedingUnit: vaccinationFeedingUnit.nameHo })
+                this.setState({ adultLabel: adultLabel.nameHo })
+                this.setState({ pigletLabel: pigletLabel.nameHo })
                 this.setState({ feeding: feeding.nameHo })
                 this.setState({ totalA: totalA.nameHo })
                 this.setState({ totalValueAfter1Year: totalValueAfter1Year.nameHo })
@@ -221,7 +230,8 @@ export default class PigTableScreen extends Component {
                 this.setState({ netProfitLabel: netProfitLabel.nameHo })
                 this.setState({ noteLabel: noteLabel.nameHo })
                 this.setState({ incomeFrom: incomeFrom.nameHo })
-                this.setState({ count: count.nameHindi })
+                this.setState({ count: count.nameHo })
+                this.setState({ andLabel: andLabel.nameHo })
             } else if (this.state.textLanguageChange === '3') {
                 this.setState({ incomeHeaderLabel: incomeHeaderLabel.nameOdia })
                 this.setState({ quantityLabel: quantityLabel.nameOdia })
@@ -237,7 +247,8 @@ export default class PigTableScreen extends Component {
                 this.setState({ shedConstruction: shedConstruction.nameOdia })
                 this.setState({ vaccination: vaccination.nameOdia })
                 this.setState({ shedConstruction: shedConstruction.nameOdia })
-                this.setState({ vaccinationFeedingUnit: vaccinationFeedingUnit.nameOdia })
+                this.setState({ adultLabel: adultLabel.nameOdia })
+                this.setState({ pigletLabel: pigletLabel.nameOdia })
                 this.setState({ feeding: feeding.nameOdia })
                 this.setState({ totalA: totalA.nameOdia })
                 this.setState({ totalValueAfter1Year: totalValueAfter1Year.nameOdia })
@@ -250,6 +261,7 @@ export default class PigTableScreen extends Component {
                 this.setState({ noteLabel: noteLabel.nameOdia })
                 this.setState({ incomeFrom: incomeFrom.nameOdia })
                 this.setState({ count: count.nameHindi })
+                this.setState({ andLabel: andLabel.nameOdia })
             } else if (this.state.textLanguageChange === '4') {
                 this.setState({ incomeHeaderLabel: incomeHeaderLabel.nameSanthali })
                 this.setState({ quantityLabel: quantityLabel.nameSanthali })
@@ -265,7 +277,8 @@ export default class PigTableScreen extends Component {
                 this.setState({ shedConstruction: shedConstruction.nameSanthali })
                 this.setState({ vaccination: vaccination.nameSanthali })
                 this.setState({ shedConstruction: shedConstruction.nameSanthali })
-                this.setState({ vaccinationFeedingUnit: vaccinationFeedingUnit.nameSanthali })
+                this.setState({ adultLabel: adultLabel.nameSanthali })
+                this.setState({ pigletLabel: pigletLabel.nameSanthali })
                 this.setState({ feeding: feeding.nameSanthali })
                 this.setState({ totalA: totalA.nameSanthali })
                 this.setState({ totalValueAfter1Year: totalValueAfter1Year.nameSanthali })
@@ -278,6 +291,7 @@ export default class PigTableScreen extends Component {
                 this.setState({ noteLabel: noteLabel.nameSanthali })  
                 this.setState({ incomeFrom: incomeFrom.nameSanthali })
                 this.setState({ count: count.nameHindi })
+                this.setState({ andLabel: andLabel.nameSanthali })
             }
         } catch (error) {
             alert(error)
@@ -554,7 +568,7 @@ export default class PigTableScreen extends Component {
                                 } */}
                                     <View style={{marginTop: widthToDp("2%"), flexDirection: 'row', width: widthToDp("100%")}}>
                                         <View style={{width: widthToDp("21%"), marginLeft: widthToDp("1.3%")}}>
-                                            <Text style={{fontSize: widthToDp('3.3%')}}>{this.state.motherPigGilt}</Text>
+                                            <Text style={{fontSize: widthToDp('3%')}}>{this.state.motherPigGilt}</Text>
                                         </View>                
                                         <View style={{width: widthToDp("21%")}}>
                                             <Text style={{fontSize: widthToDp('3.3%')}}>{this.state.numberPigs}</Text>
@@ -570,7 +584,7 @@ export default class PigTableScreen extends Component {
                                     </View>
                                     <View style={{marginTop: widthToDp("2%"), flexDirection: 'row', width: widthToDp("100%")}}>
                                         <View style={{width: widthToDp("21%"), marginLeft: widthToDp("1.3%")}}>
-                                            <Text style={{fontSize: widthToDp('3.3%')}}>{this.state.malePigGilt}</Text>
+                                            <Text style={{fontSize: widthToDp('3.%')}}>{this.state.malePigGilt}</Text>
                                         </View>             
                                         <View style={{width: widthToDp("21%")}}>
                                             <Text style={{fontSize: widthToDp('3.3%')}}>{this.state.numberPigs}</Text>
@@ -586,7 +600,7 @@ export default class PigTableScreen extends Component {
                                     </View>
                                     <View style={{marginTop: widthToDp("2%"), flexDirection: 'row', width: widthToDp("100%")}}>
                                         <View style={{width: widthToDp("21%"), marginLeft: widthToDp("1.3%")}}>
-                                            <Text style={{fontSize: widthToDp('3.3%')}}>{this.state.shedConstruction}</Text>
+                                            <Text style={{fontSize: widthToDp('3.%')}}>{this.state.shedConstruction}</Text>
                                         </View>             
                                         <View style={{width: widthToDp("21%")}}>
                                             <Text style={{fontSize: widthToDp('3.3%')}}>{this.state.numberPigs}</Text>
@@ -602,32 +616,32 @@ export default class PigTableScreen extends Component {
                                     </View>
                                     <View style={{marginTop: widthToDp("2%"), flexDirection: 'row', width: widthToDp("100%")}}>
                                         <View style={{width: widthToDp("21%"), marginLeft: widthToDp("1.3%")}}>
-                                            <Text style={{fontSize: widthToDp('3.3%')}}>{this.state.vaccination}</Text>
+                                            <Text style={{fontSize: widthToDp('3%')}}>{this.state.vaccination}</Text>
                                         </View>             
                                         <View style={{width: widthToDp("21%")}}>
-                                            <Text style={{fontSize: widthToDp('3.3%')}}>{this.state.vaccinationFeedingUnit}</Text>
+                                            <Text style={{fontSize: widthToDp('3%')}}>{(Number(this.state.numberPigs) * 2) + " (" + this.state.adultLabel + ") " + this.state.andLabel + " " + (Number(this.state.numberPigs) * 12) + " (" + this.state.pigletLabel + ")"}</Text>
                                         </View>   
                                         <View style={{width: widthToDp("17%"), flexDirection: 'row', justifyContent: 'flex-end'}}>
                                             <Text style={{fontSize: widthToDp('3.3%')}}>LS</Text>
                                         </View>  
                                         <View style={{width: widthToDp("15%"), marginLeft: widthToDp('3%'), flexDirection: 'row', justifyContent: 'space-between'}}>
                                             <Text style={{ fontSize: widthToDp('3.3%') }}>₹ </Text> 
-                                            <Text style={{ fontSize: widthToDp('3.3%') }}>{this.state.totalCostfeeding}</Text>
+                                            <Text style={{ fontSize: widthToDp('3.3%') }}>{this.state.totalcostVaccine}</Text>
                                         </View>
                                     </View>
                                     <View style={{marginTop: widthToDp("2%"), flexDirection: 'row', width: widthToDp("100%")}}>
                                         <View style={{width: widthToDp("21%"), marginLeft: widthToDp("1.3%")}}>
-                                            <Text style={{fontSize: widthToDp('3.3%')}}>{this.state.feeding}</Text>
+                                            <Text style={{fontSize: widthToDp('3%')}}>{this.state.feeding}</Text>
                                         </View>           
                                         <View style={{width: widthToDp("21%")}}>
-                                            <Text style={{fontSize: widthToDp('3.3%')}}>{this.state.vaccinationFeedingUnit}</Text>
+                                            <Text style={{fontSize: widthToDp('3%')}}>{(Number(this.state.numberPigs) * 2) + " (" + this.state.adultLabel + ") " + this.state.andLabel + " " + (Number(this.state.numberPigs) * 12) + " (" + this.state.pigletLabel + ")"}</Text>
                                         </View>  
                                         <View style={{width: widthToDp("17%"), flexDirection: 'row', justifyContent: 'flex-end'}}>
                                             <Text style={{fontSize: widthToDp('3.3%')}}>LS</Text>
                                         </View>  
                                         <View style={{width: widthToDp("15%"), marginLeft: widthToDp('3%'), flexDirection: 'row', justifyContent: 'space-between'}}>
                                             <Text style={{ fontSize: widthToDp('3.3%') }}>₹ </Text> 
-                                            <Text style={{ fontSize: widthToDp('3.3%') }}>{this.state.totalcostVaccine}</Text>
+                                            <Text style={{ fontSize: widthToDp('3.3%') }}>{this.state.totalCostfeeding}</Text>
                                         </View>
                                     </View>
                                 </View>
@@ -652,7 +666,7 @@ export default class PigTableScreen extends Component {
                                             return (
                                                 <View style={{ width: widthToDp(`${key===0 ? 21 : key === 1 ? 11 : 19}%`), marginLeft: widthToDp("1.5%") }}>
 
-                                                    <Text style={{fontSize: widthToDp('3.3%')}}>{key === 0 ? this.state.itemLabel : key===1 ? this.state.quantityLabel : key===3 ? this.state.unitCostLabel : this.state.totalCostLabel}</Text>
+                                                    <Text style={{fontSize: widthToDp('3.3%')}}>{key === 0 ? this.state.itemLabel : key===1 ? this.state.quantityLabel : key===3 ? this.state.totalCostLabel : this.state.unitCostLabel}</Text>
 
                                                 </View>
 

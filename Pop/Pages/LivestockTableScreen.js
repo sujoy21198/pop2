@@ -562,7 +562,7 @@ export default class LivestockTableScreen extends Component {
 
                                         <View style={{ width: widthToDp("16%"), marginLeft: widthToDp("1.5%") }}>
                                             <Text style={{ marginTop: heightToDp("2%"), fontSize: widthToDp('3.5%') }}>16 {this.state.monthOld}</Text>
-                                            <Text style={{ marginTop: heightToDp("3.7%"), fontSize: widthToDp('3.5%') }}>8 {this.state.monthOld}</Text>
+                                            <Text style={{ marginTop: heightToDp(`${this.state.textLanguageChange === "1" ? 3.7 : 1.5}%`), fontSize: widthToDp('3.5%') }}>8 {this.state.monthOld}</Text>
                                             <Text style={{ marginTop: heightToDp("1.5%"), fontSize: widthToDp('3.5%') }}>{this.state.kids}</Text>
                                         </View>
                                         <View style={{ width: widthToDp("10%"), marginLeft: widthToDp("6%") }}>

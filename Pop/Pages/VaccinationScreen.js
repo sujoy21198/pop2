@@ -477,12 +477,18 @@ export default class VaccinationScreen extends Component {
                                             vaccine.map((i, key) => {
                                                 if(i.interval) {
                                                     return (
-                                                        <Text style={{ 
-                                                            marginTop: heightToDp(`${key===0 ? 0.5 : 3.5}%`), 
-                                                            fontSize: widthToDp('3.5%') 
-                                                        }}>
-                                                            {i.interval.split("   ").length > 1 ? this.state.repeatText : i.interval} {this.state.months}
-                                                        </Text>
+                                                        <View
+                                                            style={{
+                                                                width: widthToDp("25%"),
+                                                                marginTop: heightToDp(`${key===0 ? 0.5 : 3.5}%`), 
+                                                            }}
+                                                        >
+                                                            <Text style={{ 
+                                                                fontSize: widthToDp("3%") 
+                                                            }}>
+                                                                {i.interval.split("   ").length > 1 ? this.state.repeatText : i.interval} {this.state.months}
+                                                            </Text>
+                                                        </View>
                                                     )
                                                 }                                                
                                             })
