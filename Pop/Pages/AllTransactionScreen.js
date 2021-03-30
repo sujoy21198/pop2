@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { View, Image, TouchableOpacity, FlatList, Linking, ScrollView } from 'react-native'
 import BaseColor from '../Core/BaseTheme'
-import { Card, Text } from 'native-base'
+import { Card, Text, Toast } from 'native-base'
 import TopLogo from '../assets/TopLogo'
 import { widthToDp, heightToDp } from '../Responsive'
 import { FlatGrid, SectionGrid } from 'react-native-super-grid'
@@ -311,6 +311,37 @@ export default class AllTransactionScreen extends Component {
         }
     }
 
+    editTransactionHistory = (item, index) => {
+        this.props.navigation.navigate(
+            "IncomeScreen", {
+                "profitType" : item.type, 
+                "nameEnglish" : item.category,
+                "willEdit" : true,
+                index,
+                ...item
+            }
+        )
+    }
+
+    deleteTransactionHistory = async (item, index) => {
+        let localMoneyManagerData = this.state.moneyManagerData;
+        localMoneyManagerData.length > 0 &&
+        localMoneyManagerData.map((element, key) => {
+            if(Number(key) === Number(index) && element.isIncomeOrExpense && element.isIncomeOrExpense === item.isIncomeOrExpense) {
+                localMoneyManagerData.splice(key, 1);
+                if((element.type==="income" || element.type==="Income")) {
+                    this.setState({netProfitValue: this.state.netProfitValue - Number(element.amount)});
+                } else {
+                    this.setState({netProfitValue: this.state.netProfitValue + Number(element.amount)});
+                }
+                
+            }
+        });
+        let user = JSON.parse(await AsyncStorage.getItem("user"));
+        user[0].moneyManagerData = localMoneyManagerData;
+        await AsyncStorage.setItem("user", JSON.stringify(user));
+    }
+
     render() {
         var moneyManagerData = []
         moneyManagerData = this.state.moneyManagerData
@@ -370,9 +401,40 @@ export default class AllTransactionScreen extends Component {
                 <Text style={{ marginLeft: widthToDp("3%"), marginTop: heightToDp("2%"), fontSize: widthToDp("7%"), fontFamily: 'Oswald-Medium' }}>{this.state.allTransactionsLabel}</Text>
                 <ScrollView>
                 {
-                    moneyManagerData.map((i) => {
+                    moneyManagerData.map((i, key) => {
                         return (
                             <View style={{ backgroundColor: 'white', paddingVertical: widthToDp('5%'), alignSelf: 'center', width: widthToDp("85%"), borderRadius: 20, marginTop: heightToDp("3%"), paddingRight: widthToDp('2%'), justifyContent: 'center' }}>
+                                {
+                                    i.isIncomeOrExpense && 
+                                    <View
+                                        style={{
+                                            flexDirection: 'row',
+                                            alignItems: 'center',
+                                            justifyContent: 'flex-end',
+                                            marginTop: widthToDp("-2%")
+                                        }}
+                                    >
+                                        <TouchableOpacity
+                                            onPress={() => this.editTransactionHistory(i, key)}
+                                        >
+                                            <Icon
+                                                name="edit"
+                                                size={20}
+                                                color={"blue"}
+                                            />
+                                        </TouchableOpacity>
+                                        <TouchableOpacity
+                                            onPress={() => this.deleteTransactionHistory(i, key)}
+                                        >
+                                            <Icon
+                                                name="trash"
+                                                size={20}
+                                                color={"#ff0000"}
+                                                style={{paddingLeft: widthToDp("2%")}}
+                                            />
+                                        </TouchableOpacity>
+                                    </View>
+                                }
                                 <View style={{
                                     flexDirection: 'row',
                                     justifyContent: 'space-between',
@@ -380,7 +442,7 @@ export default class AllTransactionScreen extends Component {
                                 }}>
                                     <Text style={{ marginLeft: widthToDp("3%"), fontSize: widthToDp("4%"), fontFamily: 'Oswald-Light' }}>{this.state.dateLabel + ": " + i.date}</Text>
                                     <Text style={{ marginLeft: widthToDp("3%"), fontSize: widthToDp("4%"), fontFamily: 'Oswald-Light' }}>{(i.type==="Income" || i.type==="income") ? this.state.incomeLabel : (i.type==="Expense" || i.type==="expense") ? this.state.expenseLabel : i.type}</Text>
-                                </View>
+                                </View>                                
                                 <View style={{
                                     flexDirection: 'row',
                                     justifyContent: 'space-between',
