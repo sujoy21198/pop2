@@ -27,6 +27,7 @@ export default class IncomeScreen extends Component {
         this.state.languages = Languages
         this.state.type = this.props.route.params.type
         this.state.category = this.props.route.params.category
+        this.state.amount = this.props.route.params.amount || 0
         //alert(this.state.type)
     }
 
@@ -68,21 +69,28 @@ export default class IncomeScreen extends Component {
             var date = new Date().getDate()
             var month = new Date().getMonth()+1
             var year = new Date().getFullYear()
-            const moneyObject={'type':this.props.route.params.profitType,'category':this.props.route.params.nameEnglish,'amount':this.state.amount, 'date': date + "/" + month + "/" + year}
-            //const incomeObject ={'type':'income','category':'Crops','amount':this.state.totalincomefromcrop}
-            let username = await AsyncStorage.getItem('username')
-            let user = await AsyncStorage.getItem('user');
-            let parsed = JSON.parse(user);
-            var specificObject = parsed.find((i) => i.username === username)
-            specificObject.moneyManagerData.push(moneyObject)
-            await AsyncStorage.setItem('user', JSON.stringify(parsed))
-            console.log(specificObject.moneyManagerData)
+            if(this.props.route.params.willEdit) {
+                let user = await AsyncStorage.getItem('user');
+                let parsed = JSON.parse(user);
+                parsed[0].moneyManagerData[this.props.route.params.index].amount = this.state.amount;
+                await AsyncStorage.setItem("user", JSON.stringify(parsed)) 
+            } else {
+                const moneyObject={'type':this.props.route.params.profitType,'category':this.props.route.params.nameEnglish,'amount':this.state.amount, 'date': date + "/" + month + "/" + year}
+                //const incomeObject ={'type':'income','category':'Crops','amount':this.state.totalincomefromcrop}
+                let username = await AsyncStorage.getItem('username')
+                let user = await AsyncStorage.getItem('user');
+                let parsed = JSON.parse(user);
+                var specificObject = parsed.find((i) => i.username === username)
+                specificObject.moneyManagerData.push({...moneyObject, isIncomeOrExpense: true})
+                await AsyncStorage.setItem('user', JSON.stringify(parsed))
+                console.log(specificObject.moneyManagerData)
+            }
         }catch(error){
             console.log(error)
         }
 
         this.props.navigation.navigate({
-            name: 'MoneyManagerScreen'
+            name: 'MoneyManagerScreen', 
         })
     }
 
