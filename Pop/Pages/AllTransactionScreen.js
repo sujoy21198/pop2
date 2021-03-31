@@ -312,13 +312,34 @@ export default class AllTransactionScreen extends Component {
     }
 
     editTransactionHistory = (item, index) => {
+        console.warn("item ", item)
         this.props.navigation.navigate(
             "IncomeScreen", {
                 "profitType" : item.type, 
                 "nameEnglish" : item.category,
                 "willEdit" : true,
+                "category" : 
+                    item.category==="Small Grocery Shop" ? this.state.smallGroceryLabel : 
+                    item.category==="Goat livestock" ? this.state.goatLivestockLabel : 
+                    item.category==="Poultry livestock" ? this.state.poultryLivestockLabel : 
+                    item.category==="Pig livestock" ? this.state.pigLivestockLabel : 
+                    item.category==="Crops" ? this.state.cropLabel : 
+                    item.category==="DryFish Selling" ? this.state.dryFishSellingLabel : (
+                        item.category==="Vegetable vending" || item.category==="Vegetable Vending"
+                    ) ? this.state.vegVendingLabel : item.category==="Health" ? this.state.healthText : (
+                        item.category==="Live Stock" || item.category==="Livestock"
+                    ) ? this.state.livestockText : 
+                    item.category==="Agriculture" ? this.state.agricultureText : 
+                    item.category==="Small Business" ? this.state.smallBusinessText : 
+                    item.category==="Education" ? this.state.educationText : 
+                    item.category==="Loan savings" ? this.state.savingText : 
+                    item.category==="Pension" ? this.state.pensionText : 
+                    item.category==="Others" ? this.state.otherText : item.category,
                 index,
-                ...item
+                "type": item.type,
+                "amount": item.amount,
+                "date": item.date,
+                "isIncomeOrExpense": item.isIncomeOrExpense
             }
         )
     }
@@ -327,8 +348,8 @@ export default class AllTransactionScreen extends Component {
         let localMoneyManagerData = this.state.moneyManagerData;
         localMoneyManagerData.length > 0 &&
         localMoneyManagerData.map((element, key) => {
-            if(Number(key) === Number(index) && element.isIncomeOrExpense && element.isIncomeOrExpense === item.isIncomeOrExpense) {
-                localMoneyManagerData.splice(key, 1);
+            if(Number(key) === Number(index)) {
+                console.warn(localMoneyManagerData.splice(key, 1));
                 if((element.type==="income" || element.type==="Income")) {
                     this.setState({netProfitValue: this.state.netProfitValue - Number(element.amount)});
                 } else {
@@ -404,16 +425,16 @@ export default class AllTransactionScreen extends Component {
                     moneyManagerData.map((i, key) => {
                         return (
                             <View style={{ backgroundColor: 'white', paddingVertical: widthToDp('5%'), alignSelf: 'center', width: widthToDp("85%"), borderRadius: 20, marginTop: heightToDp("3%"), paddingRight: widthToDp('2%'), justifyContent: 'center' }}>
-                                {
-                                    i.isIncomeOrExpense && 
-                                    <View
-                                        style={{
-                                            flexDirection: 'row',
-                                            alignItems: 'center',
-                                            justifyContent: 'flex-end',
-                                            marginTop: widthToDp("-2%")
-                                        }}
-                                    >
+                                <View
+                                    style={{
+                                        flexDirection: 'row',
+                                        alignItems: 'center',
+                                        justifyContent: 'flex-end',
+                                        marginTop: widthToDp("-2%")
+                                    }}
+                                >
+                                    {
+                                        i.isIncomeOrExpense &&
                                         <TouchableOpacity
                                             onPress={() => this.editTransactionHistory(i, key)}
                                         >
@@ -423,18 +444,18 @@ export default class AllTransactionScreen extends Component {
                                                 color={"blue"}
                                             />
                                         </TouchableOpacity>
-                                        <TouchableOpacity
-                                            onPress={() => this.deleteTransactionHistory(i, key)}
-                                        >
-                                            <Icon
-                                                name="trash"
-                                                size={20}
-                                                color={"#ff0000"}
-                                                style={{paddingLeft: widthToDp("2%")}}
-                                            />
-                                        </TouchableOpacity>
-                                    </View>
-                                }
+                                    }                                        
+                                    <TouchableOpacity
+                                        onPress={() => this.deleteTransactionHistory(i, key)}
+                                    >
+                                        <Icon
+                                            name="trash"
+                                            size={20}
+                                            color={"#ff0000"}
+                                            style={{paddingLeft: widthToDp("2%")}}
+                                        />
+                                    </TouchableOpacity>
+                                </View>
                                 <View style={{
                                     flexDirection: 'row',
                                     justifyContent: 'space-between',
