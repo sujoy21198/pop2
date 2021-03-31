@@ -773,7 +773,7 @@ export default class SigninScreen extends Component {
             console.log(editedNames)
             fileNames.push(editedNames)
             ext.push(extNames)
-            imageUrls.push("http://161.35.122.165:3020/app-property/uploads/static/" + cropImages[i])
+            imageUrls.push("http://161.35.122.165:3020/app-property/uploads/label/" + cropImages[i])
         }
 
         for (var i = 0; i < imageUrls.length; i++) {
