@@ -79,7 +79,8 @@ export default class PultryTableScreen extends Component {
             incomeFrom: '',
             hens: '',
             birdText: '',
-            pieceText: '' 
+            pieceText: '',
+            isLoading: true 
         }
         this.state.tableHeading = tableHeading
         this.state.languages = Languages
@@ -87,6 +88,7 @@ export default class PultryTableScreen extends Component {
     componentDidMount() {
         this.getVaccinesFromOffline()
         this.setLanguageOnMount()
+        this.setState({isLoading: false})
     }
     setLanguageOnMount = async () => {
         let defaultLanguage = await AsyncStorage.getItem('language')
@@ -601,7 +603,7 @@ export default class PultryTableScreen extends Component {
                                             <Text style={{ marginTop: heightToDp("1.3%") }}>LS</Text>
                                             <Text style={{ marginTop: heightToDp("1.8%") }}>LS</Text>
                                         </View>
-                                        <View style={{ width: widthToDp("14%"), marginLeft: widthToDp("1.5%") }}>
+                                        <View style={{ width: widthToDp("14%"), marginLeft: widthToDp("20%") }}>
                                             <View style={{ marginTop: heightToDp("2%") }}>
                                                 <View style={{marginTop: heightToDp("4%"), flexDirection: 'row', justifyContent: 'space-between'}}>
                                                     <Text style={{ fontSize: widthToDp('3.3%') }}>{this.state.feed ? "₹ " : ""}</Text>

@@ -470,7 +470,7 @@ export default class DryFishSellingFirstTable extends Component {
                                         {
                                             tableHeading.map((i, key) => {
                                                 return(
-                                                    <Text style={{ marginTop: heightToDp(`${key===0 ? 3.8 : 1.5}%`), fontSize: widthToDp('3.5%') }}>{i.items ? key===0 ? this.state.weighingMachine : key===1 ? this.state.bambooContainer : "" : ""}</Text>
+                                                    <Text style={{ marginTop: heightToDp(`${key===0 ? 3.8 : (`${this.state.textLanguageChange==="3" ? 3.8 : 1.5}%`)}%`), fontSize: widthToDp('3.5%') }}>{i.items ? key===0 ? this.state.weighingMachine : key===1 ? this.state.bambooContainer : "" : ""}</Text>
                                                 )
                                             })
                                         }
