@@ -50,7 +50,7 @@ export default class CostBenifitAnalysisScreen extends Component {
             expectedAnalysisLabel: '',
             actualAnalysisLabel: '',
             landTypeLabel: '',
-            areaLabel: '', 
+            areaLabel: '',
             descriptionLabel: '',
             amountLabel: '',
             totalCostOfCultivationLabel: '',
@@ -91,10 +91,26 @@ export default class CostBenifitAnalysisScreen extends Component {
 
     }
 
-    componentDidMount = () =>  {
-        
+    componentDidMount = () => {
+
         this.setLanguageOnMount()
+        //this.setExitFlag()
     }
+
+
+    setExitFlag = async () => {
+        let username = await AsyncStorage.getItem('username')
+        let user = await AsyncStorage.getItem('user');
+        let parsed = JSON.parse(user);
+        var specificObject = parsed.find((i) => i.username === username)
+        var patchSpecific = specificObject.patch.find((i) => i.patchName === this.state.patchName)
+        patchSpecific.completed = true
+        await AsyncStorage.setItem('user', JSON.stringify(parsed))
+        console.log(patchSpecific.completed)
+        //console.log(patchSpecific.completed = true)
+
+    }
+
 
     setLanguageOnMount = async () => {
         let defaultLanguage = await AsyncStorage.getItem('language')
@@ -139,7 +155,7 @@ export default class CostBenifitAnalysisScreen extends Component {
             var exitLabel = specificObject.labels.find((i) => i.type === 186)
             var decimalLabel = specificObject.labels.find((i) => i.type === 188)
             if (this.state.textLanguageChange === '0') {
-                this.setState({ 
+                this.setState({
                     costBenefitAnalysisLabel: costBenefitAnalysisLabel.nameEnglish,
                     expectedAnalysisLabel: expectedAnalysisLabel.nameEnglish,
                     actualAnalysisLabel: actualAnalysisLabel.nameEnglish,
@@ -158,7 +174,7 @@ export default class CostBenifitAnalysisScreen extends Component {
                     decimalLabel: decimalLabel.nameEnglish,
                 })
             } else if (this.state.textLanguageChange === '1') {
-                this.setState({ 
+                this.setState({
                     costBenefitAnalysisLabel: costBenefitAnalysisLabel.nameHindi,
                     expectedAnalysisLabel: expectedAnalysisLabel.nameHindi,
                     actualAnalysisLabel: actualAnalysisLabel.nameHindi,
@@ -177,11 +193,11 @@ export default class CostBenifitAnalysisScreen extends Component {
                     decimalLabel: decimalLabel.nameHindi,
                 })
             } else if (this.state.textLanguageChange === '2') {
-                this.setState({ 
+                this.setState({
                     costBenefitAnalysisLabel: costBenefitAnalysisLabel.nameHo,
                     expectedAnalysisLabel: expectedAnalysisLabel.nameHo,
                     actualAnalysisLabel: actualAnalysisLabel.nameHo,
-                    landTypeLabel: landTypeLabel.nameHo,                    
+                    landTypeLabel: landTypeLabel.nameHo,
                     areaLabel: areaLabel.nameHo,
                     highLandLabel: highLandLabel.nameHo,
                     descriptionLabel: descriptionLabel.nameHo,
@@ -196,11 +212,11 @@ export default class CostBenifitAnalysisScreen extends Component {
                     decimalLabel: decimalLabel.nameHo,
                 })
             } else if (this.state.textLanguageChange === '3') {
-                this.setState({ 
+                this.setState({
                     costBenefitAnalysisLabel: costBenefitAnalysisLabel.nameOdia,
                     expectedAnalysisLabel: expectedAnalysisLabel.nameOdia,
                     actualAnalysisLabel: actualAnalysisLabel.nameOdia,
-                    landTypeLabel: landTypeLabel.nameOdia,           
+                    landTypeLabel: landTypeLabel.nameOdia,
                     areaLabel: areaLabel.nameOdia,
                     highLandLabel: highLandLabel.nameOdia,
                     descriptionLabel: descriptionLabel.nameOdia,
@@ -215,11 +231,11 @@ export default class CostBenifitAnalysisScreen extends Component {
                     decimalLabel: decimalLabel.nameOdia,
                 })
             } else if (this.state.textLanguageChange === '4') {
-                this.setState({ 
+                this.setState({
                     costBenefitAnalysisLabel: costBenefitAnalysisLabel.nameSanthali,
                     expectedAnalysisLabel: expectedAnalysisLabel.nameSanthali,
                     actualAnalysisLabel: actualAnalysisLabel.nameSanthali,
-                    landTypeLabel: landTypeLabel.nameSanthali, 
+                    landTypeLabel: landTypeLabel.nameSanthali,
                     areaLabel: areaLabel.nameSanthali,
                     highLandLabel: highLandLabel.nameSanthali,
                     descriptionLabel: descriptionLabel.nameSanthali,
@@ -291,10 +307,10 @@ export default class CostBenifitAnalysisScreen extends Component {
     goToHomeScreen = async () => {
         try {
             var date = new Date().getDate()
-            var month = new Date().getMonth()+1
+            var month = new Date().getMonth() + 1
             var year = new Date().getFullYear()
-            const expenseObject = { 'type': 'expense', 'category': 'Crops', 'amount': this.state.actualCulCostScreenTotalExpense , 'date': date + "/" + month + "/" + year }
-            const incomeObject = { 'type': 'income', 'category': 'Crops', 'amount': this.state.totalincomefromcrop , 'date': date + "/" + month + "/" + year}
+            const expenseObject = { 'type': 'expense', 'category': 'Crops', 'amount': this.state.actualCulCostScreenTotalExpense, 'date': date + "/" + month + "/" + year }
+            const incomeObject = { 'type': 'income', 'category': 'Crops', 'amount': this.state.totalincomefromcrop, 'date': date + "/" + month + "/" + year }
             let username = await AsyncStorage.getItem('username')
             let user = await AsyncStorage.getItem('user');
             let parsed = JSON.parse(user);
@@ -315,6 +331,8 @@ export default class CostBenifitAnalysisScreen extends Component {
             index: 0,
             routes: [{ name: "DashBoardScreen" }]
         })
+
+        this.setExitFlag()
 
     }
 
@@ -464,7 +482,7 @@ export default class CostBenifitAnalysisScreen extends Component {
                                 <View style={{ width: widthToDp("60%") }}>
                                     <Text style={{ fontFamily: 'Oswald-Medium', fontSize: widthToDp('3.1%') }}>{this.state.totalIncomeFromCropLabel}</Text>
                                 </View>
-                                <View style={{width: widthToDp('30%')}}>
+                                <View style={{ width: widthToDp('30%') }}>
                                     <Text style={{ fontFamily: 'Oswald-Medium', fontSize: widthToDp('3.1%') }}>₹ {this.state.costPerKg}</Text>
                                 </View>
 
@@ -473,26 +491,26 @@ export default class CostBenifitAnalysisScreen extends Component {
                                 <View style={{ width: widthToDp("60%") }}>
                                     <Text style={{ fontFamily: 'Oswald-Medium', fontSize: widthToDp('3.1%') }}>{this.state.productionLabel}</Text>
                                 </View>
-                                <View  style={{width: widthToDp('30%')}}>
+                                <View style={{ width: widthToDp('30%') }}>
                                     <Text style={{ fontFamily: 'Oswald-Medium', fontSize: widthToDp('3.1%') }}>{this.state.productionInKg} KG</Text>
-                                </View>                                
+                                </View>
                             </View>
                             <View style={{ flexDirection: 'row', marginLeft: widthToDp("4%"), marginTop: heightToDp('2%') }}>
-                                <View style={{width: widthToDp('60%')}}>
+                                <View style={{ width: widthToDp('60%') }}>
                                     <Text style={{ fontFamily: 'Oswald-Medium', fontSize: widthToDp('3.1%') }}>{this.state.costPerKgLabel}</Text>
                                 </View>
-                                <View style={{width: widthToDp('30%')}}>
+                                <View style={{ width: widthToDp('30%') }}>
                                     <Text style={{ fontFamily: 'Oswald-Medium', fontSize: widthToDp('3.1%') }}>₹ {this.state.cost}</Text>
                                 </View>
-                                
+
                             </View>
                             <View style={{ borderBottomColor: 'black', borderBottomWidth: 1, marginTop: heightToDp('1.5%'), width: widthToDp("90%") }}></View>
                             <View style={{ flexDirection: 'row', marginTop: heightToDp('1%'), alignSelf: 'center', marginLeft: widthToDp("6%"), }}>
-                                <View style={{width: widthToDp('60%')}}>
+                                <View style={{ width: widthToDp('60%') }}>
                                     <Text style={{ fontSize: widthToDp("5%"), fontFamily: 'Oswald-Bold', fontSize: widthToDp('3.3%') }}>{this.state.netProfitLabel}</Text>
                                 </View>
-                                <View style={{width: widthToDp('30%'), fontSize: widthToDp('3.3%')}}>
-                                <Text style={{ fontWeight: 'bold', fontSize: widthToDp("3.3%"), fontFamily: 'Oswald-Bold' }}>₹ {this.state.netProfit}</Text>
+                                <View style={{ width: widthToDp('30%'), fontSize: widthToDp('3.3%') }}>
+                                    <Text style={{ fontWeight: 'bold', fontSize: widthToDp("3.3%"), fontFamily: 'Oswald-Bold' }}>₹ {this.state.netProfit}</Text>
                                 </View>
                             </View>
                         </View>
@@ -501,11 +519,11 @@ export default class CostBenifitAnalysisScreen extends Component {
                         <Text style={{ color: 'white', marginLeft: widthToDp("4%"), marginTop: heightToDp('1.5%'), fontSize: widthToDp("5%"), fontFamily: 'Oswald-Medium' }}>{this.state.actualAnalysisLabel}</Text>
                         <View style={{ backgroundColor: 'white', width: widthToDp("90%"), height: heightToDp("54%"), borderBottomLeftRadius: 10, borderBottomRightRadius: 10, marginTop: heightToDp("2%") }}>
                             <View style={{ flexDirection: 'row', marginLeft: widthToDp("4%"), marginTop: heightToDp('1%') }}>
-                                <View style={{width: widthToDp('60%')}}>
-                                    <Text style={{ fontFamily: 'Oswald-Medium', fontSize: widthToDp('3.1%') }}>{this.state.descriptionLabel}</Text>    
+                                <View style={{ width: widthToDp('60%') }}>
+                                    <Text style={{ fontFamily: 'Oswald-Medium', fontSize: widthToDp('3.1%') }}>{this.state.descriptionLabel}</Text>
                                 </View>
-                                <View style={{width: widthToDp('30%')}}>
-                                    <Text style={{ fontFamily: 'Oswald-Medium', fontSize: widthToDp('3.1%') }}>{this.state.amountLabel}</Text>    
+                                <View style={{ width: widthToDp('30%') }}>
+                                    <Text style={{ fontFamily: 'Oswald-Medium', fontSize: widthToDp('3.1%') }}>{this.state.amountLabel}</Text>
                                 </View>
                             </View>
                             <View style={{ borderBottomColor: 'black', borderBottomWidth: 1, marginTop: heightToDp('1.5%'), width: widthToDp("90%") }}></View>
@@ -513,7 +531,7 @@ export default class CostBenifitAnalysisScreen extends Component {
                                 <View style={{ width: widthToDp("60%") }}>
                                     <Text style={{ fontFamily: 'Oswald-Medium', fontSize: widthToDp('3.1%') }}>{this.state.totalCostOfCultivationLabel}</Text>
                                 </View>
-                                
+
                                 <View style={{ width: widthToDp("30%") }}>
                                     <Text style={{ fontFamily: 'Oswald-Medium', fontSize: widthToDp('3.1%') }}>{this.state.actualCulCostScreenTotalExpense ? "₹ " + this.state.actualCulCostScreenTotalExpense : ""}</Text>
                                 </View>

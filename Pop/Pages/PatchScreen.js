@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Image, TouchableOpacity, FlatList } from 'react-native'
+import { View, Image, TouchableOpacity, FlatList , Alert } from 'react-native'
 import BaseColor from '../Core/BaseTheme'
 import { Text, Card } from 'native-base'
 import TopLogo from '../assets/TopLogo'
@@ -310,10 +310,37 @@ export default class PatchScreen extends Component {
         this.setState({ isDialogVisible: true })
     }
 
+    checkFlag = async(patchName) => {
+        let username = await AsyncStorage.getItem('username')
+        let user = await AsyncStorage.getItem('user');
+        let parsed = JSON.parse(user);
+        var specificObject = parsed.find((i) => i.username === username)
+        var patchSpecific = specificObject.patch.find((i) => i.patchName === patchName)
+        if(patchSpecific === undefined){
+            this.navigateToPatch(patchName)
+        }else if(patchSpecific.completed === true){
+            Alert.alert(
+                "Already added in money manager!",
+                "Do you want to continue?",
+                [
+                    {
+                      text: "Cancel",
+                      onPress: () => console.log("Cancel Pressed"),
+                      style: "cancel"
+                    },
+                    { text: "OK", onPress: () => this.navigateToPatch(patchName) }
+                  ]
+            )
+        }else if(patchSpecific.completed === ""){
+            this.navigateToPatch(patchName)
+        }
+        console.log(patchSpecific,"patchScreen")
+    }
+
     navigateToPatch = async (patchName) => {
         try {
             //alert(patchName)
-            const patchArrayObject = { 'cropId': this.state._id, 'patchName': patchName, 'landType': this.state.landType, 'step1': '', 'step2': '', 'step3': '', 'step4': '', 'step5': '', 'step6': '', 'step7': '', 'step8': '' }
+            const patchArrayObject = { 'cropId': this.state._id, 'patchName': patchName, 'landType': this.state.landType, 'step1': '', 'step2': '', 'step3': '', 'step4': '', 'step5': '', 'step6': '', 'step7': '', 'step8': '' , 'completed':'' }
             let username = await AsyncStorage.getItem('username')
             let user = await AsyncStorage.getItem('user')
             let parsed = JSON.parse(user)
@@ -330,7 +357,7 @@ export default class PatchScreen extends Component {
             }
             var jump = sepcific.patch.find((i) => i.patchName === patchName)
             var jumpNavigation = sepcific.costBenifitAnalysis.find((i) => i.patchName === patchName)
-            console.log(sepcific.costBenifitAnalysis.find((i) => i.patchName === patchName), "hi")
+            //console.log(sepcific.costBenifitAnalysis.find((i) => i.patchName === patchName), "hi")
             if (jump.step1 === '' && jump.step2 === '' && jump.step3 === '' && jump.step4 === '' && jump.step5 === '' && jump.step6 === '' && jump.step7 === '' && jump.step8 === '') {
                 this.props.navigation.navigate({
                     name: 'SelectFarmingAreaScreen',
@@ -547,6 +574,7 @@ export default class PatchScreen extends Component {
                     submitInput={(inputText) => { this.checkPatchName(inputText) }}
                     closeDialog={() => { this.setState({ isDialogVisible: false }) }}>
                 </DialogInput>
+                
                 <View>
 
                     <FlatList
@@ -554,7 +582,7 @@ export default class PatchScreen extends Component {
                         style={{ marginBottom: heightToDp("80%") }}
                         renderItem={({ item }) =>
 
-                            <TouchableOpacity onPress={() => { this.navigateToPatch(item.patchName) }}>
+                            <TouchableOpacity onPress={() => { this.checkFlag(item.patchName) }}>
                                 <View style={{ width: widthToDp("90%"), backgroundColor: 'white', margin: widthToDp("3%"), borderRadius: 20, height: heightToDp("5%") }}>
                                     <Text style={{ alignSelf: 'center', justifyContent: 'center', marginTop: heightToDp("0.5%"), fontSize: widthToDp("5%"), color: "#000", fontFamily: 'Oswald-Medium' }}>{item.patchName}</Text>
                                 </View>
