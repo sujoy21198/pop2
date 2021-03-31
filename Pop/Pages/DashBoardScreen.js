@@ -1,14 +1,18 @@
 import React, { Component } from 'react'
 import { View, Image, TouchableOpacity } from 'react-native'
 import BaseColor from '../Core/BaseTheme'
-import { Text } from 'native-base'
+import { Text, Toast } from 'native-base'
 import TopLogo from '../assets/TopLogo'
 import { widthToDp, heightToDp } from '../Responsive'
 import { FlatGrid, SectionGrid } from 'react-native-super-grid'
 import Icon from 'react-native-vector-icons/FontAwesome'
+import Sync from 'react-native-vector-icons/AntDesign'
 import Languages from '../Core/Languages'
 import LanguageChange from '../Core/LanguageChange'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import base64 from 'react-native-base64'
+import axios from 'axios'
+import DataAccess from '../Core/DataAccess'
 
 
 const data = [
@@ -29,7 +33,7 @@ export default class DashBoardScreen extends Component {
         this.state = {
             data: [],
             languages: [],
-            textLanguageChange:''
+            textLanguageChange: ''
         }
 
         this.state.languages = Languages
@@ -124,7 +128,7 @@ export default class DashBoardScreen extends Component {
                 // this.state.data[6].name = pension.nameSanthali
                 // this.state.data[7].name = others.nameSanthali
             }
-            
+
         } catch (error) {
             alert("Network Error! Data not saved. Please login again. ")
             this.props.navigation.reset({
@@ -165,7 +169,7 @@ export default class DashBoardScreen extends Component {
             this.props.navigation.navigate({
                 name: "ContactScreen"
             })
-        } else if (data ===this.state.data[2].name) {
+        } else if (data === this.state.data[2].name) {
             this.props.navigation.navigate({
                 name: "MoneyManagerScreen"
             })
@@ -216,6 +220,35 @@ export default class DashBoardScreen extends Component {
             this.loadlabelsFromStorage()
         }
     }
+
+    syncData = async () => {
+        var token = await AsyncStorage.getItem('token')
+        var username = await AsyncStorage.getItem('username')
+        var encodedUsername = base64.encode(username)
+        var user = await AsyncStorage.getItem('user')
+        let parsed = JSON.parse(user);
+        var specificObject = parsed.find((i) => i.username === username)
+        console.log(specificObject)
+        await axios.post(DataAccess.BaseUrl + DataAccess.AccessUrl + "sync-data", {
+            data: specificObject
+        }, {
+            headers: {
+                'Content-type': "application/json",
+                'X-Information': encodedUsername,
+                'Authorization': "POP " + token,
+            }
+        }).then(function (response) {
+            console.log(response.data)
+        }).catch(function (error) {
+            console.log(error)
+        })
+
+        Toast.show({
+            text: "Data Synced Successfully",
+            duration: 3000,
+            type: 'success'
+        })
+    }
     render() {
         return (
             <View style={{ backgroundColor: BaseColor.BackgroundColor }}>
@@ -223,10 +256,18 @@ export default class DashBoardScreen extends Component {
                     <View style={{ marginTop: heightToDp("3%"), marginLeft: widthToDp("3%") }}>
                         <TopLogo />
                     </View>
+
+                    <Sync
+                        name="sync"
+                        size={30}
+                        style={{ marginTop: heightToDp("4.6%"), marginLeft: widthToDp("30%") }}
+                        onPress={() => this.syncData()}
+                    />
+
                     <Icon
                         name="home"
                         size={30}
-                        style={{ marginTop: heightToDp("4.6%"), marginLeft: widthToDp("45%") }}
+                        style={{ marginTop: heightToDp("4.6%"), marginLeft: widthToDp("5%") }}
                         onPress={() => this.props.navigation.navigate('DashBoardScreen')}
                     />
                     <Icon
