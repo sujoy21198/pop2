@@ -312,7 +312,6 @@ export default class AllTransactionScreen extends Component {
     }
 
     editTransactionHistory = (item, index) => {
-        console.warn("item ", item)
         this.props.navigation.navigate(
             "IncomeScreen", {
                 "profitType" : item.type, 
@@ -349,7 +348,7 @@ export default class AllTransactionScreen extends Component {
         localMoneyManagerData.length > 0 &&
         localMoneyManagerData.map((element, key) => {
             if(Number(key) === Number(index)) {
-                console.warn(localMoneyManagerData.splice(key, 1));
+                localMoneyManagerData.splice(key, 1);
                 if((element.type==="income" || element.type==="Income")) {
                     this.setState({netProfitValue: this.state.netProfitValue - Number(element.amount)});
                 } else {
