@@ -348,7 +348,7 @@ export default class StepOneScreen extends Component {
         if(
             (
                 this.state.cropSpecificSteps && this.state.cropSpecificSteps.length > 0 &&
-                this.state.cropSpecificSteps[1].videoFile
+                this.state.cropSpecificSteps[0].videoFile
             ) && !this.state.isPlaying
         ) {
             Toast.show({
