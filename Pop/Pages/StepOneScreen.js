@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { View, Image, TouchableOpacity, FlatList, ScrollView } from 'react-native'
 import BaseColor from '../Core/BaseTheme'
-import { Card, Text, Input } from 'native-base'
+import { Card, Text, Input, Toast } from 'native-base'
 import TopLogo from '../assets/TopLogo'
 import { widthToDp, heightToDp } from '../Responsive'
 import { FlatGrid, SectionGrid } from 'react-native-super-grid'
@@ -16,19 +16,10 @@ import Languages from '../Core/Languages'
 import LanguageChange from '../Core/LanguageChange'
 import Video from 'react-native-video'
 import { Platform } from 'react-native'
-
-const videoOverLayIconTouchableStyle = {
-    position: 'absolute',
-    top: widthToDp('90%'),
-    left: widthToDp('45%'),
-    justifyContent: 'center',
-    alignItems: 'center'
-};
-
-const videoOverLayIconStyle = {
-    backgroundColor: '#fff',
-    borderRadius: 25 / 2,
-};
+import RNFetchBlob, { RNFetchBlobStat } from 'rn-fetch-blob'
+import { ActivityIndicator } from 'react-native'
+import NetInfo from "@react-native-community/netinfo";
+import VideoComponent from '../components/VideoComponent'
 
 export default class StepOneScreen extends Component {
 
@@ -97,12 +88,15 @@ export default class StepOneScreen extends Component {
     }
 
     async componentDidMount() {
+        this.setState({isDownloadingVideo: true})
         this.setLanguageOnMount()
         this.loadlabelsFromStorage()
         this.getOfflineData()
     }
 
-
+    // componentWillUnmount = () => {
+    //     if(this.didBlurSubscription) this.didBlurSubscription.remove();
+    // }
 
     getOfflineData = async () => {
         try {
@@ -113,7 +107,7 @@ export default class StepOneScreen extends Component {
             var specificObject = parsed[0]
             var cropSpecificSteps = specificObject.cropSteps.filter((i) => i.cropId === this.state._id)
             this.setState({ cropNameLanguageChangeArray: cropSpecificSteps[0].cropData })
-            this.setState({ numberOfSteps: cropSpecificSteps.length })
+            this.setState({ numberOfSteps: cropSpecificSteps.length, cropSpecificSteps })
 
             var stepId = cropSpecificSteps[0]._id
             var cropSpecificMaterial = specificObject.cropsMaterials.filter((i) => i.stepId === stepId)
@@ -129,8 +123,7 @@ export default class StepOneScreen extends Component {
             this.setState({ odiaTitleDescription: cropSpecificSteps[0].nameOdia })
             this.setState({ hoTitleDescription: cropSpecificSteps[0].nameHo })
             this.setState({ santhaliTitleDescription: cropSpecificSteps[0].nameSanthali })
-            this.setState({ stepImage: cropSpecificSteps[0].imageFile })
-            this.setState({ stepVideo: cropSpecificSteps[0].videoFile });
+            this.setState({ stepImage: cropSpecificSteps[0].imageFile }) 
         } catch (error) {
             console.log(error)
         }
@@ -352,63 +345,76 @@ export default class StepOneScreen extends Component {
     }
 
     setStepDataIntoPatch = async () => {
-        try {
-            let username = await AsyncStorage.getItem('username')
-            let user = await AsyncStorage.getItem('cropData');
-            let parsed = JSON.parse(user);
-            var specificObject = parsed[0]
-            var cropSpecificSteps = specificObject.cropSteps.filter((i) => i.cropId === this.state._id)
-            if (this.state.saveButtonClicked === false) {
-                return alert("please save before procceding")
-            } else {
-                if (cropSpecificSteps[1] === undefined) {
-                    this.props.navigation.navigate({
-                        name: 'ActualCultivationCostScreen',
-                        params: {
-                            cropName: this.state.cropName,
-                            _id: this.state._id,
-                            imageFile: this.state.imageFile,
-                            patchName: this.state.patchName,
-                            landType: this.state.landType,
-                            farmingAreaInDecimal: this.state.farmingAreaInDecimal,
-                            costOfCultivatinPerTenDecimal: this.state.costOfCultivatinPerTenDecimal,
-                            costPerKg: this.state.costPerKg,
-                            productionInKg: this.state.productionInKg,
-                            cost: this.state.cost,
-                            netProfit: this.state.netProfit
-                        }
-                    })
+        if(
+            (
+                this.state.cropSpecificSteps && this.state.cropSpecificSteps.length > 0 &&
+                this.state.cropSpecificSteps[0].videoFile
+            ) && !this.state.isPlaying
+        ) {
+            Toast.show({
+                type: 'warning',
+                duration: 3000,
+                text: 'Please pause the video before going to next screen'
+            })
+        } else {
+            try {
+                let username = await AsyncStorage.getItem('username')
+                let user = await AsyncStorage.getItem('cropData');
+                let parsed = JSON.parse(user);
+                var specificObject = parsed[0]
+                var cropSpecificSteps = specificObject.cropSteps.filter((i) => i.cropId === this.state._id)
+                if (this.state.saveButtonClicked === false) {
+                    return alert("please save before procceding")
                 } else {
-                    this.props.navigation.navigate({
-                        name: 'StepTwoScreen',
-                        params: {
-                            cropName: this.state.cropName,
-                            _id: this.state._id,
-                            imageFile: this.state.imageFile,
-                            patchName: this.state.patchName,
-                            landType: this.state.landType,
-                            farmingAreaInDecimal: this.state.farmingAreaInDecimal,
-                            costOfCultivatinPerTenDecimal: this.state.costOfCultivatinPerTenDecimal,
-                            costPerKg: this.state.costPerKg,
-                            productionInKg: this.state.productionInKg,
-                            cost: this.state.cost,
-                            netProfit: this.state.netProfit
-                        }
-                    })
+                    if (cropSpecificSteps[1] === undefined) {
+                        this.props.navigation.navigate({
+                            name: 'ActualCultivationCostScreen',
+                            params: {
+                                cropName: this.state.cropName,
+                                _id: this.state._id,
+                                imageFile: this.state.imageFile,
+                                patchName: this.state.patchName,
+                                landType: this.state.landType,
+                                farmingAreaInDecimal: this.state.farmingAreaInDecimal,
+                                costOfCultivatinPerTenDecimal: this.state.costOfCultivatinPerTenDecimal,
+                                costPerKg: this.state.costPerKg,
+                                productionInKg: this.state.productionInKg,
+                                cost: this.state.cost,
+                                netProfit: this.state.netProfit
+                            }
+                        })
+                    } else {
+                        this.props.navigation.navigate({
+                            name: 'StepTwoScreen',
+                            params: {
+                                cropName: this.state.cropName,
+                                _id: this.state._id,
+                                imageFile: this.state.imageFile,
+                                patchName: this.state.patchName,
+                                landType: this.state.landType,
+                                farmingAreaInDecimal: this.state.farmingAreaInDecimal,
+                                costOfCultivatinPerTenDecimal: this.state.costOfCultivatinPerTenDecimal,
+                                costPerKg: this.state.costPerKg,
+                                productionInKg: this.state.productionInKg,
+                                cost: this.state.cost,
+                                netProfit: this.state.netProfit
+                            }
+                        })
+                    }
                 }
+                AsyncStorage.setItem("jump", "StepOneScreen")
+            } catch (error) {
+                console.log(error)
             }
-            AsyncStorage.setItem("jump", "StepOneScreen")
-        } catch (error) {
-            console.log(error)
         }
-
     }
-
+    
     render() {
         var cropNameLanguageChangeArray = []
         cropNameLanguageChangeArray = this.state.cropNameLanguageChangeArray
         var multipleMaterials = []
         multipleMaterials = this.state.multipleMaterials
+        // console.warn(this.checkVideoExistence())
         return (
             <View style={{ backgroundColor: BaseColor.BackgroundColor, flex: 1 }}>
                 <View style={{ backgroundColor: 'white', width: widthToDp("100%"), height: heightToDp("13%"), flexDirection: 'row' }}>
@@ -486,43 +492,19 @@ export default class StepOneScreen extends Component {
                         </View>
                     </View>
 
-                    {/* {
-                        this.state.stepVideo !== null &&
-                        <>
-                            <View style={{ backgroundColor: BaseColor.Red, width: widthToDp("90%"), height: heightToDp("26%"), alignSelf: 'center', marginTop: heightToDp("2%"), borderRadius: 10 }}>
-                                {
-                                    this.state.textLanguageChange === '0' ? <Text style={{ color: 'white', marginLeft: widthToDp("4%"), marginTop: heightToDp('1.5%'), fontSize: widthToDp("5%"), fontFamily: 'Oswald-Medium' }}>{this.state.englishTitleDescription}</Text> : ((this.state.textLanguageChange === '1') ? <Text style={{ color: 'white', marginLeft: widthToDp("4%"), marginTop: heightToDp('1.5%'), fontSize: widthToDp("5%"), fontFamily: 'Oswald-Medium' }}>{this.state.hindiTitleDescription}</Text> : ((this.state.textLanguageChange === '2') ? <Text style={{ color: 'white', marginLeft: widthToDp("4%"), marginTop: heightToDp('1.5%'), fontSize: widthToDp("5%"), fontFamily: 'Oswald-Medium' }}>{this.state.hoTitleDescription}</Text> : ((this.state.textLanguageChange === '3') ? <Text style={{ color: 'white', marginLeft: widthToDp("4%"), marginTop: heightToDp('1.5%'), fontSize: widthToDp("5%"), fontFamily: 'Oswald-Medium' }}>{this.state.odiaTitleDescription}</Text> : ((this.state.textLanguageChange === '4') ? <Text style={{ color: 'white', marginLeft: widthToDp("4%"), marginTop: heightToDp('1.5%'), fontSize: widthToDp("5%"), fontFamily: 'Oswald-Medium' }}>{this.state.santhaliTitleDescription}</Text> : null))))
-                                }
-
-                                <Video
-                                    source={{ uri: 'file:///storage/emulated/0/Pictures/image_' + this.state.stepVideo }}
-                                    style={{
-                                        backgroundColor: '#fff',
-                                        height: heightToDp('21%'),
-                                        width: widthToDp('90%'),
-                                    }}
-                                    resizeMode="stretch"
-                                    controls={false}
-                                    paused={this.state.isPlaying}
-                                />
-                            </View>
-                            <TouchableOpacity
-                                style={videoOverLayIconTouchableStyle}
-                                onPress={() => this.setState({ isPlaying: !this.state.isPlaying })}
-                            >
-                                <Ionicon
-                                    name={
-                                        Platform.OS === 'android' ?
-                                            `md-${this.state.isPlaying ? "play" : "pause"}` :
-                                            `ios-${this.state.isPlaying ? "play" : "pause"}`
-                                    }
-                                    color={'#1b1b1b'}
-                                    style={videoOverLayIconStyle}
-                                    size={25}
-                                />
-                            </TouchableOpacity>
-                        </>
-                    } */}
+                    {
+                        (
+                            this.state.cropSpecificSteps && this.state.cropSpecificSteps.length > 0 &&
+                            this.state.cropSpecificSteps[0].videoFile
+                        ) &&
+                        <VideoComponent
+                            asyncVideoFileName={this.state.cropSpecificSteps[0].videoFile}
+                            isPlaying={this.state.isPlaying}
+                            playOrPauseVideo={() => this.setState({ isPlaying: !this.state.isPlaying })}
+                            _id={this.state._id}
+                            stepId={0}
+                        />
+                    }
 
                     <View style={{ backgroundColor: BaseColor.Red, width: widthToDp("90%"), height: heightToDp("50%"), alignSelf: 'center', marginTop: heightToDp("2%"), borderRadius: 10 }}>
                         <Text style={{ color: 'white', marginLeft: widthToDp("4%"), marginTop: heightToDp('1.5%'), fontSize: widthToDp("5%"), fontFamily: 'Oswald-Medium' }}>{this.state.descriptionLabel}</Text>
