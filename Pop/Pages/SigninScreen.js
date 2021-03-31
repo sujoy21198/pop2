@@ -892,7 +892,8 @@ export default class SigninScreen extends Component {
             headers: {
                 'Content-type': "application/json",
                 'X-Information': encodedUsername,
-                'Authorization': "POP " + token
+                'Authorization': "POP " + token,
+                'Cache-Control': "max-age=2592000"
             }
         }).then(function (response) {
             console.log(response.data, "CROPS NAMES")
@@ -1058,6 +1059,7 @@ export default class SigninScreen extends Component {
             console.log(specificObject.password)
             offlinePassword = specificObject.password
             if (offlinePassword === this.state.password) {
+                AsyncStorage.setItem('username',this.state.username)
                 this.props.navigation.reset({
                     index: 0,
                     routes: [
