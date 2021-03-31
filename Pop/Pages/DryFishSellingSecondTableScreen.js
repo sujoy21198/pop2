@@ -722,7 +722,7 @@ export default class DryFishSellingSecondTableScreen extends Component {
                                     marginLeft: widthToDp('1%'),
                                     fontSize: widthToDp('3.5%')
                                 }}>{this.state.perDaySellingValue}</Text>
-                                <View style={{ width: widthToDp('12%'), marginLeft: widthToDp('33%'), flexDirection: 'row', justifyContent: 'space-between' }}>
+                                <View style={{ width: widthToDp('12%'), marginLeft: widthToDp(`${this.state.textLanguageChange==="0" ? 28 : 33}%`), flexDirection: 'row', justifyContent: 'space-between' }}>
                                     <Text style={{ fontSize: widthToDp('3.3%') }}>₹ </Text>
                                     <Text style={{ fontSize: widthToDp('3.3%') }}>{this.state.perdaysellingvaluetotal}</Text>
                                 </View>

@@ -143,7 +143,6 @@ export default class LivestockTableScreen extends Component {
             var birth3 = specificObject.labels.find((i) => i.type === 137)
             var monthOld = specificObject.labels.find((i) => i.type === 138)
             var kids = specificObject.labels.find((i) => i.type === 139)
-            var birth3 = specificObject.labels.find((i) => i.type === 137)
             var total = specificObject.labels.find((i) => i.type === 112)
             var netProfitLabel = specificObject.labels.find((i) => i.type === 122)
             if (this.state.textLanguageChange === '0') {
@@ -557,12 +556,12 @@ export default class LivestockTableScreen extends Component {
                                         <View style={{ width: widthToDp("10%"), marginLeft: widthToDp("1.5%") }}>
                                             <Text style={{ marginTop: heightToDp("2%"), fontSize: widthToDp('3.5%') }}>{this.state.birth1}</Text>
                                             <Text style={{ marginTop: heightToDp("3.7%"), fontSize: widthToDp('3.5%') }}>{this.state.birth2}</Text>
-                                            <Text style={{ marginTop: heightToDp("1.5%"), fontSize: widthToDp('3.5%') }}>{this.state.birth3}</Text>
+                                            <Text style={{ marginTop: heightToDp(`${(this.state.textLanguageChange==="3" || this.state.textLanguageChange==="2") ? 3.3 : 1.5}%`), fontSize: widthToDp('3.5%') }}>{this.state.birth3}</Text>
                                         </View>
 
                                         <View style={{ width: widthToDp("16%"), marginLeft: widthToDp("1.5%") }}>
                                             <Text style={{ marginTop: heightToDp("2%"), fontSize: widthToDp('3.5%') }}>16 {this.state.monthOld}</Text>
-                                            <Text style={{ marginTop: heightToDp(`${this.state.textLanguageChange === "1" ? 3.7 : 1.5}%`), fontSize: widthToDp('3.5%') }}>8 {this.state.monthOld}</Text>
+                                            <Text style={{ marginTop: heightToDp(`${(this.state.textLanguageChange === "1" || this.state.textLanguageChange==="2" || this.state.textLanguageChange === "3") ? 3.7 : 1.5}%`), fontSize: widthToDp('3.5%') }}>8 {this.state.monthOld}</Text>
                                             <Text style={{ marginTop: heightToDp("1.5%"), fontSize: widthToDp('3.5%') }}>{this.state.kids}</Text>
                                         </View>
                                         <View style={{ width: widthToDp("10%"), marginLeft: widthToDp("6%") }}>

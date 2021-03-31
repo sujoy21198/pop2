@@ -276,7 +276,7 @@ export default class BreedNewScreen extends Component {
                             <View style={{}}>
                                 <Image
                                     source={{ uri: 'file:///storage/emulated/0/Pictures/image_'+this.state.imageFile }}
-                                    style={{ height: heightToDp("15%"), width: widthToDp("80%"), alignSelf: 'center', marginTop: heightToDp("1%"), borderRadius: 10 }}
+                                    style={{ height: heightToDp("25%"), width: widthToDp("65%"), alignSelf: 'center', marginTop: heightToDp("1%"), borderRadius: 10, resizeMode: 'cover' }}
                                 />
                             </View>
 
