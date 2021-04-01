@@ -258,13 +258,13 @@ export default class ImportantLinksSubCategoryScreen extends Component {
 
                             <Card style={{ width: widthToDp("94%"), marginLeft: widthToDp("3%"), height: heightToDp("30%"), marginBottom: heightToDp("1%"), borderRadius: 20, backgroundColor: BaseColor.Red }}>
                                 <View style={{ flexDirection: 'row' }}>
-                                    <View style={{ width: widthToDp("45%") }}>
+                                    <View style={{ width: widthToDp("50%") }}>
                                         {
                                             this.state.textLanguageChange === '0' ? <Text style={{ color: 'white', marginLeft: widthToDp("6%"), marginTop: heightToDp("1%"), fontSize: widthToDp("5%"), fontFamily: 'Oswald-Medium' }}>{item.categoryEnglish}</Text> : ((this.state.textLanguageChange === '1') ? <Text style={{ color: 'white', marginLeft: widthToDp("6%"), marginTop: heightToDp("1%"), fontSize: widthToDp("5%"), fontFamily: 'Oswald-Medium' }}>{item.categoryHindi}</Text> : ((this.state.textLanguageChange === '2') ? <Text style={{ color: 'white', marginLeft: widthToDp("6%"), marginTop: heightToDp("1%"), fontSize: widthToDp("5%"), fontFamily: 'Oswald-Medium' }}>{item.categoryHo}</Text> : ((this.state.textLanguageChange === '3') ? <Text style={{ color: 'white', marginLeft: widthToDp("6%"), marginTop: heightToDp("1%"), fontSize: widthToDp("5%"), fontFamily: 'Oswald-Medium' }}>{item.categoryOdia}</Text> : ((this.state.textLanguageChange === '4') ? <Text style={{ color: 'white', marginLeft: widthToDp("6%"), marginTop: heightToDp("1%"), fontSize: widthToDp("5%"), fontFamily: 'Oswald-Medium' }}>{item.categorySanthali}</Text> : null))))
                                         }
                                         
                                     </View>
-                                    <TouchableOpacity onPress={() => this.speak(item.category)}>
+                                    <TouchableOpacity style={{width: widthToDp("40%")}} onPress={() => this.speak(item.category)}>
                                         <Icon
                                             name="microphone"
                                             size={23}
