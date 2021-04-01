@@ -529,7 +529,7 @@ export default class DryFishSellingSecondTableScreen extends Component {
                                         {
                                             tableHeading.map((i, key) => {
                                                 return (
-                                                    <Text style={{ marginTop: heightToDp(`${this.state.textLanguageChange==="1" ? 4.5 : 5}%`), fontSize: widthToDp('3.3%') }}>{i.items? (key===0 ? this.state.sessionalVeg : key===1 ? this.state.spices : key===2 ? this.state.misc : "") : ""}</Text>
+                                                    <Text style={{ marginTop: heightToDp(`${this.state.textLanguageChange==="1" ? 4.5 : this.state.textLanguageChange==="3" ? 4.75 : this.state.textLanguageChange==="0" ? 3.75 : 5}%`), fontSize: widthToDp('3.3%') }}>{i.items? (key===0 ? this.state.sessionalVeg : key===1 ? this.state.spices : key===2 ? this.state.misc : "") : ""}</Text>
                                                 )
                                             })
                                         }
@@ -617,7 +617,7 @@ export default class DryFishSellingSecondTableScreen extends Component {
                                 <View style={{ marginLeft: widthToDp('1%') }}>
                                     <Text style={{ fontSize: widthToDp('3.3%') }}>{this.state.expenditurePerDayALabel}</Text>
                                 </View>
-                                <View style={{ width: widthToDp("13%"), marginLeft: widthToDp('22%'), flexDirection: 'row', justifyContent: 'space-between' }}>
+                                <View style={{ width: widthToDp("13%"), marginLeft: widthToDp(`${(this.state.textLanguageChange==="3" || this.state.textLanguageChange==="1") ? 30 : 22}%`), flexDirection: 'row', justifyContent: 'space-between' }}>
                                     <Text style={{ fontSize: widthToDp('3.3%') }}>₹ </Text>
                                     <Text style={{ fontSize: widthToDp('3.3%') }}>{this.state.expenditurePerDayA}</Text>
                                 </View>
@@ -742,7 +742,7 @@ export default class DryFishSellingSecondTableScreen extends Component {
                                     marginLeft: widthToDp('1%'),
                                     fontSize: widthToDp('3.3%')
                                 }}>{this.state.perDaySellingValueB}</Text>
-                                <View style={{ marginLeft: heightToDp("13%"), width: widthToDp("12%"), flexDirection: 'row', justifyContent: 'space-between' }}>
+                                <View style={{ marginLeft: heightToDp(`${(this.state.textLanguageChange==="3" || this.state.textLanguageChange==="1") ? 16 : 13}%`), width: widthToDp("12%"), flexDirection: 'row', justifyContent: 'space-between' }}>
                                     <Text style={{ fontSize: widthToDp('3.3%') }}>₹ </Text>
                                     <Text style={{ fontSize: widthToDp('3.3%') }}>{this.state.perDaySellingValue}</Text>
                                 </View>
@@ -752,7 +752,7 @@ export default class DryFishSellingSecondTableScreen extends Component {
                                     marginLeft: widthToDp('1%'),
                                     fontSize: widthToDp('3.3%')
                                 }}>{this.state.profitPerDay}</Text>
-                                <View style={{ marginLeft: heightToDp("18%"), width: widthToDp("12%"), flexDirection: 'row', justifyContent: 'space-between' }}>
+                                <View style={{ marginLeft: heightToDp(`${this.state.textLanguageChange==="3" ? 26.4 : this.state.textLanguageChange==="1" ? 23 : 18}%`), width: widthToDp("12%"), flexDirection: 'row', justifyContent: 'space-between' }}>
                                     <Text style={{ fontSize: widthToDp('3.3%') }}>₹ </Text>
                                     <Text style={{ fontSize: widthToDp('3.3%') }}>{this.state.profit}</Text>
                                 </View>

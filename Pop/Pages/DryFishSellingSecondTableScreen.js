@@ -526,7 +526,7 @@ export default class DryFishSellingSecondTableScreen extends Component {
                                         {
                                             tableHeading.map((i, key) => {
                                                 return (
-                                                    <Text style={{ marginTop: heightToDp("3%"), fontSize: widthToDp('3%') }}>{i.items ? (key===0 ? this.state.dryFishWithoutSalted : key===1 ? this.state.dryFishSalted : key===2 ? this.state.dryFishSelling : "") : ""}</Text>
+                                                    <Text style={{ marginTop: heightToDp(`${(key===1 && this.state.textLanguageChange==="3") ? 5 : 3}%`), fontSize: widthToDp('3%') }}>{i.items ? (key===0 ? this.state.dryFishWithoutSalted : key===1 ? this.state.dryFishSalted : key===2 ? this.state.dryFishSelling : "") : ""}</Text>
                                                 )
                                             })
                                         }
