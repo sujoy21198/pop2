@@ -280,7 +280,7 @@ export default class BreedDescriptionScreen extends Component {
                 <ScrollView>
                     <View style={{ backgroundColor: BaseColor.Red, height: heightToDp("80%"), alignSelf: 'center', width: widthToDp("90%"), borderRadius: 10, marginTop: heightToDp('1.5%') }}>
                         <Text style={{ color: "#fff", fontSize: widthToDp("5%"), marginLeft: widthToDp("5%"), marginTop: heightToDp("1%"), fontFamily: 'Oswald-Medium' }}>{this.state.stepName}</Text>
-                        <View style={{ backgroundColor: "white", height: heightToDp("80%"), alignSelf: 'center', width: widthToDp("90%"), marginTop: heightToDp('2%'), borderBottomLeftRadius: 10, borderBottomRightRadius: 10 }}>
+                        <View style={{ backgroundColor: "white", height: heightToDp("100%"), alignSelf: 'center', width: widthToDp("90%"), marginTop: heightToDp('2%'), borderBottomLeftRadius: 10, borderBottomRightRadius: 10 }}>
                             <View style={{}}>
                                 <Image
                                     source={{ uri: 'file:///storage/emulated/0/Pictures/image_'+ this.state.imageFile }}
@@ -294,7 +294,7 @@ export default class BreedDescriptionScreen extends Component {
 
                         </View>
                     </View>
-                    <View style={{ marginTop: heightToDp("10%") }}></View>
+                    <View style={{ marginTop: heightToDp("30%") }}></View>
                 </ScrollView>
                 <View style={{ height: heightToDp("10%") }}>
                     <View style={{ flexDirection: 'row' }}>

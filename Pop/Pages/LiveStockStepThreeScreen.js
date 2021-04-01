@@ -368,9 +368,9 @@ export default class LiveStockStepThreeScreen extends Component {
                 <View style={{ borderBottomColor: BaseColor.Stroke, borderBottomWidth: 1, marginTop: heightToDp('1.5%'), width: widthToDp("100%") }}></View>
                 {/* <Text style={{ marginLeft: widthToDp("3%"), marginTop: heightToDp("2%"), fontSize: widthToDp("7%"), fontFamily: 'Oswald-Medium' }}>{this.state.breedname}</Text> */}
                 <ScrollView>
-                    <View style={{ backgroundColor: BaseColor.Red, height: heightToDp("80%"), alignSelf: 'center', width: widthToDp("90%"), borderRadius: 10, marginTop: heightToDp('1.5%') }}>
+                    <View style={{ backgroundColor: BaseColor.Red, height: heightToDp("90%"), alignSelf: 'center', width: widthToDp("90%"), borderRadius: 10, marginTop: heightToDp('1.5%') }}>
                         <Text style={{ color: "#fff", fontSize: widthToDp("5%"), marginLeft: widthToDp("5%"), marginTop: heightToDp("1%"), fontFamily: 'Oswald-Medium' }}>{this.state.stepName}</Text>
-                        <View style={{ backgroundColor: "white", height: heightToDp("64.5%"), alignSelf: 'center', width: widthToDp("90%"), marginTop: heightToDp('2%'), borderBottomLeftRadius: 10, borderBottomRightRadius: 10 }}>
+                        <View style={{ backgroundColor: "white", height: heightToDp("78%"), alignSelf: 'center', width: widthToDp("90%"), marginTop: heightToDp('2%'), borderBottomLeftRadius: 10, borderBottomRightRadius: 10 }}>
                             <View style={{}}>
                                 <Image
                                     source={{ uri: 'file:///storage/emulated/0/Pictures/image_'+this.state.imageFile }}
@@ -381,7 +381,17 @@ export default class LiveStockStepThreeScreen extends Component {
                                 <Text style={{ fontFamily: 'Oswald-Medium', fontSize: widthToDp("4%"), marginLeft: widthToDp("2%") }}>{this.state.descriptionLabel}</Text>
                             </View>
                             <Text style={{ fontFamily: 'Oswald-Medium', fontSize: widthToDp("4%"), marginLeft: widthToDp("2%") }}>{this.state.stepDescription}</Text>
-                            <HTML source={{ html: this.state.contentArea || '<p></p>' }} containerStyle={{ elevation: 10, marginTop: heightToDp("2%"), marginLeft: widthToDp("2%") }} />
+                            
+                            <ScrollView
+                                style={{
+                                    marginTop: heightToDp("2%"), 
+                                    marginHorizontal: widthToDp("5%"),
+                                }}
+                                horizontal
+                                showsHorizontalScrollIndicator={true}
+                            >
+                                <HTML source={{ html: this.state.contentArea || '<p></p>' }} containerStyle={{ elevation: 10 }} />
+                            </ScrollView>                            
 
                         </View>
                     </View>
