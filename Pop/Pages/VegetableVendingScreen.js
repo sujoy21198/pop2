@@ -117,7 +117,7 @@ export default class VegetableVendingScreen extends Component {
     loadlabelsFromStorage = async () => {
         try {
             let username = await AsyncStorage.getItem('username')
-            let user = await AsyncStorage.getItem('offlineData');
+            let user = await AsyncStorage.getItem('labelsData');
             let parsed = JSON.parse(user);
             var specificObject = parsed[0]
           

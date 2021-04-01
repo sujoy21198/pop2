@@ -52,7 +52,7 @@ export default class BreedDescriptionScreen extends Component {
     loadlabelsFromStorage = async () => {
         try {
             let username = await AsyncStorage.getItem('username')
-            let user = await AsyncStorage.getItem('offlineData');
+            let user = await AsyncStorage.getItem('labelsData');
             let parsed = JSON.parse(user);
             var specificObject = parsed[0]
             var descriptionLabel = specificObject.labels.find((i) => i.type === 68)

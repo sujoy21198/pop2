@@ -42,7 +42,7 @@ export default class SigninScreen extends Component {
             labels: [],
             imageloaded: true,
             imageLoading: true,
-            staticImages:[]
+            staticImages: []
         }
 
         this.state.selectedLanguage = this.props.route.params.selectedLanguage
@@ -52,13 +52,13 @@ export default class SigninScreen extends Component {
     componentDidMount() {
         this.checkConnectionForCustodian()
         //this.setCustodianNumber()
-        
+
         //this.getAllData()
         this.downloadImagesForOffline()
     }
 
 
-    checkConnectionForCustodian = async() => {
+    checkConnectionForCustodian = async () => {
         let custodianNumber = await AsyncStorage.getItem('cus')
         NetInfo.fetch().then(state => {
             var isConnected = state.isConnected
@@ -67,7 +67,7 @@ export default class SigninScreen extends Component {
                 return this.getCustodianMobileNumber()
             } else {
                 var test = custodianNumber.replace(/\"/g, "")
-                this.setState({phoneNumber : test})
+                this.setState({ phoneNumber: test })
                 //alert(custodianNumber)
             }
         })
@@ -84,7 +84,7 @@ export default class SigninScreen extends Component {
         var nutritionGardenImagesArray = []
         var smallBusinessImagesArray = []
         var labelArray = []
-        var staticImagesArray=[]
+        var staticImagesArray = []
 
 
         await axios.get(DataAccess.BaseUrl + DataAccess.AccessUrl + 'files', {
@@ -285,7 +285,7 @@ export default class SigninScreen extends Component {
 
         //11
         var NewFile = []
-        for(var i=0 ; i < staticImagesArray.length ; i++){
+        for (var i = 0; i < staticImagesArray.length; i++) {
             const checkImage = await RNFS.exists('file:///storage/emulated/0/Pictures/image_' + staticImagesArray[i])
 
             if (!checkImage) {
@@ -310,7 +310,7 @@ export default class SigninScreen extends Component {
         this.setState({ nutritionGardenImages: nutritionGardenImagesArray })
         this.setState({ smallBusinessImages: smallBusinessImagesArray })
         this.setState({ labels: labelArray })
-        this.setState({staticImages : staticImagesArray})
+        this.setState({ staticImages: staticImagesArray })
         //console.log(this.state.cropScreenImages,"hi")
         this.getCropImage()
     }
@@ -949,9 +949,9 @@ export default class SigninScreen extends Component {
             console.log(error)
         })
 
-        const offlineDataToBeSaved = { 'username': this.state.username, 'crops': cropObjectsToBeSaved, 'livestock': livestockObjectsToBeSaved, 'livestockStep': livestockStepObjectsToBeSaved, 'liveStockStepMaterials': liveStockStepMaterialsObjectsToBeSaved, 'liveStockBreeds': liveStockBreedsObjectsToBeSaved, 'breedCategories': breedCategoriesObjectsToBeSaved, 'importantLinks': importantLinksObjectsToBeSaved, 'nutrationGraden': nutrationGradenObjectsToBeSaved, 'vaccination': vaccinationToBeSaved, 'contactList': contactListToBeSaved, 'dryFish': dryFishObjectsToBeSaved, 'vegetableVending': vegetableVendingObjectsToBeSaved, 'smallGroceryShop': smallGroceryShopToBeSaved, 'labels': labelsObjectsToBeSaved }
-        const cropDataToBeSaved = { 'username': this.state.username,'cropSteps': cropStepsObjectsToBeSaved, 'cropsMaterials': cropsMaterialsObjectsToBeSaved }
-
+        const offlineDataToBeSaved = { 'username': this.state.username, 'crops': cropObjectsToBeSaved, 'livestock': livestockObjectsToBeSaved, 'livestockStep': livestockStepObjectsToBeSaved, 'liveStockStepMaterials': liveStockStepMaterialsObjectsToBeSaved, 'liveStockBreeds': liveStockBreedsObjectsToBeSaved, 'breedCategories': breedCategoriesObjectsToBeSaved, 'importantLinks': importantLinksObjectsToBeSaved, 'nutrationGraden': nutrationGradenObjectsToBeSaved, 'vaccination': vaccinationToBeSaved, 'contactList': contactListToBeSaved, 'dryFish': dryFishObjectsToBeSaved, 'vegetableVending': vegetableVendingObjectsToBeSaved, 'smallGroceryShop': smallGroceryShopToBeSaved }
+        const cropDataToBeSaved = { 'username': this.state.username, 'cropSteps': cropStepsObjectsToBeSaved, 'cropsMaterials': cropsMaterialsObjectsToBeSaved }
+        const labelsToBeSaved = { 'username': this.state.username, 'labels': labelsObjectsToBeSaved }
         // offlineDataToBeSaved.crops.push(cropObjectsToBeSaved) 'cropSteps': cropStepsObjectsToBeSaved, 'cropsMaterials': cropsMaterialsObjectsToBeSaved, 
         // offlineDataToBeSaved.cropsMaterials.push(cropsMaterialsObjectsToBeSaved)
         // offlineDataToBeSaved.livestock.push(livestockObjectsToBeSaved)
@@ -960,6 +960,7 @@ export default class SigninScreen extends Component {
         // offlineDataToBeSaved.breedCategories.push(breedCategoriesObjectsToBeSaved)
         // offlineDataToBeSaved.importantLinks.push(importantLinksObjectsToBeSaved)
 
+        //SAVING OFFLINE DATA
         const exsistingOfflineData = await AsyncStorage.getItem('offlineData')
         let newOfflineData = JSON.parse(exsistingOfflineData)
         if (!newOfflineData) {
@@ -995,6 +996,7 @@ export default class SigninScreen extends Component {
 
 
 
+        //SAVING CROP DATA
         const exsistingCropData = await AsyncStorage.getItem('cropData')
         let newCropData = JSON.parse(exsistingCropData)
         if (!newCropData) {
@@ -1011,10 +1013,40 @@ export default class SigninScreen extends Component {
 
         await AsyncStorage.setItem("cropData", JSON.stringify(newCropData))
             .then(() => {
-                
+
                 //alert('‘Offline Data saved successfully’')
                 Toast.show({
                     text: "crop Data saved successfully",
+                    duration: 3000,
+                    type: 'success'
+                })
+            })
+            .catch(() => {
+                console.log('‘There was an error saving the product’')
+            })
+
+
+        //SAVING LABELS
+        const exsistingLabelsData = await AsyncStorage.getItem('labelsData')
+        let newLabelsData = JSON.parse(exsistingLabelsData)
+        if (!newLabelsData) {
+            newLabelsData = []
+        }
+
+        var labelsArr = newLabelsData.map(function (item) { return item.username })
+        if (labelsArr.includes(this.state.username)) {
+            console.log("NO")
+        } else {
+            newLabelsData.push(labelsToBeSaved)
+        }
+
+
+        await AsyncStorage.setItem("labelsData", JSON.stringify(newLabelsData))
+            .then(() => {
+                //alert("labels saved in device")
+                //alert('‘Offline Data saved successfully’')
+                Toast.show({
+                    text: "labels Data saved successfully",
                     duration: 3000,
                     type: 'success'
                 })
@@ -1059,7 +1091,7 @@ export default class SigninScreen extends Component {
             console.log(specificObject.password)
             offlinePassword = specificObject.password
             if (offlinePassword === this.state.password) {
-                AsyncStorage.setItem('username',this.state.username)
+                AsyncStorage.setItem('username', this.state.username)
                 this.props.navigation.reset({
                     index: 0,
                     routes: [
@@ -1071,7 +1103,7 @@ export default class SigninScreen extends Component {
                     type: 'danger',
                     text: 'please enter a valid password',
                     duration: 6000
-                })  
+                })
             }
             // var valueArr = parsed.map(function(item){ return item.userId });
             // alert(valueArr)
@@ -1151,7 +1183,7 @@ export default class SigninScreen extends Component {
             phone: this.state.phoneNumber,
             username: this.state.username,
             password: this.state.password,
-            deviceId : deviceId
+            deviceId: deviceId
         }, {
             headers: {
 
@@ -1200,7 +1232,7 @@ export default class SigninScreen extends Component {
         let token = await AsyncStorage.getItem('token')
         let username = await AsyncStorage.getItem('username')
 
-        const userToBeSaved = { '_id': _id, 'name': reqname, 'password': this.state.password, 'token': token, 'username': username, 'syncStatus': false, 'lowLand': [], 'highLand': [], 'mediumLand': [],'patchData':[], 'patch': [], 'cropData': [], 'livestockData': [], 'moneyManagerData': [], 'costBenifitAnalysis': [] }
+        const userToBeSaved = { '_id': _id, 'name': reqname, 'password': this.state.password, 'token': token, 'username': username, 'syncStatus': false, 'lowLand': [], 'highLand': [], 'mediumLand': [], 'patchData': [], 'patch': [], 'cropData': [], 'livestockData': [], 'moneyManagerData': [], 'costBenifitAnalysis': [] }
         const exsistingUser = await AsyncStorage.getItem('user')
         let newUser = JSON.parse(exsistingUser)
         if (!newUser) {
@@ -1264,7 +1296,7 @@ export default class SigninScreen extends Component {
             let user = await AsyncStorage.getItem('cropData');
             let parsed = JSON.parse(user);
             console.log(JSON.stringify(parsed))
-            
+
         }
         catch (error) {
             Toast.show({

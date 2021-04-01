@@ -55,10 +55,10 @@ export default class DashBoardScreen extends Component {
     getOfflineData = async () => {
         try {
             let username = await AsyncStorage.getItem('username')
-            let user = await AsyncStorage.getItem('cropData');
+            let user = await AsyncStorage.getItem('labelsData');
             let parsed = JSON.parse(user);
             var specificObject = parsed[0]
-            console.log(specificObject.cropsMaterials)
+            console.log(specificObject.labels.find((i) => i.type === 22))
         } catch (error) {
             console.log(error)
         }
@@ -67,7 +67,7 @@ export default class DashBoardScreen extends Component {
     loadlabelsFromStorage = async () => {
         try {
             let username = await AsyncStorage.getItem('username')
-            let user = await AsyncStorage.getItem('offlineData');
+            let user = await AsyncStorage.getItem('labelsData');
             let parsed = JSON.parse(user);
             var specificObject = parsed[0]
             var knowledgeCenter = specificObject.labels.find((i) => i.type === 22)
@@ -130,11 +130,12 @@ export default class DashBoardScreen extends Component {
             }
 
         } catch (error) {
-            alert("Network Error! Data not saved. Please login again. ")
-            this.props.navigation.reset({
-                index: 0,
-                routes: [{ name: "LanguageScreen" }]
-            });
+            // alert("Network Error! Data not saved. Please login again. ")
+            // this.props.navigation.reset({
+            //     index: 0,
+            //     routes: [{ name: "LanguageScreen" }]
+            // });
+            console.log(error,"labels")
         }
         this.setState({ crops: specificObject.crops })
     }
