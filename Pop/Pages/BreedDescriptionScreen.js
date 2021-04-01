@@ -13,6 +13,7 @@ import DataAccess from '../Core/DataAccess'
 import CustomIndicator from '../Core/CustomIndicator'
 import Languages from '../Core/Languages'
 import LanguageChange from '../Core/LanguageChange'
+import LabelComponent from '../components/LabelComponent'
 
 export default class BreedDescriptionScreen extends Component {
 
@@ -279,8 +280,10 @@ export default class BreedDescriptionScreen extends Component {
                 <View style={{ borderBottomColor: BaseColor.Stroke, borderBottomWidth: 1, marginTop: heightToDp('1.5%'), width: widthToDp("100%") }}></View>
                 <ScrollView>
                     <View style={{ backgroundColor: BaseColor.Red, height: heightToDp("80%"), alignSelf: 'center', width: widthToDp("90%"), borderRadius: 10, marginTop: heightToDp('1.5%') }}>
-                        <Text style={{ color: "#fff", fontSize: widthToDp("5%"), marginLeft: widthToDp("5%"), marginTop: heightToDp("1%"), fontFamily: 'Oswald-Medium' }}>{this.state.stepName}</Text>
-                        <View style={{ backgroundColor: "white", height: heightToDp("100%"), alignSelf: 'center', width: widthToDp("90%"), marginTop: heightToDp('2%'), borderBottomLeftRadius: 10, borderBottomRightRadius: 10 }}>
+                        <LabelComponent
+                            stepName={this.state.stepName}
+                        />
+                        <View style={{ backgroundColor: "white", height: heightToDp("100%"), alignSelf: 'center', width: widthToDp("90%"), marginTop: heightToDp('0%'), borderBottomLeftRadius: 10, borderBottomRightRadius: 10 }}>
                             <View style={{}}>
                                 <Image
                                     source={{ uri: 'file:///storage/emulated/0/Pictures/image_'+ this.state.imageFile }}

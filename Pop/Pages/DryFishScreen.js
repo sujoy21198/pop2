@@ -15,6 +15,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import Languages from '../Core/Languages'
 import LanguageChange from '../Core/LanguageChange'
 import HTML from "react-native-render-html";
+import LabelComponent from '../components/LabelComponent'
 
 const Sound = require('react-native-sound')
 
@@ -372,10 +373,16 @@ export default class DryFishScreen extends Component {
                 }
 
                 <View style={{ backgroundColor: BaseColor.Red, height: heightToDp("50%"), alignSelf: 'center', width: widthToDp("90%"), borderRadius: 10, marginTop: heightToDp('1.5%') }}>
-                    {
-                        this.state.textLanguageChange === '0' ? <Text style={{ color: "#fff", fontSize: widthToDp("5%"), marginLeft: widthToDp("5%"), marginTop: heightToDp("1%"), fontFamily: 'Oswald-Medium' }}>{this.state.screensData.titleEnglish}</Text> : ((this.state.textLanguageChange === '1') ? <Text style={{ color: "#fff", fontSize: widthToDp("5%"), marginLeft: widthToDp("5%"), marginTop: heightToDp("1%"), fontFamily: 'Oswald-Medium' }}>{this.state.screensData.titleHindi}</Text> : ((this.state.textLanguageChange === '2') ? <Text style={{ color: "#fff", fontSize: widthToDp("5%"), marginLeft: widthToDp("5%"), marginTop: heightToDp("1%"), fontFamily: 'Oswald-Medium' }}>{this.state.screensData.titleHo}</Text> : ((this.state.textLanguageChange === '3') ? <Text style={{ color: "#fff", fontSize: widthToDp("5%"), marginLeft: widthToDp("5%"), marginTop: heightToDp("1%"), fontFamily: 'Oswald-Medium' }}>{this.state.screensData.titleOdia}</Text> : ((this.state.textLanguageChange === '4') ? <Text style={{ color: "#fff", fontSize: widthToDp("5%"), marginLeft: widthToDp("5%"), marginTop: heightToDp("1%"), fontFamily: 'Oswald-Medium' }}>{this.state.screensData.titleSanthali}</Text> : null))))
-                    }
-                    <View style={{ backgroundColor: "white", height: heightToDp("45%"), alignSelf: 'center', width: widthToDp("90%"), marginTop: heightToDp('2%'), borderBottomLeftRadius: 10, borderBottomRightRadius: 10 }}>
+                    <LabelComponent
+                        stepName={
+                            this.state.textLanguageChange==="0" ? this.state.screensData.titleEnglish :
+                            this.state.textLanguageChange==="1" ? this.state.screensData.titleHindi :
+                            this.state.textLanguageChange==="2" ? this.state.screensData.titleHo :
+                            this.state.textLanguageChange==="3" ? this.state.screensData.titleOdia :
+                            this.state.screensData.titleSanthali
+                        }
+                    />
+                    <View style={{ backgroundColor: "white", height: heightToDp("45%"), alignSelf: 'center', width: widthToDp("90%"), borderBottomLeftRadius: 10, borderBottomRightRadius: 10 }}>
                         {/* <View style={{}}>
                             <Image
                                 source={{ uri: DataAccess.BaseUrl + DataAccess.NutritionGardenImage + this.state.screensData.imageFile }}

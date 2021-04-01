@@ -15,6 +15,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import Languages from '../Core/Languages'
 import LanguageChange from '../Core/LanguageChange'
 import HTML from "react-native-render-html";
+import LabelComponent from '../components/LabelComponent'
 
 
 const Sound = require('react-native-sound')
@@ -351,11 +352,17 @@ export default class NutritionGardenScreen extends Component {
 
                 <View style={{ backgroundColor: BaseColor.Red, height: heightToDp("50%"), alignSelf: 'center', width: widthToDp("90%"), borderRadius: 10, marginTop: heightToDp('1.5%') }}>
                     <Text style={{ color: "#fff", fontSize: widthToDp("5%"), marginLeft: widthToDp("5%"), marginTop: heightToDp("1%"), fontFamily: 'Oswald-Medium' }}>
-                    {
-                        this.state.textLanguageChange === '0' ? <Text style={{ color: "#fff", fontSize: widthToDp("5%"), marginLeft: widthToDp("5%"), marginTop: heightToDp("1%"), fontFamily: 'Oswald-Medium' }}>{this.state.screensData.nameEnglish}</Text> : ((this.state.textLanguageChange === '1') ? <Text style={{ color: "#fff", fontSize: widthToDp("5%"), marginLeft: widthToDp("5%"), marginTop: heightToDp("1%"), fontFamily: 'Oswald-Medium' }}>{this.state.screensData.nameHindi}</Text> : ((this.state.textLanguageChange === '2') ? <Text style={{ color: "#fff", fontSize: widthToDp("5%"), marginLeft: widthToDp("5%"), marginTop: heightToDp("1%"), fontFamily: 'Oswald-Medium' }}>{this.state.screensData.nameHo}</Text> : ((this.state.textLanguageChange === '3') ? <Text style={{ color: "#fff", fontSize: widthToDp("5%"), marginLeft: widthToDp("5%"), marginTop: heightToDp("1%"), fontFamily: 'Oswald-Medium' }}>{this.state.screensData.nameOdia}</Text> : ((this.state.textLanguageChange === '4') ? <Text style={{ color: "#fff", fontSize: widthToDp("5%"), marginLeft: widthToDp("5%"), marginTop: heightToDp("1%"), fontFamily: 'Oswald-Medium' }}>{this.state.screensData.nameSanthali}</Text> : null))))
-                    }
+                    <LabelComponent
+                        stepName={
+                            this.state.textLanguageChange==="0" ? this.state.screensData.nameEnglish :
+                            this.state.textLanguageChange==="1" ? this.state.screensData.nameHindi :
+                            this.state.textLanguageChange==="2" ? this.state.screensData.nameHo :
+                            this.state.textLanguageChange==="3" ? this.state.screensData.nameOdia :
+                            this.state.screensData.nameSanthali
+                        }
+                    />
                     </Text>
-                    <View style={{ backgroundColor: "white", height: heightToDp("45%"), alignSelf: 'center', width: widthToDp("90%"), marginTop: heightToDp('2%'), borderBottomLeftRadius: 10, borderBottomRightRadius: 10 }}>
+                    <View style={{ backgroundColor: "white", height: heightToDp("45%"), alignSelf: 'center', width: widthToDp("90%"), marginTop: heightToDp('1%'), borderBottomLeftRadius: 10, borderBottomRightRadius: 10 }}>
                         <View style={{}}>
                             <Image
                                 source={{ uri: 'file:///storage/emulated/0/Pictures/image_' + this.state.screensData.imageFile }}

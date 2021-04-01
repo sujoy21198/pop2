@@ -14,6 +14,7 @@ import CustomIndicator from '../Core/CustomIndicator'
 import HTML from "react-native-render-html";
 import Languages from '../Core/Languages'
 import LanguageChange from '../Core/LanguageChange'
+import LabelComponent from '../components/LabelComponent'
 
 export default class LiveStockStepThreeScreen extends Component {
 
@@ -369,8 +370,10 @@ export default class LiveStockStepThreeScreen extends Component {
                 {/* <Text style={{ marginLeft: widthToDp("3%"), marginTop: heightToDp("2%"), fontSize: widthToDp("7%"), fontFamily: 'Oswald-Medium' }}>{this.state.breedname}</Text> */}
                 <ScrollView>
                     <View style={{ backgroundColor: BaseColor.Red, height: heightToDp("90%"), alignSelf: 'center', width: widthToDp("90%"), borderRadius: 10, marginTop: heightToDp('1.5%') }}>
-                        <Text style={{ color: "#fff", fontSize: widthToDp("5%"), marginLeft: widthToDp("5%"), marginTop: heightToDp("1%"), fontFamily: 'Oswald-Medium' }}>{this.state.stepName}</Text>
-                        <View style={{ backgroundColor: "white", height: heightToDp("78%"), alignSelf: 'center', width: widthToDp("90%"), marginTop: heightToDp('2%'), borderBottomLeftRadius: 10, borderBottomRightRadius: 10 }}>
+                        <LabelComponent
+                            stepName={this.state.stepName}
+                        />
+                        <View style={{ backgroundColor: "white", height: heightToDp("78%"), alignSelf: 'center', width: widthToDp("90%"), borderBottomLeftRadius: 10, borderBottomRightRadius: 10 }}>
                             <View style={{}}>
                                 <Image
                                     source={{ uri: 'file:///storage/emulated/0/Pictures/image_'+this.state.imageFile }}
