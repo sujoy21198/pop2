@@ -363,13 +363,22 @@ export default class NutritionGardenScreen extends Component {
                             />
                         </View>
 
-                        <ScrollView>
+                        <ScrollView nestedScrollEnabled>
                             {
                                 this.state.textLanguageChange === '0' ? <Text style={{ fontFamily: 'Oswald-Medium', fontSize: widthToDp("4%"), marginLeft: widthToDp("2%") }}>{this.state.screensData.descEnglish}</Text> : ((this.state.textLanguageChange === '1') ? <Text style={{ fontFamily: 'Oswald-Medium', fontSize: widthToDp("4%"), marginLeft: widthToDp("2%") }}>{this.state.screensData.descHindi}</Text> : ((this.state.textLanguageChange === '2') ? <Text style={{ fontFamily: 'Oswald-Medium', fontSize: widthToDp("4%"), marginLeft: widthToDp("2%") }}>{this.state.screensData.descHo}</Text> : ((this.state.textLanguageChange === '3') ? <Text style={{ fontFamily: 'Oswald-Medium', fontSize: widthToDp("4%"), marginLeft: widthToDp("2%") }}>{this.state.screensData.descOdia}</Text> : ((this.state.textLanguageChange === '4') ? <Text style={{ fontFamily: 'Oswald-Medium', fontSize: widthToDp("4%"), marginLeft: widthToDp("2%") }}>{this.state.screensData.descSanthali}</Text> : null))))
                             }
-                            {
-                                this.state.textLanguageChange === '0' ? <HTML source={{ html: this.state.screensData.contentAreaEnglish || '<p></p>' }} containerStyle={{ elevation: 10, marginTop: heightToDp("2%"), marginLeft: widthToDp("2%") }} /> : ((this.state.textLanguageChange === '1') ? <HTML source={{ html: this.state.screensData.contentAreaHindi || '<p></p>' }} containerStyle={{ elevation: 10, marginTop: heightToDp("2%"), marginLeft: widthToDp("2%") }} /> : ((this.state.textLanguageChange === '2') ? <HTML source={{ html: this.state.screensData.contentAreaHo || '<p></p>' }} containerStyle={{ elevation: 10, marginTop: heightToDp("2%"), marginLeft: widthToDp("2%") }} /> : ((this.state.textLanguageChange === '3') ? <HTML source={{ html: this.state.screensData.contentAreaOdia || '<p></p>' }} containerStyle={{ elevation: 10, marginTop: heightToDp("2%"), marginLeft: widthToDp("2%") }} /> : ((this.state.textLanguageChange === '4') ? <HTML source={{ html: this.state.screensData.contentAreaSanthali || '<p></p>' }} containerStyle={{ elevation: 10, marginTop: heightToDp("2%"), marginLeft: widthToDp("2%") }} /> : null))))
-                            }
+                            <ScrollView 
+                                style={{
+                                    marginTop: heightToDp("2%"), 
+                                    marginLeft: widthToDp("2%"),
+                                }}
+                                horizontal
+                                showsHorizontalScrollIndicator={true}
+                            >
+                                {
+                                    this.state.textLanguageChange === '0' ? <HTML source={{ html: this.state.screensData.contentAreaEnglish || '<p></p>' }} containerStyle={{ elevation: 10 }} contentWidth={widthToDp("100%")} /> : ((this.state.textLanguageChange === '1') ? <HTML source={{ html: this.state.screensData.contentAreaHindi || '<p></p>' }} containerStyle={{ elevation: 10 }} contentWidth={widthToDp("100%")} /> : ((this.state.textLanguageChange === '2') ? <HTML source={{ html: this.state.screensData.contentAreaHo || '<p></p>' }} containerStyle={{ elevation: 10 }} contentWidth={widthToDp("100%")} /> : ((this.state.textLanguageChange === '3') ? <HTML source={{ html: this.state.screensData.contentAreaOdia || '<p></p>' }} containerStyle={{ elevation: 10 }} contentWidth={widthToDp("100%")} /> : ((this.state.textLanguageChange === '4') ? <HTML source={{ html: this.state.screensData.contentAreaSanthali || '<p></p>' }} containerStyle={{ elevation: 10 }} contentWidth={widthToDp("100%")} /> : null))))
+                                }
+                            </ScrollView>
                             {/* <Text style={{ fontFamily: 'Oswald-Medium', fontSize: widthToDp("4%"), marginLeft: widthToDp("2%") }}>{this.state.screensData.descEnglish}</Text> */}
                             
                             <View style={{ marginTop: heightToDp("2%") }}></View>
