@@ -14,6 +14,7 @@ import CustomIndicator from '../Core/CustomIndicator'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import Languages from '../Core/Languages'
 import LanguageChange from '../Core/LanguageChange'
+import LabelComponent from '../components/LabelComponent'
 
 const Sound = require('react-native-sound')
 
@@ -257,25 +258,18 @@ export default class ImportantLinksSubCategoryScreen extends Component {
                         renderItem={({ item }) =>
 
                             <Card style={{ width: widthToDp("94%"), marginLeft: widthToDp("3%"), height: heightToDp("30%"), marginBottom: heightToDp("1%"), borderRadius: 20, backgroundColor: BaseColor.Red }}>
-                                <View style={{ flexDirection: 'row' }}>
-                                    <View style={{ width: widthToDp("50%") }}>
-                                        {
-                                            this.state.textLanguageChange === '0' ? <Text style={{ color: 'white', marginLeft: widthToDp("6%"), marginTop: heightToDp("1%"), fontSize: widthToDp("5%"), fontFamily: 'Oswald-Medium' }}>{item.categoryEnglish}</Text> : ((this.state.textLanguageChange === '1') ? <Text style={{ color: 'white', marginLeft: widthToDp("6%"), marginTop: heightToDp("1%"), fontSize: widthToDp("5%"), fontFamily: 'Oswald-Medium' }}>{item.categoryHindi}</Text> : ((this.state.textLanguageChange === '2') ? <Text style={{ color: 'white', marginLeft: widthToDp("6%"), marginTop: heightToDp("1%"), fontSize: widthToDp("5%"), fontFamily: 'Oswald-Medium' }}>{item.categoryHo}</Text> : ((this.state.textLanguageChange === '3') ? <Text style={{ color: 'white', marginLeft: widthToDp("6%"), marginTop: heightToDp("1%"), fontSize: widthToDp("5%"), fontFamily: 'Oswald-Medium' }}>{item.categoryOdia}</Text> : ((this.state.textLanguageChange === '4') ? <Text style={{ color: 'white', marginLeft: widthToDp("6%"), marginTop: heightToDp("1%"), fontSize: widthToDp("5%"), fontFamily: 'Oswald-Medium' }}>{item.categorySanthali}</Text> : null))))
-                                        }
-                                        
-                                    </View>
-                                    <TouchableOpacity style={{width: widthToDp("40%")}} onPress={() => this.speak(item.category)}>
-                                        <Icon
-                                            name="microphone"
-                                            size={23}
-                                            style={{ color: 'white', marginTop: heightToDp("2%"), marginLeft: widthToDp("36%") }}
-                                        />
-                                    </TouchableOpacity>
-
-                                </View>
+                                <LabelComponent
+                                    stepName={
+                                        this.state.textLanguageChange==="0" ? item.categoryEnglish :
+                                        this.state.textLanguageChange==="1" ? item.categoryHindi :
+                                        this.state.textLanguageChange==="2" ? item.categoryHo :
+                                        this.state.textLanguageChange==="3" ? item.categoryOdia :
+                                        item.categorySanthali
+                                    }
+                                />
                                 <TouchableOpacity onPress={() => this.goToDetailsPage(item.categoryEnglish,item.categoryHindi,item.categoryOdia,item.categoryHo,item.categorySanthali, item.link, item.descEnglish , item.descHindi , item.descHo , item.descOdia , item.descSanthali)}>
                                     <Image
-                                        style={{ width: widthToDp("93.7%"), height: heightToDp("24%"), marginLeft: widthToDp("0%"), borderRadius: 2, marginTop: heightToDp("1%"), borderBottomLeftRadius: 20, borderBottomRightRadius: 20 }}
+                                        style={{ width: widthToDp("93.7%"), height: heightToDp("24%"), marginLeft: widthToDp("0%"), borderRadius: 2, borderBottomLeftRadius: 20, borderBottomRightRadius: 20 }}
                                         source={{ uri: 'file:///storage/emulated/0/Pictures/image_'+ item.image }}
                                     />
                                 </TouchableOpacity>
