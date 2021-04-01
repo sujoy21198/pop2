@@ -55,7 +55,22 @@ export default class SigninScreen extends Component {
 
         //this.getAllData()
         this.downloadImagesForOffline()
+        //this.chechStorage()
     }
+
+    // chechStorage = async() => {
+    //     try {
+    //         let value = await AsyncStorage.getItem('offlineData');
+    //         if (value != null){
+    //            alert("huah")
+    //         }
+    //         else {
+    //            alert("yippy")
+    //        }
+    //      } catch (error) {
+    //        // Error retrieving data
+    //      }
+    // }
 
 
     checkConnectionForCustodian = async () => {
@@ -1163,6 +1178,7 @@ export default class SigninScreen extends Component {
         var name = this.state.username
         var redirect = false
         var saveOffline = false
+        var status
 
 
         if (this.state.username === '') {
@@ -1197,6 +1213,7 @@ export default class SigninScreen extends Component {
             // console.log(response.data.data.username)
             if (response.data.status === 1) {
                 console.log("yes")
+                status = response.data.status
                 saveOffline = true
                 //redirect = true
                 Toast.show({
@@ -1242,11 +1259,11 @@ export default class SigninScreen extends Component {
         var valueArr = newUser.map(function (item) { return item._id })
         if (valueArr.includes(_id)) {
             console.log("NO")
-            Toast.show({
-                text: "Invalid username/password",
-                type: 'danger',
-                duration: 6000
-            })
+            // Toast.show({
+            //     text: "Invalid username/password",
+            //     type: 'danger',
+            //     duration: 6000
+            // })
         } else {
             newUser.push(userToBeSaved)
         }
@@ -1272,15 +1289,44 @@ export default class SigninScreen extends Component {
         // }
 
         if (saveOffline === true) {
-            await AsyncStorage.removeItem('offlineData')
-            await AsyncStorage.removeItem('cropData')
-            Toast.show({
-                text: "Please wait while we save your data",
-                type: 'success',
-                duration: 6000
-            })
-            this.getAllData()
-        } else {
+            // await AsyncStorage.removeItem('offlineData')
+            // await AsyncStorage.removeItem('cropData')
+            // Toast.show({
+            //     text: "Please wait while we save your data",
+            //     type: 'success',
+            //     duration: 6000
+            // })
+            // this.getAllData()
+            try {
+                let offlineData = await AsyncStorage.getItem('offlineData');
+                let cropData = await AsyncStorage.getItem('cropData');
+                let labelsData = await AsyncStorage.getItem('labelsData');
+                if (offlineData != null && cropData != null && labelsData != null){
+                    Toast.show({
+                        text: "Welcome" + " " + name,
+                        type: 'success',
+                        duration: 3000
+                    })
+                    this.props.navigation.reset({
+                        index: 0,
+                        routes: [
+                            { name: "DashBoardScreen" }
+                        ]
+                    });
+                }
+                else {
+                    Toast.show({
+                        text: "Please wait while we save your data",
+                        type: 'success',
+                        duration: 6000
+                    })
+                    this.getAllData()
+               }
+             } catch (error) {
+               console.log(error)
+             }
+
+        } else if(status!= 1){
             Toast.show({
                 text: "Invalid username/password",
                 type: 'danger',
