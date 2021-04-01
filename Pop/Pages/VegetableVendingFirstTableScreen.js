@@ -480,7 +480,7 @@ export default class DryFishSellingFirstTable extends Component {
                                         {
                                             tableHeading.map((i, key) => {
                                                 return (
-                                                    <Text style={{ marginTop: heightToDp(`${this.state.textLanguageChange==='1' ? 3.3 : 2}%`), fontSize: widthToDp("3.3%") }}>{i.items ? (key===0 ? this.state.weighingMachine : key===1 ? this.state.bambooContainer : key===2 ? this.state.polytheneSheet : "") : ""}</Text>
+                                                    <Text style={{ marginTop: heightToDp(`${this.state.textLanguageChange==='1' ? 3.3 : this.state.textLanguageChange==="3" ? 3.4 : 2}%`), fontSize: widthToDp("3.3%") }}>{i.items ? (key===0 ? this.state.weighingMachine : key===1 ? this.state.bambooContainer : key===2 ? this.state.polytheneSheet : "") : ""}</Text>
                                                 )
                                             })
                                         }
@@ -541,7 +541,7 @@ export default class DryFishSellingFirstTable extends Component {
                             </View>
                             <View style={{ borderWidth: 1, height: heightToDp("8%"), width: widthToDp("83%"), marginLeft: widthToDp("3%"), marginTop: heightToDp("0%"), flexDirection: 'row' }}>
                                 <Text style={{ fontSize: widthToDp('3.3%'), marginLeft: widthToDp('1%') }}>{this.state.oneTimeExpenditureLabel}</Text>
-                                <View style={{ marginLeft: widthToDp('34%'), width: widthToDp("12%"), flexDirection: 'row', justifyContent: 'space-between' }}>
+                                <View style={{ marginLeft: widthToDp(`${this.state.textLanguageChange==="3" ? 48 : this.state.textLanguageChange==="1" ? 46 : 34}%`), width: widthToDp("12%"), flexDirection: 'row', justifyContent: 'space-between' }}>
                                     <Text style={{ fontSize: widthToDp('3.3%') }}>₹ </Text>
                                     <Text style={{ fontSize: widthToDp('3.3%') }}>700</Text>
                                 </View>
