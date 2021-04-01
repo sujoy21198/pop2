@@ -37,6 +37,20 @@ export default class CropsScreen extends Component {
         //this.loadCrops()
         this.loadCropsFromStorage()
         this.setLanguageOnMount()
+        //this.getOfflineData()
+    }
+
+
+    getOfflineData = async () => {
+        try {
+            let username = await AsyncStorage.getItem('username')
+            let user = await AsyncStorage.getItem('labelsData');
+            let parsed = JSON.parse(user);
+            var specificObject = parsed[0]
+            console.log(specificObject.labels.find((i) => i.type === 22),"cropsScreen")
+        } catch (error) {
+            console.log(error)
+        }
     }
 
 
@@ -106,7 +120,7 @@ export default class CropsScreen extends Component {
         } catch (error) {
             alert(error)
         }
-        this.setState({ crops: specificObject.crops })
+        //this.setState({ crops: specificObject.crops })
     }
 
     loadCropsFromStorage = async () => {
