@@ -88,7 +88,7 @@ export default class StepOneScreen extends Component {
     }
 
     async componentDidMount() {
-        this.setState({isDownloadingVideo: true})
+        this.setState({ isDownloadingVideo: true })
         this.setLanguageOnMount()
         this.loadlabelsFromStorage()
         this.getOfflineData()
@@ -123,7 +123,7 @@ export default class StepOneScreen extends Component {
             this.setState({ odiaTitleDescription: cropSpecificSteps[0].nameOdia })
             this.setState({ hoTitleDescription: cropSpecificSteps[0].nameHo })
             this.setState({ santhaliTitleDescription: cropSpecificSteps[0].nameSanthali })
-            this.setState({ stepImage: cropSpecificSteps[0].imageFile }) 
+            this.setState({ stepImage: cropSpecificSteps[0].imageFile })
         } catch (error) {
             console.log(error)
         }
@@ -345,7 +345,7 @@ export default class StepOneScreen extends Component {
     }
 
     setStepDataIntoPatch = async () => {
-        if(
+        if (
             (
                 this.state.cropSpecificSteps && this.state.cropSpecificSteps.length > 0 &&
                 this.state.cropSpecificSteps[0].videoFile
@@ -408,7 +408,21 @@ export default class StepOneScreen extends Component {
             }
         }
     }
-    
+
+
+    goToPreviousScreen = async () => {
+        this.props.navigation.navigate({
+            name: 'SelectFarmingAreaScreen',
+            params: {
+                _id: this.state._id,
+                cropName: this.state.cropName,
+                imageFile: this.state.imageFile,
+                patchName: this.state.patchName,
+                landType: this.state.landType
+            }
+        })
+    }
+
     render() {
         var cropNameLanguageChangeArray = []
         cropNameLanguageChangeArray = this.state.cropNameLanguageChangeArray
@@ -621,7 +635,7 @@ export default class StepOneScreen extends Component {
                     <View style={{ marginBottom: heightToDp("10%") }}></View>
                 </ScrollView>
                 <View style={{ flexDirection: 'row', height: heightToDp("10%"), alignSelf: 'center' }}>
-                    <TouchableOpacity onPress={() => this.props.navigation.goBack()}>
+                    <TouchableOpacity onPress={() => this.goToPreviousScreen()}>
                         <View style={{ backgroundColor: "#fff", height: heightToDp("6%"), width: widthToDp("30%"), borderRadius: 100, alignSelf: 'center', marginTop: heightToDp("2%") }}>
                             <Text style={{ fontSize: widthToDp("4%"), color: "#000", marginTop: heightToDp("1.3%"), alignSelf: 'center', fontFamily: 'Oswald-Medium' }}>{this.state.backButtonText}</Text>
                         </View>
