@@ -15,6 +15,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import Languages from '../Core/Languages'
 import LanguageChange from '../Core/LanguageChange'
 import HTML from "react-native-render-html";
+import LabelComponent from '../components/LabelComponent'
 
 
 const Sound = require('react-native-sound')
@@ -351,11 +352,17 @@ export default class NutritionGardenScreen extends Component {
 
                 <View style={{ backgroundColor: BaseColor.Red, height: heightToDp("50%"), alignSelf: 'center', width: widthToDp("90%"), borderRadius: 10, marginTop: heightToDp('1.5%') }}>
                     <Text style={{ color: "#fff", fontSize: widthToDp("5%"), marginLeft: widthToDp("5%"), marginTop: heightToDp("1%"), fontFamily: 'Oswald-Medium' }}>
-                    {
-                        this.state.textLanguageChange === '0' ? <Text style={{ color: "#fff", fontSize: widthToDp("5%"), marginLeft: widthToDp("5%"), marginTop: heightToDp("1%"), fontFamily: 'Oswald-Medium' }}>{this.state.screensData.nameEnglish}</Text> : ((this.state.textLanguageChange === '1') ? <Text style={{ color: "#fff", fontSize: widthToDp("5%"), marginLeft: widthToDp("5%"), marginTop: heightToDp("1%"), fontFamily: 'Oswald-Medium' }}>{this.state.screensData.nameHindi}</Text> : ((this.state.textLanguageChange === '2') ? <Text style={{ color: "#fff", fontSize: widthToDp("5%"), marginLeft: widthToDp("5%"), marginTop: heightToDp("1%"), fontFamily: 'Oswald-Medium' }}>{this.state.screensData.nameHo}</Text> : ((this.state.textLanguageChange === '3') ? <Text style={{ color: "#fff", fontSize: widthToDp("5%"), marginLeft: widthToDp("5%"), marginTop: heightToDp("1%"), fontFamily: 'Oswald-Medium' }}>{this.state.screensData.nameOdia}</Text> : ((this.state.textLanguageChange === '4') ? <Text style={{ color: "#fff", fontSize: widthToDp("5%"), marginLeft: widthToDp("5%"), marginTop: heightToDp("1%"), fontFamily: 'Oswald-Medium' }}>{this.state.screensData.nameSanthali}</Text> : null))))
-                    }
+                    <LabelComponent
+                        stepName={
+                            this.state.textLanguageChange==="0" ? this.state.screensData.nameEnglish :
+                            this.state.textLanguageChange==="1" ? this.state.screensData.nameHindi :
+                            this.state.textLanguageChange==="2" ? this.state.screensData.nameHo :
+                            this.state.textLanguageChange==="3" ? this.state.screensData.nameOdia :
+                            this.state.screensData.nameSanthali
+                        }
+                    />
                     </Text>
-                    <View style={{ backgroundColor: "white", height: heightToDp("45%"), alignSelf: 'center', width: widthToDp("90%"), marginTop: heightToDp('2%'), borderBottomLeftRadius: 10, borderBottomRightRadius: 10 }}>
+                    <View style={{ backgroundColor: "white", height: heightToDp("45%"), alignSelf: 'center', width: widthToDp("90%"), marginTop: heightToDp('1%'), borderBottomLeftRadius: 10, borderBottomRightRadius: 10 }}>
                         <View style={{}}>
                             <Image
                                 source={{ uri: 'file:///storage/emulated/0/Pictures/image_' + this.state.screensData.imageFile }}
@@ -363,13 +370,22 @@ export default class NutritionGardenScreen extends Component {
                             />
                         </View>
 
-                        <ScrollView>
+                        <ScrollView nestedScrollEnabled>
                             {
                                 this.state.textLanguageChange === '0' ? <Text style={{ fontFamily: 'Oswald-Medium', fontSize: widthToDp("4%"), marginLeft: widthToDp("2%") }}>{this.state.screensData.descEnglish}</Text> : ((this.state.textLanguageChange === '1') ? <Text style={{ fontFamily: 'Oswald-Medium', fontSize: widthToDp("4%"), marginLeft: widthToDp("2%") }}>{this.state.screensData.descHindi}</Text> : ((this.state.textLanguageChange === '2') ? <Text style={{ fontFamily: 'Oswald-Medium', fontSize: widthToDp("4%"), marginLeft: widthToDp("2%") }}>{this.state.screensData.descHo}</Text> : ((this.state.textLanguageChange === '3') ? <Text style={{ fontFamily: 'Oswald-Medium', fontSize: widthToDp("4%"), marginLeft: widthToDp("2%") }}>{this.state.screensData.descOdia}</Text> : ((this.state.textLanguageChange === '4') ? <Text style={{ fontFamily: 'Oswald-Medium', fontSize: widthToDp("4%"), marginLeft: widthToDp("2%") }}>{this.state.screensData.descSanthali}</Text> : null))))
                             }
-                            {
-                                this.state.textLanguageChange === '0' ? <HTML source={{ html: this.state.screensData.contentAreaEnglish || '<p></p>' }} containerStyle={{ elevation: 10, marginTop: heightToDp("2%"), marginLeft: widthToDp("2%") }} /> : ((this.state.textLanguageChange === '1') ? <HTML source={{ html: this.state.screensData.contentAreaHindi || '<p></p>' }} containerStyle={{ elevation: 10, marginTop: heightToDp("2%"), marginLeft: widthToDp("2%") }} /> : ((this.state.textLanguageChange === '2') ? <HTML source={{ html: this.state.screensData.contentAreaHo || '<p></p>' }} containerStyle={{ elevation: 10, marginTop: heightToDp("2%"), marginLeft: widthToDp("2%") }} /> : ((this.state.textLanguageChange === '3') ? <HTML source={{ html: this.state.screensData.contentAreaOdia || '<p></p>' }} containerStyle={{ elevation: 10, marginTop: heightToDp("2%"), marginLeft: widthToDp("2%") }} /> : ((this.state.textLanguageChange === '4') ? <HTML source={{ html: this.state.screensData.contentAreaSanthali || '<p></p>' }} containerStyle={{ elevation: 10, marginTop: heightToDp("2%"), marginLeft: widthToDp("2%") }} /> : null))))
-                            }
+                            <ScrollView 
+                                style={{
+                                    marginTop: heightToDp("2%"), 
+                                    marginLeft: widthToDp("2%"),
+                                }}
+                                horizontal
+                                showsHorizontalScrollIndicator={true}
+                            >
+                                {
+                                    this.state.textLanguageChange === '0' ? <HTML source={{ html: this.state.screensData.contentAreaEnglish || '<p></p>' }} containerStyle={{ elevation: 10 }} contentWidth={widthToDp("100%")} /> : ((this.state.textLanguageChange === '1') ? <HTML source={{ html: this.state.screensData.contentAreaHindi || '<p></p>' }} containerStyle={{ elevation: 10 }} contentWidth={widthToDp("100%")} /> : ((this.state.textLanguageChange === '2') ? <HTML source={{ html: this.state.screensData.contentAreaHo || '<p></p>' }} containerStyle={{ elevation: 10 }} contentWidth={widthToDp("100%")} /> : ((this.state.textLanguageChange === '3') ? <HTML source={{ html: this.state.screensData.contentAreaOdia || '<p></p>' }} containerStyle={{ elevation: 10 }} contentWidth={widthToDp("100%")} /> : ((this.state.textLanguageChange === '4') ? <HTML source={{ html: this.state.screensData.contentAreaSanthali || '<p></p>' }} containerStyle={{ elevation: 10 }} contentWidth={widthToDp("100%")} /> : null))))
+                                }
+                            </ScrollView>
                             {/* <Text style={{ fontFamily: 'Oswald-Medium', fontSize: widthToDp("4%"), marginLeft: widthToDp("2%") }}>{this.state.screensData.descEnglish}</Text> */}
                             
                             <View style={{ marginTop: heightToDp("2%") }}></View>
