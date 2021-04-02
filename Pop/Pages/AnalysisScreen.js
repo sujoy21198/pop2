@@ -326,7 +326,7 @@ export default class LandTypeScreen extends Component {
     }
 
     netProfitCalculation = () => {
-        var netProfit = this.state.costPerKg - this.state.costOfCultivatinPerTenDecimal - this.state.productionLossPercentage //expense - profit
+        var netProfit = parseFloat(this.state.costPerKg - this.state.costOfCultivatinPerTenDecimal - this.state.productionLossPercentage).toFixed(2) //expense - profit
         this.state.netProfit = netProfit
     }
 
