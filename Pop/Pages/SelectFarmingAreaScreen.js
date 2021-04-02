@@ -197,6 +197,7 @@ export default class SelectFarmingAreaScreen extends Component {
         var productionInKg = parseFloat((this.state.decimalProduce/10)* farmingAreaInDecimal).toFixed(2)
         var costOfCultivatinPerTenDecimal = parseFloat((this.state.cultivationExpense/10)* farmingAreaInDecimal).toFixed(2)//expense
         var costPerKg = parseFloat(this.state.costPer * productionInKg).toFixed(2) //income
+        var productionLossPercentage = productionInKg * (this.state.profitLossPercentage / 100) * this.state.costPer
         
             this.props.navigation.navigate({
                 name: 'AnalysisScreen',
@@ -210,7 +211,8 @@ export default class SelectFarmingAreaScreen extends Component {
                     costPerKg: costPerKg,
                     productionInKg:productionInKg,
                     cost: this.state.costPer,
-                    patchName : this.state.patchName
+                    patchName : this.state.patchName,
+                    productionLossPercentage : productionLossPercentage
                 }
             })
 

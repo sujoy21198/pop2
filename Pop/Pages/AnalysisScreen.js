@@ -55,7 +55,11 @@ export default class LandTypeScreen extends Component {
             materialHindi: '',
             materialOdia: '',
             materialSanthali: '',
-            materialHo: ''
+            materialHo: '',
+            productionLossPercentage:'',
+            materialLabel:'',
+            productionLossPercentageLabel:'',
+            profitLossPercentage:''
         }
         this.state.landType = this.props.route.params.landType
         this.state._id = this.props.route.params._id
@@ -67,6 +71,7 @@ export default class LandTypeScreen extends Component {
         this.state.cost = this.props.route.params.cost
         this.state.imageFile = this.props.route.params.imageFile
         this.state.patchName = this.props.route.params.patchName
+        this.state.productionLossPercentage = this.props.route.params.productionLossPercentage
         this.state.languages = Languages
         this.netProfitCalculation()
         //alert(this.state.patchName)
@@ -111,6 +116,7 @@ export default class LandTypeScreen extends Component {
             this.state.materialHo = specificCrops.materialHo
             this.state.materialOdia = specificCrops.materialOdia
             this.state.materialSanthali = specificCrops.materialSanthali
+            this.state.profitLossPercentage = specificCrops.profitLossPercentage
             console.log(specificCrops.materialEnglish, "AnalysisScreen")
         } catch (error) {
             console.log(error, 'AnalysisScreen')
@@ -159,6 +165,8 @@ export default class LandTypeScreen extends Component {
             var cancelLabel = specificObject.labels.find((i) => i.type === 65)
             var doneLabel = specificObject.labels.find((i) => i.type === 39)
             var decimalLabel = specificObject.labels.find((i) => i.type === 188)
+            var materialLabel = specificObject.labels.find((i) => i.type === 77)
+            var productionLossPercentageLabel = specificObject.labels.find((i) => i.type === 218)
             if (this.state.textLanguageChange === '0') {
                 this.setState({
                     costBenefitAnalysisLabel: costBenefitAnalysisLabel.nameEnglish,
@@ -177,6 +185,8 @@ export default class LandTypeScreen extends Component {
                     cancelLabel: cancelLabel.nameEnglish,
                     doneLabel: doneLabel.nameEnglish,
                     decimalLabel: decimalLabel.nameEnglish,
+                    materialLabel: materialLabel.nameEnglish,
+                    productionLossPercentageLabel: productionLossPercentageLabel.nameEnglish
                 })
             } else if (this.state.textLanguageChange === '1') {
                 this.setState({
@@ -196,6 +206,8 @@ export default class LandTypeScreen extends Component {
                     cancelLabel: cancelLabel.nameHindi,
                     doneLabel: doneLabel.nameHindi,
                     decimalLabel: decimalLabel.nameHindi,
+                    materialLabel: materialLabel.nameHindi,
+                    productionLossPercentageLabel : productionLossPercentageLabel.nameEnglish
                 })
             } else if (this.state.textLanguageChange === '2') {
                 this.setState({
@@ -215,6 +227,8 @@ export default class LandTypeScreen extends Component {
                     cancelLabel: cancelLabel.nameHo,
                     doneLabel: doneLabel.nameHo,
                     decimalLabel: decimalLabel.nameHo,
+                    materialLabel: materialLabel.nameHo,
+                    productionLossPercentageLabel : productionLossPercentageLabel.nameHo
                 })
             } else if (this.state.textLanguageChange === '3') {
                 this.setState({
@@ -234,6 +248,8 @@ export default class LandTypeScreen extends Component {
                     cancelLabel: cancelLabel.nameOdia,
                     doneLabel: doneLabel.nameOdia,
                     decimalLabel: decimalLabel.nameOdia,
+                    materialLabel: materialLabel.nameOdia,
+                    productionLossPercentageLabel : productionLossPercentageLabel.nameOdia
                 })
             } else if (this.state.textLanguageChange === '4') {
                 this.setState({
@@ -253,6 +269,8 @@ export default class LandTypeScreen extends Component {
                     cancelLabel: cancelLabel.nameSanthali,
                     doneLabel: doneLabel.nameSanthali,
                     decimalLabel: decimalLabel.nameSanthali,
+                    materialLabel: materialLabel.nameSanthali,
+                    productionLossPercentageLabel : productionLossPercentageLabel.nameSanthali
                 })
             }
 
@@ -308,7 +326,7 @@ export default class LandTypeScreen extends Component {
     }
 
     netProfitCalculation = () => {
-        var netProfit = this.state.costPerKg - this.state.costOfCultivatinPerTenDecimal //expense - profit
+        var netProfit = this.state.costPerKg - this.state.costOfCultivatinPerTenDecimal - this.state.productionLossPercentage //expense - profit
         this.state.netProfit = netProfit
     }
 
@@ -409,7 +427,7 @@ export default class LandTypeScreen extends Component {
 
 
                     <View style={{ backgroundColor: BaseColor.Red, width: widthToDp("90%"), height: heightToDp("30%"), alignSelf: 'center', marginTop: heightToDp("2%"), borderRadius: 10 }}>
-                        <Text style={{ color: 'white', marginLeft: widthToDp("4%"), marginTop: heightToDp('1.5%'), fontSize: widthToDp("5%"), fontFamily: 'Oswald-Medium', height: heightToDp("4%") }}>MATERIALS</Text>
+                        <Text style={{ color: 'white', marginLeft: widthToDp("4%"), marginTop: heightToDp('1.5%'), fontSize: widthToDp("5%"), fontFamily: 'Oswald-Medium', height: heightToDp("4%") }}>{this.state.materialLabel}</Text>
                         <View style={{ backgroundColor: 'white', width: widthToDp("90%"), height: heightToDp("23.5%"), borderBottomLeftRadius: 10, borderBottomRightRadius: 10, marginTop: heightToDp("2%") }}>
                             <ScrollView nestedScrollEnabled={true}>
                                 <View style={{ marginLeft: widthToDp("4%")}}>
@@ -470,6 +488,14 @@ export default class LandTypeScreen extends Component {
 
                                 <Text style={{ marginLeft: widthToDp("28%"), fontFamily: 'Oswald-Medium', fontSize: widthToDp('3.1%') }}>{this.state.productionInKg} Kgs</Text>
                             </View>
+                            <View style={{ flexDirection: 'row', marginLeft: widthToDp("4%"), marginTop: heightToDp('2%') }}>
+                                <View style={{ width: widthToDp("25%") }}>
+                                    <Text style={{ fontFamily: 'Oswald-Medium', fontSize: widthToDp('3.1%') }}>{this.state.productionLossPercentageLabel} @ {this.state.profitLossPercentage}%</Text>
+                                </View>
+
+                                <Text style={{ marginLeft: widthToDp("28%"), fontFamily: 'Oswald-Medium', fontSize: widthToDp('3.1%') }}>₹ {this.state.productionLossPercentage}</Text>
+                            </View>
+
                             <View style={{ flexDirection: 'row', marginLeft: widthToDp("4%"), marginTop: heightToDp('2%') }}>
                                 <View style={{ width: widthToDp("25%") }}>
                                     <Text style={{ fontFamily: 'Oswald-Medium', fontSize: widthToDp('3.1%') }}>{this.state.costPerKgLabel}</Text>
