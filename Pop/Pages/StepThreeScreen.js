@@ -14,6 +14,7 @@ import CustomIndicator from '../Core/CustomIndicator'
 import Languages from '../Core/Languages'
 import LanguageChange from '../Core/LanguageChange'
 import VideoComponent from '../components/VideoComponent'
+import RNFetchBlob from 'rn-fetch-blob'
 
 
 export default class StepThreeScreen extends Component {
@@ -329,56 +330,71 @@ export default class StepThreeScreen extends Component {
     }
 
     setStepDataIntoPatch = async() => {
-        this.setState({isPlaying: false})
-        try{
-            let username = await AsyncStorage.getItem('username')
-            let user = await AsyncStorage.getItem('cropData');
-            let parsed = JSON.parse(user);
-            var specificObject = parsed[0]
-            var cropSpecificSteps = specificObject.cropSteps.filter((i) => i.cropId === this.state._id)
-            if (this.state.saveButtonClicked === false) {
-                alert("please click save button before procceding")
-            } else {
-                if (cropSpecificSteps[3] === undefined) {
-                    this.props.navigation.navigate({
-                        name: 'ActualCultivationCostScreen',
-                        params: {
-                            cropName: this.state.cropName,
-                            _id: this.state._id,
-                            imageFile: this.state.imageFile,
-                            patchName: this.state.patchName,
-                            landType: this.state.landType,
-                            farmingAreaInDecimal: this.state.farmingAreaInDecimal,
-                            costOfCultivatinPerTenDecimal: this.state.costOfCultivatinPerTenDecimal,
-                            costPerKg: this.state.costPerKg,
-                            productionInKg: this.state.productionInKg,
-                            cost: this.state.cost,
-                            netProfit: this.state.netProfit
-                        }
-                    })
+        let files = await RNFetchBlob.fs.ls(RNFetchBlob.fs.dirs.MovieDir)
+        if(
+            (
+                this.state.cropSpecificSteps && this.state.cropSpecificSteps.length > 0 &&
+                this.state.cropSpecificSteps[2].videoFile &&
+                files.includes("video_" + this.state.cropSpecificSteps[2].videoFile)
+            ) && !this.state.isPlaying
+        ) {
+            Toast.show({
+                type: 'warning',
+                duration: 3000,
+                text: 'Please pause the video before going to next screen'
+            })
+        } else {
+            try{
+                let username = await AsyncStorage.getItem('username')
+                let user = await AsyncStorage.getItem('cropData');
+                let parsed = JSON.parse(user);
+                var specificObject = parsed[0]
+                var cropSpecificSteps = specificObject.cropSteps.filter((i) => i.cropId === this.state._id)
+                if (this.state.saveButtonClicked === false) {
+                    alert("please click save button before procceding")
                 } else {
-                    this.props.navigation.navigate({
-                        name: 'StepFourScreen',
-                        params: {
-                            cropName: this.state.cropName,
-                            _id: this.state._id,
-                            imageFile: this.state.imageFile,
-                            patchName: this.state.patchName,
-                            landType: this.state.landType,
-                            farmingAreaInDecimal: this.state.farmingAreaInDecimal,
-                            costOfCultivatinPerTenDecimal: this.state.costOfCultivatinPerTenDecimal,
-                            costPerKg: this.state.costPerKg,
-                            productionInKg: this.state.productionInKg,
-                            cost: this.state.cost,
-                            netProfit: this.state.netProfit
-                        }
-                    })
+                    if (cropSpecificSteps[3] === undefined) {
+                        this.props.navigation.navigate({
+                            name: 'ActualCultivationCostScreen',
+                            params: {
+                                cropName: this.state.cropName,
+                                _id: this.state._id,
+                                imageFile: this.state.imageFile,
+                                patchName: this.state.patchName,
+                                landType: this.state.landType,
+                                farmingAreaInDecimal: this.state.farmingAreaInDecimal,
+                                costOfCultivatinPerTenDecimal: this.state.costOfCultivatinPerTenDecimal,
+                                costPerKg: this.state.costPerKg,
+                                productionInKg: this.state.productionInKg,
+                                cost: this.state.cost,
+                                netProfit: this.state.netProfit
+                            }
+                        })
+                    } else {
+                        this.props.navigation.navigate({
+                            name: 'StepFourScreen',
+                            params: {
+                                cropName: this.state.cropName,
+                                _id: this.state._id,
+                                imageFile: this.state.imageFile,
+                                patchName: this.state.patchName,
+                                landType: this.state.landType,
+                                farmingAreaInDecimal: this.state.farmingAreaInDecimal,
+                                costOfCultivatinPerTenDecimal: this.state.costOfCultivatinPerTenDecimal,
+                                costPerKg: this.state.costPerKg,
+                                productionInKg: this.state.productionInKg,
+                                cost: this.state.cost,
+                                netProfit: this.state.netProfit
+                            }
+                        })
+                    }
                 }
+                AsyncStorage.setItem("jump","StepThreeScreen")
+            }catch(error){
+                console.log(error)
             }
-            AsyncStorage.setItem("jump","StepThreeScreen")
-        }catch(error){
-            console.log(error)
         }
+        
     }
 
 
