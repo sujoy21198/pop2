@@ -16,6 +16,7 @@ import Languages from '../Core/Languages'
 import LanguageChange from '../Core/LanguageChange'
 import HTML from "react-native-render-html";
 import LabelComponent from '../components/LabelComponent'
+import RNFetchBlob from 'rn-fetch-blob'
 
 const Sound = require('react-native-sound')
 
@@ -46,6 +47,41 @@ export default class SmallGroceryShopScreen extends Component {
         this.getDetailsFromOffline()
         this.setLanguageOnMount()
         this.loadlabelsFromStorage()
+    }
+    
+
+    checkAudioFileExistence = async (audio) => {
+        let files = await RNFetchBlob.fs.ls(RNFetchBlob.fs.dirs.PictureDir);
+        if(files.includes("/storage/emulated/0/Pictures/image_" + audio)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
+    playSound = (audio) => {
+        if(this.checkAudioFileExistence(audio)) {
+            var sound = new Sound("/storage/emulated/0/Pictures/image_" + audio, Sound.MAIN_BUNDLE, (error) => {
+                if (error) {
+                    console.log('failed to load the sound', error);
+                    return;
+                }
+                // loaded successfully
+                console.log(
+                    'duration in seconds: ' + sound.getDuration() + 
+                    ', number of channels: ' + sound.getNumberOfChannels()
+                );
+                
+                // Play the sound with an onEnd callback
+                sound.play((success) => {
+                    if (success) {
+                        console.log('successfully finished playing');
+                    } else {
+                        console.log('playback failed due to audio decoding errors');
+                    }
+                });
+            });
+        } else return;
     }
 
     setLanguageOnMount = async () => {
@@ -369,15 +405,66 @@ export default class SmallGroceryShopScreen extends Component {
                 }
 
                 <View style={{ backgroundColor: BaseColor.Red, height: heightToDp("50%"), alignSelf: 'center', width: widthToDp("90%"), borderRadius: 10, marginTop: heightToDp('1.5%') }}>
-                    <LabelComponent
-                        stepName={
-                            this.state.textLanguageChange==="0" ? this.state.screensData.titleEnglish :
-                            this.state.textLanguageChange==="1" ? this.state.screensData.titleHindi :
-                            this.state.textLanguageChange==="2" ? this.state.screensData.titleHo :
-                            this.state.textLanguageChange==="3" ? this.state.screensData.titleOdia :
-                            this.state.screensData.titleSanthali
-                        }
-                    />
+                    <View style={{
+                        flexDirection: 'row',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                        marginHorizontal: widthToDp("3%"), 
+                        marginVertical: heightToDp("1.5%")
+                    }}>
+                        <Text 
+                            style={{ 
+                                color: "#fff", 
+                                width: widthToDp(`${
+                                    (
+                                        (this.state.textLanguageChange==="0" && this.state.screensData.audioEnglish) ||
+                                        (this.state.textLanguageChange==="1" && this.state.screensData.audioHindi) ||
+                                        (this.state.textLanguageChange==="2" && this.state.screensData.audioHo) ||
+                                        (this.state.textLanguageChange==="3" && this.state.screensData.audioOdia) ||
+                                        (this.state.textLanguageChange==="4" && this.state.screensData.audioSanthali)
+                                    ) ? 77 : 85}%`
+                                ),
+                                fontSize: widthToDp("5%"), 
+                                fontFamily: 'Oswald-Medium' 
+                            }}
+                        >
+                            {
+                                this.state.textLanguageChange==="0" ? this.state.screensData.titleEnglish :
+                                this.state.textLanguageChange==="1" ? this.state.screensData.titleHindi :
+                                this.state.textLanguageChange==="2" ? this.state.screensData.titleHo :
+                                this.state.textLanguageChange==="3" ? this.state.screensData.titleOdia :
+                                this.state.screensData.titleSanthali
+                            }
+                        </Text>
+                        {
+                            (
+                                (this.state.textLanguageChange==="0" && this.state.screensData.audioEnglish) ||
+                                (this.state.textLanguageChange==="1" && this.state.screensData.audioHindi) ||
+                                (this.state.textLanguageChange==="2" && this.state.screensData.audioHo) ||
+                                (this.state.textLanguageChange==="3" && this.state.screensData.audioOdia) ||
+                                (this.state.textLanguageChange==="4" && this.state.screensData.audioSanthali)
+                            ) &&
+                            <TouchableOpacity 
+                                style={{width: widthToDp("20%")}}
+                                onPress={
+                                    () => this.playSound(
+                                        this.state.textLanguageChange==="0" ? this.state.screensData.audioEnglish :
+                                        this.state.textLanguageChange==="1" ? this.state.screensData.audioHindi :
+                                        this.state.textLanguageChange==="2" ? this.state.screensData.audioHo :
+                                        this.state.textLanguageChange==="3" ? this.state.screensData.audioOdia :
+                                        this.state.screensData.audioSanthali
+                                    )
+                                }
+                            >
+                                <Icon
+                                    name="microphone"
+                                    size={30}
+                                    color={"#fff"}
+                                    // onPress={this.playSound}
+                                />
+                            </TouchableOpacity>
+                        }            
+                    </View> 
                     <View style={{ backgroundColor: "white", height: heightToDp("45%"), alignSelf: 'center', width: widthToDp("90%"), borderBottomLeftRadius: 10, borderBottomRightRadius: 10 }}>
                         {/* <View style={{}}>
                             <Image

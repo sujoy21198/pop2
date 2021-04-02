@@ -15,6 +15,7 @@ import Languages from '../Core/Languages'
 import LanguageChange from '../Core/LanguageChange'
 import VideoComponent from '../components/VideoComponent'
 import RNFetchBlob from 'rn-fetch-blob'
+import LabelComponent from '../components/LabelComponent'
 
 
 export default class StepThreeScreen extends Component {
@@ -67,7 +68,8 @@ export default class StepThreeScreen extends Component {
             sumOfMaterials:'',
             saveButtonClicked:false,
             stepLabel: '',
-            ploughingTypeLabel: ''
+            ploughingTypeLabel: '',
+            isPlaying: true
         }
         this.state.languages = Languages
         this.state._id = this.props.route.params._id
@@ -484,12 +486,19 @@ export default class StepThreeScreen extends Component {
                     this.state.isLoading ? <View style={{ justifyContent: 'center', marginTop: heightToDp("20%"), backgroundColor: BaseColor.BackgroundColor, marginBottom: heightToDp("30%") }}><CustomIndicator IsLoading={this.state.isLoading} /></View> : null
                 }
                 <ScrollView nestedScrollEnabled={true}>
-                    <View style={{ backgroundColor: BaseColor.Red, width: widthToDp("90%"), height: heightToDp("26%"), alignSelf: 'center', marginTop: heightToDp("2%"), borderRadius: 10 }}>
-                        {
-                            this.state.textLanguageChange === '0' ? <Text style={{ color: 'white', marginLeft: widthToDp("4%"), marginTop: heightToDp('1.5%'), fontSize: widthToDp("5%"), fontFamily: 'Oswald-Medium' }}>{this.state.englishTitleDescription}</Text> : ((this.state.textLanguageChange === '1') ? <Text style={{ color: 'white', marginLeft: widthToDp("4%"), marginTop: heightToDp('1.5%'), fontSize: widthToDp("5%"), fontFamily: 'Oswald-Medium' }}>{this.state.hindiTitleDescription}</Text> : ((this.state.textLanguageChange === '2') ? <Text style={{ color: 'white', marginLeft: widthToDp("4%"), marginTop: heightToDp('1.5%'), fontSize: widthToDp("5%"), fontFamily: 'Oswald-Medium' }}>{this.state.hoTitleDescription}</Text> : ((this.state.textLanguageChange === '3') ? <Text style={{ color: 'white', marginLeft: widthToDp("4%"), marginTop: heightToDp('1.5%'), fontSize: widthToDp("5%"), fontFamily: 'Oswald-Medium' }}>{this.state.odiaTitleDescription}</Text> : ((this.state.textLanguageChange === '4') ? <Text style={{ color: 'white', marginLeft: widthToDp("4%"), marginTop: heightToDp('1.5%'), fontSize: widthToDp("5%"), fontFamily: 'Oswald-Medium' }}>{this.state.santhaliTitleDescription}</Text> : null))))
-                        }
-
-                        <View style={{ backgroundColor: 'white', width: widthToDp("90%"), height: heightToDp("20%"), borderBottomLeftRadius: 10, borderBottomRightRadius: 10, marginTop: heightToDp("1%") }}>
+                    <View style={{ backgroundColor: BaseColor.Red, width: widthToDp("90%"), alignSelf: 'center', marginTop: heightToDp("2%"), borderRadius: 10 }}>
+                        <LabelComponent
+                            stepName={
+                                this.state.textLanguageChange==="0" ? this.state.englishTitleDescription :
+                                    this.state.textLanguageChange==="1" ? this.state.hindiTitleDescription :
+                                    this.state.textLanguageChange==="2" ? this.state.hoTitleDescription :
+                                    this.state.textLanguageChange==="3" ? this.state.odiaTitleDescription :
+                                    this.state.santhaliTitleDescription
+                            }
+                            asyncKey={"cropSteps"}
+                            index={0}
+                        />
+                        <View style={{ backgroundColor: 'white', width: widthToDp("90%"), borderBottomLeftRadius: 10, borderBottomRightRadius: 10 }}>
                             <View>
                                 <Image
                                     style={{ height: heightToDp("20%"), width: widthToDp("90%"), borderBottomLeftRadius: 10, borderBottomRightRadius: 10 }}
@@ -504,20 +513,27 @@ export default class StepThreeScreen extends Component {
                             this.state.cropSpecificSteps && this.state.cropSpecificSteps.length > 0 &&
                             this.state.cropSpecificSteps[2].videoFile
                         ) &&
-                        <VideoComponent
-                            asyncVideoFileName={this.state.cropSpecificSteps[2].videoFile}
-                            isPlaying={this.state.isPlaying}
-                            playOrPauseVideo={() => this.setState({ isPlaying: !this.state.isPlaying })}
-                            _id={this.state._id}
-                            stepId={2}
-                        />
+                        [
+                            <View style={{height: heightToDp('0.5%')}}/>,
+                            <VideoComponent
+                                asyncVideoFileName={this.state.cropSpecificSteps[2].videoFile}
+                                isPlaying={this.state.isPlaying}
+                                playOrPauseVideo={() => this.setState({ isPlaying: !this.state.isPlaying })}
+                                _id={this.state._id}
+                                stepId={2}
+                            />
+                        ]
                     }
+                    <View style={{height: heightToDp('2%')}}/>
 
-
-                    <View style={{ backgroundColor: BaseColor.Red, width: widthToDp("90%"), height: heightToDp("50%"), alignSelf: 'center', marginTop: heightToDp("2%"), borderRadius: 10 }}>
-                        <Text style={{ color: 'white', marginLeft: widthToDp("4%"), marginTop: heightToDp('1.5%'), fontSize: widthToDp("5%"), fontFamily: 'Oswald-Medium' }}>{this.state.descriptionLabel}</Text>
+                    <View style={{ backgroundColor: BaseColor.Red, width: widthToDp("90%"), alignSelf: 'center', borderRadius: 10 }}>
+                        <LabelComponent
+                            stepName={this.state.descriptionLabel}
+                            asyncKey={"cropSteps"}
+                            index={2}
+                        />
                         <ScrollView nestedScrollEnabled={true}>
-                            <View style={{ backgroundColor: 'white', width: widthToDp("90%"), height: heightToDp("43%"), borderBottomLeftRadius: 10, borderBottomRightRadius: 10, marginTop: heightToDp("2%") }}>
+                            <View style={{ backgroundColor: 'white', width: widthToDp("90%"), borderBottomLeftRadius: 10, borderBottomRightRadius: 10 }}>
                                 {
                                     this.state.textLanguageChange === '0' ? <Text style={{ marginLeft: widthToDp("2%"), marginTop: heightToDp("1%"), fontFamily: 'Oswald-Light' }}>{this.state.englishDescription}</Text> : ((this.state.textLanguageChange === '1') ? <Text style={{ marginLeft: widthToDp("2%"), marginTop: heightToDp("1%"), fontFamily: 'Oswald-Light' }}>{this.state.hindiDescription}</Text> : ((this.state.textLanguageChange === '2') ? <Text style={{ marginLeft: widthToDp("2%"), marginTop: heightToDp("1%"), fontFamily: 'Oswald-Light' }}>{this.state.hoDescription}</Text> : ((this.state.textLanguageChange === '3') ? <Text style={{ marginLeft: widthToDp("2%"), marginTop: heightToDp("1%"), fontFamily: 'Oswald-Light' }}>{this.state.odiaDescription}</Text> : ((this.state.textLanguageChange === '4') ? <Text style={{ marginLeft: widthToDp("2%"), marginTop: heightToDp("1%"), fontFamily: 'Oswald-Light' }}>{this.state.santhaliDescription}</Text> : null))))
                                 }
@@ -526,7 +542,7 @@ export default class StepThreeScreen extends Component {
 
 
                     </View>
-
+                    
 
                     <View style={{ backgroundColor: BaseColor.Red, width: widthToDp("90%"), height: heightToDp("30%"), alignSelf: 'center', marginTop: heightToDp("2%"), borderRadius: 10 }}>
                         <Text style={{ color: 'white', marginLeft: widthToDp("4%"), marginTop: heightToDp('1.5%'), fontSize: widthToDp("5%"), fontFamily: 'Oswald-Medium' }}>{this.state.selectedItemLabel}</Text>

@@ -10,19 +10,18 @@ var Sound = require('react-native-sound');
 export default class LabelComponent extends React.Component {
     state = {};
 
-    checkAudioFileExistence = async () => {
+    checkAudioFileExistence = async (audio) => {
         let files = await RNFetchBlob.fs.ls(RNFetchBlob.fs.dirs.PictureDir);
-        if(files.includes(this.state.stepAudio)) {
+        if(files.includes("/storage/emulated/0/Pictures/image_" + audio)) {
             return true;
         } else {
             return false;
         }
     }
     
-    playSound = () => {
-        if(this.checkAudioFileExistence()) {
-            var sound = new Sound(this.state.stepAudio, Sound.MAIN_BUNDLE, (error) => {
-                console.warn(this.state.stepAudio)
+    playSound = (audio) => {
+        if(this.checkAudioFileExistence(audio)) {
+            var sound = new Sound("/storage/emulated/0/Pictures/image_" + audio, Sound.MAIN_BUNDLE, (error) => {
             if (error) {
                 console.log('failed to load the sound', error);
                 return;
@@ -45,62 +44,74 @@ export default class LabelComponent extends React.Component {
         } else return;
     }
 
-    componentDidMount = async() => {
+    setAudio = async () => {
         try {
             let language = await AsyncStorage.getItem('language')
-            let labelData = JSON.parse(await AsyncStorage.getItem("labelsData"));
+            let offlineData = JSON.parse(await AsyncStorage.getItem("offlineData"));
             switch(language) {
                 case "en" : 
-                    this.setState({stepAudio: "/storage/emulated/0/Pictures/image_" + labelData[0].labels[0].audioEnglish})
+                    this.setState({stepAudio: offlineData[0][this.props.asyncKey][this.props.index].audioEnglish})
                     break;
                 case "hi" :
-                    this.setState({stepAudio: "/storage/emulated/0/Pictures/image_" + labelData[0].labels[0].audioHindi})
+                    this.setState({stepAudio: offlineData[0][this.props.asyncKey][this.props.index].audioHindi})
                     break;
                 case "ho" :
-                    this.setState({stepAudio: "/storage/emulated/0/Pictures/image_" + labelData[0].labels[0].audioHo})
+                    this.setState({stepAudio: offlineData[0][this.props.asyncKey][this.props.index].audioHo})
                     break;
                 case "od" :
-                    this.setState({stepAudio: "/storage/emulated/0/Pictures/image_" + labelData[0].labels[0].audioOdia})
+                    this.setState({stepAudio: offlineData[0][this.props.asyncKey][this.props.index].audioOdia})
                     break;
                 case "san" :
-                    this.setState({stepAudio: "/storage/emulated/0/Pictures/image_" + labelData[0].labels[0].audioSanthali})
+                    this.setState({stepAudio: offlineData[0][this.props.asyncKey][this.props.index].audioSanthali})
                     break;
                 default: 
                     break;
             }
+            console.warn(this.state.stepAudio);
         } catch (e) {
             console.log(e);
         }
     }
+    componentDidMount = () => !this.props.directData ? this.setAudio() : false
 
     render = () => (
         <View style={{
             flexDirection: 'row',
             justifyContent: 'space-between',
+            alignItems: 'center',
             marginHorizontal: widthToDp("3%"), 
-            marginVertical: heightToDp("1.5%")
+            marginVertical: heightToDp(`${this.props.directData ? (this.props.marginVertical ? 1 : 0.5) : 1.5}%`)
         }}>
             <Text 
                 style={{ 
                     color: "#fff", 
-                    width: widthToDp("77%"),
-                    fontSize: widthToDp("5%"), 
+                    width: widthToDp(`${
+                        this.props.directData ? this.props.labelWidth :
+                        this.state.stepAudio ? 77 : 85}%`
+                    ),
+                    fontSize: widthToDp("4.2%"), 
                     fontFamily: 'Oswald-Medium' 
                 }}
             >
-                {this.props.stepName}
+                {this.props.directData ? this.props.labelName : this.props.stepName}
             </Text>
-            <TouchableOpacity 
-                style={{width: widthToDp("20%")}}
-                onPress={this.playSound}
-            >
-                <Icon
-                    name="microphone"
-                    size={30}
-                    color={"#fff"}
-                    // onPress={this.playSound}
-                />
-            </TouchableOpacity>
+            {
+                this.props.isAudioHaving &&
+                <TouchableOpacity 
+                    style={{width: widthToDp(`${this.props.directData ? 15 : 20}%`)}}
+                    onPress={
+                        !this.props.directData ? () => this.playSound(this.state.stepAudio) :
+                        () => this.playSound(this.props.audioFile)
+                    }
+                >
+                    <Icon
+                        name="microphone"
+                        size={30}
+                        color={"#fff"}
+                        // onPress={this.playSound}
+                    />
+                </TouchableOpacity>
+            }            
         </View>
     )
 }

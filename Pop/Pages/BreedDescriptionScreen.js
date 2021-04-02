@@ -282,6 +282,8 @@ export default class BreedDescriptionScreen extends Component {
                     <View style={{ backgroundColor: BaseColor.Red, height: heightToDp("80%"), alignSelf: 'center', width: widthToDp("90%"), borderRadius: 10, marginTop: heightToDp('1.5%') }}>
                         <LabelComponent
                             stepName={this.state.stepName}
+                            asyncKey={"livestockStep"}
+                            index={this.state.livestockName==="Backyard Poultry" ? 5 : this.state.livestockName==="Goat" ? 0 : this.state.livestockName==="Pig" ? 3 : 0}
                         />
                         <View style={{ backgroundColor: "white", height: heightToDp("100%"), alignSelf: 'center', width: widthToDp("90%"), marginTop: heightToDp('0%'), borderBottomLeftRadius: 10, borderBottomRightRadius: 10 }}>
                             <View style={{}}>

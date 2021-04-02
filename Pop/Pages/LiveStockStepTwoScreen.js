@@ -295,6 +295,8 @@ export default class LiveStockStepTwoScreen extends Component {
                     <View style={{backgroundColor:BaseColor.Red,height:heightToDp("100%"),alignSelf:'center',width:widthToDp("90%"),borderRadius:10, marginTop: heightToDp('1.5%')}}>
                         <LabelComponent
                             stepName={this.state.stepName}
+                            asyncKey={"livestockStep"}
+                            index={this.state.livestockName==="Backyard Poultry" ? 6 : this.state.livestockName==="Goat" ? 1 : this.state.livestockName==="Pig" ? 4 : 0}
                         />
                         <View style={{backgroundColor:"white",height:heightToDp("98.5%"),alignSelf:'center',width:widthToDp("90%"), borderBottomLeftRadius:10,borderBottomRightRadius:10}}>
                             <View style={{}}>
