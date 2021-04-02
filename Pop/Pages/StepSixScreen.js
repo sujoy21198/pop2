@@ -64,8 +64,8 @@ export default class StepSixScreen extends Component {
             odiaTitleDescription: '',
             stepImage: '',
             multipleMaterials: [],
-            sumOfMaterials:'',
-            saveButtonClicked:false,
+            sumOfMaterials: '',
+            saveButtonClicked: false,
             stepLabel: '',
             ploughingTypeLabel: ''
         }
@@ -99,7 +99,7 @@ export default class StepSixScreen extends Component {
             var specificObject = parsed[0]
             var cropSpecificSteps = specificObject.cropSteps.filter((i) => i.cropId === this.state._id)
             this.setState({ cropNameLanguageChangeArray: cropSpecificSteps[5].cropData, cropSpecificSteps })
-            this.setState({numberOfSteps : cropSpecificSteps.length})
+            this.setState({ numberOfSteps: cropSpecificSteps.length })
             var stepId = cropSpecificSteps[5]._id
             var cropSpecificMaterial = specificObject.cropsMaterials.filter((i) => i.stepId === stepId)
             this.setState({ multipleMaterials: cropSpecificMaterial })
@@ -229,7 +229,7 @@ export default class StepSixScreen extends Component {
         //this.showData()
     }
 
-    setMaterialPrice = (data , index) => {
+    setMaterialPrice = (data, index) => {
         // var lastValue = ''
         // alert(index)
         // this.state.materialPrice.push({'data': data , 'materialName' : materialName})
@@ -241,14 +241,14 @@ export default class StepSixScreen extends Component {
         const test = [...this.state.materialPrice]
         test[index] = data
         this.state.materialPrice = test
-        var sum  = this.state.materialPrice.reduce((a,b) => parseInt(a)+parseInt(b),0)
+        var sum = this.state.materialPrice.reduce((a, b) => parseInt(a) + parseInt(b), 0)
         this.state.sumOfMaterials = sum
         console.log(this.state.sumOfMaterials)
     }
 
-    setValueToPatch = async() => {
-        try{
-            this.state.saveButtonClicked= true
+    setValueToPatch = async () => {
+        try {
+            this.state.saveButtonClicked = true
             let username = await AsyncStorage.getItem('username')
             let user = await AsyncStorage.getItem('user')
             let parsed = JSON.parse(user)
@@ -256,9 +256,9 @@ export default class StepSixScreen extends Component {
             var specificPatch = specific.patch.find((i) => i.patchName === this.state.patchName)
             specificPatch.step6 = this.state.sumOfMaterials
             await AsyncStorage.setItem('user', JSON.stringify(parsed))
-            console.log(specificPatch,"step6")
-        }catch(error){
-            console.log(error,"setValueToPatch")
+            console.log(specificPatch, "step6")
+        } catch (error) {
+            console.log(error, "setValueToPatch")
         }
     }
 
@@ -328,9 +328,9 @@ export default class StepSixScreen extends Component {
         }
     }
 
-    setStepDataIntoPatch = async() => {
+    setStepDataIntoPatch = async () => {
         let files = await RNFetchBlob.fs.ls(RNFetchBlob.fs.dirs.MovieDir)
-        if(
+        if (
             (
                 this.state.cropSpecificSteps && this.state.cropSpecificSteps.length > 0 &&
                 this.state.cropSpecificSteps[5].videoFile &&
@@ -343,7 +343,7 @@ export default class StepSixScreen extends Component {
                 text: 'Please pause the video before going to next screen'
             })
         } else {
-            try{
+            try {
                 let username = await AsyncStorage.getItem('username')
                 let user = await AsyncStorage.getItem('cropData');
                 let parsed = JSON.parse(user);
@@ -388,15 +388,15 @@ export default class StepSixScreen extends Component {
                         })
                     }
                 }
-                AsyncStorage.setItem("jump","StepSixScreen")
-            }catch(error){
+                AsyncStorage.setItem("jump", "StepSixScreen")
+            } catch (error) {
                 console.log(error)
             }
         }
     }
 
 
-    goToPreviousStep = () =>{
+    goToPreviousStep = () => {
         this.props.navigation.navigate({
             name: 'StepSixScreen',
             params: {
@@ -514,13 +514,15 @@ export default class StepSixScreen extends Component {
 
                     <View style={{ backgroundColor: BaseColor.Red, width: widthToDp("90%"), height: heightToDp("50%"), alignSelf: 'center', marginTop: heightToDp("2%"), borderRadius: 10 }}>
                         <Text style={{ color: 'white', marginLeft: widthToDp("4%"), marginTop: heightToDp('1.5%'), fontSize: widthToDp("5%"), fontFamily: 'Oswald-Medium' }}>{this.state.descriptionLabel}</Text>
-                        <ScrollView nestedScrollEnabled={true}>
-                            <View style={{ backgroundColor: 'white', width: widthToDp("90%"), height: heightToDp("43%"), borderBottomLeftRadius: 10, borderBottomRightRadius: 10, marginTop: heightToDp("2%") }}>
+
+                        <View style={{ backgroundColor: 'white', width: widthToDp("90%"), height: heightToDp("43%"), borderBottomLeftRadius: 10, borderBottomRightRadius: 10, marginTop: heightToDp("2%") }}>
+                            <ScrollView nestedScrollEnabled={true}>
                                 {
-                                    this.state.textLanguageChange === '0' ? <Text style={{ marginLeft: widthToDp("2%"), marginTop: heightToDp("1%"), fontFamily: 'Oswald-Light' }}>{this.state.englishDescription}</Text> : ((this.state.textLanguageChange === '1') ? <Text style={{ marginLeft: widthToDp("2%"), marginTop: heightToDp("1%"), fontFamily: 'Oswald-Light' }}>{this.state.hindiDescription}</Text> : ((this.state.textLanguageChange === '2') ? <Text style={{ marginLeft: widthToDp("2%"), marginTop: heightToDp("1%"), fontFamily: 'Oswald-Light' }}>{this.state.hoDescription}</Text> : ((this.state.textLanguageChange === '3') ? <Text style={{ marginLeft: widthToDp("2%"), marginTop: heightToDp("1%"), fontFamily: 'Oswald-Light' }}>{this.state.odiaDescription}</Text> : ((this.state.textLanguageChange === '4') ? <Text style={{ marginLeft: widthToDp("2%"), marginTop: heightToDp("1%"), fontFamily: 'Oswald-Light' }}>{this.state.santhaliDescription}</Text> : null))))
+                                    this.state.textLanguageChange === '0' ? <HTML source={{ html: this.state.englishDescription || '<p></p>' }} containerStyle={{ elevation: 10, marginTop: heightToDp("2%"), marginLeft: widthToDp("2%") }} /> : ((this.state.textLanguageChange === '1') ? <HTML source={{ html: this.state.hindiDescription || '<p></p>' }} containerStyle={{ elevation: 10, marginTop: heightToDp("2%"), marginLeft: widthToDp("2%") }} /> : ((this.state.textLanguageChange === '2') ? <HTML source={{ html: this.state.hoDescription || '<p></p>' }} containerStyle={{ elevation: 10, marginTop: heightToDp("2%"), marginLeft: widthToDp("2%") }} /> : ((this.state.textLanguageChange === '3') ? <HTML source={{ html: this.state.odiaDescription || '<p></p>' }} containerStyle={{ elevation: 10, marginTop: heightToDp("2%"), marginLeft: widthToDp("2%") }} /> : ((this.state.textLanguageChange === '4') ? <HTML source={{ html: this.state.santhaliDescription || '<p></p>' }} containerStyle={{ elevation: 10, marginTop: heightToDp("2%"), marginLeft: widthToDp("2%") }} /> : null))))
                                 }
-                            </View>
-                        </ScrollView>
+                            </ScrollView>
+                        </View>
+
 
 
                     </View>

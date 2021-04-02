@@ -99,7 +99,7 @@ export default class StepTwoScreen extends Component {
             var specificObject = parsed[0]
             var cropSpecificSteps = specificObject.cropSteps.filter((i) => i.cropId === this.state._id)
             this.setState({ cropNameLanguageChangeArray: cropSpecificSteps[1].cropData, cropSpecificSteps })
-            this.setState({numberOfSteps : cropSpecificSteps.length})
+            this.setState({ numberOfSteps: cropSpecificSteps.length })
 
             var stepId = cropSpecificSteps[1]._id
             var cropSpecificMaterial = specificObject.cropsMaterials.filter((i) => i.stepId === stepId)
@@ -334,7 +334,7 @@ export default class StepTwoScreen extends Component {
 
     setStepDataIntoPatch = async () => {
         let files = await RNFetchBlob.fs.ls(RNFetchBlob.fs.dirs.MovieDir)
-        if(
+        if (
             (
                 this.state.cropSpecificSteps && this.state.cropSpecificSteps.length > 0 &&
                 this.state.cropSpecificSteps[1].videoFile &&
@@ -392,14 +392,14 @@ export default class StepTwoScreen extends Component {
                         })
                     }
                 }
-                AsyncStorage.setItem("jump","StepTwoScreen")
+                AsyncStorage.setItem("jump", "StepTwoScreen")
             } catch (error) {
                 console.log(error)
-            }   
+            }
         }
     }
 
-    goToPreviousStep = () =>{
+    goToPreviousStep = () => {
         this.props.navigation.navigate({
             name: 'StepOneScreen',
             params: {
@@ -498,8 +498,8 @@ export default class StepTwoScreen extends Component {
                                 />
                             </View>
                         </View>
-                    </View>                    
-                    
+                    </View>
+
                     {
                         (
                             this.state.cropSpecificSteps && this.state.cropSpecificSteps.length > 0 &&
@@ -512,17 +512,19 @@ export default class StepTwoScreen extends Component {
                             _id={this.state._id}
                             stepId={1}
                         />
-                    }                    
+                    }
 
                     <View style={{ backgroundColor: BaseColor.Red, width: widthToDp("90%"), height: heightToDp("50%"), alignSelf: 'center', marginTop: heightToDp("2%"), borderRadius: 10 }}>
                         <Text style={{ color: 'white', marginLeft: widthToDp("4%"), marginTop: heightToDp('1.5%'), fontSize: widthToDp("5%"), fontFamily: 'Oswald-Medium' }}>{this.state.descriptionLabel}</Text>
-                        <ScrollView nestedScrollEnabled={true}>
-                            <View style={{ backgroundColor: 'white', width: widthToDp("90%"), height: heightToDp("43%"), borderBottomLeftRadius: 10, borderBottomRightRadius: 10, marginTop: heightToDp("2%") }}>
+
+                        <View style={{ backgroundColor: 'white', width: widthToDp("90%"), height: heightToDp("43%"), borderBottomLeftRadius: 10, borderBottomRightRadius: 10, marginTop: heightToDp("2%") }}>
+                            <ScrollView nestedScrollEnabled={true}>
                                 {
-                                    this.state.textLanguageChange === '0' ? <Text style={{ marginLeft: widthToDp("2%"), marginTop: heightToDp("1%"), fontFamily: 'Oswald-Light' }}>{this.state.englishDescription}</Text> : ((this.state.textLanguageChange === '1') ? <Text style={{ marginLeft: widthToDp("2%"), marginTop: heightToDp("1%"), fontFamily: 'Oswald-Light' }}>{this.state.hindiDescription}</Text> : ((this.state.textLanguageChange === '2') ? <Text style={{ marginLeft: widthToDp("2%"), marginTop: heightToDp("1%"), fontFamily: 'Oswald-Light' }}>{this.state.hoDescription}</Text> : ((this.state.textLanguageChange === '3') ? <Text style={{ marginLeft: widthToDp("2%"), marginTop: heightToDp("1%"), fontFamily: 'Oswald-Light' }}>{this.state.odiaDescription}</Text> : ((this.state.textLanguageChange === '4') ? <Text style={{ marginLeft: widthToDp("2%"), marginTop: heightToDp("1%"), fontFamily: 'Oswald-Light' }}>{this.state.santhaliDescription}</Text> : null))))
+                                    this.state.textLanguageChange === '0' ? <HTML source={{ html: this.state.englishDescription || '<p></p>' }} containerStyle={{ elevation: 10, marginTop: heightToDp("2%"), marginLeft: widthToDp("2%") }} /> : ((this.state.textLanguageChange === '1') ? <HTML source={{ html: this.state.hindiDescription || '<p></p>' }} containerStyle={{ elevation: 10, marginTop: heightToDp("2%"), marginLeft: widthToDp("2%") }} /> : ((this.state.textLanguageChange === '2') ? <HTML source={{ html: this.state.hoDescription || '<p></p>' }} containerStyle={{ elevation: 10, marginTop: heightToDp("2%"), marginLeft: widthToDp("2%") }} /> : ((this.state.textLanguageChange === '3') ? <HTML source={{ html: this.state.odiaDescription || '<p></p>' }} containerStyle={{ elevation: 10, marginTop: heightToDp("2%"), marginLeft: widthToDp("2%") }} /> : ((this.state.textLanguageChange === '4') ? <HTML source={{ html: this.state.santhaliDescription || '<p></p>' }} containerStyle={{ elevation: 10, marginTop: heightToDp("2%"), marginLeft: widthToDp("2%") }} /> : null))))
                                 }
-                            </View>
-                        </ScrollView>
+                            </ScrollView>
+                        </View>
+
 
 
                     </View>
