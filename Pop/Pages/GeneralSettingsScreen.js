@@ -9,7 +9,9 @@ import Sync from 'react-native-vector-icons/AntDesign'
 
 
 export default class GeneralSettingsScreen extends Component {
-
+    state = {
+        refreshLabel: ""
+    };
     go = async () => {
         await AsyncStorage.removeItem('_id')
         
@@ -28,6 +30,54 @@ export default class GeneralSettingsScreen extends Component {
             routes: [{ name: "LanguageScreen" }]
         });
     }
+    componentDidMount = async() => this.setLanguageOnMount();
+
+    setLanguageOnMount = async () => {
+        let defaultLanguage = await AsyncStorage.getItem('language')
+        if (defaultLanguage === 'en') {
+            this.setState({ textLanguageChange: '0' })
+            this.loadlabelsFromStorage()
+        } else if (defaultLanguage === 'hi') {
+            this.setState({ textLanguageChange: '1' })
+            this.loadlabelsFromStorage()
+        } else if (defaultLanguage === 'ho') {
+            this.setState({ textLanguageChange: '2' })
+            this.loadlabelsFromStorage()
+        } else if (defaultLanguage === 'od') {
+            this.setState({ textLanguageChange: '3' })
+            this.loadlabelsFromStorage()
+        } else if (defaultLanguage === 'san') {
+            this.setState({ textLanguageChange: '4' })
+            this.loadlabelsFromStorage()
+        }
+    }
+
+
+    loadlabelsFromStorage = async () => {
+        try {
+            let username = await AsyncStorage.getItem('username')
+            let user = await AsyncStorage.getItem('labelsData');
+            let parsed = JSON.parse(user);
+            var specificObject = parsed[0]
+            var refreshLabel = specificObject.labels.find((i) => i.type === 220)
+            if (this.state.textLanguageChange === '0') {
+                this.setState({ refreshLabel: refreshLabel.nameEnglish })
+            } else if (this.state.textLanguageChange === '1') {
+                this.setState({ refreshLabel: refreshLabel.nameHindi })
+            } else if (this.state.textLanguageChange === '2') {
+                this.setState({ refreshLabel: refreshLabel.nameHo })
+            } else if (this.state.textLanguageChange === '3') {
+                this.setState({ refreshLabel: refreshLabel.nameOdia })
+            } else if (this.state.textLanguageChange === '4') {
+                this.setState({ refreshLabel: refreshLabel.nameSanthali })
+            }
+        } catch (error) {
+            alert(error)
+        }
+        //this.setState({ crops: specificObject.crops })
+        //this.showData()
+    }
+
     render() {
         return (
             <View style={{ 
@@ -58,7 +108,7 @@ export default class GeneralSettingsScreen extends Component {
                     <Text style={{
                         fontSize: 30,
                         marginLeft: widthToDp("4%")
-                    }}>REFRESH APP</Text>
+                    }}>{this.state.refreshLabel}</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                     style={{
@@ -77,7 +127,6 @@ export default class GeneralSettingsScreen extends Component {
                         name="logout"
                         size={40}
                     />
-                    <Text style={{ fontSize: widthToDp("10%"), marginLeft: widthToDp("4%") }}>LOGOUT</Text>
                 </TouchableOpacity>
                 {/* <View style={{ 
                     flex: 1,

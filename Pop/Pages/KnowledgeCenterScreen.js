@@ -307,7 +307,6 @@ export default class KnowledgeCenterScreen extends Component {
                         data={data}
                         bouncesZoom={true}
                         renderItem={({ item, index }) => {
-                            console.warn(item)
                             return (
                             <TouchableOpacity onPress={() => this.checkNavigation(item.name)}>
                                 {/* <View style={{ backgroundColor: 'white', width: widthToDp("46%"), height: heightToDp("30%"), elevation: 10, borderRadius: 10 }}>

@@ -32,7 +32,6 @@ export default class IncomeScreen extends Component {
     }
 
     componentDidMount() {
-        console.warn(this.props.route.params)
         this.loadlabelsFromStorage()
         this.setLanguageOnMount()
     }

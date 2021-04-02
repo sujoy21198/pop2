@@ -67,7 +67,6 @@ export default class LabelComponent extends React.Component {
                 default: 
                     break;
             }
-            console.warn(this.state.stepAudio);
         } catch (e) {
             console.log(e);
         }
