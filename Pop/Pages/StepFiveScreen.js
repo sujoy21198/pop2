@@ -89,7 +89,7 @@ export default class StepFiveScreen extends Component {
         this.setLanguageOnMount()
         this.loadlabelsFromStorage()
         this.getOfflineData()
-        this.checkIfStepExsists()
+        //this.checkIfStepExsists()
     }
 
     checkIfStepExsists = async() => {
@@ -430,6 +430,7 @@ export default class StepFiveScreen extends Component {
     }
 
     goToPreviousStep = () =>{
+        
         this.props.navigation.navigate({
             name: 'StepFourScreen',
             params: {
@@ -661,7 +662,7 @@ export default class StepFiveScreen extends Component {
                     <View style={{ marginBottom: heightToDp("10%") }}></View>
                 </ScrollView>
                 <View style={{ flexDirection: 'row', height: heightToDp("10%"), alignSelf: 'center' }}>
-                    <TouchableOpacity onPress={() => this.goToPreviousStep}>
+                    <TouchableOpacity onPress={() => this.goToPreviousStep()}>
                         <View style={{ backgroundColor: "#fff", height: heightToDp("6%"), width: widthToDp("30%"), borderRadius: 100, alignSelf: 'center', marginTop: heightToDp("2%") }}>
                             <Text style={{ fontSize: widthToDp("4%"), color: "#000", marginTop: heightToDp("1.3%"), alignSelf: 'center', fontFamily: 'Oswald-Medium' }}>{this.state.backButtonText}</Text>
                         </View>

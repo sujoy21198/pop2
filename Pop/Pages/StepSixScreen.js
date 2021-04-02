@@ -399,7 +399,7 @@ export default class StepSixScreen extends Component {
 
     goToPreviousStep = () => {
         this.props.navigation.navigate({
-            name: 'StepSixScreen',
+            name: 'StepFiveScreen',
             params: {
                 cropName: this.state.cropName,
                 _id: this.state._id,

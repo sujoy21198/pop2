@@ -55,7 +55,8 @@ export default class VaccinationScreen extends Component {
             backButtonText: '',
             saveButtonText: '',
             nextButtonText: '',
-            repeatText: ''
+            repeatText: '',
+            expectedAnalysis:''
         }
         this.state.tableHeading = tableHeading
         this.state.value = this.props.route.params.value
@@ -66,7 +67,25 @@ export default class VaccinationScreen extends Component {
     componentDidMount() {
         this.getVaccinesFromOffline();
         this.setLanguageOnMount()
+        this.checkNavigation()
     }
+
+
+    checkNavigation = async() => {
+        try {
+            let username = await AsyncStorage.getItem('username')
+            let user = await AsyncStorage.getItem('offlineData');
+            let parsed = JSON.parse(user);
+            var specificObject = parsed[0]
+            var specificLivestock = specificObject.livestock.find((i) => i.nameEnglish === this.state.livestockName)
+            this.state.expectedAnalysis = specificLivestock.expectedAnalysis
+
+        
+        } catch (error) {
+            alert(error)
+        }
+    }
+
     setLanguageOnMount = async () => {
         let defaultLanguage = await AsyncStorage.getItem('language')
         if (defaultLanguage === 'en') {
@@ -260,7 +279,14 @@ export default class VaccinationScreen extends Component {
         //     index: 0,
         //     routes: [{ name: "DashBoardScreen" }]
         // })
-        if (this.state.value === 0) {
+        if(this.state.expectedAnalysis === false){
+            this.props.navigation.navigate({
+                name: 'DynamicLivestockScreen',
+                params : {
+                    livestockName: this.state.livestockName
+                }
+            })
+        }else if (this.state.value === 0) {
             this.props.navigation.navigate({
                 name: 'LivestockTableScreen',
                 params: {
