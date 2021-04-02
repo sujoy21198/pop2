@@ -41,17 +41,7 @@ export default class CropsScreen extends Component {
     }
 
 
-    getOfflineData = async () => {
-        try {
-            let username = await AsyncStorage.getItem('username')
-            let user = await AsyncStorage.getItem('labelsData');
-            let parsed = JSON.parse(user);
-            var specificObject = parsed[0]
-            console.log(specificObject.labels.find((i) => i.type === 22),"cropsScreen")
-        } catch (error) {
-            console.log(error)
-        }
-    }
+    
 
 
     loadlabelsFromStorage = async () => {
@@ -130,7 +120,7 @@ export default class CropsScreen extends Component {
             let parsed = JSON.parse(user);
             //var specificObject = parsed[0]
             var specificObject = parsed[0]
-            console.log(specificObject.crops)
+            console.log(specificObject.crops,"cropsScreen")
         } catch (error) {
             alert(error)
         }

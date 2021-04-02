@@ -28,7 +28,11 @@ export default class SelectFarmingAreaScreen extends Component {
             languages:[],
             farmingAreaLabel: '',
             submitText: '',
-            measureLabel: ''
+            measureLabel: '',
+            decimalProduce:'',
+            cultivationExpense:'',
+            costPer:'',
+            profitLossPercentage:''
         }
         this.state.landType = this.props.route.params.landType
         this.state._id = this.props.route.params._id
@@ -40,6 +44,23 @@ export default class SelectFarmingAreaScreen extends Component {
     }
     componentDidMount(){
         this.setLanguageOnMount()
+        this.getPricesOfCrops()
+    }
+
+    getPricesOfCrops = async() => {
+        try{
+            let user = await AsyncStorage.getItem('offlineData');
+            let parsed = JSON.parse(user);
+            var specificObject = parsed[0]
+            var specificCrops = specificObject.crops.find((i) => i._id === this.state._id)
+            this.state.decimalProduce = specificCrops.decimalProduce
+            this.state.cultivationExpense = specificCrops.cultivationExpense
+            this.state.costPer = specificCrops.costPer
+            this.state.profitLossPercentage = specificCrops.profitLossPercentage
+            //console.log(this.state.decimalProduce, "SelectFarmingArea")
+        }catch(error){
+            console.log(error,'SelectFarmingAreaScreen')
+        }
     }
 
     setLanguageOnMount = async () => {
@@ -169,15 +190,14 @@ export default class SelectFarmingAreaScreen extends Component {
     }
 
     submitDimensions = () => {
-        if(this.state.cropName === 'Bitter Gourd'){
-            var length = this.state.horizontalCounter * 5
-            var width = this.state.verticalCounter * 5
-            var farmingAreaInSqFeet = length*width
-            var farmingAreaInDecimal = parseFloat(farmingAreaInSqFeet/436).toFixed(2)
-            var productionInKg = parseFloat((400/10)* farmingAreaInDecimal).toFixed(2)
-            var costOfCultivatinPerTenDecimal = parseFloat((2810/10)* farmingAreaInDecimal).toFixed(2)//expense
-            var costPerKg = parseFloat(40 * productionInKg).toFixed(2) //income
-
+        var length = this.state.horizontalCounter * 5
+        var width = this.state.verticalCounter * 5
+        var farmingAreaInSqFeet = length*width
+        var farmingAreaInDecimal = parseFloat(farmingAreaInSqFeet/436).toFixed(2)
+        var productionInKg = parseFloat((this.state.decimalProduce/10)* farmingAreaInDecimal).toFixed(2)
+        var costOfCultivatinPerTenDecimal = parseFloat((this.state.cultivationExpense/10)* farmingAreaInDecimal).toFixed(2)//expense
+        var costPerKg = parseFloat(this.state.costPer * productionInKg).toFixed(2) //income
+        
             this.props.navigation.navigate({
                 name: 'AnalysisScreen',
                 params: {
@@ -189,113 +209,140 @@ export default class SelectFarmingAreaScreen extends Component {
                     costOfCultivatinPerTenDecimal: costOfCultivatinPerTenDecimal,
                     costPerKg: costPerKg,
                     productionInKg:productionInKg,
-                    cost: 40,
+                    cost: this.state.costPer,
                     patchName : this.state.patchName
                 }
             })
 
-            //alert(this.state.patchName)
 
-        }else if(this.state.cropName === 'Chilli'){
-            var length = this.state.horizontalCounter * 5
-            var width = this.state.verticalCounter * 5
-            var farmingAreaInSqFeet = length*width
-            var farmingAreaInDecimal = parseFloat(farmingAreaInSqFeet/436).toFixed(2)
-            var productionInKg = parseFloat((400/10)* farmingAreaInDecimal).toFixed(2)
-            var costOfCultivatinPerTenDecimal = parseFloat((2810/10)* farmingAreaInDecimal).toFixed(2)//expense
-            var costPerKg = parseFloat(40 * productionInKg).toFixed(2) //income
 
-            this.props.navigation.navigate({
-                name: 'AnalysisScreen',
-                params: {
-                    landType: this.state.landType,
-                    _id: this.state._id,
-                    imageFile: this.state.imageFile,
-                    cropName: this.state.cropName,
-                    farmingAreaInDecimal: farmingAreaInDecimal,
-                    costOfCultivatinPerTenDecimal: costOfCultivatinPerTenDecimal,
-                    costPerKg: costPerKg,
-                    productionInKg:productionInKg,
-                    cost: 40,
-                    patchName : this.state.patchName
-                }
-            })
+        // if(this.state.cropName === 'Bitter Gourd'){
+        //     var length = this.state.horizontalCounter * 5
+        //     var width = this.state.verticalCounter * 5
+        //     var farmingAreaInSqFeet = length*width
+        //     var farmingAreaInDecimal = parseFloat(farmingAreaInSqFeet/436).toFixed(2)
+        //     var productionInKg = parseFloat((400/10)* farmingAreaInDecimal).toFixed(2)
+        //     var costOfCultivatinPerTenDecimal = parseFloat((2810/10)* farmingAreaInDecimal).toFixed(2)//expense
+        //     var costPerKg = parseFloat(40 * productionInKg).toFixed(2) //income
 
-        }else if(this.state.cropName === 'Onion'){
-            var length = this.state.horizontalCounter * 5
-            var width = this.state.verticalCounter * 5
-            var farmingAreaInSqFeet = length*width
-            var farmingAreaInDecimal = parseFloat(farmingAreaInSqFeet/436).toFixed(2)
-            var productionInKg = parseFloat((400/10)* farmingAreaInDecimal).toFixed(2)
-            var costOfCultivatinPerTenDecimal = parseFloat((2810/10)* farmingAreaInDecimal).toFixed(2)//expense
-            var costPerKg = parseFloat(35 * productionInKg).toFixed(2) //income
+        //     this.props.navigation.navigate({
+        //         name: 'AnalysisScreen',
+        //         params: {
+        //             landType: this.state.landType,
+        //             _id: this.state._id,
+        //             imageFile: this.state.imageFile,
+        //             cropName: this.state.cropName,
+        //             farmingAreaInDecimal: farmingAreaInDecimal,
+        //             costOfCultivatinPerTenDecimal: costOfCultivatinPerTenDecimal,
+        //             costPerKg: costPerKg,
+        //             productionInKg:productionInKg,
+        //             cost: 40,
+        //             patchName : this.state.patchName
+        //         }
+        //     })
 
-            this.props.navigation.navigate({
-                name: 'AnalysisScreen',
-                params: {
-                    landType: this.state.landType,
-                    _id: this.state._id,
-                    imageFile: this.state.imageFile,
-                    cropName: this.state.cropName,
-                    farmingAreaInDecimal: farmingAreaInDecimal,
-                    costOfCultivatinPerTenDecimal: costOfCultivatinPerTenDecimal,
-                    costPerKg: costPerKg,
-                    productionInKg:productionInKg,
-                    cost: 35,
-                    patchName : this.state.patchName
-                }
-            })
+        //     //alert(this.state.patchName)
 
-        }else if(this.state.cropName === 'Paddy'){
-            var length = this.state.horizontalCounter * 5
-            var width = this.state.verticalCounter * 5
-            var farmingAreaInSqFeet = length*width
-            var farmingAreaInDecimal = parseFloat(farmingAreaInSqFeet/436).toFixed(2)
-            var productionInKg = parseFloat((400/10)* farmingAreaInDecimal).toFixed(2)
-            var costOfCultivatinPerTenDecimal = parseFloat((2810/10)* farmingAreaInDecimal).toFixed(2)//expense
-            var costPerKg = parseFloat(25 * productionInKg).toFixed(2) //income
+        // }else if(this.state.cropName === 'Chilli'){
+        //     var length = this.state.horizontalCounter * 5
+        //     var width = this.state.verticalCounter * 5
+        //     var farmingAreaInSqFeet = length*width
+        //     var farmingAreaInDecimal = parseFloat(farmingAreaInSqFeet/436).toFixed(2)
+        //     var productionInKg = parseFloat((400/10)* farmingAreaInDecimal).toFixed(2)
+        //     var costOfCultivatinPerTenDecimal = parseFloat((2810/10)* farmingAreaInDecimal).toFixed(2)//expense
+        //     var costPerKg = parseFloat(40 * productionInKg).toFixed(2) //income
 
-            this.props.navigation.navigate({
-                name: 'AnalysisScreen',
-                params: {
-                    landType: this.state.landType,
-                    _id: this.state._id,
-                    imageFile: this.state.imageFile,
-                    cropName: this.state.cropName,
-                    farmingAreaInDecimal: farmingAreaInDecimal,
-                    costOfCultivatinPerTenDecimal: costOfCultivatinPerTenDecimal,
-                    costPerKg: costPerKg,
-                    productionInKg:productionInKg,
-                    cost: 25,
-                    patchName : this.state.patchName
-                }
-            })
+        //     this.props.navigation.navigate({
+        //         name: 'AnalysisScreen',
+        //         params: {
+        //             landType: this.state.landType,
+        //             _id: this.state._id,
+        //             imageFile: this.state.imageFile,
+        //             cropName: this.state.cropName,
+        //             farmingAreaInDecimal: farmingAreaInDecimal,
+        //             costOfCultivatinPerTenDecimal: costOfCultivatinPerTenDecimal,
+        //             costPerKg: costPerKg,
+        //             productionInKg:productionInKg,
+        //             cost: 40,
+        //             patchName : this.state.patchName
+        //         }
+        //     })
 
-        }else if(this.state.cropName === 'Tomato'){
-            var length = this.state.horizontalCounter * 5
-            var width = this.state.verticalCounter * 5
-            var farmingAreaInSqFeet = length*width
-            var farmingAreaInDecimal = parseFloat(farmingAreaInSqFeet/436).toFixed(2)
-            var productionInKg = parseFloat((400/10)* farmingAreaInDecimal).toFixed(2)
-            var costOfCultivatinPerTenDecimal = parseFloat((2810/10)* farmingAreaInDecimal).toFixed(2)//expense
-            var costPerKg = parseFloat(35 * productionInKg).toFixed(2) //income
+        // }else if(this.state.cropName === 'Onion'){
+        //     var length = this.state.horizontalCounter * 5
+        //     var width = this.state.verticalCounter * 5
+        //     var farmingAreaInSqFeet = length*width
+        //     var farmingAreaInDecimal = parseFloat(farmingAreaInSqFeet/436).toFixed(2)
+        //     var productionInKg = parseFloat((400/10)* farmingAreaInDecimal).toFixed(2)
+        //     var costOfCultivatinPerTenDecimal = parseFloat((2810/10)* farmingAreaInDecimal).toFixed(2)//expense
+        //     var costPerKg = parseFloat(35 * productionInKg).toFixed(2) //income
 
-            this.props.navigation.navigate({
-                name: 'AnalysisScreen',
-                params: {
-                    landType: this.state.landType,
-                    _id: this.state._id,
-                    imageFile: this.state.imageFile,
-                    cropName: this.state.cropName,
-                    farmingAreaInDecimal: farmingAreaInDecimal,
-                    costOfCultivatinPerTenDecimal: costOfCultivatinPerTenDecimal,
-                    costPerKg: costPerKg,
-                    productionInKg:productionInKg,
-                    cost: 35,
-                    patchName : this.state.patchName
-                }
-            })
-        }
+        //     this.props.navigation.navigate({
+        //         name: 'AnalysisScreen',
+        //         params: {
+        //             landType: this.state.landType,
+        //             _id: this.state._id,
+        //             imageFile: this.state.imageFile,
+        //             cropName: this.state.cropName,
+        //             farmingAreaInDecimal: farmingAreaInDecimal,
+        //             costOfCultivatinPerTenDecimal: costOfCultivatinPerTenDecimal,
+        //             costPerKg: costPerKg,
+        //             productionInKg:productionInKg,
+        //             cost: 35,
+        //             patchName : this.state.patchName
+        //         }
+        //     })
+
+        // }else if(this.state.cropName === 'Paddy'){
+        //     var length = this.state.horizontalCounter * 5
+        //     var width = this.state.verticalCounter * 5
+        //     var farmingAreaInSqFeet = length*width
+        //     var farmingAreaInDecimal = parseFloat(farmingAreaInSqFeet/436).toFixed(2)
+        //     var productionInKg = parseFloat((400/10)* farmingAreaInDecimal).toFixed(2)
+        //     var costOfCultivatinPerTenDecimal = parseFloat((2810/10)* farmingAreaInDecimal).toFixed(2)//expense
+        //     var costPerKg = parseFloat(25 * productionInKg).toFixed(2) //income
+
+        //     this.props.navigation.navigate({
+        //         name: 'AnalysisScreen',
+        //         params: {
+        //             landType: this.state.landType,
+        //             _id: this.state._id,
+        //             imageFile: this.state.imageFile,
+        //             cropName: this.state.cropName,
+        //             farmingAreaInDecimal: farmingAreaInDecimal,
+        //             costOfCultivatinPerTenDecimal: costOfCultivatinPerTenDecimal,
+        //             costPerKg: costPerKg,
+        //             productionInKg:productionInKg,
+        //             cost: 25,
+        //             patchName : this.state.patchName
+        //         }
+        //     })
+
+        // }else if(this.state.cropName === 'Tomato'){
+        //     var length = this.state.horizontalCounter * 5
+        //     var width = this.state.verticalCounter * 5
+        //     var farmingAreaInSqFeet = length*width
+        //     var farmingAreaInDecimal = parseFloat(farmingAreaInSqFeet/436).toFixed(2)
+        //     var productionInKg = parseFloat((400/10)* farmingAreaInDecimal).toFixed(2)
+        //     var costOfCultivatinPerTenDecimal = parseFloat((2810/10)* farmingAreaInDecimal).toFixed(2)//expense
+        //     var costPerKg = parseFloat(35 * productionInKg).toFixed(2) //income
+
+        //     this.props.navigation.navigate({
+        //         name: 'AnalysisScreen',
+        //         params: {
+        //             landType: this.state.landType,
+        //             _id: this.state._id,
+        //             imageFile: this.state.imageFile,
+        //             cropName: this.state.cropName,
+        //             farmingAreaInDecimal: farmingAreaInDecimal,
+        //             costOfCultivatinPerTenDecimal: costOfCultivatinPerTenDecimal,
+        //             costPerKg: costPerKg,
+        //             productionInKg:productionInKg,
+        //             cost: 35,
+        //             patchName : this.state.patchName
+        //         }
+        //     })
+        // }
     }
 
 

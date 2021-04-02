@@ -37,7 +37,7 @@ export default class LandTypeScreen extends Component {
             expectedAnalysisLabel: '',
             actualAnalysisLabel: '',
             landTypeLabel: '',
-            areaLabel: '', 
+            areaLabel: '',
             descriptionLabel: '',
             amountLabel: '',
             totalCostOfCultivationLabel: '',
@@ -50,7 +50,12 @@ export default class LandTypeScreen extends Component {
             highLandLabel: '',
             areaLabel: '',
             decimalLabel: '',
-            languages: ''
+            languages: '',
+            materialEnglish: '',
+            materialHindi: '',
+            materialOdia: '',
+            materialSanthali: '',
+            materialHo: ''
         }
         this.state.landType = this.props.route.params.landType
         this.state._id = this.props.route.params._id
@@ -78,7 +83,7 @@ export default class LandTypeScreen extends Component {
             var sepcific = parsed.find((i) => i.username === username)
             var valueArr = sepcific.costBenifitAnalysis.map(function (item) { return item.patchName })
             if (valueArr.includes(this.state.patchName)) {
-                console.log("Already created")
+                //console.log("Already created")
                 //console.log(sepcific.costBenifitAnalysis)
             } else {
                 sepcific.costBenifitAnalysis.push(analysisObject)
@@ -90,9 +95,26 @@ export default class LandTypeScreen extends Component {
         }
     }
 
-    componentDidMount = () =>  {
-        
+    componentDidMount = () => {
         this.setLanguageOnMount()
+        this.getPricesOfCrops()
+    }
+
+    getPricesOfCrops = async () => {
+        try {
+            let user = await AsyncStorage.getItem('offlineData');
+            let parsed = JSON.parse(user);
+            var specificObject = parsed[0]
+            var specificCrops = specificObject.crops.find((i) => i._id === this.state._id)
+            this.state.materialEnglish = specificCrops.materialEnglish
+            this.state.materialHindi = specificCrops.materialHindi
+            this.state.materialHo = specificCrops.materialHo
+            this.state.materialOdia = specificCrops.materialOdia
+            this.state.materialSanthali = specificCrops.materialSanthali
+            console.log(specificCrops.materialEnglish, "AnalysisScreen")
+        } catch (error) {
+            console.log(error, 'AnalysisScreen')
+        }
     }
 
     setLanguageOnMount = async () => {
@@ -138,7 +160,7 @@ export default class LandTypeScreen extends Component {
             var doneLabel = specificObject.labels.find((i) => i.type === 39)
             var decimalLabel = specificObject.labels.find((i) => i.type === 188)
             if (this.state.textLanguageChange === '0') {
-                this.setState({ 
+                this.setState({
                     costBenefitAnalysisLabel: costBenefitAnalysisLabel.nameEnglish,
                     expectedAnalysisLabel: expectedAnalysisLabel.nameEnglish,
                     actualAnalysisLabel: actualAnalysisLabel.nameEnglish,
@@ -157,7 +179,7 @@ export default class LandTypeScreen extends Component {
                     decimalLabel: decimalLabel.nameEnglish,
                 })
             } else if (this.state.textLanguageChange === '1') {
-                this.setState({ 
+                this.setState({
                     costBenefitAnalysisLabel: costBenefitAnalysisLabel.nameHindi,
                     expectedAnalysisLabel: expectedAnalysisLabel.nameHindi,
                     actualAnalysisLabel: actualAnalysisLabel.nameHindi,
@@ -176,11 +198,11 @@ export default class LandTypeScreen extends Component {
                     decimalLabel: decimalLabel.nameHindi,
                 })
             } else if (this.state.textLanguageChange === '2') {
-                this.setState({ 
+                this.setState({
                     costBenefitAnalysisLabel: costBenefitAnalysisLabel.nameHo,
                     expectedAnalysisLabel: expectedAnalysisLabel.nameHo,
                     actualAnalysisLabel: actualAnalysisLabel.nameHo,
-                    landTypeLabel: landTypeLabel.nameHo,                    
+                    landTypeLabel: landTypeLabel.nameHo,
                     areaLabel: areaLabel.nameHo,
                     highLandLabel: highLandLabel.nameHo,
                     descriptionLabel: descriptionLabel.nameHo,
@@ -195,11 +217,11 @@ export default class LandTypeScreen extends Component {
                     decimalLabel: decimalLabel.nameHo,
                 })
             } else if (this.state.textLanguageChange === '3') {
-                this.setState({ 
+                this.setState({
                     costBenefitAnalysisLabel: costBenefitAnalysisLabel.nameOdia,
                     expectedAnalysisLabel: expectedAnalysisLabel.nameOdia,
                     actualAnalysisLabel: actualAnalysisLabel.nameOdia,
-                    landTypeLabel: landTypeLabel.nameOdia,           
+                    landTypeLabel: landTypeLabel.nameOdia,
                     areaLabel: areaLabel.nameOdia,
                     highLandLabel: highLandLabel.nameOdia,
                     descriptionLabel: descriptionLabel.nameOdia,
@@ -214,11 +236,11 @@ export default class LandTypeScreen extends Component {
                     decimalLabel: decimalLabel.nameOdia,
                 })
             } else if (this.state.textLanguageChange === '4') {
-                this.setState({ 
+                this.setState({
                     costBenefitAnalysisLabel: costBenefitAnalysisLabel.nameSanthali,
                     expectedAnalysisLabel: expectedAnalysisLabel.nameSanthali,
                     actualAnalysisLabel: actualAnalysisLabel.nameSanthali,
-                    landTypeLabel: landTypeLabel.nameSanthali, 
+                    landTypeLabel: landTypeLabel.nameSanthali,
                     areaLabel: areaLabel.nameSanthali,
                     highLandLabel: highLandLabel.nameSanthali,
                     descriptionLabel: descriptionLabel.nameSanthali,
@@ -379,9 +401,24 @@ export default class LandTypeScreen extends Component {
                                 </View>
                                 <Image
                                     style={{ height: heightToDp("20%"), width: widthToDp("50%"), marginTop: heightToDp("2%"), marginLeft: widthToDp("7%"), borderRadius: 10 }}
-                                    source={{ uri: 'file:///storage/emulated/0/Pictures/image_' +  this.state.imageFile }}
+                                    source={{ uri: 'file:///storage/emulated/0/Pictures/image_' + this.state.imageFile }}
                                 />
                             </View>
+                        </View>
+                    </View>
+
+
+                    <View style={{ backgroundColor: BaseColor.Red, width: widthToDp("90%"), height: heightToDp("30%"), alignSelf: 'center', marginTop: heightToDp("2%"), borderRadius: 10 }}>
+                        <Text style={{ color: 'white', marginLeft: widthToDp("4%"), marginTop: heightToDp('1.5%'), fontSize: widthToDp("5%"), fontFamily: 'Oswald-Medium', height: heightToDp("4%") }}>MATERIALS</Text>
+                        <View style={{ backgroundColor: 'white', width: widthToDp("90%"), height: heightToDp("23.5%"), borderBottomLeftRadius: 10, borderBottomRightRadius: 10, marginTop: heightToDp("2%") }}>
+                            <ScrollView nestedScrollEnabled={true}>
+                                <View style={{ marginLeft: widthToDp("4%")}}>
+                                    {
+                                        this.state.textLanguageChange === '0' ? <Text style={{ fontSize: widthToDp("5%"), fontFamily: 'Oswald-Medium'}}>{this.state.materialEnglish}</Text> : ((this.state.textLanguageChange === '1') ? <Text style={{ fontSize: widthToDp("5%"), fontFamily: 'Oswald-Medium'}}>{this.state.materialHindi}</Text> : ((this.state.textLanguageChange === '2') ? <Text style={{ fontSize: widthToDp("5%"), fontFamily: 'Oswald-Medium'}}>{this.state.materialHo}</Text> : ((this.state.textLanguageChange === '3') ? <Text style={{ fontSize: widthToDp("5%"), fontFamily: 'Oswald-Medium'}}>{this.state.materialOdia}</Text> : ((this.state.textLanguageChange === '4') ? <Text style={{ fontSize: widthToDp("5%"), fontFamily: 'Oswald-Medium'}}>{this.state.materialSanthali}</Text> : null))))
+                                    }
+                                </View>
+
+                            </ScrollView>
                         </View>
                     </View>
 
@@ -400,7 +437,7 @@ export default class LandTypeScreen extends Component {
                                     }}>{this.state.descriptionLabel}</Text>
                                 </View>
 
-                                <Text style={{ marginLeft: widthToDp("30%"), fontFamily: 'Oswald-Medium',fontSize: widthToDp('3.1%') }}>{this.state.amountLabel}</Text>
+                                <Text style={{ marginLeft: widthToDp("30%"), fontFamily: 'Oswald-Medium', fontSize: widthToDp('3.1%') }}>{this.state.amountLabel}</Text>
                             </View>
                             <View style={{ borderBottomColor: 'black', borderBottomWidth: 1, marginTop: heightToDp('1.5%'), width: widthToDp("90%") }}></View>
                             <View style={{ flexDirection: 'row', marginLeft: widthToDp("4%"), marginTop: heightToDp('2%') }}>
@@ -408,44 +445,44 @@ export default class LandTypeScreen extends Component {
                                     width
                                         : widthToDp("25%")
                                 }}>
-                                    <Text style={{ fontFamily: 'Oswald-Medium',fontSize: widthToDp('3.1%') }}>{this.state.totalCostOfCultivationLabel}</Text>
+                                    <Text style={{ fontFamily: 'Oswald-Medium', fontSize: widthToDp('3.1%') }}>{this.state.totalCostOfCultivationLabel}</Text>
                                 </View>
 
-                                <Text style={{ marginLeft: widthToDp("28%"), fontFamily: 'Oswald-Medium',fontSize: widthToDp('3.1%') }}>₹ {this.state.costOfCultivatinPerTenDecimal}</Text>
+                                <Text style={{ marginLeft: widthToDp("28%"), fontFamily: 'Oswald-Medium', fontSize: widthToDp('3.1%') }}>₹ {this.state.costOfCultivatinPerTenDecimal}</Text>
                             </View>
                             <View style={{ flexDirection: 'row', marginLeft: widthToDp("4%"), marginTop: heightToDp('2%') }}>
                                 <View style={{
                                     width
                                         : widthToDp("26%")
                                 }}>
-                                    <Text style={{ fontFamily: 'Oswald-Medium',fontSize: widthToDp('3.1%') }}>{this.state.totalIncomeFromCropLabel}</Text>
+                                    <Text style={{ fontFamily: 'Oswald-Medium', fontSize: widthToDp('3.1%') }}>{this.state.totalIncomeFromCropLabel}</Text>
                                 </View>
 
-                                <Text style={{ marginLeft: widthToDp("27%"), fontFamily: 'Oswald-Medium',fontSize: widthToDp('3.1%') }}>₹ {this.state.costPerKg}</Text>
+                                <Text style={{ marginLeft: widthToDp("27%"), fontFamily: 'Oswald-Medium', fontSize: widthToDp('3.1%') }}>₹ {this.state.costPerKg}</Text>
                             </View>
                             <View style={{ flexDirection: 'row', marginLeft: widthToDp("4%"), marginTop: heightToDp('2%') }}>
                                 <View style={{
                                     width
                                         : widthToDp("25%")
                                 }}>
-                                    <Text style={{ fontFamily: 'Oswald-Medium',fontSize: widthToDp('3.1%')}}>{this.state.productionLabel}</Text>
+                                    <Text style={{ fontFamily: 'Oswald-Medium', fontSize: widthToDp('3.1%') }}>{this.state.productionLabel}</Text>
                                 </View>
 
-                                <Text style={{ marginLeft: widthToDp("28%"), fontFamily: 'Oswald-Medium',fontSize: widthToDp('3.1%') }}>{this.state.productionInKg} Kgs</Text>
+                                <Text style={{ marginLeft: widthToDp("28%"), fontFamily: 'Oswald-Medium', fontSize: widthToDp('3.1%') }}>{this.state.productionInKg} Kgs</Text>
                             </View>
                             <View style={{ flexDirection: 'row', marginLeft: widthToDp("4%"), marginTop: heightToDp('2%') }}>
-                                <View style={{width: widthToDp("25%")}}>
-                                <Text style={{ fontFamily: 'Oswald-Medium',fontSize: widthToDp('3.1%') }}>{this.state.costPerKgLabel}</Text>
+                                <View style={{ width: widthToDp("25%") }}>
+                                    <Text style={{ fontFamily: 'Oswald-Medium', fontSize: widthToDp('3.1%') }}>{this.state.costPerKgLabel}</Text>
                                 </View>
-                                
-                                <Text style={{ marginLeft: widthToDp("28%"), fontFamily: 'Oswald-Medium',fontSize: widthToDp('3.1%') }}>₹ {this.state.cost}</Text>
+
+                                <Text style={{ marginLeft: widthToDp("28%"), fontFamily: 'Oswald-Medium', fontSize: widthToDp('3.1%') }}>₹ {this.state.cost}</Text>
                             </View>
                             <View style={{ borderBottomColor: 'black', borderBottomWidth: 1, marginTop: heightToDp('1.5%'), width: widthToDp("90%") }}></View>
                             <View style={{ flexDirection: 'row', marginLeft: widthToDp("4%"), marginTop: heightToDp('1%') }}>
-                                <View style={{ width: widthToDp("25%")}}>
-                                <Text style={{ fontSize: widthToDp("5%"), fontFamily: 'Oswald-Bold', fontSize: widthToDp('3.3%') }}>{this.state.netProfitLabel}</Text>
+                                <View style={{ width: widthToDp("25%") }}>
+                                    <Text style={{ fontSize: widthToDp("5%"), fontFamily: 'Oswald-Bold', fontSize: widthToDp('3.3%') }}>{this.state.netProfitLabel}</Text>
                                 </View>
-                                
+
                                 <Text style={{ marginLeft: widthToDp("25%"), fontWeight: 'bold', fontSize: widthToDp("3.3%"), fontFamily: 'Oswald-Bold' }}>₹ {this.state.netProfit}</Text>
                             </View>
                         </View>
