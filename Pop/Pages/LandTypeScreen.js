@@ -9,6 +9,7 @@ import Icon from 'react-native-vector-icons/FontAwesome'
 import tts from 'react-native-tts'
 import Languages from '../Core/Languages'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import LabelComponent from '../components/LabelComponent'
 
 
 
@@ -73,7 +74,10 @@ export default class LandTypeScreen extends Component {
                 this.state.data[0].name = highLand.nameEnglish
                 this.state.data[1].name = mediumLand.nameEnglish
                 this.state.data[2].name = lowLand.nameEnglish
-                this.setState({ landTypeLabel: landTypeLabel.nameEnglish })
+                this.state.data[0].audioEnglish = highLand.audioEnglish
+                this.state.data[1].audioEnglish = mediumLand.audioEnglish
+                this.state.data[2].audioEnglish = lowLand.audioEnglish
+                this.setState({ landTypeLabel: landTypeLabel.audioEnglish })
                 // this.state.data[4].name = message.nameEnglish
                 // this.state.data[5].name = generalSettings.nameEnglish
                 // this.state.data[6].name = pension.nameEnglish
@@ -86,6 +90,9 @@ export default class LandTypeScreen extends Component {
                 this.state.data[0].name = highLand.nameHindi
                 this.state.data[1].name = mediumLand.nameHindi
                 this.state.data[2].name = lowLand.nameHindi
+                this.state.data[0].audioHindi = highLand.audioHindi
+                this.state.data[1].audioHindi = mediumLand.audioHindi
+                this.state.data[2].audioHindi = lowLand.audioHindi
                 this.setState({ landTypeLabel: landTypeLabel.nameHindi })
                 // this.state.data[4].name = message.nameHindi
                 // this.state.data[5].name = generalSettings.nameHindi
@@ -95,6 +102,9 @@ export default class LandTypeScreen extends Component {
                 this.state.data[0].name = highLand.nameHo
                 this.state.data[1].name = mediumLand.nameHo
                 this.state.data[2].name = lowLand.nameHo
+                this.state.data[0].audioHo = highLand.audioHo
+                this.state.data[1].audioHo = mediumLand.audioHo
+                this.state.data[2].audioHo = lowLand.audioHo
                 this.setState({ landTypeLabel: landTypeLabel.nameHo })
                 // this.state.data[4].name = message.nameHo
                 // this.state.data[5].name = generalSettings.nameHo
@@ -104,6 +114,9 @@ export default class LandTypeScreen extends Component {
                 this.state.data[0].name = highLand.nameOdia
                 this.state.data[1].name = mediumLand.nameOdia
                 this.state.data[2].name = lowLand.nameOdia
+                this.state.data[0].audioOdia = highLand.audioOdia
+                this.state.data[1].audioOdia = mediumLand.audioOdia
+                this.state.data[2].audioOdia = lowLand.audioOdia
                 this.setState({ landTypeLabel: landTypeLabel.nameOdia })
                 // this.state.data[4].name = message.nameOdia
                 // this.state.data[5].name = generalSettings.nameOdia
@@ -113,6 +126,9 @@ export default class LandTypeScreen extends Component {
                 this.state.data[0].name = highLand.nameSanthali
                 this.state.data[1].name = mediumLand.nameSanthali
                 this.state.data[2].name = lowLand.nameSanthali
+                this.state.data[0].audioSanthali = highLand.audioSanthali
+                this.state.data[1].audioSanthali = mediumLand.audioSanthali
+                this.state.data[2].audioSanthali = lowLand.audioSanthali
                 this.setState({ landTypeLabel: landTypeLabel.nameSanthali })
                 // this.state.data[4].name = message.nameSanthali
                 // this.state.data[5].name = generalSettings.nameSanthali
@@ -290,23 +306,40 @@ export default class LandTypeScreen extends Component {
                         style={{ marginBottom: heightToDp("74%") }}
                         renderItem={({ item }) =>
 
-                            <Card style={{ width: widthToDp("94%"), marginLeft: widthToDp("3%"), height: heightToDp("30%"), marginBottom: heightToDp("1%"), borderRadius: 20, backgroundColor: BaseColor.Red }}>
-                                <View style={{ flexDirection: 'row' }}>
-                                    <View style={{ width: widthToDp("45%"), height: heightToDp("6%") }}>
-                                        <Text style={{ color: 'white', marginLeft: widthToDp("6%"), marginTop: heightToDp("1%"), fontSize: widthToDp("5%"), fontFamily: 'Oswald-Medium' }}>{item.name}</Text>
-                                    </View>
-                                    <TouchableOpacity onPress={() => this.speak(item.name)}>
-                                        <Icon
-                                            name="microphone"
-                                            size={23}
-                                            style={{ color: 'white', marginTop: heightToDp("2%"), marginLeft: widthToDp("36%") }}
-                                        />
-                                    </TouchableOpacity>
-
-                                </View>
+                            <Card style={{ width: widthToDp("94%"), marginLeft: widthToDp("3%"), height: heightToDp("30%"), marginBottom: heightToDp("1%"), borderRadius: 20, backgroundColor: BaseColor.Red, marginTop: heightToDp("1%") }}>
+                                <LabelComponent
+                                    directData={true}
+                                    marginVertical={true}
+                                    labelWidth={
+                                        (
+                                            (this.state.textLanguageChange==="0" && item.audioEnglish) ||
+                                            (this.state.textLanguageChange==="1" && item.audioHindi) ||
+                                            (this.state.textLanguageChange==="2" && item.audioHo) ||
+                                            (this.state.textLanguageChange==="3" && item.audioOdia) ||
+                                            (this.state.textLanguageChange==="4" && item.audioSanthali)
+                                        ) ? 78 : 85
+                                    }
+                                    labelName={item.name}
+                                    isAudioHaving={
+                                        (
+                                            (this.state.textLanguageChange==="0" && item.audioEnglish) ||
+                                            (this.state.textLanguageChange==="1" && item.audioHindi) ||
+                                            (this.state.textLanguageChange==="2" && item.audioHo) ||
+                                            (this.state.textLanguageChange==="3" && item.audioOdia) ||
+                                            (this.state.textLanguageChange==="4" && item.audioSanthali)
+                                        )
+                                    }
+                                    audioFile={
+                                        this.state.textLanguageChange==="0" ? item.audioEnglish :
+                                            this.state.textLanguageChange==="1" ? item.audioHindi :
+                                            this.state.textLanguageChange==="2" ? item.audioHo :
+                                            this.state.textLanguageChange==="3" ? item.audioOdia :
+                                            item.audioSanthali
+                                    }
+                                />
                                 <TouchableOpacity onPress={() => this.selectLandType(item.name)}>
                                     <Image
-                                        style={{ width: widthToDp("93%"), height: heightToDp("22.8%"), marginLeft: widthToDp("0.4%"), borderRadius: 2, marginTop: heightToDp("1%"), borderBottomLeftRadius: 20, borderBottomRightRadius: 20 }}
+                                        style={{ width: widthToDp("93%"), height: heightToDp("22.8%"), marginLeft: widthToDp("0.4%"), borderRadius: 2, borderBottomLeftRadius: 20, borderBottomRightRadius: 20 }}
                                         source={item.code}
                                     />
                                 </TouchableOpacity>
