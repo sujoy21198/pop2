@@ -13,7 +13,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import base64 from 'react-native-base64'
 import axios from 'axios'
 import DataAccess from '../Core/DataAccess'
-
+import NetInfo from '@react-native-community/netinfo'
 
 const data = [
     { name: 'Knowledge Center', code: 'fresh-green-vegetables-produce-greenhouse-garden-nursery-farm_33829-312.jpg' },
@@ -69,7 +69,7 @@ export default class DashBoardScreen extends Component {
             let username = await AsyncStorage.getItem('username')
             let user = await AsyncStorage.getItem('labelsData');
             let parsed = JSON.parse(user);
-            var specificObject = parsed.find((i) => i.username === username)
+            var specificObject = parsed[0]
             var knowledgeCenter = specificObject.labels.find((i) => i.type === 22)
             var importantLinks = specificObject.labels.find((i) => i.type === 23)
             var moneyManager = specificObject.labels.find((i) => i.type === 24)
@@ -223,6 +223,24 @@ export default class DashBoardScreen extends Component {
     }
 
     syncData = async () => {
+        
+        NetInfo.fetch().then(state => {
+            var isConnected = state.isConnected
+            console.log(isConnected)
+            if (isConnected === true) {
+                return this.startDatasync()
+            } else {
+                return Toast.show({
+                    text: "Please be online to sync the data",
+                    duration: 3000,
+                    type: 'danger'
+                })
+            }
+        })
+        
+    }
+
+    startDatasync = async() => {
         var token = await AsyncStorage.getItem('token')
         var username = await AsyncStorage.getItem('username')
         var encodedUsername = base64.encode(username)
