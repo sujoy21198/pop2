@@ -15,6 +15,7 @@ import Languages from '../Core/Languages'
 import LanguageChange from '../Core/LanguageChange'
 import VideoComponent from '../components/VideoComponent'
 import RNFetchBlob from 'rn-fetch-blob'
+import HTML from "react-native-render-html";
 
 
 export default class StepFou3Screen extends Component {

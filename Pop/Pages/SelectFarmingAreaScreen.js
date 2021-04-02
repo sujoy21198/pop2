@@ -49,7 +49,7 @@ export default class SelectFarmingAreaScreen extends Component {
 
     getPricesOfCrops = async() => {
         try{
-            let user = await AsyncStorage.getItem('offlineData');
+            let user = await AsyncStorage.getItem('numberOfCrops');
             let parsed = JSON.parse(user);
             var specificObject = parsed[0]
             var specificCrops = specificObject.crops.find((i) => i._id === this.state._id)

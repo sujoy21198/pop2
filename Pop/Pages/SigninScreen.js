@@ -964,7 +964,8 @@ export default class SigninScreen extends Component {
             console.log(error)
         })
 
-        const offlineDataToBeSaved = { 'username': this.state.username, 'crops': cropObjectsToBeSaved, 'livestock': livestockObjectsToBeSaved, 'livestockStep': livestockStepObjectsToBeSaved, 'liveStockStepMaterials': liveStockStepMaterialsObjectsToBeSaved, 'liveStockBreeds': liveStockBreedsObjectsToBeSaved, 'breedCategories': breedCategoriesObjectsToBeSaved, 'importantLinks': importantLinksObjectsToBeSaved, 'nutrationGraden': nutrationGradenObjectsToBeSaved, 'vaccination': vaccinationToBeSaved, 'contactList': contactListToBeSaved, 'dryFish': dryFishObjectsToBeSaved, 'vegetableVending': vegetableVendingObjectsToBeSaved, 'smallGroceryShop': smallGroceryShopToBeSaved }
+        const offlineDataToBeSaved = { 'username': this.state.username, 'livestock': livestockObjectsToBeSaved, 'livestockStep': livestockStepObjectsToBeSaved, 'liveStockStepMaterials': liveStockStepMaterialsObjectsToBeSaved, 'liveStockBreeds': liveStockBreedsObjectsToBeSaved, 'breedCategories': breedCategoriesObjectsToBeSaved, 'importantLinks': importantLinksObjectsToBeSaved, 'nutrationGraden': nutrationGradenObjectsToBeSaved, 'vaccination': vaccinationToBeSaved, 'contactList': contactListToBeSaved, 'dryFish': dryFishObjectsToBeSaved, 'vegetableVending': vegetableVendingObjectsToBeSaved, 'smallGroceryShop': smallGroceryShopToBeSaved }
+        const numberOfCropsToBeSaved = {'username': this.state.username, 'crops': cropObjectsToBeSaved}
         const cropDataToBeSaved = { 'username': this.state.username, 'cropSteps': cropStepsObjectsToBeSaved, 'cropsMaterials': cropsMaterialsObjectsToBeSaved }
         const labelsToBeSaved = { 'username': this.state.username, 'labels': labelsObjectsToBeSaved }
         // offlineDataToBeSaved.crops.push(cropObjectsToBeSaved) 'cropSteps': cropStepsObjectsToBeSaved, 'cropsMaterials': cropsMaterialsObjectsToBeSaved, 
@@ -974,6 +975,36 @@ export default class SigninScreen extends Component {
         // offlineDataToBeSaved.liveStockBreeds.push(liveStockBreedsObjectsToBeSaved)
         // offlineDataToBeSaved.breedCategories.push(breedCategoriesObjectsToBeSaved)
         // offlineDataToBeSaved.importantLinks.push(importantLinksObjectsToBeSaved)
+
+
+        //SAVING CROPS ONLY
+        const exsistingNumberOfCrops = await AsyncStorage.getItem('numberOfCrops')
+        let newNumberOfCrops = JSON.parse(exsistingNumberOfCrops)
+        if (!newNumberOfCrops) {
+            newNumberOfCrops = []
+        }
+
+        var numberOfCropsArr = newNumberOfCrops.map(function (item) { return item.username })
+        if (numberOfCropsArr.includes(this.state.username)) {
+            console.log("NO more crops assigned to this user")
+        } else {
+            newNumberOfCrops.push(numberOfCropsToBeSaved)
+        }
+
+
+        await AsyncStorage.setItem("numberOfCrops", JSON.stringify(newNumberOfCrops))
+            .then(() => {
+
+                //alert('‘Offline Data saved successfully’')
+                Toast.show({
+                    text: "crop Data saved successfully",
+                    duration: 3000,
+                    type: 'success'
+                })
+            })
+            .catch(() => {
+                console.log('‘There was an error saving the product’')
+            })
 
         //SAVING OFFLINE DATA
         const exsistingOfflineData = await AsyncStorage.getItem('offlineData')

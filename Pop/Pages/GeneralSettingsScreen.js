@@ -20,6 +20,7 @@ export default class GeneralSettingsScreen extends Component {
     refreshApplication = async () => {
         await AsyncStorage.removeItem('offlineData')
         await AsyncStorage.removeItem('cropData')
+        await AsyncStorage.removeItem('numberOfCrops')
         await AsyncStorage.removeItem('labelsData')
         
         this.props.navigation.reset({

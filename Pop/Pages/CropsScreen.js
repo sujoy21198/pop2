@@ -116,7 +116,7 @@ export default class CropsScreen extends Component {
     loadCropsFromStorage = async () => {
         try {
             let username = await AsyncStorage.getItem('username')
-            let user = await AsyncStorage.getItem('offlineData');
+            let user = await AsyncStorage.getItem('numberOfCrops');
             let parsed = JSON.parse(user);
             //var specificObject = parsed[0]
             var specificObject = parsed[0]
