@@ -13,9 +13,9 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 
 
 const data = [
-    { name: 'VEGETABLE VENDING', code: '77495442.jpg' },
-    { name: 'SMALL GROCERY', code: 'bec5b458e58186bc132ec3e9851e2e14--india-travel-incredible-india.jpg' },
-    { name: 'DRY FISH SELLING', code: 'dry_fish_selling-1.jpg' }
+    { categoryEnglish: '', imageFile: '77495442.jpg', categoryHindi: '', categoryOdia: '', categoryHo: '', categorySanthali: '' },
+    { categoryEnglish: '', categoryHindi: '', categoryOdia: '', categoryHo: '', categorySanthali: '', imageFile: 'bec5b458e58186bc132ec3e9851e2e14--india-travel-incredible-india.jpg' },
+    { categoryEnglish: '', categoryHindi: '', categoryOdia: '', categoryHo: '', categorySanthali: '', imageFile: 'dry_fish_selling-1.jpg' }
 ]
 
 export default class SmallBusinessScreen extends Component {
@@ -26,7 +26,7 @@ export default class SmallBusinessScreen extends Component {
         this.state = {
             data: [],
             languages: [],
-            smallBusinessLabel:''
+            smallBusinessLabel: ''
         }
 
         this.state.languages = Languages
@@ -34,35 +34,43 @@ export default class SmallBusinessScreen extends Component {
 
     }
 
-    componentDidMount(){
+    componentDidMount() {
         this.setLanguageOnMount()
         this.loadlabelsFromStorage()
+        this.getOfflineData()
     }
 
-    changeLanguage = (id) => {
-        //alert(id)
-        AsyncStorage.setItem('language', id)
-        LanguageChange.setLanguage(id)
-        this.setState({ data: data })
-        this.state.data[0].name = LanguageChange.wash
-        this.state.data[1].name = LanguageChange.health
-        this.state.data[2].name = LanguageChange.covid
-        this.state.data[3].name = LanguageChange.govtSchemes
+    getOfflineData = async () => {
+        try {
+            let username = await AsyncStorage.getItem('username')
+            let user = await AsyncStorage.getItem('smallBusiness');
+            let parsed = JSON.parse(user);
+            var specificObject = parsed[0]
+            console.log(specificObject.find((i) => i), "lololo")
+            var totalArray = this.state.data.concat(specificObject.find((i) => i))
+            console.log(totalArray, "jojo adventure")
+            this.setState({ data: totalArray })
+        } catch (error) {
+            console.log(error)
+        }
     }
+
+
 
 
     selectCategory = (data) => {
-        if (data === this.state.data[0].name) {
+
+        if (data === this.state.data[0].categoryEnglish) {
             this.props.navigation.navigate({
                 name: 'VegetableVendingScreen',
                 params: { value: 0 }
             })
-        } else if (data === this.state.data[1].name) {
+        } else if (data === this.state.data[1].categoryEnglish) {
             this.props.navigation.navigate({
                 name: 'SmallGroceryShopScreen',
                 params: { value: 0 }
             })
-        } else if (data === this.state.data[2].name) {
+        } else if (data === this.state.data[2].categoryEnglish) {
             this.props.navigation.navigate({
                 name: 'DryFishScreen',
                 params: { value: 0 }
@@ -116,10 +124,10 @@ export default class SmallBusinessScreen extends Component {
             // Low Land: 55
             // Land Type : 56
             if (this.state.textLanguageChange === '0') {
-                this.state.data[0].name = vegetableVending.nameEnglish
-                this.state.data[1].name = smallGroceryShop.nameEnglish
-                this.state.data[2].name = dryFishSelling.nameEnglish
-                this.setState({smallBusinessLabel : smallBusinessLabel.nameEnglish})
+                this.state.data[0].categoryEnglish = vegetableVending.nameEnglish
+                this.state.data[1].categoryEnglish = smallGroceryShop.nameEnglish
+                this.state.data[2].categoryEnglish = dryFishSelling.nameEnglish
+                this.setState({ smallBusinessLabel: smallBusinessLabel.nameEnglish })
                 //this.setState({ landTypeLabel: landTypeLabel.nameEnglish })
                 // this.state.data[4].name = message.nameEnglish
                 // this.state.data[5].name = generalSettings.nameEnglish
@@ -130,39 +138,39 @@ export default class SmallBusinessScreen extends Component {
                 // this.setState({ incomeLabel: incomeLabel.nameEnglish })
                 // this.setState({ allTransactionLabel: allTransactionLabel.nameEnglish })
             } else if (this.state.textLanguageChange === '1') {
-                this.state.data[0].name = vegetableVending.nameHindi
-                this.state.data[1].name = smallGroceryShop.nameHindi
-                this.state.data[2].name = dryFishSelling.nameHindi
-                this.setState({smallBusinessLabel : smallBusinessLabel.nameHindi})
+                this.state.data[0].categoryHindi = vegetableVending.nameHindi
+                this.state.data[1].categoryHindi = smallGroceryShop.nameHindi
+                this.state.data[2].categoryHindi = dryFishSelling.nameHindi
+                this.setState({ smallBusinessLabel: smallBusinessLabel.nameHindi })
                 // this.state.data[4].name = message.nameHindi
                 // this.state.data[5].name = generalSettings.nameHindi
                 // this.state.data[6].name = pension.nameHindi
                 // this.state.data[7].name = others.nameHindi
             } else if (this.state.textLanguageChange === '2') {
-                this.state.data[0].name = vegetableVending.nameHo
-                this.state.data[1].name = smallGroceryShop.nameHo
-                this.state.data[2].name = dryFishSelling.nameHo
-                this.setState({smallBusinessLabel : smallBusinessLabel.nameHo})
+                this.state.data[0].categoryHo = vegetableVending.nameHo
+                this.state.data[1].categoryHo = smallGroceryShop.nameHo
+                this.state.data[2].categoryHo = dryFishSelling.nameHo
+                this.setState({ smallBusinessLabel: smallBusinessLabel.nameHo })
                 // this.state.data[4].name = message.nameHo
                 // this.state.data[5].name = generalSettings.nameHo
                 // this.state.data[6].name = pension.nameHo
                 // this.state.data[7].name = others.nameHo
             } else if (this.state.textLanguageChange === '3') {
-                this.state.data[0].name = vegetableVending.nameOdia
-                this.state.data[1].name = smallGroceryShop.nameOdia
-                this.state.data[2].name = dryFishSelling.nameOdia
-                this.setState({smallBusinessLabel : smallBusinessLabel.nameOdia})
+                this.state.data[0].categoryOdia = vegetableVending.nameOdia
+                this.state.data[1].categoryOdia = smallGroceryShop.nameOdia
+                this.state.data[2].categoryOdia = dryFishSelling.nameOdia
+                this.setState({ smallBusinessLabel: smallBusinessLabel.nameOdia })
                 //this.setState({ landTypeLabel: landTypeLabel.nameOdia })
                 // this.state.data[4].name = message.nameOdia
                 // this.state.data[5].name = generalSettings.nameOdia
                 // this.state.data[6].name = pension.nameOdia
                 // this.state.data[7].name = others.nameOdia
             } else if (this.state.textLanguageChange === '4') {
-                this.state.data[0].name = vegetableVending.nameSanthali
-                this.state.data[1].name = smallGroceryShop.nameSanthali
-                this.state.data[2].name = dryFishSelling.nameSanthali
-                this.setState({smallBusinessLabel : smallBusinessLabel.nameSanthali})
-               // this.setState({ landTypeLabel: landTypeLabel.nameSanthali })
+                this.state.data[0].categorySanthali = vegetableVending.nameSanthali
+                this.state.data[1].categorySanthali = smallGroceryShop.nameSanthali
+                this.state.data[2].categorySanthali = dryFishSelling.nameSanthali
+                this.setState({ smallBusinessLabel: smallBusinessLabel.nameSanthali })
+                // this.setState({ landTypeLabel: landTypeLabel.nameSanthali })
                 // this.state.data[4].name = message.nameSanthali
                 // this.state.data[5].name = generalSettings.nameSanthali
                 // this.state.data[6].name = pension.nameSanthali
@@ -242,6 +250,8 @@ export default class SmallBusinessScreen extends Component {
     }
 
     render() {
+        var data = []
+        data = this.state.data
         return (
             <View style={{ backgroundColor: BaseColor.BackgroundColor }}>
                 <View style={{ backgroundColor: 'white', width: widthToDp("100%"), height: heightToDp("13%"), flexDirection: 'row' }}>
@@ -308,15 +318,18 @@ export default class SmallBusinessScreen extends Component {
                         style={{ marginTop: heightToDp("2%"), marginBottom: heightToDp("75%") }}
                         bounces={true}
                         itemDimension={130}
-                        data={data}
+                        data={this.state.data}
                         bouncesZoom={true}
                         renderItem={({ item, index }) => (
-                            <TouchableOpacity onPress={() => this.selectCategory(item.name)}>
+                            <TouchableOpacity onPress={() => this.selectCategory(item.categoryEnglish)}>
                                 <View style={{ backgroundColor: BaseColor.Red, width: widthToDp("47%"), height: heightToDp("30%"), elevation: 10, borderRadius: 10 }}>
-                                    <Text style={{ color: "#fff", fontSize: widthToDp("5%"), marginLeft: widthToDp("5%"), marginTop: heightToDp("0.4%"), fontFamily: 'Oswald-Medium' }}>{item.name}</Text>
+                                    {
+                                        this.state.textLanguageChange === '0' ? <Text style={{ color: "#fff", fontSize: widthToDp("5%"), marginLeft: widthToDp("5%"), marginTop: heightToDp("0.4%"), fontFamily: 'Oswald-Medium' }}>{item.categoryEnglish}</Text> : ((this.state.textLanguageChange === '1') ? <Text style={{ color: "#fff", fontSize: widthToDp("5%"), marginLeft: widthToDp("5%"), marginTop: heightToDp("0.4%"), fontFamily: 'Oswald-Medium' }}>{item.categoryHindi}</Text> : ((this.state.textLanguageChange === '2') ? <Text style={{ color: "#fff", fontSize: widthToDp("5%"), marginLeft: widthToDp("5%"), marginTop: heightToDp("0.4%"), fontFamily: 'Oswald-Medium' }}>{item.categoryHo}</Text> : ((this.state.textLanguageChange === '3') ? <Text style={{ color: "#fff", fontSize: widthToDp("5%"), marginLeft: widthToDp("5%"), marginTop: heightToDp("0.4%"), fontFamily: 'Oswald-Medium' }}>{item.categoryOdia}</Text> : ((this.state.textLanguageChange === '4') ? <Text style={{ color: "#fff", fontSize: widthToDp("5%"), marginLeft: widthToDp("5%"), marginTop: heightToDp("0.4%"), fontFamily: 'Oswald-Medium' }}>{item.categorySanthali}</Text> : null))))
+                                    }
+                                    
                                     <Image
                                         style={{ width: widthToDp("47%"), height: heightToDp("25%"), borderBottomLeftRadius: 10, borderBottomRightRadius: 10, marginTop: heightToDp("1%") }}
-                                        source={{ uri: 'file:///storage/emulated/0/Pictures/image_' + item.code }}
+                                        source={{ uri: 'file:///storage/emulated/0/Pictures/image_' + item.imageFile }}
                                     />
                                 </View>
 

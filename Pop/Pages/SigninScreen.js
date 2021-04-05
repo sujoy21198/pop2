@@ -902,7 +902,7 @@ export default class SigninScreen extends Component {
         var allusername = await AsyncStorage.getItem('username')
         var token = await AsyncStorage.getItem('token')
         var encodedUsername = base64.encode(this.state.username)
-        var cropObjectsToBeSaved, cropStepsObjectsToBeSaved, cropsMaterialsObjectsToBeSaved, livestockObjectsToBeSaved, liveStockStepMaterialsObjectsToBeSaved, liveStockBreedsObjectsToBeSaved, breedCategoriesObjectsToBeSaved, importantLinksObjectsToBeSaved, nutrationGradenObjectsToBeSaved, livestockStepObjectsToBeSaved, vaccinationToBeSaved, contactListToBeSaved, dryFishObjectsToBeSaved, vegetableVendingObjectsToBeSaved, smallGroceryShopToBeSaved, labelsObjectsToBeSaved;
+        var cropObjectsToBeSaved, cropStepsObjectsToBeSaved, cropsMaterialsObjectsToBeSaved, livestockObjectsToBeSaved, liveStockStepMaterialsObjectsToBeSaved, liveStockBreedsObjectsToBeSaved, breedCategoriesObjectsToBeSaved, importantLinksObjectsToBeSaved, nutrationGradenObjectsToBeSaved, livestockStepObjectsToBeSaved, vaccinationToBeSaved, contactListToBeSaved, dryFishObjectsToBeSaved, vegetableVendingObjectsToBeSaved, smallGroceryShopToBeSaved, labelsObjectsToBeSaved , smallBusinessCategoryObjectsToBeSaved;
         await axios.get("http://161.35.122.165:3020/api/v1/get-all-data", {
             headers: {
                 'Content-type': "application/json",
@@ -960,6 +960,9 @@ export default class SigninScreen extends Component {
 
             var labels = response.data.labels
             labelsObjectsToBeSaved = labels
+
+            var smallBusinessCategory = response.data.smallBusinessCategory
+            smallBusinessCategoryObjectsToBeSaved = smallBusinessCategory
         }).catch(function (error) {
             console.log(error)
         })
@@ -968,6 +971,7 @@ export default class SigninScreen extends Component {
         const numberOfCropsToBeSaved = {'username': this.state.username, 'crops': cropObjectsToBeSaved}
         const cropDataToBeSaved = { 'username': this.state.username, 'cropSteps': cropStepsObjectsToBeSaved, 'cropsMaterials': cropsMaterialsObjectsToBeSaved }
         const labelsToBeSaved = { 'username': this.state.username, 'labels': labelsObjectsToBeSaved }
+        const smallBusinessCategoryToBeSaved = {'username': this.state.username,'smallBusinessCategory':smallBusinessCategoryObjectsToBeSaved}
         // offlineDataToBeSaved.crops.push(cropObjectsToBeSaved) 'cropSteps': cropStepsObjectsToBeSaved, 'cropsMaterials': cropsMaterialsObjectsToBeSaved, 
         // offlineDataToBeSaved.cropsMaterials.push(cropsMaterialsObjectsToBeSaved)
         // offlineDataToBeSaved.livestock.push(livestockObjectsToBeSaved)
@@ -976,6 +980,34 @@ export default class SigninScreen extends Component {
         // offlineDataToBeSaved.breedCategories.push(breedCategoriesObjectsToBeSaved)
         // offlineDataToBeSaved.importantLinks.push(importantLinksObjectsToBeSaved)
 
+        //SAVING SMALL BUSINESS
+        const exsistingSmallBusiness = await AsyncStorage.getItem('smallBusiness')
+        let newSmallBusiness = JSON.parse(exsistingSmallBusiness)
+        if (!newSmallBusiness) {
+            newSmallBusiness = []
+        }
+
+        var smallBusinessArr = newSmallBusiness.map(function (item) { return item.username })
+        if (smallBusinessArr.includes(this.state.username)) {
+            console.log("NO more crops assigned to this user")
+        } else {
+            newSmallBusiness.push(smallBusinessCategoryObjectsToBeSaved)
+        }
+
+
+        await AsyncStorage.setItem("smallBusiness", JSON.stringify(newSmallBusiness))
+            .then(() => {
+
+                //alert('‘Offline Data saved successfully’')
+                Toast.show({
+                    text: "crop Data saved successfully",
+                    duration: 3000,
+                    type: 'success'
+                })
+            })
+            .catch(() => {
+                console.log('‘There was an error saving the product’')
+            })
 
         //SAVING CROPS ONLY
         const exsistingNumberOfCrops = await AsyncStorage.getItem('numberOfCrops')

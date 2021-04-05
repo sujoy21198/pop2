@@ -55,10 +55,9 @@ export default class DashBoardScreen extends Component {
     getOfflineData = async () => {
         try {
             let username = await AsyncStorage.getItem('username')
-            let user = await AsyncStorage.getItem('labelsData');
+            let user = await AsyncStorage.getItem('smallBusiness');
             let parsed = JSON.parse(user);
-            var specificObject = parsed[0]
-            console.log(specificObject.labels.find((i) => i.type === 22))
+            console.log(parsed,"lololo")
         } catch (error) {
             console.log(error)
         }
