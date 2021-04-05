@@ -21,6 +21,7 @@ import { ActivityIndicator } from 'react-native'
 import NetInfo from "@react-native-community/netinfo";
 import VideoComponent from '../components/VideoComponent'
 import LabelComponent from '../components/LabelComponent'
+import HTML from "react-native-render-html";
 
 export default class StepOneScreen extends Component {
 

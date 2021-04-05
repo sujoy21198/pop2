@@ -16,6 +16,7 @@ import LanguageChange from '../Core/LanguageChange'
 import VideoComponent from '../components/VideoComponent'
 import RNFetchBlob from 'rn-fetch-blob'
 import LabelComponent from '../components/LabelComponent'
+import HTML from "react-native-render-html";
 
 
 export default class StepSevenScreen extends Component {
