@@ -526,19 +526,17 @@ export default class StepSixScreen extends Component {
 
                     <View style={{ height: heightToDp("2%") }} />
 
-                    <View style={{ backgroundColor: BaseColor.Red, width: widthToDp("90%"), alignSelf: 'center', borderRadius: 10 }}>
+                    <View style={{ backgroundColor: BaseColor.Red, width: widthToDp("90%"), height: widthToDp("60%"), alignSelf: 'center', borderRadius: 10 }}>
                         <LabelComponent
                             stepName={this.state.descriptionLabel}
                             asyncKey={"cropSteps"}
                             index={5}
                         />
-                        <ScrollView nestedScrollEnabled={true}>
-                            <View style={{ backgroundColor: 'white', width: widthToDp("90%"), borderBottomLeftRadius: 10, borderBottomRightRadius: 10 }}>
-                                {
-                                    this.state.textLanguageChange === '0' ? <HTML source={{ html: this.state.englishDescription || '<p></p>' }} containerStyle={{ elevation: 10, marginTop: heightToDp("2%"), marginLeft: widthToDp("2%") }} /> : ((this.state.textLanguageChange === '1') ? <HTML source={{ html: this.state.hindiDescription || '<p></p>' }} containerStyle={{ elevation: 10, marginTop: heightToDp("2%"), marginLeft: widthToDp("2%") }} /> : ((this.state.textLanguageChange === '2') ? <HTML source={{ html: this.state.hoDescription || '<p></p>' }} containerStyle={{ elevation: 10, marginTop: heightToDp("2%"), marginLeft: widthToDp("2%") }} /> : ((this.state.textLanguageChange === '3') ? <HTML source={{ html: this.state.odiaDescription || '<p></p>' }} containerStyle={{ elevation: 10, marginTop: heightToDp("2%"), marginLeft: widthToDp("2%") }} /> : ((this.state.textLanguageChange === '4') ? <HTML source={{ html: this.state.santhaliDescription || '<p></p>' }} containerStyle={{ elevation: 10, marginTop: heightToDp("2%"), marginLeft: widthToDp("2%") }} /> : null))))
-                                }
+                        <ScrollView nestedScrollEnabled style={{ backgroundColor: 'white', width: widthToDp("90%"), height: widthToDp("50%"), borderBottomLeftRadius: 10, borderBottomRightRadius: 10 }}>
+                            {
+                                this.state.textLanguageChange === '0' ? <HTML source={{ html: this.state.englishDescription || '<p></p>' }} containerStyle={{ elevation: 10, marginTop: heightToDp("2%"), marginLeft: widthToDp("2%") }} /> : ((this.state.textLanguageChange === '1') ? <HTML source={{ html: this.state.hindiDescription || '<p></p>' }} containerStyle={{ elevation: 10, marginTop: heightToDp("2%"), marginLeft: widthToDp("2%") }} /> : ((this.state.textLanguageChange === '2') ? <HTML source={{ html: this.state.hoDescription || '<p></p>' }} containerStyle={{ elevation: 10, marginTop: heightToDp("2%"), marginLeft: widthToDp("2%") }} /> : ((this.state.textLanguageChange === '3') ? <HTML source={{ html: this.state.odiaDescription || '<p></p>' }} containerStyle={{ elevation: 10, marginTop: heightToDp("2%"), marginLeft: widthToDp("2%") }} /> : ((this.state.textLanguageChange === '4') ? <HTML source={{ html: this.state.santhaliDescription || '<p></p>' }} containerStyle={{ elevation: 10, marginTop: heightToDp("2%"), marginLeft: widthToDp("2%") }} /> : null))))
+                            }
 
-                            </View>
                         </ScrollView>
 
 
