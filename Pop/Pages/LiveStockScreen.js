@@ -13,6 +13,7 @@ import DataAccess from '../Core/DataAccess'
 import CustomIndicator from '../Core/CustomIndicator'
 import Languages from '../Core/Languages'
 import LanguageChange from '../Core/LanguageChange'
+import LabelComponent from '../components/LabelComponent'
 
 export default class LiveStockScreen extends Component {
 
@@ -294,12 +295,44 @@ export default class LiveStockScreen extends Component {
                         bouncesZoom={true}
                         renderItem={({ item }) => (
                             <TouchableOpacity onPress={() => this.navigationController(item._id, item.nameEnglish)}>
-                                <View style={{ backgroundColor: BaseColor.Red, width: widthToDp("47%"), height: heightToDp("30%"), elevation: 10, borderRadius: 10 }}>
-                                    {
-                                        this.state.textLanguageChange === '0' ? <Text style={{ color: "#fff", fontSize: widthToDp("5%"), marginLeft: widthToDp("5%"), marginTop: heightToDp("0.4%"), fontFamily: 'Oswald-Medium' }}>{item.nameEnglish}</Text> : ((this.state.textLanguageChange === '1') ? <Text style={{ color: "#fff", fontSize: widthToDp("5%"), marginLeft: widthToDp("5%"), marginTop: heightToDp("0.4%"), fontFamily: 'Oswald-Medium' }}>{item.nameHindi}</Text> : ((this.state.textLanguageChange === '2') ? <Text style={{ color: "#fff", fontSize: widthToDp("5%"), marginLeft: widthToDp("5%"), marginTop: heightToDp("0.4%"), fontFamily: 'Oswald-Medium' }}>{item.nameHo}</Text> : ((this.state.textLanguageChange === '3') ? <Text style={{ color: "#fff", fontSize: widthToDp("5%"), marginLeft: widthToDp("5%"), marginTop: heightToDp("0.4%"), fontFamily: 'Oswald-Medium' }}>{item.nameOdia}</Text> : ((this.state.textLanguageChange === '4') ? <Text style={{ color: "#fff", fontSize: widthToDp("5%"), marginLeft: widthToDp("5%"), marginTop: heightToDp("0.4%"), fontFamily: 'Oswald-Medium' }}>{item.nameSanthali}</Text> : null))))
-                                    }
+                                <View style={{ backgroundColor: BaseColor.Red, width: widthToDp("47%"), height: heightToDp("30%"), elevation: 10, borderRadius: 10, marginTop: heightToDp("2%") }}>
+                                    <LabelComponent
+                                        directData={true}
+                                        labelWidth={
+                                            (
+                                                (this.state.textLanguageChange==="0" && item.audioEnglish) ||
+                                                (this.state.textLanguageChange==="1" && item.audioHindi) ||
+                                                (this.state.textLanguageChange==="2" && item.audioHo) ||
+                                                (this.state.textLanguageChange==="3" && item.audioOdia) ||
+                                                (this.state.textLanguageChange==="4" && item.audioSanthali)
+                                            ) ? 35 : 40
+                                        }
+                                        labelName={
+                                            this.state.textLanguageChange==="0" ? item.nameEnglish :
+                                                this.state.textLanguageChange==="1" ? item.nameHindi :
+                                                this.state.textLanguageChange==="2" ? item.nameHo :
+                                                this.state.textLanguageChange==="3" ? item.nameOdia :
+                                                item.nameSanthali
+                                        }
+                                        isAudioHaving={
+                                            (
+                                                (this.state.textLanguageChange==="0" && item.audioEnglish) ||
+                                                (this.state.textLanguageChange==="1" && item.audioHindi) ||
+                                                (this.state.textLanguageChange==="2" && item.audioHo) ||
+                                                (this.state.textLanguageChange==="3" && item.audioOdia) ||
+                                                (this.state.textLanguageChange==="4" && item.audioSanthali)
+                                            )
+                                        }
+                                        audioFile={
+                                            this.state.textLanguageChange==="0" ? item.audioEnglish :
+                                                this.state.textLanguageChange==="1" ? item.audioHindi :
+                                                this.state.textLanguageChange==="2" ? item.audioHo :
+                                                this.state.textLanguageChange==="3" ? item.audioOdia :
+                                                item.audioSanthali
+                                        }
+                                    />    
                                     <Image
-                                        style={{ width: widthToDp("47%"), height: heightToDp("25%"), borderBottomLeftRadius: 10, borderBottomRightRadius: 10, marginTop: heightToDp("1%") }}
+                                        style={{ width: widthToDp("47%"), height: heightToDp("25%"), borderBottomLeftRadius: 10, borderBottomRightRadius: 10 }}
                                         source={{ uri: 'file:///storage/emulated/0/Pictures/image_'+ item.imageFile }}
                                     />
                                 </View>

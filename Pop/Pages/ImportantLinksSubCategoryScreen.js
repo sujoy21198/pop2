@@ -257,14 +257,40 @@ export default class ImportantLinksSubCategoryScreen extends Component {
                         style={{ marginBottom: heightToDp("74%") }}
                         renderItem={({ item }) =>
 
-                            <Card style={{ width: widthToDp("94%"), marginLeft: widthToDp("3%"), height: heightToDp("30%"), marginBottom: heightToDp("1%"), borderRadius: 20, backgroundColor: BaseColor.Red }}>
+                            <Card style={{ width: widthToDp("94%"), marginLeft: widthToDp("3%"), height: heightToDp("28%"), marginBottom: heightToDp("1%"), borderRadius: 20, backgroundColor: BaseColor.Red }}>
                                 <LabelComponent
-                                    stepName={
+                                    directData={true}
+                                    labelWidth={
+                                        (
+                                            (this.state.textLanguageChange==="0" && item.audioEnglish) ||
+                                            (this.state.textLanguageChange==="1" && item.audioHindi) ||
+                                            (this.state.textLanguageChange==="2" && item.audioHo) ||
+                                            (this.state.textLanguageChange==="3" && item.audioOdia) ||
+                                            (this.state.textLanguageChange==="4" && item.audioSanthali)
+                                        ) ? 77 : 85
+                                    }
+                                    labelName={
                                         this.state.textLanguageChange==="0" ? item.categoryEnglish :
                                         this.state.textLanguageChange==="1" ? item.categoryHindi :
                                         this.state.textLanguageChange==="2" ? item.categoryHo :
                                         this.state.textLanguageChange==="3" ? item.categoryOdia :
                                         item.categorySanthali
+                                    }
+                                    isAudioHaving={
+                                        (
+                                            (this.state.textLanguageChange==="0" && item.audioEnglish) ||
+                                            (this.state.textLanguageChange==="1" && item.audioHindi) ||
+                                            (this.state.textLanguageChange==="2" && item.audioHo) ||
+                                            (this.state.textLanguageChange==="3" && item.audioOdia) ||
+                                            (this.state.textLanguageChange==="4" && item.audioSanthali)
+                                        )
+                                    }
+                                    audioFile={
+                                        this.state.textLanguageChange==="0" ? item.audioEnglish :
+                                            this.state.textLanguageChange==="1" ? item.audioHindi :
+                                            this.state.textLanguageChange==="2" ? item.audioHo :
+                                            this.state.textLanguageChange==="3" ? item.audioOdia :
+                                            item.audioSanthali
                                     }
                                 />
                                 <TouchableOpacity onPress={() => this.goToDetailsPage(item.categoryEnglish,item.categoryHindi,item.categoryOdia,item.categoryHo,item.categorySanthali, item.link, item.descEnglish , item.descHindi , item.descHo , item.descOdia , item.descSanthali)}>

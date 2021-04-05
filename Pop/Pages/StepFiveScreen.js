@@ -15,7 +15,7 @@ import Languages from '../Core/Languages'
 import LanguageChange from '../Core/LanguageChange'
 import VideoComponent from '../components/VideoComponent'
 import RNFetchBlob from 'rn-fetch-blob'
-import HTML from "react-native-render-html";
+import LabelComponent from '../components/LabelComponent'
 
 
 export default class StepFiveScreen extends Component {
@@ -65,10 +65,11 @@ export default class StepFiveScreen extends Component {
             odiaTitleDescription: '',
             stepImage: '',
             multipleMaterials: [],
-            sumOfMaterials:'',
-            saveButtonClicked:false,
+            sumOfMaterials: '',
+            saveButtonClicked: false,
             stepLabel: '',
-            ploughingTypeLabel: ''
+            ploughingTypeLabel: '',
+            isPlaying: true
         }
         this.state.languages = Languages
         this.state._id = this.props.route.params._id
@@ -92,35 +93,35 @@ export default class StepFiveScreen extends Component {
         //this.checkIfStepExsists()
     }
 
-    checkIfStepExsists = async() => {
-        try{
+    checkIfStepExsists = async () => {
+        try {
             let username = await AsyncStorage.getItem('username')
             let user = await AsyncStorage.getItem('cropData');
             let parsed = JSON.parse(user);
             var specificObject = parsed[0]
             var cropSpecificSteps = specificObject.cropSteps.filter((i) => i.cropId === this.state._id)
-            
-                if (cropSpecificSteps[5] === undefined) {
-                    this.props.navigation.navigate({
-                        name: 'ActualCultivationCostScreen',
-                        params: {
-                            cropName: this.state.cropName,
-                            _id: this.state._id,
-                            imageFile: this.state.imageFile,
-                            patchName: this.state.patchName,
-                            landType: this.state.landType,
-                            farmingAreaInDecimal: this.state.farmingAreaInDecimal,
-                            costOfCultivatinPerTenDecimal: this.state.costOfCultivatinPerTenDecimal,
-                            costPerKg: this.state.costPerKg,
-                            productionInKg: this.state.productionInKg,
-                            cost: this.state.cost,
-                            netProfit: this.state.netProfit
-                        }
-                    })
-                }
-            
-            AsyncStorage.setItem("jump","StepFiveScreen")
-        }catch(error){
+
+            if (cropSpecificSteps[5] === undefined) {
+                this.props.navigation.navigate({
+                    name: 'ActualCultivationCostScreen',
+                    params: {
+                        cropName: this.state.cropName,
+                        _id: this.state._id,
+                        imageFile: this.state.imageFile,
+                        patchName: this.state.patchName,
+                        landType: this.state.landType,
+                        farmingAreaInDecimal: this.state.farmingAreaInDecimal,
+                        costOfCultivatinPerTenDecimal: this.state.costOfCultivatinPerTenDecimal,
+                        costPerKg: this.state.costPerKg,
+                        productionInKg: this.state.productionInKg,
+                        cost: this.state.cost,
+                        netProfit: this.state.netProfit
+                    }
+                })
+            }
+
+            AsyncStorage.setItem("jump", "StepFiveScreen")
+        } catch (error) {
             console.log(error)
         }
     }
@@ -134,7 +135,7 @@ export default class StepFiveScreen extends Component {
             var specificObject = parsed[0]
             var cropSpecificSteps = specificObject.cropSteps.filter((i) => i.cropId === this.state._id)
             this.setState({ cropNameLanguageChangeArray: cropSpecificSteps[4].cropData, cropSpecificSteps })
-            this.setState({numberOfSteps : cropSpecificSteps.length})
+            this.setState({ numberOfSteps: cropSpecificSteps.length })
             var stepId = cropSpecificSteps[4]._id
             var cropSpecificMaterial = specificObject.cropsMaterials.filter((i) => i.stepId === stepId)
             this.setState({ multipleMaterials: cropSpecificMaterial })
@@ -264,7 +265,7 @@ export default class StepFiveScreen extends Component {
         //this.showData()
     }
 
-    setMaterialPrice = (data , index) => {
+    setMaterialPrice = (data, index) => {
         // var lastValue = ''
         // alert(index)
         // this.state.materialPrice.push({'data': data , 'materialName' : materialName})
@@ -276,13 +277,13 @@ export default class StepFiveScreen extends Component {
         const test = [...this.state.materialPrice]
         test[index] = data
         this.state.materialPrice = test
-        var sum  = this.state.materialPrice.reduce((a,b) => parseInt(a)+parseInt(b),0)
+        var sum = this.state.materialPrice.reduce((a, b) => parseInt(a) + parseInt(b), 0)
         this.state.sumOfMaterials = sum
         console.log(this.state.sumOfMaterials)
     }
 
-    setValueToPatch = async() => {
-        try{
+    setValueToPatch = async () => {
+        try {
             this.state.saveButtonClicked = true
             let username = await AsyncStorage.getItem('username')
             let user = await AsyncStorage.getItem('user')
@@ -291,9 +292,9 @@ export default class StepFiveScreen extends Component {
             var specificPatch = specific.patch.find((i) => i.patchName === this.state.patchName)
             specificPatch.step5 = this.state.sumOfMaterials
             await AsyncStorage.setItem('user', JSON.stringify(parsed))
-            console.log(specificPatch,"step5")
-        }catch(error){
-            console.log(error,"setValueToPatch")
+            console.log(specificPatch, "step5")
+        } catch (error) {
+            console.log(error, "setValueToPatch")
         }
     }
     setLanguageOnMount = async () => {
@@ -362,9 +363,9 @@ export default class StepFiveScreen extends Component {
         }
     }
 
-    setStepDataIntoPatch = async() => {
+    setStepDataIntoPatch = async () => {
         let files = await RNFetchBlob.fs.ls(RNFetchBlob.fs.dirs.MovieDir)
-        if(
+        if (
             (
                 this.state.cropSpecificSteps && this.state.cropSpecificSteps.length > 0 &&
                 this.state.cropSpecificSteps[4].videoFile &&
@@ -377,7 +378,7 @@ export default class StepFiveScreen extends Component {
                 text: 'Please pause the video before going to next screen'
             })
         } else {
-            try{
+            try {
                 let username = await AsyncStorage.getItem('username')
                 let user = await AsyncStorage.getItem('cropData');
                 let parsed = JSON.parse(user);
@@ -422,15 +423,15 @@ export default class StepFiveScreen extends Component {
                         })
                     }
                 }
-                AsyncStorage.setItem("jump","StepFiveScreen")
-            }catch(error){
+                AsyncStorage.setItem("jump", "StepFiveScreen")
+            } catch (error) {
                 console.log(error)
             }
         }
     }
 
-    goToPreviousStep = () =>{
-        
+    goToPreviousStep = () => {
+
         this.props.navigation.navigate({
             name: 'StepFourScreen',
             params: {
@@ -516,12 +517,20 @@ export default class StepFiveScreen extends Component {
                     this.state.isLoading ? <View style={{ justifyContent: 'center', marginTop: heightToDp("20%"), backgroundColor: BaseColor.BackgroundColor, marginBottom: heightToDp("30%") }}><CustomIndicator IsLoading={this.state.isLoading} /></View> : null
                 }
                 <ScrollView nestedScrollEnabled={true}>
-                    <View style={{ backgroundColor: BaseColor.Red, width: widthToDp("90%"), height: heightToDp("26%"), alignSelf: 'center', marginTop: heightToDp("2%"), borderRadius: 10 }}>
-                        {
-                            this.state.textLanguageChange === '0' ? <Text style={{ color: 'white', marginLeft: widthToDp("4%"), marginTop: heightToDp('1.5%'), fontSize: widthToDp("5%"), fontFamily: 'Oswald-Medium' }}>{this.state.englishTitleDescription}</Text> : ((this.state.textLanguageChange === '1') ? <Text style={{ color: 'white', marginLeft: widthToDp("4%"), marginTop: heightToDp('1.5%'), fontSize: widthToDp("5%"), fontFamily: 'Oswald-Medium' }}>{this.state.hindiTitleDescription}</Text> : ((this.state.textLanguageChange === '2') ? <Text style={{ color: 'white', marginLeft: widthToDp("4%"), marginTop: heightToDp('1.5%'), fontSize: widthToDp("5%"), fontFamily: 'Oswald-Medium' }}>{this.state.hoTitleDescription}</Text> : ((this.state.textLanguageChange === '3') ? <Text style={{ color: 'white', marginLeft: widthToDp("4%"), marginTop: heightToDp('1.5%'), fontSize: widthToDp("5%"), fontFamily: 'Oswald-Medium' }}>{this.state.odiaTitleDescription}</Text> : ((this.state.textLanguageChange === '4') ? <Text style={{ color: 'white', marginLeft: widthToDp("4%"), marginTop: heightToDp('1.5%'), fontSize: widthToDp("5%"), fontFamily: 'Oswald-Medium' }}>{this.state.santhaliTitleDescription}</Text> : null))))
-                        }
+                    <View style={{ backgroundColor: BaseColor.Red, width: widthToDp("90%"), alignSelf: 'center', marginTop: heightToDp("2%"), borderRadius: 10 }}>
+                        <LabelComponent
+                            stepName={
+                                this.state.textLanguageChange === "0" ? this.state.englishTitleDescription :
+                                    this.state.textLanguageChange === "1" ? this.state.hindiTitleDescription :
+                                        this.state.textLanguageChange === "2" ? this.state.hoTitleDescription :
+                                            this.state.textLanguageChange === "3" ? this.state.odiaTitleDescription :
+                                                this.state.santhaliTitleDescription
+                            }
+                            asyncKey={"cropSteps"}
+                            index={4}
+                        />
 
-                        <View style={{ backgroundColor: 'white', width: widthToDp("90%"), height: heightToDp("20%"), borderBottomLeftRadius: 10, borderBottomRightRadius: 10, marginTop: heightToDp("1%") }}>
+                        <View style={{ backgroundColor: 'white', width: widthToDp("90%"), height: heightToDp("20%"), borderBottomLeftRadius: 10, borderBottomRightRadius: 10 }}>
                             <View>
                                 <Image
                                     style={{ height: heightToDp("20%"), width: widthToDp("90%"), borderBottomLeftRadius: 10, borderBottomRightRadius: 10 }}
@@ -536,27 +545,35 @@ export default class StepFiveScreen extends Component {
                             this.state.cropSpecificSteps && this.state.cropSpecificSteps.length > 0 &&
                             this.state.cropSpecificSteps[4].videoFile
                         ) &&
-                        <VideoComponent
-                            asyncVideoFileName={this.state.cropSpecificSteps[4].videoFile}
-                            isPlaying={this.state.isPlaying}
-                            playOrPauseVideo={() => this.setState({ isPlaying: !this.state.isPlaying })}
-                            _id={this.state._id}
-                            stepId={4}
-                        />
+                        [
+                            <View style={{ height: heightToDp("0.5%") }} />,
+                            <VideoComponent
+                                asyncVideoFileName={this.state.cropSpecificSteps[4].videoFile}
+                                isPlaying={this.state.isPlaying}
+                                playOrPauseVideo={() => this.setState({ isPlaying: !this.state.isPlaying })}
+                                _id={this.state._id}
+                                stepId={4}
+                            />
+                        ]
                     }
 
+                    <View style={{ height: heightToDp("2%") }} />
 
-                    <View style={{ backgroundColor: BaseColor.Red, width: widthToDp("90%"), height: heightToDp("50%"), alignSelf: 'center', marginTop: heightToDp("2%"), borderRadius: 10 }}>
-                        <Text style={{ color: 'white', marginLeft: widthToDp("4%"), marginTop: heightToDp('1.5%'), fontSize: widthToDp("5%"), fontFamily: 'Oswald-Medium' }}>{this.state.descriptionLabel}</Text>
-                        
-                            <View style={{ backgroundColor: 'white', width: widthToDp("90%"), height: heightToDp("43%"), borderBottomLeftRadius: 10, borderBottomRightRadius: 10, marginTop: heightToDp("2%") }}>
-                            <ScrollView nestedScrollEnabled={true}>
+                    <View style={{ backgroundColor: BaseColor.Red, width: widthToDp("90%"), height: heightToDp("50%"), alignSelf: 'center', borderRadius: 10 }}>
+                        <LabelComponent
+                            stepName={this.state.descriptionLabel}
+                            asyncKey={"cropSteps"}
+                            index={4}
+                        />
+                        <ScrollView nestedScrollEnabled={true}>
+                            <View style={{ backgroundColor: 'white', width: widthToDp("90%"), borderBottomLeftRadius: 10, borderBottomRightRadius: 10, marginTop: heightToDp("2%") }}>
                                 {
                                     this.state.textLanguageChange === '0' ? <HTML source={{ html: this.state.englishDescription || '<p></p>' }} containerStyle={{ elevation: 10, marginTop: heightToDp("2%"), marginLeft: widthToDp("2%") }} /> : ((this.state.textLanguageChange === '1') ? <HTML source={{ html: this.state.hindiDescription || '<p></p>' }} containerStyle={{ elevation: 10, marginTop: heightToDp("2%"), marginLeft: widthToDp("2%") }} /> : ((this.state.textLanguageChange === '2') ? <HTML source={{ html: this.state.hoDescription || '<p></p>' }} containerStyle={{ elevation: 10, marginTop: heightToDp("2%"), marginLeft: widthToDp("2%") }} /> : ((this.state.textLanguageChange === '3') ? <HTML source={{ html: this.state.odiaDescription || '<p></p>' }} containerStyle={{ elevation: 10, marginTop: heightToDp("2%"), marginLeft: widthToDp("2%") }} /> : ((this.state.textLanguageChange === '4') ? <HTML source={{ html: this.state.santhaliDescription || '<p></p>' }} containerStyle={{ elevation: 10, marginTop: heightToDp("2%"), marginLeft: widthToDp("2%") }} /> : null))))
                                 }
-                            </ScrollView>
+
                             </View>
-                        
+                        </ScrollView>
+
 
 
                     </View>

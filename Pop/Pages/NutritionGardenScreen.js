@@ -16,13 +16,9 @@ import Languages from '../Core/Languages'
 import LanguageChange from '../Core/LanguageChange'
 import HTML from "react-native-render-html";
 import LabelComponent from '../components/LabelComponent'
-
-
-const Sound = require('react-native-sound')
+import RNFetchBlob from 'rn-fetch-blob'
 
 export default class NutritionGardenScreen extends Component {
-
-    sound = new Sound('http://commondatastorage.googleapis.com/codeskulptor-assets/jump.ogg')
 
     constructor(props) {
         super(props)
@@ -209,13 +205,6 @@ export default class NutritionGardenScreen extends Component {
         })
     }
 
-
-
-    speak = (data) => {
-        // tts.speak(data)
-        this.sound.play()
-    }
-
     nextButton = () => {
         var length = parseInt(this.state.lengthOfData)
         //alert(length)
@@ -353,12 +342,38 @@ export default class NutritionGardenScreen extends Component {
                 <View style={{ backgroundColor: BaseColor.Red, height: heightToDp("50%"), alignSelf: 'center', width: widthToDp("90%"), borderRadius: 10, marginTop: heightToDp('1.5%') }}>
                     <Text style={{ color: "#fff", fontSize: widthToDp("5%"), marginLeft: widthToDp("5%"), marginTop: heightToDp("1%"), fontFamily: 'Oswald-Medium' }}>
                     <LabelComponent
-                        stepName={
+                        directData={true}
+                        labelWidth={
+                            (
+                                (this.state.textLanguageChange==="0" && this.state.screensData.audioEnglish) ||
+                                (this.state.textLanguageChange==="1" && this.state.screensData.audioHindi) ||
+                                (this.state.textLanguageChange==="2" && this.state.screensData.audioHo) ||
+                                (this.state.textLanguageChange==="3" && this.state.screensData.audioOdia) ||
+                                (this.state.textLanguageChange==="4" && this.state.screensData.audioSanthali)
+                            ) ? 77 : 85
+                        }
+                        labelName={
                             this.state.textLanguageChange==="0" ? this.state.screensData.nameEnglish :
                             this.state.textLanguageChange==="1" ? this.state.screensData.nameHindi :
                             this.state.textLanguageChange==="2" ? this.state.screensData.nameHo :
                             this.state.textLanguageChange==="3" ? this.state.screensData.nameOdia :
                             this.state.screensData.nameSanthali
+                        }
+                        isAudioHaving={
+                            (
+                                (this.state.textLanguageChange==="0" && this.state.screensData.audioEnglish) ||
+                                (this.state.textLanguageChange==="1" && this.state.screensData.audioHindi) ||
+                                (this.state.textLanguageChange==="2" && this.state.screensData.audioHo) ||
+                                (this.state.textLanguageChange==="3" && this.state.screensData.audioOdia) ||
+                                (this.state.textLanguageChange==="4" && this.state.screensData.audioSanthali)
+                            )
+                        }
+                        audioFile={
+                            this.state.textLanguageChange==="0" ? this.state.screensData.audioEnglish :
+                                this.state.textLanguageChange==="1" ? this.state.screensData.audioHindi :
+                                this.state.textLanguageChange==="2" ? this.state.screensData.audioHo :
+                                this.state.textLanguageChange==="3" ? this.state.screensData.audioOdia :
+                                this.state.screensData.audioSanthali
                         }
                     />
                     </Text>

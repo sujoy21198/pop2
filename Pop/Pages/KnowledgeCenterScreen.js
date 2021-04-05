@@ -9,7 +9,8 @@ import Icon from 'react-native-vector-icons/FontAwesome'
 import Languages from '../Core/Languages'
 import LanguageChange from '../Core/LanguageChange'
 import AsyncStorage from '@react-native-async-storage/async-storage'
-
+import LabelComponent from '../components/LabelComponent'
+import RNFetchBlob from 'rn-fetch-blob'
 
 const data = [
     { name: 'CROPS', code: 'Evsaf-4UcAMrsvC.jpg' },
@@ -98,6 +99,10 @@ export default class KnowledgeCenterScreen extends Component {
                 this.state.data[2].name = smallBusiness.nameEnglish
                 this.state.data[3].name = nutrationGraden.nameEnglish
                 this.setState({knowledgeCenterLabel : knowledgeCenter.nameEnglish})
+                this.state.data[0].audioEnglish = crops.audioEnglish
+                this.state.data[1].audioEnglish = livestock.audioEnglish
+                this.state.data[2].audioEnglish = smallBusiness.audioEnglish
+                this.state.data[3].audioEnglish = nutrationGraden.audioEnglish
                 // this.state.data[4].name = message.nameEnglish
                 // this.state.data[5].name = generalSettings.nameEnglish
                 // this.state.data[6].name = pension.nameEnglish
@@ -112,6 +117,10 @@ export default class KnowledgeCenterScreen extends Component {
                 this.state.data[2].name = smallBusiness.nameHindi
                 this.state.data[3].name = nutrationGraden.nameHindi
                 this.setState({knowledgeCenterLabel : knowledgeCenter.nameHindi})
+                this.state.data[0].audioHindi = crops.audioHindi
+                this.state.data[1].audioHindi = livestock.audioHindi
+                this.state.data[2].audioHindi = smallBusiness.audioHindi
+                this.state.data[3].audioHindi = nutrationGraden.audioHindi
                 // this.state.data[4].name = message.nameHindi
                 // this.state.data[5].name = generalSettings.nameHindi
                 // this.state.data[6].name = pension.nameHindi
@@ -122,6 +131,10 @@ export default class KnowledgeCenterScreen extends Component {
                 this.state.data[2].name = smallBusiness.nameHo
                 this.state.data[3].name = nutrationGraden.nameHo
                 this.setState({knowledgeCenterLabel : knowledgeCenter.nameHo})
+                this.state.data[0].audioHo = crops.audioHo
+                this.state.data[1].audioHo = livestock.audioHo
+                this.state.data[2].audioHo = smallBusiness.audioHo
+                this.state.data[3].audioHo = nutrationGraden.audioHo
                 // this.state.data[4].name = message.nameHo
                 // this.state.data[5].name = generalSettings.nameHo
                 // this.state.data[6].name = pension.nameHo
@@ -132,6 +145,10 @@ export default class KnowledgeCenterScreen extends Component {
                 this.state.data[2].name = smallBusiness.nameOdia
                 this.state.data[3].name = nutrationGraden.nameOdia
                 this.setState({knowledgeCenterLabel : knowledgeCenter.nameOdia})
+                this.state.data[0].audioOdia = crops.audioOdia
+                this.state.data[1].audioOdia = livestock.audioOdia
+                this.state.data[2].audioOdia = smallBusiness.audioOdia
+                this.state.data[3].audioOdia = nutrationGraden.audioOdia
                 // this.state.data[4].name = message.nameOdia
                 // this.state.data[5].name = generalSettings.nameOdia
                 // this.state.data[6].name = pension.nameOdia
@@ -142,6 +159,10 @@ export default class KnowledgeCenterScreen extends Component {
                 this.state.data[2].name = smallBusiness.nameSanthali
                 this.state.data[3].name = nutrationGraden.nameSanthali
                 this.setState({knowledgeCenterLabel : knowledgeCenter.nameSanthali})
+                this.state.data[0].audioSanthali = crops.audioSanthali
+                this.state.data[1].audioSanthali = livestock.audioSanthali
+                this.state.data[2].audioSanthali = smallBusiness.audioSanthali
+                this.state.data[3].audioSanthali = nutrationGraden.audioSanthali
                 // this.state.data[4].name = message.nameSanthali
                 // this.state.data[5].name = generalSettings.nameSanthali
                 // this.state.data[6].name = pension.nameSanthali
@@ -285,7 +306,8 @@ export default class KnowledgeCenterScreen extends Component {
                         itemDimension={130}
                         data={data}
                         bouncesZoom={true}
-                        renderItem={({ item }) => (
+                        renderItem={({ item, index }) => {
+                            return (
                             <TouchableOpacity onPress={() => this.checkNavigation(item.name)}>
                                 {/* <View style={{ backgroundColor: 'white', width: widthToDp("46%"), height: heightToDp("30%"), elevation: 10, borderRadius: 10 }}>
                                     <View style={{ backgroundColor: "#000", height: heightToDp("7%"), borderRadius: 10 }}>
@@ -297,15 +319,44 @@ export default class KnowledgeCenterScreen extends Component {
                                     />
                                 </View>
                                  */}
-                                 <View style={{backgroundColor:BaseColor.Red,width:widthToDp("47%"),height:heightToDp("30%"), elevation: 10, borderRadius: 10}}>
-                                    <Text style={{color: "#fff", fontSize: widthToDp("5%"),marginLeft:widthToDp("5%"), marginTop: heightToDp("0.4%"),fontFamily:'Oswald-Medium'}}>{item.name}</Text>
+                                 <View style={{backgroundColor:BaseColor.Red,width:widthToDp("47%"),height:heightToDp("30%"), elevation: 10, borderRadius: 10, marginBottom: heightToDp("2%")}}>
+                                    <LabelComponent
+                                        directData={true}
+                                        marginVertical={true}
+                                        labelWidth={
+                                            (
+                                                (this.state.textLanguageChange==="0" && item.audioEnglish) ||
+                                                (this.state.textLanguageChange==="1" && item.audioHindi) ||
+                                                (this.state.textLanguageChange==="2" && item.audioHo) ||
+                                                (this.state.textLanguageChange==="3" && item.audioOdia) ||
+                                                (this.state.textLanguageChange==="4" && item.audioSanthali)
+                                            ) ? 35 : 50
+                                        }
+                                        labelName={item.name}
+                                        isAudioHaving={
+                                            (
+                                                (this.state.textLanguageChange==="0" && item.audioEnglish) ||
+                                                (this.state.textLanguageChange==="1" && item.audioHindi) ||
+                                                (this.state.textLanguageChange==="2" && item.audioHo) ||
+                                                (this.state.textLanguageChange==="3" && item.audioOdia) ||
+                                                (this.state.textLanguageChange==="4" && item.audioSanthali)
+                                            )
+                                        }
+                                        audioFile={
+                                            this.state.textLanguageChange==="0" ? item.audioEnglish :
+                                                this.state.textLanguageChange==="1" ? item.audioHindi :
+                                                this.state.textLanguageChange==="2" ? item.audioHo :
+                                                this.state.textLanguageChange==="3" ? item.audioOdia :
+                                                item.audioSanthali
+                                        }
+                                    />       
                                     <Image
-                                style={{ width: widthToDp("47%"), height: heightToDp("25%") ,borderBottomLeftRadius:10,borderBottomRightRadius:10, marginTop: heightToDp("1%")}}
+                                style={{ width: widthToDp("47%"), height: heightToDp("25%") ,borderBottomLeftRadius:10,borderBottomRightRadius:10}}
                                 source={{ uri: 'file:///storage/emulated/0/Pictures/image_' + item.code }}
                                 />
                                 </View>
                             </TouchableOpacity>
-                        )}
+                        )}}
                     />
                 </View>
             </View>

@@ -10,6 +10,7 @@ import tts from 'react-native-tts'
 import Languages from '../Core/Languages'
 import LanguageChange from '../Core/LanguageChange'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import LabelComponent from '../components/LabelComponent'
 
 
 const data = [
@@ -93,6 +94,10 @@ export default class ImportantLinksScreen extends Component {
                 this.state.data[1].name = health.nameEnglish
                 this.state.data[2].name = covid.nameEnglish
                 this.state.data[3].name = governmentSchemes.nameEnglish
+                this.state.data[0].audioEnglish = wash.audioEnglish
+                this.state.data[1].audioEnglish = health.audioEnglish
+                this.state.data[2].audioEnglish = covid.audioEnglish
+                this.state.data[3].audioEnglish = governmentSchemes.audioEnglish
                 
                 // this.setState({ moneyManagerLabel: moneyManagerLabel.nameEnglish })
                 // this.setState({ expenseLabel: expenseLabel.nameEnglish })
@@ -103,24 +108,40 @@ export default class ImportantLinksScreen extends Component {
                 this.state.data[1].name = health.nameHindi
                 this.state.data[2].name = covid.nameHindi
                 this.state.data[3].name = governmentSchemes.nameHindi
+                this.state.data[0].audioHindi = wash.audioHindi
+                this.state.data[1].audioHindi = health.audioHindi
+                this.state.data[2].audioHindi = covid.audioHindi
+                this.state.data[3].audioHindi = governmentSchemes.audioHindi
                 
             } else if (this.state.textLanguageChange === '2') {
                 this.state.data[0].name = wash.nameHo
                 this.state.data[1].name = health.nameHo
                 this.state.data[2].name = covid.nameHo
                 this.state.data[3].name = governmentSchemes.nameHo
+                this.state.data[0].audioHo = wash.audioHo
+                this.state.data[1].audioHo = health.audioHo
+                this.state.data[2].audioHo = covid.audioHo
+                this.state.data[3].audioHo = governmentSchemes.audioHo
                 
             } else if (this.state.textLanguageChange === '3') {
                 this.state.data[0].name = wash.nameOdia
                 this.state.data[1].name = health.nameOdia
                 this.state.data[2].name = covid.nameOdia
                 this.state.data[3].name = governmentSchemes.nameOdia
+                this.state.data[0].audioOdia = wash.audioOdia
+                this.state.data[1].audioOdia = health.audioOdia
+                this.state.data[2].audioOdia = covid.audioOdia
+                this.state.data[3].audioOdia = governmentSchemes.audioOdia
                 
             } else if (this.state.textLanguageChange === '4') {
                 this.state.data[0].name = wash.nameSanthali
                 this.state.data[1].name = health.nameSanthali
                 this.state.data[2].name = covid.nameSanthali
                 this.state.data[3].name = governmentSchemes.nameSanthali
+                this.state.data[0].audioSanthali = wash.audioSanthali
+                this.state.data[1].audioSanthali = health.audioSanthali
+                this.state.data[2].audioSanthali = covid.audioSanthali
+                this.state.data[3].audioSanthali = governmentSchemes.audioSanthali
                
             }
             
@@ -262,9 +283,37 @@ export default class ImportantLinksScreen extends Component {
                         renderItem={({ item }) => (
                             <TouchableOpacity onPress={() => this.selectLandType(item.name)}>
                                 <View style={{ backgroundColor: BaseColor.Red, width: widthToDp("47%"), height: heightToDp("30%"), elevation: 10, borderRadius: 10 }}>
-                                    <Text style={{ color: "#fff", fontSize: widthToDp("5%"), marginLeft: widthToDp("5%"), marginTop: heightToDp("0.4%"), fontFamily: 'Oswald-Medium', height:heightToDp("4%") }}>{item.name}</Text>
+                                    <LabelComponent
+                                        directData={true}
+                                        labelWidth={
+                                            (
+                                                (this.state.textLanguageChange==="0" && item.audioEnglish) ||
+                                                (this.state.textLanguageChange==="1" && item.audioHindi) ||
+                                                (this.state.textLanguageChange==="2" && item.audioHo) ||
+                                                (this.state.textLanguageChange==="3" && item.audioOdia) ||
+                                                (this.state.textLanguageChange==="4" && item.audioSanthali)
+                                            ) ? 35 : 50
+                                        }
+                                        labelName={item.name}
+                                        isAudioHaving={
+                                            (
+                                                (this.state.textLanguageChange==="0" && item.audioEnglish) ||
+                                                (this.state.textLanguageChange==="1" && item.audioHindi) ||
+                                                (this.state.textLanguageChange==="2" && item.audioHo) ||
+                                                (this.state.textLanguageChange==="3" && item.audioOdia) ||
+                                                (this.state.textLanguageChange==="4" && item.audioSanthali)
+                                            )
+                                        }
+                                        audioFile={
+                                            this.state.textLanguageChange==="0" ? item.audioEnglish :
+                                                this.state.textLanguageChange==="1" ? item.audioHindi :
+                                                this.state.textLanguageChange==="2" ? item.audioHo :
+                                                this.state.textLanguageChange==="3" ? item.audioOdia :
+                                                item.audioSanthali
+                                        }
+                                    />
                                     <Image
-                                        style={{ width: widthToDp("47%"), height: heightToDp("25%"), borderBottomLeftRadius: 10, borderBottomRightRadius: 10, marginTop: heightToDp("1%") }}
+                                        style={{ width: widthToDp("47%"), height: heightToDp("25%"), borderBottomLeftRadius: 10, borderBottomRightRadius: 10, marginTop: heightToDp("0%") }}
                                         source={{ uri: 'file:///storage/emulated/0/Pictures/image_' + item.code }}
                                     />
                                 </View>

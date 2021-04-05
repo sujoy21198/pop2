@@ -5,10 +5,13 @@ import BaseColor from '../Core/BaseTheme'
 import Icon from 'react-native-vector-icons/AntDesign'
 import { widthToDp, heightToDp } from '../Responsive'
 import { TouchableOpacity } from 'react-native-gesture-handler'
+import Sync from 'react-native-vector-icons/AntDesign'
 
 
 export default class GeneralSettingsScreen extends Component {
-
+    state = {
+        refreshLabel: ""
+    };
     go = async () => {
         await AsyncStorage.removeItem('_id')
         
@@ -28,25 +31,119 @@ export default class GeneralSettingsScreen extends Component {
             routes: [{ name: "LanguageScreen" }]
         });
     }
+    componentDidMount = async() => this.setLanguageOnMount();
+
+    setLanguageOnMount = async () => {
+        let defaultLanguage = await AsyncStorage.getItem('language')
+        if (defaultLanguage === 'en') {
+            this.setState({ textLanguageChange: '0' })
+            this.loadlabelsFromStorage()
+        } else if (defaultLanguage === 'hi') {
+            this.setState({ textLanguageChange: '1' })
+            this.loadlabelsFromStorage()
+        } else if (defaultLanguage === 'ho') {
+            this.setState({ textLanguageChange: '2' })
+            this.loadlabelsFromStorage()
+        } else if (defaultLanguage === 'od') {
+            this.setState({ textLanguageChange: '3' })
+            this.loadlabelsFromStorage()
+        } else if (defaultLanguage === 'san') {
+            this.setState({ textLanguageChange: '4' })
+            this.loadlabelsFromStorage()
+        }
+    }
+
+
+    loadlabelsFromStorage = async () => {
+        try {
+            let username = await AsyncStorage.getItem('username')
+            let user = await AsyncStorage.getItem('labelsData');
+            let parsed = JSON.parse(user);
+            var specificObject = parsed[0]
+            var refreshLabel = specificObject.labels.find((i) => i.type === 220)
+            if (this.state.textLanguageChange === '0') {
+                this.setState({ refreshLabel: refreshLabel.nameEnglish })
+            } else if (this.state.textLanguageChange === '1') {
+                this.setState({ refreshLabel: refreshLabel.nameHindi })
+            } else if (this.state.textLanguageChange === '2') {
+                this.setState({ refreshLabel: refreshLabel.nameHo })
+            } else if (this.state.textLanguageChange === '3') {
+                this.setState({ refreshLabel: refreshLabel.nameOdia })
+            } else if (this.state.textLanguageChange === '4') {
+                this.setState({ refreshLabel: refreshLabel.nameSanthali })
+            }
+        } catch (error) {
+            alert(error)
+        }
+        //this.setState({ crops: specificObject.crops })
+        //this.showData()
+    }
+
     render() {
         return (
-            <View style={{ backgroundColor: BaseColor.BackgroundColor, flex: 1 }}>
-                {/* <Button
+            <View style={{ 
+                backgroundColor: BaseColor.BackgroundColor, 
+                flex: 1,
+                justifyContent: 'center',
+                alignItems: 'center' 
+            }}>                
+                <TouchableOpacity 
+                    style={{
+                        flexDirection: 'row',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                        marginBottom: heightToDp("5%"),
+                        padding: heightToDp("2%"),
+                        borderWidth: 1,
+                        borderRadius: 10,
+                        borderColor: '#fff',
+                        backgroundColor: '#fff'
+                    }}
+                    onPress={() => this.refreshApplication()}
+                >
+                    <Sync
+                        name="sync"
+                        size={30}
+                        onPress={() => this.syncData()}
+                    />
+                    <Text style={{
+                        fontSize: 30,
+                        marginLeft: widthToDp("4%")
+                    }}>{this.state.refreshLabel}</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                    style={{
+                        flexDirection: 'row',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                        borderWidth: 1,
+                        borderRadius: 10,
+                        borderColor: '#fff',
+                        backgroundColor: '#fff',
+                        padding: heightToDp("2%"),
+                    }}
                     onPress={() => this.go()}
-                    title="Logout"
-                /> */}
-                <View style={{ marginTop: heightToDp("50%"), marginLeft: widthToDp("40%") }}>
-                    <TouchableOpacity onPress={() => this.refreshApplication()}>
-                        <Text>REFRESH APP</Text>
-                    </TouchableOpacity>
+                >
                     <Icon
                         name="logout"
-                        size={60}
-                        style={{ marginTop: heightToDp("0%"), marginLeft: widthToDp("0%") }}
-                        onPress={() => this.go()}
+                        size={40}
                     />
-                    <Text style={{ fontSize: widthToDp("4%"), marginTop: heightToDp("5%") }}>LOGOUT</Text>
-                </View>
+                </TouchableOpacity>
+                {/* <View style={{ 
+                    flex: 1,
+                    justifyContent: 'center',
+                    alignItems: 'center'
+                 }}>
+                    <TouchableOpacity 
+                    style={{
+                        paddingBottom: heightToDp("5%"),
+
+                    }}
+                    onPress={() => this.refreshApplication()}>
+                        <Text>REFRESH APP</Text>
+                    </TouchableOpacity>
+                    
+                </View> */}
             </View>
         );
     }
