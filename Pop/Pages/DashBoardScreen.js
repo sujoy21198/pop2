@@ -33,7 +33,8 @@ export default class DashBoardScreen extends Component {
         this.state = {
             data: [],
             languages: [],
-            textLanguageChange: ''
+            textLanguageChange: '',
+            notificationCount : 0
         }
 
         this.state.languages = Languages
@@ -54,7 +55,16 @@ export default class DashBoardScreen extends Component {
 
     getOfflineData = async () => {
         try {
-            let username = await AsyncStorage.getItem('username')
+            let username = base64.encode(await AsyncStorage.getItem('username'));
+            let token = await AsyncStorage.getItem('token')
+            let response = await axios.get("http://161.35.122.165:3020/api/v1/notifications?info=604240ff4b9a872502ab64d0", {
+                headers: {
+                    'Content-type': "application/json",
+                    'X-Information': username,
+                    'Authorization': "POP " + token
+                }
+            })
+            this.setState({notificationCount: response.data.notifications.length})
             let user = await AsyncStorage.getItem('labelsData');
             let parsed = JSON.parse(user);
             var specificObject = parsed[0]
@@ -295,6 +305,22 @@ export default class DashBoardScreen extends Component {
                         style={{ marginTop: heightToDp("4.6%"), marginLeft: widthToDp("5%") }}
                         onPress={() => this.props.navigation.navigate('NotificationsScreen')}
                     />
+                    <View style={{
+                        position: 'absolute',
+                        top: heightToDp("3.2%"),
+                        right: widthToDp("3%"),
+                        width: 20,
+                        height: 20, 
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        borderRadius: 20 / 2,
+                        backgroundColor: '#1b1b1b'
+                    }}>
+                        <Text style={{
+                            fontSize: widthToDp("3.3%"),
+                            color: '#fff'
+                        }}>{this.state.notificationCount}</Text>
+                    </View>
                 </View>
                 <View style={{ flexDirection: 'row', marginTop: heightToDp("1%"), marginLeft: widthToDp("1%") }}>
                     <TouchableOpacity onPress={() => this.languageChangeFunction(this.state.languages[0].id)}>
