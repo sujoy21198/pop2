@@ -571,75 +571,78 @@ export default class StepSixScreen extends Component {
                         </View>
                     </View>
 
-                    <View style={{ backgroundColor: BaseColor.Red, width: widthToDp("90%"), height: heightToDp("40%"), alignSelf: 'center', marginTop: heightToDp("2%"), borderRadius: 10 }}>
-                        <Text style={{ color: 'white', marginLeft: widthToDp("4%"), marginTop: heightToDp('1.5%'), fontSize: widthToDp("5%"), fontFamily: 'Oswald-Medium' }}>{this.state.material}</Text>
-                        <View style={{ backgroundColor: 'white', width: widthToDp("90%"), height: heightToDp("40%"), borderBottomLeftRadius: 10, borderBottomRightRadius: 10, marginTop: heightToDp("2%") }}>
-                            <View style={{ flexDirection: 'row', marginLeft: widthToDp("3%"), marginTop: heightToDp("2%") }}>
-                                <View style={{ width: widthToDp("20%") }}>
-                                    <Text style={{ color: BaseColor.Red, fontFamily: 'Oswald-Medium', fontSize: widthToDp("3.5%") }}>{this.state.descriptionLabel}</Text>
+                    {
+                        multipleMaterials.length > 0 &&
+                        <View style={{ backgroundColor: BaseColor.Red, width: widthToDp("90%"), height: heightToDp("40%"), alignSelf: 'center', marginTop: heightToDp("2%"), borderRadius: 10 }}>
+                            <Text style={{ color: 'white', marginLeft: widthToDp("4%"), marginTop: heightToDp('1.5%'), fontSize: widthToDp("5%"), fontFamily: 'Oswald-Medium' }}>{this.state.material}</Text>
+                            <View style={{ backgroundColor: 'white', width: widthToDp("90%"), height: heightToDp("40%"), borderBottomLeftRadius: 10, borderBottomRightRadius: 10, marginTop: heightToDp("2%") }}>
+                                <View style={{ flexDirection: 'row', marginLeft: widthToDp("3%"), marginTop: heightToDp("2%") }}>
+                                    <View style={{ width: widthToDp("20%") }}>
+                                        <Text style={{ color: BaseColor.Red, fontFamily: 'Oswald-Medium', fontSize: widthToDp("3.5%") }}>{this.state.descriptionLabel}</Text>
+                                    </View>
+                                    <View style={{ width: widthToDp("25%") }}>
+                                        <Text style={{ color: BaseColor.Red, fontFamily: 'Oswald-Medium', marginLeft: widthToDp("10%"), fontSize: widthToDp("3.5%") }}>{this.state.quantityLabel}</Text>
+                                    </View>
+                                    <View style={{ width: widthToDp("30%") }}>
+                                        <Text style={{ color: BaseColor.Red, fontFamily: 'Oswald-Medium', marginLeft: widthToDp("15%"), fontSize: widthToDp("3.5%") }}>{this.state.amountLabel}</Text>
+                                    </View>
+
+
+
                                 </View>
-                                <View style={{ width: widthToDp("25%") }}>
-                                    <Text style={{ color: BaseColor.Red, fontFamily: 'Oswald-Medium', marginLeft: widthToDp("10%"), fontSize: widthToDp("3.5%") }}>{this.state.quantityLabel}</Text>
-                                </View>
-                                <View style={{ width: widthToDp("30%") }}>
-                                    <Text style={{ color: BaseColor.Red, fontFamily: 'Oswald-Medium', marginLeft: widthToDp("15%"), fontSize: widthToDp("3.5%") }}>{this.state.amountLabel}</Text>
-                                </View>
+
+                                <ScrollView nestedScrollEnabled={true}>
+                                    {
+                                        multipleMaterials.map((i, index) => {
+                                            return (
+                                                [
+                                                    <>
+                                                        <View style={{ height: heightToDp(`${index === 0 ? 1 : 0}%`) }} />
+                                                        <View style={{ flexDirection: 'row', marginLeft: widthToDp("3%"), marginTop: heightToDp("2%") }}>
+                                                            <View style={{ width: widthToDp("20%") }}>
+                                                                {
+                                                                    this.state.textLanguageChange === '0' ? <Text style={{ fontFamily: 'Oswald-Medium', fontSize: widthToDp('3.3%') }}>{i.materialNameEnglish}</Text> : ((this.state.textLanguageChange === '1') ? <Text style={{ fontFamily: 'Oswald-Medium', fontSize: widthToDp('3.3%') }}>{i.materialNameHindi}</Text> : ((this.state.textLanguageChange === '2') ? <Text style={{ fontFamily: 'Oswald-Medium', fontSize: widthToDp('3.3%') }}>{i.materialNameHo}</Text> : ((this.state.textLanguageChange === '3') ? <Text style={{ fontFamily: 'Oswald-Medium', fontSize: widthToDp('3.3%') }}>{i.materialNameOdia}</Text> : ((this.state.textLanguageChange === '4') ? <Text style={{ fontFamily: 'Oswald-Medium', fontSize: widthToDp('3.3%') }}>{i.materialNameSanthali}</Text> : null))))
+                                                                }
+
+                                                            </View>
+                                                            <View style={{ width: widthToDp("25%"), marginLeft: widthToDp("9%") }}>
+                                                                <Input
+                                                                    style={{
+                                                                        borderBottomWidth: 1,
+                                                                        borderColor: 'blue',
+                                                                        fontFamily: 'Oswald-Medium',
+                                                                    }}
+                                                                    defaultValue={i.qty}
+                                                                />
+                                                            </View>
+                                                            <View style={{ width: widthToDp("30%"), marginLeft: widthToDp("5%") }}>
+                                                                <Input
+                                                                    defaultValue={i.decimalPrice}
+                                                                    keyboardType='number-pad'
+                                                                    onChangeText={(data) => this.setMaterialPrice(data, index)}
+                                                                    style={{ marginLeft: widthToDp("0%"), fontFamily: 'Oswald-Medium', width: widthToDp("20%"), marginTop: heightToDp("-2%"), borderBottomWidth: 1, borderColor: 'blue', marginRight: widthToDp("5%") }}
+                                                                />
+                                                            </View>
+                                                        </View>
+                                                        <View style={{ height: heightToDp(`${index === multipleMaterials.length - 1 ? 1 : 0}%`) }} />
+                                                    </>,
+                                                    this.setMaterialPrice(i.decimalPrice, index)
+                                                ]
+                                            )
+                                        })
+                                    }
+                                </ScrollView>
+
+
+
+                                {/* <Text style={{ marginLeft: widthToDp("35%"), fontFamily: 'Oswald-Medium' }}>₹ {this.state.decimalPrice}</Text> */}
+
 
 
 
                             </View>
-
-                            <ScrollView nestedScrollEnabled={true}>
-                                {
-                                    multipleMaterials.map((i, index) => {
-                                        return (
-                                            [
-                                                <>
-                                                    <View style={{ height: heightToDp(`${index === 0 ? 1 : 0}%`) }} />
-                                                    <View style={{ flexDirection: 'row', marginLeft: widthToDp("3%"), marginTop: heightToDp("2%") }}>
-                                                        <View style={{ width: widthToDp("20%") }}>
-                                                            {
-                                                                this.state.textLanguageChange === '0' ? <Text style={{ fontFamily: 'Oswald-Medium', fontSize: widthToDp('3.3%') }}>{i.materialNameEnglish}</Text> : ((this.state.textLanguageChange === '1') ? <Text style={{ fontFamily: 'Oswald-Medium', fontSize: widthToDp('3.3%') }}>{i.materialNameHindi}</Text> : ((this.state.textLanguageChange === '2') ? <Text style={{ fontFamily: 'Oswald-Medium', fontSize: widthToDp('3.3%') }}>{i.materialNameHo}</Text> : ((this.state.textLanguageChange === '3') ? <Text style={{ fontFamily: 'Oswald-Medium', fontSize: widthToDp('3.3%') }}>{i.materialNameOdia}</Text> : ((this.state.textLanguageChange === '4') ? <Text style={{ fontFamily: 'Oswald-Medium', fontSize: widthToDp('3.3%') }}>{i.materialNameSanthali}</Text> : null))))
-                                                            }
-
-                                                        </View>
-                                                        <View style={{ width: widthToDp("25%"), marginLeft: widthToDp("9%") }}>
-                                                            <Input
-                                                                style={{
-                                                                    borderBottomWidth: 1,
-                                                                    borderColor: 'blue',
-                                                                    fontFamily: 'Oswald-Medium',
-                                                                }}
-                                                                defaultValue={i.qty}
-                                                            />
-                                                        </View>
-                                                        <View style={{ width: widthToDp("30%"), marginLeft: widthToDp("5%") }}>
-                                                            <Input
-                                                                defaultValue={i.decimalPrice}
-                                                                keyboardType='number-pad'
-                                                                onChangeText={(data) => this.setMaterialPrice(data, index)}
-                                                                style={{ marginLeft: widthToDp("0%"), fontFamily: 'Oswald-Medium', width: widthToDp("20%"), marginTop: heightToDp("-2%"), borderBottomWidth: 1, borderColor: 'blue', marginRight: widthToDp("5%") }}
-                                                            />
-                                                        </View>
-                                                    </View>
-                                                    <View style={{ height: heightToDp(`${index === multipleMaterials.length - 1 ? 1 : 0}%`) }} />
-                                                </>,
-                                                this.setMaterialPrice(i.decimalPrice, index)
-                                            ]
-                                        )
-                                    })
-                                }
-                            </ScrollView>
-
-
-
-                            {/* <Text style={{ marginLeft: widthToDp("35%"), fontFamily: 'Oswald-Medium' }}>₹ {this.state.decimalPrice}</Text> */}
-
-
-
-
                         </View>
-                    </View>
+                    }
 
                     <View style={{ marginBottom: heightToDp("10%") }}></View>
                 </ScrollView>
