@@ -602,7 +602,7 @@ export default class StepOneScreen extends Component {
                                                     <>
                                                         <View style={{ height: heightToDp(`${index === 0 ? 1 : 0}%`) }} />
                                                         <View style={{ flexDirection: 'row', marginLeft: widthToDp("3%"), marginTop: heightToDp("2%") }}>
-                                                            <View style={{ width: widthToDp("20%") }}>
+                                                            <View style={{ width: widthToDp("20%"), marginTop: heightToDp("1%") }}>
                                                                 {
                                                                     this.state.textLanguageChange === '0' ? <Text style={{ fontFamily: 'Oswald-Medium', fontSize: widthToDp('3.3%') }}>{i.materialNameEnglish}</Text> : ((this.state.textLanguageChange === '1') ? <Text style={{ fontFamily: 'Oswald-Medium', fontSize: widthToDp('3.3%') }}>{i.materialNameHindi}</Text> : ((this.state.textLanguageChange === '2') ? <Text style={{ fontFamily: 'Oswald-Medium', fontSize: widthToDp('3.3%') }}>{i.materialNameHo}</Text> : ((this.state.textLanguageChange === '3') ? <Text style={{ fontFamily: 'Oswald-Medium', fontSize: widthToDp('3.3%') }}>{i.materialNameOdia}</Text> : ((this.state.textLanguageChange === '4') ? <Text style={{ fontFamily: 'Oswald-Medium', fontSize: widthToDp('3.3%') }}>{i.materialNameSanthali}</Text> : null))))
                                                                 }
@@ -623,7 +623,7 @@ export default class StepOneScreen extends Component {
                                                                     defaultValue={i.decimalPrice}
                                                                     keyboardType='number-pad'
                                                                     onChangeText={(data) => this.setMaterialPrice(data, index)}
-                                                                    style={{ marginLeft: widthToDp("0%"), fontFamily: 'Oswald-Medium', width: widthToDp("20%"), marginTop: heightToDp("-2%"), borderBottomWidth: 1, borderColor: 'blue', marginRight: widthToDp("5%") }}
+                                                                    style={{ marginLeft: widthToDp("0%"), fontFamily: 'Oswald-Medium', width: widthToDp("20%"), borderBottomWidth: 1, borderColor: 'blue', marginRight: widthToDp("5%") }}
                                                                 />
                                                             </View>
                                                         </View>
