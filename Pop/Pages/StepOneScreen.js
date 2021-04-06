@@ -22,6 +22,7 @@ import NetInfo from "@react-native-community/netinfo";
 import VideoComponent from '../components/VideoComponent'
 import LabelComponent from '../components/LabelComponent'
 import HTML from "react-native-render-html";
+import HeaderComponent from '../components/HeaderComponent'
 
 export default class StepOneScreen extends Component {
 
@@ -437,23 +438,9 @@ export default class StepOneScreen extends Component {
         // console.warn(this.checkVideoExistence())
         return (
             <View style={{ backgroundColor: BaseColor.BackgroundColor, flex: 1 }}>
-                <View style={{ backgroundColor: 'white', width: widthToDp("100%"), height: heightToDp("13%"), flexDirection: 'row' }}>
-                    <View style={{ marginTop: heightToDp("3%"), marginLeft: widthToDp("3%") }}>
-                        <TopLogo />
-                    </View>
-                    <Icon
-                        name="home"
-                        size={30}
-                        style={{ marginTop: heightToDp("4.6%"), marginLeft: widthToDp("45%") }}
-                        onPress={() => this.props.navigation.navigate('DashBoardScreen')}
-                    />
-                    <Icon
-                        name="bell"
-                        size={30}
-                        style={{ marginTop: heightToDp("4.6%"), marginLeft: widthToDp("5%") }}
-                        onPress={() => this.props.navigation.navigate('NotificationsScreen')}
-                    />
-                </View>
+                <HeaderComponent
+                    navigation={this.props.navigation}
+                />
                 <View style={{ flexDirection: 'row', marginTop: heightToDp("1%"), marginLeft: widthToDp("1%") }}>
                     <TouchableOpacity onPress={() => this.languageChangeFunction(this.state.languages[0].id)}>
                         <View style={{ backgroundColor: BaseColor.English, width: widthToDp("30%"), height: heightToDp("6%"), marginLeft: widthToDp("2%"), borderRadius: 100, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
@@ -615,7 +602,7 @@ export default class StepOneScreen extends Component {
                                                     <>
                                                         <View style={{ height: heightToDp(`${index === 0 ? 1 : 0}%`) }} />
                                                         <View style={{ flexDirection: 'row', marginLeft: widthToDp("3%"), marginTop: heightToDp("2%") }}>
-                                                            <View style={{ width: widthToDp("20%") }}>
+                                                            <View style={{ width: widthToDp("20%"), marginTop: heightToDp("1%") }}>
                                                                 {
                                                                     this.state.textLanguageChange === '0' ? <Text style={{ fontFamily: 'Oswald-Medium', fontSize: widthToDp('3.3%') }}>{i.materialNameEnglish}</Text> : ((this.state.textLanguageChange === '1') ? <Text style={{ fontFamily: 'Oswald-Medium', fontSize: widthToDp('3.3%') }}>{i.materialNameHindi}</Text> : ((this.state.textLanguageChange === '2') ? <Text style={{ fontFamily: 'Oswald-Medium', fontSize: widthToDp('3.3%') }}>{i.materialNameHo}</Text> : ((this.state.textLanguageChange === '3') ? <Text style={{ fontFamily: 'Oswald-Medium', fontSize: widthToDp('3.3%') }}>{i.materialNameOdia}</Text> : ((this.state.textLanguageChange === '4') ? <Text style={{ fontFamily: 'Oswald-Medium', fontSize: widthToDp('3.3%') }}>{i.materialNameSanthali}</Text> : null))))
                                                                 }
@@ -636,7 +623,7 @@ export default class StepOneScreen extends Component {
                                                                     defaultValue={i.decimalPrice}
                                                                     keyboardType='number-pad'
                                                                     onChangeText={(data) => this.setMaterialPrice(data, index)}
-                                                                    style={{ marginLeft: widthToDp("0%"), fontFamily: 'Oswald-Medium', width: widthToDp("20%"), marginTop: heightToDp("-2%"), borderBottomWidth: 1, borderColor: 'blue', marginRight: widthToDp("5%") }}
+                                                                    style={{ marginLeft: widthToDp("0%"), fontFamily: 'Oswald-Medium', width: widthToDp("20%"), borderBottomWidth: 1, borderColor: 'blue', marginRight: widthToDp("5%") }}
                                                                 />
                                                             </View>
                                                         </View>

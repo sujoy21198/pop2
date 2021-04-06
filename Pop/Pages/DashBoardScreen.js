@@ -14,6 +14,7 @@ import base64 from 'react-native-base64'
 import axios from 'axios'
 import DataAccess from '../Core/DataAccess'
 import NetInfo from '@react-native-community/netinfo'
+import HeaderComponent from '../components/HeaderComponent'
 
 const data = [
     { name: 'Knowledge Center', code: 'fresh-green-vegetables-produce-greenhouse-garden-nursery-farm_33829-312.jpg' },
@@ -34,7 +35,8 @@ export default class DashBoardScreen extends Component {
             data: [],
             languages: [],
             textLanguageChange: '',
-            notificationCount : 0
+            notificationCount : 0,
+            isUserOnline: false
         }
 
         this.state.languages = Languages
@@ -48,29 +50,8 @@ export default class DashBoardScreen extends Component {
 
     }
 
-    componentDidMount() {
-        this.getOfflineData()
+    componentDidMount() {   
         this.setLanguageOnMount()
-    }
-
-    getOfflineData = async () => {
-        try {
-            let username = base64.encode(await AsyncStorage.getItem('username'));
-            let token = await AsyncStorage.getItem('token')
-            let response = await axios.get("http://161.35.122.165:3020/api/v1/notifications?info=604240ff4b9a872502ab64d0", {
-                headers: {
-                    'Content-type': "application/json",
-                    'X-Information': username,
-                    'Authorization': "POP " + token
-                }
-            })
-            this.setState({notificationCount: response.data.notifications.length})
-            let user = await AsyncStorage.getItem('labelsData');
-            let parsed = JSON.parse(user);
-            console.log(parsed,"lololo")
-        } catch (error) {
-            console.log(error)
-        }
     }
 
     loadlabelsFromStorage = async () => {
@@ -162,7 +143,7 @@ export default class DashBoardScreen extends Component {
     //     this.state.data[5].name = LanguageChange.generalSettings
     // }
 
-    check = (data) => {
+    check = async (data) => {
         if (data === this.state.data[5].name) {
             this.props.navigation.navigate({
                 name: 'GeneralSettingsScreen'
@@ -183,6 +164,17 @@ export default class DashBoardScreen extends Component {
             this.props.navigation.navigate({
                 name: "MoneyManagerScreen"
             })
+        } else if (data === this.state.data[4].name) {
+            let isOnline = await NetInfo.fetch().then(state => state.isConnected);
+            if(isOnline) {
+                // console.warn("Message");
+            } else {
+                Toast.show({
+                    type: "warning",
+                    text: "Please be online to see Message section",
+                    duration: 3000
+                })
+            }
         }
     }
 
@@ -276,51 +268,17 @@ export default class DashBoardScreen extends Component {
             duration: 3000,
             type: 'success'
         })
-    }
+    }   
+
     render() {
         return (
             <View style={{ backgroundColor: BaseColor.BackgroundColor }}>
-                <View style={{ backgroundColor: 'white', width: widthToDp("100%"), height: heightToDp("13%"), flexDirection: 'row' }}>
-                    <View style={{ marginTop: heightToDp("3%"), marginLeft: widthToDp("3%") }}>
-                        <TopLogo />
-                    </View>
-
-                    <Sync
-                        name="sync"
-                        size={30}
-                        style={{ marginTop: heightToDp("4.6%"), marginLeft: widthToDp("30%") }}
-                        onPress={() => this.syncData()}
-                    />
-
-                    <Icon
-                        name="home"
-                        size={30}
-                        style={{ marginTop: heightToDp("4.6%"), marginLeft: widthToDp("5%") }}
-                        onPress={() => this.props.navigation.navigate('DashBoardScreen')}
-                    />
-                    <Icon
-                        name="bell"
-                        size={30}
-                        style={{ marginTop: heightToDp("4.6%"), marginLeft: widthToDp("5%") }}
-                        onPress={() => this.props.navigation.navigate('NotificationsScreen')}
-                    />
-                    <View style={{
-                        position: 'absolute',
-                        top: heightToDp("3.2%"),
-                        right: widthToDp("3%"),
-                        width: 20,
-                        height: 20, 
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        borderRadius: 20 / 2,
-                        backgroundColor: '#1b1b1b'
-                    }}>
-                        <Text style={{
-                            fontSize: widthToDp("3.3%"),
-                            color: '#fff'
-                        }}>{this.state.notificationCount}</Text>
-                    </View>
-                </View>
+                <HeaderComponent 
+                    navigation={this.props.navigation}
+                    isDashboard={true}
+                    hideHome={true}
+                    syncData={this.syncData}
+                />
                 <View style={{ flexDirection: 'row', marginTop: heightToDp("1%"), marginLeft: widthToDp("1%") }}>
                     <TouchableOpacity onPress={() => this.languageChangeFunction(this.state.languages[0].id)}>
                         <View style={{ backgroundColor: BaseColor.English, alignItems: 'center', justifyContent: 'center', width: widthToDp("30%"), height: heightToDp("6%"), marginLeft: widthToDp("2%"), borderRadius: 100, flexDirection: 'row' }}>

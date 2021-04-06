@@ -79,7 +79,7 @@ export default class LabelComponent extends React.Component {
             justifyContent: 'space-between',
             alignItems: 'center',
             marginHorizontal: widthToDp("3%"), 
-            marginVertical: heightToDp(`${this.props.directData ? (this.props.marginVertical ? 1 : 0.5) : 1.5}%`)
+            marginVertical: heightToDp(`${this.props.directData ? (this.props.marginVertical ? 1 : ((this.props.moneyManager && this.props.isAudioHaving) ? .3 : 0.5)) : 1.5}%`)
         }}>
             <Text 
                 style={{ 
