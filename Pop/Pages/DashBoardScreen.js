@@ -265,6 +265,7 @@ export default class DashBoardScreen extends Component {
                 <HeaderComponent 
                     navigation={this.props.navigation}
                     isDashboard={true}
+                    hideHome={true}
                     syncData={this.syncData}
                 />
                 <View style={{ flexDirection: 'row', marginTop: heightToDp("1%"), marginLeft: widthToDp("1%") }}>

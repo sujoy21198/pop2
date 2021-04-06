@@ -60,17 +60,20 @@ export default class HeaderComponent extends React.Component {
                 <Sync
                     name="sync"
                     size={30}
-                    style={{ marginTop: heightToDp("4.6%"), marginLeft: widthToDp("30%") }}
+                    style={{ marginTop: heightToDp("4.6%"), marginLeft: widthToDp(`${this.props.hideHome ? 41.5 : 30}%`) }}
                     onPress={this.props.syncData}
                 />
             }
 
-            <Icon
-                name="home"
-                size={30}
-                style={{ marginTop: heightToDp("4.6%"), marginLeft: widthToDp(`${this.props.isDashboard ? 5 : this.props.hideBell ? 55 : 42}%`) }}
-                onPress={() => this.props.navigation.navigate('DashBoardScreen')}
-            />
+            {
+                !this.props.hideHome &&
+                <Icon
+                    name="home"
+                    size={30}
+                    style={{ marginTop: heightToDp("4.6%"), marginLeft: widthToDp(`${this.props.isDashboard ? 5 : this.props.hideBell ? 55 : 42}%`) }}
+                    onPress={() => this.props.navigation.navigate('DashBoardScreen')}
+                />
+            }
             {
                 !this.props.hideBell && 
                     <>
