@@ -17,6 +17,7 @@ import LanguageChange from '../Core/LanguageChange'
 import Hyperlink from 'react-native-hyperlink'
 import { ScrollView } from 'react-native-gesture-handler'
 import HTML from "react-native-render-html";
+import HeaderComponent from '../components/HeaderComponent'
 
 const Sound = require('react-native-sound')
 
@@ -204,23 +205,9 @@ export default class ImportantLinksDetailsScreen extends Component {
         //console.log(valueArray)
         return (
             <View style={{ backgroundColor: BaseColor.BackgroundColor, flex: 1 }}>
-                <View style={{ backgroundColor: 'white', width: widthToDp("100%"), height: heightToDp("13%"), flexDirection: 'row' }}>
-                    <View style={{ marginTop: heightToDp("3%"), marginLeft: widthToDp("3%") }}>
-                        <TopLogo />
-                    </View>
-                    <Icon
-                        name="home"
-                        size={30}
-                        style={{ marginTop: heightToDp("4.6%"), marginLeft: widthToDp("45%") }}
-                        onPress={() => this.props.navigation.navigate('DashBoardScreen')}
-                    />
-                    <Icon
-                        name="bell"
-                        size={30}
-                        style={{ marginTop: heightToDp("4.6%"), marginLeft: widthToDp("5%") }}
-                        onPress={() => this.props.navigation.navigate('NotificationsScreen')}
-                    />
-                </View>
+                <HeaderComponent
+                    navigation={this.props.navigation}
+                />
 
                 <View style={{ flexDirection: 'row', marginTop: heightToDp("1%"), marginLeft: widthToDp("1%") }}>
                     <TouchableOpacity onPress={() => this.languageChangeFunction(this.state.languages[0].id)}>

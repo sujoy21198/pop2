@@ -12,6 +12,7 @@ import axios from 'axios'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import base64 from 'react-native-base64'
 import { ActivityIndicator } from 'react-native'
+import HeaderComponent from '../components/HeaderComponent';
 
 const data = [
     { name: 'TURQUOISE', code: '#1abc9c' },
@@ -126,39 +127,9 @@ export default class NotificationScreen extends Component {
     render() {
         return (
             <View style={{backgroundColor:BaseColor.BackgroundColor}}>
-                <View style={{backgroundColor:'white',width:widthToDp("100%"),height:heightToDp("13%"), flexDirection: 'row'}}>
-                    <View style={{marginTop:heightToDp("4%"),marginLeft:widthToDp("3%")}}>
-                        <TopLogo />
-                    </View>
-                    <FontAwesome
-                        name="home"
-                        size={30}
-                        style={{ marginTop: heightToDp("4.6%"), marginLeft: widthToDp("42%") }}
-                        onPress={() => this.props.navigation.navigate('DashBoardScreen')}
-                    />
-                    <FontAwesome
-                        name="bell"
-                        size={30}
-                        style={{ marginTop: heightToDp("4.6%"), marginLeft: widthToDp("5%") }}
-                        onPress={() => this.props.navigation.navigate('NotificationsScreen')}
-                    />
-                    <View style={{
-                        position: 'absolute',
-                        top: heightToDp("3.2%"),
-                        right: widthToDp("3.3%"),
-                        width: 20,
-                        height: 20, 
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        borderRadius: 20 / 2,
-                        backgroundColor: '#1b1b1b'
-                    }}>
-                        <Text style={{
-                            fontSize: widthToDp("3.3%"),
-                            color: '#fff'
-                        }}>{this.state.notificationList.length}</Text>
-                    </View>
-                </View>
+                <HeaderComponent 
+                    navigation={this.props.navigation}
+                />
                 {
                     !this.state.isLoading ?
                     <>

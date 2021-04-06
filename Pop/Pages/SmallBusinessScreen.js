@@ -10,6 +10,7 @@ import tts from 'react-native-tts'
 import Languages from '../Core/Languages'
 import LanguageChange from '../Core/LanguageChange'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import HeaderComponent from '../components/HeaderComponent'
 
 
 const data = [
@@ -254,23 +255,9 @@ export default class SmallBusinessScreen extends Component {
         data = this.state.data
         return (
             <View style={{ backgroundColor: BaseColor.BackgroundColor }}>
-                <View style={{ backgroundColor: 'white', width: widthToDp("100%"), height: heightToDp("13%"), flexDirection: 'row' }}>
-                    <View style={{ marginTop: heightToDp("3%"), marginLeft: widthToDp("3%") }}>
-                        <TopLogo />
-                    </View>
-                    <Icon
-                        name="home"
-                        size={30}
-                        style={{ marginTop: heightToDp("4.6%"), marginLeft: widthToDp("45%") }}
-                        onPress={() => this.props.navigation.navigate('DashBoardScreen')}
-                    />
-                    <Icon
-                        name="bell"
-                        size={30}
-                        style={{ marginTop: heightToDp("4.6%"), marginLeft: widthToDp("5%") }}
-                        onPress={() => this.props.navigation.navigate('NotificationsScreen')}
-                    />
-                </View>
+                <HeaderComponent
+                    navigation={this.props.navigation}
+                />
 
                 <View style={{ flexDirection: 'row', marginTop: heightToDp("1%"), marginLeft: widthToDp("1%") }}>
                     <TouchableOpacity onPress={() => this.languageChangeFunction(this.state.languages[0].id)}>

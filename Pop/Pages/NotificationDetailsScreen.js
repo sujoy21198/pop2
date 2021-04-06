@@ -10,6 +10,7 @@ import tts from 'react-native-tts'
 import LanguageChange from '../Core/LanguageChange'
 import { ScrollView } from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import HeaderComponent from '../components/HeaderComponent'
 
 export default class NotificationDetailsScreen extends Component {
     state = {
@@ -82,17 +83,10 @@ export default class NotificationDetailsScreen extends Component {
     render = () => {
         return (
             <View style={{ backgroundColor: BaseColor.BackgroundColor, flex: 1 }}>
-                <View style={{ backgroundColor: 'white', width: widthToDp("100%"), height: heightToDp("13%"), flexDirection: 'row' }}>
-                    <View style={{ marginTop: heightToDp("4%"), marginLeft: widthToDp("3%") }}>
-                        <TopLogo />
-                    </View>
-                    <Icon2
-                        name="home"
-                        size={30}
-                        style={{ marginTop: heightToDp("4.6%"), marginLeft: widthToDp("55%") }}
-                        onPress={() => this.props.navigation.navigate('DashBoardScreen')}
-                    />
-                </View>
+                <HeaderComponent 
+                    navigation={this.props.navigation}
+                    hideBell={true}
+                />
                 <View style={{ marginTop: heightToDp("5%") }}>
                     <Text style={{ fontSize: widthToDp("7%"), alignSelf: 'center', fontFamily: 'Oswald-SemiBold' }}>{this.state.notificationHeaderLabel}</Text>
                 </View>

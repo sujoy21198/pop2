@@ -14,6 +14,7 @@ import CustomIndicator from '../Core/CustomIndicator'
 import Languages from '../Core/Languages'
 import LanguageChange from '../Core/LanguageChange'
 import LabelComponent from '../components/LabelComponent'
+import HeaderComponent from '../components/HeaderComponent'
 
 export default class BreedScreen extends Component {
 
@@ -243,23 +244,9 @@ export default class BreedScreen extends Component {
         breedArray = this.state.breed
         return (
             <View style={{ backgroundColor: BaseColor.BackgroundColor }}>
-                <View style={{ backgroundColor: 'white', width: widthToDp("100%"), height: heightToDp("13%"), flexDirection: 'row' }}>
-                    <View style={{ marginTop: heightToDp("3%"), marginLeft: widthToDp("3%") }}>
-                        <TopLogo />
-                    </View>
-                    <Icon
-                        name="home"
-                        size={30}
-                        style={{ marginTop: heightToDp("4.6%"), marginLeft: widthToDp("45%") }}
-                        onPress={() => this.props.navigation.navigate('DashBoardScreen')}
-                    />
-                    <Icon
-                        name="bell"
-                        size={30}
-                        style={{ marginTop: heightToDp("4.6%"), marginLeft: widthToDp("5%") }}
-                        onPress={() => this.props.navigation.navigate('NotificationsScreen')}
-                    />
-                </View>
+                <HeaderComponent
+                    navigation={this.props.navigation}
+                />
                 <View style={{ flexDirection: 'row', marginTop: heightToDp("1%"), marginLeft: widthToDp("1%") }}>
                     <TouchableOpacity onPress={() => this.languageChangeFunction(this.state.languages[0].id)}>
                         <View style={{ backgroundColor: BaseColor.English, width: widthToDp("30%"), height: heightToDp("6%"), marginLeft: widthToDp("2%"), borderRadius: 100, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
