@@ -25,7 +25,7 @@ export default class GeneralSettingsScreen extends Component {
         await AsyncStorage.removeItem('cropData')
         await AsyncStorage.removeItem('numberOfCrops')
         await AsyncStorage.removeItem('labelsData')
-        
+        await AsyncStorage.removeItem('smallBusiness')
         this.props.navigation.reset({
             index: 0,
             routes: [{ name: "LanguageScreen" }]

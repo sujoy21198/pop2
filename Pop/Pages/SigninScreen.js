@@ -991,7 +991,7 @@ export default class SigninScreen extends Component {
         if (smallBusinessArr.includes(this.state.username)) {
             console.log("NO more crops assigned to this user")
         } else {
-            newSmallBusiness.push(smallBusinessCategoryObjectsToBeSaved)
+            newSmallBusiness.push(smallBusinessCategoryToBeSaved)
         }
 
 

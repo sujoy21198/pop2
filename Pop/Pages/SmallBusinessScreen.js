@@ -45,11 +45,19 @@ export default class SmallBusinessScreen extends Component {
             let username = await AsyncStorage.getItem('username')
             let user = await AsyncStorage.getItem('smallBusiness');
             let parsed = JSON.parse(user);
-            var specificObject = parsed[0]
-            console.log(specificObject.find((i) => i), "lololo")
-            var totalArray = this.state.data.concat(specificObject.find((i) => i))
-            console.log(totalArray, "jojo adventure")
-            this.setState({ data: totalArray })
+            var specificObject = parsed[0].smallBusinessCategory
+            
+            var check = specificObject.find((i) => i)
+            console.log(check,"small busineieieie")
+            if (check != undefined) {
+                var totalArray = this.state.data.concat(specificObject.find((i) => i))
+                console.log(totalArray, "jojo adventure")
+                this.setState({ data: totalArray })
+            }else{
+                this.setState({data:data})
+            }
+            console.log(check, "lololo")
+
         } catch (error) {
             console.log(error)
         }
@@ -326,7 +334,7 @@ export default class SmallBusinessScreen extends Component {
                                     {
                                         this.state.textLanguageChange === '0' ? <Text style={{ color: "#fff", fontSize: widthToDp("5%"), marginLeft: widthToDp("5%"), marginTop: heightToDp("0.4%"), fontFamily: 'Oswald-Medium' }}>{item.categoryEnglish}</Text> : ((this.state.textLanguageChange === '1') ? <Text style={{ color: "#fff", fontSize: widthToDp("5%"), marginLeft: widthToDp("5%"), marginTop: heightToDp("0.4%"), fontFamily: 'Oswald-Medium' }}>{item.categoryHindi}</Text> : ((this.state.textLanguageChange === '2') ? <Text style={{ color: "#fff", fontSize: widthToDp("5%"), marginLeft: widthToDp("5%"), marginTop: heightToDp("0.4%"), fontFamily: 'Oswald-Medium' }}>{item.categoryHo}</Text> : ((this.state.textLanguageChange === '3') ? <Text style={{ color: "#fff", fontSize: widthToDp("5%"), marginLeft: widthToDp("5%"), marginTop: heightToDp("0.4%"), fontFamily: 'Oswald-Medium' }}>{item.categoryOdia}</Text> : ((this.state.textLanguageChange === '4') ? <Text style={{ color: "#fff", fontSize: widthToDp("5%"), marginLeft: widthToDp("5%"), marginTop: heightToDp("0.4%"), fontFamily: 'Oswald-Medium' }}>{item.categorySanthali}</Text> : null))))
                                     }
-                                    
+
                                     <Image
                                         style={{ width: widthToDp("47%"), height: heightToDp("25%"), borderBottomLeftRadius: 10, borderBottomRightRadius: 10, marginTop: heightToDp("1%") }}
                                         source={{ uri: 'file:///storage/emulated/0/Pictures/image_' + item.imageFile }}
