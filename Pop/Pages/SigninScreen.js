@@ -1245,12 +1245,14 @@ export default class SigninScreen extends Component {
 
 
         if (this.state.username === '') {
+            this.setState({isLoading: false})
             return Toast.show({
                 text: "please enter username",
                 type: 'danger',
                 duration: 3000
             })
         } else if (this.state.password === '') {
+            this.setState({isLoading: false})
             return Toast.show({
                 text: "please enter password",
                 type: 'danger',
@@ -1492,7 +1494,7 @@ export default class SigninScreen extends Component {
                                     {
                                         this.state.isLoading ? <CustomIndicator IsLoading={this.state.isLoading} /> : null
                                     }
-                                    <TouchableOpacity onPress={() => this.checkConnection()}>
+                                    <TouchableOpacity onPress={() => this.checkConnection()} disabled={this.state.isLoading}>
                                         <View style={{ backgroundColor: BaseColor.SecondaryColor, marginTop: heightToDp("5%"), width: widthToDp("37%"), alignSelf: 'center', height: heightToDp("5%"), borderRadius: 100 }}>
                                             <Text style={{ alignSelf: 'center', marginTop: heightToDp("0.5%"), fontWeight: '500', fontSize: widthToDp("5%"), fontFamily: 'Oswald-Medium' }}>{LanguageChange.signIn}</Text>
                                         </View>
@@ -1506,7 +1508,7 @@ export default class SigninScreen extends Component {
 
                                     <View style={{ borderBottomColor: BaseColor.Stroke, borderBottomWidth: 1, marginTop: heightToDp('1.5%'), width: widthToDp("100%") }}></View>
 
-                                    <TouchableOpacity onPress={() => this.guestSignIn()}>
+                                    <TouchableOpacity onPress={() => this.guestSignIn()} disabled={this.state.isLoading}>
                                         <View style={{ backgroundColor: BaseColor.SecondaryColor, marginTop: heightToDp("3%"), width: widthToDp("37%"), alignSelf: 'center', height: heightToDp("5%"), borderRadius: 100 }}>
                                             <Text style={{ alignSelf: 'center', marginTop: heightToDp("0.4%"), fontWeight: '500', fontSize: widthToDp("5%"), fontFamily: 'Oswald-Medium' }}>{LanguageChange.guestSignIn}</Text>
                                         </View>

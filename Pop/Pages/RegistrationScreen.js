@@ -846,7 +846,7 @@ export default class RegistrationScreen extends Component {
         >
         </DialogInput>
 
-        <TouchableOpacity onPress={() => this.signup()}>
+        <TouchableOpacity onPress={() => this.signup()} disabled={this.state.isLoading}>
           <View style={{ backgroundColor: BaseColor.SecondaryColor, marginTop: heightToDp("5%"), width: widthToDp("37%"), alignSelf: 'center', height: heightToDp("5%"), borderRadius: 100 }}>
             <Text style={{ alignSelf: 'center', marginTop: heightToDp("0.5%"), fontWeight: '500', fontSize: widthToDp("5%"), fontFamily: 'Oswald-Medium' }}>{LanguageChange.signUp}</Text>
           </View>
