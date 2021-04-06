@@ -9,8 +9,61 @@ import Icon2 from 'react-native-vector-icons/FontAwesome'
 import tts from 'react-native-tts'
 import LanguageChange from '../Core/LanguageChange'
 import { ScrollView } from 'react-native'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 export default class NotificationDetailsScreen extends Component {
+    state = {
+        notificationHeaderLabel: ""
+    }
+
+    componentDidMount() {
+        this.setLanguageOnMount();
+    }
+
+    setLanguageOnMount = async () => {
+        let defaultLanguage = await AsyncStorage.getItem('language')
+        if (defaultLanguage === 'en') {
+            this.setState({ textLanguageChange: '0' })
+            this.loadlabelsFromStorage()
+        } else if (defaultLanguage === 'hi') {
+            this.setState({ textLanguageChange: '1' })
+            this.loadlabelsFromStorage()
+        } else if (defaultLanguage === 'ho') {
+            this.setState({ textLanguageChange: '2' })
+            this.loadlabelsFromStorage()
+        } else if (defaultLanguage === 'od') {
+            this.setState({ textLanguageChange: '3' })
+            this.loadlabelsFromStorage()
+        } else if (defaultLanguage === 'san') {
+            this.setState({ textLanguageChange: '4' })
+            this.loadlabelsFromStorage()
+        }
+    }
+
+    loadlabelsFromStorage = async () => {
+        try {
+            let username = await AsyncStorage.getItem('username')
+            let user = await AsyncStorage.getItem('labelsData');
+            let parsed = JSON.parse(user);
+            var specificObject = parsed[0]
+            var notificationHeaderLabel = specificObject.labels.find((i) => i.type === 45)
+            if (this.state.textLanguageChange === '0') {
+                this.setState({notificationHeaderLabel: notificationHeaderLabel.nameEnglish})
+            } else if (this.state.textLanguageChange === '1') {
+                this.setState({notificationHeaderLabel: notificationHeaderLabel.nameHindi})
+            } else if (this.state.textLanguageChange === '2') {
+                this.setState({notificationHeaderLabel: notificationHeaderLabel.nameHo})
+            } else if (this.state.textLanguageChange === '3') {
+                this.setState({notificationHeaderLabel: notificationHeaderLabel.nameOdia})
+            } else if (this.state.textLanguageChange === '4') {
+                this.setState({notificationHeaderLabel: notificationHeaderLabel.nameSanthali})
+            }
+
+        } catch (error) {
+            alert(error)
+        }
+    }
+
     speak = () => {
         
         tts.speak("this is the body of notification and it will contain the details of the notification")
@@ -41,7 +94,7 @@ export default class NotificationDetailsScreen extends Component {
                     />
                 </View>
                 <View style={{ marginTop: heightToDp("5%") }}>
-                    <Text style={{ fontSize: widthToDp("7%"), alignSelf: 'center', fontFamily: 'Oswald-SemiBold' }}>NOTIFICATIONS</Text>
+                    <Text style={{ fontSize: widthToDp("7%"), alignSelf: 'center', fontFamily: 'Oswald-SemiBold' }}>{this.state.notificationHeaderLabel}</Text>
                 </View>
                 <View 
                     style={{

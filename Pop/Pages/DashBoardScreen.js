@@ -34,7 +34,8 @@ export default class DashBoardScreen extends Component {
             data: [],
             languages: [],
             textLanguageChange: '',
-            notificationCount : 0
+            notificationCount : 0,
+            isUserOnline: false
         }
 
         this.state.languages = Languages
@@ -48,7 +49,7 @@ export default class DashBoardScreen extends Component {
 
     }
 
-    componentDidMount() {
+    componentDidMount() {        
         this.getOfflineData()
         this.setLanguageOnMount()
     }
@@ -277,6 +278,20 @@ export default class DashBoardScreen extends Component {
             type: 'success'
         })
     }
+
+    getNotifications = async () => {
+        let isOnline = await NetInfo.fetch().then(state => state.isConnected); 
+        if (isOnline) {
+            this.props.navigation.navigate('NotificationsScreen')
+        } else {
+            Toast.show({
+                type: "warning",
+                text: "To see notifications, please be online",
+                duration: 3000
+            })
+        }            
+    }        
+
     render() {
         return (
             <View style={{ backgroundColor: BaseColor.BackgroundColor }}>
@@ -302,7 +317,7 @@ export default class DashBoardScreen extends Component {
                         name="bell"
                         size={30}
                         style={{ marginTop: heightToDp("4.6%"), marginLeft: widthToDp("5%") }}
-                        onPress={() => this.props.navigation.navigate('NotificationsScreen')}
+                        onPress={this.getNotifications}
                     />
                     <View style={{
                         position: 'absolute',

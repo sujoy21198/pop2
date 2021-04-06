@@ -39,7 +39,9 @@ const data = [
 export default class NotificationScreen extends Component {
     state = {
         notificationList: [],
-        isLoading: true
+        isLoading: true,
+        notificationHeaderLabel: "",
+        noNotificationText: ""
     };
     componentDidMount = async () => {
         this.setLanguageOnMount();
@@ -97,12 +99,23 @@ export default class NotificationScreen extends Component {
             let user = await AsyncStorage.getItem('labelsData');
             let parsed = JSON.parse(user);
             var specificObject = parsed[0]
-            var landTypeLabel = specificObject.labels.find((i) => i.type === 56)
+            var notificationHeaderLabel = specificObject.labels.find((i) => i.type === 45)
+            var noNotificationText = specificObject.labels.find((i) => i.type === 221)
             if (this.state.textLanguageChange === '0') {
+                this.setState({notificationHeaderLabel: notificationHeaderLabel.nameEnglish})
+                this.setState({noNotificationText: noNotificationText.nameEnglish})
             } else if (this.state.textLanguageChange === '1') {
+                this.setState({notificationHeaderLabel: notificationHeaderLabel.nameHindi})
+                this.setState({noNotificationText: noNotificationText.nameHindi})
             } else if (this.state.textLanguageChange === '2') {
+                this.setState({notificationHeaderLabel: notificationHeaderLabel.nameHo})
+                this.setState({noNotificationText: noNotificationText.nameHo})
             } else if (this.state.textLanguageChange === '3') {
+                this.setState({notificationHeaderLabel: notificationHeaderLabel.nameOdia})
+                this.setState({noNotificationText: noNotificationText.nameOdia})
             } else if (this.state.textLanguageChange === '4') {
+                this.setState({notificationHeaderLabel: notificationHeaderLabel.nameSanthali})
+                this.setState({noNotificationText: noNotificationText.nameSanthali})
             }
 
         } catch (error) {
@@ -150,7 +163,7 @@ export default class NotificationScreen extends Component {
                     !this.state.isLoading ?
                     <>
                         <View style={{ marginTop: heightToDp("5%") }}>
-                            <Text style={{ fontSize: widthToDp("7%"), alignSelf: 'center',fontFamily:'Oswald-SemiBold' }}>NOTIFICATIONS</Text>
+                            <Text style={{ fontSize: widthToDp("7%"), alignSelf: 'center',fontFamily:'Oswald-SemiBold' }}>{this.state.notificationHeaderLabel}</Text>
                         </View>
                         <View>
                             {
@@ -162,7 +175,7 @@ export default class NotificationScreen extends Component {
                                         alignItems: 'center'
                                     }}
                                 >
-                                    <Text style={{color: '#fff', fontSize: widthToDp("4%")}}>No Notifications Found</Text>
+                                    <Text style={{color: '#fff', fontSize: widthToDp("4%")}}>{this.state.noNotificationText}</Text>
                                 </View> : 
                                 <FlatGrid
                                     style={{ marginTop: heightToDp("2%"), marginBottom: heightToDp("50%") }}
