@@ -323,6 +323,7 @@ export default class MoneyManagerCategoriesScreen extends Component {
                                 <View style={{ backgroundColor: BaseColor.Red, width: widthToDp("47%"), height: heightToDp("30%"), elevation: 10, borderRadius: 10 }}>
                                     <LabelComponent
                                         directData={true}
+                                        moneyManager={true}
                                         labelWidth={
                                             (
                                                 (this.state.textLanguageChange==="0" && item.audioEnglish) ||

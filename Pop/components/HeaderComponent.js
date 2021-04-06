@@ -43,7 +43,7 @@ export default class HeaderComponent extends React.Component {
         } else {
             Toast.show({
                 type: "warning",
-                text: "To see notifications, please be online",
+                text: "Please be online to see the notifications",
                 duration: 3000
             })
         }            

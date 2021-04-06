@@ -143,7 +143,7 @@ export default class DashBoardScreen extends Component {
     //     this.state.data[5].name = LanguageChange.generalSettings
     // }
 
-    check = (data) => {
+    check = async (data) => {
         if (data === this.state.data[5].name) {
             this.props.navigation.navigate({
                 name: 'GeneralSettingsScreen'
@@ -164,6 +164,17 @@ export default class DashBoardScreen extends Component {
             this.props.navigation.navigate({
                 name: "MoneyManagerScreen"
             })
+        } else if (data === this.state.data[4].name) {
+            let isOnline = await NetInfo.fetch().then(state => state.isConnected);
+            if(isOnline) {
+                // console.warn("Message");
+            } else {
+                Toast.show({
+                    type: "warning",
+                    text: "Please be online to see Message section",
+                    duration: 3000
+                })
+            }
         }
     }
 
