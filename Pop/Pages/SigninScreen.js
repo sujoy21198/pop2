@@ -1486,9 +1486,11 @@ export default class SigninScreen extends Component {
                                         >{LanguageChange.password}</FloatingLabel>
                                     </View>
                                     {/* <View style={{ borderBottomColor: 'black', borderBottomWidth: 1, marginTop: heightToDp('1.5%'), width: widthToDp("80%"), alignSelf: 'center' }}></View> */}
+                                    <TouchableOpacity onPress={() => {this.props.navigation.navigate("ForgetPasswordScreen")}}>
                                     <View style={{ marginLeft: widthToDp("50%"), marginTop: heightToDp("0.5%"), width: widthToDp("37%") }}>
                                         <Text style={{ fontFamily: 'Oswald-Medium', fontSize: widthToDp("4%") }}>{LanguageChange.forgotPassword}</Text>
                                     </View>
+                                    </TouchableOpacity>
                                     {
                                         this.state.isLoading ? <CustomIndicator IsLoading={this.state.isLoading} /> : null
                                     }
