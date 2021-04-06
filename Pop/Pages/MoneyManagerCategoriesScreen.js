@@ -11,6 +11,7 @@ import Languages from '../Core/Languages'
 import LanguageChange from '../Core/LanguageChange'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import HeaderComponent from '../components/HeaderComponent'
+import LabelComponent from '../components/LabelComponent'
 
 
 const data = [
@@ -69,6 +70,14 @@ export default class MoneyManagerCategoriesScreen extends Component {
                 this.state.data[5].name = loanSavings.nameEnglish
                 this.state.data[6].name = pension.nameEnglish
                 this.state.data[7].name = others.nameEnglish
+                this.state.data[0].audioEnglish = agriculture.audioEnglish
+                this.state.data[1].audioEnglish = livestock.audioEnglish
+                this.state.data[2].audioEnglish = smallBusiness.audioEnglish
+                this.state.data[3].audioEnglish = health.audioEnglish
+                this.state.data[4].audioEnglish = education.audioEnglish
+                this.state.data[5].audioEnglish = loanSavings.audioEnglish
+                this.state.data[6].audioEnglish = pension.audioEnglish
+                this.state.data[7].audioEnglish = others.audioEnglish
                 // this.setState({ moneyManagerLabel: moneyManagerLabel.nameEnglish })
                 // this.setState({ expenseLabel: expenseLabel.nameEnglish })
                 // this.setState({ incomeLabel: incomeLabel.nameEnglish })
@@ -82,6 +91,14 @@ export default class MoneyManagerCategoriesScreen extends Component {
                 this.state.data[5].name = loanSavings.nameHindi
                 this.state.data[6].name = pension.nameHindi
                 this.state.data[7].name = others.nameHindi
+                this.state.data[0].audioHindi = agriculture.audioHindi
+                this.state.data[1].audioHindi = livestock.audioHindi
+                this.state.data[2].audioHindi = smallBusiness.audioHindi
+                this.state.data[3].audioHindi = health.audioHindi
+                this.state.data[4].audioHindi = education.audioHindi
+                this.state.data[5].audioHindi = loanSavings.audioHindi
+                this.state.data[6].audioHindi = pension.audioHindi
+                this.state.data[7].audioHindi = others.audioHindi
             } else if (this.state.textLanguageChange === '2') {
                 this.state.data[0].name = agriculture.nameHo
                 this.state.data[1].name = livestock.nameHo
@@ -91,6 +108,14 @@ export default class MoneyManagerCategoriesScreen extends Component {
                 this.state.data[5].name = loanSavings.nameHo
                 this.state.data[6].name = pension.nameHo
                 this.state.data[7].name = others.nameHo
+                this.state.data[0].audioHo = agriculture.audioHo
+                this.state.data[1].audioHo = livestock.audioHo
+                this.state.data[2].audioHo = smallBusiness.audioHo
+                this.state.data[3].audioHo = health.audioHo
+                this.state.data[4].audioHo = education.audioHo
+                this.state.data[5].audioHo = loanSavings.audioHo
+                this.state.data[6].audioHo = pension.audioHo
+                this.state.data[7].audioHo = others.audioHo
             } else if (this.state.textLanguageChange === '3') {
                 this.state.data[0].name = agriculture.nameOdia
                 this.state.data[1].name = livestock.nameOdia
@@ -100,6 +125,14 @@ export default class MoneyManagerCategoriesScreen extends Component {
                 this.state.data[5].name = loanSavings.nameOdia
                 this.state.data[6].name = pension.nameOdia
                 this.state.data[7].name = others.nameOdia
+                this.state.data[0].audioOdia = agriculture.audioOdia
+                this.state.data[1].audioOdia = livestock.audioOdia
+                this.state.data[2].audioOdia = smallBusiness.audioOdia
+                this.state.data[3].audioOdia = health.audioOdia
+                this.state.data[4].audioOdia = education.audioOdia
+                this.state.data[5].audioOdia = loanSavings.audioOdia
+                this.state.data[6].audioOdia = pension.audioOdia
+                this.state.data[7].audioOdia = others.audioOdia
             } else if (this.state.textLanguageChange === '4') {
                 this.state.data[0].name = agriculture.nameSanthali
                 this.state.data[1].name = livestock.nameSanthali
@@ -109,6 +142,14 @@ export default class MoneyManagerCategoriesScreen extends Component {
                 this.state.data[5].name = loanSavings.nameSanthali
                 this.state.data[6].name = pension.nameSanthali
                 this.state.data[7].name = others.nameSanthali
+                this.state.data[0].audioSanthali = agriculture.audioSanthali
+                this.state.data[1].audioSanthali = livestock.audioSanthali
+                this.state.data[2].audioSanthali = smallBusiness.audioSanthali
+                this.state.data[3].audioSanthali = health.audioSanthali
+                this.state.data[4].audioSanthali = education.audioSanthali
+                this.state.data[5].audioSanthali = loanSavings.audioSanthali
+                this.state.data[6].audioSanthali = pension.audioSanthali
+                this.state.data[7].audioSanthali = others.audioSanthali
             }
             
         } catch (error) {
@@ -275,12 +316,40 @@ export default class MoneyManagerCategoriesScreen extends Component {
                         style={{ marginTop: heightToDp("2%"), marginBottom: heightToDp("60%") }}
                         bounces={true}
                         itemDimension={130}
-                        data={data}
+                        data={this.state.data}
                         bouncesZoom={true}
                         renderItem={({ item }) => (
                             <TouchableOpacity onPress={() => this.selectLandType(item.name, item.nameEnglish)}>
                                 <View style={{ backgroundColor: BaseColor.Red, width: widthToDp("47%"), height: heightToDp("30%"), elevation: 10, borderRadius: 10 }}>
-                                    <Text style={{ color: "#fff", fontSize: widthToDp("5%"), marginLeft: widthToDp("5%"), marginTop: heightToDp("0.4%"), fontFamily: 'Oswald-Medium' }}>{item.name}</Text>
+                                    <LabelComponent
+                                        directData={true}
+                                        labelWidth={
+                                            (
+                                                (this.state.textLanguageChange==="0" && item.audioEnglish) ||
+                                                (this.state.textLanguageChange==="1" && item.audioHindi) ||
+                                                (this.state.textLanguageChange==="2" && item.audioHo) ||
+                                                (this.state.textLanguageChange==="3" && item.audioOdia) ||
+                                                (this.state.textLanguageChange==="4" && item.audioSanthali)
+                                            ) ? 35 : 50
+                                        }
+                                        labelName={item.name}
+                                        isAudioHaving={
+                                            (
+                                                (this.state.textLanguageChange==="0" && item.audioEnglish) ||
+                                                (this.state.textLanguageChange==="1" && item.audioHindi) ||
+                                                (this.state.textLanguageChange==="2" && item.audioHo) ||
+                                                (this.state.textLanguageChange==="3" && item.audioOdia) ||
+                                                (this.state.textLanguageChange==="4" && item.audioSanthali)
+                                            )
+                                        }
+                                        audioFile={
+                                            this.state.textLanguageChange==="0" ? item.audioEnglish :
+                                                this.state.textLanguageChange==="1" ? item.audioHindi :
+                                                this.state.textLanguageChange==="2" ? item.audioHo :
+                                                this.state.textLanguageChange==="3" ? item.audioOdia :
+                                                item.audioSanthali
+                                        }
+                                    />
                                     <Image
                                         style={{ width: widthToDp("47%"), height: heightToDp("25%"), borderBottomLeftRadius: 10, borderBottomRightRadius: 10, marginTop: heightToDp("1%") }}
                                         source={{ uri: 'file:///storage/emulated/0/Pictures/image_' +item.code }}
