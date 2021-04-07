@@ -11,6 +11,7 @@ import Languages from '../Core/Languages'
 import LanguageChange from '../Core/LanguageChange'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import HeaderComponent from '../components/HeaderComponent'
+import LabelComponent from '../components/LabelComponent'
 
 
 const data = [
@@ -128,7 +129,6 @@ export default class SmallBusinessScreen extends Component {
             var smallGroceryShop = specificObject.labels.find((i) => i.type === 99)
             var dryFishSelling = specificObject.labels.find((i) => i.type === 100)
             var smallBusinessLabel = specificObject.labels.find((i) => i.type === 30)
-            console.log(vegetableVending)
             //var nutrationGraden = specificObject.labels.find((i) => i.type === 31)
             // var message = specificObject.labels.find((i) => i.type === 26)
             // var generalSettings = specificObject.labels.find((i) => i.type === 27)
@@ -142,7 +142,12 @@ export default class SmallBusinessScreen extends Component {
                 this.state.data[0].categoryEnglish = vegetableVending.nameEnglish
                 this.state.data[1].categoryEnglish = smallGroceryShop.nameEnglish
                 this.state.data[2].categoryEnglish = dryFishSelling.nameEnglish
-                this.setState({ smallBusinessLabel: smallBusinessLabel.nameEnglish })
+                this.setState({smallBusinessLabel: smallBusinessLabel.nameEnglish})
+                // this.state.data[3].categoryEnglish = smallBusinessLabel.nameEnglish
+                this.state.data[0].audioEnglish = vegetableVending.audioEnglish
+                this.state.data[1].audioEnglish = smallGroceryShop.audioEnglish
+                this.state.data[2].audioEnglish = dryFishSelling.audioEnglish
+                // this.state.data[3].audioEnglish = smallBusinessLabel.audioEnglish
                 //this.setState({ landTypeLabel: landTypeLabel.nameEnglish })
                 // this.state.data[4].name = message.nameEnglish
                 // this.state.data[5].name = generalSettings.nameEnglish
@@ -156,7 +161,12 @@ export default class SmallBusinessScreen extends Component {
                 this.state.data[0].categoryHindi = vegetableVending.nameHindi
                 this.state.data[1].categoryHindi = smallGroceryShop.nameHindi
                 this.state.data[2].categoryHindi = dryFishSelling.nameHindi
-                this.setState({ smallBusinessLabel: smallBusinessLabel.nameHindi })
+                this.setState({smallBusinessLabel: smallBusinessLabel.nameEnglish})
+                // this.state.data[3].categoryHindi = smallBusinessLabel.nameHindi
+                this.state.data[0].audioHindi = vegetableVending.audioHindi
+                this.state.data[1].audioHindi = smallGroceryShop.audioHindi
+                this.state.data[2].audioHindi = dryFishSelling.audioHindi
+                // this.state.data[3].audioHindi = smallBusinessLabel.audioHindi
                 // this.state.data[4].name = message.nameHindi
                 // this.state.data[5].name = generalSettings.nameHindi
                 // this.state.data[6].name = pension.nameHindi
@@ -165,7 +175,12 @@ export default class SmallBusinessScreen extends Component {
                 this.state.data[0].categoryHo = vegetableVending.nameHo
                 this.state.data[1].categoryHo = smallGroceryShop.nameHo
                 this.state.data[2].categoryHo = dryFishSelling.nameHo
-                this.setState({ smallBusinessLabel: smallBusinessLabel.nameHo })
+                this.setState({smallBusinessLabel: smallBusinessLabel.nameEnglish})
+                // this.state.data[3].categoryHo = smallBusinessLabel.nameHo
+                this.state.data[0].audioHo = vegetableVending.audioHo
+                this.state.data[1].audioHo = smallGroceryShop.audioHo
+                this.state.data[2].audioHo = dryFishSelling.audioHo
+                // this.state.data[3].audioHo = smallBusinessLabel.audioHo
                 // this.state.data[4].name = message.nameHo
                 // this.state.data[5].name = generalSettings.nameHo
                 // this.state.data[6].name = pension.nameHo
@@ -174,7 +189,12 @@ export default class SmallBusinessScreen extends Component {
                 this.state.data[0].categoryOdia = vegetableVending.nameOdia
                 this.state.data[1].categoryOdia = smallGroceryShop.nameOdia
                 this.state.data[2].categoryOdia = dryFishSelling.nameOdia
-                this.setState({ smallBusinessLabel: smallBusinessLabel.nameOdia })
+                this.setState({smallBusinessLabel: smallBusinessLabel.nameEnglish})
+                // this.state.data[3].categoryOdia = smallBusinessLabel.nameOdia
+                this.state.data[0].audioOdia = vegetableVending.audioOdia
+                this.state.data[1].audioOdia = smallGroceryShop.audioOdia
+                this.state.data[2].audioOdia = dryFishSelling.audioOdia
+                // this.state.data[3].audioOdia = smallBusinessLabel.audioOdia
                 //this.setState({ landTypeLabel: landTypeLabel.nameOdia })
                 // this.state.data[4].name = message.nameOdia
                 // this.state.data[5].name = generalSettings.nameOdia
@@ -184,7 +204,12 @@ export default class SmallBusinessScreen extends Component {
                 this.state.data[0].categorySanthali = vegetableVending.nameSanthali
                 this.state.data[1].categorySanthali = smallGroceryShop.nameSanthali
                 this.state.data[2].categorySanthali = dryFishSelling.nameSanthali
-                this.setState({ smallBusinessLabel: smallBusinessLabel.nameSanthali })
+                this.setState({smallBusinessLabel: smallBusinessLabel.nameEnglish})
+                // this.state.data[3].categorySanthali = smallBusinessLabel.nameSanthali
+                this.state.data[0].audioSanthali = vegetableVending.audioSanthali
+                this.state.data[1].audioSanthali = smallGroceryShop.audioSanthali
+                this.state.data[2].audioSanthali = dryFishSelling.audioSanthali
+                // this.state.data[3].audioSanthali = smallBusinessLabel.audioSanthali
                 // this.setState({ landTypeLabel: landTypeLabel.nameSanthali })
                 // this.state.data[4].name = message.nameSanthali
                 // this.state.data[5].name = generalSettings.nameSanthali
@@ -324,12 +349,43 @@ export default class SmallBusinessScreen extends Component {
                         renderItem={({ item, index }) => (
                             <TouchableOpacity onPress={() => this.selectCategory(item.categoryEnglish,item._id , item.expectedAnalysis)}>
                                 <View style={{ backgroundColor: BaseColor.Red, width: widthToDp("47%"), height: heightToDp("30%"), elevation: 10, borderRadius: 10 }}>
-                                    {
-                                        this.state.textLanguageChange === '0' ? <Text style={{ color: "#fff", fontSize: widthToDp("5%"), marginLeft: widthToDp("5%"), marginTop: heightToDp("0.4%"), fontFamily: 'Oswald-Medium' }}>{item.categoryEnglish}</Text> : ((this.state.textLanguageChange === '1') ? <Text style={{ color: "#fff", fontSize: widthToDp("5%"), marginLeft: widthToDp("5%"), marginTop: heightToDp("0.4%"), fontFamily: 'Oswald-Medium' }}>{item.categoryHindi}</Text> : ((this.state.textLanguageChange === '2') ? <Text style={{ color: "#fff", fontSize: widthToDp("5%"), marginLeft: widthToDp("5%"), marginTop: heightToDp("0.4%"), fontFamily: 'Oswald-Medium' }}>{item.categoryHo}</Text> : ((this.state.textLanguageChange === '3') ? <Text style={{ color: "#fff", fontSize: widthToDp("5%"), marginLeft: widthToDp("5%"), marginTop: heightToDp("0.4%"), fontFamily: 'Oswald-Medium' }}>{item.categoryOdia}</Text> : ((this.state.textLanguageChange === '4') ? <Text style={{ color: "#fff", fontSize: widthToDp("5%"), marginLeft: widthToDp("5%"), marginTop: heightToDp("0.4%"), fontFamily: 'Oswald-Medium' }}>{item.categorySanthali}</Text> : null))))
-                                    }
-
+                                    <LabelComponent
+                                        directData={true}
+                                        labelWidth={
+                                            (
+                                                (this.state.textLanguageChange==="0" && item.audioEnglish) ||
+                                                (this.state.textLanguageChange==="1" && item.audioHindi) ||
+                                                (this.state.textLanguageChange==="2" && item.audioHo) ||
+                                                (this.state.textLanguageChange==="3" && item.audioOdia) ||
+                                                (this.state.textLanguageChange==="4" && item.audioSanthali)
+                                            ) ? 35 : 40
+                                        }
+                                        labelName={
+                                            this.state.textLanguageChange==="0" ? item.categoryEnglish :
+                                                this.state.textLanguageChange==="1" ? item.categoryHindi :
+                                                this.state.textLanguageChange==="2" ? item.categoryHo :
+                                                this.state.textLanguageChange==="3" ? item.categoryOdia :
+                                                item.categorySanthali
+                                        }
+                                        isAudioHaving={
+                                            (
+                                                (this.state.textLanguageChange==="0" && item.audioEnglish) ||
+                                                (this.state.textLanguageChange==="1" && item.audioHindi) ||
+                                                (this.state.textLanguageChange==="2" && item.audioHo) ||
+                                                (this.state.textLanguageChange==="3" && item.audioOdia) ||
+                                                (this.state.textLanguageChange==="4" && item.audioSanthali)
+                                            )
+                                        }
+                                        audioFile={
+                                            this.state.textLanguageChange==="0" ? item.audioEnglish :
+                                                this.state.textLanguageChange==="1" ? item.audioHindi :
+                                                this.state.textLanguageChange==="2" ? item.audioHo :
+                                                this.state.textLanguageChange==="3" ? item.audioOdia :
+                                                item.audioSanthali
+                                        }
+                                    />   
                                     <Image
-                                        style={{ width: widthToDp("47%"), height: heightToDp("25%"), borderBottomLeftRadius: 10, borderBottomRightRadius: 10, marginTop: heightToDp("1%") }}
+                                        style={{ width: widthToDp("47%"), height: heightToDp("25%"), borderBottomLeftRadius: 10, borderBottomRightRadius: 10, marginTop: heightToDp("0%") }}
                                         source={{ uri: 'file:///storage/emulated/0/Pictures/image_' + item.imageFile }}
                                     />
                                 </View>
