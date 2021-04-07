@@ -129,6 +129,8 @@ export default class GeneralSettingsScreen extends Component {
                         size={40}
                     />
                 </TouchableOpacity>
+
+                <Text style={{marginTop:heightToDp("20%")}}>Version - 1.0</Text>
                 {/* <View style={{ 
                     flex: 1,
                     justifyContent: 'center',

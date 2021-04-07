@@ -467,14 +467,14 @@ export default class AllTransactionScreen extends Component {
                     fontSize: widthToDp("5%"), 
                     fontFamily: 'Oswald-Medium',
                     fontWeight: 'bold',
-                    color: '#fff' 
+                    color: '#000' 
                 }}>
                     {this.state.netProfitText} = 
                     <Text style={{
                         fontFamily: 'Oswald-Light',
                         fontSize: widthToDp("4.5%"), 
                         fontWeight: 'bold',
-                        color: '#fff'
+                        color: '#000'
                     }}>  ₹ {this.state.netProfitValue}</Text>
                 </Text>
                 <View style={{margin:20}}></View>
