@@ -902,7 +902,7 @@ export default class SigninScreen extends Component {
         var allusername = await AsyncStorage.getItem('username')
         var token = await AsyncStorage.getItem('token')
         var encodedUsername = base64.encode(this.state.username)
-        var cropObjectsToBeSaved, cropStepsObjectsToBeSaved, cropsMaterialsObjectsToBeSaved, livestockObjectsToBeSaved, liveStockStepMaterialsObjectsToBeSaved, liveStockBreedsObjectsToBeSaved, breedCategoriesObjectsToBeSaved, importantLinksObjectsToBeSaved, nutrationGradenObjectsToBeSaved, livestockStepObjectsToBeSaved, vaccinationToBeSaved, contactListToBeSaved, dryFishObjectsToBeSaved, vegetableVendingObjectsToBeSaved, smallGroceryShopToBeSaved, labelsObjectsToBeSaved , smallBusinessCategoryObjectsToBeSaved;
+        var cropObjectsToBeSaved, cropStepsObjectsToBeSaved, cropsMaterialsObjectsToBeSaved, livestockObjectsToBeSaved, liveStockStepMaterialsObjectsToBeSaved, liveStockBreedsObjectsToBeSaved, breedCategoriesObjectsToBeSaved, importantLinksObjectsToBeSaved, nutrationGradenObjectsToBeSaved, livestockStepObjectsToBeSaved, vaccinationToBeSaved, contactListToBeSaved, dryFishObjectsToBeSaved, vegetableVendingObjectsToBeSaved, smallGroceryShopToBeSaved, labelsObjectsToBeSaved , smallBusinessCategoryObjectsToBeSaved, smallBusinessSubCategoryObjectsToBeSaved;
         await axios.get("http://161.35.122.165:3020/api/v1/get-all-data", {
             headers: {
                 'Content-type': "application/json",
@@ -963,6 +963,9 @@ export default class SigninScreen extends Component {
 
             var smallBusinessCategory = response.data.smallBusinessCategory
             smallBusinessCategoryObjectsToBeSaved = smallBusinessCategory
+
+            var smallBusinessSubCategory = response.data.smallBusinessSubCategory
+            smallBusinessSubCategoryObjectsToBeSaved = smallBusinessSubCategory
         }).catch(function (error) {
             console.log(error)
         })
@@ -971,7 +974,7 @@ export default class SigninScreen extends Component {
         const numberOfCropsToBeSaved = {'username': this.state.username, 'crops': cropObjectsToBeSaved}
         const cropDataToBeSaved = { 'username': this.state.username, 'cropSteps': cropStepsObjectsToBeSaved, 'cropsMaterials': cropsMaterialsObjectsToBeSaved }
         const labelsToBeSaved = { 'username': this.state.username, 'labels': labelsObjectsToBeSaved }
-        const smallBusinessCategoryToBeSaved = {'username': this.state.username,'smallBusinessCategory':smallBusinessCategoryObjectsToBeSaved}
+        const smallBusinessCategoryToBeSaved = {'username': this.state.username,'smallBusinessCategory':smallBusinessCategoryObjectsToBeSaved , 'smallBusinessSubCategory':smallBusinessSubCategoryObjectsToBeSaved}
         // offlineDataToBeSaved.crops.push(cropObjectsToBeSaved) 'cropSteps': cropStepsObjectsToBeSaved, 'cropsMaterials': cropsMaterialsObjectsToBeSaved, 
         // offlineDataToBeSaved.cropsMaterials.push(cropsMaterialsObjectsToBeSaved)
         // offlineDataToBeSaved.livestock.push(livestockObjectsToBeSaved)

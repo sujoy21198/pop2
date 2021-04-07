@@ -60,6 +60,7 @@ import AllTransactionScreen from './Pages/AllTransactionScreen'
 import MoneyManagerCategoriesScreen from './Pages/MoneyManagerCategoriesScreen'
 import DynamicLivestockScreen from './Pages/DynamicLivestockScreen'
 import ForgetPasswordScreen from './Pages/ForgetPasswordScreen'
+import SmallBusinessDetailsScreen from './Pages/SmallBusinessDetailsScreen'
 
 const Stack = createStackNavigator();
 
@@ -124,6 +125,7 @@ function AppStack(){
                 <Stack.Screen name="MoneyManagerCategoriesScreen" component={MoneyManagerCategoriesScreen} options={{ headerShown: false }}/>
                 <Stack.Screen name="DynamicLivestockScreen" component={DynamicLivestockScreen} options={{ headerShown: false }} />
                 <Stack.Screen name="ForgetPasswordScreen" component={ForgetPasswordScreen} options={{headerShown:false}}/>
+                <Stack.Screen name="SmallBusinessDetailsScreen" component={SmallBusinessDetailsScreen} options={{headerShown:false}}/>
             </Stack.Navigator>
         </NavigationContainer>
     );

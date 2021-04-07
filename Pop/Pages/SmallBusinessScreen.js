@@ -27,7 +27,8 @@ export default class SmallBusinessScreen extends Component {
         this.state = {
             data: [],
             languages: [],
-            smallBusinessLabel: ''
+            smallBusinessLabel: '',
+            _id:''
         }
 
         this.state.languages = Languages
@@ -49,15 +50,15 @@ export default class SmallBusinessScreen extends Component {
             var specificObject = parsed[0].smallBusinessCategory
             
             var check = specificObject.find((i) => i)
-            console.log(check,"small busineieieie")
+            //console.log(check._id,"small busineieieie")
             if (check != undefined) {
                 var totalArray = this.state.data.concat(specificObject.find((i) => i))
-                console.log(totalArray, "jojo adventure")
+                //console.log(totalArray, "jojo adventure")
                 this.setState({ data: totalArray })
             }else{
                 this.setState({data:data})
             }
-            console.log(check, "lololo")
+            //console.log(check, "lololo")
 
         } catch (error) {
             console.log(error)
@@ -67,8 +68,8 @@ export default class SmallBusinessScreen extends Component {
 
 
 
-    selectCategory = (data) => {
-
+    selectCategory = (data,id , expectedAnalysis) => {
+        //alert(expectedAnalysis)
         if (data === this.state.data[0].categoryEnglish) {
             this.props.navigation.navigate({
                 name: 'VegetableVendingScreen',
@@ -83,6 +84,11 @@ export default class SmallBusinessScreen extends Component {
             this.props.navigation.navigate({
                 name: 'DryFishScreen',
                 params: { value: 0 }
+            })
+        }else if(expectedAnalysis === true){
+            this.props.navigation.navigate({
+                name: 'SmallBusinessDetailsScreen',
+                params: { value: id }
             })
         }
 
@@ -316,7 +322,7 @@ export default class SmallBusinessScreen extends Component {
                         data={this.state.data}
                         bouncesZoom={true}
                         renderItem={({ item, index }) => (
-                            <TouchableOpacity onPress={() => this.selectCategory(item.categoryEnglish)}>
+                            <TouchableOpacity onPress={() => this.selectCategory(item.categoryEnglish,item._id , item.expectedAnalysis)}>
                                 <View style={{ backgroundColor: BaseColor.Red, width: widthToDp("47%"), height: heightToDp("30%"), elevation: 10, borderRadius: 10 }}>
                                     {
                                         this.state.textLanguageChange === '0' ? <Text style={{ color: "#fff", fontSize: widthToDp("5%"), marginLeft: widthToDp("5%"), marginTop: heightToDp("0.4%"), fontFamily: 'Oswald-Medium' }}>{item.categoryEnglish}</Text> : ((this.state.textLanguageChange === '1') ? <Text style={{ color: "#fff", fontSize: widthToDp("5%"), marginLeft: widthToDp("5%"), marginTop: heightToDp("0.4%"), fontFamily: 'Oswald-Medium' }}>{item.categoryHindi}</Text> : ((this.state.textLanguageChange === '2') ? <Text style={{ color: "#fff", fontSize: widthToDp("5%"), marginLeft: widthToDp("5%"), marginTop: heightToDp("0.4%"), fontFamily: 'Oswald-Medium' }}>{item.categoryHo}</Text> : ((this.state.textLanguageChange === '3') ? <Text style={{ color: "#fff", fontSize: widthToDp("5%"), marginLeft: widthToDp("5%"), marginTop: heightToDp("0.4%"), fontFamily: 'Oswald-Medium' }}>{item.categoryOdia}</Text> : ((this.state.textLanguageChange === '4') ? <Text style={{ color: "#fff", fontSize: widthToDp("5%"), marginLeft: widthToDp("5%"), marginTop: heightToDp("0.4%"), fontFamily: 'Oswald-Medium' }}>{item.categorySanthali}</Text> : null))))
