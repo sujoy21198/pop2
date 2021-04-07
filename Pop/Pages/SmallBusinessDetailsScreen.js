@@ -24,7 +24,8 @@ export default class SmallBusinessDetailsScreen extends Component {
             textLanguageChange:'',
             length:'',
             counter:0,
-            nextButtonText: ""
+            nextButtonText: "",
+            title:''
         }
         this.state.languages = Languages
         this.state._id = this.props.route.params.value
@@ -47,14 +48,19 @@ export default class SmallBusinessDetailsScreen extends Component {
             this.setState({length : businessSpecific.length})
             if(this.state.textLanguageChange === '0'){
                 this.setState({description : businessSpecific[this.state.counter].descEnglish})
+                this.setState({title : businessSpecific[this.state.counter].subCategoryEnglish})
             }else if(this.state.textLanguageChange === '1'){
                 this.setState({description : businessSpecific[this.state.counter].descHindi})
+                this.setState({title : businessSpecific[this.state.counter].subCategoryHindi})
             }else if(this.state.textLanguageChange === '2'){
                 this.setState({description : businessSpecific[this.state.counter].descHo})
+                this.setState({title : businessSpecific[this.state.counter].subCategoryHo})
             }else if(this.state.textLanguageChange === '3'){
                 this.setState({description : businessSpecific[this.state.counter].descOdia})
+                this.setState({title : businessSpecific[this.state.counter].subCategoryOdia})
             }else if(this.state.textLanguageChange === '4'){
                 this.setState({description : businessSpecific[this.state.counter].descSanthali})
+                this.setState({title : businessSpecific[this.state.counter].subCategorySanthali})
             }
             
             console.log(businessSpecific.length, "sub category")
@@ -259,7 +265,8 @@ export default class SmallBusinessDetailsScreen extends Component {
                 </View>
                 <View style={{ borderBottomColor: BaseColor.Stroke, borderBottomWidth: 1, marginTop: heightToDp('1.5%'), width: widthToDp("100%") }}></View>
                 <View style={{ backgroundColor: BaseColor.Red, height: heightToDp("50%"), alignSelf: 'center', width: widthToDp("90%"), borderRadius: 10, marginTop: heightToDp('1.5%') }}>
-                    <View style={{ backgroundColor: "white", height: heightToDp("50%"), alignSelf: 'center', width: widthToDp("90%"), marginTop: heightToDp('0%'), borderRadius: 10, padding: widthToDp("2%")}}>
+                    <Text style={{ color: "#fff", fontSize: widthToDp("5%"), marginLeft: widthToDp("5%"), marginTop: heightToDp("1%"), fontFamily: 'Oswald-Medium' }}>{this.state.title}</Text>
+                    <View style={{ backgroundColor: "white", height: heightToDp("45%"), alignSelf: 'center', width: widthToDp("90%"), marginTop: heightToDp('2%'), borderRadius: 10, padding: widthToDp("2%")}}>
                         <ScrollView>
                             <Text>{this.state.description}</Text>
                         </ScrollView>
