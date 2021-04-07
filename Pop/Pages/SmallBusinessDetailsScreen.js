@@ -11,6 +11,7 @@ import Languages from '../Core/Languages'
 import LanguageChange from '../Core/LanguageChange'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import HeaderComponent from '../components/HeaderComponent'
+import LabelComponent from '../components/LabelComponent'
 
 export default class SmallBusinessDetailsScreen extends Component {
 
@@ -22,7 +23,8 @@ export default class SmallBusinessDetailsScreen extends Component {
             description:'',
             textLanguageChange:'',
             length:'',
-            counter:0
+            counter:0,
+            nextButtonText: ""
         }
         this.state.languages = Languages
         this.state._id = this.props.route.params.value
@@ -31,7 +33,7 @@ export default class SmallBusinessDetailsScreen extends Component {
 
     componentDidMount() {
         this.setLanguageOnMount()
-        this.loadlabelsFromStorage()
+        // this.loadlabelsFromStorage()
         this.getOfflineData()
     }
 
@@ -70,10 +72,8 @@ export default class SmallBusinessDetailsScreen extends Component {
             let user = await AsyncStorage.getItem('labelsData');
             let parsed = JSON.parse(user);
             var specificObject = parsed[0]
-            var vegetableVending = specificObject.labels.find((i) => i.type === 98)
-            var smallGroceryShop = specificObject.labels.find((i) => i.type === 99)
-            var dryFishSelling = specificObject.labels.find((i) => i.type === 100)
             var smallBusinessLabel = specificObject.labels.find((i) => i.type === 30)
+            var nextButtonText = specificObject.labels.find((i) => i.type === 62)
             //console.log(vegetableVending)
             //var nutrationGraden = specificObject.labels.find((i) => i.type === 31)
             // var message = specificObject.labels.find((i) => i.type === 26)
@@ -85,10 +85,8 @@ export default class SmallBusinessDetailsScreen extends Component {
             // Low Land: 55
             // Land Type : 56
             if (this.state.textLanguageChange === '0') {
-                this.state.data[0].categoryEnglish = vegetableVending.nameEnglish
-                this.state.data[1].categoryEnglish = smallGroceryShop.nameEnglish
-                this.state.data[2].categoryEnglish = dryFishSelling.nameEnglish
                 this.setState({ smallBusinessLabel: smallBusinessLabel.nameEnglish })
+                this.setState({ nextButtonText: nextButtonText.nameEnglish })
                 //this.setState({ landTypeLabel: landTypeLabel.nameEnglish })
                 // this.state.data[4].name = message.nameEnglish
                 // this.state.data[5].name = generalSettings.nameEnglish
@@ -99,38 +97,30 @@ export default class SmallBusinessDetailsScreen extends Component {
                 // this.setState({ incomeLabel: incomeLabel.nameEnglish })
                 // this.setState({ allTransactionLabel: allTransactionLabel.nameEnglish })
             } else if (this.state.textLanguageChange === '1') {
-                this.state.data[0].categoryHindi = vegetableVending.nameHindi
-                this.state.data[1].categoryHindi = smallGroceryShop.nameHindi
-                this.state.data[2].categoryHindi = dryFishSelling.nameHindi
                 this.setState({ smallBusinessLabel: smallBusinessLabel.nameHindi })
+                this.setState({ nextButtonText: nextButtonText.nameHindi })
                 // this.state.data[4].name = message.nameHindi
                 // this.state.data[5].name = generalSettings.nameHindi
                 // this.state.data[6].name = pension.nameHindi
                 // this.state.data[7].name = others.nameHindi
             } else if (this.state.textLanguageChange === '2') {
-                this.state.data[0].categoryHo = vegetableVending.nameHo
-                this.state.data[1].categoryHo = smallGroceryShop.nameHo
-                this.state.data[2].categoryHo = dryFishSelling.nameHo
                 this.setState({ smallBusinessLabel: smallBusinessLabel.nameHo })
+                this.setState({ nextButtonText: nextButtonText.nameHo })
                 // this.state.data[4].name = message.nameHo
                 // this.state.data[5].name = generalSettings.nameHo
                 // this.state.data[6].name = pension.nameHo
                 // this.state.data[7].name = others.nameHo
             } else if (this.state.textLanguageChange === '3') {
-                this.state.data[0].categoryOdia = vegetableVending.nameOdia
-                this.state.data[1].categoryOdia = smallGroceryShop.nameOdia
-                this.state.data[2].categoryOdia = dryFishSelling.nameOdia
                 this.setState({ smallBusinessLabel: smallBusinessLabel.nameOdia })
+                this.setState({ nextButtonText: nextButtonText.nameOdia })
                 //this.setState({ landTypeLabel: landTypeLabel.nameOdia })
                 // this.state.data[4].name = message.nameOdia
                 // this.state.data[5].name = generalSettings.nameOdia
                 // this.state.data[6].name = pension.nameOdia
                 // this.state.data[7].name = others.nameOdia
             } else if (this.state.textLanguageChange === '4') {
-                this.state.data[0].categorySanthali = vegetableVending.nameSanthali
-                this.state.data[1].categorySanthali = smallGroceryShop.nameSanthali
-                this.state.data[2].categorySanthali = dryFishSelling.nameSanthali
                 this.setState({ smallBusinessLabel: smallBusinessLabel.nameSanthali })
+                this.setState({ nextButtonText: nextButtonText.nameSanthali })
                 // this.setState({ landTypeLabel: landTypeLabel.nameSanthali })
                 // this.state.data[4].name = message.nameSanthali
                 // this.state.data[5].name = generalSettings.nameSanthali
@@ -269,7 +259,7 @@ export default class SmallBusinessDetailsScreen extends Component {
                 </View>
                 <View style={{ borderBottomColor: BaseColor.Stroke, borderBottomWidth: 1, marginTop: heightToDp('1.5%'), width: widthToDp("100%") }}></View>
                 <View style={{ backgroundColor: BaseColor.Red, height: heightToDp("50%"), alignSelf: 'center', width: widthToDp("90%"), borderRadius: 10, marginTop: heightToDp('1.5%') }}>
-                    <View style={{ backgroundColor: "white", height: heightToDp("50%"), alignSelf: 'center', width: widthToDp("90%"), marginTop: heightToDp('0%'), borderRadius: 10}}>
+                    <View style={{ backgroundColor: "white", height: heightToDp("50%"), alignSelf: 'center', width: widthToDp("90%"), marginTop: heightToDp('0%'), borderRadius: 10, padding: widthToDp("2%")}}>
                         <ScrollView>
                             <Text>{this.state.description}</Text>
                         </ScrollView>
@@ -279,7 +269,7 @@ export default class SmallBusinessDetailsScreen extends Component {
                 <View style={{ height: heightToDp("10%"), marginTop: heightToDp("3%") }}>
                     <TouchableOpacity onPress={() => this.nextButton()}>
                         <View style={{ backgroundColor: "#fff", height: heightToDp("6%"), width: widthToDp("30%"), borderRadius: 100, alignSelf: 'center', marginTop: heightToDp("2%") }}>
-                            <Text style={{ fontSize: widthToDp("4%"), color: "#000", marginTop: heightToDp("1.3%"), alignSelf: 'center', fontFamily: 'Oswald-Medium' }}>NEXT</Text>
+                            <Text style={{ fontSize: widthToDp("4%"), color: "#000", marginTop: heightToDp("1.3%"), alignSelf: 'center', fontFamily: 'Oswald-Medium' }}>{this.state.nextButtonText}</Text>
                         </View>
                     </TouchableOpacity>
                 </View>

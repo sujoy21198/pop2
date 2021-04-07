@@ -208,7 +208,7 @@ export default class LandTypeScreen extends Component {
                     doneLabel: doneLabel.nameHindi,
                     decimalLabel: decimalLabel.nameHindi,
                     materialLabel: materialLabel.nameHindi,
-                    productionLossPercentageLabel : productionLossPercentageLabel.nameEnglish
+                    productionLossPercentageLabel : productionLossPercentageLabel.nameHindi
                 })
             } else if (this.state.textLanguageChange === '2') {
                 this.setState({

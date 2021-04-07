@@ -143,7 +143,7 @@ export default class DryFishSellingFirstTable extends Component {
             let parsed = JSON.parse(user);
             var specificObject = parsed[0]
             var backButtontext = specificObject.labels.find((i) => i.type === 64)
-            var saveButtonText = specificObject.labels.find((i) => i.type === 65)
+            var saveButtonText = specificObject.labels.find((i) => i.type === 63)
             var nextButtonText = specificObject.labels.find((i) => i.type === 62)
             var oneTimeExpenditureLabel = specificObject.labels.find((i) => i.type === 101)
             var quantityLabel = specificObject.labels.find((i) => i.type === 79)
