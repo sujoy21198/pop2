@@ -87,7 +87,7 @@ export default class RegistrationScreen extends Component {
         'Content-Type': 'application/json'
       }
     }).then(function (response) {
-      console.log(response.data.gramPanchayatVillage[0].villageData)
+      console.log(response.data.states)
       statesApi = response.data.states
       distApi = response.data.districtsAndBlocks
       gramApi = response.data.gramPanchayatVillage
