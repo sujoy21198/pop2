@@ -120,6 +120,7 @@ export default class VaccinationScreen extends Component {
             var intervalLabel = specificObject.labels.find((i) => i.type === 91)
             var totalLabel = specificObject.labels.find((i) => i.type === 112)
             var months = specificObject.labels.find((i) => i.type === 111)
+            var month = specificObject.labels.find((i) => i.type === 222)
             var back = specificObject.labels.find((i) => i.type === 64)
             var save = specificObject.labels.find((i) => i.type === 63)
             var next = specificObject.labels.find((i) => i.type === 62)
@@ -135,6 +136,7 @@ export default class VaccinationScreen extends Component {
                 this.setState({ intervalLabel: intervalLabel.nameEnglish })
                 this.setState({ totalLabel: totalLabel.nameEnglish })
                 this.setState({ months: months.nameEnglish })
+                this.setState({ month: month.nameEnglish })
                 this.setState({ backButtonText: back.nameEnglish })
                 this.setState({ saveButtonText: save.nameEnglish })
                 this.setState({ nextButtonText: next.nameEnglish })
@@ -146,6 +148,7 @@ export default class VaccinationScreen extends Component {
                 this.setState({ intervalLabel: intervalLabel.nameHindi })
                 this.setState({ totalLabel: totalLabel.nameHindi })
                 this.setState({ months: months.nameHindi })
+                this.setState({ month: month.nameHindi })
                 this.setState({ backButtonText: back.nameHindi })
                 this.setState({ saveButtonText: save.nameHindi })
                 this.setState({ nextButtonText: next.nameHindi })
@@ -157,6 +160,7 @@ export default class VaccinationScreen extends Component {
                 this.setState({ intervalLabel: intervalLabel.nameHo })
                 this.setState({ totalLabel: totalLabel.nameHo })
                 this.setState({ months: months.nameHo })
+                this.setState({ month: month.nameHo })
                 this.setState({ backButtonText: back.nameHo })
                 this.setState({ saveButtonText: save.nameHo })
                 this.setState({ nextButtonText: next.nameHo })
@@ -168,6 +172,7 @@ export default class VaccinationScreen extends Component {
                 this.setState({ intervalLabel: intervalLabel.nameOdia })
                 this.setState({ totalLabel: totalLabel.nameOdia })
                 this.setState({ months: months.nameOdia })
+                this.setState({ month: month.nameEnglish })
                 this.setState({ backButtonText: back.nameOdia })
                 this.setState({ saveButtonText: save.nameOdia })
                 this.setState({ nextButtonText: next.nameOdia })
@@ -179,6 +184,7 @@ export default class VaccinationScreen extends Component {
                 this.setState({ intervalLabel: intervalLabel.nameSanthali })
                 this.setState({ totalLabel: totalLabel.nameSanthali })
                 this.setState({ months: months.nameSanthali })
+                this.setState({ month: month.nameSanthali })
                 this.setState({ backButtonText: back.nameSanthali })
                 this.setState({ saveButtonText: save.nameSanthali })
                 this.setState({ nextButtonText: next.nameSanthali })
@@ -499,7 +505,7 @@ export default class VaccinationScreen extends Component {
                                                             <Text style={{ 
                                                                 fontSize: widthToDp("3%") 
                                                             }}>
-                                                                {i.interval.split("   ").length > 1 ? this.state.repeatText : i.interval} {this.state.months}
+                                                                {i.interval.split("   ").length > 1 ? this.state.repeatText : i.interval} {Number(i.interval) > 1 ? this.state.months : this.state.month}
                                                             </Text>
                                                         </View>
                                                     )
