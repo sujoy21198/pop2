@@ -49,18 +49,23 @@ export default class SmallBusinessDetailsScreen extends Component {
             if(this.state.textLanguageChange === '0'){
                 this.setState({description : businessSpecific[this.state.counter].descEnglish})
                 this.setState({title : businessSpecific[this.state.counter].subCategoryEnglish})
+                this.setState({audio : businessSpecific[this.state.counter].audioEnglish})
             }else if(this.state.textLanguageChange === '1'){
                 this.setState({description : businessSpecific[this.state.counter].descHindi})
                 this.setState({title : businessSpecific[this.state.counter].subCategoryHindi})
+                this.setState({audio : businessSpecific[this.state.counter].audioHindi})
             }else if(this.state.textLanguageChange === '2'){
                 this.setState({description : businessSpecific[this.state.counter].descHo})
                 this.setState({title : businessSpecific[this.state.counter].subCategoryHo})
+                this.setState({audio : businessSpecific[this.state.counter].audioHo})
             }else if(this.state.textLanguageChange === '3'){
                 this.setState({description : businessSpecific[this.state.counter].descOdia})
                 this.setState({title : businessSpecific[this.state.counter].subCategoryOdia})
+                this.setState({audio : businessSpecific[this.state.counter].audioOdia})
             }else if(this.state.textLanguageChange === '4'){
                 this.setState({description : businessSpecific[this.state.counter].descSanthali})
                 this.setState({title : businessSpecific[this.state.counter].subCategorySanthali})
+                this.setState({audio : businessSpecific[this.state.counter].audioSanthali})
             }
             
             console.log(businessSpecific.length, "sub category")
@@ -265,8 +270,16 @@ export default class SmallBusinessDetailsScreen extends Component {
                 </View>
                 <View style={{ borderBottomColor: BaseColor.Stroke, borderBottomWidth: 1, marginTop: heightToDp('1.5%'), width: widthToDp("100%") }}></View>
                 <View style={{ backgroundColor: BaseColor.Red, height: heightToDp("50%"), alignSelf: 'center', width: widthToDp("90%"), borderRadius: 10, marginTop: heightToDp('1.5%') }}>
-                    <Text style={{ color: "#fff", fontSize: widthToDp("5%"), marginLeft: widthToDp("5%"), marginTop: heightToDp("1%"), fontFamily: 'Oswald-Medium' }}>{this.state.title}</Text>
-                    <View style={{ backgroundColor: "white", height: heightToDp("45%"), alignSelf: 'center', width: widthToDp("90%"), marginTop: heightToDp('2%'), borderRadius: 10, padding: widthToDp("2%")}}>
+                    <LabelComponent
+                        directData={true}
+                        labelWidth={
+                            this.state.audio ? 77 : 85
+                        }
+                        labelName={this.state.title}
+                        isAudioHaving={this.state.audio}
+                        audioFile={this.state.audio}
+                    /> 
+                    <View style={{ backgroundColor: "white", height: heightToDp("45%"), alignSelf: 'center', width: widthToDp("90%"), marginTop: heightToDp('0%'), borderRadius: 10, padding: widthToDp("2%")}}>
                         <ScrollView>
                             <Text>{this.state.description}</Text>
                         </ScrollView>
