@@ -354,7 +354,7 @@ export default class StepThreeScreen extends Component {
                 let parsed = JSON.parse(user);
                 var specificObject = parsed[0]
                 var cropSpecificSteps = specificObject.cropSteps.filter((i) => i.cropId === this.state._id)
-                if (this.state.saveButtonClicked === false) {
+                if (this.state.saveButtonClicked === false && this.state.multipleMaterials.length > 0) {
                     alert("please click save button before procceding")
                 } else {
                     if (cropSpecificSteps[3] === undefined) {
@@ -640,11 +640,14 @@ export default class StepThreeScreen extends Component {
                             <Text style={{ fontSize: widthToDp("4%"), color: "#000", marginTop: heightToDp("1.3%"), alignSelf: 'center', fontFamily: 'Oswald-Medium' }}>{this.state.backButtonText}</Text>
                         </View>
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={() => { this.setValueToPatch() }}>
-                        <View style={{ backgroundColor: "#fff", height: heightToDp("6%"), width: widthToDp("30%"), borderRadius: 100, marginLeft: widthToDp("1%"), marginTop: heightToDp("2%") }}>
-                            <Text style={{ fontSize: widthToDp("4%"), color: "#000", marginTop: heightToDp("1.3%"), alignSelf: 'center', fontFamily: 'Oswald-Medium' }}>{this.state.saveButtonText}</Text>
-                        </View>
-                    </TouchableOpacity>
+                    {
+                        multipleMaterials.length > 0 &&
+                        <TouchableOpacity onPress={() => { this.setValueToPatch() }}>
+                            <View style={{ backgroundColor: "#fff", height: heightToDp("6%"), width: widthToDp("30%"), borderRadius: 100, marginLeft: widthToDp("1%"), marginTop: heightToDp("2%") }}>
+                                <Text style={{ fontSize: widthToDp("4%"), color: "#000", marginTop: heightToDp("1.3%"), alignSelf: 'center', fontFamily: 'Oswald-Medium' }}>{this.state.saveButtonText}</Text>
+                            </View>
+                        </TouchableOpacity>
+                    }
                     <TouchableOpacity onPress={() => { this.setStepDataIntoPatch() }}>
                         <View style={{ backgroundColor: "#fff", height: heightToDp("6%"), width: widthToDp("30%"), borderRadius: 100, marginLeft: widthToDp("1%"), marginTop: heightToDp("2%") }}>
                             <Text style={{ fontSize: widthToDp("4%"), color: "#000", marginTop: heightToDp("1.3%"), alignSelf: 'center', fontFamily: 'Oswald-Medium' }}>{this.state.nextButtonText}</Text>
