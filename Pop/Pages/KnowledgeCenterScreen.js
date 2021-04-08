@@ -339,7 +339,7 @@ export default class KnowledgeCenterScreen extends Component {
                                     />       
                                     <Image
                                 style={{ width: widthToDp("47%"), height: heightToDp("25%") ,borderBottomLeftRadius:10,borderBottomRightRadius:10}}
-                                source={{ uri: 'file:///storage/emulated/0/Pictures/image_' + item.code }}
+                                source={{ uri: 'file:///storage/emulated/0/Pop/image_' + item.code }}
                                 />
                                 </View>
                             </TouchableOpacity>

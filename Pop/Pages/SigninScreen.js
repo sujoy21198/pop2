@@ -139,12 +139,12 @@ export default class SigninScreen extends Component {
         //1
         var NewFile = []
         for (var i = 0; i < cropScreenImageArray.length; i++) {
-            const checkImage = await RNFS.exists('file:///storage/emulated/0/Pictures/image_' + cropScreenImageArray[i])
+            const checkImage = await RNFS.exists('file:///storage/emulated/0/Pop/image_' + cropScreenImageArray[i])
 
             if (!checkImage) {
                 NewFile.push(cropScreenImageArray[i])
                 //console.log(cropScreenImageArray[i])
-                console.log(NewFile)
+                //console.log(NewFile," AAAAWWWWOOOOOOOOW")
 
             } else {
                 console.log("file exists")
@@ -155,7 +155,7 @@ export default class SigninScreen extends Component {
         //2
         var NewFile = []
         for (var i = 0; i < cropStepImagesArray.length; i++) {
-            const checkImage = await RNFS.exists('file:///storage/emulated/0/Pictures/image_' + cropStepImagesArray[i])
+            const checkImage = await RNFS.exists('file:///storage/emulated/0/Pop/image_' + cropStepImagesArray[i])
 
             if (!checkImage) {
                 NewFile.push(cropStepImagesArray[i])
@@ -171,7 +171,7 @@ export default class SigninScreen extends Component {
         //3
         var NewFile = []
         for (var i = 0; i < cropMaterialImagesArray.length; i++) {
-            const checkImage = await RNFS.exists('file:///storage/emulated/0/Pictures/image_' + cropMaterialImagesArray[i])
+            const checkImage = await RNFS.exists('file:///storage/emulated/0/Pop/image_' + cropMaterialImagesArray[i])
 
             if (!checkImage) {
                 NewFile.push(cropMaterialImagesArray[i])
@@ -187,7 +187,7 @@ export default class SigninScreen extends Component {
         //4
         var NewFile = []
         for (var i = 0; i < livestockScreenImagesArray.length; i++) {
-            const checkImage = await RNFS.exists('file:///storage/emulated/0/Pictures/image_' + livestockScreenImagesArray[i])
+            const checkImage = await RNFS.exists('file:///storage/emulated/0/Pop/image_' + livestockScreenImagesArray[i])
 
             if (!checkImage) {
                 NewFile.push(livestockScreenImagesArray[i])
@@ -203,7 +203,7 @@ export default class SigninScreen extends Component {
         //5
         var NewFile = []
         for (var i = 0; i < liveStockStepImagesArray.length; i++) {
-            const checkImage = await RNFS.exists('file:///storage/emulated/0/Pictures/image_' + liveStockStepImagesArray[i])
+            const checkImage = await RNFS.exists('file:///storage/emulated/0/Pop/image_' + liveStockStepImagesArray[i])
 
             if (!checkImage) {
                 NewFile.push(liveStockStepImagesArray[i])
@@ -219,7 +219,7 @@ export default class SigninScreen extends Component {
         //6
         var NewFile = []
         for (var i = 0; i < breedScreenImagesArray.length; i++) {
-            const checkImage = await RNFS.exists('file:///storage/emulated/0/Pictures/image_' + breedScreenImagesArray[i])
+            const checkImage = await RNFS.exists('file:///storage/emulated/0/Pop/image_' + breedScreenImagesArray[i])
 
             if (!checkImage) {
                 NewFile.push(breedScreenImagesArray[i])
@@ -235,7 +235,7 @@ export default class SigninScreen extends Component {
         //7
         var NewFile = []
         for (var i = 0; i < importantLinksScreenArray.length; i++) {
-            const checkImage = await RNFS.exists('file:///storage/emulated/0/Pictures/image_' + importantLinksScreenArray[i])
+            const checkImage = await RNFS.exists('file:///storage/emulated/0/Pop/image_' + importantLinksScreenArray[i])
 
             if (!checkImage) {
                 NewFile.push(importantLinksScreenArray[i])
@@ -251,7 +251,7 @@ export default class SigninScreen extends Component {
         //8
         var NewFile = []
         for (var i = 0; i < nutritionGardenImagesArray.length; i++) {
-            const checkImage = await RNFS.exists('file:///storage/emulated/0/Pictures/image_' + nutritionGardenImagesArray[i])
+            const checkImage = await RNFS.exists('file:///storage/emulated/0/Pop/image_' + nutritionGardenImagesArray[i])
 
             if (!checkImage) {
                 NewFile.push(nutritionGardenImagesArray[i])
@@ -267,7 +267,7 @@ export default class SigninScreen extends Component {
         //9
         var NewFile = []
         for (var i = 0; i < smallBusinessImagesArray.length; i++) {
-            const checkImage = await RNFS.exists('file:///storage/emulated/0/Pictures/image_' + smallBusinessImagesArray[i])
+            const checkImage = await RNFS.exists('file:///storage/emulated/0/Pop/image_' + smallBusinessImagesArray[i])
 
             if (!checkImage) {
                 NewFile.push(smallBusinessImagesArray[i])
@@ -283,7 +283,7 @@ export default class SigninScreen extends Component {
         //10
         var NewFile = []
         for (var i = 0; i < labelArray.length; i++) {
-            const checkImage = await RNFS.exists('file:///storage/emulated/0/Pictures/image_' + labelArray[i])
+            const checkImage = await RNFS.exists('file:///storage/emulated/0/Pop/image_' + labelArray[i])
 
             if (!checkImage) {
                 NewFile.push(labelArray[i])
@@ -301,7 +301,7 @@ export default class SigninScreen extends Component {
         //11
         var NewFile = []
         for (var i = 0; i < staticImagesArray.length; i++) {
-            const checkImage = await RNFS.exists('file:///storage/emulated/0/Pictures/image_' + staticImagesArray[i])
+            const checkImage = await RNFS.exists('file:///storage/emulated/0/Pop/image_' + staticImagesArray[i])
 
             if (!checkImage) {
                 NewFile.push(staticImagesArray[i])
@@ -331,6 +331,7 @@ export default class SigninScreen extends Component {
     }
 
 
+    //1
     getCropImage = () => {
         var cropImages = []
         var fileNames = []
@@ -351,15 +352,13 @@ export default class SigninScreen extends Component {
 
         for (var i = 0; i < imageUrls.length; i++) {
             const { config, fs } = RNFetchBlob;
-            let PictureDir = fs.dirs.PictureDir;
-            console.log(PictureDir)
             let options = {
                 fileCache: true,
                 addAndroidDownloads: {
                     useDownloadManager: true,
                     notification: false,
                     path:
-                        PictureDir +
+                        RNFS.ExternalStorageDirectoryPath + '/' + 'Pop' +
                         '/image_' +
                         fileNames[i] + '.' +
                         ext[i],
@@ -379,6 +378,7 @@ export default class SigninScreen extends Component {
         this.getCropStepImages()
     }
 
+    //2
     getCropStepImages = () => {
         var cropImages = []
         var fileNames = []
@@ -398,16 +398,14 @@ export default class SigninScreen extends Component {
         }
 
         for (var i = 0; i < imageUrls.length; i++) {
-            const { config, fs } = RNFetchBlob;
-            let PictureDir = fs.dirs.PictureDir;
-            console.log(PictureDir)
+            const { config, fs } = RNFetchBlob; 
             let options = {
                 fileCache: true,
                 addAndroidDownloads: {
                     useDownloadManager: true,
                     notification: false,
                     path:
-                        PictureDir +
+                        RNFS.ExternalStorageDirectoryPath + '/' + 'Pop' +
                         '/image_' +
                         fileNames[i] + '.' +
                         ext[i],
@@ -428,6 +426,7 @@ export default class SigninScreen extends Component {
     }
 
 
+    //3
     getcropMaterial = () => {
         var cropImages = []
         var fileNames = []
@@ -448,15 +447,14 @@ export default class SigninScreen extends Component {
 
         for (var i = 0; i < imageUrls.length; i++) {
             const { config, fs } = RNFetchBlob;
-            let PictureDir = fs.dirs.PictureDir;
-            console.log(PictureDir)
+            
             let options = {
                 fileCache: true,
                 addAndroidDownloads: {
                     useDownloadManager: true,
                     notification: false,
                     path:
-                        PictureDir +
+                        RNFS.ExternalStorageDirectoryPath + '/' + 'Pop' +
                         '/image_' +
                         fileNames[i] + '.' +
                         ext[i],
@@ -476,7 +474,7 @@ export default class SigninScreen extends Component {
         this.getlivestock()
     }
 
-
+//4
     getlivestock = () => {
         var cropImages = []
         var fileNames = []
@@ -497,15 +495,14 @@ export default class SigninScreen extends Component {
 
         for (var i = 0; i < imageUrls.length; i++) {
             const { config, fs } = RNFetchBlob;
-            let PictureDir = fs.dirs.PictureDir;
-            console.log(PictureDir)
+            
             let options = {
                 fileCache: true,
                 addAndroidDownloads: {
                     useDownloadManager: true,
                     notification: false,
                     path:
-                        PictureDir +
+                        RNFS.ExternalStorageDirectoryPath + '/' + 'Pop' +
                         '/image_' +
                         fileNames[i] + '.' +
                         ext[i],
@@ -526,6 +523,7 @@ export default class SigninScreen extends Component {
     }
 
 
+    //5
     getlivestockStep = () => {
         var cropImages = []
         var fileNames = []
@@ -546,15 +544,14 @@ export default class SigninScreen extends Component {
 
         for (var i = 0; i < imageUrls.length; i++) {
             const { config, fs } = RNFetchBlob;
-            let PictureDir = fs.dirs.PictureDir;
-            console.log(PictureDir)
+            
             let options = {
                 fileCache: true,
                 addAndroidDownloads: {
                     useDownloadManager: true,
                     notification: false,
                     path:
-                        PictureDir +
+                        RNFS.ExternalStorageDirectoryPath + '/' + 'Pop' +
                         '/image_' +
                         fileNames[i] + '.' +
                         ext[i],
@@ -575,6 +572,7 @@ export default class SigninScreen extends Component {
     }
 
 
+    //6
     getbreed = () => {
         var cropImages = []
         var fileNames = []
@@ -595,15 +593,14 @@ export default class SigninScreen extends Component {
 
         for (var i = 0; i < imageUrls.length; i++) {
             const { config, fs } = RNFetchBlob;
-            let PictureDir = fs.dirs.PictureDir;
-            console.log(PictureDir)
+           
             let options = {
                 fileCache: true,
                 addAndroidDownloads: {
                     useDownloadManager: true,
                     notification: false,
                     path:
-                        PictureDir +
+                        RNFS.ExternalStorageDirectoryPath + '/' + 'Pop' +
                         '/image_' +
                         fileNames[i] + '.' +
                         ext[i],
@@ -624,6 +621,7 @@ export default class SigninScreen extends Component {
     }
 
 
+    //7
     getimportantLink = () => {
         var cropImages = []
         var fileNames = []
@@ -644,15 +642,14 @@ export default class SigninScreen extends Component {
 
         for (var i = 0; i < imageUrls.length; i++) {
             const { config, fs } = RNFetchBlob;
-            let PictureDir = fs.dirs.PictureDir;
-            console.log(PictureDir)
+            
             let options = {
                 fileCache: true,
                 addAndroidDownloads: {
                     useDownloadManager: true,
                     notification: false,
                     path:
-                        PictureDir +
+                        RNFS.ExternalStorageDirectoryPath + '/' + 'Pop' +
                         '/image_' +
                         fileNames[i] + '.' +
                         ext[i],
@@ -674,6 +671,7 @@ export default class SigninScreen extends Component {
 
 
 
+    //8
     getnutritionGarden = () => {
         var cropImages = []
         var fileNames = []
@@ -694,15 +692,14 @@ export default class SigninScreen extends Component {
 
         for (var i = 0; i < imageUrls.length; i++) {
             const { config, fs } = RNFetchBlob;
-            let PictureDir = fs.dirs.PictureDir;
-            console.log(PictureDir)
+            
             let options = {
                 fileCache: true,
                 addAndroidDownloads: {
                     useDownloadManager: true,
                     notification: false,
                     path:
-                        PictureDir +
+                    RNFS.ExternalStorageDirectoryPath + '/' + 'Pop' +
                         '/image_' +
                         fileNames[i] + '.' +
                         ext[i],
@@ -723,7 +720,9 @@ export default class SigninScreen extends Component {
     }
 
 
+    //9
     getsmallBusiness = () => {
+
         var cropImages = []
         var fileNames = []
         var imageUrls = []
@@ -743,15 +742,14 @@ export default class SigninScreen extends Component {
 
         for (var i = 0; i < imageUrls.length; i++) {
             const { config, fs } = RNFetchBlob;
-            let PictureDir = fs.dirs.PictureDir;
-            console.log(PictureDir)
+            
             let options = {
                 fileCache: true,
                 addAndroidDownloads: {
                     useDownloadManager: true,
                     notification: false,
                     path:
-                        PictureDir +
+                        RNFS.ExternalStorageDirectoryPath + '/' + 'Pop' +
                         '/image_' +
                         fileNames[i] + '.' +
                         ext[i],
@@ -773,7 +771,9 @@ export default class SigninScreen extends Component {
     }
 
 
+    //10
     getLabelAudio = () => {
+        
         var cropImages = []
         var fileNames = []
         var imageUrls = []
@@ -793,15 +793,14 @@ export default class SigninScreen extends Component {
 
         for (var i = 0; i < imageUrls.length; i++) {
             const { config, fs } = RNFetchBlob;
-            let PictureDir = fs.dirs.PictureDir;
-            console.log(PictureDir)
+            
             let options = {
                 fileCache: true,
                 addAndroidDownloads: {
                     useDownloadManager: true,
                     notification: false,
                     path:
-                        PictureDir +
+                        RNFS.ExternalStorageDirectoryPath + '/' + 'Pop' +
                         '/image_' +
                         fileNames[i] + '.' +
                         ext[i],
@@ -817,21 +816,24 @@ export default class SigninScreen extends Component {
                 });
         }
         // alert("images downloaded successfully")
-        this.setState({ imageloaded: false })
-        if (this.state.imageloaded === false) {
-            Toast.show({
-                text: "Images Downloaded Successfully",
-                duration: 6000,
-                type: 'success'
-            })
-        }
+        // this.setState({ imageloaded: false })
+        // if (this.state.imageloaded === false) {
+        //     Toast.show({
+        //         text: "Images Downloaded Successfully",
+        //         duration: 6000,
+        //         type: 'success'
+        //     })
+        // }
 
         console.log(fileNames)
         console.log(imageUrls)
         this.getStaticImages()
     }
 
+    //11
+
     getStaticImages = () => {
+        //alert("lplplpllplplplplplpl")
         var cropImages = []
         var fileNames = []
         var imageUrls = []
@@ -851,15 +853,14 @@ export default class SigninScreen extends Component {
 
         for (var i = 0; i < imageUrls.length; i++) {
             const { config, fs } = RNFetchBlob;
-            let PictureDir = fs.dirs.PictureDir;
-            console.log(PictureDir)
+            
             let options = {
                 fileCache: true,
                 addAndroidDownloads: {
                     useDownloadManager: true,
                     notification: false,
                     path:
-                        PictureDir +
+                        RNFS.ExternalStorageDirectoryPath + '/' + 'Pop' +
                         '/image_' +
                         fileNames[i] + '.' +
                         ext[i],
@@ -884,6 +885,7 @@ export default class SigninScreen extends Component {
             })
         }
 
+        
         console.log(fileNames)
         console.log(imageUrls)
     }
@@ -902,7 +904,7 @@ export default class SigninScreen extends Component {
         var allusername = await AsyncStorage.getItem('username')
         var token = await AsyncStorage.getItem('token')
         var encodedUsername = base64.encode(this.state.username)
-        var cropObjectsToBeSaved, cropStepsObjectsToBeSaved, cropsMaterialsObjectsToBeSaved, livestockObjectsToBeSaved, liveStockStepMaterialsObjectsToBeSaved, liveStockBreedsObjectsToBeSaved, breedCategoriesObjectsToBeSaved, importantLinksObjectsToBeSaved, nutrationGradenObjectsToBeSaved, livestockStepObjectsToBeSaved, vaccinationToBeSaved, contactListToBeSaved, dryFishObjectsToBeSaved, vegetableVendingObjectsToBeSaved, smallGroceryShopToBeSaved, labelsObjectsToBeSaved , smallBusinessCategoryObjectsToBeSaved, smallBusinessSubCategoryObjectsToBeSaved;
+        var cropObjectsToBeSaved, cropStepsObjectsToBeSaved, cropsMaterialsObjectsToBeSaved, livestockObjectsToBeSaved, liveStockStepMaterialsObjectsToBeSaved, liveStockBreedsObjectsToBeSaved, breedCategoriesObjectsToBeSaved, importantLinksObjectsToBeSaved, nutrationGradenObjectsToBeSaved, livestockStepObjectsToBeSaved, vaccinationToBeSaved, contactListToBeSaved, dryFishObjectsToBeSaved, vegetableVendingObjectsToBeSaved, smallGroceryShopToBeSaved, labelsObjectsToBeSaved, smallBusinessCategoryObjectsToBeSaved, smallBusinessSubCategoryObjectsToBeSaved;
         await axios.get("http://161.35.122.165:3020/api/v1/get-all-data", {
             headers: {
                 'Content-type': "application/json",
@@ -971,10 +973,10 @@ export default class SigninScreen extends Component {
         })
 
         const offlineDataToBeSaved = { 'username': this.state.username, 'livestock': livestockObjectsToBeSaved, 'livestockStep': livestockStepObjectsToBeSaved, 'liveStockStepMaterials': liveStockStepMaterialsObjectsToBeSaved, 'liveStockBreeds': liveStockBreedsObjectsToBeSaved, 'breedCategories': breedCategoriesObjectsToBeSaved, 'importantLinks': importantLinksObjectsToBeSaved, 'nutrationGraden': nutrationGradenObjectsToBeSaved, 'vaccination': vaccinationToBeSaved, 'contactList': contactListToBeSaved, 'dryFish': dryFishObjectsToBeSaved, 'vegetableVending': vegetableVendingObjectsToBeSaved, 'smallGroceryShop': smallGroceryShopToBeSaved }
-        const numberOfCropsToBeSaved = {'username': this.state.username, 'crops': cropObjectsToBeSaved}
+        const numberOfCropsToBeSaved = { 'username': this.state.username, 'crops': cropObjectsToBeSaved }
         const cropDataToBeSaved = { 'username': this.state.username, 'cropSteps': cropStepsObjectsToBeSaved, 'cropsMaterials': cropsMaterialsObjectsToBeSaved }
         const labelsToBeSaved = { 'username': this.state.username, 'labels': labelsObjectsToBeSaved }
-        const smallBusinessCategoryToBeSaved = {'username': this.state.username,'smallBusinessCategory':smallBusinessCategoryObjectsToBeSaved , 'smallBusinessSubCategory':smallBusinessSubCategoryObjectsToBeSaved}
+        const smallBusinessCategoryToBeSaved = { 'username': this.state.username, 'smallBusinessCategory': smallBusinessCategoryObjectsToBeSaved, 'smallBusinessSubCategory': smallBusinessSubCategoryObjectsToBeSaved }
         // offlineDataToBeSaved.crops.push(cropObjectsToBeSaved) 'cropSteps': cropStepsObjectsToBeSaved, 'cropsMaterials': cropsMaterialsObjectsToBeSaved, 
         // offlineDataToBeSaved.cropsMaterials.push(cropsMaterialsObjectsToBeSaved)
         // offlineDataToBeSaved.livestock.push(livestockObjectsToBeSaved)
@@ -1248,14 +1250,14 @@ export default class SigninScreen extends Component {
 
 
         if (this.state.username === '') {
-            this.setState({isLoading: false})
+            this.setState({ isLoading: false })
             return Toast.show({
                 text: "please enter username",
                 type: 'danger',
                 duration: 3000
             })
         } else if (this.state.password === '') {
-            this.setState({isLoading: false})
+            this.setState({ isLoading: false })
             return Toast.show({
                 text: "please enter password",
                 type: 'danger',
@@ -1369,7 +1371,7 @@ export default class SigninScreen extends Component {
                 let offlineData = await AsyncStorage.getItem('offlineData');
                 let cropData = await AsyncStorage.getItem('cropData');
                 let labelsData = await AsyncStorage.getItem('labelsData');
-                if (offlineData != null && cropData != null && labelsData != null){
+                if (offlineData != null && cropData != null && labelsData != null) {
                     Toast.show({
                         text: "Welcome" + " " + name,
                         type: 'success',
@@ -1389,12 +1391,12 @@ export default class SigninScreen extends Component {
                         duration: 6000
                     })
                     this.getAllData()
-               }
-             } catch (error) {
-               console.log(error)
-             }
+                }
+            } catch (error) {
+                console.log(error)
+            }
 
-        } else if(status!= 1){
+        } else if (status != 1) {
             Toast.show({
                 text: "Invalid username/password",
                 type: 'danger',
@@ -1491,10 +1493,10 @@ export default class SigninScreen extends Component {
                                         >{LanguageChange.password}</FloatingLabel>
                                     </View>
                                     {/* <View style={{ borderBottomColor: 'black', borderBottomWidth: 1, marginTop: heightToDp('1.5%'), width: widthToDp("80%"), alignSelf: 'center' }}></View> */}
-                                    <TouchableOpacity onPress={() => {this.props.navigation.navigate("ForgetPasswordScreen")}}>
-                                    <View style={{ marginLeft: widthToDp("50%"), marginTop: heightToDp("0.5%"), width: widthToDp("37%") }}>
-                                        <Text style={{ fontFamily: 'Oswald-Medium', fontSize: widthToDp("4%") }}>{LanguageChange.forgotPassword}</Text>
-                                    </View>
+                                    <TouchableOpacity onPress={() => { this.props.navigation.navigate("ForgetPasswordScreen") }}>
+                                        <View style={{ marginLeft: widthToDp("50%"), marginTop: heightToDp("0.5%"), width: widthToDp("37%") }}>
+                                            <Text style={{ fontFamily: 'Oswald-Medium', fontSize: widthToDp("4%") }}>{LanguageChange.forgotPassword}</Text>
+                                        </View>
                                     </TouchableOpacity>
                                     {
                                         this.state.isLoading ? <CustomIndicator IsLoading={this.state.isLoading} /> : null

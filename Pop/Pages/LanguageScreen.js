@@ -13,7 +13,8 @@ import NetInfo from '@react-native-community/netinfo'
 import axios from 'axios'
 import DataAccess from '../Core/DataAccess'
 import RNFetchBlob from 'rn-fetch-blob'
-import { check, PERMISSIONS, RESULTS, request , checkMultiple, requestMultiple } from 'react-native-permissions'
+import RNFS, { exists } from 'react-native-fs'
+import { check, PERMISSIONS, RESULTS, request, checkMultiple, requestMultiple } from 'react-native-permissions'
 
 const Sound = require('react-native-sound')
 
@@ -54,12 +55,32 @@ export default class LanguageScreen extends Component {
     componentDidMount() {
         //this.checkSession()
         //this.requestStoragePermission()
-        
         this.acceptPermissionDialogBox()
-        
+        this.makeDirTest()
     }
 
-    
+    makeDirTest = () => {
+        const folderName = RNFS.ExternalStorageDirectoryPath+'/'+'Pop'
+        RNFS.mkdir(folderName)
+        .then((result) => {
+            console.log(result)
+
+        })
+        .catch((err) => {
+            console.log(err,"asasalolopopsdjasbkjbakfb")
+        })
+        // let test = RNFS.ExternalStorageDirectoryPath
+        // console.log(test,"lplpplplp")
+        // RNFS.readDir(RNFS.ExternalStorageDirectoryPath+'/'+'Pop')
+        // .then((result) => {
+        //     console.log(result)
+        // })
+        // .catch((err) => {
+        //     console.log(err)
+        // })
+    }
+
+
 
     testPermision = () => {
         check(PERMISSIONS.ANDROID.READ_EXTERNAL_STORAGE).then((result) => {
@@ -69,7 +90,7 @@ export default class LanguageScreen extends Component {
                     break;
                 case RESULTS.DENIED:
                     this.acceptPermissionDialogBox()
-                   console.log("deniiiiid")
+                    console.log("deniiiiid")
                     break;
                 case RESULTS.GRANTED:
                     console.log("granted")
@@ -82,18 +103,18 @@ export default class LanguageScreen extends Component {
         // })
 
 
-        
+
     }
 
     acceptPermissionDialogBox = () => {
-        requestMultiple([PERMISSIONS.ANDROID.READ_EXTERNAL_STORAGE , PERMISSIONS.ANDROID.WRITE_EXTERNAL_STORAGE , PERMISSIONS.ANDROID.READ_PHONE_STATE]).then((result) => {
+        requestMultiple([PERMISSIONS.ANDROID.READ_EXTERNAL_STORAGE, PERMISSIONS.ANDROID.WRITE_EXTERNAL_STORAGE, PERMISSIONS.ANDROID.READ_PHONE_STATE]).then((result) => {
             console.log(result)
         }).catch((error) => {
             console.log(error)
         })
     }
 
-   
+
 
 
 

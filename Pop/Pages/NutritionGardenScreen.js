@@ -367,7 +367,7 @@ export default class NutritionGardenScreen extends Component {
                     <View style={{ backgroundColor: "white", height: heightToDp("45%"), alignSelf: 'center', width: widthToDp("90%"), marginTop: heightToDp('1%'), borderBottomLeftRadius: 10, borderBottomRightRadius: 10 }}>
                         <View style={{}}>
                             <Image
-                                source={{ uri: 'file:///storage/emulated/0/Pictures/image_' + this.state.screensData.imageFile }}
+                                source={{ uri: 'file:///storage/emulated/0/Pop/image_' + this.state.screensData.imageFile }}
                                 style={{ height: heightToDp("15%"), width: widthToDp("80%"), alignSelf: 'center', marginTop: heightToDp("1%"), borderRadius: 10 }}
                             />
                         </View>

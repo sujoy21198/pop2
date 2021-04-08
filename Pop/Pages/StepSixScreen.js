@@ -488,7 +488,7 @@ export default class StepSixScreen extends Component {
                             <View>
                                 <Image
                                     style={{ height: heightToDp("20%"), width: widthToDp("90%"), borderBottomLeftRadius: 10, borderBottomRightRadius: 10 }}
-                                    source={{ uri: 'file:///storage/emulated/0/Pictures/image_' + this.state.stepImage }}
+                                    source={{ uri: 'file:///storage/emulated/0/Pop/image_' + this.state.stepImage }}
                                 />
                             </View>
                         </View>
@@ -552,7 +552,7 @@ export default class StepSixScreen extends Component {
                                 </View>
                                 <Image
                                     style={{ height: heightToDp("20%"), width: widthToDp("50%"), marginTop: heightToDp("2%"), marginLeft: widthToDp("7%"), borderRadius: 10 }}
-                                    source={{ uri: 'file:///storage/emulated/0/Pictures/image_' + this.state.imageFile }}
+                                    source={{ uri: 'file:///storage/emulated/0/Pop/image_' + this.state.imageFile }}
                                 />
                             </View>
                         </View>
