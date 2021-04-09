@@ -403,6 +403,19 @@ export default class StepOneScreen extends Component {
         })
     }
 
+    isVideoPresent = () => {
+        if(
+            (
+                this.state.cropSpecificSteps && this.state.cropSpecificSteps.length > 0 &&
+                this.state.cropSpecificSteps[7].videoFile
+            )
+        ) {
+            return true
+        } else {
+            return false
+        }
+    }        
+
     render() {
         var cropNameLanguageChangeArray = []
         cropNameLanguageChangeArray = this.state.cropNameLanguageChangeArray
@@ -480,10 +493,7 @@ export default class StepOneScreen extends Component {
                     </View>
 
                     {
-                        (
-                            this.state.cropSpecificSteps && this.state.cropSpecificSteps.length > 0 &&
-                            this.state.cropSpecificSteps[7].videoFile
-                        ) &&
+                        this.isVideoPresent() &&
                         [
                             <View style={{ height: heightToDp("0.5%") }} />,
                             <VideoComponent
