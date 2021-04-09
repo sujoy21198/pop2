@@ -34,7 +34,22 @@ export default class LanguageScreen extends Component {
 
 
 
+
+
+    english = new Sound(require('../assets/English.mp3'))
+    hindi = new Sound(require('../assets/Hindi.mp3'))
+    ho = new Sound(require('../assets/Ho.mp3'))
+    odia = new Sound(require('../assets/Odia.mp3'))
+    santhali = new Sound(require('../assets/Santhali.mp3'))
+    // play = () => {
+    //     SoundPlayer.playUrl('http://commondatastorage.googleapis.com/codeskulptor-assets/Evillaugh.ogg')
+
+    // }
+
+
     test = (value) => {
+        //alert(value)
+
         AsyncStorage.setItem('language', value)
         LanguageChange.setLanguage(value)
         this.props.navigation.navigate('SigninScreen', { selectedLanguage: value })
@@ -42,14 +57,18 @@ export default class LanguageScreen extends Component {
         //alert(value)
 
     }
-
-    sound = new Sound('http://commondatastorage.googleapis.com/codeskulptor-assets/jump.ogg')
-    // play = () => {
-    //     SoundPlayer.playUrl('http://commondatastorage.googleapis.com/codeskulptor-assets/Evillaugh.ogg')
-
-    // }
-    platsound = () => {
-        this.sound.play()
+    playAudio = (value) => {
+        if (value === 'en') {
+            this.english.play()
+        } else if (value === 'hi') {
+            this.hindi.play()
+        } else if (value === 'od') {
+            this.odia.play()
+        } else if (value === 'ho') {
+            this.ho.play()
+        } else if (value === 'san') {
+            this.santhali.play()
+        }
     }
 
     componentDidMount() {
@@ -60,15 +79,15 @@ export default class LanguageScreen extends Component {
     }
 
     makeDirTest = () => {
-        const folderName = RNFS.ExternalStorageDirectoryPath+'/'+'Pop'
+        const folderName = RNFS.ExternalStorageDirectoryPath + '/' + 'Pop'
         RNFS.mkdir(folderName)
-        .then((result) => {
-            console.log(result)
+            .then((result) => {
+                console.log(result)
 
-        })
-        .catch((err) => {
-            console.log(err,"asasalolopopsdjasbkjbakfb")
-        })
+            })
+            .catch((err) => {
+                console.log(err, "asasalolopopsdjasbkjbakfb")
+            })
         // let test = RNFS.ExternalStorageDirectoryPath
         // console.log(test,"lplpplplp")
         // RNFS.readDir(RNFS.ExternalStorageDirectoryPath+'/'+'Pop')
@@ -170,40 +189,76 @@ export default class LanguageScreen extends Component {
                         })
                     } */}
                     <View style={{ flexDirection: 'row', marginTop: heightToDp("5%") }}>
-                        <TouchableOpacity onPress={() => this.test(this.state.languages[0].id)}>
-                            <View style={{ backgroundColor: BaseColor.English, width: widthToDp("30%"), height: heightToDp("6%"), marginLeft: widthToDp("10%"), borderRadius: 100, flexDirection: 'row' }}>
-                                <Text style={{ color: '#fff', marginTop: heightToDp("1.5%"), fontFamily: 'Oswald-Medium', marginLeft: widthToDp("9%"), justifyContent: 'center' }}>{this.state.languages[0].value}</Text>
 
-                            </View>
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={() => this.test(this.state.languages[1].id)}>
-                            <View style={{ backgroundColor: BaseColor.Hindi, width: widthToDp("30%"), height: heightToDp("6%"), marginLeft: widthToDp("10%"), borderRadius: 100, flexDirection: 'row' }}>
-                                <Text style={{ color: '#fff', marginTop: heightToDp("1.7%"), justifyContent: 'center', fontWeight: 'bold', fontSize: widthToDp("4.3%"), marginLeft: widthToDp("10%") }}>{this.state.languages[1].value}</Text>
+                        <View style={{ backgroundColor: BaseColor.English, width: widthToDp("30%"), height: heightToDp("6%"), marginLeft: widthToDp("10%"), borderRadius: 100, flexDirection: 'row' }}>
+                            <TouchableOpacity onPress={() => this.test(this.state.languages[0].id)}>
+                                <Text style={{ color: '#fff', marginTop: heightToDp("1.2%"), fontFamily: 'Oswald-Medium', marginLeft: widthToDp("3%"), justifyContent: 'center' }}>{this.state.languages[0].value}</Text>
+                            </TouchableOpacity>
+                            <Icon
+                                name="microphone"
+                                color="white"
+                                size={20}
+                                onPress={() => this.playAudio(this.state.languages[0].id)}
+                                style={{ marginTop: heightToDp("1.8%"), marginLeft: widthToDp("6%") }}
+                            />
+                        </View>
 
-                            </View>
-                        </TouchableOpacity>
+
+                        <View style={{ backgroundColor: BaseColor.Hindi, width: widthToDp("30%"), height: heightToDp("6%"), marginLeft: widthToDp("10%"), borderRadius: 100, flexDirection: 'row' }}>
+                            <TouchableOpacity onPress={() => this.test(this.state.languages[1].id)}>
+                                <Text style={{ color: '#fff', marginTop: heightToDp("1.7%"), justifyContent: 'center', fontWeight: 'bold', fontSize: widthToDp("4.3%"), marginLeft: widthToDp("3%") }}>{this.state.languages[1].value}</Text>
+                            </TouchableOpacity>
+                            <Icon
+                                name="microphone"
+                                color="white"
+                                size={20}
+                                onPress={() => this.playAudio(this.state.languages[1].id)}
+                                style={{ marginTop: heightToDp("1.8%"), marginLeft: widthToDp("6%") }}
+                            />
+                        </View>
+
                     </View>
                     <View style={{ flexDirection: 'row', marginTop: heightToDp("4%") }}>
-                        <TouchableOpacity onPress={() => alert("No scripts available")}>
+                        
                             <View style={{ backgroundColor: BaseColor.Ho, width: widthToDp("30%"), height: heightToDp("6%"), marginLeft: widthToDp("10%"), borderRadius: 100, flexDirection: 'row' }}>
-                                <Text style={{ color: '#fff', marginTop: heightToDp("1.5%"), marginLeft: widthToDp("5%"), fontWeight: 'bold', fontSize: widthToDp("4.3%"), marginLeft: widthToDp("10%") }}>{this.state.languages[2].value}</Text>
-
+                                <Text style={{ color: '#fff', marginTop: heightToDp("1.5%"), marginLeft: widthToDp("5%"), fontWeight: 'bold', fontSize: widthToDp("4.3%"), marginLeft: widthToDp("3%") }}>{this.state.languages[2].value}</Text>
+                                <Icon
+                                    name="microphone"
+                                    color="white"
+                                    size={20}
+                                    onPress={() => this.playAudio(this.state.languages[2].id)}
+                                    style={{ marginTop: heightToDp("1.8%"), marginLeft: widthToDp("6%") }}
+                                />
                             </View>
-                        </TouchableOpacity>
+                       
 
-                        <TouchableOpacity onPress={() => this.test(this.state.languages[3].id)}>
-                            <View style={{ backgroundColor: BaseColor.Uridia, width: widthToDp("30%"), height: heightToDp("6%"), marginLeft: widthToDp("10%"), borderRadius: 100, flexDirection: 'row' }}>
-                                <Text style={{ color: '#fff', marginTop: heightToDp("1.7%"), marginLeft: widthToDp("4.7%"), fontWeight: 'bold', fontSize: widthToDp("4.3%"), marginLeft: widthToDp("10%") }}>{this.state.languages[3].value}</Text>
 
-                            </View>
-                        </TouchableOpacity>
-                    </View>
-                    <TouchableOpacity onPress={() => alert("No scripts available")}>
-                        <View style={{ marginTop: heightToDp("4%"), backgroundColor: BaseColor.Santhali, width: widthToDp("30%"), height: heightToDp("6%"), borderRadius: 100, alignSelf: 'center', flexDirection: 'row' }}>
-                            <Text style={{ color: '#fff', marginTop: heightToDp("1.7%"), marginLeft: widthToDp("3.4%"), fontWeight: 'bold', fontSize: widthToDp("4.3%"), marginLeft: widthToDp("5%") }}>{this.state.languages[4].value}</Text>
-
+                        <View style={{ backgroundColor: BaseColor.Uridia, width: widthToDp("30%"), height: heightToDp("6%"), marginLeft: widthToDp("10%"), borderRadius: 100, flexDirection: 'row' }}>
+                            <TouchableOpacity onPress={() => this.test(this.state.languages[3].id)}>
+                                <Text style={{ color: '#fff', marginTop: heightToDp("1.7%"), marginLeft: widthToDp("4.7%"), fontWeight: 'bold', fontSize: widthToDp("4.3%"), marginLeft: widthToDp("3%") }}>{this.state.languages[3].value}</Text>
+                            </TouchableOpacity>
+                            <Icon
+                                name="microphone"
+                                color="white"
+                                size={20}
+                                onPress={() => this.playAudio(this.state.languages[3].id)}
+                                style={{ marginTop: heightToDp("1.8%"), marginLeft: widthToDp("6%") }}
+                            />
                         </View>
-                    </TouchableOpacity>
+
+                    </View>
+                    
+                        <View style={{ marginTop: heightToDp("4%"), backgroundColor: BaseColor.Santhali, width: widthToDp("30%"), height: heightToDp("6%"), borderRadius: 100, alignSelf: 'center', flexDirection: 'row' }}>
+                            <Text style={{ color: '#fff', marginTop: heightToDp("1.7%"), marginLeft: widthToDp("3.4%"), fontWeight: 'bold', fontSize: widthToDp("4.3%"), marginLeft: widthToDp("2%") }}>{this.state.languages[4].value}</Text>
+                            <Icon
+                                name="microphone"
+                                color="white"
+                                size={20}
+                                onPress={() => this.playAudio(this.state.languages[4].id)}
+                                style={{ marginTop: heightToDp("1.8%"), marginLeft: widthToDp("6%") }}
+                            />
+                        </View>
+                    
                 </View>
             </View>
         );
