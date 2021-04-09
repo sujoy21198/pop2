@@ -3,9 +3,11 @@ import { View, Button, Text } from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import BaseColor from '../Core/BaseTheme'
 import Icon from 'react-native-vector-icons/AntDesign'
+import Ionicons from 'react-native-vector-icons/Ionicons'
 import { widthToDp, heightToDp } from '../Responsive'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import Sync from 'react-native-vector-icons/AntDesign'
+import { Platform } from 'react-native'
 
 
 export default class GeneralSettingsScreen extends Component {
@@ -86,7 +88,31 @@ export default class GeneralSettingsScreen extends Component {
                 flex: 1,
                 justifyContent: 'center',
                 alignItems: 'center' 
-            }}>                
+            }}>     
+                {/* <TouchableOpacity 
+                    style={{
+                        flexDirection: 'row',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                        marginBottom: heightToDp("5%"),
+                        padding: heightToDp("2%"),
+                        borderWidth: 1,
+                        borderRadius: 10,
+                        borderColor: '#fff',
+                        backgroundColor: '#fff'
+                    }}
+                    onPress={() => this.props.navigation.navigate("EditProfile")}
+                >
+                    <Ionicons
+                        name={Platform.OS==="android" ? 'md-create-outline' : 'ios-create-outline'}
+                        size={40}
+                        color={"#1b1b1b"}
+                    />
+                    <Text style={{
+                        fontSize: 30,
+                        marginLeft: widthToDp("4%")
+                    }}>EDIT PROFILE</Text>
+                </TouchableOpacity>            */}
                 <TouchableOpacity 
                     style={{
                         flexDirection: 'row',
