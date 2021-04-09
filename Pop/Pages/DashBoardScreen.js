@@ -15,6 +15,9 @@ import axios from 'axios'
 import DataAccess from '../Core/DataAccess'
 import NetInfo from '@react-native-community/netinfo'
 import HeaderComponent from '../components/HeaderComponent'
+import RNFetchBlob from 'rn-fetch-blob'
+
+var Sound = require("react-native-sound");
 
 const data = [
     { name: 'Knowledge Center', code: 'fresh-green-vegetables-produce-greenhouse-garden-nursery-farm_33829-312.jpg' },
@@ -66,6 +69,11 @@ export default class DashBoardScreen extends Component {
             var contact = specificObject.labels.find((i) => i.type === 25)
             var message = specificObject.labels.find((i) => i.type === 26)
             var generalSettings = specificObject.labels.find((i) => i.type === 27)
+            var englishLanguage = specificObject.labels.find((i) => i.type === 225)
+            var hindiLanguage = specificObject.labels.find((i) => i.type === 226)
+            var odiaLanguage = specificObject.labels.find((i) => i.type === 215)
+            var hoLanguage = specificObject.labels.find((i) => i.type === 217)
+            var santhaliLanguage = specificObject.labels.find((i) => i.type === 216)
             // var pension = specificObject.labels.find((i) => i.type === 51)
             // var others = specificObject.labels.find((i) => i.type === 52)
             if (this.state.textLanguageChange === '0') {
@@ -75,6 +83,11 @@ export default class DashBoardScreen extends Component {
                 this.state.data[3].name = contact.nameEnglish
                 this.state.data[4].name = message.nameEnglish
                 this.state.data[5].name = generalSettings.nameEnglish
+                this.state.languages[0].audio = englishLanguage.audioEnglish
+                this.state.languages[1].audio = hindiLanguage.audioEnglish
+                this.state.languages[2].audio = hoLanguage.audioEnglish
+                this.state.languages[3].audio = odiaLanguage.audioEnglish
+                this.state.languages[4].audio = santhaliLanguage.audioEnglish
                 // this.state.data[6].name = pension.nameEnglish
                 // this.state.data[7].name = others.nameEnglish
                 // this.setState({ moneyManagerLabel: moneyManagerLabel.nameEnglish })
@@ -88,6 +101,11 @@ export default class DashBoardScreen extends Component {
                 this.state.data[3].name = contact.nameHindi
                 this.state.data[4].name = message.nameHindi
                 this.state.data[5].name = generalSettings.nameHindi
+                this.state.languages[0].audio = englishLanguage.audioHindi
+                this.state.languages[1].audio = hindiLanguage.audioHindi
+                this.state.languages[2].audio = hoLanguage.audioHindi
+                this.state.languages[3].audio = odiaLanguage.audioHindi
+                this.state.languages[4].audio = santhaliLanguage.audioHindi
                 // this.state.data[6].name = pension.nameHindi
                 // this.state.data[7].name = others.nameHindi
             } else if (this.state.textLanguageChange === '2') {
@@ -97,6 +115,11 @@ export default class DashBoardScreen extends Component {
                 this.state.data[3].name = contact.nameHo
                 this.state.data[4].name = message.nameHo
                 this.state.data[5].name = generalSettings.nameHo
+                this.state.languages[0].audio = englishLanguage.audioHo
+                this.state.languages[1].audio = hindiLanguage.audioHo
+                this.state.languages[2].audio = hoLanguage.audioHo
+                this.state.languages[3].audio = odiaLanguage.audioHo
+                this.state.languages[4].audio = santhaliLanguage.audioHo
                 // this.state.data[6].name = pension.nameHo
                 // this.state.data[7].name = others.nameHo
             } else if (this.state.textLanguageChange === '3') {
@@ -106,6 +129,11 @@ export default class DashBoardScreen extends Component {
                 this.state.data[3].name = contact.nameOdia
                 this.state.data[4].name = message.nameOdia
                 this.state.data[5].name = generalSettings.nameOdia
+                this.state.languages[0].audio = englishLanguage.audioOdia
+                this.state.languages[1].audio = hindiLanguage.audioOdia
+                this.state.languages[2].audio = hoLanguage.audioOdia
+                this.state.languages[3].audio = odiaLanguage.audioOdia
+                this.state.languages[4].audio = santhaliLanguage.audioOdia
                 // this.state.data[6].name = pension.nameOdia
                 // this.state.data[7].name = others.nameOdia
             } else if (this.state.textLanguageChange === '4') {
@@ -115,6 +143,11 @@ export default class DashBoardScreen extends Component {
                 this.state.data[3].name = contact.nameSanthali
                 this.state.data[4].name = message.nameSanthali
                 this.state.data[5].name = generalSettings.nameSanthali
+                this.state.languages[0].audio = englishLanguage.audioSanthali
+                this.state.languages[1].audio = hindiLanguage.audioSanthali
+                this.state.languages[2].audio = hoLanguage.audioSanthali
+                this.state.languages[3].audio = odiaLanguage.audioSanthali
+                this.state.languages[4].audio = santhaliLanguage.audioSanthali
                 // this.state.data[6].name = pension.nameSanthali
                 // this.state.data[7].name = others.nameSanthali
             }
@@ -128,6 +161,40 @@ export default class DashBoardScreen extends Component {
             console.log(error,"labels")
         }
         this.setState({ crops: specificObject.crops })
+    }
+
+    checkAudioFileExistence = async (audio) => {
+        let files = await RNFetchBlob.fs.ls(RNFetchBlob.fs.dirs.PictureDir);
+        if(files.includes("/storage/emulated/0/Pictures/image_" + audio)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
+    playSound = (audio) => {
+        if(this.checkAudioFileExistence(audio)) {
+            var sound = new Sound("/storage/emulated/0/Pictures/image_" + audio, Sound.MAIN_BUNDLE, (error) => {
+            if (error) {
+                console.log('Failed to load the sound', error);
+                return;
+            }
+            // loaded successfully
+            console.log(
+                'duration in seconds: ' + sound.getDuration() + 
+                ', number of channels: ' + sound.getNumberOfChannels()
+            );
+            
+            // Play the sound with an onEnd callback
+            sound.play((success) => {
+                if (success) {
+                    console.log('successfully finished playing');
+                } else {
+                    console.log('playback failed due to audio decoding errors');
+                }
+            });
+            });
+        } else return;
     }
 
     // changeLanguage = (id) => {
@@ -279,39 +346,106 @@ export default class DashBoardScreen extends Component {
                     hideHome={true}
                     syncData={this.syncData}
                 />
-                <View style={{ flexDirection: 'row', marginTop: heightToDp("1%"), marginLeft: widthToDp("1%") }}>
-                    <TouchableOpacity onPress={() => this.languageChangeFunction(this.state.languages[0].id)}>
-                        <View style={{ backgroundColor: BaseColor.English, alignItems: 'center', justifyContent: 'center', width: widthToDp("30%"), height: heightToDp("6%"), marginLeft: widthToDp("2%"), borderRadius: 100, flexDirection: 'row' }}>
+                <View style={{ flexDirection: 'row', marginTop: heightToDp("1%"), marginHorizontal: widthToDp("1%") }}>
+                    <View style={{ flex: 1, backgroundColor: BaseColor.English, alignItems: 'center', justifyContent: 'center', width: widthToDp("30%"), height: heightToDp("6%"), marginLeft: widthToDp("2%"), borderRadius: 100, flexDirection: 'row' }}>
+                        <TouchableOpacity 
+                            style={{width: widthToDp("15%")}}
+                            onPress={() => this.languageChangeFunction(this.state.languages[0].id)}
+                        >
                             <Text style={{ color: '#fff', fontFamily: 'Oswald-Medium' }}>{this.state.languages[0].value}</Text>
-                        </View>
-                    </TouchableOpacity>
-
-                    <TouchableOpacity onPress={() => this.languageChangeFunction(this.state.languages[1].id)}>
-                        <View style={{ backgroundColor: BaseColor.Hindi, alignItems: 'center', justifyContent: 'center', width: widthToDp("30%"), height: heightToDp("6%"), marginLeft: widthToDp("2%"), borderRadius: 100, flexDirection: 'row' }}>
-                            <Text style={{ color: '#fff', fontWeight: 'bold', fontSize: widthToDp("4.3%") }}>{this.state.languages[1].value}</Text>
-                        </View>
-                    </TouchableOpacity>
-
-                    <TouchableOpacity onPress={() => this.languageChangeFunction(this.state.languages[2].id)}>
-                        <View style={{ backgroundColor: BaseColor.Ho, alignItems: 'center', justifyContent: 'center', width: widthToDp("30%"), height: heightToDp("6%"), marginLeft: widthToDp("2%"), borderRadius: 100, flexDirection: 'row' }}>
-                            <Text style={{ color: '#fff', fontWeight: 'bold', fontSize: widthToDp("4.3%") }}>{this.state.languages[2].value}</Text>
-                        </View>
-                    </TouchableOpacity>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            style={{width: widthToDp("8%")}}
+                            onPress={() => this.playSound(this.state.languages[0].audio)}
+                        >
+                            <Icon
+                                name="microphone"
+                                size={30}
+                                color={"#fff"}
+                                style={{marginLeft: widthToDp("3%")}}                            
+                            />
+                        </TouchableOpacity>
+                    </View>
+                    <View style={{ flex: 1, backgroundColor: BaseColor.English, alignItems: 'center', justifyContent: 'center', width: widthToDp("30%"), height: heightToDp("6%"), marginLeft: widthToDp("2%"), borderRadius: 100, flexDirection: 'row' }}>
+                        <TouchableOpacity 
+                            style={{width: widthToDp("10%")}}
+                            onPress={() => this.languageChangeFunction(this.state.languages[1].id)}
+                        >
+                            <Text style={{ color: '#fff', fontFamily: 'Oswald-Medium' }}>{this.state.languages[1].value}</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            style={{width: widthToDp("10%")}}
+                            onPress={() => this.playSound(this.state.languages[1].audio)}
+                        >
+                            <Icon
+                                name="microphone"
+                                size={30}
+                                color={"#fff"}
+                                style={{marginLeft: widthToDp("3%")}}                            
+                            />
+                        </TouchableOpacity>
+                    </View>
+                    <View style={{ flex: 1, backgroundColor: BaseColor.English, alignItems: 'center', justifyContent: 'center', width: widthToDp("30%"), height: heightToDp("6%"), marginLeft: widthToDp("2%"), borderRadius: 100, flexDirection: 'row' }}>
+                        <TouchableOpacity 
+                            style={{width: widthToDp("14%")}}
+                            onPress={() => this.languageChangeFunction(this.state.languages[2].id)}
+                        >
+                            <Text style={{ color: '#fff', fontFamily: 'Oswald-Medium' }}>{this.state.languages[2].value}</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            style={{width: widthToDp("10%")}}
+                            onPress={() => this.playSound(this.state.languages[2].audio)}
+                        >
+                            <Icon
+                                name="microphone"
+                                size={30}
+                                color={"#fff"}
+                                style={{marginLeft: widthToDp("3%")}}                            
+                            />
+                        </TouchableOpacity>
+                    </View>
                 </View>
-                <View style={{ flexDirection: 'row', marginTop: heightToDp("1%"), marginLeft: widthToDp("1%"), alignSelf: 'center' }}>
-                    <TouchableOpacity onPress={() => this.languageChangeFunction(this.state.languages[3].id)}>
-                        <View style={{ backgroundColor: BaseColor.Uridia, alignItems: 'center', justifyContent: 'center', width: widthToDp("30%"), height: heightToDp("6%"), borderRadius: 100, flexDirection: 'row' }}>
-                            <Text style={{ color: '#fff', fontWeight: 'bold', fontSize: widthToDp("4.3%") }}>{this.state.languages[3].value}</Text>
-                        </View>
-                    </TouchableOpacity>
-
-                    <TouchableOpacity onPress={() => this.languageChangeFunction(this.state.languages[4].id)}>
-                        <View style={{ backgroundColor: BaseColor.Santhali, alignItems: 'center', justifyContent: 'center', width: widthToDp("30%"), height: heightToDp("6%"), borderRadius: 100, marginLeft: widthToDp("2%"), flexDirection: 'row' }}>
-                            <Text style={{ color: '#fff', fontWeight: 'bold', fontSize: widthToDp("4.3%") }}>{this.state.languages[4].value}</Text>
-                        </View>
-                    </TouchableOpacity>
+                <View style={{ flexDirection: 'row', marginTop: heightToDp("1%"), marginHorizontal: widthToDp("17%"), alignSelf: 'center' }}>
+                    <View style={{ flex: 1, backgroundColor: BaseColor.English, alignItems: 'center', justifyContent: 'center', width: widthToDp("30%"), height: heightToDp("6%"), marginLeft: widthToDp("2%"), borderRadius: 100, flexDirection: 'row' }}>
+                        <TouchableOpacity 
+                            style={{width: widthToDp("10%")}}
+                            onPress={() => this.languageChangeFunction(this.state.languages[3].id)}
+                        >
+                            <Text style={{ color: '#fff', fontFamily: 'Oswald-Medium' }}>{this.state.languages[3].value}</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            style={{width: widthToDp("10%")}}
+                            onPress={() => this.playSound(this.state.languages[3].audio)}
+                        >
+                            <Icon
+                                name="microphone"
+                                size={30}
+                                color={"#fff"}
+                                style={{marginLeft: widthToDp("3%")}}                            
+                            />
+                        </TouchableOpacity>
+                    </View>
+                    <View style={{ flex: 1, backgroundColor: BaseColor.English, alignItems: 'center', justifyContent: 'center', width: widthToDp("30%"), height: heightToDp("6%"), marginLeft: widthToDp("1%"), borderRadius: 100, flexDirection: 'row' }}>
+                        <TouchableOpacity 
+                            style={{width: widthToDp("18%")}}
+                            onPress={() => this.languageChangeFunction(this.state.languages[4].id)}
+                        >
+                            <Text style={{ color: '#fff', fontFamily: 'Oswald-Medium' }}>{this.state.languages[4].value}</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            style={{width: widthToDp("8%")}}
+                            onPress={() => this.playSound(this.state.languages[4].audio)}
+                        >
+                            <Icon
+                                name="microphone"
+                                size={30}
+                                color={"#fff"}
+                                style={{marginLeft: widthToDp("3%")}}                            
+                            />
+                        </TouchableOpacity>
+                    </View>
                 </View>
-                <View style={{ borderBottomColor: BaseColor.Stroke, borderBottomWidth: 1, marginTop: heightToDp('1.5%'), width: widthToDp("100%") }}></View>
+                <View style={{ borderBottomColor: BaseColor.Stroke, borderBottomWidth: 1, marginTop: heightToDp('1.5%'), width: widthToDp("100%") }}></View>               
                 <View>
                     <FlatGrid
                         style={{ marginTop: heightToDp("2%"), marginBottom: heightToDp("60%") }}

@@ -130,22 +130,16 @@ export default class GeneralSettingsScreen extends Component {
                     />
                 </TouchableOpacity>
 
-                <Text style={{marginTop:heightToDp("20%")}}>Version - 1.0</Text>
-                {/* <View style={{ 
-                    flex: 1,
-                    justifyContent: 'center',
-                    alignItems: 'center'
-                 }}>
-                    <TouchableOpacity 
-                    style={{
-                        paddingBottom: heightToDp("5%"),
-
-                    }}
-                    onPress={() => this.refreshApplication()}>
-                        <Text>REFRESH APP</Text>
-                    </TouchableOpacity>
-                    
-                </View> */}
+                <Text style={{
+                    position: 'absolute',
+                    backgroundColor: '#fff',
+                    bottom: 0,
+                    width: '100%',
+                    textAlign: 'center',
+                    fontSize: widthToDp("4%"),
+                    paddingVertical: heightToDp("0.8%"),
+                    fontWeight: 'bold'
+                }}>Version - 1.0</Text>
             </View>
         );
     }
