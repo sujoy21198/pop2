@@ -6,6 +6,8 @@ import Icon from 'react-native-vector-icons/AntDesign'
 import { widthToDp, heightToDp } from '../Responsive'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import Sync from 'react-native-vector-icons/AntDesign'
+import Database from 'react-native-vector-icons/FontAwesome'
+import NetInfo from '@react-native-community/netinfo'
 
 
 export default class GeneralSettingsScreen extends Component {
@@ -79,6 +81,20 @@ export default class GeneralSettingsScreen extends Component {
         //this.showData()
     }
 
+
+    dataSync  = async() => {
+        NetInfo.fetch().then(state => {
+            var isConnected = state.isConnected
+            if (isConnected === true) {
+                return alert(isConnected)
+            }else{
+                return alert("Please connect to internet")
+            }
+        })
+    }
+
+
+
     render() {
         return (
             <View style={{ 
@@ -104,7 +120,7 @@ export default class GeneralSettingsScreen extends Component {
                     <Sync
                         name="sync"
                         size={30}
-                        onPress={() => this.syncData()}
+                        onPress={() => {}}
                     />
                     <Text style={{
                         fontSize: 30,
@@ -128,6 +144,32 @@ export default class GeneralSettingsScreen extends Component {
                         name="logout"
                         size={40}
                     />
+                </TouchableOpacity>
+                
+                <TouchableOpacity 
+                    style={{
+                        flexDirection: 'row',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                        marginBottom: heightToDp("5%"),
+                        padding: heightToDp("2%"),
+                        borderWidth: 1,
+                        borderRadius: 10,
+                        borderColor: '#fff',
+                        backgroundColor: '#fff',
+                        marginTop:heightToDp("5%")
+                    }}
+                    onPress={() => this.dataSync()}
+                >
+                    <Database
+                        name="database"
+                        size={30}
+                        onPress={() => {}}
+                    />
+                    <Text style={{
+                        fontSize: 30,
+                        marginLeft: widthToDp("4%")
+                    }}>DATA SYNC</Text>
                 </TouchableOpacity>
 
                 <Text style={{
