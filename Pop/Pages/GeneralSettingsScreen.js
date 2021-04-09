@@ -63,16 +63,28 @@ export default class GeneralSettingsScreen extends Component {
             let parsed = JSON.parse(user);
             var specificObject = parsed[0]
             var refreshLabel = specificObject.labels.find((i) => i.type === 220)
+            var updateProfileLabel = specificObject.labels.find((i) => i.type === 230)
+            var versionLabel = specificObject.labels.find((i) => i.type === 231)
             if (this.state.textLanguageChange === '0') {
                 this.setState({ refreshLabel: refreshLabel.nameEnglish })
+                this.setState({ updateProfileLabel: updateProfileLabel.nameEnglish })
+                this.setState({ versionLabel: versionLabel.nameEnglish })
             } else if (this.state.textLanguageChange === '1') {
                 this.setState({ refreshLabel: refreshLabel.nameHindi })
+                this.setState({ updateProfileLabel: updateProfileLabel.nameHindi })
+                this.setState({ versionLabel: versionLabel.nameHindi })
             } else if (this.state.textLanguageChange === '2') {
                 this.setState({ refreshLabel: refreshLabel.nameHo })
+                this.setState({ updateProfileLabel: updateProfileLabel.nameHo })
+                this.setState({ versionLabel: versionLabel.nameHo })
             } else if (this.state.textLanguageChange === '3') {
                 this.setState({ refreshLabel: refreshLabel.nameOdia })
+                this.setState({ updateProfileLabel: updateProfileLabel.nameOdia })
+                this.setState({ versionLabel: versionLabel.nameOdia })
             } else if (this.state.textLanguageChange === '4') {
                 this.setState({ refreshLabel: refreshLabel.nameSanthali })
+                this.setState({ updateProfileLabel: updateProfileLabel.nameSanthali })
+                this.setState({ versionLabel: versionLabel.nameSanthali })
             }
         } catch (error) {
             alert(error)
@@ -111,7 +123,7 @@ export default class GeneralSettingsScreen extends Component {
                     <Text style={{
                         fontSize: 30,
                         marginLeft: widthToDp("4%")
-                    }}>EDIT PROFILE</Text>
+                    }}>{this.state.updateProfileLabel}</Text>
                 </TouchableOpacity>            */}
                 <TouchableOpacity 
                     style={{
@@ -165,7 +177,7 @@ export default class GeneralSettingsScreen extends Component {
                     fontSize: widthToDp("4%"),
                     paddingVertical: heightToDp("0.8%"),
                     fontWeight: 'bold'
-                }}>Version - 1.0</Text>
+                }}>{this.state.versionLabel} - 1.0</Text>
             </View>
         );
     }
