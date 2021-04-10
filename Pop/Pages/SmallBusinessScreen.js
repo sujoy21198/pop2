@@ -386,7 +386,7 @@ export default class SmallBusinessScreen extends Component {
                                     />   
                                     <Image
                                         style={{ width: widthToDp("47%"), height: heightToDp("25%"), borderBottomLeftRadius: 10, borderBottomRightRadius: 10, marginTop: heightToDp("0%") }}
-                                        source={{ uri: 'file:///storage/emulated/0/Pictures/image_' + item.imageFile }}
+                                        source={{ uri: 'file:///storage/emulated/0/Pictures/Pop/image_' + item.imageFile }}
                                     />
                                 </View>
 

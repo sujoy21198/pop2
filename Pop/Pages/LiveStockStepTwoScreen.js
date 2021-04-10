@@ -288,7 +288,7 @@ export default class LiveStockStepTwoScreen extends Component {
                         <View style={{backgroundColor:"white",height:heightToDp("98.5%"),alignSelf:'center',width:widthToDp("90%"), borderBottomLeftRadius:10,borderBottomRightRadius:10}}>
                             <View style={{}}>
                             <Image
-                            source={{uri:'file:///storage/emulated/0/Pictures/image_'+this.state.imageFile}}
+                            source={{uri:'file:///storage/emulated/0/Pictures/Pop/image_'+this.state.imageFile}}
                             style={{height:heightToDp("25%"),width:widthToDp("65%"),alignSelf:'center',marginTop:heightToDp("1%"),borderRadius:10}}
                             />
                             </View>

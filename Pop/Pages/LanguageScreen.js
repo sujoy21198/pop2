@@ -86,7 +86,7 @@ export default class LanguageScreen extends Component {
     }
 
     makeDirTest = () => {
-        const folderName = RNFS.ExternalStorageDirectoryPath + '/' + 'Pop'
+        const folderName = RNFS.PicturesDirectoryPath + '/' + 'Pop'
         RNFS.mkdir(folderName)
             .then((result) => {
                 console.log(result)
