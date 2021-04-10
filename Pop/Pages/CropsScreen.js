@@ -355,7 +355,7 @@ export default class CropsScreen extends Component {
                                         <TouchableOpacity onPress={() => this.navigateToLandScreen(item._id, item.nameEnglish, item.imageFile)}>
                                             <Image
                                                 style={{ width: widthToDp("47%"), height: heightToDp("25%"), borderBottomLeftRadius: 10, borderBottomRightRadius: 10 }}
-                                                source={{ uri: 'file:///storage/emulated/0/Pop/image_' + item.imageFile }}
+                                                source={{ uri: 'file:///storage/emulated/0/Pictures/image_' + item.imageFile }}
                                             />
                                         </TouchableOpacity>
                                     </View>

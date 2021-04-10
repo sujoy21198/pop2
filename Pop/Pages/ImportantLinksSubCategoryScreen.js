@@ -283,7 +283,7 @@ export default class ImportantLinksSubCategoryScreen extends Component {
                                 <TouchableOpacity onPress={() => this.goToDetailsPage(item.categoryEnglish,item.categoryHindi,item.categoryOdia,item.categoryHo,item.categorySanthali, item.link, item.descEnglish , item.descHindi , item.descHo , item.descOdia , item.descSanthali)}>
                                     <Image
                                         style={{ width: widthToDp("93.7%"), height: heightToDp("24%"), marginLeft: widthToDp("0%"), borderRadius: 2, borderBottomLeftRadius: 20, borderBottomRightRadius: 20 }}
-                                        source={{ uri: 'file:///storage/emulated/0/Pop/image_'+ item.image }}
+                                        source={{ uri: 'file:///storage/emulated/0/Pictures/image_'+ item.image }}
                                     />
                                 </TouchableOpacity>
                             </Card>

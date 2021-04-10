@@ -76,6 +76,13 @@ export default class LanguageScreen extends Component {
         //this.requestStoragePermission()
         this.acceptPermissionDialogBox()
         this.makeDirTest()
+        this.seeIfWorks()
+    }
+
+    seeIfWorks = async() => {
+        const { config, fs } = RNFetchBlob;
+        let DirTest = fs.dirs.PictureDir + "/" + 'Pop'
+        console.log(DirTest,"lolpop")
     }
 
     makeDirTest = () => {

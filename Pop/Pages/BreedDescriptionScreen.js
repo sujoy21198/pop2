@@ -275,7 +275,7 @@ export default class BreedDescriptionScreen extends Component {
                         <View style={{ backgroundColor: "white", height: heightToDp("100%"), alignSelf: 'center', width: widthToDp("90%"), marginTop: heightToDp('0%'), borderBottomLeftRadius: 10, borderBottomRightRadius: 10 }}>
                             <View style={{}}>
                                 <Image
-                                    source={{ uri: 'file:///storage/emulated/0/Pop/image_'+ this.state.imageFile }}
+                                    source={{ uri: 'file:///storage/emulated/0/Pictures/image_'+ this.state.imageFile }}
                                     style={{ height: heightToDp("25%"), width: widthToDp("65%"), alignSelf: 'center', marginTop: heightToDp("1%"), borderRadius: 10 }}
                                 />
                             </View>

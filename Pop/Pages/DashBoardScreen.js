@@ -459,7 +459,7 @@ export default class DashBoardScreen extends Component {
                                     <Text style={{ color: "#fff", fontSize: widthToDp("5%"), marginLeft: widthToDp("5%"), marginTop: heightToDp("0.4%"), fontFamily: 'Oswald-Medium' }}>{item.name}</Text>
                                     <Image
                                         style={{ width: widthToDp("47%"), height: heightToDp("25%"), borderBottomLeftRadius: 10, borderBottomRightRadius: 10, marginTop: heightToDp("1%") }}
-                                        source={{ uri: 'file:///storage/emulated/0/Pop/image_' + item.code }}
+                                        source={{ uri: 'file:///storage/emulated/0/Pictures/image_' + item.code }}
                                     />
                                 </View>
 
