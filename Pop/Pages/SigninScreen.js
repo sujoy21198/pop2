@@ -1062,12 +1062,12 @@ export default class SigninScreen extends Component {
 
         await AsyncStorage.setItem("offlineData", JSON.stringify(newOfflineData))
             .then(() => {
-                this.props.navigation.reset({
-                    index: 0,
-                    routes: [
-                        { name: "DashBoardScreen" }
-                    ]
-                });
+                // this.props.navigation.reset({
+                //     index: 0,
+                //     routes: [
+                //         { name: "DashBoardScreen" }
+                //     ]
+                // });
                 //alert('‘Offline Data saved successfully’')
                 Toast.show({
                     text: "Offline Data saved successfully",
@@ -1128,6 +1128,13 @@ export default class SigninScreen extends Component {
 
         await AsyncStorage.setItem("labelsData", JSON.stringify(newLabelsData))
             .then(() => {
+
+                this.props.navigation.reset({
+                    index: 0,
+                    routes: [
+                        { name: "DashBoardScreen" }
+                    ]
+                });
                 //alert("labels saved in device")
                 //alert('‘Offline Data saved successfully’')
                 Toast.show({

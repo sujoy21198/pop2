@@ -9,11 +9,16 @@ import { TouchableOpacity } from 'react-native-gesture-handler'
 import Sync from 'react-native-vector-icons/AntDesign'
 import Database from 'react-native-vector-icons/FontAwesome'
 import NetInfo from '@react-native-community/netinfo'
+import axios from 'axios'
+import base64 from 'react-native-base64'
 
 
 export default class GeneralSettingsScreen extends Component {
     state = {
-        refreshLabel: ""
+        refreshLabel: "",
+        patch:[],
+        moneyManagerData:[],
+        costBenifitAnalysis:[]
     };
     go = async () => {
         await AsyncStorage.removeItem('_id')
@@ -99,11 +104,60 @@ export default class GeneralSettingsScreen extends Component {
         NetInfo.fetch().then(state => {
             var isConnected = state.isConnected
             if (isConnected === true) {
-                return alert(isConnected)
+                return this.getOldData()
             }else{
                 return alert("Please connect to internet")
             }
         })
+    }
+
+
+    getOldData = async() => {
+        let userId = await AsyncStorage.getItem('_id')
+        var username = await AsyncStorage.getItem('username')
+        var token = await AsyncStorage.getItem('token')
+        var encodedUsername = base64.encode(username)
+        var patch = []
+        var moneyManagerData= []
+        var costBenifitAnalysis = []
+        await axios.get('http://161.35.122.165:3020/api/v1/synced-data?info='+userId , {
+            headers:{
+                'Content-type': "accept",
+                'X-Information': encodedUsername,
+                'Authorization': "POP " + token
+            }
+        }).then(function (response){
+            var parsed = response.data.syncedData.userData
+            var specificObject = parsed.find((i) => i.username === username)
+            patch = specificObject.patch
+            moneyManagerData = specificObject.moneyManagerData
+            costBenifitAnalysis = specificObject.costBenifitAnalysis
+            //console.log(costBenifitAnalysis)
+        }).catch(function (error){
+            console.log(error)
+        })
+
+        this.state.patch = patch
+        this.state.moneyManagerData = moneyManagerData
+        this.state.costBenifitAnalysis = costBenifitAnalysis
+        this.setOldData()
+    }
+
+
+    setOldData = async() => {
+        try{
+            let username = await AsyncStorage.getItem('username')
+            let user = await AsyncStorage.getItem('user');
+            let parsed = JSON.parse(user);
+            var specificObject = parsed.find((i) => i.username === username)
+            specificObject.patch = this.state.patch
+            specificObject.moneyManagerData = this.state.moneyManagerData
+            specificObject.costBenifitAnalysis = this.state.costBenifitAnalysis
+            await AsyncStorage.setItem('user', JSON.stringify(parsed))
+            alert("data synced")
+        }catch(error){
+            console.log(error)
+        }
     }
 
 
