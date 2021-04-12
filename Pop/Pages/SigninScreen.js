@@ -1293,11 +1293,12 @@ export default class SigninScreen extends Component {
                     type: 'success',
                     duration: 3000
                 })
-
                 AsyncStorage.setItem("_id", response.data.data._id)
                 AsyncStorage.setItem("name", response.data.data.name)
                 AsyncStorage.setItem("token", response.data.data.token)
                 AsyncStorage.setItem("username", response.data.data.username)
+                AsyncStorage.setItem("age", String(response.data.data.age))
+                AsyncStorage.setItem("phone", String(response.data.data.phone))
             } else {
                 load = false
                 Toast.show({
