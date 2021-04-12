@@ -139,7 +139,7 @@ export default class GeneralSettingsScreen extends Component {
                         fontSize: 30,
                         marginLeft: widthToDp("4%")
                     }}>{this.state.updateProfileLabel}</Text>
-                </TouchableOpacity>            */}
+                </TouchableOpacity> */}
                 <TouchableOpacity 
                     style={{
                         flexDirection: 'row',
