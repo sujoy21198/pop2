@@ -350,7 +350,11 @@ export default class StepOneScreen extends Component {
     }
 
     setStepDataIntoPatch = async () => {
-        let files = await RNFetchBlob.fs.ls(RNFetchBlob.fs.dirs.MovieDir)
+        console.log(this.state.cropSpecificSteps[0].videoFile)
+        const { config, fs } = RNFetchBlob;
+        let files = fs.dirs.MovieDir
+        // let files = await RNFetchBlob.fs.ls(RNFetchBlob.fs.dirs.MovieDir)
+        // console.log(files)
         if (
             (
                 this.state.cropSpecificSteps && this.state.cropSpecificSteps.length > 0 &&

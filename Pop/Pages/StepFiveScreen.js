@@ -366,7 +366,8 @@ export default class StepFiveScreen extends Component {
     }
 
     setStepDataIntoPatch = async () => {
-        let files = await RNFetchBlob.fs.ls(RNFetchBlob.fs.dirs.MovieDir)
+        const { config, fs } = RNFetchBlob;
+        let files = fs.dirs.MovieDir
         if (
             (
                 this.state.cropSpecificSteps && this.state.cropSpecificSteps.length > 0 &&
