@@ -228,7 +228,7 @@ export default class LanguageScreen extends Component {
                     <View style={{ flexDirection: 'row', marginTop: heightToDp("4%") }}>
                         
                             <View style={{ backgroundColor: BaseColor.Ho, width: widthToDp("30%"), height: heightToDp("6%"), marginLeft: widthToDp("10%"), borderRadius: 100, flexDirection: 'row' }}>
-                                <Text style={{ color: '#fff', marginTop: heightToDp("1.5%"), marginLeft: widthToDp("5%"), fontWeight: 'bold', fontSize: widthToDp("4.3%"), marginLeft: widthToDp("3%") }}>{this.state.languages[2].value}</Text>
+                                <Text style={{ color: '#fff', marginTop: heightToDp("1.5%"), marginLeft: widthToDp("7%"), fontWeight: 'bold', fontSize: widthToDp("4.3%"), marginLeft: widthToDp("3%") }}>{this.state.languages[2].value}</Text>
                                 <Icon
                                     name="microphone"
                                     color="white"
