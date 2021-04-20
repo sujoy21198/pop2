@@ -674,7 +674,7 @@ export default class RegistrationScreen extends Component {
         <View style={{ marginTop: heightToDp("5%"), marginLeft: widthToDp("8%") }}>
           <TouchableOpacity style={{ flexDirection: 'row' }} onPress={() => this.RBSheet2.open()}>
             <View style={{ width: widthToDp("31%") }}>
-              <Text style={{ fontSize: widthToDp("4.6%"), marginLeft: widthToDp("2%"), fontFamily: 'Oswald-Medium' }}>{this.state.gram}</Text>
+              <Text style={{ fontSize: widthToDp("4%"), marginLeft: widthToDp("2%"), fontFamily: 'Oswald-Medium' }}>{this.state.gram}</Text>
             </View>
 
             <Icon

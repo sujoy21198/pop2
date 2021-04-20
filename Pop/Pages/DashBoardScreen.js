@@ -366,7 +366,7 @@ export default class DashBoardScreen extends Component {
                             />
                         </TouchableOpacity>
                     </View>
-                    <View style={{ flex: 1, backgroundColor: BaseColor.English, alignItems: 'center', justifyContent: 'center', width: widthToDp("30%"), height: heightToDp("6%"), marginLeft: widthToDp("2%"), borderRadius: 100, flexDirection: 'row' }}>
+                    <View style={{ flex: 1, backgroundColor: BaseColor.Hindi, alignItems: 'center', justifyContent: 'center', width: widthToDp("30%"), height: heightToDp("6%"), marginLeft: widthToDp("2%"), borderRadius: 100, flexDirection: 'row' }}>
                         <TouchableOpacity 
                             style={{width: widthToDp("10%")}}
                             onPress={() => this.languageChangeFunction(this.state.languages[1].id)}
@@ -385,7 +385,7 @@ export default class DashBoardScreen extends Component {
                             />
                         </TouchableOpacity>
                     </View>
-                    <View style={{ flex: 1, backgroundColor: BaseColor.English, alignItems: 'center', justifyContent: 'center', width: widthToDp("30%"), height: heightToDp("6%"), marginLeft: widthToDp("2%"), borderRadius: 100, flexDirection: 'row' }}>
+                    <View style={{ flex: 1, backgroundColor: BaseColor.Ho, alignItems: 'center', justifyContent: 'center', width: widthToDp("30%"), height: heightToDp("6%"), marginLeft: widthToDp("2%"), borderRadius: 100, flexDirection: 'row' }}>
                         <TouchableOpacity 
                             style={{width: widthToDp("14%")}}
                             onPress={() => this.languageChangeFunction(this.state.languages[2].id)}
@@ -406,7 +406,7 @@ export default class DashBoardScreen extends Component {
                     </View>
                 </View>
                 <View style={{ flexDirection: 'row', marginTop: heightToDp("1%"), marginHorizontal: widthToDp("17%"), alignSelf: 'center' }}>
-                    <View style={{ flex: 1, backgroundColor: BaseColor.English, alignItems: 'center', justifyContent: 'center', width: widthToDp("30%"), height: heightToDp("6%"), marginLeft: widthToDp("2%"), borderRadius: 100, flexDirection: 'row' }}>
+                    <View style={{ flex: 1, backgroundColor: BaseColor.Uridia, alignItems: 'center', justifyContent: 'center', width: widthToDp("30%"), height: heightToDp("6%"), marginLeft: widthToDp("2%"), borderRadius: 100, flexDirection: 'row' }}>
                         <TouchableOpacity 
                             style={{width: widthToDp("10%")}}
                             onPress={() => this.languageChangeFunction(this.state.languages[3].id)}
@@ -425,7 +425,7 @@ export default class DashBoardScreen extends Component {
                             />
                         </TouchableOpacity>
                     </View>
-                    <View style={{ flex: 1, backgroundColor: BaseColor.English, alignItems: 'center', justifyContent: 'center', width: widthToDp("30%"), height: heightToDp("6%"), marginLeft: widthToDp("1%"), borderRadius: 100, flexDirection: 'row' }}>
+                    <View style={{ flex: 1, backgroundColor: BaseColor.Santhali, alignItems: 'center', justifyContent: 'center', width: widthToDp("30%"), height: heightToDp("6%"), marginLeft: widthToDp("1%"), borderRadius: 100, flexDirection: 'row' }}>
                         <TouchableOpacity 
                             style={{width: widthToDp("18%")}}
                             onPress={() => this.languageChangeFunction(this.state.languages[4].id)}
