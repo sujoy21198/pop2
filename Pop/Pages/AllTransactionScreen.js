@@ -358,8 +358,12 @@ export default class AllTransactionScreen extends Component {
                 
             }
         });
+        let username = await AsyncStorage.getItem('username')
         let user = JSON.parse(await AsyncStorage.getItem("user"));
-        user[0].moneyManagerData = localMoneyManagerData;
+        let specificData = user.find((i) => i.username === username)
+        
+        //console.log(specificData.moneyManagerData)
+        specificData.moneyManagerData = localMoneyManagerData;
         await AsyncStorage.setItem("user", JSON.stringify(user));
     }
 
