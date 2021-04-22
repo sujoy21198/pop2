@@ -38,7 +38,7 @@ export default class DashBoardScreen extends Component {
             data: [],
             languages: [],
             textLanguageChange: '',
-            notificationCount : 0,
+            notificationCount: 0,
             isUserOnline: false
         }
 
@@ -53,7 +53,7 @@ export default class DashBoardScreen extends Component {
 
     }
 
-    componentDidMount() {   
+    componentDidMount() {
         this.setLanguageOnMount()
     }
 
@@ -158,41 +158,41 @@ export default class DashBoardScreen extends Component {
             //     index: 0,
             //     routes: [{ name: "LanguageScreen" }]
             // });
-            console.log(error,"labels")
+            console.log(error, "labels")
         }
         this.setState({ crops: specificObject.crops })
     }
 
     checkAudioFileExistence = async (audio) => {
         let files = await RNFetchBlob.fs.ls(RNFetchBlob.fs.dirs.PictureDir);
-        if(files.includes("/storage/emulated/0/Pictures/image_" + audio)) {
+        if (files.includes("/storage/emulated/0/Pictures/image_" + audio)) {
             return true;
         } else {
             return false;
         }
     }
-    
+
     playSound = (audio) => {
-        if(this.checkAudioFileExistence(audio)) {
+        if (this.checkAudioFileExistence(audio)) {
             var sound = new Sound("/storage/emulated/0/Pictures/image_" + audio, Sound.MAIN_BUNDLE, (error) => {
-            if (error) {
-                console.log('Failed to load the sound', error);
-                return;
-            }
-            // loaded successfully
-            console.log(
-                'duration in seconds: ' + sound.getDuration() + 
-                ', number of channels: ' + sound.getNumberOfChannels()
-            );
-            
-            // Play the sound with an onEnd callback
-            sound.play((success) => {
-                if (success) {
-                    console.log('successfully finished playing');
-                } else {
-                    console.log('playback failed due to audio decoding errors');
+                if (error) {
+                    console.log('Failed to load the sound', error);
+                    return;
                 }
-            });
+                // loaded successfully
+                console.log(
+                    'duration in seconds: ' + sound.getDuration() +
+                    ', number of channels: ' + sound.getNumberOfChannels()
+                );
+
+                // Play the sound with an onEnd callback
+                sound.play((success) => {
+                    if (success) {
+                        console.log('successfully finished playing');
+                    } else {
+                        console.log('playback failed due to audio decoding errors');
+                    }
+                });
             });
         } else return;
     }
@@ -233,7 +233,7 @@ export default class DashBoardScreen extends Component {
             })
         } else if (data === this.state.data[4].name) {
             let isOnline = await NetInfo.fetch().then(state => state.isConnected);
-            if(isOnline) {
+            if (isOnline) {
                 // console.warn("Message");
             } else {
                 Toast.show({
@@ -291,7 +291,7 @@ export default class DashBoardScreen extends Component {
     }
 
     syncData = async () => {
-        
+
         NetInfo.fetch().then(state => {
             var isConnected = state.isConnected
             console.log(isConnected)
@@ -305,10 +305,10 @@ export default class DashBoardScreen extends Component {
                 })
             }
         })
-        
+
     }
 
-    startDatasync = async() => {
+    startDatasync = async () => {
         var token = await AsyncStorage.getItem('token')
         var username = await AsyncStorage.getItem('username')
         var encodedUsername = base64.encode(username)
@@ -335,12 +335,12 @@ export default class DashBoardScreen extends Component {
             duration: 3000,
             type: 'success'
         })
-    }   
+    }
 
     render() {
         return (
             <View style={{ backgroundColor: BaseColor.BackgroundColor }}>
-                <HeaderComponent 
+                <HeaderComponent
                     navigation={this.props.navigation}
                     isDashboard={true}
                     hideHome={true}
@@ -348,104 +348,104 @@ export default class DashBoardScreen extends Component {
                 />
                 <View style={{ flexDirection: 'row', marginTop: heightToDp("1%"), marginHorizontal: widthToDp("1%") }}>
                     <View style={{ flex: 1, backgroundColor: BaseColor.English, alignItems: 'center', justifyContent: 'center', width: widthToDp("30%"), height: heightToDp("6%"), marginLeft: widthToDp("2%"), borderRadius: 100, flexDirection: 'row' }}>
-                        <TouchableOpacity 
-                            style={{width: widthToDp("15%")}}
+                        <TouchableOpacity
+                            style={{ width: widthToDp("15%") }}
                             onPress={() => this.languageChangeFunction(this.state.languages[0].id)}
                         >
                             <Text style={{ color: '#fff', fontFamily: 'Oswald-Medium' }}>{this.state.languages[0].value}</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
-                            style={{width: widthToDp("8%")}}
+                            style={{ width: widthToDp("8%") }}
                             onPress={() => this.playSound(this.state.languages[0].audio)}
                         >
                             <Icon
                                 name="microphone"
                                 size={30}
                                 color={"#fff"}
-                                style={{marginLeft: widthToDp("3%")}}                            
+                                style={{ marginLeft: widthToDp("3%") }}
                             />
                         </TouchableOpacity>
                     </View>
                     <View style={{ flex: 1, backgroundColor: BaseColor.Hindi, alignItems: 'center', justifyContent: 'center', width: widthToDp("30%"), height: heightToDp("6%"), marginLeft: widthToDp("2%"), borderRadius: 100, flexDirection: 'row' }}>
-                        <TouchableOpacity 
-                            style={{width: widthToDp("10%")}}
+                        <TouchableOpacity
+                            style={{ width: widthToDp("10%") }}
                             onPress={() => this.languageChangeFunction(this.state.languages[1].id)}
                         >
                             <Text style={{ color: '#fff', fontFamily: 'Oswald-Medium' }}>{this.state.languages[1].value}</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
-                            style={{width: widthToDp("10%")}}
+                            style={{ width: widthToDp("10%") }}
                             onPress={() => this.playSound(this.state.languages[1].audio)}
                         >
                             <Icon
                                 name="microphone"
                                 size={30}
                                 color={"#fff"}
-                                style={{marginLeft: widthToDp("3%")}}                            
+                                style={{ marginLeft: widthToDp("3%") }}
                             />
                         </TouchableOpacity>
                     </View>
                     <View style={{ flex: 1, backgroundColor: BaseColor.Ho, alignItems: 'center', justifyContent: 'center', width: widthToDp("30%"), height: heightToDp("6%"), marginLeft: widthToDp("2%"), borderRadius: 100, flexDirection: 'row' }}>
-                        <TouchableOpacity 
-                            style={{width: widthToDp("14%")}}
+                        <TouchableOpacity
+                            style={{ width: widthToDp("14%") }}
                             onPress={() => this.languageChangeFunction(this.state.languages[2].id)}
                         >
                             <Text style={{ color: '#fff', fontFamily: 'Oswald-Medium' }}>{this.state.languages[2].value}</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
-                            style={{width: widthToDp("10%")}}
+                            style={{ width: widthToDp("10%") }}
                             onPress={() => this.playSound(this.state.languages[2].audio)}
                         >
                             <Icon
                                 name="microphone"
                                 size={30}
                                 color={"#fff"}
-                                style={{marginLeft: widthToDp("3%")}}                            
+                                style={{ marginLeft: widthToDp("3%") }}
                             />
                         </TouchableOpacity>
                     </View>
                 </View>
                 <View style={{ flexDirection: 'row', marginTop: heightToDp("1%"), marginHorizontal: widthToDp("17%"), alignSelf: 'center' }}>
                     <View style={{ flex: 1, backgroundColor: BaseColor.Uridia, alignItems: 'center', justifyContent: 'center', width: widthToDp("30%"), height: heightToDp("6%"), marginLeft: widthToDp("2%"), borderRadius: 100, flexDirection: 'row' }}>
-                        <TouchableOpacity 
-                            style={{width: widthToDp("10%")}}
+                        <TouchableOpacity
+                            style={{ width: widthToDp("10%") }}
                             onPress={() => this.languageChangeFunction(this.state.languages[3].id)}
                         >
                             <Text style={{ color: '#fff', fontFamily: 'Oswald-Medium' }}>{this.state.languages[3].value}</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
-                            style={{width: widthToDp("10%")}}
+                            style={{ width: widthToDp("10%") }}
                             onPress={() => this.playSound(this.state.languages[3].audio)}
                         >
                             <Icon
                                 name="microphone"
                                 size={30}
                                 color={"#fff"}
-                                style={{marginLeft: widthToDp("3%")}}                            
+                                style={{ marginLeft: widthToDp("3%") }}
                             />
                         </TouchableOpacity>
                     </View>
                     <View style={{ flex: 1, backgroundColor: BaseColor.Santhali, alignItems: 'center', justifyContent: 'center', width: widthToDp("30%"), height: heightToDp("6%"), marginLeft: widthToDp("1%"), borderRadius: 100, flexDirection: 'row' }}>
-                        <TouchableOpacity 
-                            style={{width: widthToDp("18%")}}
+                        <TouchableOpacity
+                            style={{ width: widthToDp("18%") }}
                             onPress={() => this.languageChangeFunction(this.state.languages[4].id)}
                         >
                             <Text style={{ color: '#fff', fontFamily: 'Oswald-Medium' }}>{this.state.languages[4].value}</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
-                            style={{width: widthToDp("8%")}}
+                            style={{ width: widthToDp("8%") }}
                             onPress={() => this.playSound(this.state.languages[4].audio)}
                         >
                             <Icon
                                 name="microphone"
                                 size={30}
                                 color={"#fff"}
-                                style={{marginLeft: widthToDp("3%")}}                            
+                                style={{ marginLeft: widthToDp("3%") }}
                             />
                         </TouchableOpacity>
                     </View>
                 </View>
-                <View style={{ borderBottomColor: BaseColor.Stroke, borderBottomWidth: 1, marginTop: heightToDp('1.5%'), width: widthToDp("100%") }}></View>               
+                <View style={{ borderBottomColor: BaseColor.Stroke, borderBottomWidth: 1, marginTop: heightToDp('1.5%'), width: widthToDp("100%") }}></View>
                 <View>
                     <FlatGrid
                         style={{ marginTop: heightToDp("2%"), marginBottom: heightToDp("60%") }}
@@ -456,7 +456,18 @@ export default class DashBoardScreen extends Component {
                         renderItem={({ item }) => (
                             <TouchableOpacity onPress={() => this.check(item.name)}>
                                 <View style={{ backgroundColor: BaseColor.Red, width: widthToDp("47%"), height: heightToDp("30%"), elevation: 10, borderRadius: 10 }}>
-                                    <Text style={{ color: "#fff", fontSize: widthToDp("5%"), marginLeft: widthToDp("5%"), marginTop: heightToDp("0.4%"), fontFamily: 'Oswald-Medium' }}>{item.name}</Text>
+                                    <View style={{ flexDirection: 'row' }}>
+                                        <Text style={{ color: "#fff", fontSize: widthToDp("5%"), marginLeft: widthToDp("5%"), marginTop: heightToDp("0.4%"), fontFamily: 'Oswald-Medium' }}>{item.name}</Text>
+                                        <TouchableOpacity>
+                                            <Icon
+                                                name="microphone"
+                                                size={20}
+                                                color={"#fff"}
+                                                style={{ marginLeft: widthToDp("5%"), marginTop: heightToDp("1%") }}
+                                            />
+                                        </TouchableOpacity>
+
+                                    </View>
                                     <Image
                                         style={{ width: widthToDp("47%"), height: heightToDp("25%"), borderBottomLeftRadius: 10, borderBottomRightRadius: 10, marginTop: heightToDp("1%") }}
                                         source={{ uri: 'file:///storage/emulated/0/Pictures/Pop/image_' + item.code }}
