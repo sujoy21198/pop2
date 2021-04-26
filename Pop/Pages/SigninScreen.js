@@ -1305,7 +1305,12 @@ export default class SigninScreen extends Component {
                 AsyncStorage.setItem("token", response.data.data.token)
                 AsyncStorage.setItem("username", response.data.data.username)
                 AsyncStorage.setItem("age", String(response.data.data.age))
-                AsyncStorage.setItem("phone", String(response.data.data.phone))
+                AsyncStorage.setItem("phone", String(response.data.data.phone))                
+                AsyncStorage.setItem("state", response.data.data.state)
+                AsyncStorage.setItem("district", response.data.data.district)
+                AsyncStorage.setItem("panchayat", response.data.data.panchayat)
+                AsyncStorage.setItem("village", response.data.data.village)
+                AsyncStorage.setItem("block", response.data.data.block[0].block)
             } else {
                 load = false
                 Toast.show({

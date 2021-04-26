@@ -170,7 +170,7 @@ export default class GeneralSettingsScreen extends Component {
                 justifyContent: 'center',
                 alignItems: 'center' 
             }}>     
-                {/* <TouchableOpacity 
+                <TouchableOpacity 
                     style={{
                         flexDirection: 'row',
                         justifyContent: 'space-between',
@@ -193,7 +193,7 @@ export default class GeneralSettingsScreen extends Component {
                         fontSize: 30,
                         marginLeft: widthToDp("4%")
                     }}>{this.state.updateProfileLabel}</Text>
-                </TouchableOpacity>            */}
+                </TouchableOpacity>           
                 <TouchableOpacity 
                     style={{
                         flexDirection: 'row',

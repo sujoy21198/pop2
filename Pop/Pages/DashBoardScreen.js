@@ -456,14 +456,14 @@ export default class DashBoardScreen extends Component {
                         renderItem={({ item }) => (
                             <TouchableOpacity onPress={() => this.check(item.name)}>
                                 <View style={{ backgroundColor: BaseColor.Red, width: widthToDp("47%"), height: heightToDp("30%"), elevation: 10, borderRadius: 10 }}>
-                                    <View style={{ flexDirection: 'row' }}>
-                                        <Text style={{ color: "#fff", fontSize: widthToDp("5%"), marginLeft: widthToDp("5%"), marginTop: heightToDp("0.4%"), fontFamily: 'Oswald-Medium' }}>{item.name}</Text>
+                                    <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: widthToDp('2%') }}>
+                                        <Text style={{ color: "#fff", fontSize: widthToDp("5%"), marginTop: heightToDp("0.4%"), fontFamily: 'Oswald-Medium' }}>{item.name}</Text>
                                         <TouchableOpacity>
                                             <Icon
                                                 name="microphone"
                                                 size={20}
                                                 color={"#fff"}
-                                                style={{ marginLeft: widthToDp("5%"), marginTop: heightToDp("1%") }}
+                                                style={{ marginLeft: widthToDp("2%"), marginTop: heightToDp("1%") }}
                                             />
                                         </TouchableOpacity>
 
