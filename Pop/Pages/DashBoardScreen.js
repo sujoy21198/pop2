@@ -337,6 +337,27 @@ export default class DashBoardScreen extends Component {
         })
     }
 
+    knowledgeCenter = new Sound('/storage/emulated/0/Pictures/Pop/image_knowledgeCenter.mp3')
+    importantLinks = new Sound('/storage/emulated/0/Pictures/Pop/image_importantLinks.mp3')
+    moneyManager = new Sound('/storage/emulated/0/Pictures/Pop/image_moneyManager.mp3')
+    contactNumber = new Sound('/storage/emulated/0/Pictures/Pop/image_contactNumber.mp3')
+    message = new Sound('/storage/emulated/0/Pictures/Pop/image_message.mp3')
+    generalSettings = new Sound('/storage/emulated/0/Pictures/Pop/image_generalSettings.mp3')
+    dashboardaudio = async(index) => {
+        if(index === 0) {
+            this.knowledgeCenter.play()
+        }else if(index === 1){
+            this.importantLinks.play()
+        }else if(index === 2){
+            this.moneyManager.play()
+        }else if(index === 3){
+            this.contactNumber.play()
+        }else if(index === 4){
+            this.message.play()
+        }else if(index === 5){
+            this.generalSettings.play()
+        }
+    }
     render() {
         return (
             <View style={{ backgroundColor: BaseColor.BackgroundColor }}>
@@ -453,12 +474,12 @@ export default class DashBoardScreen extends Component {
                         itemDimension={130}
                         data={this.state.data}
                         bouncesZoom={true}
-                        renderItem={({ item }) => (
+                        renderItem={({ item , index }) => (
                             <TouchableOpacity onPress={() => this.check(item.name)}>
                                 <View style={{ backgroundColor: BaseColor.Red, width: widthToDp("47%"), height: heightToDp("30%"), elevation: 10, borderRadius: 10 }}>
                                     <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: widthToDp('2%') }}>
                                         <Text style={{ color: "#fff", fontSize: widthToDp("5%"), marginTop: heightToDp("0.4%"), fontFamily: 'Oswald-Medium' }}>{item.name}</Text>
-                                        <TouchableOpacity>
+                                        <TouchableOpacity onPress={() => this.dashboardaudio(index)}>
                                             <Icon
                                                 name="microphone"
                                                 size={20}
