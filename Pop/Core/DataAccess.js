@@ -1,5 +1,5 @@
 const DataAccess = {
-    BaseUrl : 'http://161.35.122.165:3020/',
+    BaseUrl : 'https://tupop.in/',
     AccessUrl:'api/v1/',
     SignUp: 'signup',
     SignIn: 'signin',

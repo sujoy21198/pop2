@@ -111,7 +111,7 @@ export default class VideoComponent extends React.Component {
                     }
                 };
                 config(options)
-                    .fetch('GET', "http://161.35.122.165:3020/app-property/uploads/crops/steps/" + this.props.asyncVideoFileName)
+                    .fetch('GET', "https://tupop.in/app-property/uploads/crops/steps/" + this.props.asyncVideoFileName)
                     .then(async res => {
                         this.setState({
                             stepVideo: "file:///storage/emulated/0/Movies/video_" + this.props.asyncVideoFileName

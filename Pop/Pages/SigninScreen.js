@@ -347,7 +347,7 @@ export default class SigninScreen extends Component {
             console.log(editedNames)
             fileNames.push(editedNames)
             ext.push(extNames)
-            imageUrls.push("http://161.35.122.165:3020/app-property/uploads/crops/" + cropImages[i])
+            imageUrls.push("https://tupop.in/app-property/uploads/crops/" + cropImages[i])
         }
 
         for (var i = 0; i < imageUrls.length; i++) {
@@ -395,7 +395,7 @@ export default class SigninScreen extends Component {
             console.log(editedNames)
             fileNames.push(editedNames)
             ext.push(extNames)
-            imageUrls.push("http://161.35.122.165:3020/app-property/uploads/crops/steps/" + cropImages[i])
+            imageUrls.push("https://tupop.in/app-property/uploads/crops/steps/" + cropImages[i])
         }
 
         for (var i = 0; i < imageUrls.length; i++) {
@@ -444,7 +444,7 @@ export default class SigninScreen extends Component {
             console.log(editedNames)
             fileNames.push(editedNames)
             ext.push(extNames)
-            imageUrls.push("http://161.35.122.165:3020/app-property/uploads/crops/materials/" + cropImages[i])
+            imageUrls.push("https://tupop.in/app-property/uploads/crops/materials/" + cropImages[i])
         }
 
         for (var i = 0; i < imageUrls.length; i++) {
@@ -492,7 +492,7 @@ export default class SigninScreen extends Component {
             console.log(editedNames)
             fileNames.push(editedNames)
             ext.push(extNames)
-            imageUrls.push("http://161.35.122.165:3020/app-property/uploads/livestocks/" + cropImages[i])
+            imageUrls.push("https://tupop.in/app-property/uploads/livestocks/" + cropImages[i])
         }
 
         for (var i = 0; i < imageUrls.length; i++) {
@@ -541,7 +541,7 @@ export default class SigninScreen extends Component {
             console.log(editedNames)
             fileNames.push(editedNames)
             ext.push(extNames)
-            imageUrls.push("http://161.35.122.165:3020/app-property/uploads/livestocks/steps/" + cropImages[i])
+            imageUrls.push("https://tupop.in/app-property/uploads/livestocks/steps/" + cropImages[i])
         }
 
         for (var i = 0; i < imageUrls.length; i++) {
@@ -590,7 +590,7 @@ export default class SigninScreen extends Component {
             console.log(editedNames)
             fileNames.push(editedNames)
             ext.push(extNames)
-            imageUrls.push("http://161.35.122.165:3020/app-property/uploads/livestocks/breeds/" + cropImages[i])
+            imageUrls.push("https://tupop.in/app-property/uploads/livestocks/breeds/" + cropImages[i])
         }
 
         for (var i = 0; i < imageUrls.length; i++) {
@@ -639,7 +639,7 @@ export default class SigninScreen extends Component {
             console.log(editedNames)
             fileNames.push(editedNames)
             ext.push(extNames)
-            imageUrls.push("http://161.35.122.165:3020/app-property/uploads/important-links/" + cropImages[i])
+            imageUrls.push("https://tupop.in/app-property/uploads/important-links/" + cropImages[i])
         }
 
         for (var i = 0; i < imageUrls.length; i++) {
@@ -689,7 +689,7 @@ export default class SigninScreen extends Component {
             console.log(editedNames)
             fileNames.push(editedNames)
             ext.push(extNames)
-            imageUrls.push("http://161.35.122.165:3020/app-property/uploads/nutrition-garden/" + cropImages[i])
+            imageUrls.push("https://tupop.in/app-property/uploads/nutrition-garden/" + cropImages[i])
         }
 
         for (var i = 0; i < imageUrls.length; i++) {
@@ -739,7 +739,7 @@ export default class SigninScreen extends Component {
             console.log(editedNames)
             fileNames.push(editedNames)
             ext.push(extNames)
-            imageUrls.push("http://161.35.122.165:3020/app-property/uploads/small-business/" + cropImages[i])
+            imageUrls.push("https://tupop.in/app-property/uploads/small-business/" + cropImages[i])
         }
 
         for (var i = 0; i < imageUrls.length; i++) {
@@ -790,7 +790,7 @@ export default class SigninScreen extends Component {
             console.log(editedNames)
             fileNames.push(editedNames)
             ext.push(extNames)
-            imageUrls.push("http://161.35.122.165:3020/app-property/uploads/label/" + cropImages[i])
+            imageUrls.push("https://tupop.in/app-property/uploads/label/" + cropImages[i])
         }
 
         for (var i = 0; i < imageUrls.length; i++) {
@@ -850,7 +850,7 @@ export default class SigninScreen extends Component {
             console.log(editedNames)
             fileNames.push(editedNames)
             ext.push(extNames)
-            imageUrls.push("http://161.35.122.165:3020/app-property/uploads/static/" + cropImages[i])
+            imageUrls.push("https://tupop.in/app-property/uploads/static/" + cropImages[i])
         }
 
         for (var i = 0; i < imageUrls.length; i++) {
@@ -907,7 +907,7 @@ export default class SigninScreen extends Component {
         var token = await AsyncStorage.getItem('token')
         var encodedUsername = base64.encode(this.state.username)
         var cropObjectsToBeSaved, cropStepsObjectsToBeSaved, cropsMaterialsObjectsToBeSaved, livestockObjectsToBeSaved, liveStockStepMaterialsObjectsToBeSaved, liveStockBreedsObjectsToBeSaved, breedCategoriesObjectsToBeSaved, importantLinksObjectsToBeSaved, nutrationGradenObjectsToBeSaved, livestockStepObjectsToBeSaved, vaccinationToBeSaved, contactListToBeSaved, dryFishObjectsToBeSaved, vegetableVendingObjectsToBeSaved, smallGroceryShopToBeSaved, labelsObjectsToBeSaved, smallBusinessCategoryObjectsToBeSaved, smallBusinessSubCategoryObjectsToBeSaved;
-        await axios.get("http://161.35.122.165:3020/api/v1/get-all-data", {
+        await axios.get("https://tupop.in/api/v1/get-all-data", {
             headers: {
                 'Content-type': "application/json",
                 'X-Information': encodedUsername,

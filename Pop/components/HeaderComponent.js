@@ -20,7 +20,7 @@ export default class HeaderComponent extends React.Component {
         if(isOnline) {
             let username = base64.encode(await AsyncStorage.getItem('username'));
             let token = await AsyncStorage.getItem('token')
-            let response = await axios.get("http://161.35.122.165:3020/api/v1/notifications?info=604240ff4b9a872502ab64d0", {
+            let response = await axios.get("https://tupop.in/api/v1/notifications?info=604240ff4b9a872502ab64d0", {
                 headers: {
                     'Content-type': "application/json",
                     'X-Information': username,
