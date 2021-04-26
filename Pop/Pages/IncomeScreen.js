@@ -72,8 +72,14 @@ export default class IncomeScreen extends Component {
             var year = new Date().getFullYear()
             if(this.props.route.params.willEdit) {
                 let user = await AsyncStorage.getItem('user');
+                let _id = await AsyncStorage.getItem('_id');
                 let parsed = JSON.parse(user);
-                parsed[0].moneyManagerData[this.props.route.params.index].amount = this.state.amount;
+                parsed.length > 0 && 
+                parsed.map(element => {
+                    if(element._id === _id) {
+                        element.moneyManagerData[this.props.route.params.index].amount = this.state.amount;
+                    }
+                })
                 await AsyncStorage.setItem("user", JSON.stringify(parsed)) 
             } else {
                 const moneyObject={'type':this.props.route.params.profitType,'category':this.props.route.params.nameEnglish,'amount':this.state.amount, 'date': date + "/" + month + "/" + year}
