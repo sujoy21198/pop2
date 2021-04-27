@@ -120,7 +120,7 @@ export default class GeneralSettingsScreen extends Component {
         var patch = []
         var moneyManagerData= []
         var costBenifitAnalysis = []
-        await axios.get('https://tupop.in/api/v1/synced-data?info='+userId , {
+        await axios.get('http://tupop.in:3020/api/v1//synced-data?info='+userId , {
             headers:{
                 'Content-type': "accept",
                 'X-Information': encodedUsername,

@@ -347,18 +347,18 @@ export default class PatchScreen extends Component {
             let parsed = JSON.parse(user)
             var sepcific = parsed.find((i) => i.username === username)
             console.log(patchArrayObject,"jumpasasdasdadadsadas")
-            // var valueArr = sepcific.patch.map(function (item) { return item.patchName })
-            // console.log(valueArr.includes(patchName))
-            // if (valueArr.includes(patchName)) {
-            //     console.log("Already created")
-            // } else {
-            //     sepcific.patch.push(patchArrayObject)
-            //     await AsyncStorage.setItem('user', JSON.stringify(parsed))
-            //     console.log("pushed")
-            // }
+            var valueArr = sepcific.patch.map(function (item) { return item.patchName })
+            console.log(valueArr.includes(patchName))
+            if (valueArr.includes(patchName)) {
+                console.log("Already created")
+            } else {
+                sepcific.patch.push(patchArrayObject)
+                await AsyncStorage.setItem('user', JSON.stringify(parsed))
+                console.log("pushed")
+            }
             var jump = sepcific.patch.find((i) => i.patchName === patchName)
             var jumpNavigation = sepcific.costBenifitAnalysis.find((i) => i.patchName === patchName)
-            //console.log(sepcific.costBenifitAnalysis.find((i) => i.patchName === patchName), "hi")
+            console.log(sepcific.costBenifitAnalysis.find((i) => i.patchName === patchName), "hi")
             if (jump.step1 === '' && jump.step2 === '' && jump.step3 === '' && jump.step4 === '' && jump.step5 === '' && jump.step6 === '' && jump.step7 === '' && jump.step8 === '') {
                 this.props.navigation.navigate({
                     name: 'SelectFarmingAreaScreen',

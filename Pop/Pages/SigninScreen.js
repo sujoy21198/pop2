@@ -907,7 +907,7 @@ export default class SigninScreen extends Component {
         var token = await AsyncStorage.getItem('token')
         var encodedUsername = base64.encode(this.state.username)
         var cropObjectsToBeSaved, cropStepsObjectsToBeSaved, cropsMaterialsObjectsToBeSaved, livestockObjectsToBeSaved, liveStockStepMaterialsObjectsToBeSaved, liveStockBreedsObjectsToBeSaved, breedCategoriesObjectsToBeSaved, importantLinksObjectsToBeSaved, nutrationGradenObjectsToBeSaved, livestockStepObjectsToBeSaved, vaccinationToBeSaved, contactListToBeSaved, dryFishObjectsToBeSaved, vegetableVendingObjectsToBeSaved, smallGroceryShopToBeSaved, labelsObjectsToBeSaved, smallBusinessCategoryObjectsToBeSaved, smallBusinessSubCategoryObjectsToBeSaved;
-        await axios.get("https://tupop.in/api/v1/get-all-data", {
+        await axios.get("http://tupop.in:3020/api/v1//get-all-data", {
             headers: {
                 'Content-type': "application/json",
                 'X-Information': encodedUsername,
