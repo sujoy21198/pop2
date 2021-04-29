@@ -472,7 +472,7 @@ export default class PatchScreen extends Component {
                         netProfit: jumpNavigation.netProfit
                     }
                 })
-            } else if (jump.step8 === '') {
+            } else if (jump.step8 === '' || jump.step8!= '') {
                 this.props.navigation.navigate({
                     name: 'StepSevenScreen',
                     params: {

@@ -18,7 +18,8 @@ export default class GeneralSettingsScreen extends Component {
         refreshLabel: "",
         patch:[],
         moneyManagerData:[],
-        costBenifitAnalysis:[]
+        costBenifitAnalysis:[],
+        patchData : []
     };
     go = async () => {
         await AsyncStorage.removeItem('_id')
@@ -120,6 +121,7 @@ export default class GeneralSettingsScreen extends Component {
         var patch = []
         var moneyManagerData= []
         var costBenifitAnalysis = []
+        var patchData = []
         await axios.get('http://tupop.in:3020/api/v1//synced-data?info='+userId , {
             headers:{
                 'Content-type': "accept",
@@ -132,7 +134,8 @@ export default class GeneralSettingsScreen extends Component {
             patch = specificObject.patch
             moneyManagerData = specificObject.moneyManagerData
             costBenifitAnalysis = specificObject.costBenifitAnalysis
-            //console.log(costBenifitAnalysis)
+            patchData = specificObject.patchData
+            console.log(specificObject.patchData)
         }).catch(function (error){
             console.log(error)
         })
@@ -140,6 +143,7 @@ export default class GeneralSettingsScreen extends Component {
         this.state.patch = patch
         this.state.moneyManagerData = moneyManagerData
         this.state.costBenifitAnalysis = costBenifitAnalysis
+        this.state.patchData = patchData
         this.setOldData()
     }
 
@@ -153,6 +157,7 @@ export default class GeneralSettingsScreen extends Component {
             specificObject.patch = this.state.patch
             specificObject.moneyManagerData = this.state.moneyManagerData
             specificObject.costBenifitAnalysis = this.state.costBenifitAnalysis
+            specificObject.patchData = this.state.patchData
             await AsyncStorage.setItem('user', JSON.stringify(parsed))
             alert("data synced")
         }catch(error){
