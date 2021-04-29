@@ -174,7 +174,7 @@ export default class DashBoardScreen extends Component {
 
     playSound = (audio) => {
         if (this.checkAudioFileExistence(audio)) {
-            var sound = new Sound("/storage/emulated/0/Pictures/image_" + audio, Sound.MAIN_BUNDLE, (error) => {
+            var sound = new Sound("/storage/emulated/0/Pictures/pop/image_" + audio, Sound.MAIN_BUNDLE, (error) => {
                 if (error) {
                     console.log('Failed to load the sound', error);
                     return;
@@ -315,7 +315,15 @@ export default class DashBoardScreen extends Component {
         var user = await AsyncStorage.getItem('user')
         let parsed = JSON.parse(user);
         var specificObject = parsed.find((i) => i.username === username)
-        console.log(specificObject)
+        let cropData = await AsyncStorage.getItem("cropData");
+        specificObject.patch.length > 0 && 
+        specificObject.patch.map(element => {
+            JSON.parse(cropData)[0].cropSteps.map(item => {
+                if(item.cropData[0]._id === element.cropId) {
+                    element.cropName = item.cropData[0].nameEnglish;
+                }
+            })
+        })
         await axios.post(DataAccess.BaseUrl + DataAccess.AccessUrl + "sync-data", {
             data: specificObject
         }, {
@@ -337,12 +345,12 @@ export default class DashBoardScreen extends Component {
         })
     }
 
-    knowledgeCenter = new Sound('/storage/emulated/0/Pictures/Pop/image_knowledgeCenter.mp3')
-    importantLinks = new Sound('/storage/emulated/0/Pictures/Pop/image_importantLinks.mp3')
-    moneyManager = new Sound('/storage/emulated/0/Pictures/Pop/image_moneyManager.mp3')
-    contactNumber = new Sound('/storage/emulated/0/Pictures/Pop/image_contactNumber.mp3')
-    message = new Sound('/storage/emulated/0/Pictures/Pop/image_message.mp3')
-    generalSettings = new Sound('/storage/emulated/0/Pictures/Pop/image_generalSettings.mp3')
+    knowledgeCenter = new Sound('/storage/emulated/0/Pictures/pop/image_knowledgeCenter.mp3')
+    importantLinks = new Sound('/storage/emulated/0/Pictures/pop/image_importantLinks.mp3')
+    moneyManager = new Sound('/storage/emulated/0/Pictures/pop/image_moneyManager.mp3')
+    contactNumber = new Sound('/storage/emulated/0/Pictures/pop/image_contactNumber.mp3')
+    message = new Sound('/storage/emulated/0/Pictures/pop/image_message.mp3')
+    generalSettings = new Sound('/storage/emulated/0/Pictures/pop/image_generalSettings.mp3')
     dashboardaudio = async(index) => {
         if(index === 0) {
             this.knowledgeCenter.play()

@@ -12,7 +12,7 @@ export default class LabelComponent extends React.Component {
 
     checkAudioFileExistence = async (audio) => {
         let files = await RNFetchBlob.fs.ls(RNFetchBlob.fs.dirs.PictureDir);
-        if(files.includes("/storage/emulated/0/Pictures/image_" + audio)) {
+        if(files.includes("/storage/emulated/0/Pictures/pop/image_" + audio)) {
             return true;
         } else {
             return false;
@@ -21,7 +21,7 @@ export default class LabelComponent extends React.Component {
     
     playSound = (audio) => {
         if(this.checkAudioFileExistence(audio)) {
-            var sound = new Sound("/storage/emulated/0/Pictures/image_" + audio, Sound.MAIN_BUNDLE, (error) => {
+            var sound = new Sound("/storage/emulated/0/Pictures/pop/image_" + audio, Sound.MAIN_BUNDLE, (error) => {
             if (error) {
                 console.log('failed to load the sound', error);
                 return;
