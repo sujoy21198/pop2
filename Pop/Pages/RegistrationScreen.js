@@ -67,6 +67,7 @@ export default class RegistrationScreen extends Component {
       blockId: '',
       isDialogVisible: false,
       blockApi: [],
+      sentOtp: ''
     }
 
     this.state.selectedLanguage = this.props.route.params.selectedLanguage
@@ -95,7 +96,6 @@ export default class RegistrationScreen extends Component {
     }).catch(function (error) {
       console.log(error.message)
     })
-
     this.setState({ statesApi: statesApi })
 
   }
@@ -108,9 +108,83 @@ export default class RegistrationScreen extends Component {
       this.setState({ status: false })
     }
 
-    // if (value === 0) {
-    //   this.setState({ isDialogVisible: true })
-    // }
+    if (value === 0) {
+      this.setState({ isDialogVisible: true })
+      this.otpSignup()
+    }
+  }
+
+  otpSignup = async () => {
+    var sentOtp;
+    await axios.post(DataAccess.BaseUrl + DataAccess.AccessUrl + DataAccess.SignUp, {
+      name: this.state.fullname,
+      gender: this.state.genderPicker,
+      age: this.state.age,
+      phone: this.state.phoneNumber,
+      username: this.state.username,
+      password: this.state.password,
+      state: this.state.state,
+      district: this.state.district,
+      panchayat: this.state.gram,
+      village: this.state.village,
+      participantNumber: this.state.participantNumber,
+      blockPassword: this.state.fieldOfficerPass,
+      deviceId: this.state.deviceId,
+      blockInfo: this.state.blockId
+    }, {
+      headers: {
+        'Content-type': 'application/json'
+      }
+    }).then(function (response) {
+      console.log(response.data, "kokokok")
+      sentOtp = response.data.data
+
+    }).catch(function (error) {
+      console.log(error)
+    })
+    this.setState({ sentOtp: sentOtp })
+  }
+
+  verifyOtp = async (otp) => {
+    var status
+    await axios.post(DataAccess.BaseUrl + DataAccess.AccessUrl + DataAccess.SignUp, {
+      name: this.state.fullname,
+      gender: this.state.genderPicker,
+      age: this.state.age,
+      phone: this.state.phoneNumber,
+      username: this.state.username,
+      password: this.state.password,
+      state: this.state.state,
+      district: this.state.district,
+      panchayat: this.state.gram,
+      village: this.state.village,
+      participantNumber: this.state.participantNumber,
+      blockPassword: this.state.fieldOfficerPass,
+      deviceId: this.state.deviceId,
+      blockInfo: this.state.blockId,
+      sentOtp: this.state.sentOtp,
+      verifyOtp: otp
+    }, {
+      headers: {
+        'Content-type': 'application/json'
+      }
+    }).then(function (response) {
+      console.log(response.data, "kokokok")
+      sentOtp = response.data.data
+      status = response.data.status
+
+    }).catch(function (error) {
+      console.log(error)
+    })
+
+    if (status === 1) {
+      this.props.navigation.reset({
+        index: 0,
+        routes: [{
+          name: "DashBoardScreen"
+        }]
+      });
+    }
   }
 
   getDeviceId = async () => {
@@ -125,27 +199,27 @@ export default class RegistrationScreen extends Component {
     var load = true
     this.setState({ isLoading: true })
 
-    if(this.state.age < 12 || this.state.age >= 100){
+    if (this.state.age < 12 || this.state.age >= 100) {
       this.setState({ isLoading: false })
-        return Toast.show({
+      return Toast.show({
         text: "Age must be grater than 12 and less than 100",
         duration: 3000,
         type: 'danger'
       })
     }
 
-    if(this.state.password != this.state.confirmPassword){
+    if (this.state.password != this.state.confirmPassword) {
       this.setState({ isLoading: false })
-        return Toast.show({
+      return Toast.show({
         text: "Passwords Doesnt match",
         duration: 3000,
         type: 'danger'
       })
     }
 
-    if(this.state.phoneNumber.length != 10){
+    if (this.state.phoneNumber.length != 10) {
       this.setState({ isLoading: false })
-        return Toast.show({
+      return Toast.show({
         text: "Phone Number must be of 10 digits",
         duration: 3000,
         type: 'danger'
@@ -200,7 +274,7 @@ export default class RegistrationScreen extends Component {
         'Content-type': 'application/json'
       }
     }).then(function (response) {
-      console.log(response.data.data)
+      console.log(response.data, "kokokok")
       status = response.data.status
       // alert(response.data.msg)
       if (response.data.status === 1) {
@@ -763,7 +837,7 @@ export default class RegistrationScreen extends Component {
           <Input
             style={[styles.input, styles.formInput]}
             onChangeText={(text) => { this.setState({ participantNumber: text }) }}
-            
+
           />
         </View>
         <Input
@@ -839,7 +913,7 @@ export default class RegistrationScreen extends Component {
           title={"Verify OTP"}
           // message={"Message for DialogInput #1"}
           hintInput={"Please enter the otp"}
-          submitInput={(inputText) => { this.verify(inputText) }}
+          submitInput={(inputText) => { this.verifyOtp(inputText) }}
           closeDialog={() => { this.setState({ isDialogVisible: false }) }}
           submitText={"Verify"}
           keyboardType='numeric'
