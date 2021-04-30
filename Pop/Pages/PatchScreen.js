@@ -319,7 +319,7 @@ export default class PatchScreen extends Component {
         var patchSpecific = specificObject.patch.find((i) => i.patchName === patchName)
         if(patchSpecific === undefined){
             this.navigateToPatch(patchName)
-        }else if(patchSpecific.completed === true){
+        }else if(patchSpecific.completed === true || patchSpecific.completed === 'true'){
             Alert.alert(
                 "Already added in money manager!",
                 "Do you want to continue?",

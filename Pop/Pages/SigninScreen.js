@@ -1226,13 +1226,15 @@ export default class SigninScreen extends Component {
     getCustodianMobileNumber = async () => {
 
         let deviceId = await DeviceInfo.getAndroidId()
+        //alert(deviceId)
         //var load = true
         //this.setState({ loadPhoneNumber: true })
         var phone
         await axios.get(DataAccess.BaseUrl + DataAccess.AccessUrl + DataAccess.CustodianNumber + deviceId, {
         }).then(function (response) {
             //load = false
-            console.log(response.data.status)
+            ///alert(response.data.msg)
+            console.log(response.data.status,"kokokokokokookokoko")
             if (response.data.status === 1) {
                 phone = response.data.data.phone
                 AsyncStorage.setItem("cus", JSON.stringify(response.data.data.phone))

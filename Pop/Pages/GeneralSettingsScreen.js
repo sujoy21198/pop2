@@ -159,6 +159,7 @@ export default class GeneralSettingsScreen extends Component {
             specificObject.costBenifitAnalysis = this.state.costBenifitAnalysis
             specificObject.patchData = this.state.patchData
             await AsyncStorage.setItem('user', JSON.stringify(parsed))
+            console.log(specificObject.patch)
             alert("data synced")
         }catch(error){
             console.log(error)
