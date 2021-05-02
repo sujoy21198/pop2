@@ -40,7 +40,7 @@ export default class EditProfile extends React.Component {
       var distApi = []
       var gramApi = []
       var villageApi = []
-      let resState = await axios.get("http://tupop.in:3020/api/v1//zones", {
+      let resState = await axios.get("https://tupop.in/api/v1//zones", {
         headers: {
           'Content-Type': 'application/json'
         }
@@ -49,7 +49,7 @@ export default class EditProfile extends React.Component {
         this.setState({statesApi: resState.data.states});        
       }
     
-        let resDist = await axios.get("http://tupop.in:3020/api/v1//districts?state="+this.state.stateName, {
+        let resDist = await axios.get("https://tupop.in/api/v1//districts?state="+this.state.stateName, {
             headers: {
                 'Content-Type': 'application/json'
             }
@@ -58,7 +58,7 @@ export default class EditProfile extends React.Component {
             this.setState({distApi: resDist.data.districts});            
         }
 
-        let resBlock = await axios.get("http://tupop.in:3020/api/v1//blocks?district="+this.state.district, {
+        let resBlock = await axios.get("https://tupop.in/api/v1//blocks?district="+this.state.district, {
             headers: {
                 'Content-Type': 'application/json'
             }
@@ -67,7 +67,7 @@ export default class EditProfile extends React.Component {
             this.setState({blockApi: resBlock.data.blocks});                
         }
 
-        let resPanchayat = await axios.get("http://tupop.in:3020/api/v1//gram-panchayats?block="+this.state.block, {
+        let resPanchayat = await axios.get("https://tupop.in/api/v1//gram-panchayats?block="+this.state.block, {
             headers: {
                 'Content-Type': 'application/json'
             }
@@ -76,7 +76,7 @@ export default class EditProfile extends React.Component {
             this.setState({villageApi: resPanchayat.data.gramPanchayats});                    
         }
 
-        let resVillages = await axios.get("http://tupop.in:3020/api/v1//villages?panchayat="+this.state.panchayat, {
+        let resVillages = await axios.get("https://tupop.in/api/v1//villages?panchayat="+this.state.panchayat, {
             headers: {
                 'Content-Type': 'application/json'
             }
@@ -92,7 +92,7 @@ export default class EditProfile extends React.Component {
         stateName: value
       })
       var district = []
-      await axios.get("http://tupop.in:3020/api/v1//districts?state=" + value, {
+      await axios.get("https://tupop.in/api/v1//districts?state=" + value, {
         headers: {
           'Content-Type': 'application/json'
         }
@@ -111,7 +111,7 @@ export default class EditProfile extends React.Component {
         district: value
       })
       var block = []
-      await axios.get("http://tupop.in:3020/api/v1//blocks?district=" + value, {
+      await axios.get("https://tupop.in/api/v1//blocks?district=" + value, {
         headers: {
           'Content-Type': 'application/json'
         }
@@ -133,7 +133,7 @@ export default class EditProfile extends React.Component {
       })
   
       var village = []
-      await axios.get("http://tupop.in:3020/api/v1//villages?panchayat=" + value, {
+      await axios.get("https://tupop.in/api/v1//villages?panchayat=" + value, {
         headers: {
           'Content-Type': 'application/json'
         }
@@ -164,7 +164,7 @@ export default class EditProfile extends React.Component {
       this.state.blockId = id
   
       var gram = []
-      await axios.get("http://tupop.in:3020/api/v1//gram-panchayats?block=" + value, {
+      await axios.get("https://tupop.in/api/v1//gram-panchayats?block=" + value, {
         headers: {
           'Content-Type': 'application/json'
         }
@@ -359,7 +359,7 @@ export default class EditProfile extends React.Component {
         if(isOnline) {
             this.setState({isLoading: true});
             let blockInfo;
-            let resBlock = await axios.get("http://tupop.in:3020/api/v1//blocks?district="+this.state.district, {
+            let resBlock = await axios.get("https://tupop.in/api/v1//blocks?district="+this.state.district, {
                 headers: {
                     'Content-Type': 'application/json'
                 }

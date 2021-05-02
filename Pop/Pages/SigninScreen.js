@@ -907,7 +907,7 @@ export default class SigninScreen extends Component {
         var token = await AsyncStorage.getItem('token')
         var encodedUsername = base64.encode(this.state.username)
         var cropObjectsToBeSaved, cropStepsObjectsToBeSaved, cropsMaterialsObjectsToBeSaved, livestockObjectsToBeSaved, liveStockStepMaterialsObjectsToBeSaved, liveStockBreedsObjectsToBeSaved, breedCategoriesObjectsToBeSaved, importantLinksObjectsToBeSaved, nutrationGradenObjectsToBeSaved, livestockStepObjectsToBeSaved, vaccinationToBeSaved, contactListToBeSaved, dryFishObjectsToBeSaved, vegetableVendingObjectsToBeSaved, smallGroceryShopToBeSaved, labelsObjectsToBeSaved, smallBusinessCategoryObjectsToBeSaved, smallBusinessSubCategoryObjectsToBeSaved;
-        await axios.get("http://tupop.in:3020/api/v1//get-all-data", {
+        await axios.get("https://tupop.in/api/v1//get-all-data", {
             headers: {
                 'Content-type': "application/json",
                 'X-Information': encodedUsername,
@@ -1312,7 +1312,7 @@ export default class SigninScreen extends Component {
                 AsyncStorage.setItem("district", response.data.data.district)
                 AsyncStorage.setItem("panchayat", response.data.data.panchayat)
                 AsyncStorage.setItem("village", response.data.data.village)
-                AsyncStorage.setItem("block", response.data.data.block[0].block)
+                //AsyncStorage.setItem("block", response.data.data.block[0].block)
             } else {
                 load = false
                 Toast.show({
@@ -1376,42 +1376,42 @@ export default class SigninScreen extends Component {
         // }
 
         if (saveOffline === true) {
-            // await AsyncStorage.removeItem('offlineData')
-            // await AsyncStorage.removeItem('cropData')
-            // Toast.show({
-            //     text: "Please wait while we save your data",
-            //     type: 'success',
-            //     duration: 6000
-            // })
-            // this.getAllData()
-            try {
-                let offlineData = await AsyncStorage.getItem('offlineData');
-                let cropData = await AsyncStorage.getItem('cropData');
-                let labelsData = await AsyncStorage.getItem('labelsData');
-                if (offlineData != null && cropData != null && labelsData != null) {
-                    Toast.show({
-                        text: "Welcome" + " " + name,
-                        type: 'success',
-                        duration: 3000
-                    })
-                    this.props.navigation.reset({
-                        index: 0,
-                        routes: [
-                            { name: "DashBoardScreen" }
-                        ]
-                    });
-                }
-                else {
-                    Toast.show({
-                        text: "Please wait while we save your data",
-                        type: 'success',
-                        duration: 6000
-                    })
-                    this.getAllData()
-                }
-            } catch (error) {
-                console.log(error)
-            }
+            await AsyncStorage.removeItem('offlineData')
+            await AsyncStorage.removeItem('cropData')
+            Toast.show({
+                text: "Please wait while we save your data",
+                type: 'success',
+                duration: 6000
+            })
+            this.getAllData()
+            // try {
+            //     let offlineData = await AsyncStorage.getItem('offlineData');
+            //     let cropData = await AsyncStorage.getItem('cropData');
+            //     let labelsData = await AsyncStorage.getItem('labelsData');
+            //     if (offlineData != null && cropData != null && labelsData != null) {
+            //         Toast.show({
+            //             text: "Welcome" + " " + name,
+            //             type: 'success',
+            //             duration: 3000
+            //         })
+            //         this.props.navigation.reset({
+            //             index: 0,
+            //             routes: [
+            //                 { name: "DashBoardScreen" }
+            //             ]
+            //         });
+            //     }
+            //     else {
+            //         Toast.show({
+            //             text: "Please wait while we save your data",
+            //             type: 'success',
+            //             duration: 6000
+            //         })
+            //         this.getAllData()
+            //     }
+            // } catch (error) {
+            //     console.log(error)
+            // }
 
         } else if (status != 1) {
             Toast.show({

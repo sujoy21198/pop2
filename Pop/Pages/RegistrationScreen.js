@@ -83,7 +83,7 @@ export default class RegistrationScreen extends Component {
     var distApi = []
     var gramApi = []
     var villageApi = []
-    await axios.get("http://tupop.in:3020/api/v1//zones", {
+    await axios.get("https://tupop.in/api/v1//zones", {
       headers: {
         'Content-Type': 'application/json'
       }
@@ -181,7 +181,8 @@ export default class RegistrationScreen extends Component {
       this.props.navigation.reset({
         index: 0,
         routes: [{
-          name: "DashBoardScreen"
+          name: "SigninScreen",
+          params: { selectedLanguage: this.state.selectedLanguage }
         }]
       });
     }
@@ -350,7 +351,7 @@ export default class RegistrationScreen extends Component {
       state: value
     })
     var district = []
-    await axios.get("http://tupop.in:3020/api/v1//districts?state=" + value, {
+    await axios.get("https://tupop.in/api/v1//districts?state=" + value, {
       headers: {
         'Content-Type': 'application/json'
       }
@@ -369,7 +370,7 @@ export default class RegistrationScreen extends Component {
       district: value
     })
     var block = []
-    await axios.get("http://tupop.in:3020/api/v1//blocks?district=" + value, {
+    await axios.get("https://tupop.in/api/v1//blocks?district=" + value, {
       headers: {
         'Content-Type': 'application/json'
       }
@@ -391,7 +392,7 @@ export default class RegistrationScreen extends Component {
     })
 
     var village = []
-    await axios.get("http://tupop.in:3020/api/v1//villages?panchayat=" + value, {
+    await axios.get("https://tupop.in/api/v1//villages?panchayat=" + value, {
       headers: {
         'Content-Type': 'application/json'
       }
@@ -422,7 +423,7 @@ export default class RegistrationScreen extends Component {
     this.state.blockId = id
 
     var gram = []
-    await axios.get("http://tupop.in:3020/api/v1//gram-panchayats?block=" + value, {
+    await axios.get("https://tupop.in/api/v1//gram-panchayats?block=" + value, {
       headers: {
         'Content-Type': 'application/json'
       }
