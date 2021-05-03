@@ -13,7 +13,8 @@ const DataAccess = {
     NutritionGardenImage:'app-property/uploads/nutrition-garden/',
     CustodianNumber :'get-custodian/',
     GetAllData: 'get-all-data',
-    State : 'zones'
+    State : 'zones',
+    GetMessageTemplate : 'messaging-template/'
 }
 
 export default DataAccess

@@ -79,10 +79,10 @@ export default class LanguageScreen extends Component {
         this.seeIfWorks()
     }
 
-    seeIfWorks = async() => {
+    seeIfWorks = async () => {
         const { config, fs } = RNFetchBlob;
         let DirTest = fs.dirs.PictureDir + "/" + 'Pop'
-        console.log(DirTest,"lolpop")
+        console.log(DirTest, "lolpop")
     }
 
     makeDirTest = () => {
@@ -226,18 +226,21 @@ export default class LanguageScreen extends Component {
 
                     </View>
                     <View style={{ flexDirection: 'row', marginTop: heightToDp("4%") }}>
-                        
-                            <View style={{ backgroundColor: BaseColor.Ho, width: widthToDp("30%"), height: heightToDp("6%"), marginLeft: widthToDp("10%"), borderRadius: 100, flexDirection: 'row' }}>
-                                <Text style={{ color: '#fff', marginTop: heightToDp("1.5%"), marginLeft: widthToDp("7%"), fontWeight: 'bold', fontSize: widthToDp("4.3%")}}>{this.state.languages[2].value}</Text>
-                                <Icon
-                                    name="microphone"
-                                    color="white"
-                                    size={20}
-                                    onPress={() => this.playAudio(this.state.languages[2].id)}
-                                    style={{ marginTop: heightToDp("1.8%"), marginLeft: widthToDp("13%") }}
-                                />
-                            </View>
-                       
+
+                        <View style={{ backgroundColor: BaseColor.Ho, width: widthToDp("30%"), height: heightToDp("6%"), marginLeft: widthToDp("10%"), borderRadius: 100, flexDirection: 'row' }}>
+                            <TouchableOpacity onPress={() => this.test(this.state.languages[1].id)}>
+                                <Text style={{ color: '#fff', marginTop: heightToDp("1.5%"), marginLeft: widthToDp("7%"), fontWeight: 'bold', fontSize: widthToDp("4.3%") }}>{this.state.languages[2].value}</Text>
+                            </TouchableOpacity>
+
+                            <Icon
+                                name="microphone"
+                                color="white"
+                                size={20}
+                                onPress={() => this.playAudio(this.state.languages[2].id)}
+                                style={{ marginTop: heightToDp("1.8%"), marginLeft: widthToDp("13%") }}
+                            />
+                        </View>
+
 
 
                         <View style={{ backgroundColor: BaseColor.Uridia, width: widthToDp("30%"), height: heightToDp("6%"), marginLeft: widthToDp("10%"), borderRadius: 100, flexDirection: 'row' }}>
@@ -254,18 +257,21 @@ export default class LanguageScreen extends Component {
                         </View>
 
                     </View>
-                    
-                        <View style={{ marginTop: heightToDp("4%"), backgroundColor: BaseColor.Santhali, width: widthToDp("30%"), height: heightToDp("6%"), borderRadius: 100, alignSelf: 'center', flexDirection: 'row' }}>
+
+                    <View style={{ marginTop: heightToDp("4%"), backgroundColor: BaseColor.Santhali, width: widthToDp("30%"), height: heightToDp("6%"), borderRadius: 100, alignSelf: 'center', flexDirection: 'row' }}>
+                        <TouchableOpacity onPress={() => this.test(this.state.languages[1].id)}>
                             <Text style={{ color: '#fff', marginTop: heightToDp("1.7%"), marginLeft: widthToDp("3.4%"), fontWeight: 'bold', fontSize: widthToDp("4.3%"), marginLeft: widthToDp("2%") }}>{this.state.languages[4].value}</Text>
-                            <Icon
-                                name="microphone"
-                                color="white"
-                                size={20}
-                                onPress={() => this.playAudio(this.state.languages[4].id)}
-                                style={{ marginTop: heightToDp("1.8%"), marginLeft: widthToDp("6%") }}
-                            />
-                        </View>
-                    
+                        </TouchableOpacity>
+
+                        <Icon
+                            name="microphone"
+                            color="white"
+                            size={20}
+                            onPress={() => this.playAudio(this.state.languages[4].id)}
+                            style={{ marginTop: heightToDp("1.8%"), marginLeft: widthToDp("6%") }}
+                        />
+                    </View>
+
                 </View>
             </View>
         );

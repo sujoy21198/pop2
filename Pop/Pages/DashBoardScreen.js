@@ -232,16 +232,19 @@ export default class DashBoardScreen extends Component {
                 name: "MoneyManagerScreen"
             })
         } else if (data === this.state.data[4].name) {
-            let isOnline = await NetInfo.fetch().then(state => state.isConnected);
-            if (isOnline) {
-                // console.warn("Message");
-            } else {
-                Toast.show({
-                    type: "warning",
-                    text: "Please be online to see Message section",
-                    duration: 3000
-                })
-            }
+            // let isOnline = await NetInfo.fetch().then(state => state.isConnected);
+            // if (isOnline) {
+            //     // console.warn("Message");
+            // } else {
+            //     Toast.show({
+            //         type: "warning",
+            //         text: "Please be online to see Message section",
+            //         duration: 3000
+            //     })
+            // }
+            this.props.navigation.navigate({
+                name: "MessageScreen"
+            })
         }
     }
 
