@@ -86,7 +86,7 @@ export default class SmallBusinessScreen extends Component {
                 name: 'DryFishScreen',
                 params: { value: 0 }
             })
-        }else if(expectedAnalysis === true){
+        }else if(expectedAnalysis === true || expectedAnalysis === false){
             this.props.navigation.navigate({
                 name: 'SmallBusinessDetailsScreen',
                 params: { value: id }

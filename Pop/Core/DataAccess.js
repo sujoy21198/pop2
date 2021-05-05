@@ -14,7 +14,8 @@ const DataAccess = {
     CustodianNumber :'get-custodian/',
     GetAllData: 'get-all-data',
     State : 'zones',
-    GetMessageTemplate : 'messaging-template/'
+    GetMessageTemplate : 'messaging-template/',
+    SendMessageTemplate : 'send/message'
 }
 
 export default DataAccess
