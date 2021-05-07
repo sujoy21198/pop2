@@ -219,6 +219,8 @@ export default class SmallBusinessDetailsScreen extends Component {
                 routes: [{ name: "DashBoardScreen" }]
             });
         }
+
+        this.getOfflineData()
         //alert(this.state.length)
          
     }
