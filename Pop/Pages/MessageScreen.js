@@ -22,16 +22,16 @@ export default class MessageScreen extends Component {
         this.state = {
             languageSelected: '',
             messages: [],
-            stepVideoLabel:'',
-            textLanguageChange:''
+            stepVideoLabel: '',
+            textLanguageChange: ''
         }
     }
 
-    componentDidMount(){
+    componentDidMount() {
         this.languagePresent()
     }
 
-    languagePresent = async() => {
+    languagePresent = async () => {
         let value = await AsyncStorage.getItem('language')
         if (value === 'en') {
             this.state.textLanguageChange = '0'
@@ -68,7 +68,7 @@ export default class MessageScreen extends Component {
                 this.setState({ stepVideoLabel: stepVideoLabel.nameSanthali })
             }
         } catch (error) {
-            alert(error)
+            console.log(error)
         }
         //this.setState({ crops: specificObject.crops })
         //this.showData()
@@ -119,9 +119,9 @@ export default class MessageScreen extends Component {
         }).catch(function (error) {
             console.log(error)
         })
-        if(status === '1'){
+        if (status === '1') {
             alert("Message sent successfully to the field officer. ")
-        }else{
+        } else {
             alert("Message sent")
         }
     }
@@ -129,19 +129,22 @@ export default class MessageScreen extends Component {
         return (
             <View style={{ backgroundColor: BaseColor.BackgroundColor, flex: 1 }}>
                 <TouchableOpacity onPress={() => this.getMessageTemplate()}>
-                    <View style={{ marginTop: heightToDp("20%"), alignSelf: 'center',backgroundColor:'#fff', width:widthToDp("50%"), height:heightToDp("4%") , borderRadius:20}}>
-                        <Text style={{alignSelf:'center',marginTop: heightToDp("0.6%")}}>{this.state.stepVideoLabel}</Text>
+                    <View style={{ marginTop: heightToDp("20%"), alignSelf: 'center', backgroundColor: '#fff', width: widthToDp("50%"), height: heightToDp("4%"), borderRadius: 20 }}>
+                        <Text style={{ alignSelf: 'center', marginTop: heightToDp("0.6%") }}>{this.state.stepVideoLabel}</Text>
                     </View>
                 </TouchableOpacity>
                 <View>
                     <ScrollView>
                         {
                             this.state.messages.map((i) => (
-                                <View style={{ backgroundColor: '#fff', height: heightToDp("8%"), marginTop: heightToDp("2%") }}>
+                                <View>
                                     <TouchableOpacity onPress={() => this.sendMessage(i.contentEnglish)}>
-                                        {
-                                            this.state.languageSelected === 'English' ? <Text style={{ alignSelf: 'center', marginTop: heightToDp("2%") }}>{i.contentEnglish}</Text> : ((this.state.languageSelected === 'Hindi') ? <Text style={{ alignSelf: 'center', marginTop: heightToDp("2%") }}>{i.contentEnglish}</Text> : ((this.state.languageSelected === 'Ho') ? <Text style={{ alignSelf: 'center', marginTop: heightToDp("2%") }}>{i.contentHo}</Text> : ((this.state.languageSelected === 'Odia') ? <Text style={{ alignSelf: 'center', marginTop: heightToDp("2%") }}>{i.contentOdia}</Text> : ((this.state.languageSelected === 'Santhali') ? <Text style={{ alignSelf: 'center', marginTop: heightToDp("2%") }}>{i.contentSanthali}</Text> : null))))
-                                        }
+                                        <View style={{ backgroundColor: '#fff', height: heightToDp("8%"), marginTop: heightToDp("2%") }}>
+                                            {
+                                                this.state.languageSelected === 'English' ? <Text style={{ alignSelf: 'center', marginTop: heightToDp("2%") }}>{i.contentEnglish}</Text> : ((this.state.languageSelected === 'Hindi') ? <Text style={{ alignSelf: 'center', marginTop: heightToDp("2%") }}>{i.contentEnglish}</Text> : ((this.state.languageSelected === 'Ho') ? <Text style={{ alignSelf: 'center', marginTop: heightToDp("2%") }}>{i.contentHo}</Text> : ((this.state.languageSelected === 'Odia') ? <Text style={{ alignSelf: 'center', marginTop: heightToDp("2%") }}>{i.contentOdia}</Text> : ((this.state.languageSelected === 'Santhali') ? <Text style={{ alignSelf: 'center', marginTop: heightToDp("2%") }}>{i.contentSanthali}</Text> : null))))
+                                            }
+                                        </View>
+
                                     </TouchableOpacity>
                                 </View>
                             ))
