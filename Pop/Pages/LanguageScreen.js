@@ -201,13 +201,16 @@ export default class LanguageScreen extends Component {
                             <TouchableOpacity onPress={() => this.test(this.state.languages[0].id)}>
                                 <Text style={{ color: '#fff', marginTop: heightToDp("1.2%"), fontFamily: 'Oswald-Medium', marginLeft: widthToDp("3%"), justifyContent: 'center' }}>{this.state.languages[0].value}</Text>
                             </TouchableOpacity>
-                            <Icon
-                                name="microphone"
-                                color="white"
-                                size={20}
+                            <TouchableOpacity
                                 onPress={() => this.playAudio(this.state.languages[0].id)}
                                 style={{ marginTop: heightToDp("1.8%"), marginLeft: widthToDp("6%") }}
-                            />
+                            >
+                                <Icon
+                                    name="microphone"
+                                    color="white"
+                                    size={20}
+                                />
+                            </TouchableOpacity>
                         </View>
 
 
@@ -215,13 +218,16 @@ export default class LanguageScreen extends Component {
                             <TouchableOpacity onPress={() => this.test(this.state.languages[1].id)}>
                                 <Text style={{ color: '#fff', marginTop: heightToDp("1.7%"), justifyContent: 'center', fontWeight: 'bold', fontSize: widthToDp("4.3%"), marginLeft: widthToDp("3%") }}>{this.state.languages[1].value}</Text>
                             </TouchableOpacity>
-                            <Icon
-                                name="microphone"
-                                color="white"
-                                size={20}
+                            <TouchableOpacity
                                 onPress={() => this.playAudio(this.state.languages[1].id)}
                                 style={{ marginTop: heightToDp("1.8%"), marginLeft: widthToDp("6%") }}
-                            />
+                            >
+                                <Icon
+                                    name="microphone"
+                                    color="white"
+                                    size={20}
+                                />
+                            </TouchableOpacity>
                         </View>
 
                     </View>
@@ -232,13 +238,16 @@ export default class LanguageScreen extends Component {
                                 <Text style={{ color: '#fff', marginTop: heightToDp("1.5%"), marginLeft: widthToDp("7%"), fontWeight: 'bold', fontSize: widthToDp("4.3%") }}>{this.state.languages[2].value}</Text>
                             </TouchableOpacity>
 
-                            <Icon
-                                name="microphone"
-                                color="white"
-                                size={20}
+                            <TouchableOpacity
                                 onPress={() => this.playAudio(this.state.languages[2].id)}
                                 style={{ marginTop: heightToDp("1.8%"), marginLeft: widthToDp("13%") }}
-                            />
+                            >
+                                <Icon
+                                    name="microphone"
+                                    color="white"
+                                    size={20}
+                                />
+                            </TouchableOpacity>
                         </View>
 
 
@@ -247,13 +256,16 @@ export default class LanguageScreen extends Component {
                             <TouchableOpacity onPress={() => this.test(this.state.languages[3].id)}>
                                 <Text style={{ color: '#fff', marginTop: heightToDp("1.7%"), marginLeft: widthToDp("4.7%"), fontWeight: 'bold', fontSize: widthToDp("4.3%"), marginLeft: widthToDp("3%") }}>{this.state.languages[3].value}</Text>
                             </TouchableOpacity>
-                            <Icon
-                                name="microphone"
-                                color="white"
-                                size={20}
+                            <TouchableOpacity
                                 onPress={() => this.playAudio(this.state.languages[3].id)}
                                 style={{ marginTop: heightToDp("1.8%"), marginLeft: widthToDp("6%") }}
-                            />
+                            >
+                                <Icon
+                                    name="microphone"
+                                    color="white"
+                                    size={20}
+                                />
+                            </TouchableOpacity>
                         </View>
 
                     </View>
@@ -263,13 +275,16 @@ export default class LanguageScreen extends Component {
                             <Text style={{ color: '#fff', marginTop: heightToDp("1.7%"), marginLeft: widthToDp("3.4%"), fontWeight: 'bold', fontSize: widthToDp("4.3%"), marginLeft: widthToDp("2%") }}>{this.state.languages[4].value}</Text>
                         </TouchableOpacity>
 
-                        <Icon
-                            name="microphone"
-                            color="white"
-                            size={20}
+                        <TouchableOpacity
                             onPress={() => this.playAudio(this.state.languages[4].id)}
                             style={{ marginTop: heightToDp("1.8%"), marginLeft: widthToDp("6%") }}
-                        />
+                        >
+                            <Icon
+                                name="microphone"
+                                color="white"
+                                size={20}
+                            />
+                        </TouchableOpacity>
                     </View>
 
                 </View>
