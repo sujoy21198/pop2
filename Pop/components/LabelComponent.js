@@ -74,13 +74,17 @@ export default class LabelComponent extends React.Component {
     componentDidMount = () => !this.props.directData ? this.setAudio() : false
 
     render = () => (
-        <View style={{
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            marginHorizontal: widthToDp("3%"), 
-            marginVertical: heightToDp(`${this.props.directData ? (this.props.marginVertical ? 1 : ((this.props.isAudioHaving) ? .8 : 1)) : 1.5}%`)
-        }}>
+        <View 
+            style={[
+                {
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    marginHorizontal: widthToDp("3%"), 
+                    marginVertical: heightToDp(`${this.props.directData ? (this.props.marginVertical ? 1 : ((this.props.isAudioHaving) ? .8 : 1)) : 1.5}%`)
+                }, this.props.dashboard && {marginBottom: 0}
+            ]
+        }>
             <Text 
                 style={{ 
                     color: "#fff", 
