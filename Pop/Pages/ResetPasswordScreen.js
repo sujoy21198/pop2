@@ -29,7 +29,10 @@ export default class ResetPasswordScreen extends Component {
             smallBusinessLabel: '',
             newPassword: '',
             confirmPassword: '',
-            isLoading: false
+            isLoading: false,
+            newPassword: "",
+            confirmPassword: "",
+            password: ""
         }
 
         this.state.languages = Languages
