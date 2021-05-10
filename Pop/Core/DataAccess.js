@@ -15,7 +15,10 @@ const DataAccess = {
     GetAllData: 'get-all-data',
     State : 'zones',
     GetMessageTemplate : 'messaging-template/',
-    SendMessageTemplate : 'send/message'
+    SendMessageTemplate : 'send/message',
+    sendOtp: 'send-otp',
+    verifyOtp: 'verify-otp',
+    resetPassword: 'reset-password'
 }
 
 export default DataAccess

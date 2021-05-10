@@ -18,6 +18,7 @@ import NetInfo from '@react-native-community/netinfo'
 import base64 from 'react-native-base64'
 import RNFetchBlob from 'rn-fetch-blob'
 import RNFS, { exists } from 'react-native-fs'
+import { Alert } from 'react-native'
 
 
 export default class SigninScreen extends Component {
@@ -1260,14 +1261,14 @@ export default class SigninScreen extends Component {
         var status
 
 
-        if (this.state.username === '') {
+        if (this.state.username.trim() === '') {
             this.setState({ isLoading: false })
             return Toast.show({
                 text: "please enter username",
                 type: 'danger',
                 duration: 3000
             })
-        } else if (this.state.password === '') {
+        } else if (this.state.password.trim() === '') {
             this.setState({ isLoading: false })
             return Toast.show({
                 text: "please enter password",
@@ -1278,8 +1279,8 @@ export default class SigninScreen extends Component {
 
         await axios.post(DataAccess.BaseUrl + DataAccess.AccessUrl + DataAccess.SignIn, {
             phone: this.state.phoneNumber,
-            username: this.state.username,
-            password: this.state.password,
+            username: this.state.username.trim(),
+            password: this.state.password.trim(),
             deviceId: deviceId
         }, {
             headers: {
@@ -1423,6 +1424,10 @@ export default class SigninScreen extends Component {
 
     }
 
+    forgotPassword = async () => {
+        this.props.navigation.navigate("ForgetPasswordScreen")
+    }
+
     displayData = async () => {
         try {
             //var count = 8
@@ -1504,13 +1509,13 @@ export default class SigninScreen extends Component {
                                             inputStyle={styles.input}
                                             style={styles.formInput}
                                             password={true}
-
+                                            value={this.state.password}
                                             onChangeText={(text) => { this.setState({ password: text }) }}
                                         // onBlur={this.onBlur}
                                         >{LanguageChange.password}</FloatingLabel>
                                     </View>
                                     {/* <View style={{ borderBottomColor: 'black', borderBottomWidth: 1, marginTop: heightToDp('1.5%'), width: widthToDp("80%"), alignSelf: 'center' }}></View> */}
-                                    <TouchableOpacity onPress={() => { this.props.navigation.navigate("ForgetPasswordScreen") }}>
+                                    <TouchableOpacity onPress={this.forgotPassword}>
                                         <View style={{ marginLeft: widthToDp("50%"), marginTop: heightToDp("0.5%"), width: widthToDp("37%") }}>
                                             <Text style={{ fontFamily: 'Oswald-Medium', fontSize: widthToDp("4%") }}>{LanguageChange.forgotPassword}</Text>
                                         </View>

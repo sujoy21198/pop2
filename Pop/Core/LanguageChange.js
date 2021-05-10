@@ -38,7 +38,11 @@ const LanguageChange = new LocalizedStrings({
     govtSchemes: 'सरकारी योजनाएँ',
     otp: 'ओ टी पी',
     blockPassword: ' पासवर्ड ब्लॉक करें',
-    block: 'खंड मैथा'
+    block: 'खंड मैथा',
+    sendOtp: "OTP भेजें",
+    verifyOtp: "OTP सत्यापित करे",
+    resetPassword: "नया पासवर्ड बनाए",
+    newPassword: "नया पासवर्",
   },
   en: {
     signIn: 'SIGN IN',
@@ -77,7 +81,11 @@ const LanguageChange = new LocalizedStrings({
     govtSchemes: 'GOVT SCHEMES',
     otp: 'OTP',
     blockPassword: 'BLOCK PASSWORD',
-    block: 'BLOCK'
+    block: 'BLOCK',
+    sendOtp: "Send OTP",
+    verifyOtp: "Verify OTP",
+    resetPassword: "Create New Password",
+    newPassword: "NEW PASSWORD",
   },
   od: {
     signIn: 'ଚୁକ୍ତି କରିବା',
@@ -116,7 +124,11 @@ const LanguageChange = new LocalizedStrings({
     govtSchemes: 'ଶାସନ ଯୋଜନା',
     otp: 'ଓ ଟି ପି',
     blockPassword: 'ପାସୱାର୍ଡ ଅବରୋଧ କରନ୍ତୁ |',
-    block: 'ବ୍ଲକ'
+    block: 'ବ୍ଲକ',
+    sendOtp: "OTP ପଠାନ୍ତୁ |",
+    verifyOtp: "OTP ଯାଞ୍ଚ କରନ୍ତୁ |",
+    resetPassword: "ନୂତନ ପାସୱାର୍ଡ ସୃଷ୍ଟି କରନ୍ତୁ |",
+    newPassword: "ନୁତନ ପାସ୍ୱାର୍ଡ",
   }
 })
 

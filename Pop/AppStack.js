@@ -63,6 +63,8 @@ import ForgetPasswordScreen from './Pages/ForgetPasswordScreen'
 import SmallBusinessDetailsScreen from './Pages/SmallBusinessDetailsScreen'
 import EditProfile from './Pages/EditProfile';
 import MessageScreen from './Pages/MessageScreen'
+import VerifyOtpScreen from './Pages/VerifyOtpScreen';
+import ResetPasswordScreen from './Pages/ResetPasswordScreen';
 
 const Stack = createStackNavigator();
 
@@ -130,6 +132,8 @@ function AppStack(){
                 <Stack.Screen name="SmallBusinessDetailsScreen" component={SmallBusinessDetailsScreen} options={{headerShown:false}}/>
                 <Stack.Screen name="EditProfile" component={EditProfile} options={{headerShown: false}}/>
                 <Stack.Screen name = 'MessageScreen' component={MessageScreen} options= {{headerShown: false}}/>
+                <Stack.Screen name="VerifyOtpScreen" component={VerifyOtpScreen} options={{headerShown: false}}/>
+                <Stack.Screen name="ResetPasswordScreen" component={ResetPasswordScreen} options={{headerShown: false}}/>
             </Stack.Navigator>
         </NavigationContainer>
     );

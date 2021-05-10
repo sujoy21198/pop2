@@ -14,31 +14,30 @@ import Logo from '../assets/Logo'
 import { ScrollView } from 'react-native'
 import FloatingLabel from 'react-native-floating-labels'
 import CustomIndicator from '../Core/CustomIndicator'
+import NetInfo from '@react-native-community/netinfo';
 import axios from 'axios'
 import DataAccess from '../Core/DataAccess'
-import NetInfo from '@react-native-community/netinfo';
 
 
-export default class ForgetPasswordScreen extends Component {
+export default class VerifyOtpScreen extends Component {
 
     constructor(props) {
         super(props)
         this.state = {
             data: [],
             languages: [],
-            smallBusinessLabel: '', 
-            username: '',
-            isLoading: false
+            smallBusinessLabel: '',
+            otp: ''
         }
 
         this.state.languages = Languages
     }
 
-    sendOtp = async () => {
-        if(this.state.username.trim() === "") {
+    verifyOtp = async () => {
+        if(this.state.otp.trim() === "") {
             return Toast.show({
                 type: "danger",
-                text: "Please enter username",
+                text: "Please enter OTP sent to the registered mobile number",
                 duration: 3000
             })
         }
@@ -51,8 +50,10 @@ export default class ForgetPasswordScreen extends Component {
             })
         }
         this.setState({isLoading: true})
-        let response = await axios.post(DataAccess.BaseUrl + DataAccess.AccessUrl + DataAccess.sendOtp, {
-            "username" : this.state.username.trim()
+        let response = await axios.post(DataAccess.BaseUrl + DataAccess.AccessUrl + DataAccess.verifyOtp, {
+            "verifyOtp" : this.state.otp.trim(),
+            "sentOtp" : this.props.route.params.sentOtp,
+            "userId" : this.props.route.params.userId
         });
         this.setState({isLoading: false})
         if(response.data.status == 2) {
@@ -62,13 +63,7 @@ export default class ForgetPasswordScreen extends Component {
                 duration: 3000
             })
         } else if(response.data.status == 1) {
-            this.props.navigation.navigate(
-                "VerifyOtpScreen", {
-                    sentOtp: response.data.hashData,
-                    userId: response.data.data._id,
-                    username: this.state.username.trim()
-                }
-            )
+            this.props.navigation.navigate("ResetPasswordScreen", {userId: this.props.route.params.userId, username: this.props.route.params.username})
             return Toast.show({
                 type: 'warning',
                 text: response.data.msg,
@@ -88,7 +83,7 @@ export default class ForgetPasswordScreen extends Component {
                         <Logo />
                     </View>
                     <View style={{ marginTop: heightToDp("5%") }}>
-                        <Text style={{ fontSize: widthToDp("7%"), alignSelf: 'center', fontFamily: 'Oswald-SemiBold' }}>{LanguageChange.forgotPassword}</Text>
+                        <Text style={{ fontSize: widthToDp("7%"), alignSelf: 'center', fontFamily: 'Oswald-SemiBold' }}>{LanguageChange.verifyOtp}</Text>
                     </View>
                 </View>
 
@@ -98,16 +93,17 @@ export default class ForgetPasswordScreen extends Component {
                         inputStyle={styles.input}
                         style={styles.formInput}
                         // onBlur={this.onBlur}
-                        onChangeText={(text) => { this.setState({ username: text }) }}
-                    >{LanguageChange.username}</FloatingLabel>
+                        onChangeText={(text) => { this.setState({ otp: text }) }}
+                    >{LanguageChange.otp}</FloatingLabel>
+
                     {
                         this.state.isLoading ? <CustomIndicator IsLoading={this.state.isLoading} /> : null
                     }
                     <TouchableOpacity 
-                    onPress={this.sendOtp}
+                    onPress={this.verifyOtp}
                     disabled={this.state.isLoading}>
                         <View style={{ backgroundColor: BaseColor.SecondaryColor, marginTop: heightToDp("5%"), width: widthToDp("60%"), alignSelf: 'center', height: heightToDp("5%"), borderRadius: 100 }}>
-                            <Text style={{ alignSelf: 'center', marginTop: heightToDp("0.5%"), fontWeight: '500', fontSize: widthToDp("5%"), fontFamily: 'Oswald-Medium' }}>{LanguageChange.sendOtp}</Text>
+                            <Text style={{ alignSelf: 'center', marginTop: heightToDp("0.5%"), fontWeight: '500', fontSize: widthToDp("5%"), fontFamily: 'Oswald-Medium' }}>{LanguageChange.verifyOtp}</Text>
                         </View>
                     </TouchableOpacity>
                 </ScrollView>
