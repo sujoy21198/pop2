@@ -56,7 +56,6 @@ export default class VerifyOtpScreen extends Component {
             "userId" : this.props.route.params.userId
         });
         this.setState({isLoading: false})
-        this.props.navigation.navigate("ResetPasswordScreen", {userId: this.props.route.params.userId, username: this.props.route.params.username})
         if(response.data.status == 2) {
             return Toast.show({
                 type: 'warning',
