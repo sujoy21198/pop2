@@ -17,8 +17,7 @@ import NetInfo from '@react-native-community/netinfo'
 import HeaderComponent from '../components/HeaderComponent'
 import RNFetchBlob from 'rn-fetch-blob'
 import LabelComponent from '../components/LabelComponent'
-
-var Sound = require("react-native-sound");
+import TrackPlayer from 'react-native-track-player';
 
 const data = [
     { name: 'Knowledge Center', code: 'fresh-green-vegetables-produce-greenhouse-garden-nursery-farm_33829-312.jpg' },
@@ -202,29 +201,19 @@ export default class DashBoardScreen extends Component {
             return false;
         }
     }
-
-    playSound = (audio) => {
+    
+    playSound = async (audio) => {
         if (this.checkAudioFileExistence(audio)) {
-            var sound = new Sound("/storage/emulated/0/Pictures/pop/image_" + audio, Sound.MAIN_BUNDLE, (error) => {
-                if (error) {
-                    console.log('Failed to load the sound', error);
-                    return;
-                }
-                // loaded successfully
-                console.log(
-                    'duration in seconds: ' + sound.getDuration() +
-                    ', number of channels: ' + sound.getNumberOfChannels()
-                );
+            await TrackPlayer.setupPlayer();
 
-                // Play the sound with an onEnd callback
-                sound.play((success) => {
-                    if (success) {
-                        console.log('successfully finished playing');
-                    } else {
-                        console.log('playback failed due to audio decoding errors');
-                    }
-                });
+            await TrackPlayer.add({
+                id: 'trackId',
+                url: "/storage/emulated/0/Pictures/pop/image_" + audio,
+                title: 'Track Title',
+                artist: 'Track Artist',
             });
+
+            await TrackPlayer.play();
         } else return;
     }
 
@@ -378,13 +367,7 @@ export default class DashBoardScreen extends Component {
             type: 'success'
         })
     }
-
-    knowledgeCenter = new Sound('/storage/emulated/0/Pictures/pop/image_knowledgeCenter.mp3')
-    importantLinks = new Sound('/storage/emulated/0/Pictures/pop/image_importantLinks.mp3')
-    moneyManager = new Sound('/storage/emulated/0/Pictures/pop/image_moneyManager.mp3')
-    contactNumber = new Sound('/storage/emulated/0/Pictures/pop/image_contactNumber.mp3')
-    message = new Sound('/storage/emulated/0/Pictures/pop/image_message.mp3')
-    generalSettings = new Sound('/storage/emulated/0/Pictures/pop/image_generalSettings.mp3')
+    
     dashboardaudio = async(index) => {
         if(index === 0) {
             this.knowledgeCenter.play()

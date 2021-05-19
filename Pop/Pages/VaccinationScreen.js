@@ -172,7 +172,7 @@ export default class VaccinationScreen extends Component {
                 this.setState({ intervalLabel: intervalLabel.nameOdia })
                 this.setState({ totalLabel: totalLabel.nameOdia })
                 this.setState({ months: months.nameOdia })
-                this.setState({ month: month.nameEnglish })
+                this.setState({ month: month.nameOdia })
                 this.setState({ backButtonText: back.nameOdia })
                 this.setState({ saveButtonText: save.nameOdia })
                 this.setState({ nextButtonText: next.nameOdia })
@@ -293,7 +293,7 @@ export default class VaccinationScreen extends Component {
                     livestockName: this.state.livestockName
                 }
             })
-        }else if (this.state.value === 0) {
+        }else if (this.state.value === 1) {
             this.props.navigation.navigate({
                 name: 'LivestockTableScreen',
                 params: {
@@ -303,7 +303,7 @@ export default class VaccinationScreen extends Component {
                     livestockName: this.state.livestockName
                 }
             })
-        } else if (this.state.value === 1) {
+        } else if (this.state.value === 0) {
             this.props.navigation.navigate({
                 name: 'PultryTableScreen',
                 params: {
@@ -462,7 +462,7 @@ export default class VaccinationScreen extends Component {
                                         {
                                             vaccine.map((i) => {
                                                 return (
-                                                    <Text style={{ marginBottom: heightToDp("3.5%"), fontSize: widthToDp('3.3%') }}>{this.state.textLanguageChange==="0" ? i.itemEnglish : this.state.textLanguageChange==="1" ? i.itemHindi : this.state.textLanguageChange==="2" ? i.itemHo : this.state.textLanguageChange==="3" ? i.itemOdia : i.itemSanthala}</Text>
+                                                    <Text style={{ marginBottom: heightToDp("3.5%"), fontSize: widthToDp('3.3%') }}>{this.state.textLanguageChange==="0" ? i.itemEnglish : this.state.textLanguageChange==="1" ? i.itemHindi : this.state.textLanguageChange==="2" ? i.itemHo : this.state.textLanguageChange==="3" ? i.itemOdia : i.itemSanthali}</Text>
                                                 )
                                             })
                                         }

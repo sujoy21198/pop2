@@ -17,8 +17,6 @@ import LanguageChange from '../Core/LanguageChange'
 import LabelComponent from '../components/LabelComponent'
 import HeaderComponent from '../components/HeaderComponent'
 
-const Sound = require('react-native-sound')
-
 
 const data = [
     { name: 'HIGH LAND', code: 'https://shramajeewiki.com/images/English/00214136.jpg' },
@@ -27,8 +25,6 @@ const data = [
 ]
 
 export default class ImportantLinksSubCategoryScreen extends Component {
-
-    sound = new Sound('http://commondatastorage.googleapis.com/codeskulptor-assets/jump.ogg')
 
     constructor(props) {
         super(props)
@@ -126,13 +122,6 @@ export default class ImportantLinksSubCategoryScreen extends Component {
                 descSanthali:descSanthali
             }
         })
-    }
-
-
-
-    speak = (data) => {
-        // tts.speak(data)
-        this.sound.play()
     }
 
     setLanguageOnMount = async () => {

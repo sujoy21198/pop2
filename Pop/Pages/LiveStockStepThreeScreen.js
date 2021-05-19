@@ -210,7 +210,7 @@ export default class LiveStockStepThreeScreen extends Component {
 
     nextButton = () => {
         var test = this.state.livestockName
-        if (this.state.livestockName === 'Goat') {
+        if (this.state.livestockName === 'Backyard Poultry') {
             // this.props.navigation.navigate({
             //     name: 'LivestockTableScreen',
             //     params:{
@@ -238,7 +238,7 @@ export default class LiveStockStepThreeScreen extends Component {
                 name: 'VaccinationScreen',
                 params: { value: 2, name : this.state.livestockName }
             })
-        } else if (this.state.livestockName === 'Pig') {
+        } else if (this.state.livestockName === 'Goat') {
             // this.props.navigation.navigate({
             //     name: 'PigTableScreen',
             //     params:{

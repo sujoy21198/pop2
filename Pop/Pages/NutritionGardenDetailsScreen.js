@@ -19,12 +19,7 @@ import { ScrollView } from 'react-native-gesture-handler'
 import HTML from "react-native-render-html";
 
 
-const Sound = require('react-native-sound')
-
-
 export default class NutritionGardenDetailsScreen extends Component {
-
-    //sound = new Sound('http://commondatastorage.googleapis.com/codeskulptor-assets/jump.ogg')
 
     constructor(props) {
         super(props)
@@ -121,14 +116,6 @@ export default class NutritionGardenDetailsScreen extends Component {
     openLink = (link) => {
         Linking.openURL(link)
     }
-
-
-
-
-    // speak = (data) => {
-    //     // tts.speak(data)
-    //     this.sound.play()
-    // }
 
 
     render() {

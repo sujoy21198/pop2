@@ -19,11 +19,7 @@ import LabelComponent from '../components/LabelComponent'
 import RNFetchBlob from 'rn-fetch-blob'
 import HeaderComponent from '../components/HeaderComponent'
 
-const Sound = require('react-native-sound')
-
 export default class VegetableVendingScreen extends Component {
-
-    sound = new Sound('http://commondatastorage.googleapis.com/codeskulptor-assets/jump.ogg')
 
     constructor(props) {
         super(props)
@@ -58,31 +54,6 @@ export default class VegetableVendingScreen extends Component {
         } else {
             return false;
         }
-    }
-    
-    playSound = (audio) => {
-        if(this.checkAudioFileExistence(audio)) {
-            var sound = new Sound("/storage/emulated/0/Pictures/image_" + audio, Sound.MAIN_BUNDLE, (error) => {
-                if (error) {
-                    console.log('failed to load the sound', error);
-                    return;
-                }
-                // loaded successfully
-                console.log(
-                    'duration in seconds: ' + sound.getDuration() + 
-                    ', number of channels: ' + sound.getNumberOfChannels()
-                );
-                
-                // Play the sound with an onEnd callback
-                sound.play((success) => {
-                    if (success) {
-                        console.log('successfully finished playing');
-                    } else {
-                        console.log('playback failed due to audio decoding errors');
-                    }
-                });
-            });
-        } else return;
     }
 
 
@@ -233,7 +204,7 @@ export default class VegetableVendingScreen extends Component {
 
             var descri = specificObject.vegetableVending[this.state.pageCounter]
             this.setState({ screensData: specificObject.vegetableVending[this.state.pageCounter] })
-            console.log(specificObject.vegetableVending[3])
+            // console.log(specificObject.vegetableVending[3])
         } catch (error) {
             console.log(error)
         }

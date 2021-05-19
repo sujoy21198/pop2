@@ -1060,7 +1060,7 @@ export default class SigninScreen extends Component {
             newOfflineData.push(offlineDataToBeSaved)
         }
 
-
+        console.warn(newOfflineData[0].importantLinks);
         await AsyncStorage.setItem("offlineData", JSON.stringify(newOfflineData))
             .then(() => {
                 // this.props.navigation.reset({

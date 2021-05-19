@@ -5,8 +5,8 @@ import { SafeAreaView, Text, View } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome'
 import RNFetchBlob from 'rn-fetch-blob';
 import { heightToDp, widthToDp } from '../Responsive';
+import TrackPlayer from 'react-native-track-player';
 
-var Sound = require('react-native-sound');
 export default class LabelComponent extends React.Component {
     state = {};
 
@@ -19,28 +19,18 @@ export default class LabelComponent extends React.Component {
         }
     }
     
-    playSound = (audio) => {
+    playSound = async (audio) => {
         if(this.checkAudioFileExistence(audio)) {
-            var sound = new Sound("/storage/emulated/0/Pictures/pop/image_" + audio, Sound.MAIN_BUNDLE, (error) => {
-            if (error) {
-                console.log('failed to load the sound', error);
-                return;
-            }
-            // loaded successfully
-            console.log(
-                'duration in seconds: ' + sound.getDuration() + 
-                ', number of channels: ' + sound.getNumberOfChannels()
-            );
-            
-            // Play the sound with an onEnd callback
-            sound.play((success) => {
-                if (success) {
-                    console.log('successfully finished playing');
-                } else {
-                    console.log('playback failed due to audio decoding errors');
-                }
+            await TrackPlayer.setupPlayer();
+
+            await TrackPlayer.add({
+                id: 'trackId',
+                url: "/storage/emulated/0/Pictures/pop/image_" + audio,
+                title: 'Track Title',
+                artist: 'Track Artist',
             });
-            });
+
+            await TrackPlayer.play();
         } else return;
     }
 
