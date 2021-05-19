@@ -20,6 +20,7 @@ export default class LabelComponent extends React.Component {
     }
     
     playSound = async (audio) => {
+        console.log(audio);
         if(this.checkAudioFileExistence(audio)) {
             await TrackPlayer.setupPlayer();
 
@@ -38,24 +39,29 @@ export default class LabelComponent extends React.Component {
         try {
             let language = await AsyncStorage.getItem('language')
             let offlineData = JSON.parse(await AsyncStorage.getItem("offlineData"));
-            switch(language) {
-                case "en" : 
-                    this.setState({stepAudio: offlineData[0][this.props.asyncKey][this.props.index].audioEnglish})
-                    break;
-                case "hi" :
-                    this.setState({stepAudio: offlineData[0][this.props.asyncKey][this.props.index].audioHindi})
-                    break;
-                case "ho" :
-                    this.setState({stepAudio: offlineData[0][this.props.asyncKey][this.props.index].audioHo})
-                    break;
-                case "od" :
-                    this.setState({stepAudio: offlineData[0][this.props.asyncKey][this.props.index].audioOdia})
-                    break;
-                case "san" :
-                    this.setState({stepAudio: offlineData[0][this.props.asyncKey][this.props.index].audioSanthali})
-                    break;
-                default: 
-                    break;
+            if(
+                Object.keys(offlineData[0]).includes(this.props.asyncKey) &&
+                Object.keys(offlineData[0][this.props.asyncKey]).includes(this.props.index)
+            ) {
+                switch(language) {
+                    case "en" : 
+                        this.setState({stepAudio: offlineData[0][this.props.asyncKey][this.props.index].audioEnglish})
+                        break;
+                    case "hi" :
+                        this.setState({stepAudio: offlineData[0][this.props.asyncKey][this.props.index].audioHindi})
+                        break;
+                    case "ho" :
+                        this.setState({stepAudio: offlineData[0][this.props.asyncKey][this.props.index].audioHo})
+                        break;
+                    case "od" :
+                        this.setState({stepAudio: offlineData[0][this.props.asyncKey][this.props.index].audioOdia})
+                        break;
+                    case "san" :
+                        this.setState({stepAudio: offlineData[0][this.props.asyncKey][this.props.index].audioSanthali})
+                        break;
+                    default: 
+                        break;
+                }
             }
         } catch (e) {
             console.log(e);
