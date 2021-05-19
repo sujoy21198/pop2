@@ -898,7 +898,7 @@ export default class SigninScreen extends Component {
         this.state.phoneNumber = '1000000000'
         this.state.username = 'Guest'
         this.state.password = '12'
-        this.signIn()
+        this.signIn("guest")
         // this.setState({username : 'anonymous@abc.com'})
         // this.setState({password : 'Test@12345'})
     }
@@ -1251,7 +1251,7 @@ export default class SigninScreen extends Component {
         this.setState({ phoneNumber: phone })
     }
 
-    signIn = async () => {
+    signIn = async (type) => {
         let deviceId = await DeviceInfo.getAndroidId()
         var load = true
         this.setState({ isLoading: true })
@@ -1313,6 +1313,9 @@ export default class SigninScreen extends Component {
                 AsyncStorage.setItem("district", response.data.data.district)
                 AsyncStorage.setItem("panchayat", response.data.data.panchayat)
                 AsyncStorage.setItem("village", response.data.data.village)
+                if(type === "guest") {
+                    AsyncStorage.setItem("isGuest", "true");
+                }
                 //AsyncStorage.setItem("block", response.data.data.block[0].block)
             } else {
                 load = false

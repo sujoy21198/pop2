@@ -15,6 +15,7 @@ import base64 from 'react-native-base64'
 
 export default class GeneralSettingsScreen extends Component {
     state = {
+        isGuest: "",
         refreshLabel: "",
         patch:[],
         moneyManagerData:[],
@@ -23,7 +24,9 @@ export default class GeneralSettingsScreen extends Component {
     };
     go = async () => {
         await AsyncStorage.removeItem('_id')
-        
+        if(await AsyncStorage.getItem("isGuest") !== null) {
+            await AsyncStorage.removeItem("isGuest");
+        }
         this.props.navigation.reset({
             index: 0,
             routes: [{ name: "LanguageScreen" }]
@@ -40,7 +43,11 @@ export default class GeneralSettingsScreen extends Component {
             routes: [{ name: "LanguageScreen" }]
         });
     }
-    componentDidMount = async() => this.setLanguageOnMount();
+    componentDidMount = async() => {
+        let isGuest = await AsyncStorage.getItem("isGuest");
+        this.setState({isGuest});
+        this.setLanguageOnMount();
+    }
 
     setLanguageOnMount = async () => {
         let defaultLanguage = await AsyncStorage.getItem('language')
@@ -176,30 +183,33 @@ export default class GeneralSettingsScreen extends Component {
                 justifyContent: 'center',
                 alignItems: 'center' 
             }}>     
-                <TouchableOpacity 
-                    style={{
-                        flexDirection: 'row',
-                        justifyContent: 'space-between',
-                        alignItems: 'center',
-                        marginBottom: heightToDp("5%"),
-                        padding: heightToDp("2%"),
-                        borderWidth: 1,
-                        borderRadius: 10,
-                        borderColor: '#fff',
-                        backgroundColor: '#fff'
-                    }}
-                    onPress={() => this.props.navigation.navigate("EditProfile")}
-                >
-                    <Ionicons
-                        name={Platform.OS==="android" ? 'md-create-outline' : 'ios-create-outline'}
-                        size={40}
-                        color={"#1b1b1b"}
-                    />
-                    <Text style={{
-                        fontSize: 30,
-                        marginLeft: widthToDp("4%")
-                    }}>{this.state.updateProfileLabel}</Text>
-                </TouchableOpacity>           
+                {
+                    this.state.isGuest !== "true" &&
+                    <TouchableOpacity 
+                        style={{
+                            flexDirection: 'row',
+                            justifyContent: 'space-between',
+                            alignItems: 'center',
+                            marginBottom: heightToDp("5%"),
+                            padding: heightToDp("2%"),
+                            borderWidth: 1,
+                            borderRadius: 10,
+                            borderColor: '#fff',
+                            backgroundColor: '#fff'
+                        }}
+                        onPress={() => this.props.navigation.navigate("EditProfile")}
+                    >
+                        <Ionicons
+                            name={Platform.OS==="android" ? 'md-create-outline' : 'ios-create-outline'}
+                            size={40}
+                            color={"#1b1b1b"}
+                        />
+                        <Text style={{
+                            fontSize: 30,
+                            marginLeft: widthToDp("4%")
+                        }}>{this.state.updateProfileLabel}</Text>
+                    </TouchableOpacity>
+                }           
                 <TouchableOpacity 
                     style={{
                         flexDirection: 'row',
@@ -243,31 +253,34 @@ export default class GeneralSettingsScreen extends Component {
                     />
                 </TouchableOpacity>
                 
-                <TouchableOpacity 
-                    style={{
-                        flexDirection: 'row',
-                        justifyContent: 'space-between',
-                        alignItems: 'center',
-                        marginBottom: heightToDp("5%"),
-                        padding: heightToDp("2%"),
-                        borderWidth: 1,
-                        borderRadius: 10,
-                        borderColor: '#fff',
-                        backgroundColor: '#fff',
-                        marginTop:heightToDp("5%")
-                    }}
-                    onPress={() => this.dataSync()}
-                >
-                    <Database
-                        name="database"
-                        size={30}
-                        onPress={() => {}}
-                    />
-                    <Text style={{
-                        fontSize: 30,
-                        marginLeft: widthToDp("4%")
-                    }}>DATA SYNC</Text>
-                </TouchableOpacity>
+                {
+                    this.state.isGuest !== "true" &&
+                    <TouchableOpacity 
+                        style={{
+                            flexDirection: 'row',
+                            justifyContent: 'space-between',
+                            alignItems: 'center',
+                            marginBottom: heightToDp("5%"),
+                            padding: heightToDp("2%"),
+                            borderWidth: 1,
+                            borderRadius: 10,
+                            borderColor: '#fff',
+                            backgroundColor: '#fff',
+                            marginTop:heightToDp("5%")
+                        }}
+                        onPress={() => this.dataSync()}
+                    >
+                        <Database
+                            name="database"
+                            size={30}
+                            onPress={() => {}}
+                        />
+                        <Text style={{
+                            fontSize: 30,
+                            marginLeft: widthToDp("4%")
+                        }}>DATA SYNC</Text>
+                    </TouchableOpacity>
+                }
 
                 <Text style={{
                     position: 'absolute',

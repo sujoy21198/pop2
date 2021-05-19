@@ -151,9 +151,14 @@ export default class NotificationScreen extends Component {
                             <Text style={{ fontSize: widthToDp("7%"), alignSelf: 'center',fontFamily:'Oswald-SemiBold' }}>{this.state.notificationHeaderLabel}</Text>
                         </View>
                         <FlatGrid
-                            style={{ marginTop: heightToDp("2%"), marginBottom: heightToDp("50%") }}
+                            ListHeaderComponent={
+                                <View style={{height: heightToDp("5%")}}/>
+                            }
                             bounces={true}
                             itemDimension={130}
+                            ListFooterComponent={
+                                <View style={{height: heightToDp("28%")}}/>
+                            }
                             data={this.state.notificationList}
                             bouncesZoom={true}
                             renderItem={({ item }) => (

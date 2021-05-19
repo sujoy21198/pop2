@@ -12,10 +12,13 @@ import { Toast } from 'native-base';
 
 export default class HeaderComponent extends React.Component {
     state = {
-        notificationCount: 0
+        notificationCount: 0,
+        isGuest: ""
     }
 
     componentDidMount = async() => {
+        let isGuest = await AsyncStorage.getItem("isGuest");
+        this.setState({isGuest})
         let isOnline = await NetInfo.fetch().then(state => state.isConnected);
         if(isOnline) {
             let username = base64.encode(await AsyncStorage.getItem('username'));
@@ -56,7 +59,7 @@ export default class HeaderComponent extends React.Component {
             </View>
 
             {
-                this.props.isDashboard &&
+                this.props.isDashboard && this.state.isGuest !== "true" &&
                 <Sync
                     name="sync"
                     size={30}
@@ -70,7 +73,7 @@ export default class HeaderComponent extends React.Component {
                 <Icon
                     name="home"
                     size={30}
-                    style={{ marginTop: heightToDp("4.6%"), marginLeft: widthToDp(`${this.props.isDashboard ? 5 : this.props.hideBell ? 55 : 42}%`) }}
+                    style={{ marginTop: heightToDp("4.6%"), marginLeft: widthToDp(`${(this.props.isDashboard && this.state.isGuest !== "true") ? 5 : this.props.hideBell ? 55 : 42}%`) }}
                     onPress={() => this.props.navigation.navigate('DashBoardScreen')}
                 />
             }
@@ -80,7 +83,7 @@ export default class HeaderComponent extends React.Component {
                         <Icon
                             name="bell"
                             size={30}
-                            style={{ marginTop: heightToDp("4.6%"), marginLeft: widthToDp("5%") }}
+                            style={{ marginTop: heightToDp("4.6%"), marginLeft: widthToDp(`${(this.state.isGuest === "true" && this.props.hideHome) ? 52 : 5}%`) }}
                             onPress={this.getNotifications}
                         />
                         <View style={{
