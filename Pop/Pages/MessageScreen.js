@@ -16,6 +16,7 @@ import HeaderComponent from '../components/HeaderComponent'
 import Languages from '../Core/Languages'
 import CustomIndicator from '../Core/CustomIndicator';
 import { Alert } from 'react-native'
+import { Toast } from 'native-base'
 
 
 
@@ -30,7 +31,8 @@ export default class MessageScreen extends Component {
             textLanguageChange: '',
             isLoading: false,
             headerLabel: '',
-            descLabel: ''
+            descLabel: '',
+            englishMessages: []
         }
         this.state.languages = Languages
     }
@@ -38,6 +40,10 @@ export default class MessageScreen extends Component {
     componentDidMount() {
         this.languagePresent()
         this.getMessageTemplate()
+    }
+
+    getEnglishMessageTemplates = () => {
+
     }
 
     languagePresent = async () => {
@@ -151,32 +157,79 @@ export default class MessageScreen extends Component {
             messages = [];
         })
         // this.state.messages = messages
-        this.setState({ messages: messages, isLoading: false })
-        console.log(this.state.messages)
-
+        this.setState({ messages: messages })
+        if (language !== "English") {
+            this.getEnglishMessageTemplates()
+        }  else {
+            this.setState({isLoading: false})
+        }
     }
 
-    sendMessage = async (msg) => {
-        this.setState({isLoading: true})
-        let userId = await AsyncStorage.getItem('_id')
-        //console.log(userId)
-        var status, successText = ''
-        await axios.post('https://tupop.in/api/v1/send/message', {
-            "userId": userId,
-            "message": msg
+    getEnglishMessageTemplates = async () => {
+        let englishMessages = [];
+        await axios.get(DataAccess.BaseUrl + DataAccess.AccessUrl + DataAccess.GetMessageTemplate + "English", {
+            headers: {
+                'Content-type': "accept"
+            }
         }).then(function (response) {
-            //messages = response.data.data
-            console.log(response.data, msg, userId);
-            successText = response.data.msg;
-            status = response.data.status
+            englishMessages = response.data.data
+            //console.log(response.data.data)
         }).catch(function (error) {
             console.log(error)
+            englishMessages = [];
         })
-        this.setState({isLoading: false})
-        if (Number(status) === 1 || Number(status) === 2) {
-            Alert.alert("Server Message", successText, [{text: "Ok"}]);
+        this.setState({englishMessages, isLoading: false})
+        console.log(this.state.messages, this.state.englishMessages);
+    }
+    
+
+    sendMessage = async (item) => {
+        let isGuest = await AsyncStorage.getItem("isGuest");
+        if(isGuest === "true") {
+            return Toast.show({
+                type: 'warning',
+                text: "You can't send message by logging as a guest user",
+                duration: 3000
+            })
         } else {
-            alert("Some error occurred")
+            this.setState({isLoading: true})
+            let userId = await AsyncStorage.getItem('_id')
+            //console.log(userId)
+            let status, successText = '', msg = '';
+            if(this.state.textLanguageChange === "0") {
+                msg = item.contentEnglish;
+            } else {
+                this.state.englishMessages.map(element => {
+                    if(element._id === item._id) {
+                        msg = element.contentEnglish;
+                    }
+                })
+            }
+            await axios.post('https://tupop.in/api/v1/send/message', {
+                "userId": userId,
+                "message": msg
+            }).then(function (response) {
+                //messages = response.data.data
+                console.log(response.data, msg, userId);
+                successText = response.data.msg;
+                status = response.data.status
+            }).catch(function (error) {
+                console.log(error)
+            })
+            this.setState({isLoading: false})
+            if (Number(status) === 1 || Number(status) === 2) {
+                Toast.show({
+                    type: 'success',
+                    text: successText,
+                    duration: 3000
+                })
+            } else {
+                Toast.show({
+                    type: 'danger',
+                    text: "Some error occurred",
+                    duration: 3000
+                })
+            }
         }
     }
     render() {
@@ -257,13 +310,7 @@ export default class MessageScreen extends Component {
                                 <TouchableOpacity 
                                     activeOpacity={0.7}
                                     style={{ backgroundColor: '#fff', padding: widthToDp("5%"), marginTop: heightToDp("2%"), borderRadius: 10 }}
-                                    onPress={() => this.sendMessage(
-                                        this.state.textLanguageChange === "0" ? i.contentEnglish :
-                                        this.state.textLanguageChange === "1" ? i.contentHindi :
-                                        this.state.textLanguageChange === "2" ? i.contentHo :
-                                        this.state.textLanguageChange === "3" ? i.contentOdia :
-                                        this.state.textLanguageChange === "4" ? i.contentSanthali : ""
-                                    )}
+                                    onPress={() => this.sendMessage(i)}
                                 >
                                     {
                                         this.state.textLanguageChange === "0" ? <Text style={{ textAlign: 'center', fontSize: widthToDp("4.5%") }}>{i.contentEnglish}</Text> : ((this.state.textLanguageChange === "1") ? <Text style={{ textAlign: 'center', fontSize: widthToDp("4.5%") }}>{i.contentHindi}</Text> : ((this.state.textLanguageChange === "2") ? <Text style={{ textAlign: 'center', fontSize: widthToDp("4.5%") }}>{i.contentHo}</Text> : ((this.state.textLanguageChange === "3") ? <Text style={{ textAlign: 'center', fontSize: widthToDp("4.5%") }}>{i.contentOdia}</Text> : ((this.state.textLanguageChange === "4") ? <Text style={{ textAlign: 'center', fontSize: widthToDp("4.5%") }}>{i.contentSanthali}</Text> : null))))
