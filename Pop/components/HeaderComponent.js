@@ -9,6 +9,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import base64 from 'react-native-base64';
 import { Toast } from 'native-base';
+import { TouchableOpacity } from 'react-native';
+import { Image } from 'react-native';
 
 export default class HeaderComponent extends React.Component {
     state = {
@@ -60,12 +62,15 @@ export default class HeaderComponent extends React.Component {
 
             {
                 this.props.isDashboard && this.state.isGuest !== "true" &&
-                <Sync
-                    name="sync"
-                    size={30}
-                    style={{ marginTop: heightToDp("4.6%"), marginLeft: widthToDp(`${this.props.hideHome ? 41.5 : 30}%`) }}
-                    onPress={this.props.syncData}
-                />
+                <TouchableOpacity
+                style={{ marginTop: heightToDp(`${this.props.hideHome ? 3.8 : 4.6}%`), marginLeft: widthToDp(`${this.props.hideHome ? 41.5 : 30}%`) }}
+                onPress={this.props.syncData}
+                >
+                    <Image
+                    source={require("../assets/data-sync.png")}
+                    style={{height: 40, width: 30, resizeMode: 'contain'}}
+                    />
+                </TouchableOpacity>
             }
 
             {
@@ -86,22 +91,25 @@ export default class HeaderComponent extends React.Component {
                             style={{ marginTop: heightToDp("4.6%"), marginLeft: widthToDp(`${(this.state.isGuest === "true" && this.props.hideHome) ? 52 : 5}%`) }}
                             onPress={this.getNotifications}
                         />
-                        <View style={{
-                            position: 'absolute',
-                            top: heightToDp("3.2%"),
-                            right: widthToDp("3%"),
-                            width: 20,
-                            height: 20, 
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            borderRadius: 20 / 2,
-                            backgroundColor: '#1b1b1b'
-                        }}>
-                            <Text style={{
-                                fontSize: widthToDp("3.3%"),
-                                color: '#fff'
-                            }}>{this.state.notificationCount}</Text>
-                        </View>
+                        {
+                            !this.props.messageScreen &&
+                            <View style={{
+                                position: 'absolute',
+                                top: heightToDp("3.2%"),
+                                right: widthToDp("3%"),
+                                width: 20,
+                                height: 20, 
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                borderRadius: 20 / 2,
+                                backgroundColor: '#1b1b1b'
+                            }}>
+                                <Text style={{
+                                    fontSize: widthToDp("3.3%"),
+                                    color: '#fff'
+                                }}>{this.state.notificationCount}</Text>
+                            </View>
+                        }
                     </>
             }            
         </View>

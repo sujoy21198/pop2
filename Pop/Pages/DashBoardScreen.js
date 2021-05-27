@@ -262,9 +262,18 @@ export default class DashBoardScreen extends Component {
             //         duration: 3000
             //     })
             // }
-            this.props.navigation.navigate({
-                name: "MessageScreen"
-            })
+            let isOnline = await NetInfo.fetch().then(state => state.isConnected);
+            if(isOnline) {
+                this.props.navigation.navigate({
+                    name: "MessageScreen"
+                })
+            } else {
+                Toast.show({
+                    type: 'warning',
+                    text: "Please be online to see messages",
+                    duration: 3000
+                })
+            }
         }
     }
 
@@ -393,12 +402,12 @@ export default class DashBoardScreen extends Component {
                     syncData={this.syncData}
                 />
                 <View style={{ flexDirection: 'row', marginTop: heightToDp("1%"), marginHorizontal: widthToDp("1%") }}>
-                    <View style={{ flex: 1, backgroundColor: BaseColor.English, alignItems: 'center', justifyContent: 'center', width: widthToDp("30%"), height: heightToDp("6%"), marginLeft: widthToDp("2%"), borderRadius: 100, flexDirection: 'row' }}>
+                    <View style={{ backgroundColor: BaseColor.English, marginLeft: widthToDp("2%"), alignItems: 'center', justifyContent: 'center', width: widthToDp("30%"), height: heightToDp("6%"), borderRadius: 100, flexDirection: 'row' }}>
                         <TouchableOpacity
                             style={{ width: widthToDp("15%") }}
                             onPress={() => this.languageChangeFunction(this.state.languages[0].id)}
                         >
-                            <Text style={{ color: '#fff', fontFamily: 'Oswald-Medium' }}>{this.state.languages[0].value}</Text>
+                            <Text style={{ color: '#fff', fontFamily: 'Oswald-Medium', fontSize: widthToDp("3.6%") }}>{this.state.languages[0].value}</Text>
                         </TouchableOpacity>
                         {
                             this.state.languages[0].audio!==null &&
@@ -408,19 +417,19 @@ export default class DashBoardScreen extends Component {
                             >
                                 <Icon
                                     name="microphone"
-                                    size={30}
+                                    size={25}
                                     color={"#fff"}
                                     style={{ marginLeft: widthToDp("3%") }}
                                 />
                             </TouchableOpacity>
                         }                        
                     </View>
-                    <View style={{ flex: 1, backgroundColor: BaseColor.Hindi, alignItems: 'center', justifyContent: 'center', width: widthToDp("30%"), height: heightToDp("6%"), marginLeft: widthToDp("2%"), borderRadius: 100, flexDirection: 'row' }}>
+                    <View style={{ backgroundColor: BaseColor.Hindi, alignItems: 'center', justifyContent: 'center', width: widthToDp("30%"), height: heightToDp("6%"), marginLeft: widthToDp("2%"), borderRadius: 100, flexDirection: 'row' }}>
                         <TouchableOpacity
                             style={{ width: widthToDp("10%") }}
                             onPress={() => this.languageChangeFunction(this.state.languages[1].id)}
                         >
-                            <Text style={{ color: '#fff', fontFamily: 'Oswald-Medium' }}>{this.state.languages[1].value}</Text>
+                            <Text style={{ color: '#fff', fontFamily: 'Oswald-Medium', fontSize: widthToDp("3.6%") }}>{this.state.languages[1].value}</Text>
                         </TouchableOpacity>
                         {
                             this.state.languages[1].audio &&
@@ -430,19 +439,19 @@ export default class DashBoardScreen extends Component {
                             >
                                 <Icon
                                     name="microphone"
-                                    size={30}
+                                    size={25}
                                     color={"#fff"}
-                                    style={{ marginLeft: widthToDp("3%") }}
+                                    style={{ marginLeft: widthToDp("5%") }}
                                 />
                             </TouchableOpacity>
                         }                        
                     </View>
-                    <View style={{ flex: 1, backgroundColor: BaseColor.Ho, alignItems: 'center', justifyContent: 'center', width: widthToDp("30%"), height: heightToDp("6%"), marginLeft: widthToDp("2%"), borderRadius: 100, flexDirection: 'row' }}>
+                    <View style={{ backgroundColor: BaseColor.Ho, alignItems: 'center', justifyContent: 'center', width: widthToDp("30%"), height: heightToDp("6%"), marginLeft: widthToDp("2%"), borderRadius: 100, flexDirection: 'row' }}>
                         <TouchableOpacity
                             style={{ width: widthToDp("14%") }}
                             onPress={() => this.languageChangeFunction(this.state.languages[2].id)}
                         >
-                            <Text style={{ color: '#fff', fontFamily: 'Oswald-Medium' }}>{this.state.languages[2].value}</Text>
+                            <Text style={{ color: '#fff', fontFamily: 'Oswald-Medium', fontSize: widthToDp("3.6%") }}>{this.state.languages[2].value}</Text>
                         </TouchableOpacity>
                         {
                             this.state.languages[2].audio &&
@@ -452,7 +461,7 @@ export default class DashBoardScreen extends Component {
                             >
                                 <Icon
                                     name="microphone"
-                                    size={30}
+                                    size={25}
                                     color={"#fff"}
                                     style={{ marginLeft: widthToDp("3%") }}
                                 />
@@ -461,34 +470,34 @@ export default class DashBoardScreen extends Component {
                     </View>
                 </View>
                 <View style={{ flexDirection: 'row', marginTop: heightToDp("1%"), marginHorizontal: widthToDp("17%"), alignSelf: 'center' }}>
-                    <View style={{ flex: 1, backgroundColor: BaseColor.Uridia, alignItems: 'center', justifyContent: 'center', width: widthToDp("30%"), height: heightToDp("6%"), marginLeft: widthToDp("2%"), borderRadius: 100, flexDirection: 'row' }}>
+                    <View style={{ backgroundColor: BaseColor.Uridia, alignItems: 'center', justifyContent: 'center', width: widthToDp("30%"), height: heightToDp("6%"), marginLeft: widthToDp("2%"), borderRadius: 100, flexDirection: 'row' }}>
                         <TouchableOpacity
                             style={{ width: widthToDp("10%") }}
                             onPress={() => this.languageChangeFunction(this.state.languages[3].id)}
                         >
-                            <Text style={{ color: '#fff', fontFamily: 'Oswald-Medium' }}>{this.state.languages[3].value}</Text>
+                            <Text style={{ color: '#fff', fontFamily: 'Oswald-Medium', fontSize: widthToDp("3.6%") }}>{this.state.languages[3].value}</Text>
                         </TouchableOpacity>
                         {
                             this.state.languages[3].audio &&
                             <TouchableOpacity
-                                style={{ width: widthToDp("10%") }}
+                                style={{ width: widthToDp("14%") }}
                                 onPress={() => this.playSound(this.state.languages[3].audio)}
                             >
                                 <Icon
                                     name="microphone"
-                                    size={30}
+                                    size={25}
                                     color={"#fff"}
-                                    style={{ marginLeft: widthToDp("3%") }}
+                                    style={{ marginLeft: widthToDp("8%") }}
                                 />
                             </TouchableOpacity>
                         }                        
                     </View>
-                    <View style={{ flex: 1, backgroundColor: BaseColor.Santhali, alignItems: 'center', justifyContent: 'center', width: widthToDp("30%"), height: heightToDp("6%"), marginLeft: widthToDp("1%"), borderRadius: 100, flexDirection: 'row' }}>
+                    <View style={{ marginLeft: heightToDp("2%"), backgroundColor: BaseColor.Santhali, alignItems: 'center', justifyContent: 'center', alignSelf: 'center', width: widthToDp("30%"), height: heightToDp("6%"), borderRadius: 100, flexDirection: 'row' }}>
                         <TouchableOpacity
-                            style={{ width: widthToDp("18%") }}
+                            style={{ width: widthToDp("15%") }}
                             onPress={() => this.languageChangeFunction(this.state.languages[4].id)}
                         >
-                            <Text style={{ color: '#fff', fontFamily: 'Oswald-Medium' }}>{this.state.languages[4].value}</Text>
+                            <Text style={{ color: '#fff', fontFamily: 'Oswald-Medium', fontSize: widthToDp("3.6%") }}>{this.state.languages[4].value}</Text>
                         </TouchableOpacity>
                         {
                             this.state.languages[4].audio &&
@@ -498,7 +507,7 @@ export default class DashBoardScreen extends Component {
                             >
                                 <Icon
                                     name="microphone"
-                                    size={30}
+                                    size={25}
                                     color={"#fff"}
                                     style={{ marginLeft: widthToDp("3%") }}
                                 />
