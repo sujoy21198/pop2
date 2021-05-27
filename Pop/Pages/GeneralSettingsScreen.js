@@ -337,9 +337,9 @@ export default class GeneralSettingsScreen extends Component {
                             width: widthToDp("70%")
                         }}
                         onPress={() => this.refreshApplication()}
-                    >                        
-                        <Database
-                            name="database"
+                    >      
+                        <Sync
+                            name="sync"
                             size={30}
                             onPress={() => {}}
                         />
@@ -370,8 +370,8 @@ export default class GeneralSettingsScreen extends Component {
                             }}
                             onPress={() => this.dataSync()}
                         >
-                            <Sync
-                                name="sync"
+                            <Database
+                                name="database"
                                 size={30}
                                 onPress={() => {}}
                             />
