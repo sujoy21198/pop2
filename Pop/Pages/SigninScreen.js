@@ -51,12 +51,20 @@ export default class SigninScreen extends Component {
     }
 
     componentDidMount() {
+        this.checkForGuestSignIn()
         this.checkConnectionForCustodian()
         //this.setCustodianNumber()
 
         //this.getAllData()
         this.downloadImagesForOffline()
         //this.chechStorage()
+    }
+
+    checkForGuestSignIn = async () => {
+        let isGuest = await AsyncStorage.getItem("isGuest");
+        if(isGuest !== null) {
+            await AsyncStorage.removeItem("isGuest");
+        }
     }
 
     // chechStorage = async() => {
