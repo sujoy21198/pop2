@@ -68,7 +68,7 @@ export default class HeaderComponent extends React.Component {
                 >
                     <Image
                     source={require("../assets/data-sync.png")}
-                    style={{height: 40, width: 30, resizeMode: 'contain'}}
+                    style={{height: 40, width: 35}}
                     />
                 </TouchableOpacity>
             }
@@ -88,7 +88,7 @@ export default class HeaderComponent extends React.Component {
                         <Icon
                             name="bell"
                             size={30}
-                            style={{ marginTop: heightToDp("4.6%"), marginLeft: widthToDp(`${(this.state.isGuest === "true" && this.props.hideHome) ? 52 : 5}%`) }}
+                            style={{ marginTop: heightToDp("4.6%"), marginLeft: widthToDp(`${(this.state.isGuest === "true" && this.props.hideHome) ? 52 : (this.props.isDashboard && this.state.isGuest !== "true") ? 4 : 5}%`) }}
                             onPress={this.getNotifications}
                         />
                         {
