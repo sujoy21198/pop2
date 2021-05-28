@@ -141,7 +141,7 @@ export default class MessageScreen extends Component {
         } else if(value === "ho") {
             language = "Ho";
         } else if(value === "od") {
-            language = "Odisa";
+            language = "Odia";
         } else if(value === "san") {
             language = "Santhali";
         }
