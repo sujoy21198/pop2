@@ -270,7 +270,7 @@ export default class DashBoardScreen extends Component {
             } else {
                 Toast.show({
                     type: 'warning',
-                    text: "Please be online to see messages",
+                    text: "Please be online to send messages",
                     duration: 3000
                 })
             }

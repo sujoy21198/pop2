@@ -110,7 +110,7 @@ export default class SigninScreen extends Component {
         var labelArray = []
         var staticImagesArray = []
 
-
+        let isDownloaded = false
         await axios.get(DataAccess.BaseUrl + DataAccess.AccessUrl + 'files', {
         }).then(function (response) {
             //console.log(response.data.data)
@@ -154,7 +154,7 @@ export default class SigninScreen extends Component {
                 NewFile.push(cropScreenImageArray[i])
                 //console.log(cropScreenImageArray[i])
                 //console.log(NewFile," AAAAWWWWOOOOOOOOW")
-
+                console.log("cropScreenImageArray ", i);
             } else {
                 console.log("file exists")
             }
@@ -170,6 +170,7 @@ export default class SigninScreen extends Component {
                 NewFile.push(cropStepImagesArray[i])
                 //console.log(cropScreenImageArray[i])
                 console.log(NewFile)
+                console.log("cropStepImagesArray ", i);
 
             } else {
                 console.log("file exists")
@@ -186,6 +187,7 @@ export default class SigninScreen extends Component {
                 NewFile.push(cropMaterialImagesArray[i])
                 //console.log(cropScreenImageArray[i])
                 console.log(NewFile)
+                console.log("cropMaterialImagesArray ", i);
 
             } else {
                 console.log("file exists")
@@ -202,6 +204,7 @@ export default class SigninScreen extends Component {
                 NewFile.push(livestockScreenImagesArray[i])
                 //console.log(cropScreenImageArray[i])
                 console.log(NewFile)
+                console.log("livestockScreenImagesArray ", i);
 
             } else {
                 console.log("file exists")
@@ -218,6 +221,7 @@ export default class SigninScreen extends Component {
                 NewFile.push(liveStockStepImagesArray[i])
                 //console.log(cropScreenImageArray[i])
                 console.log(NewFile)
+                console.log("liveStockStepImagesArray ", i);
 
             } else {
                 console.log("file exists")
@@ -234,6 +238,7 @@ export default class SigninScreen extends Component {
                 NewFile.push(breedScreenImagesArray[i])
                 //console.log(cropScreenImageArray[i])
                 console.log(NewFile)
+                console.log("breedScreenImagesArray ", i);
 
             } else {
                 console.log("file exists")
@@ -250,6 +255,7 @@ export default class SigninScreen extends Component {
                 NewFile.push(importantLinksScreenArray[i])
                 //console.log(cropScreenImageArray[i])
                 console.log(NewFile)
+                console.log("importantLinksScreenArray ", i);
 
             } else {
                 console.log("file exists")
@@ -266,6 +272,7 @@ export default class SigninScreen extends Component {
                 NewFile.push(nutritionGardenImagesArray[i])
                 //console.log(cropScreenImageArray[i])
                 console.log(NewFile)
+                console.log("nutritionGardenImagesArray ", i);
 
             } else {
                 console.log("file exists")
@@ -282,6 +289,7 @@ export default class SigninScreen extends Component {
                 NewFile.push(smallBusinessImagesArray[i])
                 //console.log(cropScreenImageArray[i])
                 console.log(NewFile)
+                console.log("smallBusinessImagesArray ", i);
 
             } else {
                 console.log("file exists")
@@ -298,6 +306,7 @@ export default class SigninScreen extends Component {
                 NewFile.push(labelArray[i])
                 //console.log(cropScreenImageArray[i])
                 console.log(NewFile)
+                console.log("labelArray ", i);
 
             } else {
                 console.log("file exists")
@@ -316,6 +325,7 @@ export default class SigninScreen extends Component {
                 NewFile.push(staticImagesArray[i])
                 //console.log(cropScreenImageArray[i])
                 console.log(NewFile)
+                console.log("staticImagesArray ", i);
 
             } else {
                 console.log("file exists")
@@ -336,7 +346,8 @@ export default class SigninScreen extends Component {
         this.setState({ labels: labelArray })
         this.setState({ staticImages: staticImagesArray })
         //console.log(this.state.cropScreenImages,"hi")
-        this.getCropImage()
+        isDownloaded = true;
+        isDownloaded && this.getCropImage()
     }
 
 

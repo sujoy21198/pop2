@@ -233,7 +233,7 @@ export default class ImportantLinksSubCategoryScreen extends Component {
                         style={{ marginBottom: heightToDp("74%") }}
                         renderItem={({ item }) =>
 
-                            <Card style={{ width: widthToDp("94%"), marginLeft: widthToDp("3%"), height: heightToDp("28%"), marginBottom: heightToDp("1%"), borderRadius: 20, backgroundColor: BaseColor.Red }}>
+                            <Card style={{ width: widthToDp("94%"), marginLeft: widthToDp("3%"), height: heightToDp("28%"), marginBottom: heightToDp("2%"), borderRadius: 20, backgroundColor: BaseColor.Red }}>
                                 <LabelComponent
                                     directData={true}
                                     labelWidth={

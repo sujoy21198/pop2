@@ -11,6 +11,7 @@ import base64 from 'react-native-base64';
 import { Toast } from 'native-base';
 import { TouchableOpacity } from 'react-native';
 import { Image } from 'react-native';
+import Database from 'react-native-vector-icons/FontAwesome'
 
 export default class HeaderComponent extends React.Component {
     state = {
@@ -63,12 +64,14 @@ export default class HeaderComponent extends React.Component {
             {
                 this.props.isDashboard && this.state.isGuest !== "true" &&
                 <TouchableOpacity
-                style={{ marginTop: heightToDp(`${this.props.hideHome ? 3.8 : 4.6}%`), marginLeft: widthToDp(`${this.props.hideHome ? 41.5 : 30}%`) }}
+                style={{ marginTop: heightToDp('4.6%'), marginLeft: widthToDp(`${this.props.hideHome ? 41.5 : 30}%`) }}
                 onPress={this.props.syncData}
                 >
-                    <Image
-                    source={require("../assets/data-sync.png")}
-                    style={{height: 40, width: 30, resizeMode: 'contain'}}
+                    
+                    <Database
+                        name="database"
+                        size={30}
+                        onPress={() => {}}
                     />
                 </TouchableOpacity>
             }

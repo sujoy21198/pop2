@@ -7,13 +7,13 @@ import Ionicons from 'react-native-vector-icons/Ionicons'
 import { widthToDp, heightToDp } from '../Responsive'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import Sync from 'react-native-vector-icons/AntDesign'
-import Database from 'react-native-vector-icons/FontAwesome'
 import NetInfo from '@react-native-community/netinfo'
 import axios from 'axios'
 import base64 from 'react-native-base64'
 import HeaderComponent from '../components/HeaderComponent'
 import { ScrollView } from 'react-native'
 import Languages from '../Core/Languages'
+import { Image } from 'react-native'
 
 
 export default class GeneralSettingsScreen extends Component {
@@ -370,10 +370,9 @@ export default class GeneralSettingsScreen extends Component {
                             }}
                             onPress={() => this.dataSync()}
                         >
-                            <Database
-                                name="database"
-                                size={30}
-                                onPress={() => {}}
+                            <Image
+                            source={require("../assets/data-sync.png")}
+                            style={{height: 40, width: 40}}
                             />
                             <Text style={{
                                 fontWeight: '500', 
